@@ -1,0 +1,3 @@
+[submodule "parti-mx"]
+	path = parti-mx
+	url = git@github.com:parti-coop/parti-mx.git
