@@ -1,33 +1,30 @@
 import React from "react";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
 import "./index.sass";
+import { FormData } from "../../types";
 import LoginForm from "../../components/LoginForm";
-import { useStore } from "../../store";
+import { auth } from "../../services/firebase";
+import Alert from "@material-ui/lab/Alert";
+// import { useStore } from "../../store/store";
 
 export default function Login() {
-  const history = useHistory()
-  const { loading, login } = useStore('useLoginStore');
-  const { snackBarUpdate } = useStore('useSnackBarStore');
-
-  const handleForm = (form: object) => {
-    login(form).then(() => {
-      history.push('/dashboard')
-    }).catch((err: any) => {
-      const { data: { message } } = err;
-      snackBarUpdate({
-        payload: {
-          message,
-          status: true,
-          type: "error"
-        }
-      })
-    })
+  const [error, setError] = React.useState<undefined | { message: string }>(
+    undefined
+  );
+  const handleForm = async (form: FormData) => {
+    const { email, password } = form;
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      setError(error);
+    }
   };
   return (
     <div className="login-container">
+      {!!error && <Alert severity="error">{error.message}</Alert>}
       <div className="login-container__form">
-        <LoginForm loading={loading} handleForm={handleForm} />
+        <LoginForm handleForm={handleForm} />
       </div>
     </div>
   );

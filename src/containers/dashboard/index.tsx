@@ -1,47 +1,53 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
+import React from "react";
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MenuIcon from "@material-ui/icons/Menu";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { auth } from "../../services/firebase";
+import {
+  makeStyles,
+  useTheme,
+  Theme,
+  createStyles,
+} from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
-import { useStore } from '../../store';
+import { useStore } from "../../store/store";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: "flex",
     },
     drawer: {
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up("sm")]: {
         width: drawerWidth,
         flexShrink: 0,
       },
     },
     appBar: {
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up("sm")]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
       },
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up('sm')]: {
-        display: 'none',
+      [theme.breakpoints.up("sm")]: {
+        display: "none",
       },
     },
     toolbar: theme.mixins.toolbar,
@@ -53,11 +59,11 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(3),
     },
     header: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      width: '100%'
-    }
-  }),
+      display: "flex",
+      justifyContent: "space-between",
+      width: "100%",
+    },
+  })
 );
 
 interface ResponsiveDrawerProps {
@@ -71,11 +77,11 @@ interface ResponsiveDrawerProps {
 
 export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
+  const [{ user_id }] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
-  const { logout } = useStore('useLoginStore')
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -85,7 +91,13 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
     history.push(path);
   };
 
-  const handleLogout = () => logout()
+  const handleLogout = async () => {
+    await auth.signOut();
+    history.push("/login");
+  };
+  const handleLogin = () => {
+    history.push("/login");
+  };
 
   const drawer = (
     <div>
@@ -102,7 +114,10 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary={"Products"} onClick={() => handeClick("/dashboard/product")} />
+          <ListItemText
+            primary={"Products"}
+            onClick={() => handeClick("/dashboard/product")}
+          />
         </ListItem>
       </List>
     </div>
@@ -123,13 +138,21 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
             <MenuIcon />
           </IconButton>
           <div className={classes.header}>
-         <Typography variant="h6" noWrap>
-            Condominio
-          </Typography>
-          <Typography variant="h6" noWrap>
-          <Button variant="contained" onClick={() => handleLogout()}>Logout</Button>
-          </Typography>
-         </div>
+            <Typography variant="h6" noWrap>
+              빠띠 믹스
+            </Typography>
+            <Typography variant="h6" noWrap>
+              {user_id === null ? (
+                <Button variant="contained" onClick={handleLogin}>
+                  Login
+                </Button>
+              ) : (
+                <Button variant="contained" onClick={handleLogout}>
+                  Logout
+                </Button>
+              )}
+            </Typography>
+          </div>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -138,7 +161,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
           <Drawer
             container={container}
             variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
@@ -165,7 +188,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-            {children && children }
+        {children && children}
       </main>
     </div>
   );
