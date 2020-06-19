@@ -1,12 +1,10 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 import "./index.sass";
 import { FormData } from "../../types";
 import LoginForm from "../../components/LoginForm";
 import { auth } from "../../services/firebase";
 import Alert from "@material-ui/lab/Alert";
-// import { useStore } from "../../store/store";
 
 export default function Login() {
   const [error, setError] = React.useState<undefined | { message: string }>(

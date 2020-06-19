@@ -5,16 +5,13 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MenuIcon from "@material-ui/icons/Menu";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import { auth } from "../../services/firebase";
+import MyGroupList from "../../components/MyGroupList";
 import {
   makeStyles,
   useTheme,
@@ -77,7 +74,7 @@ interface ResponsiveDrawerProps {
 
 export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
-  const [{ user_id }] = useStore();
+  const [{ user_id }, dispatch] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -87,12 +84,9 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
     setMobileOpen(!mobileOpen);
   };
 
-  const handeClick = (path: string) => {
-    history.push(path);
-  };
-
   const handleLogout = async () => {
     await auth.signOut();
+    dispatch({ type: "LOGOUT" });
     history.push("/login");
   };
   const handleLogin = () => {
@@ -104,21 +98,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        <ListItem button onClick={() => handeClick("/dashboard/category")}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Category"} />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={"Products"}
-            onClick={() => handeClick("/dashboard/product")}
-          />
-        </ListItem>
+        <MyGroupList />
       </List>
     </div>
   );
