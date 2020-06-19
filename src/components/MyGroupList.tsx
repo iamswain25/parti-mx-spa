@@ -22,7 +22,7 @@ export default function MyGroupList() {
 
   return !loading && data && data.mx_users_group.length > 0 ? (
     data.mx_users_group.map((usersGroup: UserGroup, i: number) => (
-      <ListItem button onClick={() => handeClick(usersGroup.group_id)}>
+      <ListItem key={i} button onClick={() => handeClick(usersGroup.group_id)}>
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>

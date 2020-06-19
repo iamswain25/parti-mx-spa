@@ -12,10 +12,10 @@ import { WebSocketLink } from "@apollo/link-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { setContext } from "@apollo/link-context";
 import { IdTokenResult, auth } from "./services/firebase";
-const HASURA_DOMAIN = `hasura-load-balancer-1241189389.ap-northeast-2.elb.amazonaws.com/v1/graphql`;
+const HASURA_DOMAIN = `api.parti.mx/v1/graphql`;
 
 const wsLink = new WebSocketLink({
-  uri: `ws://${HASURA_DOMAIN}`,
+  uri: `wss://${HASURA_DOMAIN}`,
   options: {
     reconnect: true,
     lazy: true,
