@@ -36,10 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     appBar: {
-      [theme.breakpoints.up("sm")]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-      },
+      // [theme.breakpoints.up("sm")]: {
+      //   width: `calc(100% - ${drawerWidth}px)`,
+      //   marginLeft: drawerWidth,
+      // },
+      zIndex: theme.zIndex.drawer + 1,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -97,10 +98,41 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List>
-        <MyGroupList />
-      </List>
+      <List>{user_id !== null && <MyGroupList />}</List>
     </div>
+  );
+
+  const drawerContainer = user_id !== null && (
+    <nav className={classes.drawer} aria-label="mailbox folders">
+      <Hidden smUp implementation="css">
+        <Drawer
+          container={container}
+          variant="temporary"
+          anchor={theme.direction === "rtl" ? "right" : "left"}
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </Hidden>
+      <Hidden xsDown implementation="css">
+        <Drawer
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          variant="permanent"
+          open
+        >
+          {drawer}
+        </Drawer>
+      </Hidden>
+    </nav>
   );
 
   return (
@@ -135,37 +167,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
           </div>
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
+      {drawerContainer}
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {children && children}

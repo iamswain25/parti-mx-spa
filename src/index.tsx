@@ -45,9 +45,12 @@ async function delay(t: number) {
 }
 let refreshCounts = 0;
 async function extractValidToken(refresh = false): Promise<string> {
+  if (auth.currentUser === null) {
+    throw new Error("must login first");
+  }
   const res:
     | IdTokenResult
-    | undefined = await auth?.currentUser?.getIdTokenResult(refresh);
+    | undefined = await auth.currentUser.getIdTokenResult(refresh);
   if (res?.claims?.["https://hasura.io/jwt/claims"]?.["x-hasura-user-id"]) {
     return res.token;
   } else {
