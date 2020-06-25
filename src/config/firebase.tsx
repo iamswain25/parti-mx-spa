@@ -12,18 +12,6 @@ firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 
 export const auth = firebase.auth();
-export async function uploadFileUUIDGetUrl(uri: string, dir: string) {
-  const path = `${dir}/${uuid.v4()}`;
-  console.log({ path });
-  const res = await uploadImage(uri, path);
-  return res.ref.getDownloadURL();
-}
-export const uploadImage = async (uri: string, path: string) => {
-  const response = await fetch(uri);
-  const blob = await response.blob();
-  var ref = firebase.storage().ref().child(path);
-  return ref.put(blob);
-};
 export const Firebase = firebase;
 export type IdTokenResult = Modify<
   firebase.auth.IdTokenResult,
@@ -60,4 +48,15 @@ export async function getUserId2(user: firebase.User): Promise<number | null> {
   } else {
     return Number(string);
   }
+}
+
+export async function uploadFileGetUriArray(file: File) {
+  return new Promise(async function (res) {
+    const path = `posts/${uuid.v4()}`;
+    console.log({ path });
+    const ref = firebase.storage().ref().child(path);
+    const fileSnapshot = await ref.put(file);
+    const uri = fileSnapshot.ref.getDownloadURL();
+    return res({ ...file, uri, type: "web" });
+  });
 }

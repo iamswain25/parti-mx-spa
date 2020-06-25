@@ -26,7 +26,7 @@ export const insertPost = gql`
     $board_id: Int!
     $group_id: Int!
     $title: String!
-    $sContext: String
+    $context: String
     $body: String!
     $metadata: jsonb = {}
     $images: jsonb
@@ -36,7 +36,7 @@ export const insertPost = gql`
       objects: {
         body: $body
         title: $title
-        context: $sContext
+        context: $context
         board_id: $board_id
         metadata: $metadata
         images: $images

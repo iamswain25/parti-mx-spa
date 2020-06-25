@@ -7,20 +7,15 @@ export type Board = {
   title: string;
   body: string;
   permission: "member" | "all";
-  type: boardTypes;
+  type: BoardTypes;
   updated_at: string;
   last_posted_at: string;
   users: Array<{ updated_at: string }>;
   newPostCount?: number;
 };
-export enum boardTypes {
-  NOTICE = "notice",
-  SUGGESTION = "suggestion",
-  EVENT = "event",
-  VOTE = "vote",
-}
+export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
 
-export interface VoteBoardList {
+export interface BoardList {
   mx_boards_by_pk: {
     id: string;
     body: string;
@@ -31,7 +26,7 @@ export interface VoteBoardList {
         count: number;
       };
     };
-    posts: VoteListType[];
+    posts: PostType[];
   };
 }
 export interface HomeGroup {
@@ -81,7 +76,7 @@ export interface Comment {
   post?: VoteDetailType;
 }
 
-export type PostListType = {
+export type PostType = {
   id: number;
   title: string;
   body: string;
@@ -95,7 +90,7 @@ export type PostListType = {
       };
     };
   };
-  users: Array<{ like_count: number; updated_at: string }>;
+  users: UserPost[];
   updatedBy: User;
   createdBy: User;
   comments_aggregate: {
@@ -104,7 +99,7 @@ export type PostListType = {
     };
   };
 };
-export type SuggestionListType = PostListType;
+export type SuggestionType = PostType;
 type VoteMetadata = {
   closedAt?: string;
   closingMethod: string;
@@ -119,10 +114,10 @@ type EventMetadata = {
   deadline: string;
   countPeople: number;
 };
-export interface VoteListType extends PostListType {
+export interface VoteType extends PostType {
   metadata: VoteMetadata;
 }
-export interface EventListType extends PostListType {
+export interface EventType extends PostType {
   metadata: EventMetadata;
 }
 
@@ -146,6 +141,15 @@ export interface UserGroup {
   group?: Group;
   group_id: number;
   user_id: number;
+}
+export interface UserPost {
+  user: User;
+  created_at: string;
+  updated_at: string;
+  user_id: number;
+  user_id: number;
+  like_count: number;
+  post: PostType;
 }
 
 export interface Group {

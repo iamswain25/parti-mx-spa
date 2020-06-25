@@ -5,6 +5,7 @@ export default function createReducer<T, A extends Action>(
 ) {
   return function reducer(state = initialState, action: Action) {
     const { type, ...payload } = action;
+    console.log(type, payload);
     if (handlers.hasOwnProperty(type)) {
       return handlers[type](state, payload as any);
     } else {

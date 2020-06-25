@@ -10,8 +10,8 @@ import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
-import { auth } from "../../services/firebase";
-import MyGroupList from "../../components/MyGroupList";
+import { auth } from "../config/firebase";
+import MyGroupList from "./MyGroupList";
 import {
   makeStyles,
   useTheme,
@@ -20,7 +20,7 @@ import {
 } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
-import { useStore } from "../../store/store";
+import { useStore } from "../store/store";
 
 const drawerWidth = 240;
 
@@ -75,7 +75,7 @@ interface ResponsiveDrawerProps {
 
 export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
-  const [{ user_id }, dispatch] = useStore();
+  const [{ user_id }] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -87,12 +87,14 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
 
   const handleLogout = async () => {
     await auth.signOut();
-    dispatch({ type: "LOGOUT" });
     history.push("/login");
   };
   const handleLogin = () => {
     history.push("/login");
   };
+  function toRoot() {
+    history.push("/");
+  }
 
   const drawer = (
     <div>
@@ -150,7 +152,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
             <MenuIcon />
           </IconButton>
           <div className={classes.header}>
-            <Typography variant="h6" noWrap>
+            <Typography variant="h6" noWrap onClick={toRoot}>
               빠띠 믹스
             </Typography>
             <Typography variant="h6" noWrap>
