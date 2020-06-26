@@ -30,7 +30,11 @@ export default function Home() {
     <>
       <h1>제안 - {title}</h1>
       {posts.map((p, i) => {
-        return <div onClick={() => navigatePost(p.id)}>{p.body}</div>;
+        return (
+          <div key={i} onClick={() => navigatePost(p.id)}>
+            {p.body}
+          </div>
+        );
       })}
     </>
   );

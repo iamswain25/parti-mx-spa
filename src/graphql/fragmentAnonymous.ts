@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 export const commentsResult = gql`
-  fragment comments_result on mx_comments {
+  fragment comments_result_anonymous on mx_comments {
     id
     body
     updated_at
@@ -12,15 +12,6 @@ export const commentsResult = gql`
     user {
       id
       name
-      photo_url
-      checkedPosts(where: { post_id: { _eq: $id }, like_count: { _gt: 0 } }) {
-        like_count
-      }
-    }
-    likes(where: { user_id: { _eq: $user_id } }) {
-      user {
-        name
-      }
     }
     likes_aggregate {
       aggregate {
@@ -40,7 +31,6 @@ export const voteCommentsResult = gql`
     user {
       id
       name
-      photo_url
       votes(where: { candidate: { post_id: { _eq: $id } } }) {
         candidate {
           body
@@ -67,7 +57,6 @@ export const noticeCommentsResult = gql`
     user {
       id
       name
-      photo_url
     }
     likes(where: { user_id: { _eq: $user_id } }) {
       user {

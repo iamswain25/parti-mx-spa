@@ -21,6 +21,7 @@ import {
 import Button from "@material-ui/core/Button";
 
 import { useStore } from "../store/store";
+import SnackbarCustom from "./SnackbarCustom";
 
 const drawerWidth = 240;
 
@@ -173,6 +174,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {children && children}
+        <SnackbarCustom />
       </main>
     </div>
   );

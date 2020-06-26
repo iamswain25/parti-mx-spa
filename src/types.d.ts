@@ -79,6 +79,7 @@ export interface Comment {
 export type PostType = {
   id: number;
   title: string;
+  context?: string;
   body: string;
   metadata: { closedAt: string; closingMethod: string };
   created_at: string;
@@ -99,7 +100,9 @@ export type PostType = {
     };
   };
 };
-export type SuggestionType = PostType;
+export interface SuggestionPost {
+  mx_posts_by_pk: PostType;
+}
 type VoteMetadata = {
   closedAt?: string;
   closingMethod: string;

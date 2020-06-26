@@ -53,7 +53,7 @@ export const subscribePostsByBoardId = gql`
 `;
 
 export const subscribeSuggestion = gql`
-  subscription($id: Int!, $user_id: Int!) {
+  subscription($id: Int!) {
     mx_posts_by_pk(id: $id) {
       id
       title
@@ -67,33 +67,27 @@ export const subscribeSuggestion = gql`
       }
       updatedBy {
         name
-        photo_url
         id
       }
       createdBy {
         name
-        photo_url
         id
       }
       comments(
         order_by: { created_at: asc }
         where: { parent_id: { _is_null: true } }
       ) {
-        ...comments_result
+        ...comments_result_anonymous
         re(order_by: { created_at: asc }) {
-          ...comments_result
+          ...comments_result_anonymous
         }
       }
       created_at
       updated_at
-      meLiked: users(where: { user_id: { _eq: $user_id } }) {
-        like_count
-      }
       likedUsers: users(where: { like_count: { _gt: 0 } }) {
         created_at
         user {
           name
-          photo_url
         }
       }
     }
@@ -117,12 +111,10 @@ export const subscribeNotice = gql`
       updatedBy {
         id
         name
-        photo_url
       }
       createdBy {
         id
         name
-        photo_url
       }
       comments(
         order_by: { created_at: asc }
@@ -259,12 +251,10 @@ export const subscribeVote = gql`
       }
       updatedBy {
         name
-        photo_url
         id
       }
       createdBy {
         name
-        photo_url
         id
       }
       comments(
@@ -310,7 +300,6 @@ export const subscribeVote = gql`
           created_at
           user {
             name
-            photo_url
             id
           }
         }
@@ -335,21 +324,19 @@ export const subscribeEvent = gql`
       }
       updatedBy {
         name
-        photo_url
         id
       }
       createdBy {
         name
-        photo_url
         id
       }
       comments(
         order_by: { created_at: asc }
         where: { parent_id: { _is_null: true } }
       ) {
-        ...comments_result
+        ...comments_result_anonymous
         re(order_by: { created_at: asc }) {
-          ...comments_result
+          ...comments_result_anonymous
         }
       }
       created_at
@@ -361,7 +348,6 @@ export const subscribeEvent = gql`
         created_at
         user {
           name
-          photo_url
         }
       }
     }
