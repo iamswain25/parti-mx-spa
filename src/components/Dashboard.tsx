@@ -22,6 +22,7 @@ import Button from "@material-ui/core/Button";
 
 import { useStore } from "../store/store";
 import SnackbarCustom from "./SnackbarCustom";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const drawerWidth = 240;
 
@@ -76,7 +77,7 @@ interface ResponsiveDrawerProps {
 
 export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
-  const [{ user_id }] = useStore();
+  const [{ user_id, loading, isInit }] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -173,8 +174,10 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       {drawerContainer}
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {children && children}
+
+        {children && isInit && children}
         <SnackbarCustom />
+        {loading && <LinearProgress />}
       </main>
     </div>
   );

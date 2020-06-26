@@ -9,19 +9,22 @@ import { useSubscription } from "@apollo/client";
 export default function SuggestionDetail() {
   const [{ user_id }, dispatch] = useStore();
   const { id = 214 } = useParams();
-  const { data, error, loading } = useSubscription<SuggestionPost>(
+  const { data, error = null, loading = true } = useSubscription<
+    SuggestionPost
+  >(
     user_id === null ? subsAnon.subscribeSuggestion : subs.subscribeSuggestion,
     {
       variables: user_id === null ? { id } : { id, user_id },
     }
   );
   React.useEffect(() => {
+    dispatch({ type: "SET_ERROR", error });
+  }, [error, dispatch]);
+  React.useEffect(() => {
     dispatch({ type: "SET_LOADING", loading });
   }, [loading, dispatch]);
   const { title, body, context, metadata } = data?.mx_posts_by_pk ?? {};
-  if (error) {
-    console.log(error);
-  }
+
   return (
     <>
       <h1>{title}</h1>

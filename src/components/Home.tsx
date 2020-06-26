@@ -32,7 +32,7 @@ export default function Home() {
       {posts.map((p, i) => {
         return (
           <div key={i} onClick={() => navigatePost(p.id)}>
-            {p.body}
+            {p.title}: {p.body}
           </div>
         );
       })}

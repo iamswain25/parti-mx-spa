@@ -6,7 +6,7 @@ export default function SnackbarCustom() {
   const [{ error }] = useStore();
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
-    if (error !== null) {
+    if (error) {
       setOpen(true);
     }
   }, [error]);
@@ -27,7 +27,7 @@ export default function SnackbarCustom() {
         horizontal: "left",
       }}
       open={open}
-      autoHideDuration={6000}
+      // autoHideDuration={6000}
       onClose={handleClose}
       message={JSON.stringify(error)}
       action={

@@ -14,7 +14,7 @@ export type Action =
   | { type: "SET_LOADING"; loading: boolean }
   | { type: "SET_GROUP"; group_id: number }
   | { type: "SET_USER"; user_id: number | null }
-  | { type: "SET_ERROR"; error: string | null }
+  | { type: "SET_ERROR"; error: any }
   | { type: "LOGOUT" };
 function persistSecureStore(state: State, payload: any) {
   const jsonStr = JSON.stringify({ ...state, ...payload });
