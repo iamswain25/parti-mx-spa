@@ -10,7 +10,6 @@ import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
-import { auth } from "../config/firebase";
 import MyGroupList from "./MyGroupList";
 import {
   makeStyles,
@@ -18,11 +17,12 @@ import {
   Theme,
   createStyles,
 } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import LoginModal from "./LoginModal";
 
 import { useStore } from "../store/store";
 import SnackbarCustom from "./SnackbarCustom";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import LogoutButton from "./LogoutButton";
 
 const drawerWidth = 240;
 
@@ -70,7 +70,7 @@ interface ResponsiveDrawerProps {
 
 export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
-  const [{ user_id, loading, isInit }] = useStore();
+  const [{ user_id, loading, isInit }, dispatch] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -80,13 +80,12 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleLogout = async () => {
-    await auth.signOut();
-    history.push("/login");
-  };
-  const handleLogin = () => {
-    history.push("/login");
-  };
+  function navigateGroupHandler(group_id: number) {
+    dispatch({ type: "SET_GROUP", group_id });
+    setMobileOpen(false);
+    history.push("/");
+  }
+
   function toRoot() {
     history.push("/");
   }
@@ -95,7 +94,11 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
     <div>
       <div className={classes.toolbar}>version: 0.5.3</div>
       <Divider />
-      <List>{user_id !== null && <MyGroupList />}</List>
+      <List>
+        {user_id !== null && (
+          <MyGroupList clickHandler={navigateGroupHandler} />
+        )}
+      </List>
     </div>
   );
 
@@ -123,29 +126,23 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
+          {user_id !== null && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <div className={classes.header}>
             <Typography variant="h6" noWrap onClick={toRoot}>
               빠띠 믹스
             </Typography>
             <Typography variant="h6" noWrap>
-              {user_id === null ? (
-                <Button variant="contained" onClick={handleLogin}>
-                  Login
-                </Button>
-              ) : (
-                <Button variant="contained" onClick={handleLogout}>
-                  Logout
-                </Button>
-              )}
+              {user_id === null ? <LoginModal /> : <LogoutButton />}
             </Typography>
           </div>
         </Toolbar>

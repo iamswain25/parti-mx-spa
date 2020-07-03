@@ -7,22 +7,30 @@ import { subscribeGroupsByUserId } from "../graphql/subscription";
 import { useSubscription } from "@apollo/client";
 import { useStore } from "../store/store";
 import { UserGroup } from "../types";
-import { useHistory } from "react-router-dom";
+import useLoadingEffect from "./useLoadingEffect";
+import useErrorEffect from "./useErrorEffect";
 
-export default function MyGroupList() {
-  const history = useHistory();
-  const [{ user_id }, dispatch] = useStore();
-  const { loading, data } = useSubscription(subscribeGroupsByUserId, {
+export default function MyGroupList(props: {
+  clickHandler: (group_id: number) => void;
+}) {
+  const { clickHandler } = props;
+  const [{ user_id }] = useStore();
+  const { loading, data, error } = useSubscription(subscribeGroupsByUserId, {
     variables: { user_id },
   });
-  function handeClick(group_id: number) {
-    dispatch({ type: "SET_GROUP", group_id });
-    history.push("/");
+  useLoadingEffect(loading);
+  useErrorEffect(error);
+  if (loading) {
+    return null;
   }
 
-  return !loading && data && data.mx_users_group.length > 0 ? (
+  return data?.mx_users_group?.length > 0 ? (
     data.mx_users_group.map((usersGroup: UserGroup, i: number) => (
-      <ListItem key={i} button onClick={() => handeClick(usersGroup.group_id)}>
+      <ListItem
+        key={i}
+        button
+        onClick={() => clickHandler(usersGroup.group_id)}
+      >
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>

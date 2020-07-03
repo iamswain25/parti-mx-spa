@@ -28,15 +28,15 @@ export default function SuggestionDetail() {
       <div>{JSON.stringify(metadata)}</div>
       <div>{context}</div>
       <div>{body}</div>
-      {images?.map((image) => {
+      {images?.map((image, i) => {
         return (
-          <div>
+          <div key={i}>
             <img src={image.uri} alt="post" />
           </div>
         );
       })}
-      {comments?.map((c) => {
-        return <div>{c.body}</div>;
+      {comments?.map((c, i) => {
+        return <div key={i}>{c.body}</div>;
       })}
     </>
   );

@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const queryByGroupId = gql`
-  query($group_id: Int!, $user_id: Int!, $isAnonymous: Boolean!) {
+  query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_groups_by_pk(id: $group_id) {
       id
       title

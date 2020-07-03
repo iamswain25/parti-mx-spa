@@ -53,7 +53,7 @@ export const subscribePostsByBoardId = gql`
 `;
 
 export const subscribeSuggestion = gql`
-  subscription($id: Int!, $user_id: Int!, $isAnonymous: Boolean!) {
+  subscription($id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_posts_by_pk(id: $id) {
       id
       title

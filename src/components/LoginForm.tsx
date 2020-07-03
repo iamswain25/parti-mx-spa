@@ -65,6 +65,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             variant="outlined"
             margin="normal"
             fullWidth
+            type="email"
             id="email"
             label="Email Address"
             name="email"
@@ -105,7 +106,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              로그인
             </Button>
           </div>
         </form>

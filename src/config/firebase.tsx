@@ -40,14 +40,28 @@ export async function getUserId(refresh = false): Promise<number | null> {
 }
 
 export async function getUserId2(user: firebase.User): Promise<number | null> {
-  const res = await user.getIdTokenResult();
-  const string =
-    res?.claims?.["https://hasura.io/jwt/claims"]?.["x-hasura-user-id"];
-  if (string === undefined) {
-    return null;
-  } else {
-    return Number(string);
+  async function delay(t: number) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, t);
+    });
   }
+  let refreshCounts = 0;
+  async function extractValidToken(refresh = false): Promise<number> {
+    const res: IdTokenResult = await user.getIdTokenResult(refresh);
+    const string =
+      res?.claims?.["https://hasura.io/jwt/claims"]?.["x-hasura-user-id"];
+    if (string) {
+      return Number(string);
+    } else {
+      if (refresh) {
+        refreshCounts++;
+        await delay(500);
+        console.log("token try: " + refreshCounts);
+      }
+      return extractValidToken(true);
+    }
+  }
+  return extractValidToken();
 }
 
 export async function uploadFileGetUriArray(file: File) {

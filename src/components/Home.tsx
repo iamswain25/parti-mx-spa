@@ -5,6 +5,8 @@ import useNavigateToPost from "./useNavigateToPost";
 import { HomeGroup } from "../types";
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
+import useLoadingEffect from "./useLoadingEffect";
+import useErrorEffect from "./useErrorEffect";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -15,19 +17,16 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function Home() {
-  const [{ user_id, group_id = 34 }, dispatch] = useStore();
+  const [{ user_id, group_id = 34 }] = useStore();
   const classes = useStyles();
   const navigatePost = useNavigateToPost();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
     variables: { group_id, user_id, isAnonymous: user_id === null },
   });
-  React.useEffect(() => {
-    dispatch({ type: "SET_LOADING", loading });
-  }, [loading, dispatch]);
+  useLoadingEffect(loading);
+  useErrorEffect(error);
   const { boards = [], title, bg_img_url } = data?.mx_groups_by_pk ?? {};
-  if (error) {
-    console.log(error);
-  }
+
   return (
     <div className={classes.root}>
       <h1>{title}</h1>
