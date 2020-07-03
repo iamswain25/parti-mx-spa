@@ -38,17 +38,10 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     appBar: {
-      // [theme.breakpoints.up("sm")]: {
-      //   width: `calc(100% - ${drawerWidth}px)`,
-      //   marginLeft: drawerWidth,
-      // },
       zIndex: theme.zIndex.drawer + 1,
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
-        display: "none",
-      },
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
@@ -100,14 +93,14 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.toolbar}>version: 0.5.3</div>
       <Divider />
       <List>{user_id !== null && <MyGroupList />}</List>
     </div>
   );
 
   const drawerContainer = user_id !== null && (
-    <nav className={classes.drawer} aria-label="mailbox folders">
+    <nav aria-label="mailbox folders">
       <Hidden smUp implementation="css">
         <Drawer
           container={container}
@@ -115,23 +108,9 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
           anchor={theme.direction === "rtl" ? "right" : "left"}
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
           ModalProps={{
             keepMounted: true,
           }}
-        >
-          {drawer}
-        </Drawer>
-      </Hidden>
-      <Hidden xsDown implementation="css">
-        <Drawer
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          variant="permanent"
-          open
         >
           {drawer}
         </Drawer>

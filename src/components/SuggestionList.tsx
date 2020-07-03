@@ -1,7 +1,6 @@
 import React from "react";
 import { useStore } from "../store/store";
-import * as subs from "../graphql/subscription";
-import * as subsAnon from "../graphql/subscriptionAnonymous";
+import { subscribePostsByBoardId } from "../graphql/subscription";
 import useNavigateToPost from "./useNavigateToPost";
 import { BoardList } from "../types";
 import { useParams } from "react-router-dom";
@@ -11,12 +10,10 @@ export default function SuggestionList() {
   const [{ user_id }, dispatch] = useStore();
   const navigatePost = useNavigateToPost();
   const { id = 104 } = useParams();
-  const { data, error, loading } = useSubscription<BoardList>(
-    user_id === null
-      ? subsAnon.subscribePostsByBoardId
-      : subs.subscribePostsByBoardId,
+  const { data, error, loading = true } = useSubscription<BoardList>(
+    subscribePostsByBoardId,
     {
-      variables: user_id === null ? { id } : { id, user_id },
+      variables: { id, user_id, isAnonymous: user_id === null },
     }
   );
   React.useEffect(() => {

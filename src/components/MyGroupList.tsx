@@ -17,7 +17,7 @@ export default function MyGroupList() {
   });
   function handeClick(group_id: number) {
     dispatch({ type: "SET_GROUP", group_id });
-    history.push("/suggestion");
+    history.push("/");
   }
 
   return !loading && data && data.mx_users_group.length > 0 ? (

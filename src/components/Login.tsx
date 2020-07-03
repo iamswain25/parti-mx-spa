@@ -1,10 +1,9 @@
 import React from "react";
-import "./index.sass";
-import { FormData } from "../../types";
-import LoginForm from "../../components/LoginForm";
-import { auth } from "../../config/firebase";
+import { FormData } from "../types";
+import LoginForm from "./LoginForm";
+import { auth } from "../config/firebase";
 import { useLocation, Redirect } from "react-router-dom";
-import { useStore } from "../../store/store";
+import { useStore } from "../store/store";
 
 export default function Login() {
   const [{ user_id, isInit }, dispatch] = useStore();

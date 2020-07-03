@@ -53,7 +53,7 @@ export const subscribePostsByBoardId = gql`
 `;
 
 export const subscribeSuggestion = gql`
-  subscription($id: Int!, $user_id: Int!) {
+  subscription($id: Int!, $user_id: Int!, $isAnonymous: Boolean!) {
     mx_posts_by_pk(id: $id) {
       id
       title
@@ -86,7 +86,8 @@ export const subscribeSuggestion = gql`
       }
       created_at
       updated_at
-      meLiked: users(where: { user_id: { _eq: $user_id } }) {
+      meLiked: users(where: { user_id: { _eq: $user_id } })
+        @skip(if: $isAnonymous) {
         like_count
       }
       likedUsers: users(where: { like_count: { _gt: 0 } }) {

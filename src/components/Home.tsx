@@ -1,41 +1,63 @@
 import React from "react";
 import { useStore } from "../store/store";
-import * as subs from "../graphql/subscription";
-import * as subsAnon from "../graphql/subscriptionAnonymous";
+import { queryByGroupId } from "../graphql/query";
 import useNavigateToPost from "./useNavigateToPost";
-import { BoardList } from "../types";
-import { useParams } from "react-router-dom";
-import { useSubscription } from "@apollo/client";
-
+import { HomeGroup } from "../types";
+import { useQuery } from "@apollo/client";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {
+      "& img": {
+        height: 200,
+      },
+    },
+  };
+});
 export default function Home() {
-  const [{ user_id }, dispatch] = useStore();
+  const [{ user_id, group_id = 34 }, dispatch] = useStore();
+  const classes = useStyles();
   const navigatePost = useNavigateToPost();
-  const { id = 104 } = useParams();
-  const { data, error, loading } = useSubscription<BoardList>(
-    user_id === null
-      ? subsAnon.subscribePostsByBoardId
-      : subs.subscribePostsByBoardId,
-    {
-      variables: user_id === null ? { id } : { id, user_id },
-    }
-  );
+  const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
+    variables: { group_id, user_id, isAnonymous: user_id === null },
+  });
   React.useEffect(() => {
     dispatch({ type: "SET_LOADING", loading });
   }, [loading, dispatch]);
-  const { posts = [], title } = data?.mx_boards_by_pk ?? {};
+  const { boards = [], title, bg_img_url } = data?.mx_groups_by_pk ?? {};
   if (error) {
     console.log(error);
   }
   return (
-    <>
-      <h1>제안 - {title}</h1>
-      {posts.map((p, i) => {
-        return (
-          <div key={i} onClick={() => navigatePost(p.id)}>
-            {p.title}: {p.body}
-          </div>
-        );
-      })}
-    </>
+    <div className={classes.root}>
+      <h1>{title}</h1>
+      <img src={bg_img_url} alt="group background" />
+      <ul>
+        {boards.map((b, i) => {
+          return (
+            <li key={i}>
+              <h2>{b.title}</h2>
+              <h3>{b.body}</h3>
+              <div>{b.type}</div>
+              <div>{b.last_posted_at}</div>
+              <ul>
+                {b.posts.map((p, i) => {
+                  return (
+                    <li key={i} onClick={() => navigatePost(p.id)}>
+                      <h4>{p.title}</h4>
+                      <h5>{p.body}</h5>
+                      <div>{p.createdBy.name}</div>
+                      <div>{p.created_at}</div>
+                      <div>{p.comments_aggregate.aggregate.count}</div>
+                      <div>{p.users_aggregate.aggregate.sum.like_count}</div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }

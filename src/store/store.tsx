@@ -35,7 +35,7 @@ function authCheck(dispatch: React.Dispatch<Action>) {
 export const StoreProvider = (props: ComponentProps<any>) => {
   const [store, dispatch] = React.useReducer(reducer, initialState);
   const init = React.useCallback(async function init() {
-    console.log("init");
+    console.log("init store");
     try {
       const [storeJSON, user_id] = await Promise.all([
         SecureStorage.getItem(PERSIST_KEY),

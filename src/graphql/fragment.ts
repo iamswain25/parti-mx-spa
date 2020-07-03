@@ -17,7 +17,7 @@ export const commentsResult = gql`
         like_count
       }
     }
-    likes(where: { user_id: { _eq: $user_id } }) {
+    likes(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       user {
         name
       }

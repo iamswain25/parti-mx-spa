@@ -1,29 +1,26 @@
 import React from "react";
 import { useStore } from "../store/store";
 import * as subs from "../graphql/subscription";
-import * as subsAnon from "../graphql/subscriptionAnonymous";
 import { SuggestionPost } from "../types";
 import { useParams } from "react-router-dom";
 import { useSubscription } from "@apollo/client";
+import useLoadingEffect from "./useLoadingEffect";
+import useErrorEffect from "./useErrorEffect";
 
 export default function SuggestionDetail() {
-  const [{ user_id }, dispatch] = useStore();
+  const [{ user_id }] = useStore();
   const { id = 214 } = useParams();
-  const { data, error = null, loading = true } = useSubscription<
-    SuggestionPost
-  >(
-    user_id === null ? subsAnon.subscribeSuggestion : subs.subscribeSuggestion,
+  const { data, error, loading } = useSubscription<SuggestionPost>(
+    subs.subscribeSuggestion,
     {
-      variables: user_id === null ? { id } : { id, user_id },
+      variables: { id, user_id, isAnonymous: user_id === null },
     }
   );
-  React.useEffect(() => {
-    dispatch({ type: "SET_ERROR", error });
-  }, [error, dispatch]);
-  React.useEffect(() => {
-    dispatch({ type: "SET_LOADING", loading });
-  }, [loading, dispatch]);
-  const { title, body, context, metadata } = data?.mx_posts_by_pk ?? {};
+  useLoadingEffect(loading);
+  useErrorEffect(error);
+
+  const { title, body, context, metadata, images, comments } =
+    data?.mx_posts_by_pk ?? {};
 
   return (
     <>
@@ -31,6 +28,16 @@ export default function SuggestionDetail() {
       <div>{JSON.stringify(metadata)}</div>
       <div>{context}</div>
       <div>{body}</div>
+      {images?.map((image) => {
+        return (
+          <div>
+            <img src={image.uri} alt="post" />
+          </div>
+        );
+      })}
+      {comments?.map((c) => {
+        return <div>{c.body}</div>;
+      })}
     </>
   );
 }

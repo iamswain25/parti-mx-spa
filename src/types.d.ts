@@ -10,8 +10,9 @@ export type Board = {
   type: BoardTypes;
   updated_at: string;
   last_posted_at: string;
-  users: Array<{ updated_at: string }>;
+  users: UserBoard[];
   newPostCount?: number;
+  posts: Post[];
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
 
@@ -26,7 +27,7 @@ export interface BoardList {
         count: number;
       };
     };
-    posts: PostType[];
+    posts: Post[];
   };
 }
 export interface HomeGroup {
@@ -35,12 +36,12 @@ export interface HomeGroup {
     title: string;
     bg_img_url: string;
     boards: Board[];
-    users_aggregate: {
+    users_aggregate?: {
       aggregate: {
         count: number;
       };
     };
-    users: [
+    users?: [
       {
         status: UserStatus;
         notification_type: NotificationType;
@@ -75,13 +76,23 @@ export interface Comment {
   re?: Comment[];
   post?: VoteDetailType;
 }
-
-export type PostType = {
+export type Image = {
+  uri: string;
+  type?: "web";
+};
+export type File = {
+  uri: string;
+  name: string;
+  size: number;
+};
+export type Post = {
   id: number;
   title: string;
   context?: string;
   body: string;
   metadata: { closedAt: string; closingMethod: string };
+  images: Image[];
+  files: File[];
   created_at: string;
   updated_at: string;
   users_aggregate: {
@@ -99,9 +110,12 @@ export type PostType = {
       count: number;
     };
   };
+  comments: Comment[];
+  meLiked: [UserPost];
+  board: Board;
 };
 export interface SuggestionPost {
-  mx_posts_by_pk: PostType;
+  mx_posts_by_pk: Post;
 }
 type VoteMetadata = {
   closedAt?: string;
@@ -117,10 +131,10 @@ type EventMetadata = {
   deadline: string;
   countPeople: number;
 };
-export interface VoteType extends PostType {
+export interface VoteType extends Post {
   metadata: VoteMetadata;
 }
-export interface EventType extends PostType {
+export interface EventType extends Post {
   metadata: EventMetadata;
 }
 
@@ -150,9 +164,17 @@ export interface UserPost {
   created_at: string;
   updated_at: string;
   user_id: number;
-  user_id: number;
   like_count: number;
-  post: PostType;
+  post: Post;
+}
+export interface UserBoard {
+  user_id: number;
+  board_id: number;
+  count_click: number;
+  created_at: string;
+  updated_at: string;
+  board: Board;
+  user: User;
 }
 
 export interface Group {
@@ -163,41 +185,21 @@ export interface Group {
   slug: string;
 }
 
-export type PostDetailType = {
-  id: number;
-  title: string;
-  body: string;
-  metadata: any;
-  images: any;
-  files: any;
-  updatedBy: User;
-  createdBy: User;
-  created_at: string;
-  updated_at: string;
-  comments: Comment[];
-  meLiked: {
-    like_count: number;
-  }[];
-  board: {
-    title: string;
-    type: string;
-  };
-};
-export interface SuggestionDetailType extends PostDetailType {
+export interface SuggestionDetailType extends Post {
   likedUsers: {
     created_at: string;
     user: User;
   }[];
   context: string;
 }
-export interface EventDetailType extends PostDetailType {
+export interface EventDetailType extends Post {
   likedUsers: {
     created_at: string;
     user: User;
   }[];
   metadata: EventMetadata;
 }
-export interface NoticeDetailType extends PostDetailType {
+export interface NoticeDetailType extends Post {
   users_aggregate: {
     aggregate: {
       sum: {
@@ -236,7 +238,7 @@ export type Candidate = {
   ];
   votes: Vote[];
 };
-export interface VoteDetailType extends PostDetailType {
+export interface VoteDetailType extends Post {
   users_aggregate: {
     aggregate: {
       sum: {

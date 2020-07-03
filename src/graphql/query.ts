@@ -1,14 +1,55 @@
 import gql from "graphql-tag";
-export const whoami = gql`
-  query($id: Int!) {
-    mx_users_by_pk(id: $id) {
-      name
-      email
-      photo_url
-      push_tokens
+
+export const queryByGroupId = gql`
+  query($group_id: Int!, $user_id: Int!, $isAnonymous: Boolean!) {
+    mx_groups_by_pk(id: $group_id) {
+      id
+      title
+      bg_img_url
+      boards(
+        order_by: {
+          last_posted_at: desc_nulls_last
+          updated_at: desc_nulls_last
+        }
+      ) {
+        id
+        title
+        body
+        permission
+        type
+        updated_at
+        last_posted_at
+        posts {
+          id
+          body
+          title
+          created_at
+          createdBy {
+            name
+            id
+          }
+          comments_aggregate {
+            aggregate {
+              count
+            }
+          }
+          users_aggregate {
+            aggregate {
+              sum {
+                like_count
+              }
+            }
+          }
+        }
+      }
+      users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
+        status
+        notification_type
+      }
     }
   }
 `;
+
 export const searchDuplicateNameWithoutMine = gql`
   query($name: String!, $id: Int!) {
     mx_users(
