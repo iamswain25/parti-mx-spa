@@ -24,7 +24,7 @@ export default function LogoutButton() {
   };
   return (
     <div>
-      <Button variant="contained" onClick={handleClickOpen}>
+      <Button onClick={handleClickOpen}>
         Logout
       </Button>
       <Dialog

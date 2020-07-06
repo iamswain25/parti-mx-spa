@@ -11,12 +11,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import MyGroupList from "./MyGroupList";
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-} from "@material-ui/core/styles";
+import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import LoginModal from "./LoginModal";
 
 import { useStore } from "../store/store";
@@ -26,38 +21,53 @@ import LogoutButton from "./LogoutButton";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-    },
-    drawer: {
-      [theme.breakpoints.up("sm")]: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    display: "flex",
+  },
+  drawer: {
+    [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
+      flexShrink: 0,
     },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-      width: "100%",
-    },
-  })
-);
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: "#fff",
+    color: "#00a270",
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    minHeight: 56,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+  logoFont: {
+    fontFamily: "Lato",
+    fontSize: 20,
+    fontWeight: "bold",
+    fontStyle: "normal",
+    letterSpacing: 0,
+    textAlign: "center",
+    color: "#00a270",
+  },
+}));
 
 interface ResponsiveDrawerProps {
   /**
@@ -125,21 +135,25 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          {user_id !== null && (
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
+        <Toolbar classes={{ regular: classes.toolbar }}>
           <div className={classes.header}>
-            <Typography variant="h6" noWrap onClick={toRoot}>
-              빠띠 믹스
+            {user_id !== null && (
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                className={classes.menuButton}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+            <Typography
+              variant="h6"
+              onClick={toRoot}
+              className={classes.logoFont}
+            >
+              Parti Mix
             </Typography>
             <Typography variant="h6" noWrap>
               {user_id === null ? <LoginModal /> : <LogoutButton />}

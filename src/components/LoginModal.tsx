@@ -47,8 +47,8 @@ export default function LoginModal() {
   }
   return (
     <>
-      <Button variant="contained" onClick={handleLogin}>
-        Login
+      <Button onClick={handleLogin}>
+        로그인
       </Button>
 
       <Modal
