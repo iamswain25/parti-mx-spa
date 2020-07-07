@@ -13,7 +13,7 @@ export default function SuggestionDetail() {
   const { data, error, loading } = useSubscription<SuggestionPost>(
     subs.subscribeSuggestion,
     {
-      variables: { id, user_id, isAnonymous: user_id === null },
+      variables: { id, user_id, isAnonymous: !user_id },
     }
   );
   useLoadingEffect(loading);

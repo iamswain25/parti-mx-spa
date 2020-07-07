@@ -22,13 +22,13 @@ export default function LoginPath() {
   }
   return (
     <>
-      {user_id === null ? (
-        <Button variant="contained" onClick={handleLogin}>
-          Login
-        </Button>
-      ) : (
+      {user_id ? (
         <Button variant="contained" onClick={handleLogout}>
           Logout
+        </Button>
+      ) : (
+        <Button variant="contained" onClick={handleLogin}>
+          Login
         </Button>
       )}
       <Modal

@@ -12,7 +12,7 @@ function authCheck(dispatch: React.Dispatch<Action>) {
     auth.onAuthStateChanged(function (user) {
       if (user) {
         return getUserId2(user).then((user_id) => {
-          if (user_id !== null) {
+          if (user_id) {
             if (didInit) {
               dispatch({ type: "SET_USER", user_id });
             }

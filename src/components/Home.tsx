@@ -11,7 +11,7 @@ import GroupLogoContainer from "./GroupLogoContainer";
 import useParseGroupId from "./useParseGroupId";
 const useStyles = makeStyles((theme) => {
   return {
-    root: {},
+    root: { marginTop: 26 },
   };
 });
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
   const classes = useStyles();
   const navigatePost = useNavigateToPost();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
-    variables: { group_id, user_id, isAnonymous: user_id === null },
+    variables: { group_id, user_id, isAnonymous: !user_id },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);

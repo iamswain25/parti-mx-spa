@@ -9,7 +9,7 @@ export default function useRedirectIfLogin() {
   const redirect = params.get("to");
   const history = useHistory();
   React.useEffect(() => {
-    if (user_id !== null && isInit) {
+    if (user_id && isInit) {
       console.log("leave!!!");
       if (redirect) {
         return history.push("/" + redirect);

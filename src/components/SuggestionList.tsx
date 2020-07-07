@@ -13,7 +13,7 @@ export default function SuggestionList() {
   const { data, error, loading = true } = useSubscription<BoardList>(
     subscribePostsByBoardId,
     {
-      variables: { id, user_id, isAnonymous: user_id === null },
+      variables: { id, user_id, isAnonymous: !user_id },
     }
   );
   React.useEffect(() => {
