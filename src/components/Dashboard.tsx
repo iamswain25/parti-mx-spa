@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    width: 24,
+    height: 24,
   },
   toolbar: {
     display: "flex",
@@ -139,7 +141,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar classes={{ regular: classes.toolbar }}>
           <div className={classes.header}>
-            {user_id && (
+            {user_id ? (
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -149,6 +151,8 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
               >
                 <MenuIcon />
               </IconButton>
+            ) : (
+              <div className={classes.menuButton} />
             )}
             <Typography
               variant="h6"
@@ -158,7 +162,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
               Parti Mix
             </Typography>
             <Typography variant="h6" noWrap>
-              {user_id ? <LoginModal /> : <LogoutButton />}
+              {user_id ? <LogoutButton /> : <LoginModal />}
             </Typography>
           </div>
         </Toolbar>

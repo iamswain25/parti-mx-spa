@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => {
       flexDirection: "column",
       justifyContent: "flex-end",
       padding: 19,
+      backgroundImage:
+        "linear-gradient(rgba(250, 252 ,251, 0.02), rgba(4, 97, 64, 0.98))",
+        // "linear-gradient(rgba(255, 255, 255, 0.0) 0%, rgba(250, 252 ,251, 0.02) 80%, rgba(4, 97, 64, 0.98) 90%, rgba(0, 95, 61,1) 100%)",
     },
     groupTitle: {
       fontFamily: "NotoSansCJKkr",
