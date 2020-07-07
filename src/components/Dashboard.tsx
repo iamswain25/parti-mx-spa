@@ -44,21 +44,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbar: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     minHeight: 56,
+    justifyContent: "center",
   },
   drawerPaper: {
     width: drawerWidth,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
   },
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
+    maxWidth: 1140,
   },
   logoFont: {
     fontFamily: "Lato",
@@ -107,14 +109,12 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       <div className={classes.toolbar}>version: 0.5.3</div>
       <Divider />
       <List>
-        {user_id !== null && (
-          <MyGroupList clickHandler={navigateGroupHandler} />
-        )}
+        {user_id && <MyGroupList clickHandler={navigateGroupHandler} />}
       </List>
     </div>
   );
 
-  const drawerContainer = user_id !== null && (
+  const drawerContainer = user_id && (
     <nav aria-label="mailbox folders">
       <Hidden smUp implementation="css">
         <Drawer
@@ -139,7 +139,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar classes={{ regular: classes.toolbar }}>
           <div className={classes.header}>
-            {user_id !== null && (
+            {user_id && (
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -158,7 +158,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
               Parti Mix
             </Typography>
             <Typography variant="h6" noWrap>
-              {user_id === null ? <LoginModal /> : <LogoutButton />}
+              {user_id ? <LoginModal /> : <LogoutButton />}
             </Typography>
           </div>
         </Toolbar>
