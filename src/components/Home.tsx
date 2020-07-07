@@ -7,17 +7,16 @@ import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
+import GroupLogoContainer from "./GroupLogoContainer";
+import useParseGroupId from "./useParseGroupId";
 const useStyles = makeStyles((theme) => {
   return {
-    root: {
-      "& img": {
-        height: 200,
-      },
-    },
+    root: {},
   };
 });
 export default function Home() {
   const [{ user_id, group_id = 34 }] = useStore();
+  useParseGroupId();
   const classes = useStyles();
   const navigatePost = useNavigateToPost();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
@@ -25,12 +24,11 @@ export default function Home() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const { boards = [], title, bg_img_url } = data?.mx_groups_by_pk ?? {};
+  const { boards = [] } = data?.mx_groups_by_pk ?? {};
 
   return (
     <div className={classes.root}>
-      <h1>{title}</h1>
-      <img src={bg_img_url} alt="group background" />
+      <GroupLogoContainer data={data} />
       <ul>
         {boards.map((b, i) => {
           return (

@@ -35,6 +35,7 @@ export interface HomeGroup {
     id: string;
     title: string;
     bg_img_url: string;
+    created_at: string;
     boards: Board[];
     users_aggregate?: {
       aggregate: {

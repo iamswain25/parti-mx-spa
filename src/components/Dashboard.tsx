@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: "#fff",
     color: "#00a270",
+    boxShadow: "none",
+    borderBottom: "1px solid #e0e0e0",
   },
   menuButton: {
     marginRight: theme.spacing(2),

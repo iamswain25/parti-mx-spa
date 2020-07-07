@@ -6,6 +6,12 @@ export const queryByGroupId = gql`
       id
       title
       bg_img_url
+      created_at
+      users_aggregate {
+        aggregate {
+          count
+        }
+      }
       boards(
         order_by: {
           last_posted_at: desc_nulls_last
