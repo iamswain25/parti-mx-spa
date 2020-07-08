@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { boards } from "./fragment";
 
 export const queryByGroupId = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
@@ -12,41 +13,17 @@ export const queryByGroupId = gql`
           count
         }
       }
-      boards(
-        order_by: {
-          last_posted_at: desc_nulls_last
-          updated_at: desc_nulls_last
-        }
-      ) {
-        id
-        title
-        body
-        permission
-        type
-        updated_at
-        last_posted_at
-        posts {
-          id
-          body
-          title
-          created_at
-          createdBy {
-            name
-            id
-          }
-          comments_aggregate {
-            aggregate {
-              count
-            }
-          }
-          users_aggregate {
-            aggregate {
-              sum {
-                like_count
-              }
-            }
-          }
-        }
+      notice: boards(where: { type: { _eq: "notice" } }) {
+        ...boards
+      }
+      suggestion: boards(where: { type: { _eq: "suggestion" } }) {
+        ...boards
+      }
+      vote: boards(where: { type: { _eq: "vote" } }) {
+        ...boards
+      }
+      event: boards(where: { type: { _eq: "event" } }) {
+        ...boards
       }
       users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
         status
@@ -54,6 +31,7 @@ export const queryByGroupId = gql`
       }
     }
   }
+  ${boards}
 `;
 
 export const searchDuplicateNameWithoutMine = gql`

@@ -112,3 +112,37 @@ export const postResult = gql`
     }
   }
 `;
+export const boards = gql`
+  fragment boards on mx_boards {
+    id
+    title
+    body
+    permission
+    type
+    updated_at
+    last_posted_at
+    posts(limit: 4, order_by: { created_at: desc_nulls_last }) {
+      id
+      body
+      title
+      created_at
+      createdBy {
+        name
+        id
+      }
+      images
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+      users_aggregate {
+        aggregate {
+          sum {
+            like_count
+          }
+        }
+      }
+    }
+  }
+`;

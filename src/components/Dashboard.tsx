@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    marginLeft: 0,
     width: 24,
     height: 24,
   },
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     // justifyContent: "flex-end",
     minHeight: 56,
     justifyContent: "center",
+    paddingLeft: 49,
+    paddingRight: 49,
   },
   drawerPaper: {
     width: drawerWidth,
@@ -62,7 +65,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    maxWidth: 1140,
+    maxWidth: 1200,
+    // marginLeft: 30,
+    // marginRight: 30,
   },
   logoFont: {
     fontFamily: "Lato",
