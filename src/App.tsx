@@ -97,6 +97,11 @@ const theme: Theme = createMuiTheme({
       variantMapping: {
         body1: "div",
         body2: "div",
+        // h1: "div",
+        // h2: "div",
+        // h3: "div",
+        // h4: "div",
+        // h5: "div",
         h6: "div",
       },
     },
@@ -163,6 +168,15 @@ const theme: Theme = createMuiTheme({
     subtitle2: {
       fontSize: 11,
       color: grey[600],
+      display: "flex",
+      flexWrap: "wrap",
+      wordBreak: "break-all",
+    },
+    button: {
+      fontSize: 14,
+      fontWeight: 500,
+      letterSpacing: 0.2,
+      color: "#fff",
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",

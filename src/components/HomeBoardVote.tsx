@@ -3,10 +3,12 @@ import React from "react";
 // import useNavigateToPost from "./useNavigateToPost";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import IconButton from "@material-ui/core/IconButton";
 import { grey } from "@material-ui/core/colors";
 import BoardPostVote from "./BoardPostVote";
-import { Typography, Grid, Box } from "@material-ui/core";
+import { Typography, Grid, Box, Button } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 const useStyles = makeStyles((theme) => {
@@ -36,6 +38,18 @@ const useStyles = makeStyles((theme) => {
       height: 57,
     },
     postContainer: { backgroundColor: grey[100] },
+    icon: {
+      width: 9,
+      height: 14,
+    },
+    btnLeft: {
+      position: "absolute",
+      left: 8,
+    },
+    btnRight: {
+      position: "absolute",
+      right: 8,
+    },
   };
 });
 const responsive = {
@@ -48,6 +62,34 @@ const responsive = {
     items: 1,
   },
 };
+function CustomLeftArrow(props: any) {
+  const classes = useStyles();
+  const {
+    onClick,
+    onMove,
+    carouselState: { currentSlide, deviceType },
+  } = props;
+
+  return (
+    <IconButton onClick={() => onClick()} className={classes.btnLeft}>
+      <ChevronLeftIcon color="primary" className={classes.icon} />
+    </IconButton>
+  );
+}
+function CustomRightArrow(props: any) {
+  const classes = useStyles();
+  const {
+    onClick,
+    onMove,
+    carouselState: { currentSlide, deviceType },
+  } = props;
+
+  return (
+    <IconButton onClick={() => onClick()} className={classes.btnRight}>
+      <ChevronRightIcon color="primary" className={classes.icon} />
+    </IconButton>
+  );
+}
 export default function HomeBoardVote({ board: b }: { board: Board }) {
   //   const [{ user_id }] = useStore();
   const classes = useStyles();
@@ -74,6 +116,8 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
         <Carousel
           responsive={responsive}
           showDots={true}
+          customRightArrow={<CustomRightArrow />}
+          customLeftArrow={<CustomLeftArrow />}
           dotListClass="custom-dot-list-style"
         >
           {b.posts.map((p, i) => (
