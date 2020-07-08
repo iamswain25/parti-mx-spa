@@ -9,20 +9,28 @@ import useErrorEffect from "./useErrorEffect";
 import GroupLogoContainer from "./GroupLogoContainer";
 import useParseGroupId from "./useParseGroupId";
 import HomeBoardNotice from "./HomeBoardNotice";
+import HomeBoardSuggestion from "./HomeBoardSuggestion";
+import HomeBoardVote from "./HomeBoardVote";
 const useStyles = makeStyles((theme) => {
   return {
     root: { marginTop: 26 },
     grid: {
-      display: "grid",
-      gridTemplateColumns: "2fr 1fr",
-      columnGap: 48,
+      display: "flex",
+      // display: "grid",
+      // gridTemplateColumns: "2fr 1fr",
+      // columnGap: 48,
       marginTop: 24,
     },
+    left: {
+      marginRight: 24,
+      width: "calc(66% - 24px)",
+    },
+    right: { marginLeft: 24, width: "calc(34% - 24px)" },
   };
 });
 
 export default function Home() {
-  const [{ user_id, group_id = 34 }] = useStore();
+  const [{ user_id, group_id }] = useStore();
   useParseGroupId();
   const classes = useStyles();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
@@ -35,20 +43,20 @@ export default function Home() {
     <div className={classes.root}>
       <GroupLogoContainer data={data} />
       <section className={classes.grid}>
-        <ul>
+        <ul className={classes.left}>
           {notice?.map((b: Board, i: number) => (
             <HomeBoardNotice key={i} board={b} />
           ))}
           {suggestion?.map((b: Board, i: number) => (
-            <HomeBoardNotice key={i} board={b} />
+            <HomeBoardSuggestion key={i} board={b} />
           ))}
         </ul>
-        <ul>
+        <ul className={classes.right}>
           {vote?.map((b: Board, i: number) => (
-            <HomeBoardNotice key={i} board={b} />
+            <HomeBoardVote key={i} board={b} />
           ))}
           {event?.map((b: Board, i: number) => (
-            <HomeBoardNotice key={i} board={b} />
+            <HomeBoardVote key={i} board={b} />
           ))}
         </ul>
       </section>

@@ -8,6 +8,8 @@ import { WebSocketLink } from "@apollo/link-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { setContext } from "@apollo/link-context";
 import { IdTokenResult, auth } from "./config/firebase";
+import { Theme, ThemeProvider, createMuiTheme } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 const HASURA_DOMAIN = `api.parti.mx/v1/graphql`;
 
 const wsLink = new WebSocketLink({
@@ -86,12 +88,96 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(splitLink),
 });
+const theme: Theme = createMuiTheme({
+  palette: {
+    primary: { main: "#00a270", dark: "#009062" },
+  },
+  props: {
+    MuiTypography: {
+      variantMapping: {
+        body1: "div",
+        body2: "div",
+        h6: "div",
+      },
+    },
+  },
+  typography: {
+    fontFamily: "NotoSansCJKkr",
+    h1: {
+      fontSize: 34,
+      letterSpacing: -1.8,
+      color: "rgba(255, 255, 255, 0.87)",
+    },
+    h2: {
+      fontSize: 20,
+      fontWeight: 500,
+      letterSpacing: -0.75,
+      textAlign: "center",
+      color: "rgba(0, 0, 0, 0.87)",
+    },
+    h3: {
+      //제목
+      fontSize: 18,
+      letterSpacing: -0.5,
+      color: "rgba(0, 0, 0, 0.87)",
+    },
+    h4: {
+      fontSize: 16,
+      fontWeight: 500,
+      letterSpacing: -0.6,
+      color: "rgba(0, 0, 0, 0.87)",
+    },
+    h5: {
+      fontSize: 14,
+      fontWeight: 500,
+      color: "#009062",
+      letterSpacing: -0.3,
+    },
+    h6: {
+      fontSize: 12,
+      color: grey[600],
+    },
+    body1: {
+      fontSize: 14,
+      letterSpacing: -0.3,
+      color: grey[600],
+      display: "flex",
+      flexWrap: "wrap",
+      wordBreak: "break-all",
+    },
+    body2: {
+      fontSize: 11,
+      color: grey[600],
+      display: "flex",
+      flexWrap: "wrap",
+      wordBreak: "break-all",
+    },
+    subtitle1: {
+      fontSize: 14,
+      letterSpacing: -0.38,
+      color: grey[600],
+      display: "flex",
+      flexWrap: "wrap",
+      wordBreak: "break-all",
+    },
+    subtitle2: {
+      fontSize: 11,
+      color: grey[600],
+      display: "flex",
+      flexWrap: "wrap",
+      wordBreak: "break-all",
+    },
+  },
+});
+
 export default function App() {
   return (
-    <ApolloProvider client={client}>
-      <StoreProvider>
-        <Routes />
-      </StoreProvider>
-    </ApolloProvider>
+    <ThemeProvider theme={theme}>
+      <ApolloProvider client={client}>
+        <StoreProvider>
+          <Routes />
+        </StoreProvider>
+      </ApolloProvider>
+    </ThemeProvider>
   );
 }

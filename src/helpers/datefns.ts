@@ -6,13 +6,13 @@ import {
   formatDistanceToNow,
 } from "date-fns";
 import { ko } from "date-fns/locale";
-export function calculateDays(date: string) {
+export function calculateDays(date: string, days = 30) {
   // const time = (_ => _.setDate(_.getDate() + 30))(new Date(date));
   // const timeDiff = new Date().getTime() - time;
   // const daysDiff = timeDiff / 1000 / 60 / 60 / 24;
   // const daysDiffCeil = Math.ceil(daysDiff);
   // return daysDiffCeil;
-  return differenceInDays(new Date(), addDays(new Date(date), 30));
+  return differenceInDays(new Date(), addDays(new Date(date), days));
 }
 export function minutesDiff(date: string) {
   const time = new Date(date).getTime();

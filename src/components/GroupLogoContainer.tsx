@@ -9,6 +9,7 @@ import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return {
     groupLogoContainer: {
@@ -32,13 +33,6 @@ const useStyles = makeStyles((theme) => {
       padding: 19,
       backgroundImage:
         "linear-gradient(rgba(250, 252 ,251, 0.02), rgba(4, 97, 64, 0.98))",
-        // "linear-gradient(rgba(255, 255, 255, 0.0) 0%, rgba(250, 252 ,251, 0.02) 80%, rgba(4, 97, 64, 0.98) 90%, rgba(0, 95, 61,1) 100%)",
-    },
-    groupTitle: {
-      fontFamily: "NotoSansCJKkr",
-      fontSize: 34,
-      letterSpacing: -1.8,
-      color: "rgba(255, 255, 255, 0.87)",
     },
     groupInfo: {
       display: "flex",
@@ -49,6 +43,7 @@ const useStyles = makeStyles((theme) => {
       letterSpacing: 0,
       color: "#ffffff",
       alignItems: "center",
+      marginTop: 24,
     },
     padding16: {
       paddingLeft: 8,
@@ -104,7 +99,7 @@ export default function GroupLogoContainer(props: { data?: HomeGroup }) {
         className={classes.groupLogoImg}
       />
       <div className={classes.groupLogoOverlay}>
-        <h1 className={classes.groupTitle}>{title}</h1>
+        <Typography variant="h1">{title}</Typography>
         <div className={classes.groupInfo}>
           <div className={classes.paddingLeft16}>
             개설 {semanticDate(created_at)}
