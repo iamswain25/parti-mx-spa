@@ -84,6 +84,22 @@ export function getEventDate(date: string) {
     return error.message;
   }
 }
+export function getEventDate2(date: string) {
+  try {
+    const newDate = new Date(date);
+    return format(newDate, "MM/dd(eee) aaa HH:mm", { locale: ko });
+  } catch (error) {
+    return error.message;
+  }
+}
+export function getEventDate3(date: string) {
+  try {
+    const newDate = new Date(date);
+    return format(newDate, "MM/dd(eee)", { locale: ko });
+  } catch (error) {
+    return error.message;
+  }
+}
 export function getUnix(date: Date) {
   return Math.round(date.getTime() / 1000);
 }

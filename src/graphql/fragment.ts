@@ -125,6 +125,7 @@ export const boards = gql`
       id
       body
       title
+      metadata
       created_at
       createdBy {
         name

@@ -11,14 +11,12 @@ import useParseGroupId from "./useParseGroupId";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
+import HomeBoardEvent from "./HomeBoardEvent";
 const useStyles = makeStyles((theme) => {
   return {
-    root: { marginTop: 26 },
+    root: { [theme.breakpoints.up("md")]: { marginTop: 26 } },
     grid: {
       display: "flex",
-      // display: "grid",
-      // gridTemplateColumns: "2fr 1fr",
-      // columnGap: 48,
       marginTop: 24,
     },
     left: {
@@ -56,7 +54,7 @@ export default function Home() {
             <HomeBoardVote key={i} board={b} />
           ))}
           {event?.map((b: Board, i: number) => (
-            <HomeBoardVote key={i} board={b} />
+            <HomeBoardEvent key={i} board={b} />
           ))}
         </ul>
       </section>

@@ -26,14 +26,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
   },
   drawer: {
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
       width: drawerWidth,
       flexShrink: 0,
     },
   },
   appBar: {
+    [theme.breakpoints.up("md")]: {
+      backgroundColor: "#fff",
+    },
+    [theme.breakpoints.down("md")]: {
+      backgroundColor: "transparent",
+    },
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: "#fff",
     color: "#00a270",
     boxShadow: "none",
     borderBottom: "1px solid #e0e0e0",
@@ -47,18 +52,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbar: {
     display: "flex",
     alignItems: "center",
-    // justifyContent: "flex-end",
-    minHeight: 56,
+    [theme.breakpoints.up("md")]: {
+      minHeight: 56,
+    },
     justifyContent: "center",
     paddingLeft: 49,
     paddingRight: 49,
   },
-  drawerPaper: {
-    width: drawerWidth,
-  },
   content: {
     flexGrow: 1,
-    // padding: theme.spacing(3),
   },
   header: {
     display: "flex",
@@ -66,8 +68,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     width: "100%",
     maxWidth: 1200,
-    // marginLeft: 30,
-    // marginRight: 30,
   },
   logoFont: {
     fontFamily: "Lato",
@@ -123,7 +123,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
 
   const drawerContainer = user_id && (
     <nav aria-label="mailbox folders">
-      <Hidden smUp implementation="css">
+      <Hidden mdUp implementation="css">
         <Drawer
           container={container}
           variant="temporary"

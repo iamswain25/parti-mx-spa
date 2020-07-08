@@ -4,7 +4,6 @@ import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Button } from "@material-ui/core";
-import BoardPostSub2 from "./BoardPostSub2";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { calculateDays } from "../helpers/datefns";
 const useStyles = makeStyles((theme) => {
@@ -25,35 +24,20 @@ const useStyles = makeStyles((theme) => {
       borderColor: "rgba(255, 255, 255, 0.12)",
       boxShadow: theme.shadows[1],
     },
-    title: {
-      height: 24,
-    },
+
     titleContainer: {
       display: "flex",
       overflow: "hidden",
-      maxHeight: 48,
-      marginBottom: 8,
+      maxHeight: 84,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
       justifyContent: "center",
     },
     body: {
-      marginBottom: 8,
+      marginBottom: theme.spacing(1),
       overflow: "hidden",
     },
-    flexrowleft: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    label: {
-      height: 16,
-      display: "flex",
-      flexDirection: "row",
-      overflow: "hidden",
-      alignItems: "center",
-    },
-    margin: {
-      marginRight: 8,
-    },
+
     icon: {
       width: 15,
       height: 17,
@@ -73,9 +57,7 @@ export default function BoardPostVote({ post: p }: { post: Post }) {
         <Typography variant="h5">{daysLeft}일 남음</Typography>
       </Grid>
       <div className={classes.titleContainer}>
-        <Typography variant="h2" className={classes.title}>
-          {p.title}
-        </Typography>
+        <Typography variant="h2">{p.title}</Typography>
       </div>
       <Typography variant="subtitle1" className={classes.body}>
         참여자 {p.users_aggregate.aggregate.sum.like_count}명
