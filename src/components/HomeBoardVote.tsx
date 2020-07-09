@@ -131,7 +131,11 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
           <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
             <Box ml={isDesktop ? 2 : 0}>{b.title}</Box>
           </Typography>
-          {isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+          {isDesktop && (
+            <Box mr={1}>
+              <BoardMoreTag to={`/home/${b.id}`} />
+            </Box>
+          )}
         </Grid>
         <div className={classes.postContainer}>
           <Carousel

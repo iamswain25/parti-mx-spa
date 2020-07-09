@@ -22,12 +22,14 @@ const useStyles = makeStyles((theme) => {
           borderBottomStyle: "solid",
         },
       },
-      "&.ontop a": {
-        color: "rgba(255, 255, 255, 0.6)",
+      "&.ontop": {
         backgroundColor: theme.palette.primary.main,
-        "&.active": {
-          color: theme.palette.background.paper,
-          borderBottomColor: theme.palette.background.paper,
+        "& a": {
+          color: "rgba(255, 255, 255, 0.6)",
+          "&.active": {
+            color: theme.palette.background.paper,
+            borderBottomColor: theme.palette.background.paper,
+          },
         },
       },
     },
