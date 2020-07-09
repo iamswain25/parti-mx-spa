@@ -1,11 +1,11 @@
 import React from "react";
-// import { useStore } from "../store/store";
 import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import { Typography, useMediaQuery } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -62,8 +62,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostNotice({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [isDesktop] = useDesktop();
   const navigatePost = useNavigateToPost();
   const firstImage = p.images?.[0].uri;
   return (

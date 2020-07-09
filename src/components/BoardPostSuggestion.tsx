@@ -1,12 +1,12 @@
 import React from "react";
 import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import PanToolIcon from "@material-ui/icons/PanTool";
-import { Typography, Grid, Box, useMediaQuery } from "@material-ui/core";
+import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
-import { borders } from "@material-ui/system";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -55,8 +55,7 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost();
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [isDesktop] = useDesktop();
   return (
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
       <Box mb={1}>

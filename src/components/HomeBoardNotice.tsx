@@ -1,14 +1,12 @@
 import React from "react";
-// import { useStore } from "../store/store";
-// import useNavigateToPost from "./useNavigateToPost";
 import { Board } from "../types";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
 import { Typography, Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -29,8 +27,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function HomeBoardNotice({ board: b }: { board: Board }) {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [isDesktop] = useDesktop();
   const classes = useStyles();
 
   return (

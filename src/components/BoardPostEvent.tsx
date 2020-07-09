@@ -61,7 +61,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     deadline = getEventDate3(p.metadata.deadline);
   }
   const firstImage = p.images?.[0].uri;
-  const isDesktop = useDesktop();
+  const [isDesktop] = useDesktop();
   return (
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
       <Box mb={1}>

@@ -1,15 +1,17 @@
 import React from "react";
 import { Board } from "../types";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import IconButton from "@material-ui/core/IconButton";
 import { grey } from "@material-ui/core/colors";
 import BoardPostVote from "./BoardPostVote";
-import { Typography, Grid, Box, useMediaQuery } from "@material-ui/core";
+import { Typography, Grid, Box } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import GreyDivider from "./GreyDivider";
+import useDesktop from "./useDesktop";
+import BoardMoreTag from "./BoardMoreTag";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -90,17 +92,9 @@ function CustomRightArrow(props: any) {
     </IconButton>
   );
 }
-const moreTag = (
-  <Typography variant="body2">
-    더 보기
-    <Box mr={1}>
-      <ChevronRightIcon style={{ color: grey[600], fontSize: 16 }} />
-    </Box>
-  </Typography>
-);
+
 export default function HomeBoardVote({ board: b }: { board: Board }) {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [isDesktop, theme] = useDesktop();
   const classes = useStyles();
   const responsive = {
     desktop: {
@@ -137,7 +131,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
           <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
             <Box ml={isDesktop ? 2 : 0}>{b.title}</Box>
           </Typography>
-          {isDesktop && moreTag}
+          {isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
         </Grid>
         <div className={classes.postContainer}>
           <Carousel
@@ -155,7 +149,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
             ))}
           </Carousel>
         </div>
-        {!isDesktop && <div className={classes.flexrowcenter}>{moreTag}</div>}
+        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

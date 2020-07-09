@@ -1,11 +1,12 @@
 import React from "react";
 import { Board } from "../types";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import BoardPostSuggestion from "./BoardPostSuggestion";
-import { Typography, Grid, useMediaQuery } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -36,8 +37,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [isDesktop] = useDesktop();
   return (
     <>
       <section className={classes.container}>

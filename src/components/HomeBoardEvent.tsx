@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function HomeBoardEvent({ board: b }: { board: Board }) {
   const classes = useStyles();
-  const isDesktop = useDesktop();
+  const [isDesktop] = useDesktop();
   return (
     <>
       <section className={classes.container}>

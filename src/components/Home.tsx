@@ -3,7 +3,7 @@ import { useStore } from "../store/store";
 import { queryByGroupId } from "../graphql/query";
 import { HomeGroup, Board } from "../types";
 import { useQuery } from "@apollo/client";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import GroupLogoContainer from "./GroupLogoContainer";
@@ -14,7 +14,7 @@ import HomeBoardVote from "./HomeBoardVote";
 import HomeBoardEvent from "./HomeBoardEvent";
 import BoardTabNavigator from "./BoardTabNavigator";
 import GreyDivider from "./GreyDivider";
-import { useMediaQuery } from "@material-ui/core";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     root: { [theme.breakpoints.up("md")]: { marginTop: 26 } },
@@ -52,8 +52,7 @@ export default function Home() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [isDesktop] = useDesktop();
   const { notice, suggestion, vote, event } = data?.mx_groups_by_pk ?? {};
   return (
     <div className={classes.root}>
