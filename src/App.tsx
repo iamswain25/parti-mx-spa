@@ -88,9 +88,21 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(splitLink),
 });
+const DRAWER_MIN_HEIGHT = 56;
 const theme: Theme = createMuiTheme({
   palette: {
     primary: { main: "#00a270", dark: "#009062" },
+  },
+  mixins: {
+    toolbar: {
+      minHeight: DRAWER_MIN_HEIGHT,
+      "@media (min-width: 600px)": {
+        minHeight: DRAWER_MIN_HEIGHT,
+      },
+      "@media (min-width:0px) and (orientation: landscape)": {
+        minHeight: DRAWER_MIN_HEIGHT,
+      },
+    },
   },
   props: {
     MuiTypography: {

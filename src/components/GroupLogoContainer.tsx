@@ -13,7 +13,12 @@ import { Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return {
     groupLogoContainer: {
-      height: 260,
+      [theme.breakpoints.up("md")]: {
+        height: 260,
+      },
+      [theme.breakpoints.down("sm")]: {
+        height: 180,
+      },
       width: "100%",
       position: "relative",
     },

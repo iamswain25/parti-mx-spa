@@ -13,35 +13,40 @@ import { useHistory } from "react-router-dom";
 import MyGroupList from "./MyGroupList";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import LoginModal from "./LoginModal";
-
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useStore } from "../store/store";
 import SnackbarCustom from "./SnackbarCustom";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import LogoutButton from "./LogoutButton";
+import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 
-const drawerWidth = 240;
+const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    display: "flex",
+    display: "block",
   },
   drawer: {
     [theme.breakpoints.up("md")]: {
-      width: drawerWidth,
+      width: DRAWER_WIDTH,
       flexShrink: 0,
     },
   },
   appBar: {
     [theme.breakpoints.up("md")]: {
       backgroundColor: "#fff",
+      borderBottom: "1px solid #e0e0e0",
+      color: theme.palette.primary.main,
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
+      "&.hide": {
+        visibility: "hidden",
+      },
       backgroundColor: "transparent",
+      color: "#fff",
     },
     zIndex: theme.zIndex.drawer + 1,
-    color: "#00a270",
     boxShadow: "none",
-    borderBottom: "1px solid #e0e0e0",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -53,11 +58,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     [theme.breakpoints.up("md")]: {
-      minHeight: 56,
+      minHeight: theme.mixins.toolbar.minHeight,
+      paddingLeft: 49,
+      paddingRight: 49,
+    },
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: 19,
+      paddingRight: 19,
     },
     justifyContent: "center",
-    paddingLeft: 49,
-    paddingRight: 49,
   },
   content: {
     flexGrow: 1,
@@ -76,7 +85,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontStyle: "normal",
     letterSpacing: 0,
     textAlign: "center",
-    color: "#00a270",
+    color: theme.palette.primary.main,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -95,8 +107,9 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const classes = useStyles();
   const theme = useTheme();
+  // const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const history = useHistory();
-
+  const [hideOnScroll, setHideOnScroll] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -111,14 +124,14 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
     history.push("/");
   }
 
-  const drawer = (
-    <div>
-      <div className={classes.toolbar}>version: 0.5.3</div>
-      <Divider />
-      <List>
-        {user_id && <MyGroupList clickHandler={navigateGroupHandler} />}
-      </List>
-    </div>
+  useScrollPosition(
+    ({ prevPos, currPos }) => {
+      const isShow = currPos.y > 180 - 56;
+      if (isShow !== hideOnScroll) setHideOnScroll(isShow);
+    },
+    [hideOnScroll],
+    undefined,
+    true
   );
 
   const drawerContainer = user_id && (
@@ -134,7 +147,11 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
             keepMounted: true,
           }}
         >
-          {drawer}
+          <div className={classes.toolbar}>version: 0.5.3</div>
+          <Divider />
+          <List>
+            {user_id && <MyGroupList clickHandler={navigateGroupHandler} />}
+          </List>
         </Drawer>
       </Hidden>
     </nav>
@@ -143,7 +160,10 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar
+        position="fixed"
+        className={`${classes.appBar} ${hideOnScroll ? "hide" : ""}`}
+      >
         <Toolbar classes={{ regular: classes.toolbar }}>
           <div className={classes.header}>
             {user_id ? (
@@ -171,8 +191,8 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
             </Typography>
           </div>
         </Toolbar>
+        {drawerContainer}
       </AppBar>
-      {drawerContainer}
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
