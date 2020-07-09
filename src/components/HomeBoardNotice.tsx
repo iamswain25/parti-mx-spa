@@ -3,13 +3,11 @@ import React from "react";
 // import useNavigateToPost from "./useNavigateToPost";
 import { Board } from "../types";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
 import { Typography, Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import GreyDivider from "./GreyDivider";
-import { Link } from "react-router-dom";
 import BoardMoreTag from "./BoardMoreTag";
 const useStyles = makeStyles((theme) => {
   return {

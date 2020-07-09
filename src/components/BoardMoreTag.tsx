@@ -8,11 +8,10 @@ const useStyles = makeStyles((theme) => {
   return {
     link: {
       textDecoration: "none",
-      [theme.breakpoints.up("md")]: {},
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
       [theme.breakpoints.down("sm")]: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
         justifyContent: "center",
         padding: theme.spacing(2),
       },

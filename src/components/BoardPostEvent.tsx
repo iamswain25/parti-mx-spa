@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => {
       border: `1px solid ${grey[200]}`,
       padding: theme.spacing(2),
       borderRadius: 4,
-      backgroundColor: "#ffffff",
+      backgroundColor: theme.palette.background.paper,
       borderStyle: "solid",
       borderWidth: 1,
-      borderColor: "rgba(255, 255, 255, 0.12)",
+      borderColor: theme.palette.divider,
       boxShadow: theme.shadows[1],
     },
     titleContainer: {
@@ -64,14 +64,16 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const isDesktop = useDesktop();
   return (
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
-      <Box borderColor="text.primary" borderBottom={1} pb={1} mb={1}>
+      <Box mb={1}>
         <Grid container direction="row" alignItems="center">
           <div className={classes.imgContainer}>
             {firstImage ? <img src={firstImage} alt="event" /> : <EventIcon />}
           </div>
           <Box>
             <Box mb={1} className={classes.titleContainer}>
-              <Typography variant={"h4"} color="textPrimary">{p.title}</Typography>
+              <Typography variant={"h4"} color="textPrimary">
+                {p.title}
+              </Typography>
             </Box>
             <Typography variant={isDesktop ? "subtitle2" : "h6"}>
               {eventDate}
@@ -79,23 +81,25 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
           </Box>
         </Grid>
       </Box>
-      <Typography variant="h6">
-        <Grid container alignItems="center">
-          <HowToRegIcon />
-          <Box mr={1}>
-            {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
-            {countPeople}명 모집
-          </Box>
-        </Grid>
-        <Grid container alignItems="center">
-          <EventIcon />
-          <Box mr={1}>{deadline} 모집마감</Box>
-        </Grid>
-        <Grid container alignItems="center">
-          <PlaceIcon />
-          <Box mr={1}>{place}</Box>
-        </Grid>
-      </Typography>
+      <Box borderTop={1} borderColor="grey.200" pt={1}>
+        <Typography variant="h6">
+          <Grid container alignItems="center">
+            <HowToRegIcon />
+            <Box mr={1}>
+              {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
+              {countPeople}명 모집
+            </Box>
+          </Grid>
+          <Grid container alignItems="center">
+            <EventIcon />
+            <Box mr={1}>{deadline} 모집마감</Box>
+          </Grid>
+          <Grid container alignItems="center">
+            <PlaceIcon />
+            <Box mr={1}>{place}</Box>
+          </Grid>
+        </Typography>
+      </Box>
     </div>
   );
 }

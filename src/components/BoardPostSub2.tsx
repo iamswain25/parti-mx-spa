@@ -2,7 +2,6 @@ import React from "react";
 import { Post } from "../types";
 import { semanticDate } from "../helpers/datefns";
 import { Typography, Box } from "@material-ui/core";
-const margin = { mr: 1 };
 export default function BoardPostSub2({ post: p }: { post: Post }) {
   return (
     <Typography variant="subtitle2">

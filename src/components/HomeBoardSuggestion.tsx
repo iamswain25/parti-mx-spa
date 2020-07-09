@@ -1,7 +1,6 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { grey } from "@material-ui/core/colors";
 import BoardPostSuggestion from "./BoardPostSuggestion";
 import { Typography, Grid, useMediaQuery } from "@material-ui/core";
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme) => {
       borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
-      [theme.breakpoints.up("md")]: {},
+      
     },
     postContainer: {
       [theme.breakpoints.up("md")]: {
@@ -34,14 +33,7 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-const moreTag = (
-  <span>
-    <Grid direction="row" container>
-      <Typography variant={"body2"}>더 보기</Typography>
-      <ChevronRightIcon style={{ color: grey[600], fontSize: 16 }} />
-    </Grid>
-  </span>
-);
+
 export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const theme = useTheme();
