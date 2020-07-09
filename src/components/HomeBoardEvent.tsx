@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.down("sm")]: {
         marginLeft: theme.spacing(2),
       },
+      backgroundColor: theme.palette.background.default,
     },
     titleContainer: {
       paddingTop: theme.spacing(2),
@@ -25,10 +26,15 @@ const useStyles = makeStyles((theme) => {
     },
     postContainer: {
       overflow: "hidden",
-      backgroundColor: grey[100],
-      padding: theme.spacing(2),
+
       display: "grid",
       gridGap: theme.spacing(1.5),
+      [theme.breakpoints.up("md")]: {
+        padding: theme.spacing(2),
+      },
+      [theme.breakpoints.down("sm")]: {
+        paddingRight: theme.spacing(2),
+      },
     },
   };
 });

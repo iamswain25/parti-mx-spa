@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
       flexDirection: "column",
       border: `1px solid ${grey[200]}`,
       padding: theme.spacing(2),
-      borderRadius: 4,
+      borderRadius: theme.shape.borderRadius,
       backgroundColor: theme.palette.background.paper,
       borderStyle: "solid",
       borderWidth: 1,

@@ -6,6 +6,7 @@ import { grey } from "@material-ui/core/colors";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import { Typography, Grid, Box, useMediaQuery } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
+import { borders } from "@material-ui/system";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles((theme) => {
       },
       [theme.breakpoints.down("sm")]: {
         borderBottom: `1px solid ${grey[200]}`,
+        paddingLeft: 0,
       },
       padding: theme.spacing(2),
     },
