@@ -81,18 +81,18 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
         <Typography variant="h6">
           <Grid container alignItems="center">
             <HowToRegIcon />
-            <Box css={marginRight8}>
+            <Box mr={1}>
               {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
               {countPeople}명 모집
             </Box>
           </Grid>
           <Grid container alignItems="center">
             <EventIcon />
-            <Box css={marginRight8}>{deadline} 모집마감</Box>
+            <Box mr={1}>{deadline} 모집마감</Box>
           </Grid>
           <Grid container alignItems="center">
             <PlaceIcon />
-            <Box css={marginRight8}>{place}</Box>
+            <Box mr={1}>{place}</Box>
           </Grid>
         </Typography>
       </Grid>

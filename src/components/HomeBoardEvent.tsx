@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function HomeBoardEvent({ board: b }: { board: Board }) {
-  //   const [{ user_id }] = useStore();
   const classes = useStyles();
   return (
     <section className={classes.container}>
@@ -37,11 +36,11 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
         className={classes.titleContainer}
       >
         <Typography variant="h2">
-          <Box css={{ ml: 2 }}>{b.title}</Box>
+          <Box ml={2}>{b.title}</Box>
         </Typography>
         <Typography variant="body2">
           더 보기
-          <Box css={{ mr: 1 }}>
+          <Box mr={1}>
             <ChevronRightIcon style={{ color: grey[600], fontSize: 16 }} />
           </Box>
         </Typography>

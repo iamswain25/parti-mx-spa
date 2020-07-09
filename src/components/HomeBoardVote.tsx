@@ -93,7 +93,7 @@ function CustomRightArrow(props: any) {
 const moreTag = (
   <Typography variant="body2">
     더 보기
-    <Box css={{ mr: 1 }}>
+    <Box mr={1}>
       <ChevronRightIcon style={{ color: grey[600], fontSize: 16 }} />
     </Box>
   </Typography>
@@ -135,7 +135,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
           className={classes.titleContainer}
         >
           <Typography variant={isDesktop ? "h2" : "h3"}>
-            <Box css={isDesktop ? { ml: 2 } : undefined}>{b.title}</Box>
+            <Box ml={isDesktop ? 2 : 0}>{b.title}</Box>
           </Typography>
           {isDesktop && moreTag}
         </Grid>
