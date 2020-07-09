@@ -104,7 +104,9 @@ export default function GroupLogoContainer(props: { data?: HomeGroup }) {
         className={classes.groupLogoImg}
       />
       <div className={classes.groupLogoOverlay}>
-        <Typography variant="h1">{title}</Typography>
+        <Typography variant="h1" color="textPrimary">
+          {title}
+        </Typography>
         <div className={classes.groupInfo}>
           <div className={classes.paddingLeft16}>
             개설 {semanticDate(created_at)}

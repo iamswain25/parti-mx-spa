@@ -66,7 +66,7 @@ export default function BoardPostVote({ post: p }: { post: Post }) {
         <Typography variant="h5">{daysLeft}일 남음</Typography>
       </Grid>
       <div className={classes.titleContainer}>
-        <Typography variant="h2">{p.title}</Typography>
+        <Typography variant="h2" color="textPrimary">{p.title}</Typography>
       </div>
       <Typography variant="subtitle1" className={classes.body}>
         참여자 {p.users_aggregate.aggregate.sum.like_count}명

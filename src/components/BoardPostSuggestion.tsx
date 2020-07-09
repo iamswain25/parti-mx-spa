@@ -68,7 +68,11 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
         </Grid>
       </Box>
       <div className={classes.titleContainer}>
-        <Typography variant={isDesktop ? "h3" : "h5"} className={classes.title}>
+        <Typography
+          variant={isDesktop ? "h3" : "h5"}
+          className={classes.title}
+          color="textPrimary"
+        >
           {p.title}
         </Typography>
       </div>

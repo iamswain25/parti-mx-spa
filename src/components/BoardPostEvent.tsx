@@ -8,12 +8,12 @@ import EventIcon from "@material-ui/icons/Event";
 import { getEventDate2, getEventDate3 } from "../helpers/datefns";
 import HowToRegIcon from "@material-ui/icons/HowToReg";
 import PlaceIcon from "@material-ui/icons/Place";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       display: "flex",
       flexDirection: "column",
-      alignItems: "center",
       border: `1px solid ${grey[200]}`,
       padding: theme.spacing(2),
       borderRadius: 4,
@@ -24,11 +24,8 @@ const useStyles = makeStyles((theme) => {
       boxShadow: theme.shadows[1],
     },
     titleContainer: {
-      display: "flex",
       overflow: "hidden",
       maxHeight: 44,
-      marginBottom: 8,
-      justifyContent: "center",
     },
     imgContainer: {
       maxWidth: 76,
@@ -50,7 +47,6 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-const marginRight8 = { mr: 1 };
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost();
@@ -65,37 +61,41 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     deadline = getEventDate3(p.metadata.deadline);
   }
   const firstImage = p.images?.[0].uri;
-
+  const isDesktop = useDesktop();
   return (
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
-      <Grid container direction="row">
-        <div className={classes.imgContainer}>
-          {firstImage ? <img src={firstImage} alt="event" /> : <EventIcon />}
-        </div>
-        <Grid>
-          <Box className={classes.titleContainer}>
-            <Typography variant="h4">{p.title}</Typography>
-          </Box>
-          <Typography variant="subtitle2">{eventDate}</Typography>
-        </Grid>
-        <Typography variant="h6">
-          <Grid container alignItems="center">
-            <HowToRegIcon />
-            <Box mr={1}>
-              {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
-              {countPeople}명 모집
+      <Box borderColor="text.primary" borderBottom={1} pb={1} mb={1}>
+        <Grid container direction="row" alignItems="center">
+          <div className={classes.imgContainer}>
+            {firstImage ? <img src={firstImage} alt="event" /> : <EventIcon />}
+          </div>
+          <Box>
+            <Box mb={1} className={classes.titleContainer}>
+              <Typography variant={"h4"} color="textPrimary">{p.title}</Typography>
             </Box>
-          </Grid>
-          <Grid container alignItems="center">
-            <EventIcon />
-            <Box mr={1}>{deadline} 모집마감</Box>
-          </Grid>
-          <Grid container alignItems="center">
-            <PlaceIcon />
-            <Box mr={1}>{place}</Box>
-          </Grid>
-        </Typography>
-      </Grid>
+            <Typography variant={isDesktop ? "subtitle2" : "h6"}>
+              {eventDate}
+            </Typography>
+          </Box>
+        </Grid>
+      </Box>
+      <Typography variant="h6">
+        <Grid container alignItems="center">
+          <HowToRegIcon />
+          <Box mr={1}>
+            {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
+            {countPeople}명 모집
+          </Box>
+        </Grid>
+        <Grid container alignItems="center">
+          <EventIcon />
+          <Box mr={1}>{deadline} 모집마감</Box>
+        </Grid>
+        <Grid container alignItems="center">
+          <PlaceIcon />
+          <Box mr={1}>{place}</Box>
+        </Grid>
+      </Typography>
     </div>
   );
 }

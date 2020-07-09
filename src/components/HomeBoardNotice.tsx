@@ -9,6 +9,8 @@ import BoardPostNotice from "./BoardPostNotice";
 import { Typography, Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import GreyDivider from "./GreyDivider";
+import { Link } from "react-router-dom";
+import BoardMoreTag from "./BoardMoreTag";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -25,32 +27,14 @@ const useStyles = makeStyles((theme) => {
       paddingBottom: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {},
     },
-    flexrowleft: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    flexrowcenter: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: theme.spacing(2),
-    },
   };
 });
-const moreTag = (
-  <span>
-    <Grid direction="row" container>
-      <Typography variant={"body2"}>더 보기</Typography>
-      <ChevronRightIcon style={{ color: grey[600], fontSize: 16 }} />
-    </Grid>
-  </span>
-);
+
 export default function HomeBoardNotice({ board: b }: { board: Board }) {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const classes = useStyles();
+
   return (
     <>
       <section className={classes.container}>
@@ -60,15 +44,17 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           alignItems="center"
           className={classes.titleContainer}
         >
-          <Typography variant={isDesktop ? "h2" : "h3"}>{b.title}</Typography>
-          {isDesktop && moreTag}
+          <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
+            {b.title}
+          </Typography>
+          {isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
         </Grid>
         <div>
           {b.posts.map((p, i) => (
             <BoardPostNotice key={i} post={p} />
           ))}
         </div>
-        {!isDesktop && <div className={classes.flexrowcenter}>{moreTag}</div>}
+        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

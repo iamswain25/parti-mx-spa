@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => {
     title: {
       height: 24,
       [theme.breakpoints.down("sm")]: {
-        color: "rgba(0, 0, 0, 0.87)",
         letterSpacing: -0.35,
         fontWeight: 300,
       },
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => {
     img: {
       width: 176,
       height: 120,
-      backgroundColor: "#eeeeee",
+      backgroundColor: grey[200],
       marginRight: 18,
     },
   };
@@ -76,6 +75,7 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
         <div className={classes.titleContainer}>
           <Typography
             variant={isDesktop ? "h3" : "h5"}
+            color="textPrimary"
             className={classes.title}
           >
             {p.title}

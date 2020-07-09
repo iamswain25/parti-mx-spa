@@ -6,6 +6,7 @@ import { grey } from "@material-ui/core/colors";
 import BoardPostSuggestion from "./BoardPostSuggestion";
 import { Typography, Grid, useMediaQuery } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
+import BoardMoreTag from "./BoardMoreTag";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -54,14 +55,17 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           alignItems="center"
           className={classes.titleContainer}
         >
-          <Typography variant={isDesktop ? "h2" : "h3"}>{b.title}</Typography>
-          {isDesktop && moreTag}
+          <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
+            {b.title}
+          </Typography>
+          {isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
         </Grid>
         <div className={classes.postContainer}>
           {b.posts.map((p, i) => (
             <BoardPostSuggestion key={i} post={p} />
           ))}
         </div>
+        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

@@ -132,26 +132,22 @@ const theme: Theme = createMuiTheme({
     h1: {
       fontSize: 34,
       letterSpacing: -1.8,
-      color: "rgba(255, 255, 255, 0.87)",
     },
     h2: {
       fontSize: 20,
       fontWeight: 500,
       letterSpacing: -0.75,
       textAlign: "center",
-      color: "rgba(0, 0, 0, 0.87)",
     },
     h3: {
       //제목
       fontSize: 18,
       letterSpacing: -0.5,
-      color: "rgba(0, 0, 0, 0.87)",
     },
     h4: {
       fontSize: 16,
       fontWeight: 500,
       letterSpacing: -0.6,
-      color: "rgba(0, 0, 0, 0.87)",
     },
     h5: {
       fontSize: 14,
