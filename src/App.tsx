@@ -96,6 +96,9 @@ const theme: Theme = createMuiTheme({
         body: {
           display: "block",
         },
+        button: {
+          color: "inherit",
+        },
       },
     },
   },
@@ -193,7 +196,6 @@ const theme: Theme = createMuiTheme({
       fontSize: 14,
       fontWeight: 500,
       letterSpacing: 0.2,
-      color: "#fff",
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",

@@ -9,7 +9,7 @@ import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return {
     groupLogoContainer: {
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => {
     groupInfo: {
       display: "flex",
       gap: 10,
-      fontFamily: "NotoSansCJKkr",
       fontSize: 12,
       fontWeight: 500,
       letterSpacing: 0,
@@ -96,9 +95,7 @@ export default function GroupLogoContainer(props: { data?: HomeGroup }) {
         className={classes.groupLogoImg}
       />
       <div className={classes.groupLogoOverlay}>
-        <Typography variant="h1" color="inherit">
-          {title}
-        </Typography>
+        <Typography variant="h1">{title}</Typography>
         <div className={classes.groupInfo}>
           <Box>개설 {semanticDate(created_at)}</Box>
           <Box paddingX={1}>멤버 {users_aggregate?.aggregate.count ?? 0}</Box>
