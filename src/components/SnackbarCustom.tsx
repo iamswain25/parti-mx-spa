@@ -3,7 +3,7 @@ import { Snackbar, IconButton, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useStore } from "../store/store";
 export default function SnackbarCustom() {
-  const [{ error }] = useStore();
+  const [{ error }, dispatch] = useStore();
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
     if (error) {
@@ -17,8 +17,8 @@ export default function SnackbarCustom() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
+    dispatch({ type: "SET_ERROR", error: null });
   }
   return (
     <Snackbar
@@ -32,9 +32,6 @@ export default function SnackbarCustom() {
       message={JSON.stringify(error)}
       action={
         <React.Fragment>
-          <Button color="secondary" size="small" onClick={handleClose}>
-            UNDO
-          </Button>
           <IconButton
             size="small"
             aria-label="close"
