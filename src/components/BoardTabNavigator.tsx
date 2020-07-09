@@ -11,9 +11,24 @@ const useStyles = makeStyles((theme) => {
       overflowX: "scroll",
       position: "sticky",
       top: 0,
+      boxShadow: theme.shadows[1],
       zIndex: theme.zIndex.appBar,
-      "&.ontop": {
+      "& a": {
+        color: "rgba(0, 0, 0, 0.6)",
+        "&.active": {
+          color: "black",
+          borderBottomWidth: 2,
+          borderBottomColor: grey[900],
+          borderBottomStyle: "solid",
+        },
+      },
+      "&.ontop a": {
+        color: "rgba(255, 255, 255, 0.6)",
         backgroundColor: theme.palette.primary.main,
+        "&.active": {
+          color: theme.palette.background.paper,
+          borderBottomColor: theme.palette.background.paper,
+        },
       },
     },
     tab: {
@@ -27,24 +42,7 @@ const useStyles = makeStyles((theme) => {
       flexWrap: "nowrap",
     },
     tabLink: {
-      "&.active": {
-        color: "black",
-        borderBottomWidth: 2,
-        borderBottomColor: grey[900],
-        borderBottomStyle: "solid",
-        "&.ontop": {
-          color: "white",
-          borderBottomWidth: 2,
-          borderBottomColor: "white",
-          borderBottomStyle: "solid",
-        },
-      },
-      "&.ontop": {
-        color: "rgba(255, 255, 255, 0.6)",
-      },
-      color: "rgba(0, 0, 0, 0.6)",
       textDecoration: "none",
-      // maxWidth: 150,
       minWidth: 72,
       padding: theme.spacing(2),
       overflow: "hidden",
