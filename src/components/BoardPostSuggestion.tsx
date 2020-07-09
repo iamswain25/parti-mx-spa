@@ -1,30 +1,34 @@
 import React from "react";
 import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import PanToolIcon from "@material-ui/icons/PanTool";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Box, useMediaQuery } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      border: `1px solid ${grey[200]}`,
-      padding: 16,
-      // maxWidth: "calc(50% - 12px)",
+      [theme.breakpoints.up("md")]: {
+        border: `1px solid ${grey[200]}`,
+      },
+      [theme.breakpoints.down("sm")]: {
+        borderBottom: `1px solid ${grey[200]}`,
+      },
+      padding: theme.spacing(2),
     },
     title: {
-      height: 24,
+      height: theme.spacing(3),
     },
     titleContainer: {
       display: "flex",
       overflow: "hidden",
-      maxHeight: 48,
-      marginBottom: 8,
+      maxHeight: theme.spacing(6),
+      marginBottom: theme.spacing(1),
     },
     body: {
       maxHeight: 60,
-      marginBottom: 8,
+      marginBottom: theme.spacing(1),
       overflow: "hidden",
     },
     flexrowleft: {
@@ -33,13 +37,15 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
     },
     margin: {
-      marginRight: 8,
+      marginRight: theme.spacing(1),
     },
     icon: {
-      width: 16,
-      height: 17,
-      marginRight: 9,
-      marginBottom: 8,
+      width: theme.spacing(2),
+      height: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        width: 13,
+        height: 14,
+      },
     },
   };
 });
@@ -47,20 +53,26 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
-      <Grid container direction="row">
-        <PanToolIcon color="primary" className={classes.icon} />
-        <Typography variant="h5">
-          {p.users_aggregate.aggregate.sum.like_count}명 동의
-        </Typography>
-      </Grid>
+      <Box mb={1}>
+        <Grid container direction="row">
+          <Box mr={1}>
+            <PanToolIcon color="primary" className={classes.icon} />
+          </Box>
+          <Typography variant={isDesktop ? "h5" : "body2"} color="primary">
+            {p.users_aggregate.aggregate.sum.like_count}명 동의
+          </Typography>
+        </Grid>
+      </Box>
       <div className={classes.titleContainer}>
-        <Typography variant="h3" className={classes.title}>
+        <Typography variant={isDesktop ? "h3" : "h5"} className={classes.title}>
           {p.title}
         </Typography>
       </div>
-      <Typography variant="body1" className={classes.body}>
+      <Typography variant={isDesktop ? "body1" : "h6"} className={classes.body}>
         {p.body}
       </Typography>
       <BoardPostSub2 post={p} />

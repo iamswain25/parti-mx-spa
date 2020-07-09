@@ -10,7 +10,6 @@ import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
 import { Typography } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) => {
   return {
     groupLogoContainer: {

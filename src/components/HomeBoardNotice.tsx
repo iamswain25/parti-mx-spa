@@ -19,15 +19,11 @@ const useStyles = makeStyles((theme) => {
         marginLeft: theme.spacing(2),
       },
     },
-    title: {
-      height: theme.spacing(3),
-    },
     titleContainer: {
-      height: theme.spacing(7),
       borderBottom: `1px solid ${grey[400]}`,
-      [theme.breakpoints.down("sm")]: {
-        height: theme.spacing(6),
-      },
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {},
     },
     flexrowleft: {
       display: "flex",
@@ -64,14 +60,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           alignItems="center"
           className={classes.titleContainer}
         >
-          <span>
-            <Typography
-              variant={isDesktop ? "h2" : "h3"}
-              className={classes.title}
-            >
-              {b.title}
-            </Typography>
-          </span>
+          <Typography variant={isDesktop ? "h2" : "h3"}>{b.title}</Typography>
           {isDesktop && moreTag}
         </Grid>
         <div>
