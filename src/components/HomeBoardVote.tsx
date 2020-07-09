@@ -1,20 +1,26 @@
 import React from "react";
 import { Board } from "../types";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import IconButton from "@material-ui/core/IconButton";
 import { grey } from "@material-ui/core/colors";
 import BoardPostVote from "./BoardPostVote";
-import { Typography, Grid, Box } from "@material-ui/core";
+import { Typography, Grid, Box, useMediaQuery } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import GreyDivider from "./GreyDivider";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      marginBottom: 38,
-      border: `1px solid ${grey[300]}`,
-      maxWidth: 364,
+      [theme.breakpoints.up("md")]: {
+        marginBottom: theme.spacing(5),
+        border: `1px solid ${grey[300]}`,
+        maxWidth: 364,
+      },
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: theme.spacing(2),
+      },
       "& .custom-dot-list-style": {
         bottom: 24,
         "& .react-multi-carousel-dot button": {
@@ -35,7 +41,9 @@ const useStyles = makeStyles((theme) => {
     titleContainer: {
       height: 57,
     },
-    postContainer: { backgroundColor: grey[100] },
+    postContainer: {
+      [theme.breakpoints.up("md")]: { backgroundColor: grey[100] },
+    },
     btnLeft: {
       position: "absolute",
       left: 0,
@@ -44,18 +52,16 @@ const useStyles = makeStyles((theme) => {
       position: "absolute",
       right: 0,
     },
+    flexrowcenter: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: theme.spacing(2),
+    },
   };
 });
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 600 },
-    items: 1,
-  },
-  mobile: {
-    breakpoint: { max: 600, min: 0 },
-    items: 1,
-  },
-};
+
 function CustomLeftArrow(props: any) {
   const classes = useStyles();
   const {
@@ -84,41 +90,74 @@ function CustomRightArrow(props: any) {
     </IconButton>
   );
 }
+const moreTag = (
+  <Typography variant="body2">
+    더 보기
+    <Box css={{ mr: 1 }}>
+      <ChevronRightIcon style={{ color: grey[600], fontSize: 16 }} />
+    </Box>
+  </Typography>
+);
 export default function HomeBoardVote({ board: b }: { board: Board }) {
-  //   const [{ user_id }] = useStore();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const classes = useStyles();
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: theme.breakpoints.values.md },
+      items: 1,
+    },
+    tablet: {
+      breakpoint: {
+        max: theme.breakpoints.values.md,
+        min: theme.breakpoints.values.sm,
+      },
+      items: 2,
+      partialVisibilityGutter: 50,
+    },
+    mobile: {
+      breakpoint: {
+        max: theme.breakpoints.values.sm,
+        min: theme.breakpoints.values.xs,
+      },
+      items: 1,
+      partialVisibilityGutter: 100,
+    },
+  };
   return (
-    <section className={classes.container}>
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-        className={classes.titleContainer}
-      >
-        <Typography variant="h2">
-          <Box css={{ ml: 2 }}>{b.title}</Box>
-        </Typography>
-        <Typography variant="body2">
-          더 보기
-          <Box css={{ mr: 1 }}>
-            <ChevronRightIcon style={{ color: grey[600], fontSize: 16 }} />
-          </Box>
-        </Typography>
-      </Grid>
-      <div className={classes.postContainer}>
-        <Carousel
-          responsive={responsive}
-          showDots={true}
-          customRightArrow={<CustomRightArrow />}
-          customLeftArrow={<CustomLeftArrow />}
-          dotListClass="custom-dot-list-style"
+    <>
+      <section className={classes.container}>
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          className={classes.titleContainer}
         >
-          {b.posts.map((p, i) => (
-            <BoardPostVote key={i} post={p} />
-          ))}
-        </Carousel>
-      </div>
-    </section>
+          <Typography variant={isDesktop ? "h2" : "h3"}>
+            <Box css={isDesktop ? { ml: 2 } : undefined}>{b.title}</Box>
+          </Typography>
+          {isDesktop && moreTag}
+        </Grid>
+        <div className={classes.postContainer}>
+          <Carousel
+            responsive={responsive}
+            showDots={isDesktop}
+            arrows={isDesktop}
+            customRightArrow={<CustomRightArrow />}
+            customLeftArrow={<CustomLeftArrow />}
+            dotListClass="custom-dot-list-style"
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            partialVisible={true}
+          >
+            {b.posts.map((p, i) => (
+              <BoardPostVote key={i} post={p} />
+            ))}
+          </Carousel>
+        </div>
+        {!isDesktop && <div className={classes.flexrowcenter}>{moreTag}</div>}
+      </section>
+      {!isDesktop && <GreyDivider />}
+    </>
   );
 }

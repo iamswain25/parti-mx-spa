@@ -13,6 +13,11 @@ export const queryByGroupId = gql`
           count
         }
       }
+      boards {
+        id
+        type
+        title
+      }
       notice: boards(where: { type: { _eq: "notice" } }) {
         ...boards
       }

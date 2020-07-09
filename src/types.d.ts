@@ -36,6 +36,7 @@ export interface HomeGroup {
     title: string;
     bg_img_url: string;
     created_at: string;
+    boards: Board[];
     suggestion: Board[];
     notice: Board[];
     event: Board[];

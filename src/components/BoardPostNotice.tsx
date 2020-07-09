@@ -2,20 +2,27 @@ import React from "react";
 // import { useStore } from "../store/store";
 import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import { Typography } from "@material-ui/core";
+import { Typography, useMediaQuery } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       borderBottom: `1px solid ${grey[200]}`,
-      height: 145,
+      [theme.breakpoints.up("md")]: {
+        height: 145,
+      },
       padding: "12px 0",
       display: "flex",
     },
     title: {
       height: 24,
+      [theme.breakpoints.down("sm")]: {
+        color: "rgba(0, 0, 0, 0.87)",
+        letterSpacing: -0.35,
+        fontWeight: 300,
+      },
     },
     titleContainer: {
       display: "flex",
@@ -27,7 +34,7 @@ const useStyles = makeStyles((theme) => {
     },
     body: {
       maxHeight: 40,
-      marginBottom: 8,
+      marginBottom: theme.spacing(1),
       overflow: "hidden",
     },
     flexrowleft: {
@@ -36,7 +43,7 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
     },
     label: {
-      height: 16,
+      height: theme.spacing(2),
       display: "flex",
       flexDirection: "row",
       overflow: "hidden",
@@ -56,6 +63,8 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostNotice({ post: p }: { post: Post }) {
   const classes = useStyles();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const navigatePost = useNavigateToPost();
   const firstImage = p.images?.[0].uri;
   return (
@@ -65,13 +74,18 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
       )}
       <div>
         <div className={classes.titleContainer}>
-          <Typography variant="h3" className={classes.title}>
+          <Typography
+            variant={isDesktop ? "h3" : "h5"}
+            className={classes.title}
+          >
             {p.title}
           </Typography>
         </div>
-        <Typography variant="body1" className={classes.body}>
-          {p.body}
-        </Typography>
+        {isDesktop && (
+          <Typography variant="body1" className={classes.body}>
+            {p.body}
+          </Typography>
+        )}
         <BoardPostSub2 post={p} />
       </div>
     </div>

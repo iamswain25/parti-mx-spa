@@ -90,6 +90,15 @@ const client = new ApolloClient({
 });
 const DRAWER_MIN_HEIGHT = 56;
 const theme: Theme = createMuiTheme({
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        body: {
+          display: "block",
+        },
+      },
+    },
+  },
   palette: {
     primary: { main: "#00a270", dark: "#009062" },
   },

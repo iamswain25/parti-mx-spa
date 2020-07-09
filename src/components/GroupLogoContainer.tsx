@@ -10,6 +10,7 @@ import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) => {
   return {
     groupLogoContainer: {
@@ -48,21 +49,21 @@ const useStyles = makeStyles((theme) => {
       letterSpacing: 0,
       color: "#ffffff",
       alignItems: "center",
-      marginTop: 24,
+      marginTop: theme.spacing(3),
     },
     padding16: {
-      paddingLeft: 8,
-      paddingRight: 8,
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
     },
     paddingLeft16: {
-      paddingRight: 8,
+      paddingRight: theme.spacing(1),
     },
     groupJoin: {
       width: 69,
-      height: 24,
+      height: theme.spacing(3),
       borderRadius: 2,
       backgroundColor: "#212121",
-      paddingLeft: 8,
+      paddingLeft: theme.spacing(1),
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",

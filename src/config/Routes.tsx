@@ -15,6 +15,7 @@ export default function Routes() {
         <Dashboard>
           <Route path="/" exact component={Home} />
           <Route path="/home" exact component={Home} />
+          <Route path="/home/:boardId" exact component={Home} />
           <PrivateRoute path="/suggestion" exact component={SuggestionNew} />
           <Route path="/suggestion/:id" exact component={SuggestionDetail} />
           <Route path="/login" exact component={Login} />

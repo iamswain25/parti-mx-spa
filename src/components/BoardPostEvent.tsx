@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "center",
     },
     imgContainer: {
+      maxWidth: 76,
+      maxHeight: 76,
       width: 76,
       height: 76,
       display: "flex",

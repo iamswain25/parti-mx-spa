@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => {
       height: 57,
     },
     postContainer: {
+      overflow: "hidden",
       backgroundColor: grey[100],
       padding: theme.spacing(2),
       display: "grid",
