@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => {
         "&.active": {
           color: "black",
           borderBottomWidth: 2,
-          borderBottomColor: grey[900],
+          borderBottomColor: "#007e55",
           borderBottomStyle: "solid",
         },
       },

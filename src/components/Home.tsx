@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <GroupLogoContainer data={data} />
-      <GreyDivider />
+      {!isDesktop && <GreyDivider />}
       <BoardTabNavigator data={data} />
       {isDesktop ? (
         <section className={classes.grid}>
