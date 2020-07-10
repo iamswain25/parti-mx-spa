@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-end",
-      color: theme.palette.background.paper,
+      color: theme.palette.common.white,
       padding: 19,
       backgroundImage:
         "linear-gradient(rgba(250, 252 ,251, 0.02), rgba(4, 97, 64, 0.98))",

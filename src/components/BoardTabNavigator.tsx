@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => {
         "& a": {
           color: "rgba(255, 255, 255, 0.6)",
           "&.active": {
-            color: theme.palette.background.paper,
-            borderBottomColor: theme.palette.background.paper,
+            color: theme.palette.common.white,
+            borderBottomColor: theme.palette.common.white,
           },
         },
       },
