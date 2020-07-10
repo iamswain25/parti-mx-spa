@@ -102,7 +102,7 @@ const theme: Theme = createMuiTheme({
     },
   },
   palette: {
-    primary: { main: "#00a270", dark: "#009062" },
+    primary: { main: "#00a270", dark: "#009062", light: "#e3f5ef" },
   },
   mixins: {
     toolbar: {

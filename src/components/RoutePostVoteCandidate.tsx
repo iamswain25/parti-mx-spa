@@ -14,15 +14,14 @@ export default function RoutePostVoteCandidate({
   max: number;
   voted: boolean;
 }) {
-  const [myVote, count, percentage, width] = React.useMemo(() => {
+  const [myVote, percentage, width] = React.useMemo(() => {
     const count = c?.votes_aggregate?.aggregate?.sum?.count || 0;
     return [
       !!c?.myVote?.[0]?.count,
-      count,
       Math.round((count * 100) / total) ?? 0,
       Math.round((count * 100) / max) || 0,
     ];
-  }, [c]);
+  }, [c, max, total]);
   return (
     <Box
       border={1}

@@ -37,7 +37,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
           alignItems="center"
           className={classes.titleContainer}
         >
-          <Button onClick={() => setClosed(false)}>
+          <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
                 variant={isDesktop ? "h2" : "h5"}
@@ -56,7 +56,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
             </Box>
           </Button>
           <Box mr={2} />
-          <Button onClick={() => setClosed(true)}>
+          <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
                 variant={isDesktop ? "h2" : "h5"}
@@ -75,13 +75,11 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
             </Box>
           </Button>
         </Grid>
-        <Box paddingX={isDesktop ? 0 : 2}>
-          {b?.posts
-            .filter((a) => (typeof a.closed_at === "string") === isClosed)
-            .map((p, i) => (
-              <RoutePostVote key={i} post={p} />
-            ))}
-        </Box>
+        {b?.posts
+          .filter((a) => (typeof a.closed_at === "string") === isClosed)
+          .map((p, i) => (
+            <RoutePostVote key={i} post={p} />
+          ))}
       </section>
     </>
   );
