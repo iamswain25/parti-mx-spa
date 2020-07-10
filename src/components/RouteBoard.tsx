@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import RouteBoardVote from "./RouteBoardVote";
 import RouteBoardSuggestion from "./RouteBoardSuggestion";
+import RouteBoardEvent from "./RouteBoardEvent";
 const useStyles = makeStyles((theme) => {
   return {
     top: {
@@ -80,7 +81,7 @@ export default function RouteBoard() {
       boardByType = <RouteBoardSuggestion board={data?.mx_boards_by_pk} />;
       break;
     case "event":
-      boardByType = <RouteBoardNotice board={data?.mx_boards_by_pk} />;
+      boardByType = <RouteBoardEvent board={data?.mx_boards_by_pk} />;
       break;
   }
   return (

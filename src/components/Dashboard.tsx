@@ -110,7 +110,7 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
   const [{ user_id, loading, isInit }, dispatch] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const isDesktop = useDesktop();
+  const [isDesktop] = useDesktop();
   useParseGroupId();
   const classes = useStyles();
   const theme = useTheme();
@@ -195,11 +195,11 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
             >
               Parti Mix
             </Typography>
-            {isDesktop && (
-              <Typography variant="h6" noWrap>
-                {user_id ? <LogoutButton /> : <LoginModal />}
-              </Typography>
-            )}
+            {/* {isDesktop && ( */}
+            <Typography variant="h6" noWrap>
+              {user_id ? <LogoutButton /> : <LoginModal />}
+            </Typography>
+            {/* )} */}
           </div>
         </Toolbar>
         {drawerContainer}

@@ -2,8 +2,8 @@ import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import { Typography, Grid, Box } from "@material-ui/core";
-import BoardPostVEvent from "./BoardPostEvent";
+import { Typography, Grid, Box, Divider } from "@material-ui/core";
+import BoardPostEvent from "./BoardPostEvent";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
@@ -45,27 +45,28 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
   return (
     <>
       <section className={classes.container}>
-        <Box borderBottom={isDesktop ? 1 : 0} borderColor="grey.400">
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
-            className={classes.titleContainer}
-          >
-            <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
-              <Box ml={isDesktop ? 2 : 0} fontWeight="bold">{b.title}</Box>
-            </Typography>
-            {isDesktop && (
-              <Box mr={1}>
-                <BoardMoreTag to={`/home/${b.id}`} />
-              </Box>
-            )}
-          </Grid>
-        </Box>
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          className={classes.titleContainer}
+        >
+          <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
+            <Box ml={isDesktop ? 2 : 0} fontWeight="bold">
+              {b.title}
+            </Box>
+          </Typography>
+          {isDesktop && (
+            <Box mr={1}>
+              <BoardMoreTag to={`/home/${b.id}`} />
+            </Box>
+          )}
+        </Grid>
+        {isDesktop && <Divider light />}
         <div className={classes.postContainer}>
           {b.posts.map((p, i) => (
-            <BoardPostVEvent key={i} post={p} />
+            <BoardPostEvent key={i} post={p} />
           ))}
         </div>
         {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}

@@ -9,13 +9,20 @@ import { getEventDate2, getEventDate3 } from "../helpers/datefns";
 import HowToRegIcon from "@material-ui/icons/HowToReg";
 import PlaceIcon from "@material-ui/icons/Place";
 import useDesktop from "./useDesktop";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       display: "flex",
       flexDirection: "column",
       border: `1px solid ${grey[200]}`,
-      padding: theme.spacing(2),
+      [theme.breakpoints.up("md")]: {
+        padding: theme.spacing(2),
+      },
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(1),
+      },
       borderRadius: theme.shape.borderRadius,
       backgroundColor: theme.palette.background.paper,
       borderStyle: "solid",
@@ -62,9 +69,10 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
   }
   const firstImage = p.images?.[0].uri;
   const [isDesktop] = useDesktop();
+  const attending = !!p.meLiked?.[0]?.like_count;
   return (
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
-      <Box mb={1}>
+      <Box mb={1} color="#a9aaad">
         <Grid container direction="row" alignItems="center">
           <div className={classes.imgContainer}>
             {firstImage ? <img src={firstImage} alt="event" /> : <EventIcon />}
@@ -83,22 +91,39 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
           </Box>
         </Grid>
       </Box>
-      <Box borderTop={1} borderColor="grey.200" pt={1}>
+      <Box borderTop={1} borderColor="grey.200" pt={1} color="#a9aaad">
         <Typography variant="h6">
-          <Grid container alignItems="center">
-            <HowToRegIcon />
-            <Box mr={1}>
-              {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
-              {countPeople}명 모집
+          <Grid container justify="space-between" wrap="wrap">
+            <Box>
+              <Box display="flex" alignItems="center">
+                <HowToRegIcon />
+                <Box ml={1}>
+                  {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
+                  {countPeople}명 모집
+                </Box>
+              </Box>
+              <Box display="flex" alignItems="center" mt={1}>
+                <EventIcon />
+                <Box ml={1}>{deadline} 모집마감</Box>
+              </Box>
+              <Box display="flex" alignItems="center" mt={1}>
+                <PlaceIcon />
+                <Box ml={1}>{place}</Box>
+              </Box>
             </Box>
-          </Grid>
-          <Grid container alignItems="center">
-            <EventIcon />
-            <Box mr={1}>{deadline} 모집마감</Box>
-          </Grid>
-          <Grid container alignItems="center">
-            <PlaceIcon />
-            <Box mr={1}>{place}</Box>
+            <Box color="primary.dark" display="flex" alignItems="flex-end">
+              {attending ? (
+                <Box display="flex" alignItems="center">
+                  참석함
+                  <CheckCircleIcon color="primary" />
+                </Box>
+              ) : (
+                <Box display="flex" alignItems="center">
+                  모집중
+                  <HourglassEmptyIcon color="primary" />
+                </Box>
+              )}
+            </Box>
           </Grid>
         </Typography>
       </Box>

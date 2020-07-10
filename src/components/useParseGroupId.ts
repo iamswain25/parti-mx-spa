@@ -7,6 +7,7 @@ export default function useParseGroupId() {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const groupId = params.get("group_id");
+  // console.log(groupId, search);
   React.useEffect(() => {
     if (groupId) {
       const group_id = Number(groupId);

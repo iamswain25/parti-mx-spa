@@ -131,10 +131,6 @@ const theme: Theme = createMuiTheme({
   },
   typography: {
     fontFamily: "NotoSansCJKkr",
-    h1: {
-      fontSize: 34,
-      letterSpacing: -1.8,
-    },
     h2: {
       fontSize: 20,
       letterSpacing: -0.75,

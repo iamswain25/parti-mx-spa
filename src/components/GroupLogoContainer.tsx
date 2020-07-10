@@ -9,7 +9,8 @@ import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
-import { Typography, Box, Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -27,7 +28,6 @@ const useStyles = makeStyles((theme) => {
           width: "100%",
           objectFit: "cover",
         },
-        // margin: "0 30px",
       },
       [theme.breakpoints.down("sm")]: {
         // height: 180,
@@ -103,6 +103,7 @@ export default function GroupLogoContainer({ group }: { group?: Group }) {
   }
   useLoadingEffect(loading);
   useErrorEffect(error);
+  const [isDesktop] = useDesktop();
   const { bg_img_url, title, created_at, users_aggregate, users = null } =
     group ?? {};
   const toJoinTag = users ? (
@@ -117,7 +118,13 @@ export default function GroupLogoContainer({ group }: { group?: Group }) {
       <div className={classes.groupLogoContainer}>
         <img src={bg_img_url ?? publicsphere} alt="group logo" />
         <div className={classes.groupLogoOverlay}>
-          <Typography variant="h1">{title}</Typography>
+          <Box
+            fontSize={isDesktop ? 34 : 24}
+            letterSpacing={isDesktop ? -1.8 : -0.5}
+            color={isDesktop ? "common.white" : "text.primary"}
+          >
+            {title}
+          </Box>
           <div className={classes.groupInfo}>
             <Box>개설 {semanticDate(created_at)}</Box>
             <Box paddingX={1}>멤버 {users_aggregate?.aggregate.count ?? 0}</Box>

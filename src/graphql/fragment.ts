@@ -91,6 +91,7 @@ export const posts = gql`
     closed_at
     created_at
     updated_at
+    images
     users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       like_count
       updated_at
@@ -127,30 +128,10 @@ export const boards = gql`
     updated_at
     last_posted_at
     posts(limit: 4, order_by: { created_at: desc_nulls_last }) {
-      id
-      body
-      title
-      metadata
-      created_at
-      createdBy {
-        name
-        id
-      }
-      images
-      comments_aggregate {
-        aggregate {
-          count
-        }
-      }
-      users_aggregate {
-        aggregate {
-          sum {
-            like_count
-          }
-        }
-      }
+      ...posts
     }
   }
+  ${posts}
 `;
 export const candidates = gql`
   fragment candidates on mx_candidates {
