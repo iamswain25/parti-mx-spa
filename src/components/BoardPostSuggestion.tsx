@@ -63,7 +63,7 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
           <Box mr={1}>
             <PanToolIcon color="primary" className={classes.icon} />
           </Box>
-          <Box color="primary.dark">
+          <Box color="primary.dark" fontWeight={500}>
             <Typography variant={isDesktop ? "h5" : "body2"}>
               {p.users_aggregate.aggregate.sum.like_count}명 동의
             </Typography>

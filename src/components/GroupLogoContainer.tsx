@@ -10,7 +10,6 @@ import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
 import { Typography, Box, Grid } from "@material-ui/core";
-import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -102,7 +101,6 @@ export default function GroupLogoContainer({ group }: { group?: Group }) {
       history.push("/login");
     }
   }
-  const isDesktop = useDesktop();
   useLoadingEffect(loading);
   useErrorEffect(error);
   const { bg_img_url, title, created_at, users_aggregate, users = null } =

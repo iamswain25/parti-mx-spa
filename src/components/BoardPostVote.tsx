@@ -64,22 +64,22 @@ export default function BoardPostVote({ post: p }: { post: Post }) {
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
       <Grid container direction="row" justify="center">
         <HowToVoteIcon color="primary" className={classes.icon} />
-        <Box color="primary.dark">
+        <Box color="primary.dark" fontWeight={500}>
           <Typography variant="h5">{daysLeft}일 남음</Typography>
         </Box>
       </Grid>
-      <div className={classes.titleContainer}>
+      <Box className={classes.titleContainer} fontWeight={500}>
         <Typography variant="h2" color="textPrimary">
           {p.title}
         </Typography>
-      </div>
+      </Box>
       <Box color="grey.600">
         <Typography variant="subtitle1" className={classes.body}>
           참여자 {p.users_aggregate.aggregate.sum.like_count}명
         </Typography>
       </Box>
       <Button variant="contained" color="primary">
-        투표하러 가기
+        <Box fontWeight={500}>투표하러 가기</Box>
       </Button>
     </div>
   );

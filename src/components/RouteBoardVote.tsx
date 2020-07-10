@@ -38,28 +38,40 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
           className={classes.titleContainer}
         >
           <Button onClick={() => setClosed(false)}>
-            <Box display="flex">
-              <Typography variant={isDesktop ? "h2" : "h5"} color="textPrimary">
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant={isDesktop ? "h2" : "h5"}
+                color={isClosed ? "textSecondary" : "textPrimary"}
+              >
                 {/* {b?.title} */}
                 진행 중인 투표
               </Typography>
               <Box mr={1} />
-              <Typography variant={isDesktop ? "h2" : "h5"} color="primary">
+              <Box
+                fontSize={isDesktop ? 20 : 14}
+                color={isClosed ? "text.secondary" : "primary.main"}
+              >
                 {b?.posts_aggregate_open.aggregate.count}
-              </Typography>
+              </Box>
             </Box>
           </Button>
           <Box mr={2} />
           <Button onClick={() => setClosed(true)}>
-            <Box display="flex">
-              <Typography variant={isDesktop ? "h2" : "h5"} color="textPrimary">
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant={isDesktop ? "h2" : "h5"}
+                color={isClosed ? "textPrimary" : "textSecondary"}
+              >
                 {/* {b?.title} */}
                 완료 된 투표
               </Typography>
               <Box mr={1} />
-              <Typography variant={isDesktop ? "h2" : "h5"} color="primary">
+              <Box
+                fontSize={isDesktop ? 20 : 14}
+                color={isClosed ? "primary.main" : "text.secondary"}
+              >
                 {b?.posts_aggregate_closed.aggregate.count}
-              </Typography>
+              </Box>
             </Box>
           </Button>
         </Grid>

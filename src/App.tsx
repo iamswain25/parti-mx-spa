@@ -148,23 +148,28 @@ const theme: Theme = createMuiTheme({
     h4: {
       fontSize: 16,
       letterSpacing: -0.6,
+      fontWeight: "inherit",
     },
     h5: {
       fontSize: 14,
       letterSpacing: -0.3,
+      fontWeight: "inherit",
     },
     h6: {
       fontSize: 12,
+      fontWeight: "inherit",
     },
     body1: {
       fontSize: 14,
       letterSpacing: -0.3,
+      fontWeight: "inherit",
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
     },
     body2: {
       fontSize: 11,
+      fontWeight: "inherit",
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
@@ -175,12 +180,14 @@ const theme: Theme = createMuiTheme({
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
+      fontWeight: "inherit",
     },
     subtitle2: {
       fontSize: 11,
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
+      fontWeight: "inherit",
     },
     button: {
       fontSize: 14,
@@ -188,6 +195,7 @@ const theme: Theme = createMuiTheme({
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
+      fontWeight: "inherit",
     },
   },
 });
