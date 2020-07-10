@@ -9,12 +9,20 @@ import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Grid } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return {
+    container: {
+      [theme.breakpoints.up("md")]: {
+        padding: "0 30px",
+        position: "relative",
+      },
+    },
     groupLogoContainer: {
       [theme.breakpoints.up("md")]: {
         height: 260,
+        maxWidth: 1140,
+        // margin: "0 30px",
       },
       [theme.breakpoints.down("sm")]: {
         height: 180,
@@ -88,20 +96,22 @@ export default function GroupLogoContainer(props: { data?: HomeGroup }) {
     </button>
   );
   return (
-    <div className={classes.groupLogoContainer}>
-      <img
-        src={bg_img_url ?? publicsphere}
-        alt="group logo"
-        className={classes.groupLogoImg}
-      />
-      <div className={classes.groupLogoOverlay}>
-        <Typography variant="h1">{title}</Typography>
-        <div className={classes.groupInfo}>
-          <Box>개설 {semanticDate(created_at)}</Box>
-          <Box paddingX={1}>멤버 {users_aggregate?.aggregate.count ?? 0}</Box>
-          {toJoinTag}
+    <Grid container className={classes.container} justify="center">
+      <div className={classes.groupLogoContainer}>
+        <img
+          src={bg_img_url ?? publicsphere}
+          alt="group logo"
+          className={classes.groupLogoImg}
+        />
+        <div className={classes.groupLogoOverlay}>
+          <Typography variant="h1">{title}</Typography>
+          <div className={classes.groupInfo}>
+            <Box>개설 {semanticDate(created_at)}</Box>
+            <Box paddingX={1}>멤버 {users_aggregate?.aggregate.count ?? 0}</Box>
+            {toJoinTag}
+          </div>
         </div>
       </div>
-    </div>
+    </Grid>
   );
 }

@@ -17,11 +17,18 @@ import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
-    root: { [theme.breakpoints.up("md")]: { marginTop: 26 } },
+    root: {
+      [theme.breakpoints.up("md")]: { marginTop: 26 },
+    },
     grid: {
       display: "flex",
       [theme.breakpoints.up("md")]: {
         marginTop: theme.spacing(3),
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: 1200,
       },
       [theme.breakpoints.down("sm")]: {
         flexDirection: "column",

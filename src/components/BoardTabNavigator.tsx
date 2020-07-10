@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => {
       overflowX: "scroll",
       position: "sticky",
       top: 0,
-      boxShadow: theme.shadows[1],
+      boxShadow: `0 4px 2px -2px ${grey[300]}`,
+      //  theme.shadows[1],
       zIndex: theme.zIndex.appBar,
       "& a": {
         color: "rgba(0, 0, 0, 0.6)",
@@ -34,6 +35,12 @@ const useStyles = makeStyles((theme) => {
       },
     },
     tab: {
+      [theme.breakpoints.up("md")]: {
+        maxWidth: 1200,
+        width: 1200,
+        padding: "0 30px",
+        margin: "0 auto",
+      },
       height: 48,
       overflow: "unset",
       fontSize: 14,
