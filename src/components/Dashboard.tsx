@@ -20,6 +20,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import LogoutButton from "./LogoutButton";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import useParseGroupId from "./useParseGroupId";
+import useDesktop from "./useDesktop";
 
 const DRAWER_WIDTH = 240;
 
@@ -109,11 +110,11 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
   const [{ user_id, loading, isInit }, dispatch] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const isDesktop = useDesktop();
   useParseGroupId();
   const classes = useStyles();
   const theme = useTheme();
   const isHome = useRouteMatch("/home");
-  // const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const history = useHistory();
   const [hideOnScroll, setHideOnScroll] = React.useState(false);
   const handleDrawerToggle = () => {
@@ -194,9 +195,11 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
             >
               Parti Mix
             </Typography>
-            <Typography variant="h6" noWrap>
-              {user_id ? <LogoutButton /> : <LoginModal />}
-            </Typography>
+            {isDesktop && (
+              <Typography variant="h6" noWrap>
+                {user_id ? <LogoutButton /> : <LoginModal />}
+              </Typography>
+            )}
           </div>
         </Toolbar>
         {drawerContainer}

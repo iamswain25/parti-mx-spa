@@ -163,14 +163,12 @@ const theme: Theme = createMuiTheme({
     body1: {
       fontSize: 14,
       letterSpacing: -0.3,
-      color: grey[600],
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
     },
     body2: {
       fontSize: 11,
-      color: grey[600],
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",

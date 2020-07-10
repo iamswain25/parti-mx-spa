@@ -20,6 +20,16 @@ export type Board = {
       count: number;
     };
   };
+  posts_aggregate_open: {
+    aggregate: {
+      count: number;
+    };
+  };
+  posts_aggregate_closed: {
+    aggregate: {
+      count: number;
+    };
+  };
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
 
@@ -90,11 +100,12 @@ export type File = {
 export type Post = {
   id: number;
   title: string;
-  context?: string;
+  context: string;
   body: string;
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata;
   images: Image[];
   files: File[];
+  closed_at: string;
   created_at: string;
   updated_at: string;
   users_aggregate: {

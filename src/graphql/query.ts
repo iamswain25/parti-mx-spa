@@ -44,6 +44,7 @@ export const queryByBoardId = gql`
     mx_boards_by_pk(id: $board_id) {
       id
       title
+      type
       group {
         id
         title
@@ -56,6 +57,20 @@ export const queryByBoardId = gql`
         }
       }
       posts_aggregate {
+        aggregate {
+          count
+        }
+      }
+      posts_aggregate_open: posts_aggregate(
+        where: { closed_at: { _is_null: true } }
+      ) {
+        aggregate {
+          count
+        }
+      }
+      posts_aggregate_closed: posts_aggregate(
+        where: { closed_at: { _is_null: false } }
+      ) {
         aggregate {
           count
         }

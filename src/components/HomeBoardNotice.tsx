@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => {
       },
       [theme.breakpoints.down("sm")]: {
         marginLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
       },
     },
     titleContainer: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function HomeBoardNotice({ board: b }: { board: Board }) {
+export default function HomeBoardNotice({ board: b }: { board?: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
 
@@ -40,16 +41,16 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           className={classes.titleContainer}
         >
           <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
-            {b.title}
+            {b?.title}
           </Typography>
-          {isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+          {isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}
         </Grid>
         <div>
-          {b.posts.map((p, i) => (
+          {b?.posts.map((p, i) => (
             <BoardPostNotice key={i} post={p} />
           ))}
         </div>
-        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+        {!isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

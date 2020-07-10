@@ -1,22 +1,18 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
-import { HomeGroup, Board, PageBoard } from "../types";
+import { PageBoard } from "../types";
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import GroupLogoContainer from "./GroupLogoContainer";
-import useParseGroupId from "./useParseGroupId";
-import HomeBoardNotice from "./HomeBoardNotice";
-import HomeBoardSuggestion from "./HomeBoardSuggestion";
-import HomeBoardVote from "./HomeBoardVote";
-import HomeBoardEvent from "./HomeBoardEvent";
+import RouteBoardNotice from "./RouteBoardNotice";
 import BoardTabNavigator from "./BoardTabNavigator";
-import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 import { useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import RouteBoardVote from "./RouteBoardVote";
 const useStyles = makeStyles((theme) => {
   return {
     top: {
@@ -70,7 +66,22 @@ export default function RouteBoard() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const [isDesktop] = useDesktop();
-  const { group } = data?.mx_boards_by_pk ?? {};
+  const { group, type } = data?.mx_boards_by_pk ?? {};
+  let boardByType = null;
+  switch (type) {
+    case "notice":
+      boardByType = <RouteBoardNotice board={data?.mx_boards_by_pk} />;
+      break;
+    case "vote":
+      boardByType = <RouteBoardVote board={data?.mx_boards_by_pk} />;
+      break;
+    case "suggestion":
+      boardByType = <RouteBoardNotice board={data?.mx_boards_by_pk} />;
+      break;
+    case "event":
+      boardByType = <RouteBoardNotice board={data?.mx_boards_by_pk} />;
+      break;
+  }
   return (
     <>
       <Typography variant="h3" color="textPrimary" className={classes.top}>
@@ -79,11 +90,7 @@ export default function RouteBoard() {
       <div className={classes.root}>
         {isDesktop && <GroupLogoContainer group={group} />}
         <BoardTabNavigator group={group} />
-        {isDesktop ? (
-          <section className={classes.grid}></section>
-        ) : (
-          <section className={classes.grid}></section>
-        )}
+        {boardByType}
       </div>
     </>
   );

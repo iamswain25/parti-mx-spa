@@ -88,6 +88,7 @@ export const posts = gql`
     body
     context
     metadata
+    closed_at
     created_at
     updated_at
     users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
