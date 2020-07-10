@@ -9,7 +9,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import MyGroupList from "./MyGroupList";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import LoginModal from "./LoginModal";
@@ -19,6 +19,7 @@ import SnackbarCustom from "./SnackbarCustom";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import LogoutButton from "./LogoutButton";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
+import useParseGroupId from "./useParseGroupId";
 
 const DRAWER_WIDTH = 240;
 
@@ -34,8 +35,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   appBar: {
     [theme.breakpoints.up("md")]: {
-      backgroundColor: "#fff",
-      borderBottom: "1px solid #e0e0e0",
+      backgroundColor: theme.palette.background.paper,
+      borderBottom: `1px solid ${theme.palette.grey[300]}`,
       color: theme.palette.primary.main,
     },
     "&.hide": {
@@ -43,9 +44,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       backgroundColor: "transparent",
-      color: "#fff",
+      color: theme.palette.grey[900],
+      "&.home": {
+        color: theme.palette.common.white,
+      },
     },
-    zIndex: theme.zIndex.drawer + 1,
+    // zIndex: theme.zIndex.drawer + 1,
     boxShadow: "none",
   },
   menuButton: {
@@ -105,8 +109,10 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
   const [{ user_id, loading, isInit }, dispatch] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  useParseGroupId();
   const classes = useStyles();
   const theme = useTheme();
+  const isHome = useRouteMatch("/home");
   // const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const history = useHistory();
   const [hideOnScroll, setHideOnScroll] = React.useState(false);
@@ -162,7 +168,9 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
       <CssBaseline />
       <AppBar
         position="fixed"
-        className={`${classes.appBar} ${hideOnScroll ? "hide" : ""}`}
+        className={`${classes.appBar} ${hideOnScroll ? "hide" : ""} ${
+          isHome?.isExact ? "home" : ""
+        }`}
       >
         <Toolbar classes={{ regular: classes.toolbar }}>
           <div className={classes.header}>
@@ -194,8 +202,6 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
         {drawerContainer}
       </AppBar>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-
         {children && isInit && children}
         <SnackbarCustom />
         {loading && <LinearProgress />}

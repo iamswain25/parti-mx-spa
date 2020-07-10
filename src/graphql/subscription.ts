@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import {
   commentsResult,
   noticeCommentsResult,
-  postResult,
+  posts,
   voteCommentsResult,
 } from "./fragment";
 export const whoami = gql`
@@ -45,11 +45,11 @@ export const subscribePostsByBoardId = gql`
         }
       }
       posts(order_by: { updated_at: desc }, limit: 20) {
-        ...post_result
+        ...posts
       }
     }
   }
-  ${postResult}
+  ${posts}
 `;
 
 export const subscribeSuggestion = gql`
@@ -230,7 +230,7 @@ export const subscribeNoticeList = gql`
         limit: 20
         where: { metadata: { _contains: { announcement: true } } }
       ) {
-        ...post_result
+        ...posts
       }
 
       posts: posts(
@@ -238,11 +238,11 @@ export const subscribeNoticeList = gql`
         limit: 20
         where: { _not: { metadata: { _contains: { announcement: true } } } }
       ) {
-        ...post_result
+        ...posts
       }
     }
   }
-  ${postResult}
+  ${posts}
 `;
 
 export const subscribeVote = gql`

@@ -155,12 +155,10 @@ const theme: Theme = createMuiTheme({
     h5: {
       fontSize: 14,
       fontWeight: 500,
-      color: "#009062",
       letterSpacing: -0.3,
     },
     h6: {
       fontSize: 12,
-      color: grey[600],
     },
     body1: {
       fontSize: 14,

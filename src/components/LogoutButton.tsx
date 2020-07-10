@@ -9,19 +9,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Theme, makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  btn: {
-    [theme.breakpoints.up("md")]: {
-      color: theme.palette.primary.main,
-    },
-    [theme.breakpoints.down("sm")]: {
-      color: "#fff",
-    },
-  },
-}));
 export default function LogoutButton() {
   const history = useHistory();
-  const classes = useStyles();
   async function logoutHandler() {
     await auth.signOut();
     history.push("/");
@@ -38,7 +27,7 @@ export default function LogoutButton() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} className={classes.btn}>
+      <Button onClick={handleClickOpen} color="inherit">
         Logout
       </Button>
       <Dialog

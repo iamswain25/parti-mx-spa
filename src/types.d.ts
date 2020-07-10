@@ -6,6 +6,7 @@ export type Board = {
   id: number;
   title: string;
   body: string;
+  slug: string;
   permission: "member" | "all";
   type: BoardTypes;
   updated_at: string;
@@ -13,46 +14,42 @@ export type Board = {
   users: UserBoard[];
   newPostCount?: number;
   posts: Post[];
+  group: Group;
+  posts_aggregate: {
+    aggregate: {
+      count: number;
+    };
+  };
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
 
-export interface BoardList {
-  mx_boards_by_pk: {
-    id: string;
-    body: string;
-    title: string;
-    slug: string;
-    posts_aggregate: {
-      aggregate: {
-        count: number;
-      };
+export interface Group {
+  id: string;
+  title: string;
+  bg_img_url: string;
+  created_at: string;
+  boards: Board[];
+  suggestion: Board[];
+  notice: Board[];
+  event: Board[];
+  vote: Board[];
+  users_aggregate: {
+    aggregate: {
+      count: number;
     };
-    posts: Post[];
   };
+  users: [
+    {
+      status: UserStatus;
+      notification_type: NotificationType;
+    }
+  ];
 }
 export interface HomeGroup {
-  mx_groups_by_pk: {
-    id: string;
-    title: string;
-    bg_img_url: string;
-    created_at: string;
-    boards: Board[];
-    suggestion: Board[];
-    notice: Board[];
-    event: Board[];
-    vote: Board[];
-    users_aggregate?: {
-      aggregate: {
-        count: number;
-      };
-    };
-    users?: [
-      {
-        status: UserStatus;
-        notification_type: NotificationType;
-      }
-    ];
-  };
+  mx_groups_by_pk: Group;
+}
+export interface PageBoard {
+  mx_boards_by_pk: Board;
 }
 export interface Whoami {
   mx_users_by_pk: {

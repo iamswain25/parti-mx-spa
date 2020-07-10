@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import GroupLogoContainer from "./GroupLogoContainer";
-import useParseGroupId from "./useParseGroupId";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
@@ -18,7 +17,10 @@ import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-      [theme.breakpoints.up("md")]: { marginTop: 26 },
+      [theme.breakpoints.up("md")]: {
+        marginTop: 26,
+        paddingTop: theme.mixins.toolbar.minHeight,
+      },
     },
     grid: {
       display: "flex",
@@ -52,7 +54,6 @@ const useStyles = makeStyles((theme) => {
 
 export default function Home() {
   const [{ user_id, group_id }] = useStore();
-  useParseGroupId();
   const classes = useStyles();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
     variables: { group_id, user_id, isAnonymous: !user_id },
@@ -63,9 +64,9 @@ export default function Home() {
   const { notice, suggestion, vote, event } = data?.mx_groups_by_pk ?? {};
   return (
     <div className={classes.root}>
-      <GroupLogoContainer data={data} />
+      <GroupLogoContainer group={data?.mx_groups_by_pk} />
       {!isDesktop && <GreyDivider />}
-      <BoardTabNavigator data={data} />
+      <BoardTabNavigator group={data?.mx_groups_by_pk} />
       {isDesktop ? (
         <section className={classes.grid}>
           <ul className={classes.left}>

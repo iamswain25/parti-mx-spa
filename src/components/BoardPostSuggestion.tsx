@@ -63,9 +63,11 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
           <Box mr={1}>
             <PanToolIcon color="primary" className={classes.icon} />
           </Box>
-          <Typography variant={isDesktop ? "h5" : "body2"} color="primary">
-            {p.users_aggregate.aggregate.sum.like_count}명 동의
-          </Typography>
+          <Box color="primary.dark">
+            <Typography variant={isDesktop ? "h5" : "body2"}>
+              {p.users_aggregate.aggregate.sum.like_count}명 동의
+            </Typography>
+          </Box>
         </Grid>
       </Box>
       <div className={classes.titleContainer}>
@@ -77,9 +79,14 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
           {p.title}
         </Typography>
       </div>
-      <Typography variant={isDesktop ? "body1" : "h6"} className={classes.body}>
-        {p.body}
-      </Typography>
+      <Box color="grey.600">
+        <Typography
+          variant={isDesktop ? "body1" : "h6"}
+          className={classes.body}
+        >
+          {p.body}
+        </Typography>
+      </Box>
       <BoardPostSub2 post={p} />
     </div>
   );

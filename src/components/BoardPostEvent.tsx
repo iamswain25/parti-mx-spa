@@ -75,9 +75,11 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
                 {p.title}
               </Typography>
             </Box>
-            <Typography variant={isDesktop ? "subtitle2" : "h6"}>
-              {eventDate}
-            </Typography>
+            <Box color="grey.600">
+              <Typography variant={isDesktop ? "subtitle2" : "h6"}>
+                {eventDate}
+              </Typography>
+            </Box>
           </Box>
         </Grid>
       </Box>

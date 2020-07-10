@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { boards } from "./fragment";
+import { boards, posts } from "./fragment";
 
 export const queryByGroupId = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
@@ -37,6 +37,35 @@ export const queryByGroupId = gql`
     }
   }
   ${boards}
+`;
+
+export const queryByBoardId = gql`
+  query($board_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
+    mx_boards_by_pk(id: $board_id) {
+      id
+      title
+      group {
+        id
+        title
+        bg_img_url
+        created_at
+        boards {
+          id
+          type
+          title
+        }
+      }
+      posts_aggregate {
+        aggregate {
+          count
+        }
+      }
+      posts(order_by: { updated_at: desc }) {
+        ...posts
+      }
+    }
+  }
+  ${posts}
 `;
 
 export const searchDuplicateNameWithoutMine = gql`

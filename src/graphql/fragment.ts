@@ -81,8 +81,8 @@ export const noticeCommentsResult = gql`
     }
   }
 `;
-export const postResult = gql`
-  fragment post_result on mx_posts {
+export const posts = gql`
+  fragment posts on mx_posts {
     id
     title
     body
@@ -90,7 +90,7 @@ export const postResult = gql`
     metadata
     created_at
     updated_at
-    users(where: { user_id: { _eq: $user_id } }) {
+    users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       like_count
       updated_at
     }

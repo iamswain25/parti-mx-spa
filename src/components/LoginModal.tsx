@@ -18,16 +18,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  btn: {
-    [theme.breakpoints.up("md")]: {
-      color: theme.palette.primary.main,
-    },
-    [theme.breakpoints.down("sm")]: {
-      color: "#fff",
-    },
-  },
 }));
-
 
 export default function LoginModal() {
   const [, dispatch] = useStore();
@@ -56,7 +47,7 @@ export default function LoginModal() {
   }
   return (
     <>
-      <Button onClick={handleLogin} className={classes.btn}>
+      <Button onClick={handleLogin} color="inherit">
         로그인
       </Button>
 

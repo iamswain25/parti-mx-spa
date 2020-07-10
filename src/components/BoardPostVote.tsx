@@ -3,7 +3,7 @@ import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import { Typography, Grid, Button } from "@material-ui/core";
+import { Typography, Grid, Button, Box } from "@material-ui/core";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { calculateDays } from "../helpers/datefns";
 const useStyles = makeStyles((theme) => {
@@ -64,7 +64,9 @@ export default function BoardPostVote({ post: p }: { post: Post }) {
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
       <Grid container direction="row" justify="center">
         <HowToVoteIcon color="primary" className={classes.icon} />
-        <Typography variant="h5">{daysLeft}일 남음</Typography>
+        <Box color="primary.dark">
+          <Typography variant="h5">{daysLeft}일 남음</Typography>
+        </Box>
       </Grid>
       <div className={classes.titleContainer}>
         <Typography variant="h2" color="textPrimary">

@@ -1,6 +1,6 @@
 import React from "react";
 import { useStore } from "../store/store";
-import { HomeGroup } from "../types";
+import { Group } from "../types";
 import { useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-export default function GroupLogoContainer(props: { data?: HomeGroup }) {
+export default function GroupLogoContainer({ group }: { group?: Group }) {
   const [{ user_id, group_id }] = useStore();
   const classes = useStyles();
   const history = useHistory();
@@ -87,7 +87,7 @@ export default function GroupLogoContainer(props: { data?: HomeGroup }) {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const { bg_img_url, title, created_at, users_aggregate, users = null } =
-    props.data?.mx_groups_by_pk ?? {};
+    group ?? {};
   const toJoinTag = users ? (
     <div>{users?.[0].status}</div>
   ) : (

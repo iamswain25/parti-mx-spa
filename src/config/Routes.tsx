@@ -5,6 +5,7 @@ import Login from "../components/Login";
 import SuggestionNew from "../components/SuggestionNew";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../components/Home";
+import RouteBoard from "../components/RouteBoard";
 import SuggestionDetail from "../components/SuggestionDetail";
 import Signup from "../components/Signup";
 
@@ -15,7 +16,7 @@ export default function Routes() {
         <Dashboard>
           <Route path="/" exact component={Home} />
           <Route path="/home" exact component={Home} />
-          <Route path="/home/:boardId" exact component={Home} />
+          <Route path="/home/:board_id" exact component={RouteBoard} />
           <PrivateRoute path="/suggestion" exact component={SuggestionNew} />
           <Route path="/suggestion/:id" exact component={SuggestionDetail} />
           <Route path="/login" exact component={Login} />

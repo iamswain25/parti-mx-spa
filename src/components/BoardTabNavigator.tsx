@@ -1,5 +1,5 @@
 import React from "react";
-import { HomeGroup } from "../types";
+import { Group } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
@@ -65,9 +65,9 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function BoardTabNavigator({ data }: { data?: HomeGroup }) {
+export default function BoardTabNavigator({ group }: { group?: Group }) {
   const classes = useStyles();
-  const { boards } = data?.mx_groups_by_pk ?? {};
+  const { boards } = group ?? {};
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
   useScrollPosition(

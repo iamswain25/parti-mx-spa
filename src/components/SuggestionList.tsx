@@ -2,7 +2,7 @@ import React from "react";
 import { useStore } from "../store/store";
 import { subscribePostsByBoardId } from "../graphql/subscription";
 import useNavigateToPost from "./useNavigateToPost";
-import { BoardList } from "../types";
+import { PageBoard } from "../types";
 import { useParams } from "react-router-dom";
 import { useSubscription } from "@apollo/client";
 
@@ -10,7 +10,7 @@ export default function SuggestionList() {
   const [{ user_id }, dispatch] = useStore();
   const navigatePost = useNavigateToPost();
   const { id = 104 } = useParams();
-  const { data, error, loading = true } = useSubscription<BoardList>(
+  const { data, error, loading = true } = useSubscription<PageBoard>(
     subscribePostsByBoardId,
     {
       variables: { id, user_id, isAnonymous: !user_id },
