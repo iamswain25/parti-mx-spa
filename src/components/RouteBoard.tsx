@@ -13,6 +13,7 @@ import useDesktop from "./useDesktop";
 import { useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import RouteBoardVote from "./RouteBoardVote";
+import RouteBoardSuggestion from "./RouteBoardSuggestion";
 const useStyles = makeStyles((theme) => {
   return {
     top: {
@@ -76,7 +77,7 @@ export default function RouteBoard() {
       boardByType = <RouteBoardVote board={data?.mx_boards_by_pk} />;
       break;
     case "suggestion":
-      boardByType = <RouteBoardNotice board={data?.mx_boards_by_pk} />;
+      boardByType = <RouteBoardSuggestion board={data?.mx_boards_by_pk} />;
       break;
     case "event":
       boardByType = <RouteBoardNotice board={data?.mx_boards_by_pk} />;
