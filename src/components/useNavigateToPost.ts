@@ -14,7 +14,7 @@ export default function useNavigateToPost() {
         variables: { user_id, post_id },
       });
     }
-    push("/suggestion/" + post_id);
+    push("/post/" + post_id);
   }
 
   return navigateHandler;

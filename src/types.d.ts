@@ -61,6 +61,9 @@ export interface HomeGroup {
 export interface PageBoard {
   mx_boards_by_pk: Board;
 }
+export interface PagePost {
+  mx_posts_by_pk: Post;
+}
 export interface Whoami {
   mx_users_by_pk: {
     name: string;

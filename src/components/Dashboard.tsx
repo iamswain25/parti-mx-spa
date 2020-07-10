@@ -13,14 +13,12 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import MyGroupList from "./MyGroupList";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import LoginModal from "./LoginModal";
-// import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useStore } from "../store/store";
 import SnackbarCustom from "./SnackbarCustom";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import LogoutButton from "./LogoutButton";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import useParseGroupId from "./useParseGroupId";
-import useDesktop from "./useDesktop";
 
 const DRAWER_WIDTH = 240;
 
@@ -110,7 +108,6 @@ export default function Dashboard(props: ResponsiveDrawerProps) {
   const { container, children } = props;
   const [{ user_id, loading, isInit }, dispatch] = useStore();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isDesktop] = useDesktop();
   useParseGroupId();
   const classes = useStyles();
   const theme = useTheme();

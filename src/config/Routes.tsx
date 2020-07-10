@@ -6,8 +6,8 @@ import SuggestionNew from "../components/SuggestionNew";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../components/Home";
 import RouteBoard from "../components/RouteBoard";
-import SuggestionDetail from "../components/SuggestionDetail";
 import Signup from "../components/Signup";
+import RoutePost from "../components/RoutePost";
 
 export default function Routes() {
   return (
@@ -18,7 +18,7 @@ export default function Routes() {
           <Route path="/home" exact component={Home} />
           <Route path="/home/:board_id" exact component={RouteBoard} />
           <PrivateRoute path="/suggestion" exact component={SuggestionNew} />
-          <Route path="/suggestion/:id" exact component={SuggestionDetail} />
+          <Route path="/post/:post_id" exact component={RoutePost} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
         </Dashboard>

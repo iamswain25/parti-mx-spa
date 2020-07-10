@@ -1,10 +1,5 @@
 import gql from "graphql-tag";
-import {
-  commentsResult,
-  noticeCommentsResult,
-  posts,
-  voteCommentsResult,
-} from "./fragment";
+import { posts, comments } from "./fragment";
 export const whoami = gql`
   subscription($email: String!) {
     mx_users(where: { email: { _eq: $email } }) {
@@ -79,9 +74,9 @@ export const subscribeSuggestion = gql`
         order_by: { created_at: asc }
         where: { parent_id: { _is_null: true } }
       ) {
-        ...comments_result
+        ...comments
         re(order_by: { created_at: asc }) {
-          ...comments_result
+          ...comments
         }
       }
       created_at
@@ -99,7 +94,7 @@ export const subscribeSuggestion = gql`
       }
     }
   }
-  ${commentsResult}
+  ${comments}
 `;
 
 export const subscribeNotice = gql`
@@ -129,9 +124,9 @@ export const subscribeNotice = gql`
         order_by: { created_at: asc }
         where: { parent_id: { _is_null: true } }
       ) {
-        ...notice_comments_result
+        ...comments
         re(order_by: { created_at: asc }) {
-          ...notice_comments_result
+          ...comments
         }
       }
       created_at
@@ -148,7 +143,7 @@ export const subscribeNotice = gql`
       }
     }
   }
-  ${noticeCommentsResult}
+  ${comments}
 `;
 
 export const subscribeBoardsByGroupId = gql`
@@ -272,9 +267,9 @@ export const subscribeVote = gql`
         order_by: { created_at: asc }
         where: { parent_id: { _is_null: true } }
       ) {
-        ...vote_comments_result
+        ...comments
         re(order_by: { created_at: asc }) {
-          ...vote_comments_result
+          ...comments
         }
       }
       created_at
@@ -318,7 +313,7 @@ export const subscribeVote = gql`
       }
     }
   }
-  ${voteCommentsResult}
+  ${comments}
 `;
 
 export const subscribeEvent = gql`
@@ -348,9 +343,9 @@ export const subscribeEvent = gql`
         order_by: { created_at: asc }
         where: { parent_id: { _is_null: true } }
       ) {
-        ...comments_result
+        ...comments
         re(order_by: { created_at: asc }) {
-          ...comments_result
+          ...comments
         }
       }
       created_at
@@ -367,5 +362,5 @@ export const subscribeEvent = gql`
       }
     }
   }
-  ${commentsResult}
+  ${comments}
 `;

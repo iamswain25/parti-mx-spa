@@ -1,10 +1,11 @@
 import gql from "graphql-tag";
-export const commentsResult = gql`
-  fragment comments_result on mx_comments {
+export const comments = gql`
+  fragment comments on mx_comments {
     id
     body
     updated_at
     post {
+      metadata
       board {
         type
       }
@@ -13,8 +14,15 @@ export const commentsResult = gql`
       id
       name
       photo_url
-      checkedPosts(where: { post_id: { _eq: $id }, like_count: { _gt: 0 } }) {
+      checkedPosts(
+        where: { post_id: { _eq: $post_id }, like_count: { _gt: 0 } }
+      ) {
         like_count
+      }
+      votes(where: { candidate: { post_id: { _eq: $post_id } } }) {
+        candidate {
+          body
+        }
       }
     }
     likes(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
@@ -29,58 +37,7 @@ export const commentsResult = gql`
     }
   }
 `;
-export const voteCommentsResult = gql`
-  fragment vote_comments_result on mx_comments {
-    id
-    body
-    post {
-      metadata
-    }
-    updated_at
-    user {
-      id
-      name
-      photo_url
-      votes(where: { candidate: { post_id: { _eq: $id } } }) {
-        candidate {
-          body
-        }
-      }
-    }
-    likes(where: { user_id: { _eq: $user_id } }) {
-      user {
-        name
-      }
-    }
-    likes_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
-export const noticeCommentsResult = gql`
-  fragment notice_comments_result on mx_comments {
-    id
-    body
-    updated_at
-    user {
-      id
-      name
-      photo_url
-    }
-    likes(where: { user_id: { _eq: $user_id } }) {
-      user {
-        name
-      }
-    }
-    likes_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
+
 export const posts = gql`
   fragment posts on mx_posts {
     id

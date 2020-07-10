@@ -120,12 +120,7 @@ const theme: Theme = createMuiTheme({
       variantMapping: {
         body1: "div",
         body2: "div",
-        // h1: "div",
-        // h2: "div",
-        // h3: "div",
-        // h4: "div",
-        // h5: "div",
-        h6: "div",
+        // h6: "div",
       },
     },
   },
