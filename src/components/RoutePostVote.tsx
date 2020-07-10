@@ -8,6 +8,7 @@ import BoardPostSub2 from "./BoardPostSub2";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import useDesktop from "./useDesktop";
 import { calculateDays } from "../helpers/datefns";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -21,7 +22,6 @@ const useStyles = makeStyles((theme) => {
       height: 24,
       [theme.breakpoints.down("sm")]: {
         letterSpacing: -0.35,
-        fontWeight: 300,
       },
     },
     titleContainer: {
@@ -75,12 +75,55 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
           alignItems="center"
           justify="space-between"
         >
-          <Box color="grey.600">
+          <Box color="grey.600" fontWeight={400}>
             <Typography variant="body2">
               참여자 {p.users_aggregate.aggregate.sum.like_count}명
             </Typography>
           </Box>
+          <Box
+            color="primary.dark"
+            fontWeight={500}
+            display="flex"
+            alignItems="center"
+          >
+            <Typography variant="body2">투표완료</Typography>
+            <CheckCircleIcon
+              color="primary"
+              style={{ width: 14, height: 14 }}
+            />
+          </Box>
         </Grid>
+      </Box>
+      <Box mt={1}>
+        {p.candidates.map((c, i) => (
+          <Box
+            key={i}
+            border={1}
+            borderColor="primary.dark"
+            borderRadius={2}
+            mb={1}
+            p={2}
+          >
+            <Grid
+              container
+              direction="row"
+              alignItems="center"
+              justify="space-between"
+            >
+              <Box fontSize={12} letterSpacing={-0.26} color="grey.900">
+                {c.body}
+              </Box>
+              <Box
+                fontSize={12}
+                letterSpacing={-0.26}
+                color="grey.900"
+                fontWeight={500}
+              >
+                65%
+              </Box>
+            </Grid>
+          </Box>
+        ))}
       </Box>
       {isDesktop && (
         <Box mt={1} color="grey.600">

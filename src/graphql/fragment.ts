@@ -148,3 +148,33 @@ export const boards = gql`
     }
   }
 `;
+export const candidates = gql`
+  fragment candidates on mx_candidates {
+    id
+    body
+    post {
+      id
+      metadata
+    }
+    votes_aggregate {
+      aggregate {
+        sum {
+          count
+        }
+      }
+    }
+    myVote: votes(where: { user_id: { _eq: $user_id } })
+      @skip(if: $isAnonymous) {
+      count
+    }
+    votes {
+      count
+      created_at
+      user {
+        name
+        photo_url
+        id
+      }
+    }
+  }
+`;

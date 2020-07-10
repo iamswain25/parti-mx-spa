@@ -73,9 +73,11 @@ export default function BoardPostVote({ post: p }: { post: Post }) {
           {p.title}
         </Typography>
       </div>
-      <Typography variant="subtitle1" className={classes.body}>
-        참여자 {p.users_aggregate.aggregate.sum.like_count}명
-      </Typography>
+      <Box color="grey.600">
+        <Typography variant="subtitle1" className={classes.body}>
+          참여자 {p.users_aggregate.aggregate.sum.like_count}명
+        </Typography>
+      </Box>
       <Button variant="contained" color="primary">
         투표하러 가기
       </Button>

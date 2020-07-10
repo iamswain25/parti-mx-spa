@@ -9,7 +9,6 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { setContext } from "@apollo/link-context";
 import { IdTokenResult, auth } from "./config/firebase";
 import { Theme, ThemeProvider, createMuiTheme } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
 const HASURA_DOMAIN = `api.parti.mx/v1/graphql`;
 
 const wsLink = new WebSocketLink({
@@ -176,14 +175,12 @@ const theme: Theme = createMuiTheme({
     subtitle1: {
       fontSize: 14,
       letterSpacing: -0.38,
-      color: grey[600],
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
     },
     subtitle2: {
       fontSize: 11,
-      color: grey[600],
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",

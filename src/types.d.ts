@@ -105,6 +105,7 @@ export type Post = {
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata;
   images: Image[];
   files: File[];
+  candidates: Candidate[];
   closed_at: string;
   created_at: string;
   updated_at: string;
@@ -199,29 +200,6 @@ export interface Group {
   slug: string;
 }
 
-export interface SuggestionDetailType extends Post {
-  likedUsers: {
-    created_at: string;
-    user: User;
-  }[];
-  context: string;
-}
-export interface EventDetailType extends Post {
-  likedUsers: {
-    created_at: string;
-    user: User;
-  }[];
-  metadata: EventMetadata;
-}
-export interface NoticeDetailType extends Post {
-  users_aggregate: {
-    aggregate: {
-      sum: {
-        like_count: number;
-      };
-    };
-  };
-}
 export type Vote = {
   user: User;
   count: number;

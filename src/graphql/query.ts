@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { boards, posts } from "./fragment";
+import { boards, posts, candidates } from "./fragment";
 
 export const queryByGroupId = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
@@ -77,10 +77,14 @@ export const queryByBoardId = gql`
       }
       posts(order_by: { updated_at: desc }) {
         ...posts
+        candidates {
+          ...candidates
+        }
       }
     }
   }
   ${posts}
+  ${candidates}
 `;
 
 export const searchDuplicateNameWithoutMine = gql`
