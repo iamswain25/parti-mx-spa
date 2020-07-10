@@ -8,8 +8,6 @@ const useStyles = makeStyles((theme) => {
     link: {
       textDecoration: "none",
       display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
       [theme.breakpoints.down("sm")]: {
         justifyContent: "center",
         padding: theme.spacing(2),
@@ -21,9 +19,9 @@ export default function BoardMoreTag({ to = "/" }: { to: string }) {
   const classes = useStyles();
   return (
     <Link to={to} className={classes.link}>
-      <Box color="grey.600">
+      <Box color="grey.600" display="flex" alignItems="center">
         <Typography variant={"body2"}>더 보기</Typography>
-        <Box fontSize={16}>
+        <Box fontSize={16} display="flex" alignItems="center">
           <ChevronRightIcon />
         </Box>
       </Box>

@@ -117,7 +117,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
                 fontSize={12}
                 letterSpacing={-0.26}
                 color="grey.900"
-                fontWeight={500}
+                fontWeight="bold"
               >
                 65%
               </Box>

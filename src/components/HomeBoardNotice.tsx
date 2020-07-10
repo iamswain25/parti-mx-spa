@@ -3,7 +3,7 @@ import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
@@ -41,7 +41,7 @@ export default function HomeBoardNotice({ board: b }: { board?: Board }) {
           className={classes.titleContainer}
         >
           <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
-            {b?.title}
+            <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
           {isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}
         </Grid>

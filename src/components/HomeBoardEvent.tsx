@@ -54,7 +54,7 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
             className={classes.titleContainer}
           >
             <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
-              <Box ml={isDesktop ? 2 : 0}>{b.title}</Box>
+              <Box ml={isDesktop ? 2 : 0} fontWeight="bold">{b.title}</Box>
             </Typography>
             {isDesktop && (
               <Box mr={1}>

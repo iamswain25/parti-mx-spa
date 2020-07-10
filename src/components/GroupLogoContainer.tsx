@@ -10,6 +10,7 @@ import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
 import { Typography, Box, Grid } from "@material-ui/core";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -22,31 +23,40 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up("md")]: {
         height: 260,
         maxWidth: 1140,
+        "& img": {
+          height: "100%",
+          width: "100%",
+          objectFit: "cover",
+        },
         // margin: "0 30px",
       },
       [theme.breakpoints.down("sm")]: {
-        height: 180,
+        // height: 180,
+        display: "block",
+        "& img": {
+          // height: "100%",
+          width: "100%",
+          objectFit: "cover",
+        },
       },
       width: "100%",
       position: "relative",
     },
-    groupLogoImg: {
-      height: "100%",
-      width: "100%",
-      objectFit: "cover",
-    },
     groupLogoOverlay: {
-      position: "absolute",
-      height: "100%",
-      width: "100%",
-      top: 0,
+      [theme.breakpoints.up("md")]: {
+        position: "absolute",
+        height: "100%",
+        width: "100%",
+        top: 0,
+        backgroundImage:
+          "linear-gradient(rgba(250, 252 ,251, 0.02), rgba(4, 97, 64, 0.98))",
+        color: theme.palette.common.white,
+        padding: 19,
+      },
+      padding: theme.spacing(2),
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-end",
-      color: theme.palette.common.white,
-      padding: 19,
-      backgroundImage:
-        "linear-gradient(rgba(250, 252 ,251, 0.02), rgba(4, 97, 64, 0.98))",
     },
     groupInfo: {
       display: "flex",
@@ -55,13 +65,21 @@ const useStyles = makeStyles((theme) => {
       fontWeight: 500,
       letterSpacing: 0,
       alignItems: "center",
-      marginTop: theme.spacing(3),
+      [theme.breakpoints.up("md")]: {
+        marginTop: theme.spacing(3),
+      },
+      [theme.breakpoints.down("sm")]: {
+        marginTop: theme.spacing(1),
+      },
     },
     groupJoin: {
       width: 69,
       height: theme.spacing(3),
       borderRadius: 2,
-      backgroundColor: "#212121",
+      [theme.breakpoints.down("sm")]: {
+        backgroundColor: theme.palette.background.paper,
+      },
+      backgroundColor: theme.palette.grey[900],
       paddingLeft: theme.spacing(1),
       display: "flex",
       flexDirection: "row",
@@ -84,6 +102,7 @@ export default function GroupLogoContainer({ group }: { group?: Group }) {
       history.push("/login");
     }
   }
+  const isDesktop = useDesktop();
   useLoadingEffect(loading);
   useErrorEffect(error);
   const { bg_img_url, title, created_at, users_aggregate, users = null } =
@@ -98,11 +117,7 @@ export default function GroupLogoContainer({ group }: { group?: Group }) {
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
-        <img
-          src={bg_img_url ?? publicsphere}
-          alt="group logo"
-          className={classes.groupLogoImg}
-        />
+        <img src={bg_img_url ?? publicsphere} alt="group logo" />
         <div className={classes.groupLogoOverlay}>
           <Typography variant="h1">{title}</Typography>
           <div className={classes.groupInfo}>

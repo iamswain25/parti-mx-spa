@@ -129,7 +129,9 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
           className={classes.titleContainer}
         >
           <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
-            <Box ml={isDesktop ? 2 : 0}>{b.title}</Box>
+            <Box fontWeight="bold" ml={isDesktop ? 2 : 0}>
+              {b?.title}
+            </Box>
           </Typography>
           {isDesktop && (
             <Box mr={1}>

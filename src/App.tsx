@@ -137,7 +137,6 @@ const theme: Theme = createMuiTheme({
     },
     h2: {
       fontSize: 20,
-      fontWeight: 500,
       letterSpacing: -0.75,
       textAlign: "center",
     },
@@ -148,12 +147,10 @@ const theme: Theme = createMuiTheme({
     },
     h4: {
       fontSize: 16,
-      fontWeight: 500,
       letterSpacing: -0.6,
     },
     h5: {
       fontSize: 14,
-      fontWeight: 500,
       letterSpacing: -0.3,
     },
     h6: {
@@ -187,7 +184,6 @@ const theme: Theme = createMuiTheme({
     },
     button: {
       fontSize: 14,
-      fontWeight: 500,
       letterSpacing: 0.2,
       display: "flex",
       flexWrap: "wrap",
