@@ -3,7 +3,6 @@ import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
 import { PageBoard } from "../types";
 import { useQuery } from "@apollo/client";
-import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import GroupLogoContainer from "./GroupLogoContainer";
@@ -11,57 +10,15 @@ import RouteBoardNotice from "./RouteBoardNotice";
 import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
 import { useParams } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import RouteBoardVote from "./RouteBoardVote";
 import RouteBoardSuggestion from "./RouteBoardSuggestion";
 import RouteBoardEvent from "./RouteBoardEvent";
-const useStyles = makeStyles((theme) => {
-  return {
-    top: {
-      height: theme.mixins.toolbar.minHeight,
-      [theme.breakpoints.down("sm")]: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      },
-    },
-    root: {
-      [theme.breakpoints.up("md")]: { marginTop: 26 },
-    },
-    grid: {
-      display: "flex",
-      [theme.breakpoints.up("md")]: {
-        marginTop: theme.spacing(3),
-        paddingLeft: 30,
-        paddingRight: 30,
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: 1200,
-      },
-      [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
-        marginTop: theme.spacing(1),
-      },
-    },
-    left: {
-      [theme.breakpoints.up("md")]: {
-        marginRight: theme.spacing(3),
-        width: `calc(66% - ${theme.spacing(3)}px)`,
-      },
-    },
-    right: {
-      [theme.breakpoints.up("md")]: {
-        marginLeft: theme.spacing(3),
-        width: `calc(34% - ${theme.spacing(3)}px)`,
-      },
-    },
-  };
-});
+import HeaderBoard from "./HeaderBoard";
 
 export default function RouteBoard() {
   const { board_id } = useParams();
   const [{ user_id }] = useStore();
-  const classes = useStyles();
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
     variables: { board_id, user_id, isAnonymous: !user_id },
   });
@@ -86,14 +43,11 @@ export default function RouteBoard() {
   }
   return (
     <>
-      <Typography variant="h3" color="textPrimary" className={classes.top}>
-        {group?.title}
-      </Typography>
-      <div className={classes.root}>
-        {isDesktop && <GroupLogoContainer group={group} />}
-        <BoardTabNavigator group={group} />
-        {boardByType}
-      </div>
+      <HeaderBoard title={group?.title} />
+      <Box mt={isDesktop ? 3 : 0} />
+      {isDesktop && <GroupLogoContainer group={group} />}
+      <BoardTabNavigator group={group} />
+      {boardByType}
     </>
   );
 }

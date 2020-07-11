@@ -8,47 +8,16 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import BoardTabNavigator from "./BoardTabNavigator";
 import { useParams } from "react-router-dom";
-import { Typography } from "@material-ui/core";
 import SuggestionDetail from "./SuggestionDetail";
+import { Box } from "@material-ui/core";
+import HeaderPost from "./HeaderPost";
 const useStyles = makeStyles((theme) => {
   return {
     top: {
       height: theme.mixins.toolbar.minHeight,
-      [theme.breakpoints.down("sm")]: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      },
     },
     root: {
       [theme.breakpoints.up("md")]: { marginTop: 26 },
-    },
-    grid: {
-      display: "flex",
-      [theme.breakpoints.up("md")]: {
-        marginTop: theme.spacing(3),
-        paddingLeft: 30,
-        paddingRight: 30,
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: 1200,
-      },
-      [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
-        marginTop: theme.spacing(1),
-      },
-    },
-    left: {
-      [theme.breakpoints.up("md")]: {
-        marginRight: theme.spacing(3),
-        width: `calc(66% - ${theme.spacing(3)}px)`,
-      },
-    },
-    right: {
-      [theme.breakpoints.up("md")]: {
-        marginLeft: theme.spacing(3),
-        width: `calc(34% - ${theme.spacing(3)}px)`,
-      },
     },
   };
 });
@@ -77,16 +46,16 @@ export default function RoutePost() {
     // case "event":
     //   postByType = <RouteBoardEvent board={p} />;
     //   break;
+    default:
+      postByType = <SuggestionDetail post={p} />;
   }
   return (
     <>
-      <Typography variant="h3" color="textPrimary" className={classes.top}>
-        {p?.board?.group?.title}
-      </Typography>
-      <div className={classes.root}>
+      <HeaderPost title={p?.board?.group?.title} />
+      <Box className={classes.root}>
         <BoardTabNavigator group={p?.board?.group} />
         {postByType}
-      </div>
+      </Box>
     </>
   );
 }
