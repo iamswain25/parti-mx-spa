@@ -5,13 +5,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import LoginModal from "./LoginModal";
 import { useStore } from "../store/store";
 import SnackbarCustom from "./SnackbarCustom";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import LogoutButton from "./LogoutButton";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import DrawerGroup from "./DrawerGroup";
+import LoginButton from "./LoginButton";
 const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -72,7 +72,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     letterSpacing: 0,
     textAlign: "center",
     color: theme.palette.primary.main,
-    textDecoration: "none",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -110,7 +109,7 @@ export default function Dashboard(props: { children?: any }) {
             </Link>
             {/* {isDesktop && ( */}
             <Typography variant="h3" noWrap>
-              {user_id ? <LogoutButton /> : <LoginModal />}
+              {user_id ? <LogoutButton /> : <LoginButton />}
             </Typography>
             {/* )} */}
           </div>

@@ -3,29 +3,18 @@ import { useStore } from "../store/store";
 import { queryByPostId } from "../graphql/query";
 import { PagePost } from "../types";
 import { useQuery } from "@apollo/client";
-import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-import BoardTabNavigator from "./BoardTabNavigator";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import SuggestionDetail from "./SuggestionDetail";
-import { Box } from "@material-ui/core";
+import { Box, Divider, Typography } from "@material-ui/core";
 import HeaderPost from "./HeaderPost";
-const useStyles = makeStyles((theme) => {
-  return {
-    top: {
-      height: theme.mixins.toolbar.minHeight,
-    },
-    root: {
-      [theme.breakpoints.up("md")]: { marginTop: 26 },
-    },
-  };
-});
+// import useDesktop from "./useDesktop";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 export default function RoutePost() {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
-  const classes = useStyles();
   const { data, error, loading } = useQuery<PagePost>(queryByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
   });
@@ -52,10 +41,29 @@ export default function RoutePost() {
   return (
     <>
       <HeaderPost title={p?.board?.group?.title} />
-      <Box className={classes.root}>
-        <BoardTabNavigator group={p?.board?.group} />
-        {postByType}
+      <Divider />
+      <Link to={`/home/${p?.board.id}`}>
+        <Box
+          mt={1}
+          paddingX={2}
+          color="primary.dark"
+          display="flex"
+          alignItems="center"
+        >
+          <Typography variant="body2">{p?.board?.title}</Typography>
+          <ChevronRightIcon color="primary" fontSize="small" />
+        </Box>
+      </Link>
+      <Box
+        fontSize={16}
+        fontWeight={500}
+        letterSpacing={-0.6}
+        paddingX={2}
+        color="grey.900"
+      >
+        {p?.title}
       </Box>
+      {postByType}
     </>
   );
 }

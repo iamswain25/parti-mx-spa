@@ -20,15 +20,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginModal() {
+export default function LoginModal({
+  isVisible,
+  setVisible,
+}: {
+  isVisible: boolean;
+  setVisible: any;
+}) {
   const [, dispatch] = useStore();
-  const [isVisible, setVisible] = React.useState(false);
   const classes = useStyles();
   const history = useHistory();
-
-  function handleLogin() {
-    setVisible(true);
-  }
   function handleClose() {
     setVisible(false);
   }
@@ -46,30 +47,24 @@ export default function LoginModal() {
     handleClose();
   }
   return (
-    <>
-      <Button onClick={handleLogin} color="inherit">
-        로그인
-      </Button>
-
-      <Modal
-        open={isVisible}
-        onClose={handleClose}
-        className={classes.modal}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <div className={classes.paper}>
-          <LoginForm handleForm={handleForm} />
-          <Button
-            type="button"
-            fullWidth
-            variant="outlined"
-            onClick={signupHandler}
-          >
-            회원가입
-          </Button>
-        </div>
-      </Modal>
-    </>
+    <Modal
+      open={isVisible}
+      onClose={handleClose}
+      className={classes.modal}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+    >
+      <div className={classes.paper}>
+        <LoginForm handleForm={handleForm} />
+        <Button
+          type="button"
+          fullWidth
+          variant="outlined"
+          onClick={signupHandler}
+        >
+          회원가입
+        </Button>
+      </div>
+    </Modal>
   );
 }

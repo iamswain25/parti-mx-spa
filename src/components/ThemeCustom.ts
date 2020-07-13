@@ -10,6 +10,9 @@ export const theme: Theme = createMuiTheme({
         button: {
           color: "inherit",
         },
+        a: {
+          textDecoration: "none",
+        },
       },
     },
   },

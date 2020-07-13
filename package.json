@@ -24,6 +24,7 @@
     "date-fns": "^2.14.0",
     "firebase": "^7.15.1",
     "graphql": "^15.1.0",
+    "material-ui-image": "^3.2.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.9.3",

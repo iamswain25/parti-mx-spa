@@ -5,12 +5,11 @@ const useStyles = makeStyles((theme) => {
   return {
     greyBg: {
       backgroundColor: grey[300],
-      paddingTop: theme.spacing(1),
+      paddingTop: (height: number) => theme.spacing(height),
     },
   };
 });
-
-export default function GreyDivider() {
-  const classes = useStyles();
+export default function GreyDivider({ height = 1 }) {
+  const classes = useStyles(height);
   return <hr className={classes.greyBg} />;
 }

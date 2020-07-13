@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => {
       flexWrap: "nowrap",
     },
     tabLink: {
-      textDecoration: "none",
       minWidth: 72,
       padding: theme.spacing(2),
       overflow: "hidden",
