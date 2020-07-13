@@ -1,7 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { Grid, IconButton, Typography, Box, CssBaseline } from "@material-ui/core";
+import {
+  Grid,
+  IconButton,
+  Typography,
+  Box,
+  CssBaseline,
+} from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 const useStyles = makeStyles((theme) => {
@@ -11,6 +17,10 @@ const useStyles = makeStyles((theme) => {
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
       overflow: "hidden",
+      position: "sticky",
+      top: 0,
+      backgroundColor: theme.palette.background.paper,
+      zIndex: theme.zIndex.appBar,
     },
   };
 });
