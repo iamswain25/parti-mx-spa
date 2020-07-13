@@ -6,12 +6,10 @@ export const initialState = {
   group_id: 34,
   // group_title: null,
   user_id: null,
-  loading: false,
 };
 export type State = typeof initialState;
 export type Action =
   | { type: "CHANGE_ALL"; isInit: boolean }
-  | { type: "SET_LOADING"; loading: boolean }
   | { type: "SET_GROUP"; group_id: number }
   // | { type: "SET_GROUP_AND_TITLE"; group_id: number; group_title: string }
   | { type: "SET_USER"; user_id: number | null }

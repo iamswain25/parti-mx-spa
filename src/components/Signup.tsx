@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Button } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
-import { useStore } from "../store/store";
+import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -38,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function Signup() {
-  const [, dispatch] = useStore();
   useRedirectIfLogin();
   const classes = useStyles();
+  const [, setLoading] = useGlobalState(keys.LOADING);
   const { handleSubmit, register, errors } = useForm<FormData>();
   async function formHandler(form: FormData) {
     const { email, password } = form;
-    dispatch({ type: "SET_LOADING", loading: true });
+    setLoading(true);
     await auth.createUserWithEmailAndPassword(email, password);
   }
 

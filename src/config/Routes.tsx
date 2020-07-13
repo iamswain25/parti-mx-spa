@@ -11,12 +11,9 @@ import RoutePost from "../components/RoutePost";
 import useParseGroupId from "../components/useParseGroupId";
 import LoginModal from "../components/LoginModal";
 import SnackbarCustom from "../components/SnackbarCustom";
-import { useStore } from "../store/store";
-import { LinearProgress } from "@material-ui/core";
 
 export default function Routes() {
   useParseGroupId();
-  const [{ loading }] = useStore();
   return (
     <>
       <Switch>
@@ -32,7 +29,6 @@ export default function Routes() {
       </Switch>
       <LoginModal />
       <SnackbarCustom />
-      {loading && <LinearProgress />}
     </>
   );
 }

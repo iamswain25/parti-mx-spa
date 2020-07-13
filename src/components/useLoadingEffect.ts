@@ -1,11 +1,11 @@
 import React from "react";
-import { useStore } from "../store/store";
+import { useGlobalState, keys } from "../store/useGlobalState";
 export default function useLoadingEffect(loading?: boolean) {
-  const [, dispatch] = useStore();
+  const [, setLoading] = useGlobalState(keys.LOADING);
   React.useEffect(() => {
     if (typeof loading === "boolean") {
-      dispatch({ type: "SET_LOADING", loading });
+      setLoading(loading);
     }
-  }, [loading, dispatch]);
+  }, [loading, setLoading]);
   return null;
 }

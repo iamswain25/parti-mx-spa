@@ -1,5 +1,5 @@
 import { createGlobalState } from "react-hooks-global-state";
-const initialState = { showLoginModal: false, error: null };
+const initialState = { showLoginModal: false, error: null, loading: true };
 export const { useGlobalState } = createGlobalState(initialState);
 // const SHOW_LOGIN_MODAL = "showLoginModal";
 // export const keys: { SHOW_LOGIN_MODAL: "showLoginModal" } = {
@@ -8,4 +8,5 @@ export const { useGlobalState } = createGlobalState(initialState);
 export enum keys {
   SHOW_LOGIN_MODAL = "showLoginModal",
   ERROR = "error",
+  LOADING = "loading",
 }

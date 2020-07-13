@@ -4,12 +4,14 @@ import { ApolloProvider } from "@apollo/client";
 import { StoreProvider } from "./store/store";
 import { client } from "./components/ApolloSetup";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider, LinearProgress } from "@material-ui/core";
 import { theme } from "./components/ThemeCustom";
-
+import { useGlobalState, keys } from "./store/useGlobalState";
 export default function App() {
+  const [loading] = useGlobalState(keys.LOADING);
   return (
     <ThemeProvider theme={theme}>
+      {loading && <LinearProgress />}
       <ApolloProvider client={client}>
         <StoreProvider>
           <Router>
