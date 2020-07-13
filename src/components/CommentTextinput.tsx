@@ -2,6 +2,7 @@ import React from "react";
 import { TextField } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useStore } from "../store/store";
+import { useGlobalState, keys } from "../store/useGlobalState";
 export default function CommentTextinput({
   post_id,
   comment_id,
@@ -17,14 +18,19 @@ export default function CommentTextinput({
     defaultValues: { body },
   });
   const [{ user_id }] = useStore();
+  const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const ref = React.useRef<HTMLInputElement | null>(null);
   React.useEffect(() => {
     reset({ body });
     ref.current?.focus();
   }, [body, comment_id, reset]);
   function formHandler() {}
-  function loginAlert() {}
-
+  function loginHandler() {
+    console.log(user_id);
+    if (!user_id) {
+      setVisible(true);
+    }
+  }
   return (
     <>
       <form onSubmit={handleSubmit(formHandler)} noValidate>
@@ -35,7 +41,7 @@ export default function CommentTextinput({
           disabled={!user_id}
           label="댓글"
           name="body"
-          onClick={user_id ? undefined : loginAlert}
+          onClick={loginHandler}
           autoFocus={autoFocus}
           inputRef={(r) => {
             ref.current = r;

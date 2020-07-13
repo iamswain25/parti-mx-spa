@@ -7,7 +7,6 @@ export const initialState = {
   // group_title: null,
   user_id: null,
   loading: false,
-  error: null,
 };
 export type State = typeof initialState;
 export type Action =
@@ -16,7 +15,6 @@ export type Action =
   | { type: "SET_GROUP"; group_id: number }
   // | { type: "SET_GROUP_AND_TITLE"; group_id: number; group_title: string }
   | { type: "SET_USER"; user_id: number | null }
-  | { type: "SET_ERROR"; error: any }
   | { type: "LOGOUT" };
 function persistSecureStore(state: State, payload: any) {
   const newState = { ...state, ...payload };

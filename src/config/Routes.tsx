@@ -9,20 +9,30 @@ import RouteBoard from "../components/RouteBoard";
 import Signup from "../components/Signup";
 import RoutePost from "../components/RoutePost";
 import useParseGroupId from "../components/useParseGroupId";
+import LoginModal from "../components/LoginModal";
+import SnackbarCustom from "../components/SnackbarCustom";
+import { useStore } from "../store/store";
+import { LinearProgress } from "@material-ui/core";
 
 export default function Routes() {
   useParseGroupId();
+  const [{ loading }] = useStore();
   return (
-    <Switch>
-      <Route path="/post/:post_id" exact component={RoutePost} />
-      <Route path="/home/:board_id" exact component={RouteBoard} />
-      <Dashboard>
-        <Route path="/" exact component={Home} />
-        <Route path="/home" exact component={Home} />
-        <PrivateRoute path="/suggestion" exact component={SuggestionNew} />
-        <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={Signup} />
-      </Dashboard>
-    </Switch>
+    <>
+      <Switch>
+        <Route path="/post/:post_id" exact component={RoutePost} />
+        <Route path="/home/:board_id" exact component={RouteBoard} />
+        <Dashboard>
+          <Route path="/" exact component={Home} />
+          <Route path="/home" exact component={Home} />
+          <PrivateRoute path="/suggestion" exact component={SuggestionNew} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+        </Dashboard>
+      </Switch>
+      <LoginModal />
+      <SnackbarCustom />
+      {loading && <LinearProgress />}
+    </>
   );
 }

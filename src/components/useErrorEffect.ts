@@ -1,11 +1,11 @@
 import React from "react";
-import { useStore } from "../store/store";
+import { useGlobalState, keys } from "../store/useGlobalState";
 export default function useErrorEffect(error: any) {
-  const [, dispatch] = useStore();
+  const [, setError] = useGlobalState(keys.ERROR);
   React.useEffect(() => {
     if (error) {
-      dispatch({ type: "SET_ERROR", error });
+      setError(error);
     }
-  }, [error, dispatch]);
+  }, [error, setError]);
   return null;
 }

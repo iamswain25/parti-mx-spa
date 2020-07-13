@@ -28,6 +28,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.9.3",
+    "react-hooks-global-state": "^1.0.1",
     "react-images-upload": "^1.2.8",
     "react-multi-carousel": "^2.5.5",
     "react-router-dom": "^5.1.2",

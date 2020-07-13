@@ -3,7 +3,6 @@ import { Comment } from "../types";
 import { Box, Divider } from "@material-ui/core";
 import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
-import LoginModal from "./LoginModal";
 
 export default function CommentContainer({
   comments,
@@ -12,7 +11,6 @@ export default function CommentContainer({
   comments?: Comment[];
   post_id?: number;
 }) {
-  const [isVisible, setVisible] = React.useState(false);
   return (
     <>
       <Box padding={2}>
@@ -34,7 +32,6 @@ export default function CommentContainer({
         {comments?.map((c, i) => {
           return <Comment1 key={i} comment={c} />;
         })}
-        <LoginModal isVisible={isVisible} setVisible={setVisible} />
       </Box>
     </>
   );

@@ -6,8 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { useStore } from "../store/store";
-import SnackbarCustom from "./SnackbarCustom";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import LogoutButton from "./LogoutButton";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import DrawerGroup from "./DrawerGroup";
@@ -80,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function Dashboard(props: { children?: any }) {
   const { children } = props;
-  const [{ user_id, loading, isInit }] = useStore();
+  const [{ user_id, isInit }] = useStore();
   const classes = useStyles();
   const [hideOnScroll, setHideOnScroll] = React.useState(false);
 
@@ -115,11 +113,7 @@ export default function Dashboard(props: { children?: any }) {
           </div>
         </Toolbar>
       </AppBar>
-      <main className={classes.content}>
-        {children && isInit && children}
-        <SnackbarCustom />
-        {loading && <LinearProgress />}
-      </main>
+      <main className={classes.content}>{children && isInit && children}</main>
     </div>
   );
 }

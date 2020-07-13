@@ -2,21 +2,21 @@ import React from "react";
 import { FormData } from "../types";
 import LoginForm from "./LoginForm";
 import { auth } from "../config/firebase";
-import { useStore } from "../store/store";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useGlobalState, keys } from "../store/useGlobalState";
 
 export default function Login() {
-  const [, dispatch] = useStore();
   const history = useHistory();
+  const [, setError] = useGlobalState(keys.ERROR);
   useRedirectIfLogin();
   const handleForm = async (form: FormData) => {
     const { email, password } = form;
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
-      dispatch({ type: "SET_ERROR", error });
+      setError(error);
     }
   };
   function signupHandler() {
