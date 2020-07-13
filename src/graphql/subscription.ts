@@ -364,3 +364,64 @@ export const subscribeEvent = gql`
   }
   ${comments}
 `;
+
+export const subsByPostId = gql`
+  subscription($post_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
+    mx_posts_by_pk(id: $post_id) {
+      id
+      title
+      body
+      context
+      metadata
+      images
+      files
+      board {
+        id
+        title
+        type
+        group {
+          id
+          title
+        }
+      }
+      updatedBy {
+        name
+        photo_url
+        id
+      }
+      createdBy {
+        name
+        photo_url
+        id
+      }
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+      comments(
+        order_by: { created_at: asc }
+        where: { parent_id: { _is_null: true } }
+      ) {
+        ...comments
+        re(order_by: { created_at: asc }) {
+          ...comments
+        }
+      }
+      created_at
+      updated_at
+      meLiked: users(where: { user_id: { _eq: $user_id } })
+        @skip(if: $isAnonymous) {
+        like_count
+      }
+      likedUsers: users(where: { like_count: { _gt: 0 } }) {
+        created_at
+        user {
+          name
+          photo_url
+        }
+      }
+    }
+  }
+  ${comments}
+`;

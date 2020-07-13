@@ -3,14 +3,29 @@ import { Comment } from "../types";
 import { Box, Divider } from "@material-ui/core";
 import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
-
+import useCommentInsert from "./useCommentInsert";
+let prevCommentCount: number | null = null;
+let shouldScroll = false;
 export default function CommentContainer({
   comments,
   post_id,
+  count = 0,
 }: {
   comments?: Comment[];
   post_id?: number;
+  count: number;
 }) {
+  const comment = { post: { id: post_id } } as Comment;
+  React.useEffect(() => {
+    if (count) {
+      if (prevCommentCount && shouldScroll) {
+        window.scrollTo(0, document.body.scrollHeight);
+        shouldScroll = false;
+      }
+      prevCommentCount = count;
+    }
+  }, [count]);
+  const insertHandler = useCommentInsert(() => (shouldScroll = true));
   return (
     <>
       <Box padding={2}>
@@ -26,7 +41,7 @@ export default function CommentContainer({
           </Box>
         </Box>
         <Box pb={1}>
-          <CommentTextinput post_id={post_id} />
+          <CommentTextinput comment={comment} handler={insertHandler} />
         </Box>
         <Divider light />
         {comments?.map((c, i) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment } from "../types";
+import { Comment, User } from "../types";
 import {
   Box,
   Divider,
@@ -11,6 +11,7 @@ import {
 import AvatarNameDate from "./AvatarNameDate";
 import CommentTextinput from "./CommentTextinput";
 import Comment2 from "./Comment2";
+import useCommentInsert from "./useCommentInsert";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -22,12 +23,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 export default function Comment1({ comment: c }: { comment?: Comment }) {
   const classes = useStyles();
-  const [isRe, setRe] = React.useState<string | undefined>(undefined);
-  function setReAt(name?: string) {
-    if (name) {
-      setRe(`@${name} `);
+  const [isRe, setRe] = React.useState<User | undefined>(undefined);
+  const insertHandler = useCommentInsert(() => setRe(undefined));
+
+  function setReAt(user?: User) {
+    if (user) {
+      setRe(user);
     } else {
-      setRe(`@${c?.user?.name} `);
+      setRe(c?.user);
     }
   }
   return (
@@ -50,10 +53,7 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
         >
           {c?.body}
           <Box fontSize={11} color="grey.600" display="flex" mt={1}>
-            <Button
-              className={classes.button}
-              onClick={() => setReAt(c?.user?.name)}
-            >
+            <Button className={classes.button} onClick={() => setReAt(c?.user)}>
               댓글달기
             </Button>
             <Box ml={1}>
@@ -68,10 +68,10 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
           })}
           {isRe && (
             <CommentTextinput
-              post_id={c?.post?.id}
-              comment_id={isRe ? c?.id : null}
-              body={isRe}
+              comment={c}
+              user={isRe}
               autoFocus
+              handler={insertHandler}
             />
           )}
         </Box>

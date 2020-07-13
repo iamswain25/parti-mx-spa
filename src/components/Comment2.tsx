@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment } from "../types";
+import { Comment, User } from "../types";
 import {
   Box,
   Divider,
@@ -23,7 +23,7 @@ export default function Comment2({
   setReAt,
 }: {
   comment?: Comment;
-  setReAt: (name?: string) => void;
+  setReAt: (user?: User) => void;
 }) {
   const classes = useStyles();
 
@@ -49,7 +49,7 @@ export default function Comment2({
           <Box fontSize={11} color="grey.600" display="flex" mt={1}>
             <Button
               className={classes.button}
-              onClick={() => setReAt(c?.user?.name)}
+              onClick={() => setReAt(c?.user)}
             >
               댓글달기
             </Button>

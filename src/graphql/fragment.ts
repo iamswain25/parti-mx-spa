@@ -5,6 +5,7 @@ export const comments = gql`
     body
     updated_at
     post {
+      id
       metadata
       board {
         type

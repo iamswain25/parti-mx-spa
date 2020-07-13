@@ -72,7 +72,11 @@ export interface Whoami {
     push_tokens: { token: string; created_at: string };
   };
 }
-
+export interface CommentInput {
+  body: string;
+  post_id: number | null;
+  parent_id: number | null;
+}
 export interface Comment {
   id: number;
   body: string;

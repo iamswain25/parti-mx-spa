@@ -1,8 +1,9 @@
 import React from "react";
 import { useStore } from "../store/store";
-import { queryByPostId } from "../graphql/query";
+// import { queryByPostId } from "../graphql/query";
+import { subsByPostId } from "../graphql/subscription";
 import { PagePost } from "../types";
-import { useQuery } from "@apollo/client";
+import { useSubscription } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useParams, Link } from "react-router-dom";
@@ -15,7 +16,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 export default function RoutePost() {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
-  const { data, error, loading } = useQuery<PagePost>(queryByPostId, {
+  const { data, error, loading } = useSubscription<PagePost>(subsByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
   });
   useLoadingEffect(loading);

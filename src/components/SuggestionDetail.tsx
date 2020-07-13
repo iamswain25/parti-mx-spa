@@ -15,8 +15,10 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "contain",
   },
 }));
+
 export default function SuggestionDetail({ post: p }: { post?: Post }) {
   const { body, images, comments, createdBy, created_at } = p ?? {};
+  const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
   const classes = useStyles();
   return (
     <>
@@ -49,7 +51,12 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
         </Box>
       </Box>
       <GreyDivider height={0.5} />
-      <CommentContainer comments={comments} post_id={p?.id} />
+
+      <CommentContainer
+        comments={comments}
+        post_id={p?.id}
+        count={commentCount}
+      />
     </>
   );
 }

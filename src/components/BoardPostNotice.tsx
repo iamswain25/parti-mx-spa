@@ -38,7 +38,7 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const navigatePost = useNavigateToPost();
-  const firstImage = p.images?.[0].uri;
+  const firstImage = p.images?.[0]?.uri;
   return (
     <div onClick={() => navigatePost(p.id)} className={classes.container}>
       {firstImage && (
