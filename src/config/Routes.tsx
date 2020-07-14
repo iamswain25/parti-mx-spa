@@ -12,6 +12,7 @@ import useParseGroupId from "../components/useParseGroupId";
 import LoginModal from "../components/LoginModal";
 import SnackbarCustom from "../components/SnackbarCustom";
 import { useStore } from "../store/store";
+import SnackbarSuccess from "../components/SnackbarSuccess";
 
 export default function Routes() {
   useParseGroupId();
@@ -33,6 +34,7 @@ export default function Routes() {
       )}
       <LoginModal />
       <SnackbarCustom />
+      <SnackbarSuccess />
     </>
   );
 }

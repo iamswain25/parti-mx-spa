@@ -95,7 +95,7 @@ export const deletePost = gql`
   }
 `;
 
-export const likeSuggestion = gql`
+export const likePost = gql`
   mutation($id: Int!) {
     insert_mx_users_post(
       objects: { post_id: $id, like_count: 1 }
@@ -106,7 +106,7 @@ export const likeSuggestion = gql`
   }
 `;
 
-export const unlikeSuggestion = gql`
+export const unlikePost = gql`
   mutation($id: Int!, $user_id: Int!) {
     update_mx_users_post(
       where: { post_id: { _eq: $id }, user_id: { _eq: $user_id } }

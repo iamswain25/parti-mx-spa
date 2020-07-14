@@ -1,10 +1,11 @@
 import React from "react";
 import { Post } from "../types";
 import { Box, Grid, makeStyles, Divider } from "@material-ui/core";
-import BtnLike from "./BtnLike";
+import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
+import BtnUnlikePost from "./BtnUnlikePost";
 const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
@@ -19,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SuggestionDetail({ post: p }: { post?: Post }) {
   const { body, images, comments, createdBy, created_at } = p ?? {};
   const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
+  const liked = p?.meLiked?.[0]?.like_count ?? 0;
+  const likeCount = p?.users_aggregate?.aggregate?.sum?.like_count || 0;
   const classes = useStyles();
   return (
     <>
@@ -46,7 +49,11 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
         </Box>
         <Box mt={4} mb={2}>
           <Grid container justify="center" alignItems="center">
-            <BtnLike count={p?.users_aggregate?.aggregate?.sum?.like_count} />
+            {liked ? (
+              <BtnUnlikePost id={p?.id} count={likeCount} />
+            ) : (
+              <BtnLikePost id={p?.id} count={likeCount} />
+            )}
           </Grid>
         </Box>
       </Box>

@@ -410,6 +410,13 @@ export const subsByPostId = gql`
       }
       created_at
       updated_at
+      users_aggregate {
+        aggregate {
+          sum {
+            like_count
+          }
+        }
+      }
       meLiked: users(where: { user_id: { _eq: $user_id } })
         @skip(if: $isAnonymous) {
         like_count
