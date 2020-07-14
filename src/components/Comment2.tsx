@@ -9,6 +9,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import AvatarNameDate from "./AvatarNameDate";
+import ButtonUnlikeComment from "./ButtonUnlikeComment";
+import ButtonLikeComment from "./ButtonLikeComment";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -50,12 +52,17 @@ export default function Comment2({
             <Button className={classes.button} onClick={() => setRe(c?.user)}>
               댓글달기
             </Button>
-            <Box ml={1}>
-              <Button className={classes.button}>공감</Button>
-            </Box>
-            <Box ml={0.5} alignItems="center" display="flex">
-              {c?.likes_aggregate?.aggregate?.count}
-            </Box>
+            {c?.likes?.[0] ? (
+              <ButtonUnlikeComment
+                id={c?.id}
+                count={c?.likes_aggregate?.aggregate?.count}
+              />
+            ) : (
+              <ButtonLikeComment
+                id={c?.id}
+                count={c?.likes_aggregate?.aggregate?.count}
+              />
+            )}
           </Box>
         </Box>
       </Box>
