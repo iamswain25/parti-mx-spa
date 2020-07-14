@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => {
       position: "sticky",
       top: 0,
       boxShadow: `0 4px 2px -2px ${grey[300]}`,
+      backgroundColor: theme.palette.background.paper,
       //  theme.shadows[1],
       zIndex: theme.zIndex.appBar,
       "& a": {

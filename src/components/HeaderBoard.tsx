@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, IconButton, Typography, CssBaseline } from "@material-ui/core";
+import { Grid, IconButton, Typography } from "@material-ui/core";
 import DrawerGroup from "./DrawerGroup";
 import SearchIcon from "@material-ui/icons/Search";
 const useStyles = makeStyles((theme) => {
@@ -28,7 +28,6 @@ export default function HeaderBoard({ title = "로딩 중" }) {
       justify="space-between"
       alignItems="center"
     >
-      <CssBaseline />
       <DrawerGroup />
       <Typography variant="h3" color="textPrimary">
         {title}

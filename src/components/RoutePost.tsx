@@ -14,11 +14,12 @@ import HeaderPost from "./HeaderPost";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
+import DesktopHeader from "./DesktopHeader";
 
 export default function RoutePost() {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
-  const isDesktop = useDesktop();
+  const [isDesktop] = useDesktop();
   const { data, error, loading } = useSubscription<PagePost>(subsByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
   });
@@ -44,7 +45,12 @@ export default function RoutePost() {
   }
   return (
     <>
-      <HeaderPost title={p?.board?.group?.title} />
+      {isDesktop ? (
+        <DesktopHeader />
+      ) : (
+        <HeaderPost title={p?.board?.group?.title} />
+      )}
+
       <Divider />
       {isDesktop ? (
         <BoardTabNavigator boards={p?.board?.group?.boards} />
@@ -62,15 +68,6 @@ export default function RoutePost() {
           </Box>
         </Link>
       )}
-      <Box
-        fontSize={16}
-        fontWeight={500}
-        letterSpacing={-0.6}
-        paddingX={2}
-        color="grey.900"
-      >
-        {p?.title}
-      </Box>
       {postByType}
     </>
   );

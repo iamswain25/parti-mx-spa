@@ -13,12 +13,14 @@ import LoginModal from "../components/LoginModal";
 import SnackbarCustom from "../components/SnackbarCustom";
 import { useStore } from "../store/store";
 import SnackbarSuccess from "../components/SnackbarSuccess";
+import { CssBaseline } from "@material-ui/core";
 
 export default function Routes() {
   useParseGroupId();
   const [{ isInit }] = useStore();
   return (
     <>
+      <CssBaseline />
       {isInit && (
         <Switch>
           <Route path="/post/:post_id" exact component={RoutePost} />

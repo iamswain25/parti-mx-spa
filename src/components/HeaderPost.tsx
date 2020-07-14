@@ -6,7 +6,6 @@ import {
   IconButton,
   Typography,
   Box,
-  CssBaseline,
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -36,7 +35,6 @@ export default function HeaderPost({ title = "로딩 중" }) {
       alignItems="center"
       wrap="nowrap"
     >
-      <CssBaseline />
       <IconButton
         color="inherit"
         aria-label="back"

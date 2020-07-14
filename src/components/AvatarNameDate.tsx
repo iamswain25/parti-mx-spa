@@ -16,6 +16,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     objectFit: "contain",
   },
+  font: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: 13,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 11,
+    },
+  },
 }));
 export default function AvatarNameDate({
   name = "로딩중",
@@ -31,7 +39,7 @@ export default function AvatarNameDate({
   const classes = useStyles();
   return (
     <Grid container alignItems="center" justify={justify}>
-      <Box fontSize={11} display="flex" alignItems="center">
+      <Box className={classes.font} display="flex" alignItems="center">
         <Avatar alt={name} src={photo_url} className={classes.small} />
         <Box ml={1} fontWeight={500} color="grey.900">
           {name}

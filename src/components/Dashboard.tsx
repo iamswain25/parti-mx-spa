@@ -1,6 +1,5 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
@@ -94,7 +93,6 @@ export default function Dashboard(props: { children?: any }) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         className={`${classes.appBar} ${hideOnScroll ? "hide" : ""}`}
