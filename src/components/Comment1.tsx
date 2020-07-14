@@ -26,13 +26,6 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
   const [isRe, setRe] = React.useState<User | undefined>(undefined);
   const insertHandler = useCommentInsert(() => setRe(undefined));
 
-  function setReAt(user?: User) {
-    if (user) {
-      setRe(user);
-    } else {
-      setRe(c?.user);
-    }
-  }
   return (
     <>
       <Box paddingY={2}>
@@ -46,14 +39,14 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
         </Grid>
         <Box
           ml={4}
-          paddingY={1}
+          pt={1}
           fontSize={12}
           letterSpacing={-0.26}
           color="grey.900"
         >
           {c?.body}
           <Box fontSize={11} color="grey.600" display="flex" mt={1}>
-            <Button className={classes.button} onClick={() => setReAt(c?.user)}>
+            <Button className={classes.button} onClick={() => setRe(c?.user)}>
               댓글달기
             </Button>
             <Box ml={1}>
@@ -64,7 +57,7 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
             </Box>
           </Box>
           {c?.re?.map((c, i) => {
-            return <Comment2 key={i} comment={c} setReAt={setReAt} />;
+            return <Comment2 key={i} comment={c} setRe={setRe} />;
           })}
           {isRe && (
             <CommentTextinput

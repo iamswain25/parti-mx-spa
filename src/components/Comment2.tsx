@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 export default function Comment2({
   comment: c,
-  setReAt,
+  setRe,
 }: {
   comment?: Comment;
-  setReAt: (user?: User) => void;
+  setRe: (user?: User) => void;
 }) {
   const classes = useStyles();
 
@@ -47,10 +47,7 @@ export default function Comment2({
         >
           {c?.body}
           <Box fontSize={11} color="grey.600" display="flex" mt={1}>
-            <Button
-              className={classes.button}
-              onClick={() => setReAt(c?.user)}
-            >
+            <Button className={classes.button} onClick={() => setRe(c?.user)}>
               댓글달기
             </Button>
             <Box ml={1}>
