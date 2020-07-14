@@ -40,7 +40,12 @@ export const queryByGroupId = gql`
 `;
 
 export const queryByBoardId = gql`
-  query($board_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
+  query(
+    $board_id: Int!
+    $user_id: Int
+    $isAnonymous: Boolean!
+    $sort: [mx_posts_order_by!]
+  ) {
     mx_boards_by_pk(id: $board_id) {
       id
       title
@@ -54,6 +59,9 @@ export const queryByBoardId = gql`
           id
           type
           title
+        }
+        users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
+          status
         }
       }
       posts_aggregate {
@@ -75,7 +83,7 @@ export const queryByBoardId = gql`
           count
         }
       }
-      posts(order_by: { updated_at: desc }) {
+      posts(order_by: $sort) {
         ...posts
         candidates {
           ...candidates

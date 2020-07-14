@@ -5,6 +5,7 @@ import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
 import { Typography, Grid, Box, Select, MenuItem } from "@material-ui/core";
 import useDesktop from "./useDesktop";
+import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -31,7 +32,13 @@ const useStyles = makeStyles((theme) => {
 export default function RouteBoardNotice({ board: b }: { board?: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
-
+  const [sort, setSort] = useGlobalState(keys.SORT);
+  function handleChange(
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) {
+    const { value } = event.target;
+    setSort(Number(value) ?? 0);
+  }
   return (
     <>
       <section className={classes.container}>
@@ -43,7 +50,6 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
         >
           <Box display="flex">
             <Typography variant={isDesktop ? "h2" : "h5"} color="textPrimary">
-              {/* {b?.title} */}
               소식
             </Typography>
             <Box mr={1} />
@@ -53,10 +59,10 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
           </Box>
           <Box display="flex">
             <Typography variant={isDesktop ? "h2" : "h5"} color="textPrimary">
-              <Select value={10}>
-                <MenuItem value={10}>최근업데이트순</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+              <Select value={sort} onChange={handleChange}>
+                <MenuItem value={0}>최근 등록순</MenuItem>
+                <MenuItem value={1}>최근 업데이트순</MenuItem>
+                <MenuItem value={2}>최근 댓글순</MenuItem>
               </Select>
             </Typography>
           </Box>

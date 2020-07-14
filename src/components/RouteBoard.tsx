@@ -15,12 +15,20 @@ import RouteBoardVote from "./RouteBoardVote";
 import RouteBoardSuggestion from "./RouteBoardSuggestion";
 import RouteBoardEvent from "./RouteBoardEvent";
 import HeaderBoard from "./HeaderBoard";
+import { postSortOptions } from "../helpers/options";
+import { useGlobalState, keys } from "../store/useGlobalState";
 
 export default function RouteBoard() {
   const { board_id } = useParams();
   const [{ user_id }] = useStore();
+  const [sort] = useGlobalState(keys.SORT);
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
-    variables: { board_id, user_id, isAnonymous: !user_id },
+    variables: {
+      board_id,
+      user_id,
+      isAnonymous: !user_id,
+      sort: [postSortOptions[sort]],
+    },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
