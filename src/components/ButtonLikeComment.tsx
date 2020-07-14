@@ -5,6 +5,8 @@ import { likeComment } from "../graphql/mutation";
 import { Box, Button, makeStyles, Theme } from "@material-ui/core";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
+import { useStore } from "../store/store";
+import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -18,6 +20,8 @@ export default function ButtonLikeComment(props: {
   count?: number;
 }) {
   const classes = useStyles();
+  const [{ user_id }] = useStore();
+  const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const { id, count } = props;
   const [like, { loading, error }] = useMutation(likeComment, {
     variables: { comment_id: id },
@@ -25,7 +29,11 @@ export default function ButtonLikeComment(props: {
   useLoadingEffect(loading);
   useErrorEffect(error);
   function pressHandler() {
-    like();
+    if (user_id) {
+      like();
+    } else {
+      showLogin(true);
+    }
   }
 
   return (

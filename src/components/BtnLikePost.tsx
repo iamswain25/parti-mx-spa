@@ -6,6 +6,7 @@ import { likePost } from "../graphql/mutation";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { useStore } from "../store/store";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -30,14 +31,20 @@ export default function BtnLikePost({
 }) {
   const classes = useStyles();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [{ user_id }] = useStore();
+  const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [vote, { loading, error }] = useMutation(likePost, {
     variables: { id },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
   async function voteHandler() {
-    await vote();
-    setSuccess("공감하였습니다.");
+    if (user_id) {
+      await vote();
+      setSuccess("공감하였습니다.");
+    } else {
+      showLogin(true);
+    }
   }
   return (
     <Box>
