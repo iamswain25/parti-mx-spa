@@ -109,7 +109,7 @@ export type Post = {
   title: string;
   context: string;
   body: string;
-  metadata: VoteMetadata | EventMetadata | SuggestionMetadata;
+  metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;
   images: Image[];
   files: File[];
   candidates: Candidate[];
@@ -138,6 +138,7 @@ export type Post = {
 export interface SuggestionPost {
   mx_posts_by_pk: Post;
 }
+type NoticeMetadata = { announcement: boolean };
 type SuggestionMetadata = { closedAt: string; closingMethod: string };
 type VoteMetadata = {
   closedAt?: string;

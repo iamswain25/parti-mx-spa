@@ -3,7 +3,14 @@ import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
-import { Typography, Grid, Box, Select, MenuItem } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  Box,
+  Select,
+  MenuItem,
+  Divider,
+} from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
@@ -67,10 +74,44 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
             </Typography>
           </Box>
         </Grid>
-        <Box paddingX={isDesktop ? 0 : 2}>
-          {b?.posts.map((p, i) => (
-            <BoardPostNotice key={i} post={p} />
-          ))}
+        <Box display="flex">
+          <Box paddingX={isDesktop ? 0 : 2} flex={1}>
+            {b?.posts.map((p, i) => (
+              <BoardPostNotice key={i} post={p} />
+            ))}
+          </Box>
+          {isDesktop && (
+            <Box
+              width={364}
+              border={1}
+              borderColor="grey.300"
+              mt={2}
+              ml={3}
+              height="fit-content"
+            >
+              <Box
+                padding={2}
+                fontSize={16}
+                fontWeight={500}
+                letterSpacing={0.23}
+                color="grey.900"
+              >
+                공지
+              </Box>
+              <Divider />
+              <Box padding={2}>
+                {b?.posts
+                  .filter((p) =>
+                    "announcement" in p.metadata
+                      ? p.metadata.announcement
+                      : false
+                  )
+                  .map((p, i) => (
+                    <BoardPostNotice key={i} post={p} />
+                  ))}
+              </Box>
+            </Box>
+          )}
         </Box>
       </section>
     </>

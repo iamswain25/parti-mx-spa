@@ -30,9 +30,9 @@ export default function RoutePost() {
     // case "vote":
     //   postByType = <RouteBoardVote board={p} />;
     //   break;
-    // case "suggestion":
-    //   postByType = <RouteBoardSuggestion board={p} />;
-    //   break;
+    case "suggestion":
+      postByType = <SuggestionDetail post={p} />;
+      break;
     // case "event":
     //   postByType = <RouteBoardEvent board={p} />;
     //   break;

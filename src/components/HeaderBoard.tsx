@@ -9,6 +9,12 @@ const useStyles = makeStyles((theme) => {
       height: theme.mixins.toolbar.minHeight,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+      [theme.breakpoints.up("md")]: {
+        maxWidth: 1200,
+        paddingLeft: 30,
+        paddingRight: 30,
+        margin: "0 auto",
+      },
     },
   };
 });

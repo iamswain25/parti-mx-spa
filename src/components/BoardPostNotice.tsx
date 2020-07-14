@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => {
     titleContainer: {
       overflow: "hidden",
       maxHeight: theme.spacing(6),
+      cursor: "pointer",
     },
     body: {
       maxHeight: theme.spacing(5),
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => {
       height: 120,
       backgroundColor: grey[200],
       marginRight: 18,
+      cursor: "pointer",
     },
   };
 });
@@ -39,13 +41,26 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
   const [isDesktop] = useDesktop();
   const navigatePost = useNavigateToPost();
   const firstImage = p.images?.[0]?.uri;
+  function navigate() {
+    navigatePost(p.id);
+  }
   return (
-    <div onClick={() => navigatePost(p.id)} className={classes.container}>
+    <div className={classes.container}>
       {firstImage && (
-        <img src={firstImage} alt="post" className={classes.img} />
+        <img
+          src={firstImage}
+          alt="post"
+          className={classes.img}
+          onClick={navigate}
+        />
       )}
       <div>
-        <Box className={classes.titleContainer} mb={1} display="flex">
+        <Box
+          className={classes.titleContainer}
+          mb={1}
+          display="flex"
+          onClick={navigate}
+        >
           <Typography variant={isDesktop ? "h3" : "h5"} color="textPrimary">
             {p.title}
           </Typography>
