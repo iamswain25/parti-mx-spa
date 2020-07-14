@@ -54,7 +54,7 @@ export default function RouteBoard() {
       <HeaderBoard title={group?.title} />
       <Box mt={isDesktop ? 3 : 0} />
       {isDesktop && <GroupLogoContainer group={group} />}
-      <BoardTabNavigator group={group} />
+      <BoardTabNavigator boards={group?.boards} />
       {boardByType}
     </>
   );

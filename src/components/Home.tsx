@@ -61,12 +61,13 @@ export default function Home() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const [isDesktop] = useDesktop();
-  const { notice, suggestion, vote, event } = data?.mx_groups_by_pk ?? {};
+  const { notice, suggestion, vote, event, boards } =
+    data?.mx_groups_by_pk ?? {};
   return (
     <div className={classes.root}>
       <GroupLogoContainer group={data?.mx_groups_by_pk} />
       {!isDesktop && <GreyDivider />}
-      <BoardTabNavigator group={data?.mx_groups_by_pk} />
+      <BoardTabNavigator boards={boards} />
       {isDesktop ? (
         <section className={classes.grid}>
           <ul className={classes.left}>

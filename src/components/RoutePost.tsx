@@ -12,10 +12,13 @@ import { Box, Divider, Typography } from "@material-ui/core";
 import HeaderPost from "./HeaderPost";
 // import useDesktop from "./useDesktop";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import BoardTabNavigator from "./BoardTabNavigator";
+import useDesktop from "./useDesktop";
 
 export default function RoutePost() {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
+  const isDesktop = useDesktop();
   const { data, error, loading } = useSubscription<PagePost>(subsByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
   });
@@ -43,18 +46,22 @@ export default function RoutePost() {
     <>
       <HeaderPost title={p?.board?.group?.title} />
       <Divider />
-      <Link to={`/home/${p?.board.id}`}>
-        <Box
-          mt={1}
-          paddingX={2}
-          color="primary.dark"
-          display="flex"
-          alignItems="center"
-        >
-          <Typography variant="body2">{p?.board?.title}</Typography>
-          <ChevronRightIcon color="primary" fontSize="small" />
-        </Box>
-      </Link>
+      {isDesktop ? (
+        <BoardTabNavigator boards={p?.board?.group?.boards} />
+      ) : (
+        <Link to={`/home/${p?.board.id}`}>
+          <Box
+            mt={1}
+            paddingX={2}
+            color="primary.dark"
+            display="flex"
+            alignItems="center"
+          >
+            <Typography variant="body2">{p?.board?.title}</Typography>
+            <ChevronRightIcon color="primary" fontSize="small" />
+          </Box>
+        </Link>
+      )}
       <Box
         fontSize={16}
         fontWeight={500}

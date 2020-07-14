@@ -382,6 +382,11 @@ export const subsByPostId = gql`
         group {
           id
           title
+          boards {
+            id
+            type
+            title
+          }
         }
       }
       updatedBy {
