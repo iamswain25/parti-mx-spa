@@ -6,6 +6,8 @@ import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
 import BtnUnlikePost from "./BtnUnlikePost";
+import LinkPreview from "./LinkPreview";
+import Linkify from "react-linkify";
 const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
@@ -45,8 +47,17 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
           ))}
         </Box>
         <Box fontSize={14} letterSpacing={-0.3} color="grey.900" mt={1.5}>
-          {body}
+          <Linkify
+            componentDecorator={(decoratedHref, decoratedText, key) => (
+              <a target="blank" href={decoratedHref} key={key}>
+                {decoratedText}
+              </a>
+            )}
+          >
+            {body}
+          </Linkify>
         </Box>
+        <LinkPreview text={body} />
         <Box mt={4} mb={2}>
           <Grid container justify="center" alignItems="center">
             {liked ? (

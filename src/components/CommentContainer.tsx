@@ -37,7 +37,7 @@ export default function CommentContainer({
         >
           댓글
           <Box ml={0.5} color="primary.dark">
-            20
+            {count}
           </Box>
         </Box>
         <Box pb={1}>
