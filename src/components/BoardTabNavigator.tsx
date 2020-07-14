@@ -65,7 +65,13 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function BoardTabNavigator({ boards }: { boards?: Board[] }) {
+export default function BoardTabNavigator({
+  boards,
+  board_id,
+}: {
+  boards?: Board[];
+  board_id?: number;
+}) {
   const classes = useStyles();
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
@@ -89,7 +95,13 @@ export default function BoardTabNavigator({ boards }: { boards?: Board[] }) {
           홈
         </NavLink>
         {boards?.map((b, i) => (
-          <NavLink to={`/home/${b.id}`} key={i} className={classes.tabLink}>
+          <NavLink
+            to={`/home/${b.id}`}
+            key={i}
+            className={`${classes.tabLink} ${
+              board_id && board_id === b.id ? "active" : ""
+            }`}
+          >
             {b.title}
           </NavLink>
         ))}

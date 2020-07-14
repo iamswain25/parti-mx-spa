@@ -125,3 +125,25 @@ export const candidates = gql`
     }
   }
 `;
+export const groups = gql`
+  fragment groups on mx_groups {
+    id
+    title
+    bg_img_url
+    created_at
+    users_aggregate {
+      aggregate {
+        count
+      }
+    }
+    boards {
+      id
+      type
+      title
+    }
+    users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
+      status
+      notification_type
+    }
+  }
+`;

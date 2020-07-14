@@ -1,23 +1,10 @@
 import gql from "graphql-tag";
-import { boards, posts, candidates, comments } from "./fragment";
+import { boards, posts, candidates, comments, groups } from "./fragment";
 
 export const queryByGroupId = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_groups_by_pk(id: $group_id) {
-      id
-      title
-      bg_img_url
-      created_at
-      users_aggregate {
-        aggregate {
-          count
-        }
-      }
-      boards {
-        id
-        type
-        title
-      }
+      ...groups
       notice: boards(where: { type: { _eq: "notice" } }) {
         ...boards
       }
@@ -30,13 +17,10 @@ export const queryByGroupId = gql`
       event: boards(where: { type: { _eq: "event" } }) {
         ...boards
       }
-      users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
-        status
-        notification_type
-      }
     }
   }
   ${boards}
+  ${groups}
 `;
 
 export const queryByBoardId = gql`
@@ -51,18 +35,7 @@ export const queryByBoardId = gql`
       title
       type
       group {
-        id
-        title
-        bg_img_url
-        created_at
-        boards {
-          id
-          type
-          title
-        }
-        users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
-          status
-        }
+        ...groups
       }
       posts_aggregate {
         aggregate {
@@ -93,6 +66,7 @@ export const queryByBoardId = gql`
   }
   ${posts}
   ${candidates}
+  ${groups}
 `;
 
 export const queryByPostId = gql`
