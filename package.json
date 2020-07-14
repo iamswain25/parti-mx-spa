@@ -38,6 +38,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "react-tiny-link": "^3.5.0",
+    "react-viewer": "^3.2.2",
     "secure-ls": "^1.2.6",
     "subscriptions-transport-ws": "^0.9.16",
     "typescript": "^3.8.3",

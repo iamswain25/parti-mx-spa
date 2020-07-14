@@ -97,6 +97,7 @@ export interface Comment {
 }
 export type Image = {
   uri: string;
+  name: string;
   type?: "web";
 };
 export type File = {
