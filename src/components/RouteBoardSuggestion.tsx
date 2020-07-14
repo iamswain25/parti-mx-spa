@@ -9,7 +9,11 @@ const useStyles = makeStyles((theme) => {
   return {
     container: {
       [theme.breakpoints.up("md")]: {
-        marginBottom: theme.spacing(5),
+        // marginBottom: theme.spacing(5),
+        maxWidth: 1200,
+        paddingLeft: 30,
+        paddingRight: 30,
+        margin: "0 auto",
       },
     },
     titleContainer: {
