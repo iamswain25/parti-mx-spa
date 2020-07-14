@@ -3,21 +3,13 @@ import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
-import {
-  Typography,
-  Grid,
-  Box,
-  Select,
-  MenuItem,
-  Divider,
-} from "@material-ui/core";
+import { Typography, Grid, Box, Divider } from "@material-ui/core";
 import useDesktop from "./useDesktop";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import PostSort from "./PostSort";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       [theme.breakpoints.up("md")]: {
-        // marginBottom: theme.spacing(5),
         maxWidth: 1200,
         paddingLeft: 30,
         paddingRight: 30,
@@ -39,13 +31,6 @@ const useStyles = makeStyles((theme) => {
 export default function RouteBoardNotice({ board: b }: { board?: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
-  const [sort, setSort] = useGlobalState(keys.SORT);
-  function handleChange(
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) {
-    const { value } = event.target;
-    setSort(Number(value) ?? 0);
-  }
   return (
     <>
       <section className={classes.container}>
@@ -64,15 +49,7 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
               {b?.posts_aggregate.aggregate.count}
             </Typography>
           </Box>
-          <Box display="flex">
-            <Typography variant={isDesktop ? "h2" : "h5"} color="textPrimary">
-              <Select value={sort} onChange={handleChange}>
-                <MenuItem value={0}>최근 등록순</MenuItem>
-                <MenuItem value={1}>최근 업데이트순</MenuItem>
-                <MenuItem value={2}>최근 댓글순</MenuItem>
-              </Select>
-            </Typography>
-          </Box>
+          <PostSort />
         </Grid>
         <Box display="flex">
           <Box paddingX={isDesktop ? 0 : 2} flex={1}>

@@ -37,7 +37,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
       <section className={classes.container}>
         <Grid
           container
-          // justify="space-between"
+          justify="space-between"
           alignItems="center"
           className={classes.titleContainer}
         >
