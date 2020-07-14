@@ -16,23 +16,25 @@ const useStyles = makeStyles((theme) => {
     container: {
       display: "flex",
       flexDirection: "column",
-      border: `1px solid ${grey[200]}`,
       [theme.breakpoints.up("md")]: {
         padding: theme.spacing(2),
+        borderBottom: "1px solid " + theme.palette.divider,
       },
       [theme.breakpoints.down("sm")]: {
+        // border: `1px solid ${grey[200]}`,
         padding: theme.spacing(1),
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[1],
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: theme.palette.divider,
       },
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: theme.palette.background.paper,
-      borderStyle: "solid",
-      borderWidth: 1,
-      borderColor: theme.palette.divider,
-      boxShadow: theme.shadows[1],
     },
     titleContainer: {
       overflow: "hidden",
       maxHeight: 44,
+      cursor: "pointer",
     },
     imgContainer: {
       maxWidth: 76,
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: grey[200],
       overflow: "hidden",
       marginRight: theme.spacing(1),
+      cursor: "pointer",
       "& img": {
         width: "inherit",
         height: "inherit",
@@ -56,7 +59,7 @@ const useStyles = makeStyles((theme) => {
 });
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost();
+  const navigatePost = useNavigateToPost(p.id);
   let eventDate = null,
     place = null,
     deadline = null,
@@ -71,14 +74,18 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const [isDesktop] = useDesktop();
   const attending = !!p.meLiked?.[0]?.like_count;
   return (
-    <div onClick={() => navigatePost(p.id)} className={classes.container}>
+    <div className={classes.container}>
       <Box mb={1} color="#a9aaad">
         <Grid container direction="row" alignItems="center">
-          <div className={classes.imgContainer}>
+          <div className={classes.imgContainer} onClick={navigatePost}>
             {firstImage ? <img src={firstImage} alt="event" /> : <EventIcon />}
           </div>
           <Box>
-            <Box mb={1} className={classes.titleContainer}>
+            <Box
+              mb={1}
+              className={classes.titleContainer}
+              onClick={navigatePost}
+            >
               <Typography variant={"h4"} color="textPrimary">
                 {p.title}
               </Typography>

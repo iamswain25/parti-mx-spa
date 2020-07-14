@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => {
     img: {
       width: 176,
       height: 120,
+      objectFit: "cover",
       backgroundColor: grey[200],
       marginRight: 18,
       cursor: "pointer",
@@ -39,11 +40,8 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostNotice({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  const navigatePost = useNavigateToPost();
+  const navigatePost = useNavigateToPost(p.id);
   const firstImage = p.images?.[0]?.uri;
-  function navigate() {
-    navigatePost(p.id);
-  }
   return (
     <div className={classes.container}>
       {firstImage && (
@@ -51,7 +49,7 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
           src={firstImage}
           alt="post"
           className={classes.img}
-          onClick={navigate}
+          onClick={navigatePost}
         />
       )}
       <div>
@@ -59,7 +57,7 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
           className={classes.titleContainer}
           mb={1}
           display="flex"
-          onClick={navigate}
+          onClick={navigatePost}
         >
           <Typography variant={isDesktop ? "h3" : "h5"} color="textPrimary">
             {p.title}

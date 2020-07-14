@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => {
     },
 
     titleContainer: {
+      cursor: "pointer",
       flex: 1,
       display: "flex",
       overflow: "hidden",
@@ -58,17 +59,21 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost();
+  const navigatePost = useNavigateToPost(p.id);
   const daysLeft = calculateDays(p.created_at) ?? 30;
   return (
-    <div onClick={() => navigatePost(p.id)} className={classes.container}>
+    <div className={classes.container}>
       <Grid container direction="row" justify="center">
         <HowToVoteIcon color="primary" className={classes.icon} />
         <Box color="primary.dark" fontWeight={500}>
           <Typography variant="h5">{daysLeft}일 남음</Typography>
         </Box>
       </Grid>
-      <Box className={classes.titleContainer} fontWeight={500}>
+      <Box
+        className={classes.titleContainer}
+        fontWeight={500}
+        onClick={navigatePost}
+      >
         <Typography variant="h2" color="textPrimary">
           {p.title}
         </Typography>

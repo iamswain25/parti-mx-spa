@@ -35,16 +35,11 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
   return (
     <>
       <section className={classes.container}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          className={classes.titleContainer}
-        >
+        <Grid container alignItems="center" className={classes.titleContainer}>
           <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
-                variant={isDesktop ? "h2" : "h5"}
+                variant={isDesktop ? "h4" : "h5"}
                 color={isClosed ? "textSecondary" : "textPrimary"}
               >
                 {/* {b?.title} */}
@@ -52,7 +47,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
               </Typography>
               <Box mr={1} />
               <Box
-                fontSize={isDesktop ? 20 : 14}
+                fontSize={isDesktop ? 16 : 14}
                 color={isClosed ? "text.secondary" : "primary.main"}
               >
                 {b?.posts_aggregate_open.aggregate.count}
@@ -63,7 +58,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
           <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
-                variant={isDesktop ? "h2" : "h5"}
+                variant={isDesktop ? "h4" : "h5"}
                 color={isClosed ? "textPrimary" : "textSecondary"}
               >
                 {/* {b?.title} */}
@@ -71,7 +66,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
               </Typography>
               <Box mr={1} />
               <Box
-                fontSize={isDesktop ? 20 : 14}
+                fontSize={isDesktop ? 16 : 14}
                 color={isClosed ? "primary.main" : "text.secondary"}
               >
                 {b?.posts_aggregate_closed.aggregate.count}

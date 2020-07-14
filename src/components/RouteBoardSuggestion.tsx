@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => {
   return {
     container: {
       [theme.breakpoints.up("md")]: {
-        // marginBottom: theme.spacing(5),
         maxWidth: 1200,
         paddingLeft: 30,
         paddingRight: 30,
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     titleContainer: {
-      borderBottom: `1px solid ${grey[400]}`,
+      borderBottom: `1px solid ${grey[300]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
@@ -39,15 +38,14 @@ export default function RouteBoardSuggestion({ board: b }: { board?: Board }) {
           <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
-                variant={isDesktop ? "h2" : "h5"}
+                variant={isDesktop ? "h4" : "h5"}
                 color={isClosed ? "textSecondary" : "textPrimary"}
               >
-                {/* {b?.title} */}
                 진행 중인 제안
               </Typography>
               <Box mr={1} />
               <Box
-                fontSize={isDesktop ? 20 : 14}
+                fontSize={isDesktop ? 16 : 14}
                 color={isClosed ? "text.secondary" : "primary.main"}
               >
                 {b?.posts_aggregate_open.aggregate.count}
@@ -58,15 +56,14 @@ export default function RouteBoardSuggestion({ board: b }: { board?: Board }) {
           <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
-                variant={isDesktop ? "h2" : "h5"}
+                variant={isDesktop ? "h4" : "h5"}
                 color={isClosed ? "textPrimary" : "textSecondary"}
               >
-                {/* {b?.title} */}
                 완료 된 제안
               </Typography>
               <Box mr={1} />
               <Box
-                fontSize={isDesktop ? 20 : 14}
+                fontSize={isDesktop ? 16 : 14}
                 color={isClosed ? "primary.main" : "text.secondary"}
               >
                 {b?.posts_aggregate_closed.aggregate.count}

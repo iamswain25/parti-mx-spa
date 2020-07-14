@@ -50,6 +50,10 @@ export const posts = gql`
     created_at
     updated_at
     images
+    board {
+      id
+      type
+    }
     users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       like_count
       updated_at

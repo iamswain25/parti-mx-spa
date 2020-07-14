@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => {
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
-        height: 145,
+        // height: 145,
       },
     },
     title: {
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     titleContainer: {
+      cursor: "pointer",
       display: "flex",
       overflow: "hidden",
       maxHeight: theme.spacing(6),
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme) => {
 export default function RoutePostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  const navigatePost = useNavigateToPost();
+  const navigatePost = useNavigateToPost(p.id);
   const daysLeft = calculateDays(p.created_at) ?? 30;
   const [isVoted, setVoted] = React.useState(false);
   React.useEffect(() => {
@@ -85,14 +86,14 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   }, [p]);
   return (
     <>
-      <div onClick={() => navigatePost(p.id)} className={classes.container}>
+      <div className={classes.container}>
         <Grid container direction="row" alignItems="center">
           <HowToVoteIcon color="primary" className={classes.icon} />
           <Box color="primary.dark">
             <Typography variant="body2">{daysLeft}일 남음</Typography>
           </Box>
         </Grid>
-        <Box className={classes.titleContainer} mt={1}>
+        <Box className={classes.titleContainer} mt={1} onClick={navigatePost}>
           <Typography
             variant={isDesktop ? "h3" : "h4"}
             color="textPrimary"
@@ -101,72 +102,77 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
             {p.title}
           </Typography>
         </Box>
-        <Box mt={1}>
-          <Grid
-            container
-            direction="row"
-            alignItems="center"
-            justify="space-between"
-          >
-            <Box color="grey.600" fontWeight={400}>
-              <Typography variant="body2">
-                참여자 {p.users_aggregate.aggregate.sum.like_count}명
-              </Typography>
-            </Box>
-            {isVoted && (
-              <Box
-                color="primary.dark"
-                fontWeight={500}
-                display="flex"
+        {!isDesktop && (
+          <>
+            <Box mt={1}>
+              <Grid
+                container
+                direction="row"
                 alignItems="center"
+                justify="space-between"
               >
-                <Typography variant="body2">투표완료</Typography>
-                <CheckCircleIcon
-                  color="primary"
-                  style={{ width: 14, height: 14 }}
+                <Box color="grey.600" fontWeight={400}>
+                  <Typography variant="body2">
+                    참여자 {p.users_aggregate.aggregate.sum.like_count}명
+                  </Typography>
+                </Box>
+                {isVoted && (
+                  <Box
+                    color="primary.dark"
+                    fontWeight={500}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Typography variant="body2">투표완료</Typography>
+                    <CheckCircleIcon
+                      color="primary"
+                      style={{ width: 14, height: 14 }}
+                    />
+                  </Box>
+                )}
+              </Grid>
+            </Box>
+            <Box mt={1}>
+              {p.candidates.map((c, i) => (
+                <RoutePostVoteCandidate
+                  candidate={c}
+                  voted={isVoted}
+                  max={maxVoteCount}
+                  total={totalVoteCount}
+                  key={i}
                 />
-              </Box>
-            )}
-          </Grid>
-        </Box>
-        <Box mt={1}>
-          {p.candidates.map((c, i) => (
-            <RoutePostVoteCandidate
-              candidate={c}
-              voted={isVoted}
-              max={maxVoteCount}
-              total={totalVoteCount}
-              key={i}
-            />
-          ))}
-        </Box>
-        <Box color="common.white" fontWeight={500} mt={2} pb={2}>
-          {isVoted ? (
-            <Button variant="contained" fullWidth className={classes.btnLight}>
-              다시 투표하기
-            </Button>
-          ) : (
-            <Button variant="contained" fullWidth className={classes.btnDark}>
-              투표하기
-            </Button>
-          )}
-        </Box>
+              ))}
+            </Box>
+            <Box color="common.white" fontWeight={500} mt={2} pb={2}>
+              {isVoted ? (
+                <Button
+                  variant="contained"
+                  fullWidth
+                  className={classes.btnLight}
+                >
+                  다시 투표하기
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  fullWidth
+                  className={classes.btnDark}
+                >
+                  투표하기
+                </Button>
+              )}
+            </Box>
 
-        <Box marginX={-1}>
-          <Divider light />
-        </Box>
-        {isDesktop && (
-          <Box mt={1} color="grey.600">
-            <Typography variant="body1" className={classes.body}>
-              {p.body}
-            </Typography>
-          </Box>
+            <Box marginX={-1}>
+              <Divider light />
+            </Box>
+          </>
         )}
         <Box mt={2}>
           <BoardPostSub2 post={p} />
         </Box>
       </div>
-      <GreyDivider />
+      {!isDesktop && <GreyDivider />}
     </>
   );
 }

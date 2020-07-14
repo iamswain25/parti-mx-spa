@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => {
       height: theme.spacing(3),
     },
     titleContainer: {
+      cursor: "pointer",
       display: "flex",
       overflow: "hidden",
       maxHeight: theme.spacing(6),
@@ -54,10 +55,10 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost();
+  const navigatePost = useNavigateToPost(p.id);
   const [isDesktop] = useDesktop();
   return (
-    <div onClick={() => navigatePost(p.id)} className={classes.container}>
+    <div className={classes.container}>
       <Box mb={1}>
         <Grid container direction="row">
           <Box mr={1}>
@@ -70,7 +71,7 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
           </Box>
         </Grid>
       </Box>
-      <div className={classes.titleContainer}>
+      <div className={classes.titleContainer} onClick={navigatePost}>
         <Typography
           variant={isDesktop ? "h3" : "h5"}
           className={classes.title}

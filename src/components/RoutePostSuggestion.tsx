@@ -11,15 +11,18 @@ import { calculateDays } from "../helpers/datefns";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      [theme.breakpoints.up("md")]: {
-        border: `1px solid ${grey[200]}`,
-      },
+      borderBottom: `1px solid ${grey[200]}`,
       [theme.breakpoints.down("sm")]: {
-        borderBottom: `1px solid ${grey[200]}`,
+        padding: theme.spacing(2),
       },
-      padding: theme.spacing(2),
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+        marginBottom: theme.spacing(6),
+      },
     },
     titleContainer: {
+      cursor: "pointer",
       display: "flex",
       overflow: "hidden",
       maxHeight: theme.spacing(6),
@@ -51,11 +54,11 @@ const useStyles = makeStyles((theme) => {
 
 export default function RoutePostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost();
+  const navigatePost = useNavigateToPost(p.id);
   const [isDesktop] = useDesktop();
   const daysLeft = calculateDays(p.created_at) ?? 30;
   return (
-    <div onClick={() => navigatePost(p.id)} className={classes.container}>
+    <div className={classes.container}>
       <Box mb={1}>
         <Grid container direction="row">
           <Box mr={0.5} display="flex" alignItems="center">
@@ -68,7 +71,7 @@ export default function RoutePostSuggestion({ post: p }: { post: Post }) {
           </Box>
         </Grid>
       </Box>
-      <div className={classes.titleContainer}>
+      <div className={classes.titleContainer} onClick={navigatePost}>
         <Typography variant={isDesktop ? "h3" : "h5"} color="textPrimary">
           {p.title}
         </Typography>
