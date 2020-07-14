@@ -30,7 +30,7 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
 
   return (
     <>
-      <Box paddingY={2}>
+      <Box pt={2}>
         <Grid container alignItems="center" justify="space-between">
           <AvatarNameDate
             name={c?.user?.name}
@@ -57,6 +57,11 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
               />
             )}
           </Box>
+          {(c?.re?.length || 0) > 0 && (
+            <Box mt={1}>
+              <Divider light />
+            </Box>
+          )}
           {c?.re?.map((c, i) => {
             return <Comment2 key={i} comment={c} setRe={setRe} />;
           })}
@@ -70,7 +75,11 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
           )}
         </Box>
       </Box>
-      <Divider light />
+      {c?.re?.length === 0 && (
+        <Box mt={1}>
+          <Divider light />
+        </Box>
+      )}
     </>
   );
 }

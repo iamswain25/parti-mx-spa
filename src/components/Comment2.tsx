@@ -42,7 +42,7 @@ export default function Comment2({
         </Grid>
         <Box
           ml={4}
-          paddingY={1}
+          pt={1}
           fontSize={12}
           letterSpacing={-0.26}
           color="grey.900"
