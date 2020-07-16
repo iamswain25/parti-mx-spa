@@ -51,6 +51,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "firebase deploy --only hosting",
+    "bd": "react-scripts build && firebase deploy --only hosting",
     "firelogin": "firebase login --reauth",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
