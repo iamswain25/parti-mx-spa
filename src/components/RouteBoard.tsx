@@ -5,12 +5,9 @@ import { PageBoard } from "../types";
 import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-import GroupLogoContainer from "./GroupLogoContainer";
 import RouteBoardNotice from "./RouteBoardNotice";
 import BoardTabNavigator from "./BoardTabNavigator";
-import useDesktop from "./useDesktop";
 import { useParams } from "react-router-dom";
-import { Box } from "@material-ui/core";
 import RouteBoardVote from "./RouteBoardVote";
 import RouteBoardSuggestion from "./RouteBoardSuggestion";
 import RouteBoardEvent from "./RouteBoardEvent";
@@ -32,7 +29,6 @@ export default function RouteBoard() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const [isDesktop] = useDesktop();
   const { group, type } = data?.mx_boards_by_pk ?? {};
   let boardByType = null;
   switch (type) {

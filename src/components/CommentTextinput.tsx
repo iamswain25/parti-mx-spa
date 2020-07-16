@@ -1,10 +1,26 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, makeStyles, Button, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useStore } from "../store/store";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { User, Comment, CommentInput } from "../types";
-
+const useStyles = makeStyles((theme) => {
+  return {
+    root: {
+      "& .MuiOutlinedInput-root": {
+        borderRadius: 0,
+        "&.Mui-focused textarea": {
+          [theme.breakpoints.down("sm")]: {
+            minHeight: 142,
+          },
+        },
+      },
+    },
+    btn: {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  };
+});
 export default function CommentTextinput({
   comment,
   user,
@@ -22,6 +38,7 @@ export default function CommentTextinput({
   const { handleSubmit, register, errors, reset } = useForm<CommentInput>({
     defaultValues: { body: atUser, parent_id, post_id },
   });
+  const classes = useStyles();
   const [{ user_id }] = useStore();
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const ref = React.useRef<HTMLInputElement | null>(null);
@@ -44,10 +61,13 @@ export default function CommentTextinput({
         <TextField
           variant="outlined"
           margin="normal"
+          multiline
+          // rows={4}
           fullWidth
           disabled={!user_id}
-          label="댓글"
+          label="댓글 입력"
           name="body"
+          classes={{ root: classes.root }}
           // autoComplete="off"
           onClick={loginHandler}
           autoFocus={autoFocus}
@@ -60,6 +80,11 @@ export default function CommentTextinput({
           required={errors.body ? true : false}
           error={errors.body ? true : false}
         />
+        <Grid container justify="flex-end">
+          <Button type="submit" variant="contained" color="primary" disableElevation>
+            등록
+          </Button>
+        </Grid>
       </form>
     </>
   );
