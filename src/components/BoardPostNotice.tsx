@@ -3,7 +3,7 @@ import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Hidden } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
@@ -63,13 +63,13 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
             {p.title}
           </Typography>
         </Box>
-        {isDesktop && (
+        <Hidden implementation="css" smDown>
           <Box color="grey.600">
             <Typography variant="body1" className={classes.body}>
               {p.body}
             </Typography>
           </Box>
-        )}
+        </Hidden>
         <BoardPostSub2 post={p} />
       </div>
     </div>

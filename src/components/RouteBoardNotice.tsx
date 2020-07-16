@@ -3,7 +3,7 @@ import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
-import { Typography, Grid, Box, Divider } from "@material-ui/core";
+import { Typography, Grid, Box, Divider, Hidden } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import PostSort from "./PostSort";
 const useStyles = makeStyles((theme) => {
@@ -57,7 +57,7 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
               <BoardPostNotice key={i} post={p} />
             ))}
           </Box>
-          {isDesktop && (
+          <Hidden implementation="css" smDown>
             <Box
               width={364}
               border={1}
@@ -88,7 +88,7 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
                   ))}
               </Box>
             </Box>
-          )}
+          </Hidden>
         </Box>
       </section>
     </>

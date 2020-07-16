@@ -9,14 +9,71 @@ import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography, Hidden } from "@material-ui/core";
 import HeaderBoard from "./HeaderBoard";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import PostSort from "./PostSort";
-import { useStyles } from "../helpers/styles";
-import { Img } from "react-image";
+import GoogleMapReact from "google-map-react";
 import PinDropIcon from "@material-ui/icons/PinDrop";
+import { makeStyles, Theme } from "@material-ui/core";
+import RouteMapPost from "./RouteMapPost";
+import MapPlace from "./MapPlace";
+export const useStyles = makeStyles((theme: Theme) => ({
+  smallIcon: {
+    padding: theme.spacing(0.5),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    fontSize: "inherit",
+    color: theme.palette.grey[300],
+    "&.active": {
+      color: theme.palette.primary.dark,
+      borderColor: theme.palette.primary.dark,
+    },
+    "& svg": {
+      width: 13,
+      height: 13,
+    },
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: theme.palette.grey[300],
+    [theme.breakpoints.down("sm")]: {},
+    [theme.breakpoints.up("md")]: {},
+  },
+  container: {
+    [theme.breakpoints.up("md")]: {
+      maxWidth: 1200,
+      paddingLeft: 30,
+      paddingRight: 30,
+      margin: "0 auto",
+    },
+  },
+  titleContainer: {
+    borderBottom: `1px solid ${theme.palette.grey[400]}`,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+    },
+  },
+  mapContainer: {
+    [theme.breakpoints.down("sm")]: {
+      height: "calc(100vh - 164px)",
+    },
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  map: {
+    [theme.breakpoints.up("md")]: {
+      position: "sticky",
+      top: 48,
+      width: "100%",
+      height: "100vh",
+    },
+  },
+}));
 
 export default function RoutePhoto() {
   const { board_id } = useParams();
@@ -75,20 +132,28 @@ export default function RoutePhoto() {
             </NavLink>
           </Box>
         </Grid>
-        <Box className={classes.photoGrid}>
-          {b?.posts?.map((p, i) => (
-            <NavLink
-              key={i}
-              className={classes.aspectRatio}
-              exact
-              to={`/post/${p.id}`}
+        <Box className={classes.mapContainer}>
+          <Hidden smDown implementation="css">
+            <Box width={267} mr={3} mt={3}>
+              {b?.posts?.map((p, i) => (
+                <RouteMapPost key={i} post={p} />
+              ))}
+            </Box>
+          </Hidden>
+          <Box className={classes.map}>
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: "AIzaSyBmxQGhxC-UzPzxIMlE9Sy09Dv9zUtiiW4",
+              }}
+              defaultCenter={{
+                lat: 59.95,
+                lng: 30.33,
+              }}
+              defaultZoom={11}
             >
-              <Img
-                src={[...(p.images?.map((i) => i.uri) || []), "/favicon.ico"]}
-                className={classes.img}
-              />
-            </NavLink>
-          ))}
+              <MapPlace lat={59.955413} lng={30.337844} />
+            </GoogleMapReact>
+          </Box>
         </Box>
       </section>
     </>
