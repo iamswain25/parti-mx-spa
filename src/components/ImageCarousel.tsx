@@ -29,10 +29,10 @@ const responsive = {
     items: 1,
   },
 };
-export default function ImageCarousel({ images = [] }: { images?: Image[] }) {
+export default function ImageCarousel({ images = [] }: { images: Image[] }) {
   const classes = useStyles();
   const [activeIndex, setVisible] = React.useState<null | number>(null);
-  if (images.length === 0) {
+  if (!images?.length) {
     return null;
   }
   return (
@@ -55,7 +55,7 @@ export default function ImageCarousel({ images = [] }: { images?: Image[] }) {
         {images.map((image, i) => (
           <Box key={i} onClick={() => setVisible(i)}>
             <img
-              src={image?.uri}
+              src={image.uri}
               className={classes.img}
               alt={JSON.stringify(image)}
             />

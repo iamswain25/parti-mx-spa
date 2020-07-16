@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function SuggestionDetail({ post: p }: { post?: Post }) {
-  const { body, images, comments, createdBy, created_at } = p ?? {};
+  const { body, images, comments, createdBy, created_at } = p ?? { images: [] };
   const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
   const likeCount = p?.users_aggregate?.aggregate?.sum?.like_count || 0;
