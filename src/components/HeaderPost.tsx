@@ -1,12 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import {
-  Grid,
-  IconButton,
-  Typography,
-  Box,
-} from "@material-ui/core";
+import { Grid, IconButton, Typography, Box } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 const useStyles = makeStyles((theme) => {
@@ -27,6 +22,13 @@ const useStyles = makeStyles((theme) => {
 export default function HeaderPost({ title = "로딩 중" }) {
   const classes = useStyles();
   const history = useHistory();
+  function back() {
+    if (history.length < 3) {
+      return history.replace("/");
+    } else {
+      history.goBack();
+    }
+  }
   return (
     <Grid
       container
@@ -35,12 +37,7 @@ export default function HeaderPost({ title = "로딩 중" }) {
       alignItems="center"
       wrap="nowrap"
     >
-      <IconButton
-        color="inherit"
-        aria-label="back"
-        edge="start"
-        onClick={() => history.goBack()}
-      >
+      <IconButton color="inherit" aria-label="back" edge="start" onClick={back}>
         <ChevronLeftIcon />
       </IconButton>
       <Box flexShrink={1}>

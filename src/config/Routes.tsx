@@ -14,6 +14,8 @@ import SnackbarCustom from "../components/SnackbarCustom";
 import { useStore } from "../store/store";
 import SnackbarSuccess from "../components/SnackbarSuccess";
 import { CssBaseline } from "@material-ui/core";
+import RouteMap from "../components/RouteMap";
+import RoutePhoto from "../components/RoutePhoto";
 
 export default function Routes() {
   useParseGroupId();
@@ -24,6 +26,8 @@ export default function Routes() {
       {isInit && (
         <Switch>
           <Route path="/post/:post_id" exact component={RoutePost} />
+          <Route path="/photo/:board_id" exact component={RoutePhoto} />
+          <Route path="/map/:board_id" exact component={RouteMap} />
           <Route path="/home/:board_id" exact component={RouteBoard} />
           <Dashboard>
             <Route path="/" exact component={Home} />
