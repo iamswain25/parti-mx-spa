@@ -35,7 +35,9 @@ export default function CommentTextinput({
   const atUser = user ? `@${user?.name} ` : "";
   const parent_id = comment?.id || null;
   const post_id = comment?.post?.id || null;
-  const { handleSubmit, register, errors, reset } = useForm<CommentInput>({
+  const { handleSubmit, register, errors, reset, getValues } = useForm<
+    CommentInput
+  >({
     defaultValues: { body: atUser, parent_id, post_id },
   });
   const classes = useStyles();
@@ -44,9 +46,13 @@ export default function CommentTextinput({
   const ref = React.useRef<HTMLInputElement | null>(null);
 
   React.useEffect(() => {
-    reset({ body: atUser, parent_id, post_id });
+    const { body } = getValues();
+    if (body.indexOf(atUser) > -1) {
+      return ref.current?.focus();
+    }
+    reset({ body: atUser + body, parent_id, post_id });
     ref.current?.focus();
-  }, [reset, atUser, parent_id, post_id]);
+  }, [reset, atUser, parent_id, post_id, getValues]);
 
   function loginHandler() {
     if (!user_id) {
@@ -81,7 +87,12 @@ export default function CommentTextinput({
           error={errors.body ? true : false}
         />
         <Grid container justify="flex-end">
-          <Button type="submit" variant="contained" color="primary" disableElevation>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disableElevation
+          >
             등록
           </Button>
         </Grid>
