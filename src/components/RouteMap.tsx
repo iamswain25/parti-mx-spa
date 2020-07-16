@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
-import { PageBoard, Board } from "../types";
+import { PageBoard, Board, Post } from "../types";
 import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
@@ -19,6 +19,7 @@ import PinDropIcon from "@material-ui/icons/PinDrop";
 import { makeStyles, Theme } from "@material-ui/core";
 import RouteMapPost from "./RouteMapPost";
 import MapPlace from "./MapPlace";
+import RouteMapPostBottom from "./RouteMapPostBottom";
 export const useStyles = makeStyles((theme: Theme) => ({
   smallIcon: {
     padding: theme.spacing(0.5),
@@ -60,6 +61,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   mapContainer: {
     [theme.breakpoints.down("sm")]: {
       height: "calc(100vh - 164px)",
+      display: "flex",
+      flexDirection: "column",
     },
     [theme.breakpoints.up("md")]: {
       display: "flex",
@@ -71,6 +74,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
       top: 48,
       width: "100%",
       height: "100vh",
+    },
+    [theme.breakpoints.down("sm")]: {
+      flex: 1,
     },
   },
 }));
@@ -90,13 +96,19 @@ export default function RoutePhoto() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
+  const [selectedPlace, setSelectedPlace] = React.useState<Post | undefined>(
+    undefined
+  );
   const [isDesktop] = useDesktop();
   const { group, group: { boards = [], title = "로딩 중" } = {}, ...b } =
     data?.mx_boards_by_pk || ({} as Board);
+  function childClickHandler(key: number, childProps: any) {
+    const post = b?.posts?.[key];
+    setSelectedPlace(post);
+  }
   return (
     <>
       <HeaderBoard title={title} />
-      <Box mt={isDesktop ? 3 : 0} />
       <BoardTabNavigator boards={boards} />
       <section className={classes.container}>
         <Grid
@@ -133,10 +145,10 @@ export default function RoutePhoto() {
           </Box>
         </Grid>
         <Box className={classes.mapContainer}>
-          <Hidden smDown implementation="css">
+          <Hidden smDown implementation="js">
             <Box width={267} mr={3} mt={3}>
               {b?.posts?.map((p, i) => (
-                <RouteMapPost key={i} post={p} />
+                <RouteMapPost key={i} post={p} selectedPlace={selectedPlace} />
               ))}
             </Box>
           </Hidden>
@@ -150,10 +162,26 @@ export default function RoutePhoto() {
                 lng: 30.33,
               }}
               defaultZoom={11}
+              onChildClick={childClickHandler}
             >
-              <MapPlace lat={59.955413} lng={30.337844} />
+              {b?.posts?.map((p, i) => (
+                <MapPlace
+                  lat={59.955413 + Math.random() / 10}
+                  lng={30.337844 + Math.random() / 10}
+                  key={i}
+                  selected={selectedPlace === p}
+                />
+              ))}
             </GoogleMapReact>
           </Box>
+          <Hidden mdUp implementation="css">
+            {selectedPlace && (
+              <RouteMapPostBottom
+                post={selectedPlace}
+                setSelectedPlace={setSelectedPlace}
+              />
+            )}
+          </Hidden>
         </Box>
       </section>
     </>

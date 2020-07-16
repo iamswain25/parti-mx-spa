@@ -5,12 +5,15 @@ import { makeStyles, Theme } from "@material-ui/core";
 import { Img } from "react-image";
 import BoardPostSub2 from "./BoardPostSub2";
 import useNavigateToPost from "./useNavigateToPost";
+import ReactDOM from "react-dom";
 export const useStyles = makeStyles((theme: Theme) => ({
   container: {
     padding: theme.spacing(1),
     borderStyle: "solid",
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
+    borderWidth: (selected) => (selected ? 2 : 1),
+    borderColor: (selected) =>
+      selected ? theme.palette.primary.main : theme.palette.grey[300],
+
     marginBottom: theme.spacing(1),
   },
   titleContainer: {
@@ -28,11 +31,30 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function RouteMapPost({ post: p }: { post: Post }) {
+export default function RouteMapPost({
+  post: p,
+  selectedPlace,
+}: {
+  post: Post;
+  selectedPlace?: Post;
+}) {
   const navigatePost = useNavigateToPost(p.id);
-  const classes = useStyles();
+  const selected = selectedPlace?.id === p.id;
+  const classes = useStyles(selected);
+  const divRef = React.useRef<HTMLDivElement>(null);
+  console.log(selected);
+  React.useEffect(
+    function scrollInView() {
+      if (selected) {
+        const node = ReactDOM.findDOMNode(divRef.current) as Element;
+        node.scrollIntoView({ block: "center", behavior: "smooth" });
+      }
+    },
+    [selected]
+  );
+
   return (
-    <div className={classes.container}>
+    <div className={classes.container} ref={divRef}>
       <Img
         src={[...(p.images?.map((i) => i.uri) || []), "/favicon.ico"]}
         className={classes.img}

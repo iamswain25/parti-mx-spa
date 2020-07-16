@@ -27,8 +27,8 @@ const greatPlaceStyleHover = {
   backgroundColor: "#009062",
   color: "#ffffff",
 };
-export default function MapPlace(props: ChildComponentProps) {
-  const style = props.$hover ? greatPlaceStyleHover : greatPlaceStyle;
+export default function MapPlace(props: ChildComponentProps & {selected: boolean}) {
+  const style = props.$hover || props.selected ? greatPlaceStyleHover : greatPlaceStyle;
   return (
     <IconButton style={style}>
       <PlaceIcon />
