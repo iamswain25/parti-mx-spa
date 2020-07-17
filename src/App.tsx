@@ -5,7 +5,7 @@ import { StoreProvider } from "./store/store";
 import { client } from "./components/ApolloSetup";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, LinearProgress } from "@material-ui/core";
-import { theme } from "./components/ThemeCustom";
+import { theme } from "./config/ThemeCustom";
 import { useGlobalState, keys } from "./store/useGlobalState";
 export default function App() {
   const [loading] = useGlobalState(keys.LOADING);

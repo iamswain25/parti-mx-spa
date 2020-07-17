@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    // alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-  },
-  wrapper: {
-    margin: theme.spacing(1),
-    position: "relative",
   },
   buttonProgress: {
     position: "absolute",
@@ -50,12 +46,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
+        <Typography variant="h2">로그인</Typography>
         <form
           className={classes.form}
           onSubmit={handleSubmit(handleForm)}
@@ -67,7 +58,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             fullWidth
             type="email"
             id="email"
-            label="Email Address"
+            label="이메일 주소"
             name="email"
             autoComplete="email"
             autoFocus
@@ -87,7 +78,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             margin="normal"
             fullWidth
             name="password"
-            label="Password"
+            label="비밀번호"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -98,17 +89,16 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             error={errors.password ? true : false}
             helperText={errors.password && errors.password.message}
           />
-          <div className={classes.wrapper}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              로그인
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            disableElevation
+            className={classes.submit}
+          >
+            로그인
+          </Button>
         </form>
       </div>
     </Container>

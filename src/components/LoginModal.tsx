@@ -5,8 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
 import LoginForm from "./LoginForm";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { Box } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -17,6 +18,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  label: {
+    fontSize: 12,
+    letterSpacing: -0.55,
+    color: "#212121",
+    textAlign: "center",
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+  link: {
+    marginLeft: theme.spacing(1),
+    color: "#002bff",
   },
 }));
 
@@ -38,7 +51,7 @@ export default function LoginModal() {
     }
   }
   function signupHandler() {
-    history.push("/signup");
+    // history.push("/signup");
     handleClose();
   }
   return (
@@ -51,14 +64,12 @@ export default function LoginModal() {
     >
       <div className={classes.paper}>
         <LoginForm handleForm={handleForm} />
-        <Button
-          type="button"
-          fullWidth
-          variant="outlined"
-          onClick={signupHandler}
-        >
-          회원가입
-        </Button>
+        <Box className={classes.label}>
+          아직 회원이 아니신가요?
+          <Link to={`/signup`} onClick={signupHandler} className={classes.link}>
+            회원가입
+          </Link>
+        </Box>
       </div>
     </Modal>
   );

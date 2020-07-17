@@ -44,7 +44,6 @@ export const theme: Theme = createMuiTheme({
     h2: {
       fontSize: 20,
       letterSpacing: -0.75,
-      textAlign: "center",
     },
     h3: {
       //제목
