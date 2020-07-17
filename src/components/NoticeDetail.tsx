@@ -1,23 +1,18 @@
 import React from "react";
 import { Post } from "../types";
-import { Box, Grid, Divider, makeStyles, Avatar } from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
+import AvatarNameDate from "./AvatarNameDate";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
 import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
-import { semanticDate } from "../helpers/datefns";
 const useStyles = makeStyles((theme) => {
-  const colors = {
-    emerald: theme.palette.primary.dark,
-    grey900: theme.palette.grey[900],
-  };
   return {
     root: {
-      color: colors.grey900,
       [theme.breakpoints.up("md")]: {
         maxWidth: 900,
         paddingLeft: 60,
@@ -66,20 +61,10 @@ const useStyles = makeStyles((theme) => {
         marginTop: theme.spacing(1.5),
       },
     },
-    small: {
-      width: theme.spacing(2.5),
-      height: theme.spacing(2.5),
-    },
-    label: {
-      fontSize: 12,
-      fontWeight: 500,
-      color: colors.emerald,
-      marginRight: theme.spacing(0.5),
-    },
   };
 });
 
-export default function SuggestionDetail({ post: p }: { post?: Post }) {
+export default function NoticeDetail({ post: p }: { post?: Post }) {
   const { body, images, comments, createdBy, created_at } = p ?? { images: [] };
   const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
@@ -89,43 +74,24 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
   return (
     <Box bgcolor="grey.100">
       <Box paddingX={2} className={classes.root}>
-        <Box className={classes.title}>{p?.title}</Box>
-        <Box my={2}>
-          <Divider light />
+        <Box color="grey.900" className={classes.title}>
+          {p?.title}
         </Box>
-        <Box mb={2}>
-          <Grid container alignItems="center">
-            <Box className={classes.label}>제안자</Box>
-            <Avatar
-              alt={createdBy?.name}
-              src={createdBy?.photo_url}
-              className={classes.small}
-            />
-            <Box ml={1} fontWeight={500}>
-              {createdBy?.name}
-            </Box>
-          </Grid>
+        <Box mb={2} mt={1}>
+          <AvatarNameDate
+            name={createdBy?.name}
+            photo_url={createdBy?.photo_url}
+            created_at={created_at}
+          />
         </Box>
-        <Box mb={2}>
-          <Grid container alignItems="center" justify="space-between">
-            <Box display="flex">
-              <Box className={classes.label}>제안일</Box>
-              <Box>{semanticDate(created_at)}</Box>
-            </Box>
-          </Grid>
-        </Box>
+        <Divider light />
         <Box className={classes.image}>
           <ImageCarousel images={images} />
         </Box>
-        <Box className={classes.body}>
+        <Box className={classes.body} color="grey.900">
           <Linkify
             componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={decoratedHref}
-                key={key}
-              >
+              <a target="blank" href={decoratedHref} key={key}>
                 {decoratedText}
               </a>
             )}

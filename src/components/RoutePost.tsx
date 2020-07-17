@@ -15,6 +15,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
 import DesktopHeader from "./DesktopHeader";
+import NoticeDetail from "./NoticeDetail";
 
 export default function RoutePost() {
   const { post_id } = useParams();
@@ -29,7 +30,7 @@ export default function RoutePost() {
   let postByType = null;
   switch (p?.board?.type) {
     case "notice":
-      postByType = <SuggestionDetail post={p} />;
+      postByType = <NoticeDetail post={p} />;
       break;
     // case "vote":
     //   postByType = <RouteBoardVote board={p} />;

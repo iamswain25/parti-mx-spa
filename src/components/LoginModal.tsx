@@ -2,10 +2,9 @@ import React from "react";
 import { FormData } from "../types";
 import { auth } from "../config/firebase";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
 import LoginForm from "./LoginForm";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { Box } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +36,6 @@ export default function LoginModal() {
   const [isVisible, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [, setError] = useGlobalState(keys.ERROR);
   const classes = useStyles();
-  const history = useHistory();
   function handleClose() {
     setVisible(false);
   }
@@ -51,7 +49,6 @@ export default function LoginModal() {
     }
   }
   function signupHandler() {
-    // history.push("/signup");
     handleClose();
   }
   return (
