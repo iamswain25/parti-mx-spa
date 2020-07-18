@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, makeStyles, Button } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useMutation } from "@apollo/client";
 import { likePost } from "../graphql/mutation";
@@ -14,7 +14,13 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(1.5),
   },
   like: {
-    fontSize: 12,
+    [theme.breakpoints.up("md")]: {
+      fontSize: 16,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 14,
+      width: "100%",
+    },
     letterSpacing: -0.33,
     color: theme.palette.grey[600],
     backgroundColor: theme.palette.grey[50],
@@ -34,7 +40,7 @@ export default function BtnLikePost({ post }: { post?: Post }) {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  async function voteHandler() {
+  async function handler() {
     if (user_id) {
       await vote();
       setSuccess("공감하였습니다.");
@@ -42,16 +48,30 @@ export default function BtnLikePost({ post }: { post?: Post }) {
       showLogin(true);
     }
   }
-  return (
-    <Box>
-      <Button
-        onClick={voteHandler}
-        variant="contained"
-        className={classes.like}
-        startIcon={<FavoriteIcon className={classes.icon} />}
-      >
-        공감 {count}
-      </Button>
-    </Box>
-  );
+  const type = post?.board?.type;
+  switch (type) {
+    case "suggestion":
+      return (
+        <Button
+          onClick={handler}
+          variant="contained"
+          className={classes.like}
+          disableElevation
+        >
+          제안 동의
+        </Button>
+      );
+    default:
+      return (
+        <Button
+          onClick={handler}
+          variant="contained"
+          className={classes.like}
+          startIcon={<FavoriteIcon className={classes.icon} />}
+          disableElevation
+        >
+          공감 {count}
+        </Button>
+      );
+  }
 }

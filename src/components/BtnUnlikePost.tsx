@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, makeStyles, Button } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useMutation } from "@apollo/client";
 import { unlikePost } from "../graphql/mutation";
@@ -15,11 +15,17 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   like: {
-    fontSize: 12,
+    [theme.breakpoints.up("md")]: {
+      fontSize: 16,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 14,
+      width: "100%",
+    },
     letterSpacing: -0.33,
-    color: theme.palette.primary.main,
-    backgroundColor: theme.palette.grey[50],
-    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.light,
+    borderColor: "#bbe7d6", // theme.palette.primary.main,
     borderWidth: 1,
     borderStyle: "solid",
   },
@@ -34,20 +40,39 @@ export default function BtnUnlikePost({ post }: { post?: Post }) {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
+  const type = post?.board?.type;
   async function handler() {
     await unlike();
-    setSuccess("공감 취소 하였습니다.");
+    switch (type) {
+      case "suggestion":
+        return setSuccess("제안 취소 하였습니다.");
+      default:
+        return setSuccess("공감 취소 하였습니다.");
+    }
   }
-  return (
-    <Box>
-      <Button
-        onClick={handler}
-        variant="contained"
-        className={classes.like}
-        startIcon={<FavoriteIcon className={classes.icon} />}
-      >
-        공감취소 {count}
-      </Button>
-    </Box>
-  );
+  switch (type) {
+    case "suggestion":
+      return (
+        <Button
+          onClick={handler}
+          variant="contained"
+          className={classes.like}
+          disableElevation
+        >
+          제안 동의 취소
+        </Button>
+      );
+    default:
+      return (
+        <Button
+          onClick={handler}
+          variant="contained"
+          className={classes.like}
+          disableElevation
+          startIcon={<FavoriteIcon className={classes.icon} />}
+        >
+          공감 취소 {count}
+        </Button>
+      );
+  }
 }
