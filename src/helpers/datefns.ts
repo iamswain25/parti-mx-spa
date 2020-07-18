@@ -20,7 +20,7 @@ export function minutesDiff(date: string) {
   const minDiff = timeDiff / 60 / 1000;
   return minDiff;
 }
-export function closingDateFrom(created_at: string, days = 30) {
+export function closingDateFrom(created_at?: string, days = 30) {
   if (!created_at) {
     return null;
   }

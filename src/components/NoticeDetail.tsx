@@ -68,7 +68,6 @@ export default function NoticeDetail({ post: p }: { post?: Post }) {
   const { body, images, comments, createdBy, created_at } = p ?? { images: [] };
   const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
-  const likeCount = p?.users_aggregate?.aggregate?.sum?.like_count || 0;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
@@ -102,11 +101,7 @@ export default function NoticeDetail({ post: p }: { post?: Post }) {
         <LinkPreview text={body} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
-            {liked ? (
-              <BtnUnlikePost id={p?.id} count={likeCount} />
-            ) : (
-              <BtnLikePost id={p?.id} count={likeCount} />
-            )}
+            {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}
           </Grid>
         </Box>
       </Box>

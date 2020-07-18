@@ -7,6 +7,7 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useStore } from "../store/store";
+import { Post } from "../types";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -22,19 +23,14 @@ const useStyles = makeStyles((theme) => ({
     borderStyle: "solid",
   },
 }));
-export default function BtnLikePost({
-  count = 0,
-  id,
-}: {
-  count?: number;
-  id?: number;
-}) {
+export default function BtnLikePost({ post }: { post?: Post }) {
   const classes = useStyles();
+  const count = post?.users_aggregate?.aggregate?.sum?.like_count || 0;
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [{ user_id }] = useStore();
   const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [vote, { loading, error }] = useMutation(likePost, {
-    variables: { id },
+    variables: { id: post?.id },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);

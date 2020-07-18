@@ -9,7 +9,8 @@ import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
 import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
-import { semanticDate } from "../helpers/datefns";
+import { semanticDate, closingDateFrom } from "../helpers/datefns";
+import useErrorEffect from "./useErrorEffect";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -71,6 +72,9 @@ const useStyles = makeStyles((theme) => {
       height: theme.spacing(2.5),
     },
     label: {
+      [theme.breakpoints.up("md")]: {
+        fontSize: 14,
+      },
       fontSize: 12,
       fontWeight: 500,
       color: colors.emerald,
@@ -78,12 +82,38 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-
+function aTag(decoratedHref: string, decoratedText: string, key: number) {
+  return (
+    <a target="_blank" rel="noopener noreferrer" href={decoratedHref} key={key}>
+      {decoratedText}
+    </a>
+  );
+}
 export default function SuggestionDetail({ post: p }: { post?: Post }) {
-  const { body, images, comments, createdBy, created_at } = p ?? { images: [] };
+  let error = null;
+  const {
+    body,
+    images,
+    comments,
+    createdBy,
+    created_at,
+    metadata,
+    context,
+  } = p ?? {
+    images: [],
+  };
   const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
-  const likeCount = p?.users_aggregate?.aggregate?.sum?.like_count || 0;
+  let after = undefined;
+  try {
+    if (metadata && "closingMethod" in metadata) {
+      after = Number(metadata?.closingMethod?.replace("days", ""));
+    }
+  } catch (_error) {
+    error = _error;
+  }
+  useErrorEffect(error);
+  const closingAt = closingDateFrom(created_at, after);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
@@ -108,39 +138,33 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
         </Box>
         <Box mb={2}>
           <Grid container alignItems="center" justify="space-between">
-            <Box display="flex">
+            <Box display="flex" alignItems="center">
               <Box className={classes.label}>제안일</Box>
               <Box>{semanticDate(created_at)}</Box>
             </Box>
+            <Box display="flex" alignItems="center">
+              <Box className={classes.label}>제안동의 마감</Box>
+              <Box>{closingAt}</Box>
+            </Box>
           </Grid>
         </Box>
-        <Box className={classes.image}>
-          <ImageCarousel images={images} />
+        {images?.length && (
+          <Box className={classes.image}>
+            <ImageCarousel images={images} />
+          </Box>
+        )}
+        <Box className={classes.body}>
+          <Box className={classes.label}>제안배경</Box>
+          <Linkify componentDecorator={aTag}>{context}</Linkify>
         </Box>
         <Box className={classes.body}>
-          <Linkify
-            componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={decoratedHref}
-                key={key}
-              >
-                {decoratedText}
-              </a>
-            )}
-          >
-            {body}
-          </Linkify>
+          <Box className={classes.label}>제안내용</Box>
+          <Linkify componentDecorator={aTag}>{body}</Linkify>
         </Box>
         <LinkPreview text={body} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
-            {liked ? (
-              <BtnUnlikePost id={p?.id} count={likeCount} />
-            ) : (
-              <BtnLikePost id={p?.id} count={likeCount} />
-            )}
+            {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}
           </Grid>
         </Box>
       </Box>

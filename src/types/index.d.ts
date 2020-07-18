@@ -140,9 +140,8 @@ export interface SuggestionPost {
   mx_posts_by_pk: Post;
 }
 type NoticeMetadata = { announcement: boolean };
-type SuggestionMetadata = { closedAt: string; closingMethod: string };
+type SuggestionMetadata = { closingMethod: string };
 type VoteMetadata = {
-  closedAt?: string;
   closingMethod: string;
   isBinary: boolean;
   isMultiple: boolean;
