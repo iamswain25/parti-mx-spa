@@ -134,6 +134,7 @@ export type Post = {
   };
   comments: Comment[];
   meLiked: [UserPost];
+  likedUsers: UserPost[];
   board: Board;
 };
 export interface SuggestionPost {

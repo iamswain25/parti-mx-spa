@@ -1,9 +1,15 @@
 import React from "react";
 import { Post } from "../types";
-import { Box, Grid, Divider, makeStyles, Avatar } from "@material-ui/core";
+import {
+  Box,
+  Grid,
+  Divider,
+  makeStyles,
+  Avatar,
+  Hidden,
+} from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
-import CommentContainer from "./CommentContainer";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
@@ -11,6 +17,7 @@ import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
 import { semanticDate, closingDateFrom } from "../helpers/datefns";
 import useErrorEffect from "./useErrorEffect";
+import SuggestionComment from "./SuggestionComment";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -94,7 +101,7 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
   const {
     body,
     images,
-    comments,
+    
     createdBy,
     created_at,
     metadata,
@@ -102,7 +109,7 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
   } = p ?? {
     images: [],
   };
-  const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
+  
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
   let after = undefined;
   try {
@@ -168,13 +175,11 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
           </Grid>
         </Box>
       </Box>
-      {!isDesktop && <GreyDivider height={0.5} />}
+      <Hidden mdUp implementation="css">
+        <GreyDivider height={0.5} />
+      </Hidden>
       <Box className={classes.root}>
-        <CommentContainer
-          comments={comments}
-          post_id={p?.id}
-          count={commentCount}
-        />
+        <SuggestionComment post={p} />
       </Box>
     </Box>
   );
