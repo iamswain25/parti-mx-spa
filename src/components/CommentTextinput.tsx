@@ -47,12 +47,13 @@ export default function CommentTextinput({
 
   React.useEffect(() => {
     const { body } = getValues();
-    if (body.indexOf(atUser) > -1) {
-      return ref.current?.focus();
+    if (body.indexOf(atUser) < 0) {
+      reset({ body: atUser + body, parent_id, post_id });
     }
-    reset({ body: atUser + body, parent_id, post_id });
-    ref.current?.focus();
-  }, [reset, atUser, parent_id, post_id, getValues]);
+    if (autoFocus) {
+      ref.current?.focus();
+    }
+  }, [reset, atUser, parent_id, post_id, getValues, autoFocus]);
 
   function loginHandler() {
     if (!user_id) {

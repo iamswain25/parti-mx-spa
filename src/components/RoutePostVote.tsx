@@ -149,6 +149,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
                   variant="contained"
                   fullWidth
                   className={classes.btnLight}
+                  onClick={navigatePost}
                 >
                   다시 투표하기
                 </Button>
@@ -157,6 +158,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
                   variant="contained"
                   fullWidth
                   className={classes.btnDark}
+                  onClick={navigatePost}
                 >
                   투표하기
                 </Button>
