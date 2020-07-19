@@ -98,18 +98,10 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
 }
 export default function SuggestionDetail({ post: p }: { post?: Post }) {
   let error = null;
-  const {
-    body,
-    images,
-    
-    createdBy,
-    created_at,
-    metadata,
-    context,
-  } = p ?? {
+  const { body, images, createdBy, created_at, metadata, context } = p ?? {
     images: [],
   };
-  
+
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
   let after = undefined;
   try {

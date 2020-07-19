@@ -4,9 +4,10 @@ import { auth } from "../config/firebase";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { Button } from "@material-ui/core";
+import { Button, Typography, Container, Box } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,6 +37,18 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  link: {
+    marginLeft: theme.spacing(1),
+    color: "#002bff",
+  },
+  label: {
+    fontSize: 12,
+    letterSpacing: -0.55,
+    color: "#212121",
+    textAlign: "center",
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
 }));
 export default function Signup() {
   useRedirectIfLogin();
@@ -49,62 +62,70 @@ export default function Signup() {
   }
 
   return (
-    <div className="login-container">
-      <h1>회원가입</h1>
-      <form
-        onSubmit={handleSubmit(formHandler)}
-        noValidate
-        className={classes.form}
-      >
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          type="email"
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-          inputRef={register({
-            required: "Required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: "invalid email address",
-            },
-          })}
-          required={errors.email ? true : false}
-          error={errors.email ? true : false}
-          helperText={errors.email && errors.email.message}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          inputRef={register({
-            required: "Required",
-          })}
-          required={errors.password ? true : false}
-          error={errors.password ? true : false}
-          helperText={errors.password && errors.password.message}
-        />
-        <div className={classes.wrapper}>
-          <Button
-            type="submit"
+    <div className={classes.paper}>
+      <Container component="main" maxWidth="xs">
+        <Typography variant="h2">회원가입</Typography>
+        <form
+          onSubmit={handleSubmit(formHandler)}
+          noValidate
+          className={classes.form}
+        >
+          <TextField
+            variant="outlined"
+            margin="normal"
             fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            가입
-          </Button>
-        </div>
-      </form>
+            type="email"
+            id="email"
+            label="이메일 주소"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            inputRef={register({
+              required: "Required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "맞지 않는 이메일 형식 입니다.",
+              },
+            })}
+            required={errors.email ? true : false}
+            error={errors.email ? true : false}
+            helperText={errors.email && errors.email.message}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="password"
+            label="비밀번호"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            inputRef={register({
+              required: "Required",
+            })}
+            required={errors.password ? true : false}
+            error={errors.password ? true : false}
+            helperText={errors.password && errors.password.message}
+          />
+          <div className={classes.wrapper}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              가입
+            </Button>
+          </div>
+        </form>
+        <Box className={classes.label}>
+          이미 로그인 하셨나요?
+          <Link to={`/login`} className={classes.link}>
+            로그인
+          </Link>
+        </Box>
+      </Container>
     </div>
   );
 }
