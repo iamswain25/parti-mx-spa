@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { posts, comments } from "./fragment";
+import { posts, comments, candidates } from "./fragment";
 export const whoami = gql`
   subscription($email: String!) {
     mx_users(where: { email: { _eq: $email } }) {
@@ -433,7 +433,11 @@ export const subsByPostId = gql`
           photo_url
         }
       }
+      candidates {
+        ...candidates
+      }
     }
   }
   ${comments}
+  ${candidates}
 `;

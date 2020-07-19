@@ -16,6 +16,7 @@ import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
 import DesktopHeader from "./DesktopHeader";
 import NoticeDetail from "./NoticeDetail";
+import VoteDetail from "./VoteDetail";
 
 export default function RoutePost() {
   const { post_id } = useParams();
@@ -32,14 +33,14 @@ export default function RoutePost() {
     case "notice":
       postByType = <NoticeDetail post={p} />;
       break;
-    // case "vote":
-    //   postByType = <RouteBoardVote board={p} />;
-    //   break;
+    case "vote":
+      postByType = <VoteDetail post={p} />;
+      break;
     case "suggestion":
       postByType = <SuggestionDetail post={p} />;
       break;
     // case "event":
-    //   postByType = <RouteBoardEvent board={p} />;
+    //   postByType = <RouteBoardEvent post={p} />;
     //   break;
     default:
       postByType = <SuggestionDetail post={p} />;

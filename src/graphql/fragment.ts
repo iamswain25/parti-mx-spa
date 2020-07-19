@@ -99,10 +99,6 @@ export const candidates = gql`
   fragment candidates on mx_candidates {
     id
     body
-    post {
-      id
-      metadata
-    }
     votes_aggregate {
       aggregate {
         sum {

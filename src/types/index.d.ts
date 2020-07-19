@@ -140,16 +140,16 @@ export type Post = {
 export interface SuggestionPost {
   mx_posts_by_pk: Post;
 }
-type NoticeMetadata = { announcement: boolean };
-type SuggestionMetadata = { closingMethod: string };
-type VoteMetadata = {
+export type NoticeMetadata = { announcement: boolean };
+export type SuggestionMetadata = { closingMethod: string };
+export type VoteMetadata = {
   closingMethod: string;
   isBinary: boolean;
   isMultiple: boolean;
   isAnonymous: boolean;
   isResultHidden: boolean;
 };
-type EventMetadata = {
+export type EventMetadata = {
   eventDate: string;
   place: string;
   deadline: string;
