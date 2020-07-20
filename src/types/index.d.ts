@@ -117,6 +117,7 @@ export type Post = {
   closed_at: string;
   created_at: string;
   updated_at: string;
+  location: { type: "Point"; coordinates: [number, number] };
   users_aggregate: {
     aggregate: {
       sum: {

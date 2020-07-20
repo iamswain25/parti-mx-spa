@@ -50,6 +50,7 @@ export const posts = gql`
     created_at
     updated_at
     images
+    location
     board {
       id
       type

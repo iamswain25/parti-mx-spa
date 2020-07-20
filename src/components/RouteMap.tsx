@@ -158,20 +158,27 @@ export default function RoutePhoto() {
                 key: "AIzaSyBmxQGhxC-UzPzxIMlE9Sy09Dv9zUtiiW4",
               }}
               defaultCenter={{
-                lat: 59.95,
-                lng: 30.33,
+                lat: 37.5696629,
+                lng: 126.9134388,
               }}
               defaultZoom={11}
               onChildClick={childClickHandler}
             >
-              {b?.posts?.map((p, i) => (
-                <MapPlace
-                  lat={59.955413 + Math.random() / 10}
-                  lng={30.337844 + Math.random() / 10}
-                  key={i}
-                  selected={selectedPlace === p}
-                />
-              ))}
+              {b?.posts?.map((p, i) => {
+                console.log(i, p);
+                const {
+                  coordinates: [lng, lat],
+                } = p?.location || { coordinates: [null, null] };
+                console.log([lng, lat]);
+                return (
+                  <MapPlace
+                    lat={lat}
+                    lng={lng}
+                    key={i}
+                    selected={selectedPlace === p}
+                  />
+                );
+              })}
             </GoogleMapReact>
           </Box>
           <Hidden mdUp implementation="css">

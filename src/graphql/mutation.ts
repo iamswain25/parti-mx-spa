@@ -31,6 +31,7 @@ export const insertPost = gql`
     $metadata: jsonb = {}
     $images: jsonb
     $files: jsonb
+    $location: geography
   ) {
     insert_mx_posts_one(
       object: {
@@ -41,7 +42,8 @@ export const insertPost = gql`
         metadata: $metadata
         images: $images
         files: $files
-        candidates: { data: [{ body: "" }] }
+        # candidates: { data: [{ body: "" }] }
+        location: $location
       }
     ) {
       id
