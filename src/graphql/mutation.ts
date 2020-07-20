@@ -42,7 +42,6 @@ export const insertPost = gql`
         metadata: $metadata
         images: $images
         files: $files
-        # candidates: { data: [{ body: "" }] }
         location: $location
       }
     ) {

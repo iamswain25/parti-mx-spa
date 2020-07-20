@@ -165,11 +165,9 @@ export default function RoutePhoto() {
               onChildClick={childClickHandler}
             >
               {b?.posts?.map((p, i) => {
-                console.log(i, p);
                 const {
                   coordinates: [lng, lat],
                 } = p?.location || { coordinates: [null, null] };
-                console.log([lng, lat]);
                 return (
                   <MapPlace
                     lat={lat}

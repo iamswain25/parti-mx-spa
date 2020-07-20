@@ -98,12 +98,13 @@ export interface Comment {
 export type Image = {
   uri: string;
   name: string;
-  type?: "web";
+  type?: string;
 };
 export type File = {
   uri: string;
   name: string;
   size: number;
+  path: string;
 };
 export type Post = {
   id: number;

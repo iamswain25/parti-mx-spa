@@ -65,12 +65,13 @@ export async function getUserId2(user: firebase.User): Promise<number | null> {
 }
 
 export async function uploadFileGetUriArray(file: File) {
+  const { name, lastModified, type, size } = file;
   return new Promise(async function (res) {
     const path = `posts/${uuid.v4()}`;
     console.log({ path });
     const ref = firebase.storage().ref().child(path);
     const fileSnapshot = await ref.put(file);
     const uri = await fileSnapshot.ref.getDownloadURL();
-    return res({ ...file, uri, type: "web" });
+    return res({ uri, name, lastModified, type, size });
   });
 }

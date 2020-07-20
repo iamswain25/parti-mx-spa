@@ -18,6 +18,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+import Dropzone from "./Dropzone";
 const options = [{ label: "30일 후 종료", value: "30days" }];
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +64,6 @@ export default function SuggestionNew() {
   const classes = useStyles();
   function imageUploaderHandler(files: File[], pictures: string[]) {
     setImageArr(files);
-    setFileArr([]);
   }
 
   async function handleForm(form: Formdata) {
@@ -100,6 +100,7 @@ export default function SuggestionNew() {
     const res = await insert({
       variables,
     });
+    console.log(res);
     const id = res?.data?.insert_mx_posts_one?.id;
     history.push("/post/" + id);
   }
@@ -258,6 +259,7 @@ export default function SuggestionNew() {
               imgExtension={[".jpg", ".gif", ".png", ".gif"]}
               maxFileSize={5242880}
             />
+            <Dropzone files={fileArr} setFiles={setFileArr} />
             <Hidden smDown implementation="css">
               <Button
                 type="submit"

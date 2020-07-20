@@ -13,10 +13,10 @@ import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
-import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
 import { semanticDate, closingDateFrom } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
+import FilesImages from "./FilesImages";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -96,9 +96,8 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 export default function SuggestionDetail({ post: p }: { post?: Post }) {
-  const { body, images, createdBy, created_at, context } = p ?? {
-    images: [],
-  };
+  const { body, images = [], createdBy, created_at, context, files = [] } =
+    p ?? {};
   const metadata = p?.metadata as SuggestionMetadata;
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
   const closingAt = React.useMemo(() => {
@@ -146,11 +145,7 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
             </Box>
           </Grid>
         </Box>
-        {images?.length && (
-          <Box className={classes.image}>
-            <ImageCarousel images={images} />
-          </Box>
-        )}
+        <FilesImages images={images} files={files} />
         <Box className={classes.body}>
           <Box className={classes.label}>제안배경</Box>
           <Linkify componentDecorator={aTag}>{context}</Linkify>
