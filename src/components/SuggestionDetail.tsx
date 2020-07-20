@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "../types";
+import { Post, SuggestionMetadata } from "../types";
 import {
   Box,
   Grid,
@@ -16,7 +16,6 @@ import Linkify from "react-linkify";
 import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
 import { semanticDate, closingDateFrom } from "../helpers/datefns";
-import useErrorEffect from "./useErrorEffect";
 import SuggestionComment from "./SuggestionComment";
 const useStyles = makeStyles((theme) => {
   const colors = {
@@ -97,22 +96,22 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 export default function SuggestionDetail({ post: p }: { post?: Post }) {
-  let error = null;
-  const { body, images, createdBy, created_at, metadata, context } = p ?? {
+  const { body, images, createdBy, created_at, context } = p ?? {
     images: [],
   };
-
+  const metadata = p?.metadata as SuggestionMetadata;
   const liked = p?.meLiked?.[0]?.like_count ?? 0;
-  let after = undefined;
-  try {
-    if (metadata && "closingMethod" in metadata) {
+  const closingAt = React.useMemo(() => {
+    let after = undefined;
+    try {
       after = Number(metadata?.closingMethod?.replace("days", ""));
+      return closingDateFrom(created_at, after);
+    } catch (err) {
+      console.log(metadata);
+      return "버그";
     }
-  } catch (_error) {
-    error = _error;
-  }
-  useErrorEffect(error);
-  const closingAt = closingDateFrom(created_at, after);
+  }, [metadata, created_at]);
+
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
