@@ -14,12 +14,13 @@ import HomeBoardEvent from "./HomeBoardEvent";
 import BoardTabNavigator from "./BoardTabNavigator";
 import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
+import { Box } from "@material-ui/core";
+import DesktopHeader from "./DesktopHeader";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-      [theme.breakpoints.up("md")]: {
-        marginTop: 26,
-        paddingTop: theme.mixins.toolbar.minHeight,
+      [theme.breakpoints.down("sm")]: {
+        marginTop: -(theme.mixins.toolbar.minHeight || 0),
       },
     },
     grid: {
@@ -64,8 +65,11 @@ export default function Home() {
   const { notice, suggestion, vote, event, boards } =
     data?.mx_groups_by_pk ?? {};
   return (
-    <div className={classes.root}>
-      <GroupLogoContainer group={data?.mx_groups_by_pk} />
+    <>
+      <DesktopHeader />
+      <Box className={classes.root}>
+        <GroupLogoContainer group={data?.mx_groups_by_pk} />
+      </Box>
       {!isDesktop && <GreyDivider />}
       <BoardTabNavigator boards={boards} />
       {isDesktop ? (
@@ -104,6 +108,6 @@ export default function Home() {
           ))}
         </section>
       )}
-    </div>
+    </>
   );
 }

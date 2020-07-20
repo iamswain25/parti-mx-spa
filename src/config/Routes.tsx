@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Dashboard from "../components/Dashboard";
 import Login from "../components/Login";
 import SuggestionNew from "../components/SuggestionNew";
@@ -25,14 +25,20 @@ export default function Routes() {
       <CssBaseline />
       {isInit && (
         <Switch>
-          <Route path="/post/:post_id" exact component={RoutePost} />
           <Route path="/photo/:board_id" exact component={RoutePhoto} />
           <Route path="/map/:board_id" exact component={RouteMap} />
           <Route path="/home/:board_id" exact component={RouteBoard} />
+          <Route path="/home" exact component={Home} />
           <Dashboard>
-            <Route path="/" exact component={Home} />
-            <Route path="/home" exact component={Home} />
-            <PrivateRoute path="/suggestion" exact component={SuggestionNew} />
+            <Route path="/post/:post_id" exact component={RoutePost} />
+            <PrivateRoute
+              path="/suggestion/new"
+              exact
+              component={SuggestionNew}
+            />
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
           </Dashboard>

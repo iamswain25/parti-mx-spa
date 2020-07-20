@@ -1,6 +1,5 @@
 import React from "react";
 import { useStore } from "../store/store";
-// import { queryByPostId } from "../graphql/query";
 import { subsByPostId } from "../graphql/subscription";
 import { PagePost } from "../types";
 import { useSubscription } from "@apollo/client";
@@ -8,13 +7,11 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useParams, Link } from "react-router-dom";
 import SuggestionDetail from "./SuggestionDetail";
-import { Box, Divider, Typography } from "@material-ui/core";
+import { Box, Divider, Typography, Hidden } from "@material-ui/core";
 import HeaderPost from "./HeaderPost";
-// import useDesktop from "./useDesktop";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
-import DesktopHeader from "./DesktopHeader";
 import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
 
@@ -47,12 +44,9 @@ export default function RoutePost() {
   }
   return (
     <>
-      {isDesktop ? (
-        <DesktopHeader />
-      ) : (
+      <Hidden mdUp>
         <HeaderPost title={p?.board?.group?.title} />
-      )}
-
+      </Hidden>
       <Divider />
       {isDesktop ? (
         <BoardTabNavigator

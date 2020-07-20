@@ -1,9 +1,9 @@
 import React from "react";
-import { Board } from "../types";
+import { Board, BoardTypes } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
-import { Grid } from "@material-ui/core";
+import { Grid, Box, Button } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 const useStyles = makeStyles((theme) => {
   return {
@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => {
       textAlign: "center",
       display: "flex",
       flexWrap: "nowrap",
+      justifyContent: "space-between",
     },
     tabLink: {
       minWidth: 72,
@@ -67,14 +68,17 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardTabNavigator({
   boards,
+  type,
   board_id,
 }: {
   boards?: Board[];
+  type?: BoardTypes;
   board_id?: number;
 }) {
   const classes = useStyles();
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
+  const history = useHistory();
   useScrollPosition(
     ({ prevPos, currPos }) => {
       const isShow = currPos.y === 0;
@@ -84,6 +88,12 @@ export default function BoardTabNavigator({
     stickyHeader,
     false
   );
+  function btnHandler() {
+    switch (type) {
+      default:
+        return history.push("/suggestion/new");
+    }
+  }
   return (
     <Grid
       container
@@ -91,20 +101,32 @@ export default function BoardTabNavigator({
       ref={stickyHeader}
     >
       <div className={classes.tab}>
-        <NavLink exact to={`/home`} className={classes.tabLink}>
-          홈
-        </NavLink>
-        {boards?.map((b, i) => (
-          <NavLink
-            to={`/home/${b.id}`}
-            key={i}
-            className={`${classes.tabLink} ${
-              board_id && board_id === b.id ? "active" : ""
-            }`}
-          >
-            {b.title}
+        <Box display="flex" flexWrap="nowrap">
+          <NavLink exact to={`/home`} className={classes.tabLink}>
+            홈
           </NavLink>
-        ))}
+          {boards?.map((b, i) => (
+            <NavLink
+              to={`/home/${b.id}`}
+              key={i}
+              className={`${classes.tabLink} ${
+                board_id && board_id === b.id ? "active" : ""
+              }`}
+            >
+              {b.title}
+            </NavLink>
+          ))}
+        </Box>
+        <Box display="flex" alignItems="center" width={98}>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={btnHandler}
+          >
+            글쓰기
+          </Button>
+        </Box>
       </div>
     </Grid>
   );
