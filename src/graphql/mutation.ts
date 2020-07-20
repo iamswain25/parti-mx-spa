@@ -32,8 +32,8 @@ export const insertPost = gql`
     $images: jsonb
     $files: jsonb
   ) {
-    insert_mx_posts(
-      objects: {
+    insert_mx_posts_one(
+      object: {
         body: $body
         title: $title
         context: $context
@@ -44,7 +44,7 @@ export const insertPost = gql`
         candidates: { data: [{ body: "" }] }
       }
     ) {
-      affected_rows
+      id
     }
     update_mx_boards(
       _set: { last_posted_at: "now()" }

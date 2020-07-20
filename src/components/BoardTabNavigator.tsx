@@ -3,8 +3,10 @@ import { Board, BoardTypes } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink, useHistory } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
-import { Grid, Box, Button } from "@material-ui/core";
+import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
+import CreateIcon from "@material-ui/icons/Create";
+import Fab from "@material-ui/core/Fab";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -63,6 +65,12 @@ const useStyles = makeStyles((theme) => {
       textOverflow: "ellipsis",
       whiteSpace: "nowrap",
     },
+    fab: {
+      position: "fixed",
+      zIndex: theme.zIndex.speedDial,
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
   };
 });
 
@@ -119,16 +127,28 @@ export default function BoardTabNavigator({
             </NavLink>
           ))}
         </Box>
-        <Box display="flex" alignItems="center" width={98}>
-          <Button
-            variant="contained"
+        <Hidden smDown>
+          <Box display="flex" alignItems="center" width={98}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={btnHandler}
+            >
+              글쓰기
+            </Button>
+          </Box>
+        </Hidden>
+        <Hidden mdUp>
+          <Fab
             color="primary"
-            fullWidth
+            aria-label="write"
+            className={classes.fab}
             onClick={btnHandler}
           >
-            글쓰기
-          </Button>
-        </Box>
+            <CreateIcon />
+          </Fab>
+        </Hidden>
       </div>
     </Grid>
   );

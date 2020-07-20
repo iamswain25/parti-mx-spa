@@ -70,7 +70,7 @@ export async function uploadFileGetUriArray(file: File) {
     console.log({ path });
     const ref = firebase.storage().ref().child(path);
     const fileSnapshot = await ref.put(file);
-    const uri = fileSnapshot.ref.getDownloadURL();
+    const uri = await fileSnapshot.ref.getDownloadURL();
     return res({ ...file, uri, type: "web" });
   });
 }
