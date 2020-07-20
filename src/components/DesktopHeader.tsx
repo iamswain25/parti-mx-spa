@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor: "transparent",
       color: theme.palette.common.white,
     },
-    // zIndex: theme.zIndex.appBar - 1,
     boxShadow: "none",
   },
   toolbar: {

@@ -48,7 +48,11 @@ export default function RouteBoard() {
   return (
     <>
       <HeaderBoard title={group?.title} />
-      <BoardTabNavigator boards={group?.boards} />
+      <BoardTabNavigator
+        boards={group?.boards}
+        type={type}
+        board_id={board_id}
+      />
       {boardByType}
     </>
   );

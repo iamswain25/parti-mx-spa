@@ -8,6 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import ImageUploader from "react-images-upload";
+import { Container, Typography } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 
 const options = [{ label: "30일 후 종료", value: "30days" }];
 
@@ -48,6 +50,7 @@ interface Formdata {
   closingMethod: string;
 }
 export default function SuggestionNew() {
+  const { board_id } = useParams();
   const [insert] = useMutation(insertPost);
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
@@ -76,7 +79,7 @@ export default function SuggestionNew() {
         title,
         context,
         body,
-        board_id: 104,
+        board_id,
         group_id,
         metadata: { closingMethod },
         images,
@@ -86,8 +89,8 @@ export default function SuggestionNew() {
   }
 
   return (
-    <>
-      <h1>새로운 제안</h1>
+    <Container component="main" maxWidth="md">
+      <Typography variant="h2">새로운 제안</Typography>
       <form
         className={classes.form}
         onSubmit={handleSubmit(handleForm)}
@@ -181,6 +184,6 @@ export default function SuggestionNew() {
           </Button>
         </div>
       </form>
-    </>
+    </Container>
   );
 }

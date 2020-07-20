@@ -5,7 +5,7 @@ export default function useRedirectIfLogin() {
   const [{ user_id, isInit }] = useStore();
 
   const location = useLocation<{ from: { pathname: string } }>();
-  const { from } = location.state ?? {};
+  const { from } = location.state ?? { from: "/" };
   const history = useHistory();
   React.useEffect(() => {
     if (user_id && isInit) {
