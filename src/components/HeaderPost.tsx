@@ -3,7 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { Grid, IconButton, Typography, Box } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import PostMenu from "./PostMenu";
+import { Post } from "../types";
+
 const useStyles = makeStyles((theme) => {
   return {
     top: {
@@ -19,7 +21,8 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function HeaderPost({ title = "로딩 중" }) {
+export default function HeaderPost({ post: p }: { post?: Post }) {
+  const title = p?.board?.group?.title || "로딩 중";
   const classes = useStyles();
   const history = useHistory();
   function back() {
@@ -45,14 +48,7 @@ export default function HeaderPost({ title = "로딩 중" }) {
           {title}
         </Typography>
       </Box>
-      <IconButton
-        color="inherit"
-        aria-label="back"
-        edge="start"
-        // onClick={}
-      >
-        <MoreVertIcon />
-      </IconButton>
+      <PostMenu post={p} />
     </Grid>
   );
 }

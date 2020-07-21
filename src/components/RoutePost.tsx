@@ -45,7 +45,7 @@ export default function RoutePost() {
   return (
     <>
       <Hidden mdUp>
-        <HeaderPost title={p?.board?.group?.title} />
+        <HeaderPost post={p} />
       </Hidden>
       <Divider />
       {isDesktop ? (
