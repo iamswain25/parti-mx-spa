@@ -14,6 +14,7 @@ export default function PostMenu({ post: p }: { post?: Post }) {
   const isMine = user_id && p?.createdBy?.id === user_id;
   const metadata = p?.metadata as NoticeMetadata;
   const isAnnounced = metadata?.announcement;
+  const isNotice = p?.board?.type === "notice";
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const remove = usePostDelete(postId);
   const announce = usePostAnnounce(postId);
@@ -42,11 +43,12 @@ export default function PostMenu({ post: p }: { post?: Post }) {
       >
         {isMine && <MenuItem onClick={handleClose}>수정하기</MenuItem>}
         {isMine && <MenuItem onClick={remove}>삭제하기</MenuItem>}
-        {isAnnounced ? (
-          <MenuItem onClick={denounce}>공지 내리기</MenuItem>
-        ) : (
-          <MenuItem onClick={announce}>공지 올리기</MenuItem>
-        )}
+        {isNotice &&
+          (isAnnounced ? (
+            <MenuItem onClick={denounce}>공지 내리기</MenuItem>
+          ) : (
+            <MenuItem onClick={announce}>공지 올리기</MenuItem>
+          ))}
       </Menu>
     </>
   );

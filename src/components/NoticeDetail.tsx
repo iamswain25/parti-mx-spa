@@ -1,6 +1,6 @@
 import React from "react";
 import { Post } from "../types";
-import { Box, Grid, Divider, makeStyles } from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles, Hidden } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
@@ -10,6 +10,7 @@ import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
 import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
+import PostMenu from "./PostMenu";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -27,6 +28,9 @@ const useStyles = makeStyles((theme) => {
       },
     },
     title: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
       [theme.breakpoints.up("md")]: {
         paddingTop: 60,
         fontSize: 24,
@@ -75,6 +79,9 @@ export default function NoticeDetail({ post: p }: { post?: Post }) {
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p?.title}
+          <Hidden smDown>
+            <PostMenu post={p} />
+          </Hidden>
         </Box>
         <Box mb={2} mt={1}>
           <AvatarNameDate
