@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-export default function GroupLogoContainer({ group }: { group?: Group }) {
+export default function GroupLogoContainer({ group }: { group: Group }) {
   const [{ user_id, group_id }] = useStore();
   const classes = useStyles();
   const history = useHistory();
@@ -104,10 +104,15 @@ export default function GroupLogoContainer({ group }: { group?: Group }) {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const [isDesktop] = useDesktop();
-  const { bg_img_url, title, created_at, users_aggregate, users = null } =
-    group ?? {};
-  const toJoinTag = users ? (
-    <div>{users?.[0].status}</div>
+  const {
+    bg_img_url,
+    title,
+    created_at,
+    users_aggregate,
+    users: [user],
+  } = group;
+  const toJoinTag = user ? (
+    <div>{user?.status}</div>
   ) : (
     <button className={classes.groupJoin} onClick={joinHandler}>
       그룹가입
