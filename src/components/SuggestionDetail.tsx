@@ -17,6 +17,7 @@ import useDesktop from "./useDesktop";
 import { semanticDate, closingDateFrom } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
 import FilesImages from "./FilesImages";
+import PostMenu from "./PostMenu";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -44,6 +45,9 @@ const useStyles = makeStyles((theme) => {
         fontSize: 24,
         letterSpacing: -0.6,
         paddingBottom: theme.spacing(2),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
       },
       [theme.breakpoints.down("sm")]: {
         fontSize: 16,
@@ -116,7 +120,12 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
   return (
     <Box bgcolor="grey.100">
       <Box paddingX={2} className={classes.root}>
-        <Box className={classes.title}>{p?.title}</Box>
+        <Box className={classes.title}>
+          {p?.title}
+          <Hidden smDown>
+            <PostMenu post={p} />
+          </Hidden>
+        </Box>
         <Box my={2}>
           <Divider light />
         </Box>

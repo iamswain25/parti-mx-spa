@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => {
       },
     },
     title: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
       [theme.breakpoints.up("md")]: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         paddingTop: 60,
         fontSize: 24,
         letterSpacing: -0.6,

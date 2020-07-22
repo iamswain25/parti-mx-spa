@@ -7,6 +7,7 @@ import {
   makeStyles,
   Typography,
   Button,
+  Hidden,
 } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
@@ -19,6 +20,7 @@ import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { calculateDays } from "../helpers/datefns";
 import VoteCandidate from "./VoteCandidate";
 import useVoteCandidate from "./useVoteCandidate";
+import PostMenu from "./PostMenu";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -41,6 +43,9 @@ const useStyles = makeStyles((theme) => {
         fontSize: 24,
         letterSpacing: -0.6,
         paddingBottom: theme.spacing(2),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
       },
       [theme.breakpoints.down("sm")]: {
         fontSize: 16,
@@ -133,6 +138,9 @@ export default function VoteDetail({ post: p }: { post?: Post }) {
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p?.title}
+          <Hidden smDown>
+            <PostMenu post={p} />
+          </Hidden>
         </Box>
         <Box mt={1}>
           <AvatarNameDate
