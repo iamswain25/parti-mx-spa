@@ -29,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
     borderStyle: "solid",
   },
 }));
-export default function BtnLikePost({ post }: { post?: Post }) {
+export default function BtnLikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const count = post?.users_aggregate?.aggregate?.sum?.like_count || 0;
+  const count = p.users_aggregate?.aggregate?.sum?.like_count || 0;
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [{ user_id }] = useStore();
   const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [vote, { loading, error }] = useMutation(likePost, {
-    variables: { id: post?.id },
+    variables: { id: p.id },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
@@ -48,7 +48,7 @@ export default function BtnLikePost({ post }: { post?: Post }) {
       showLogin(true);
     }
   }
-  const type = post?.board?.type;
+  const type = p.board?.type;
   switch (type) {
     case "suggestion":
       return (

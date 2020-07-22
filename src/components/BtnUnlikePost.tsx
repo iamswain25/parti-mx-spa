@@ -30,17 +30,17 @@ const useStyles = makeStyles((theme) => ({
     borderStyle: "solid",
   },
 }));
-export default function BtnUnlikePost({ post }: { post?: Post }) {
+export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [{ user_id }] = useStore();
-  const count = post?.users_aggregate?.aggregate?.sum?.like_count || 0;
+  const count = p.users_aggregate?.aggregate?.sum?.like_count || 0;
   const [unlike, { loading, error }] = useMutation(unlikePost, {
-    variables: { id: post?.id, user_id },
+    variables: { id: p.id, user_id },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const type = post?.board?.type;
+  const type = p.board?.type;
   async function handler() {
     await unlike();
     switch (type) {

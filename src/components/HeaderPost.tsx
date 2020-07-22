@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function HeaderPost({ post: p }: { post?: Post }) {
-  const title = p?.board?.group?.title || "로딩 중";
+export default function HeaderPost({ post: p }: { post: Post }) {
+  const title = p.board?.group.title || "로딩 중";
   const classes = useStyles();
   const history = useHistory();
   function back() {

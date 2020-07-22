@@ -98,11 +98,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function VoteDetail({ post: p }: { post?: Post }) {
-  const { body, images = [], comments, createdBy, created_at = "" } = p || {};
-  const metadata = p?.metadata as VoteMetadata;
-  const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
-  const participantCount = p?.users_aggregate?.aggregate?.sum?.like_count;
+export default function VoteDetail({ post: p }: { post: Post }) {
+  const { body, images = [], comments, createdBy, created_at = "" } = p;
+  const metadata = p.metadata as VoteMetadata;
+  const commentCount = p.comments_aggregate?.aggregate?.count || 0;
+  const participantCount = p.users_aggregate?.aggregate?.sum?.like_count;
   const daysLeft = React.useMemo(() => {
     let after = undefined;
     try {
@@ -116,16 +116,16 @@ export default function VoteDetail({ post: p }: { post?: Post }) {
   const voteHandler = useVoteCandidate(p);
   const [isVoted, setVoted] = React.useState(false);
   React.useEffect(() => {
-    setVoted(!!p?.meLiked?.[0]?.like_count);
+    setVoted(!!p.meLiked?.[0]?.like_count);
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [
-      p?.candidates?.reduce(
+      p.candidates?.reduce(
         (p, c) => p + c?.votes_aggregate?.aggregate?.sum?.count || 0,
         0
       ) || 0,
       Math.max(
-        ...(p?.candidates?.map(
+        ...(p.candidates?.map(
           (c) => c?.votes_aggregate?.aggregate?.sum?.count || 0
         ) ?? [])
       ) || 0,
@@ -137,7 +137,7 @@ export default function VoteDetail({ post: p }: { post?: Post }) {
     <Box bgcolor="grey.100">
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
-          {p?.title}
+          {p.title}
           <Hidden smDown>
             <PostMenu post={p} />
           </Hidden>
@@ -183,7 +183,7 @@ export default function VoteDetail({ post: p }: { post?: Post }) {
           </Grid>
         </Box>
         <Box>
-          {p?.candidates?.map((c, i) => (
+          {p.candidates?.map((c, i) => (
             <VoteCandidate
               candidate={c}
               voted={isVoted}
@@ -212,7 +212,7 @@ export default function VoteDetail({ post: p }: { post?: Post }) {
       <Box className={classes.root}>
         <CommentContainer
           comments={comments}
-          post_id={p?.id}
+          post_id={p.id}
           count={commentCount}
         />
       </Box>

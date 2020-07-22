@@ -99,11 +99,10 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
     </a>
   );
 }
-export default function SuggestionDetail({ post: p }: { post?: Post }) {
-  const { body, images = [], createdBy, created_at, context, files = [] } =
-    p ?? {};
-  const metadata = p?.metadata as SuggestionMetadata;
-  const liked = p?.meLiked?.[0]?.like_count ?? 0;
+export default function SuggestionDetail({ post: p }: { post: Post }) {
+  const { body, images = [], createdBy, created_at, context, files = [] } = p;
+  const metadata = p.metadata as SuggestionMetadata;
+  const liked = p.meLiked?.[0]?.like_count ?? 0;
   const closingAt = React.useMemo(() => {
     let after = undefined;
     try {
@@ -121,7 +120,7 @@ export default function SuggestionDetail({ post: p }: { post?: Post }) {
     <Box bgcolor="grey.100">
       <Box paddingX={2} className={classes.root}>
         <Box className={classes.title}>
-          {p?.title}
+          {p.title}
           <Hidden smDown>
             <PostMenu post={p} />
           </Hidden>

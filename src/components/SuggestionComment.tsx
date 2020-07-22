@@ -41,11 +41,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function SuggestionComment({ post }: { post?: Post }) {
-  const count = post?.comments_aggregate?.aggregate?.count || 0;
-  const count2 = post?.users_aggregate?.aggregate?.sum?.like_count || 0;
-  const comments = post?.comments;
-  const comment = { post: { id: post?.id } } as Comment;
+export default function SuggestionComment({ post: p }: { post: Post }) {
+  const count = p.comments_aggregate?.aggregate?.count || 0;
+  const count2 = p.users_aggregate?.aggregate?.sum?.like_count || 0;
+  const comments = p.comments;
+  const comment = { post: { id: p.id } } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   React.useEffect(() => {
@@ -100,7 +100,7 @@ export default function SuggestionComment({ post }: { post?: Post }) {
               <Divider />
             </Box>
             <Box className={classes.grid}>
-              {post?.likedUsers?.map((u, i) => (
+              {p.likedUsers?.map((u, i) => (
                 <AvatarNameDate2 key={i} userPost={u} />
               ))}
             </Box>

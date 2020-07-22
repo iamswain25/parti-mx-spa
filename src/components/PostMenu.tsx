@@ -8,7 +8,7 @@ import { useStore } from "../store/store";
 import usePostAnnounce from "./usePostAnnounce";
 import usePostDenounce from "./usePostDenounce";
 import usePostEdit from "./usePostEdit";
-export default function PostMenu({ post: p }: { post?: Post }) {
+export default function PostMenu({ post: p }: { post: Post }) {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
   const postId = Number(post_id);

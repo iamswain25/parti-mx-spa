@@ -68,17 +68,17 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function NoticeDetail({ post: p }: { post?: Post }) {
-  const { body, images, comments, createdBy, created_at } = p ?? { images: [] };
-  const commentCount = p?.comments_aggregate?.aggregate?.count || 0;
-  const liked = p?.meLiked?.[0]?.like_count ?? 0;
+export default function NoticeDetail({ post: p }: { post: Post }) {
+  const { body, images = [], comments, createdBy, created_at } = p;
+  const commentCount = p.comments_aggregate?.aggregate?.count || 0;
+  const liked = p.meLiked?.[0]?.like_count ?? 0;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
     <Box bgcolor="grey.100">
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
-          {p?.title}
+          {p.title}
           <Hidden smDown>
             <PostMenu post={p} />
           </Hidden>
@@ -116,7 +116,7 @@ export default function NoticeDetail({ post: p }: { post?: Post }) {
       <Box className={classes.root}>
         <CommentContainer
           comments={comments}
-          post_id={p?.id}
+          post_id={p.id}
           count={commentCount}
         />
       </Box>
