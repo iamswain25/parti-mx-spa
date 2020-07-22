@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => {
         width: "100%",
         top: 0,
         backgroundImage:
-          "linear-gradient(rgba(250, 252 ,251, 0.02), rgba(4, 97, 64, 0.98))",
+          "linear-gradient(rgba(0, 0 ,0, 0.02), rgba(0, 0, 0, 0.64))",
         color: theme.palette.common.white,
         padding: 19,
       },
