@@ -42,33 +42,40 @@ export const theme: Theme = createMuiTheme({
   },
   typography: {
     fontFamily: "NotoSansCJKkr",
+
     h2: {
       fontSize: 20,
       letterSpacing: -0.75,
+      lineHeight: "normal",
     },
     h3: {
       //제목
       fontSize: 18,
+      lineHeight: "normal",
       letterSpacing: -0.5,
     },
     h4: {
       fontSize: 16,
       letterSpacing: -0.6,
       fontWeight: "inherit",
+      lineHeight: "normal",
     },
     h5: {
       fontSize: 14,
       letterSpacing: -0.3,
       fontWeight: "inherit",
+      lineHeight: "normal",
     },
     h6: {
       fontSize: 12,
       fontWeight: "inherit",
+      lineHeight: "normal",
     },
     body1: {
       fontSize: 14,
       letterSpacing: -0.3,
       fontWeight: "inherit",
+      lineHeight: "normal",
       display: "flex",
       flexWrap: "wrap",
       wordBreak: "break-all",
@@ -77,6 +84,7 @@ export const theme: Theme = createMuiTheme({
       fontSize: 11,
       fontWeight: "inherit",
       display: "flex",
+      lineHeight: "normal",
       flexWrap: "wrap",
       wordBreak: "break-all",
     },
@@ -85,6 +93,7 @@ export const theme: Theme = createMuiTheme({
       letterSpacing: -0.38,
       display: "flex",
       flexWrap: "wrap",
+      lineHeight: "normal",
       wordBreak: "break-all",
       fontWeight: "inherit",
     },
@@ -92,6 +101,7 @@ export const theme: Theme = createMuiTheme({
       fontSize: 11,
       display: "flex",
       flexWrap: "wrap",
+      lineHeight: "normal",
       wordBreak: "break-all",
       fontWeight: "inherit",
     },
@@ -99,6 +109,7 @@ export const theme: Theme = createMuiTheme({
       fontSize: 14,
       letterSpacing: 0.2,
       display: "flex",
+      lineHeight: "normal",
       flexWrap: "wrap",
       wordBreak: "break-all",
       fontWeight: "inherit",
