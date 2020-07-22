@@ -88,15 +88,16 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function GroupLogoContainer({ group }: { group: Group }) {
-  const [{ user_id, group_id }] = useStore();
+  const [{ user_id, group_id }, dispatch] = useStore();
   const classes = useStyles();
   const history = useHistory();
   const [join, { loading, error }] = useMutation(insertUserGroup, {
     variables: { group_id },
   });
-  function joinHandler() {
+  async function joinHandler() {
     if (user_id) {
-      join();
+      await join();
+      dispatch({ type: "SET_USER", user_id });
     } else {
       history.push("/login");
     }
