@@ -9,17 +9,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import ImageUploader from "react-images-upload";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import GoogleMapReact from "google-map-react";
-import MapPlace from "./MapPlace";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-places-autocomplete";
+
 import Dropzone from "./Dropzone";
-import { Post } from "../types";
+import {
+  Post,
+  Image,
+  File as File2,
+  LatLng,
+  SuggestionMetadata,
+} from "../types";
+import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
+
 const options = [{ label: "30일 후 종료", value: "30days" }];
 
 const useStyles = makeStyles((theme) => ({
@@ -51,20 +54,34 @@ interface Formdata {
   closingMethod: string;
 }
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const { board_id } = useParams();
+  const {
+    board: { id: board_id },
+  } = p;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [insert] = useMutation(insertPost);
-  const [address, setAddress] = React.useState("");
-  const [latLng, setLatLng] = React.useState<undefined | any>(undefined);
+  const [address, setAddress] = React.useState<undefined | string>(undefined);
+  const [latLng, setLatLng] = React.useState<undefined | LatLng>(undefined);
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
+  const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
+  const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
   const { handleSubmit, register, errors, reset } = useForm<Formdata>();
   React.useEffect(() => {
-    const { location, title, body, context } = p;
+    const { location, title, body, context, files, images } = p;
+    const metadata = p.metadata as SuggestionMetadata;
     reset({ title, body, context });
+    setImages2(images);
+    setFiles2(files);
+    setAddress(metadata?.address);
+    if (location) {
+      const {
+        coordinates: [lng, lat],
+      } = location;
+      setLatLng({ lng, lat });
+    }
   }, [reset, p]);
   const classes = useStyles();
   function imageUploaderHandler(files: File[], pictures: string[]) {
@@ -75,14 +92,20 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
     setLoading(true);
     const { title, context, body, closingMethod } = form;
     let images = null;
-    if (imageArr.length > 0) {
+    if (imageArr.length) {
       images = await Promise.all(imageArr.map(uploadFileGetUriArray));
       setSuccess(images?.length + " 개의 사진 업로드 성공");
     }
+    if (images2) {
+      images = [...images2, ...(images || [])];
+    }
     let files = null;
-    if (fileArr.length > 0) {
+    if (fileArr.length) {
       files = await Promise.all(fileArr.map(uploadFileGetUriArray));
       setSuccess(files?.length + " 개의 파일 업로드 성공");
+    }
+    if (files2) {
+      files = [...files2, ...(files || [])];
     }
     const variables: any = {
       title,
@@ -108,16 +131,6 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
     console.log(res);
     const id = res?.data?.insert_mx_posts_one?.id;
     history.push("/post/" + id);
-  }
-  async function handleSelect(address: string) {
-    setAddress(address);
-    return geocodeByAddress(address)
-      .then((results) => getLatLng(results[0]))
-      .then((latLng) => {
-        setLatLng(latLng);
-        console.log(latLng);
-      })
-      .catch((error) => console.error("Error", error));
   }
 
   return (
@@ -190,72 +203,12 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
               error={errors.body ? true : false}
               helperText={errors.body && errors.body.message}
             />
-
-            <PlacesAutocomplete
-              value={address}
-              onChange={setAddress}
-              onSelect={handleSelect}
-            >
-              {({
-                getInputProps,
-                suggestions,
-                getSuggestionItemProps,
-                loading,
-              }) => (
-                <div>
-                  <TextField
-                    variant="outlined"
-                    name="address"
-                    fullWidth
-                    label="주소를 입력하세요"
-                    helperText="대한민국 서울특별시 서대문구 남가좌1동 서대문구사회적경제마을센터"
-                    {...getInputProps({
-                      placeholder: "Search Places ...",
-                      className: "location-search-input",
-                    })}
-                  />
-                  <div className="autocomplete-dropdown-container">
-                    {loading && <div>Loading...</div>}
-                    {suggestions.map((suggestion, i) => {
-                      const className = suggestion.active
-                        ? "suggestion-item--active"
-                        : "suggestion-item";
-                      // inline style for demonstration purpose
-                      const style = suggestion.active
-                        ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                        : { backgroundColor: "#ffffff", cursor: "pointer" };
-                      return (
-                        <div
-                          {...getSuggestionItemProps(suggestion, {
-                            className,
-                            style,
-                          })}
-                          key={i}
-                        >
-                          <span>{suggestion.description}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </PlacesAutocomplete>
-            <Box height={200}>
-              <GoogleMapReact
-                bootstrapURLKeys={{
-                  key: "AIzaSyACd_eKd6RV29bhAu3N3pFwHOuMS-LJmjY",
-                }}
-                center={latLng}
-                defaultCenter={{
-                  lat: 37.5696629,
-                  lng: 126.9134388,
-                }}
-                defaultZoom={11}
-                // onChildClick={childClickHandler}
-              >
-                {latLng && <MapPlace {...latLng} selected={true} />}
-              </GoogleMapReact>
-            </Box>
+            <GooglePlaceAutocomplete
+              address={address}
+              setAddress={setAddress}
+              latLng={latLng}
+              setLatLng={setLatLng}
+            />
             <ImageUploader
               withIcon={true}
               buttonText="이미지를 첨부하세요"

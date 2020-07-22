@@ -1,5 +1,4 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { queryByPostId } from "../graphql/query";
 import { PagePost } from "../types";
 import { useQuery } from "@apollo/client";
@@ -15,7 +14,6 @@ import SuggestionEdit from "./SuggestionEdit";
 
 export default function RoutePostEdit() {
   const { post_id } = useParams();
-  const [{ user_id }] = useStore();
   const { data, error, loading } = useQuery<PagePost>(queryByPostId, {
     variables: { post_id },
   });

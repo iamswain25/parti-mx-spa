@@ -32,7 +32,10 @@ export type Board = {
   };
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
-
+export interface LatLng {
+  lat: number;
+  lng: number;
+}
 export interface Group {
   id: string;
   title: string;
@@ -100,12 +103,13 @@ export type Image = {
   name: string;
   type?: string;
 };
-export type File = {
+export interface File {
   uri: string;
   name: string;
   size: number;
   path: string;
-};
+}
+
 export type Post = {
   id: number;
   title: string;
@@ -264,7 +268,6 @@ export interface File {
   size: number;
   uri: string;
   lastModified?: number;
-  file?: File;
 }
 
 export interface SearchResultType {
