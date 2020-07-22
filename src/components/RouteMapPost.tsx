@@ -42,7 +42,6 @@ export default function RouteMapPost({
   const selected = selectedPlace?.id === p.id;
   const classes = useStyles(selected);
   const divRef = React.useRef<HTMLDivElement>(null);
-  console.log(selected);
   React.useEffect(
     function scrollInView() {
       if (selected) {

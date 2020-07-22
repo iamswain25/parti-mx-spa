@@ -1,7 +1,6 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { useMutation } from "@apollo/client";
-import { insertPost } from "../graphql/mutation";
+import { updatePost } from "../graphql/mutation";
 import { uploadFileGetUriArray } from "../config/firebase";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -22,6 +21,7 @@ import {
   SuggestionMetadata,
 } from "../types";
 import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
+import SavedImageFile from "./SavedImageFile";
 
 const options = [{ label: "30일 후 종료", value: "30days" }];
 
@@ -54,16 +54,13 @@ interface Formdata {
   closingMethod: string;
 }
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const {
-    board: { id: board_id },
-  } = p;
+  const { id } = p;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [insert] = useMutation(insertPost);
+  const [update] = useMutation(updatePost);
   const [address, setAddress] = React.useState<undefined | string>(undefined);
   const [latLng, setLatLng] = React.useState<undefined | LatLng>(undefined);
-  const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
@@ -72,10 +69,11 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   React.useEffect(() => {
     const { location, title, body, context, files, images } = p;
     const metadata = p.metadata as SuggestionMetadata;
-    reset({ title, body, context });
+    reset({ title, body, context, closingMethod: metadata.closingMethod });
     setImages2(images);
     setFiles2(files);
     setAddress(metadata?.address);
+
     if (location) {
       const {
         coordinates: [lng, lat],
@@ -108,11 +106,10 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       files = [...files2, ...(files || [])];
     }
     const variables: any = {
+      id,
       title,
       context,
       body,
-      board_id,
-      group_id,
       metadata: { closingMethod, address },
       images,
       files,
@@ -125,11 +122,10 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       };
       variables.location = location;
     }
-    const res = await insert({
+    const res = await update({
       variables,
     });
     console.log(res);
-    const id = res?.data?.insert_mx_posts_one?.id;
     history.push("/post/" + id);
   }
 
@@ -218,6 +214,12 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
               maxFileSize={5242880}
             />
             <Dropzone files={fileArr} setFiles={setFileArr} />
+            <SavedImageFile
+              files={files2}
+              images={images2}
+              setFiles={setFiles2}
+              setImages={setImages2}
+            />
             <Hidden smDown implementation="css">
               <Button
                 type="submit"
@@ -226,7 +228,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
                 color="primary"
                 className={classes.submit}
               >
-                제안 제출
+                제안 수정
               </Button>
             </Hidden>
           </Container>

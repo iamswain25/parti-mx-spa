@@ -27,7 +27,7 @@ export default function GooglePlaceAutocomplete(props: {
   return (
     <>
       <PlacesAutocomplete
-        value={address}
+        value={address || ""}
         onChange={setAddress}
         onSelect={handleSelect}
       >
