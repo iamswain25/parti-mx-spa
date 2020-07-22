@@ -143,7 +143,7 @@ export interface SuggestionPost {
   mx_posts_by_pk: Post;
 }
 export type NoticeMetadata = { announcement: boolean };
-export type SuggestionMetadata = { closingMethod: string };
+export type SuggestionMetadata = { closingMethod: string; address?: string };
 export type VoteMetadata = {
   closingMethod: string;
   isBinary: boolean;

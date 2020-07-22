@@ -7,6 +7,7 @@ import { Post, NoticeMetadata } from "../types";
 import { useStore } from "../store/store";
 import usePostAnnounce from "./usePostAnnounce";
 import usePostDenounce from "./usePostDenounce";
+import usePostEdit from "./usePostEdit";
 export default function PostMenu({ post: p }: { post?: Post }) {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
@@ -19,6 +20,7 @@ export default function PostMenu({ post: p }: { post?: Post }) {
   const remove = usePostDelete(postId);
   const announce = usePostAnnounce(postId);
   const denounce = usePostDenounce(postId);
+  const edit = usePostEdit(postId);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,7 +43,7 @@ export default function PostMenu({ post: p }: { post?: Post }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {isMine && <MenuItem onClick={handleClose}>수정하기</MenuItem>}
+        {isMine && <MenuItem onClick={edit}>수정하기</MenuItem>}
         {isMine && <MenuItem onClick={remove}>삭제하기</MenuItem>}
         {isNotice &&
           (isAnnounced ? (

@@ -19,6 +19,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 import Dropzone from "./Dropzone";
+import { Post } from "../types";
 const options = [{ label: "30일 후 종료", value: "30days" }];
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ interface Formdata {
   body: string;
   closingMethod: string;
 }
-export default function SuggestionNew() {
+export default function SuggestionEdit({ post: p }: { post: Post }) {
   const { board_id } = useParams();
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
@@ -60,7 +61,11 @@ export default function SuggestionNew() {
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const { handleSubmit, register, errors } = useForm<Formdata>();
+  const { handleSubmit, register, errors, reset } = useForm<Formdata>();
+  React.useEffect(() => {
+    const { location, title, body, context } = p;
+    reset({ title, body, context });
+  }, [reset, p]);
   const classes = useStyles();
   function imageUploaderHandler(files: File[], pictures: string[]) {
     setImageArr(files);
@@ -119,11 +124,11 @@ export default function SuggestionNew() {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate>
         <Hidden mdUp>
-          <HeaderNew title="제안글 쓰기" />
+          <HeaderNew title="제안글 수정" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">제안글 쓰기</Typography>
+            <Typography variant="h2">제안글 수정</Typography>
             <TextField
               variant="outlined"
               margin="normal"

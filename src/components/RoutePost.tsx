@@ -25,6 +25,9 @@ export default function RoutePost() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
+  if (!p) {
+    return null;
+  }
   let postByType = null;
   switch (p?.board?.type) {
     case "notice":

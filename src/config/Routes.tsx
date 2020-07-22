@@ -16,6 +16,7 @@ import SnackbarSuccess from "../components/SnackbarSuccess";
 import { CssBaseline } from "@material-ui/core";
 import RouteMap from "../components/RouteMap";
 import RoutePhoto from "../components/RoutePhoto";
+import RoutePostEdit from "../components/RoutePostEdit";
 
 export default function Routes() {
   useParseGroupId();
@@ -31,6 +32,7 @@ export default function Routes() {
           <Route path="/home" exact component={Home} />
           <Dashboard>
             <Route path="/post/:post_id" exact component={RoutePost} />
+            <Route path="/edit/:post_id" exact component={RoutePostEdit} />
             <PrivateRoute
               path="/suggestion/:board_id"
               exact
