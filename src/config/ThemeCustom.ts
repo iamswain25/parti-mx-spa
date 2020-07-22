@@ -6,6 +6,7 @@ export const theme: Theme = createMuiTheme({
       "@global": {
         body: {
           display: "block",
+          backgroundColor: "#fff",
         },
         button: {
           color: "inherit",
