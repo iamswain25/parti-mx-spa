@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Dashboard from "../components/Dashboard";
 import Login from "../components/Login";
-import SuggestionNew from "../components/SuggestionNew";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../components/Home";
 import RouteBoard from "../components/RouteBoard";
@@ -17,6 +16,7 @@ import { CssBaseline } from "@material-ui/core";
 import RouteMap from "../components/RouteMap";
 import RoutePhoto from "../components/RoutePhoto";
 import RoutePostEdit from "../components/RoutePostEdit";
+import RoutePostNew from "../components/RoutePostNew";
 
 export default function Routes() {
   useParseGroupId();
@@ -34,9 +34,9 @@ export default function Routes() {
             <Route path="/post/:post_id" exact component={RoutePost} />
             <Route path="/edit/:post_id" exact component={RoutePostEdit} />
             <PrivateRoute
-              path="/suggestion/:board_id"
+              path="/new/:board_id"
               exact
-              component={SuggestionNew}
+              component={RoutePostNew}
             />
             <Route exact path="/">
               <Redirect to="/home" />

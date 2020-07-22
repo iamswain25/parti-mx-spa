@@ -101,7 +101,7 @@ export default function BoardTabNavigator({
     const boardType = type ?? boards?.[0].type;
     switch (boardType) {
       default:
-        return history.push("/suggestion/" + boardId);
+        return history.push("/new/" + boardId);
     }
   }
   return (

@@ -312,22 +312,22 @@ export const deleteUserGroup = gql`
 
 export const announcePost = gql`
   mutation($id: Int!) {
-    update_mx_posts(
-      where: { id: { _eq: $id } }
+    update_mx_posts_by_pk(
+      pk_columns: { id: $id }
       _append: { metadata: { announcement: true } }
     ) {
-      affected_rows
+      board_id
     }
   }
 `;
 
 export const denouncePost = gql`
   mutation($id: Int!) {
-    update_mx_posts(
-      where: { id: { _eq: $id } }
+    update_mx_posts_by_pk(
+      pk_columns: { id: $id }
       _delete_key: { metadata: "announcement" }
     ) {
-      affected_rows
+      board_id
     }
   }
 `;

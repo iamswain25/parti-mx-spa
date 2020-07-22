@@ -69,6 +69,16 @@ export const queryByBoardId = gql`
   ${groups}
 `;
 
+export const queryBoardType = gql`
+  query($board_id: Int!) {
+    mx_boards_by_pk(id: $board_id) {
+      id
+      title
+      type
+    }
+  }
+`;
+
 export const queryByPostId = gql`
   query($post_id: Int!) {
     mx_posts_by_pk(id: $post_id) {
