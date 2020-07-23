@@ -128,7 +128,6 @@ export default function VoteNew() {
               label="내용"
               multiline
               name="body"
-              autoFocus
               register={register}
               errors={errors}
             />

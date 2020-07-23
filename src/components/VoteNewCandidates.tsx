@@ -67,7 +67,6 @@ export default function VoteNewCandidates({
                 </IconButton>
               ),
             }}
-            autoFocus
             register={register}
             errors={errors}
           />
