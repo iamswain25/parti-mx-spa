@@ -2,6 +2,13 @@ export type FormData = {
   email: string;
   password: string;
 };
+export interface VoteFormdata {
+  title: string;
+  context: string;
+  body: string;
+  closingMethod: string;
+  candidates: string[];
+}
 export type Board = {
   id: number;
   title: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { useMutation } from "@apollo/client";
-import { insertPost } from "../graphql/mutation";
+import { insertVote } from "../graphql/mutation";
 import { uploadFileGetUriArray } from "../config/firebase";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,6 +21,8 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import Dropzone from "./Dropzone";
 import CustomTextField from "./CustomTextField";
 import VoteNewCandidates from "./VoteNewCandidates";
+import { VoteFormdata } from "../types";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -48,29 +50,26 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-interface Formdata {
-  title: string;
-  context: string;
-  body: string;
-  closingMethod: string;
-  candidates: string[];
-}
+
+const options = [
+  { label: "7일 후 종료", value: "7days" },
+  { label: "3일 후 종료", value: "3days" },
+  { label: "토론 정리시 종료", value: "manual" },
+];
 export default function VoteNew() {
   const { board_id } = useParams();
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [insert] = useMutation(insertPost);
+  const [insert] = useMutation(insertVote);
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [qCount, setQCount] = React.useState(2);
   const [isBinary, setBinary] = React.useState(false);
   const [isMultiple, setMultiple] = React.useState(false);
   const [isAnonymous, setAnonymous] = React.useState(false);
   const [isResultHidden, setResultHidden] = React.useState(false);
-  const [closingMethod, setClosingMethod] = React.useState("7days");
-  const formControl = useForm<Formdata>({
+  const formControl = useForm<VoteFormdata>({
     defaultValues: { candidates: ["", ""] },
   });
   const { handleSubmit, register, errors } = formControl;
@@ -79,10 +78,10 @@ export default function VoteNew() {
     setImageArr(files);
   }
 
-  async function handleForm(form: Formdata) {
-    // return console.log(form);
+  async function handleForm(form: VoteFormdata) {
     setLoading(true);
-    const { title, body } = form;
+    // return console.log(form);
+    const { title, body, closingMethod, candidates } = form;
     let images = null;
     if (imageArr.length > 0) {
       images = await Promise.all(imageArr.map(uploadFileGetUriArray));
@@ -93,6 +92,20 @@ export default function VoteNew() {
       files = await Promise.all(fileArr.map(uploadFileGetUriArray));
       setSuccess(files?.length + " 개의 파일 업로드 성공");
     }
+    let candidateObjects = null;
+    if (isBinary) {
+      candidateObjects = [
+        { body: "찬성", order: 1 },
+        { body: "중립", order: 2 },
+        { body: "반대", order: 3 },
+        { body: "잘 모르겠습니다", order: 4 },
+      ];
+    } else {
+      candidateObjects = candidates.map((c, i) => ({
+        body: c,
+        order: i + 1,
+      }));
+    }
     const variables: any = {
       title,
       body,
@@ -100,6 +113,14 @@ export default function VoteNew() {
       group_id,
       images,
       files,
+      candidates: candidateObjects,
+      metadata: {
+        isBinary,
+        isMultiple,
+        isAnonymous,
+        closingMethod,
+        isResultHidden,
+      },
     };
     const res = await insert({
       variables,
@@ -131,6 +152,23 @@ export default function VoteNew() {
               register={register}
               errors={errors}
             />
+            <CustomTextField
+              register={register}
+              errors={errors}
+              select
+              label="투표 종료 방법"
+              variant="filled"
+              name="closingMethod"
+              SelectProps={{
+                native: true,
+              }}
+              defaultValue="7days"
+              children={options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            />
             <Grid container justify="space-between" alignItems="center">
               찬반투표
               <Switch
@@ -149,7 +187,7 @@ export default function VoteNew() {
               maxFileSize={5242880}
             />
             <Grid container justify="space-between" alignItems="center">
-              익명투표
+              <Typography>익명투표</Typography>
               <Switch
                 color="primary"
                 checked={isAnonymous}
@@ -157,11 +195,19 @@ export default function VoteNew() {
               />
             </Grid>
             <Grid container justify="space-between" alignItems="center">
-              중복투표
+              <Typography>중복투표</Typography>
               <Switch
                 color="primary"
                 checked={isMultiple}
                 onChange={() => setMultiple(!isMultiple)}
+              />
+            </Grid>
+            <Grid container justify="space-between" alignItems="center">
+              <Typography>종료 될 때까지 중간 투표 집계를 숨깁니다.</Typography>
+              <Switch
+                color="primary"
+                checked={isResultHidden}
+                onChange={() => setResultHidden(!isResultHidden)}
               />
             </Grid>
             <Dropzone files={fileArr} setFiles={setFileArr} />

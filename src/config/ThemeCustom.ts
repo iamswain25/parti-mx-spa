@@ -7,6 +7,10 @@ export const theme: Theme = createMuiTheme({
         body: {
           display: "block",
           backgroundColor: "#fff",
+          fontSize: 14,
+          "@media (max-width: 960px)": {
+            fontSize: 12,
+          },
         },
         button: {
           color: "inherit",

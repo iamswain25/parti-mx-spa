@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { IconButton } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import AddIcon from "@material-ui/icons/Add";
+import { VoteFormdata } from "../types";
 const useStyles = makeStyles((theme) => ({
   adorn: {
     "& > div": {
@@ -22,7 +23,9 @@ export default function VoteNewCandidates({
     errors,
     control,
     getValues,
-  } = formControl as FormContextValues<any>;
+    clearError,
+    unregister,
+  } = formControl as FormContextValues<VoteFormdata>;
   const classes = useStyles();
   const { fields, append, remove } = useFieldArray({
     name: "candidates",
@@ -40,12 +43,20 @@ export default function VoteNewCandidates({
   }
   React.useEffect(() => {
     const { candidates } = getValues({ nest: true });
+    wasBinary.current = isBinary;
     if (isBinary) {
+      clearError("candidates");
       fields.forEach((f, i) => {
         f.value = candidates[i];
       });
     }
-  }, [isBinary, getValues, fields]);
+  }, [isBinary, getValues, fields, clearError, unregister]);
+  const wasBinary = React.useRef(false);
+  function validate(value: string) {
+    if (!wasBinary.current && !value) {
+      return "필수 입력";
+    }
+  }
   if (isBinary) {
     return null;
   }
@@ -67,8 +78,12 @@ export default function VoteNewCandidates({
                 </IconButton>
               ),
             }}
-            register={register}
-            errors={errors}
+            inputRef={register({
+              validate: { required: validate },
+            })}
+            error={!!errors?.candidates?.[index] && !wasBinary.current}
+            required={!!errors?.candidates?.[index] && !wasBinary.current}
+            helperText={errors?.candidates?.[index]?.message}
           />
         );
       })}

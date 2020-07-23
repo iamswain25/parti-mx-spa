@@ -389,8 +389,8 @@ export const insertVote = gql`
     $files: jsonb
     $candidates: [mx_candidates_insert_input!]!
   ) {
-    insert_mx_posts(
-      objects: {
+    insert_mx_posts_one(
+      object: {
         body: $body
         title: $title
         context: $context
@@ -401,7 +401,7 @@ export const insertVote = gql`
         candidates: { data: $candidates }
       }
     ) {
-      affected_rows
+      id
     }
     update_mx_boards(
       _set: { last_posted_at: "now()" }
