@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VoteNew() {
+export default function VoteEdit() {
   const { board_id } = useParams();
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);

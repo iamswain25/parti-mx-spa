@@ -3,3 +3,8 @@ export const postSortOptions = [
   { updated_at: "desc" },
   { last_commented_at: "desc_nulls_last" },
 ];
+export const voteOptions = [
+  { label: "7일 후 종료", value: "7days" },
+  { label: "3일 후 종료", value: "3days" },
+  { label: "토론 정리시 종료", value: "manual" },
+];

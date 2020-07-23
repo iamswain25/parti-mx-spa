@@ -8,9 +8,9 @@ import { useParams } from "react-router-dom";
 import SuggestionDetail from "./SuggestionDetail";
 import { Divider, Hidden } from "@material-ui/core";
 import HeaderPost from "./HeaderPost";
-import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
 import SuggestionEdit from "./SuggestionEdit";
+import NoticeEdit from "./NoticeEdit";
 
 export default function RoutePostEdit() {
   const { post_id } = useParams();
@@ -26,7 +26,7 @@ export default function RoutePostEdit() {
   let postByType = null;
   switch (p?.board?.type) {
     case "notice":
-      postByType = <NoticeDetail post={p} />;
+      postByType = <NoticeEdit post={p} />;
       break;
     case "vote":
       postByType = <VoteDetail post={p} />;
