@@ -12,7 +12,9 @@ export default function PostMenu({ post: p }: { post: Post }) {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
   const postId = Number(post_id);
+  const [{ status }] = p?.board?.group?.users || [{ status: null }];
   const isMine = user_id && p?.createdBy?.id === user_id;
+  const isOrganizer = status === "organizer";
   const metadata = p?.metadata as NoticeMetadata;
   const isAnnounced = metadata?.announcement;
   const isNotice = p?.board?.type === "notice";
@@ -27,6 +29,9 @@ export default function PostMenu({ post: p }: { post: Post }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  if (!isMine && !isOrganizer) {
+    return null;
+  }
   return (
     <>
       <IconButton
@@ -46,6 +51,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
         {isMine && <MenuItem onClick={edit}>수정하기</MenuItem>}
         {isMine && <MenuItem onClick={remove}>삭제하기</MenuItem>}
         {isNotice &&
+          isOrganizer &&
           (isAnnounced ? (
             <MenuItem onClick={denounce}>공지 내리기</MenuItem>
           ) : (
