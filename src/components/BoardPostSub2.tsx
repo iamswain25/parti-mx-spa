@@ -4,7 +4,7 @@ import { semanticDate } from "../helpers/datefns";
 import { Typography, Box } from "@material-ui/core";
 export default function BoardPostSub2({ post: p }: { post: Post }) {
   const isVote = p.board.type === "vote";
-  const count = p.users_aggregate.aggregate.sum.like_count;
+  const count = p.users_aggregate.aggregate.sum.like_count ?? 0;
   return (
     <Box color="grey.600">
       <Typography variant="subtitle2">
