@@ -41,11 +41,11 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
           className={classes.titleContainer}
         >
           <Box display="flex">
-            <Typography variant={isDesktop ? "h4" : "h5"} color="textPrimary">
+            <Typography variant="h4" color="textPrimary">
               소식
             </Typography>
             <Box mr={1} />
-            <Typography variant={isDesktop ? "h4" : "h5"} color="primary">
+            <Typography variant="h4" color="primary">
               {b?.posts_aggregate.aggregate.count}
             </Typography>
           </Box>

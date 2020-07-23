@@ -6,7 +6,6 @@ import { grey } from "@material-ui/core/colors";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
-import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -56,7 +55,6 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
-  const [isDesktop] = useDesktop();
   return (
     <div className={classes.container}>
       <Box mb={1}>
@@ -65,26 +63,19 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
             <PanToolIcon color="primary" className={classes.icon} />
           </Box>
           <Box color="primary.dark" fontWeight={500}>
-            <Typography variant={isDesktop ? "h5" : "body2"}>
+            <Typography variant="h5">
               {p.users_aggregate.aggregate.sum.like_count}명 동의
             </Typography>
           </Box>
         </Grid>
       </Box>
       <div className={classes.titleContainer} onClick={navigatePost}>
-        <Typography
-          variant={isDesktop ? "h3" : "h5"}
-          className={classes.title}
-          color="textPrimary"
-        >
+        <Typography variant="h3" className={classes.title} color="textPrimary">
           {p.title}
         </Typography>
       </div>
       <Box color="grey.600">
-        <Typography
-          variant={isDesktop ? "body1" : "h6"}
-          className={classes.body}
-        >
+        <Typography variant="body1" className={classes.body}>
           {p.body}
         </Typography>
       </Box>

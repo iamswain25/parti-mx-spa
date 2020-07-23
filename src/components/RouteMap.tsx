@@ -6,7 +6,6 @@ import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import BoardTabNavigator from "./BoardTabNavigator";
-import useDesktop from "./useDesktop";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
 import { Box, Grid, Typography, Hidden } from "@material-ui/core";
@@ -99,7 +98,6 @@ export default function RoutePhoto() {
   const [selectedPlace, setSelectedPlace] = React.useState<Post | undefined>(
     undefined
   );
-  const [isDesktop] = useDesktop();
   const { group, group: { boards = [], title = "로딩 중" } = {}, ...b } =
     data?.mx_boards_by_pk || ({} as Board);
   function childClickHandler(key: number, childProps: any) {
@@ -118,11 +116,11 @@ export default function RoutePhoto() {
           className={classes.titleContainer}
         >
           <Box display="flex">
-            <Typography variant={isDesktop ? "h4" : "h5"} color="textPrimary">
+            <Typography variant="h4" color="textPrimary">
               제안
             </Typography>
             <Box mr={1} />
-            <Typography variant={isDesktop ? "h4" : "h5"} color="primary">
+            <Typography variant="h4" color="primary">
               {b?.posts_aggregate?.aggregate?.count}
             </Typography>
           </Box>

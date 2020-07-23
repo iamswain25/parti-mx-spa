@@ -40,7 +40,7 @@ export default function HomeBoardNotice({ board: b }: { board?: Board }) {
           alignItems="center"
           className={classes.titleContainer}
         >
-          <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
+          <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
           {isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}

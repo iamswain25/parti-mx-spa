@@ -52,7 +52,7 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
           alignItems="center"
           className={classes.titleContainer}
         >
-          <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
+          <Typography variant="h2" color="textPrimary">
             <Box ml={isDesktop ? 2 : 0} fontWeight="bold">
               {b.title}
             </Box>

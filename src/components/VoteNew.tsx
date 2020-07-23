@@ -149,6 +149,22 @@ export default function VoteNew() {
               imgExtension={[".jpg", ".gif", ".png", ".gif"]}
               maxFileSize={5242880}
             />
+            <Grid container justify="space-between" alignItems="center">
+              익명투표
+              <Switch
+                color="primary"
+                checked={isAnonymous}
+                onChange={() => setAnonymous(!isAnonymous)}
+              />
+            </Grid>
+            <Grid container justify="space-between" alignItems="center">
+              중복투표
+              <Switch
+                color="primary"
+                checked={isMultiple}
+                onChange={() => setMultiple(!isMultiple)}
+              />
+            </Grid>
             <Dropzone files={fileArr} setFiles={setFileArr} />
             <Hidden smDown implementation="css">
               <Button

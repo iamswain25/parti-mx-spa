@@ -95,7 +95,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
         </Grid>
         <Box className={classes.titleContainer} mt={1} onClick={navigatePost}>
           <Typography
-            variant={isDesktop ? "h3" : "h4"}
+            variant="h3"
             color="textPrimary"
             className={classes.title}
           >

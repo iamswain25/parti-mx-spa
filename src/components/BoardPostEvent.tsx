@@ -8,7 +8,6 @@ import EventIcon from "@material-ui/icons/Event";
 import { getEventDate2, getEventDate3 } from "../helpers/datefns";
 import HowToRegIcon from "@material-ui/icons/HowToReg";
 import PlaceIcon from "@material-ui/icons/Place";
-import useDesktop from "./useDesktop";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 const useStyles = makeStyles((theme) => {
@@ -71,7 +70,6 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     deadline = getEventDate3(p.metadata.deadline);
   }
   const firstImage = p.images?.[0].uri;
-  const [isDesktop] = useDesktop();
   const attending = !!p.meLiked?.[0]?.like_count;
   return (
     <div className={classes.container}>
@@ -91,9 +89,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               </Typography>
             </Box>
             <Box color="grey.600">
-              <Typography variant={isDesktop ? "subtitle2" : "h6"}>
-                {eventDate}
-              </Typography>
+              <Typography variant="subtitle2">{eventDate}</Typography>
             </Box>
           </Box>
         </Grid>

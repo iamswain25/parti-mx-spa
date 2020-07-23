@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Box, Hidden } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
-import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -39,7 +38,6 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostNotice({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const [isDesktop] = useDesktop();
   const navigatePost = useNavigateToPost(p.id);
   const firstImage = p.images?.[0]?.uri;
   return (
@@ -59,7 +57,7 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
           display="flex"
           onClick={navigatePost}
         >
-          <Typography variant={isDesktop ? "h3" : "h5"} color="textPrimary">
+          <Typography variant="h3" color="textPrimary">
             {p.title}
           </Typography>
         </Box>

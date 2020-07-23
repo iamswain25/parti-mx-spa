@@ -3,7 +3,6 @@ import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
-import useDesktop from "./useDesktop";
 import RoutePostVote from "./RoutePostVote";
 const useStyles = makeStyles((theme) => {
   return {
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function RouteBoardVote({ board: b }: { board?: Board }) {
-  const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
   return (
@@ -39,38 +37,38 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
           <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
-                variant={isDesktop ? "h4" : "h5"}
+                variant="h4"
                 color={isClosed ? "textSecondary" : "textPrimary"}
               >
                 {/* {b?.title} */}
                 진행 중인 투표
               </Typography>
               <Box mr={1} />
-              <Box
-                fontSize={isDesktop ? 16 : 14}
-                color={isClosed ? "text.secondary" : "primary.main"}
+              <Typography
+                variant="h4"
+                color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.posts_aggregate_open.aggregate.count}
-              </Box>
+                {b?.posts_aggregate_closed.aggregate.count}
+              </Typography>
             </Box>
           </Button>
           <Box mr={2} />
           <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
             <Box display="flex" alignItems="center">
               <Typography
-                variant={isDesktop ? "h4" : "h5"}
+                variant="h4"
                 color={isClosed ? "textPrimary" : "textSecondary"}
               >
                 {/* {b?.title} */}
                 완료 된 투표
               </Typography>
               <Box mr={1} />
-              <Box
-                fontSize={isDesktop ? 16 : 14}
-                color={isClosed ? "primary.main" : "text.secondary"}
+              <Typography
+                variant="h4"
+                color={isClosed ? "primary" : "textSecondary"}
               >
                 {b?.posts_aggregate_closed.aggregate.count}
-              </Box>
+              </Typography>
             </Box>
           </Button>
         </Grid>

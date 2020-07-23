@@ -128,7 +128,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
           alignItems="center"
           className={classes.titleContainer}
         >
-          <Typography variant={isDesktop ? "h2" : "h3"} color="textPrimary">
+          <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold" ml={isDesktop ? 2 : 0}>
               {b?.title}
             </Box>

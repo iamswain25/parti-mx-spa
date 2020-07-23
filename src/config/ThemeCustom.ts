@@ -45,34 +45,52 @@ export const theme: Theme = createMuiTheme({
 
     h2: {
       fontSize: 20,
+      "@media (max-width: 960px)": {
+        fontSize: 18,
+      },
       letterSpacing: -0.75,
       lineHeight: "normal",
     },
     h3: {
       //제목
       fontSize: 18,
+      "@media (max-width: 960px)": {
+        fontSize: 14,
+      },
       lineHeight: "normal",
       letterSpacing: -0.5,
     },
     h4: {
       fontSize: 16,
+      "@media (max-width: 960px)": {
+        fontSize: 14,
+      },
       letterSpacing: -0.6,
       fontWeight: "inherit",
       lineHeight: "normal",
     },
     h5: {
+      "@media (max-width: 960px)": {
+        fontSize: 11,
+      },
       fontSize: 14,
       letterSpacing: -0.3,
       fontWeight: "inherit",
       lineHeight: "normal",
     },
     h6: {
+      "@media (max-width: 960px)": {
+        fontSize: 10,
+      },
       fontSize: 12,
       fontWeight: "inherit",
       lineHeight: "normal",
     },
     body1: {
       fontSize: 14,
+      "@media (max-width: 960px)": {
+        fontSize: 12,
+      },
       letterSpacing: -0.3,
       fontWeight: "inherit",
       lineHeight: "normal",
@@ -82,6 +100,9 @@ export const theme: Theme = createMuiTheme({
     },
     body2: {
       fontSize: 11,
+      "@media (max-width: 960px)": {
+        fontSize: 8,
+      },
       fontWeight: "inherit",
       display: "flex",
       lineHeight: "normal",
@@ -90,6 +111,9 @@ export const theme: Theme = createMuiTheme({
     },
     subtitle1: {
       fontSize: 14,
+      "@media (max-width: 960px)": {
+        fontSize: 12,
+      },
       letterSpacing: -0.38,
       display: "flex",
       flexWrap: "wrap",
@@ -99,6 +123,9 @@ export const theme: Theme = createMuiTheme({
     },
     subtitle2: {
       fontSize: 11,
+      "@media (max-width: 960px)": {
+        fontSize: 8,
+      },
       display: "flex",
       flexWrap: "wrap",
       lineHeight: "normal",
