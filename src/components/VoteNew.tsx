@@ -2,11 +2,9 @@ import React from "react";
 import { useStore } from "../store/store";
 import { useMutation } from "@apollo/client";
 import { insertVote } from "../graphql/mutation";
-import { uploadFileGetUriArray } from "../config/firebase";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import ImageUploader from "react-images-upload";
 import {
   Container,
   Typography,
@@ -23,6 +21,8 @@ import CustomTextField from "./CustomTextField";
 import VoteNewCandidates from "./VoteNewCandidates";
 import { VoteFormdata } from "../types";
 import { voteOptions } from "../helpers/options";
+import { makeNewVariables } from "./makePostVariables";
+import CustomImageUploader from "./CustomImageUploader";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,65 +62,52 @@ export default function VoteNew() {
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [isBinary, setBinary] = React.useState(false);
-  const [isMultiple, setMultiple] = React.useState(false);
-  const [isAnonymous, setAnonymous] = React.useState(false);
-  const [isResultHidden, setResultHidden] = React.useState(false);
   const formControl = useForm<VoteFormdata>({
     defaultValues: { candidates: ["", ""] },
   });
   const { handleSubmit, register, errors } = formControl;
   const classes = useStyles();
-  function imageUploaderHandler(files: File[], pictures: string[]) {
-    setImageArr(files);
-  }
 
   async function handleForm(form: VoteFormdata) {
     setLoading(true);
-    // return console.log(form);
-    const { title, body, closingMethod, candidates } = form;
-    let images = null;
-    if (imageArr.length > 0) {
-      images = await Promise.all(imageArr.map(uploadFileGetUriArray));
-      setSuccess(images?.length + " 개의 사진 업로드 성공");
-    }
-    let files = null;
-    if (fileArr.length > 0) {
-      files = await Promise.all(fileArr.map(uploadFileGetUriArray));
-      setSuccess(files?.length + " 개의 파일 업로드 성공");
-    }
-    let candidateObjects = null;
+    const {
+      closingMethod,
+      candidates,
+      isMultiple,
+      isAnonymous,
+      isResultHidden,
+      ...rest
+    } = form;
+    const metadata = {
+      isBinary,
+      isMultiple,
+      isAnonymous,
+      isResultHidden,
+      closingMethod,
+    };
+    const variables = await makeNewVariables(rest, {
+      board_id,
+      group_id,
+      imageArr,
+      fileArr,
+      setSuccess,
+      metadata,
+    });
+
     if (isBinary) {
-      candidateObjects = [
+      variables.candidates = [
         { body: "찬성", order: 1 },
         { body: "중립", order: 2 },
         { body: "반대", order: 3 },
         { body: "잘 모르겠습니다", order: 4 },
       ];
     } else {
-      candidateObjects = candidates.map((c, i) => ({
+      variables.candidates = candidates.map((c, i) => ({
         body: c,
         order: i + 1,
       }));
     }
-    const variables: any = {
-      title,
-      body,
-      board_id,
-      group_id,
-      images,
-      files,
-      candidates: candidateObjects,
-      metadata: {
-        isBinary,
-        isMultiple,
-        isAnonymous,
-        closingMethod,
-        isResultHidden,
-      },
-    };
-    const res = await insert({
-      variables,
-    });
+    const res = await insert({ variables });
     const id = res?.data?.insert_mx_posts_one?.id;
     history.push("/post/" + id);
   }
@@ -174,36 +161,25 @@ export default function VoteNew() {
               />
             </Grid>
             <VoteNewCandidates formControl={formControl} isBinary={isBinary} />
-            <ImageUploader
-              withIcon={true}
-              buttonText="이미지를 첨부하세요"
-              onChange={imageUploaderHandler}
-              withPreview={true}
-              imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-              maxFileSize={5242880}
-            />
+            <CustomImageUploader setImageArr={setImageArr} />
             <Grid container justify="space-between" alignItems="center">
               <Typography>익명투표</Typography>
               <Switch
                 color="primary"
-                checked={isAnonymous}
-                onChange={() => setAnonymous(!isAnonymous)}
+                name="isAnonymous"
+                inputRef={register()}
               />
             </Grid>
             <Grid container justify="space-between" alignItems="center">
               <Typography>중복투표</Typography>
-              <Switch
-                color="primary"
-                checked={isMultiple}
-                onChange={() => setMultiple(!isMultiple)}
-              />
+              <Switch color="primary" name="isMultiple" inputRef={register()} />
             </Grid>
             <Grid container justify="space-between" alignItems="center">
               <Typography>종료 될 때까지 중간 투표 집계를 숨깁니다.</Typography>
               <Switch
                 color="primary"
-                checked={isResultHidden}
-                onChange={() => setResultHidden(!isResultHidden)}
+                name="isResultHidden"
+                inputRef={register()}
               />
             </Grid>
             <Dropzone files={fileArr} setFiles={setFileArr} />

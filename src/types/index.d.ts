@@ -18,6 +18,9 @@ export interface VoteFormdata {
   body: string;
   closingMethod: string;
   candidates: string[];
+  isMultiple;
+  isAnonymous;
+  isResultHidden;
 }
 export type Board = {
   id: number;

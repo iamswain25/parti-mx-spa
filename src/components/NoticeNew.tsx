@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NoticeNew() {
   const { board_id } = useParams();
   const history = useHistory();
+  const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [insert] = useMutation(insertPost);
   const [{ group_id }] = useStore();
@@ -54,6 +55,7 @@ export default function NoticeNew() {
       group_id,
       imageArr,
       fileArr,
+      setSuccess,
     });
     const res = await insert({
       variables,
