@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => {
 });
 export default function FilesImages(props: {
   files?: File[];
-  images: Image[];
+  images?: Image[];
 }) {
   const { files, images } = props;
   const classes = useStyles();

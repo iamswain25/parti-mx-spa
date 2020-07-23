@@ -8,9 +8,9 @@ import AvatarNameDate from "./AvatarNameDate";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
-import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
 import PostMenu from "./PostMenu";
+import FilesImages from "./FilesImages";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function NoticeDetail({ post: p }: { post: Post }) {
-  const { body, images = [], comments, createdBy, created_at } = p;
+  const { body, images, comments, createdBy, created_at, files } = p;
   const commentCount = p.comments_aggregate?.aggregate?.count || 0;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const classes = useStyles();
@@ -91,9 +91,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
           />
         </Box>
         <Divider light />
-        <Box className={classes.image}>
-          <ImageCarousel images={images} />
-        </Box>
+        <FilesImages images={images} files={files} />
         <Box className={classes.body} color="grey.900">
           <Linkify
             componentDecorator={(decoratedHref, decoratedText, key) => (
