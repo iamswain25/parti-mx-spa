@@ -8,3 +8,5 @@ export const voteOptions = [
   { label: "3일 후 종료", value: "3days" },
   { label: "토론 정리시 종료", value: "manual" },
 ];
+
+export const suggestionOptions = [{ label: "30일 후 종료", value: "30days" }];

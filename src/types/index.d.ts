@@ -6,7 +6,12 @@ export interface NoticeFormdata {
   title: string;
   body: string;
 }
-
+export interface SuggestionFormdata {
+  title: string;
+  context: string;
+  body: string;
+  closingMethod: string;
+}
 export interface VoteFormdata {
   title: string;
   context: string;

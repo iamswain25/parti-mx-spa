@@ -2,19 +2,19 @@ import React from "react";
 import { useStore } from "../store/store";
 import { useMutation } from "@apollo/client";
 import { insertPost } from "../graphql/mutation";
-import { uploadFileGetUriArray } from "../config/firebase";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import ImageUploader from "react-images-upload";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import Dropzone from "./Dropzone";
 import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
-const options = [{ label: "30일 후 종료", value: "30days" }];
+import { suggestionOptions } from "../helpers/options";
+import CustomTextField from "./CustomTextField";
+import { makeNewVariables } from "./makePostVariables";
+import CustomImageUploader from "./CustomImageUploader";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -57,33 +57,19 @@ export default function SuggestionNew() {
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const { handleSubmit, register, errors } = useForm<Formdata>();
   const classes = useStyles();
-  function imageUploaderHandler(files: File[], pictures: string[]) {
-    setImageArr(files);
-  }
 
   async function handleForm(form: Formdata) {
     setLoading(true);
-    const { title, context, body, closingMethod } = form;
-    let images = null;
-    if (imageArr.length > 0) {
-      images = await Promise.all(imageArr.map(uploadFileGetUriArray));
-      setSuccess(images?.length + " 개의 사진 업로드 성공");
-    }
-    let files = null;
-    if (fileArr.length > 0) {
-      files = await Promise.all(fileArr.map(uploadFileGetUriArray));
-      setSuccess(files?.length + " 개의 파일 업로드 성공");
-    }
-    const variables: any = {
-      title,
-      context,
-      body,
+    const { closingMethod, ...rest } = form;
+    const metadata = { closingMethod, address };
+    const variables = await makeNewVariables(rest, {
       board_id,
       group_id,
-      metadata: { closingMethod, address },
-      images,
-      files,
-    };
+      imageArr,
+      fileArr,
+      setSuccess,
+      metadata,
+    });
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {
@@ -92,10 +78,7 @@ export default function SuggestionNew() {
       };
       variables.location = location;
     }
-    const res = await insert({
-      variables,
-    });
-    console.log(res);
+    const res = await insert({ variables });
     const id = res?.data?.insert_mx_posts_one?.id;
     history.push("/post/" + id);
   }
@@ -109,81 +92,48 @@ export default function SuggestionNew() {
         <Box mt={2}>
           <Container component="main" maxWidth="md">
             <Typography variant="h2">제안글 쓰기</Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="제안 제목"
+            <CustomTextField
+              label="제목"
               name="title"
               autoFocus
-              inputRef={register({
-                required: "필수 입력",
-              })}
-              required={errors.title ? true : false}
-              error={errors.title ? true : false}
-              helperText={errors.title && errors.title.message}
+              register={register}
+              errors={errors}
             />
-            <TextField
+            <CustomTextField
+              label="제안 배경"
+              multiline
+              name="context"
+              register={register}
+              errors={errors}
+            />
+            <CustomTextField
               select
-              fullWidth
               label="제안 종료 방법"
               variant="filled"
               name="closingMethod"
-              inputRef={register({
-                required: "필수 입력",
-              })}
-              SelectProps={{
-                native: true,
-              }}
+              SelectProps={{ native: true }}
               defaultValue="30days"
-            >
-              {options.map((option) => (
+              children={suggestionOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
               ))}
-            </TextField>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="context"
-              label="제안 배경"
-              inputRef={register({
-                required: "필수 입력",
-              })}
-              required={errors.context ? true : false}
-              error={errors.context ? true : false}
-              helperText={errors.context && errors.context.message}
             />
-            <TextField
-              variant="outlined"
+            <CustomTextField
+              label="내용"
               multiline
-              margin="normal"
-              fullWidth
               name="body"
-              label="제안 내용"
-              inputRef={register({
-                required: "필수 입력",
-              })}
-              required={errors.body ? true : false}
-              error={errors.body ? true : false}
-              helperText={errors.body && errors.body.message}
+              register={register}
+              errors={errors}
             />
+
             <GooglePlaceAutocomplete
               address={address}
               setAddress={setAddress}
               latLng={latLng}
               setLatLng={setLatLng}
             />
-            <ImageUploader
-              withIcon={true}
-              buttonText="이미지를 첨부하세요"
-              onChange={imageUploaderHandler}
-              withPreview={true}
-              imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-              maxFileSize={5242880}
-            />
+            <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
             <Hidden smDown implementation="css">
               <Button

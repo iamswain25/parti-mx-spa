@@ -2,10 +2,8 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 import { updatePost } from "../graphql/mutation";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import ImageUploader from "react-images-upload";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
@@ -14,6 +12,8 @@ import Dropzone from "./Dropzone";
 import { Post, Image, File as File2, NoticeFormdata } from "../types";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
+import CustomTextField from "./CustomTextField";
+import CustomImageUploader from "./CustomImageUploader";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,9 +56,6 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
     setFiles2(files);
   }, [reset, p]);
   const classes = useStyles();
-  function imageUploaderHandler(files: File[], pictures: string[]) {
-    setImageArr(files);
-  }
 
   async function handleForm(form: NoticeFormdata) {
     setLoading(true);
@@ -81,48 +78,26 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate>
         <Hidden mdUp>
-          <HeaderNew title="제안글 수정" />
+          <HeaderNew title="소식 수정" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">제안글 수정</Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="제안 제목"
+            <Typography variant="h2">소식 수정</Typography>
+            <CustomTextField
+              label="제목"
               name="title"
               autoFocus
-              inputRef={register({
-                required: "필수 입력",
-              })}
-              required={errors.title ? true : false}
-              error={errors.title ? true : false}
-              helperText={errors.title && errors.title.message}
+              register={register}
+              errors={errors}
             />
-            <TextField
-              variant="outlined"
+            <CustomTextField
+              label="내용"
               multiline
-              margin="normal"
-              fullWidth
               name="body"
-              label="제안 내용"
-              inputRef={register({
-                required: "필수 입력",
-              })}
-              required={errors.body ? true : false}
-              error={errors.body ? true : false}
-              helperText={errors.body && errors.body.message}
+              register={register}
+              errors={errors}
             />
-
-            <ImageUploader
-              withIcon={true}
-              buttonText="이미지를 첨부하세요"
-              onChange={imageUploaderHandler}
-              withPreview={true}
-              imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-              maxFileSize={5242880}
-            />
+            <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
             <SavedImageFile
               files={files2}
