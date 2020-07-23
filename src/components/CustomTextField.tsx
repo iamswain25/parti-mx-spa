@@ -1,18 +1,24 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-export default function CustomTextField({ register, errors, ...rest }: any) {
+export default function CustomTextField({
+  register,
+  errors,
+  name,
+  ...rest
+}: any) {
   return (
     <TextField
+      {...rest}
       variant="outlined"
       margin="normal"
+      name={name}
       fullWidth
       inputRef={register({
         required: "필수 입력",
       })}
-      required={errors.title ? true : false}
-      error={errors.title ? true : false}
-      helperText={errors.title && errors.title.message}
-      {...rest}
+      required={errors[name] ? true : false}
+      error={errors[name] ? true : false}
+      helperText={errors[name] && errors[name].message}
     />
   );
 }

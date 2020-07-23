@@ -5,16 +5,15 @@ import { insertPost } from "../graphql/mutation";
 import { uploadFileGetUriArray } from "../config/firebase";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import ImageUploader from "react-images-upload";
-import CloseIcon from "@material-ui/icons/Close";
 import {
   Container,
   Typography,
   Box,
   Hidden,
+  Switch,
   Grid,
-  IconButton,
 } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
@@ -133,7 +132,15 @@ export default function VoteNew() {
               register={register}
               errors={errors}
             />
-            <VoteNewCandidates formControl={formControl} />
+            <Grid container justify="space-between" alignItems="center">
+              찬반투표
+              <Switch
+                color="primary"
+                checked={isBinary}
+                onChange={() => setBinary(!isBinary)}
+              />
+            </Grid>
+            <VoteNewCandidates formControl={formControl} isBinary={isBinary} />
             <ImageUploader
               withIcon={true}
               buttonText="이미지를 첨부하세요"
