@@ -7,6 +7,7 @@ import useErrorEffect from "./useErrorEffect";
 import { useParams } from "react-router-dom";
 import SuggestionNew from "./SuggestionNew";
 import NoticeNew from "./NoticeNew";
+import VoteNew from "./VoteNew";
 
 export default function RoutePostNew() {
   const { board_id } = useParams();
@@ -24,9 +25,9 @@ export default function RoutePostNew() {
     case "notice":
       boardNew = <NoticeNew />;
       break;
-    // case "vote":
-    //   boardNew = <VoteDetail />;
-    //   break;
+    case "vote":
+      boardNew = <VoteNew />;
+      break;
     case "suggestion":
       boardNew = <SuggestionNew />;
       break;
