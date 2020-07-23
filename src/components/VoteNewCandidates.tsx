@@ -34,8 +34,12 @@ export default function VoteNewCandidates({
 
   function removeHandler(i: number) {
     if (fields.length > 2) {
-      console.log(i);
       remove(i);
+    } else {
+      const ref = control.fieldsRef.current?.[`candidates[${i}]`]?.ref;
+      if (ref) {
+        ref.value = "";
+      }
     }
   }
   function addHandler() {
