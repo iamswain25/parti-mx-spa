@@ -47,6 +47,7 @@ export default function VoteNewCandidates({
   }
   React.useEffect(() => {
     const { candidates } = getValues({ nest: true });
+    if (!candidates) return;
     wasBinary.current = isBinary;
     if (isBinary) {
       clearError("candidates");
@@ -59,6 +60,13 @@ export default function VoteNewCandidates({
   function validate(value: string) {
     if (!wasBinary.current && !value) {
       return "필수 입력";
+    }
+  }
+  function duplicate(value: string) {
+    const { candidates } = getValues({ nest: true });
+    const isDup = candidates.filter((c) => c === value).length > 1;
+    if (isDup) {
+      return "중복입니다";
     }
   }
   if (isBinary) {
@@ -83,7 +91,7 @@ export default function VoteNewCandidates({
               ),
             }}
             inputRef={register({
-              validate: { required: validate },
+              validate: { required: validate, duplicate },
             })}
             error={!!errors?.candidates?.[index] && !wasBinary.current}
             required={!!errors?.candidates?.[index] && !wasBinary.current}
