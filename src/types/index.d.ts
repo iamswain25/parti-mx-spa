@@ -22,6 +22,9 @@ export interface VoteFormdata {
   isAnonymous;
   isResultHidden;
 }
+export interface VoteEditFormdata extends VoteFormdata {
+  candidates: Candidate[];
+}
 export type Board = {
   id: number;
   title: string;

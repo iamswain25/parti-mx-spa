@@ -1,4 +1,5 @@
 import React from "react";
+import { useStore } from "../store/store";
 import { queryByPostId } from "../graphql/query";
 import { PagePost } from "../types";
 import { useQuery } from "@apollo/client";
@@ -8,14 +9,15 @@ import { useParams } from "react-router-dom";
 import SuggestionDetail from "./SuggestionDetail";
 import { Divider, Hidden } from "@material-ui/core";
 import HeaderPost from "./HeaderPost";
-import VoteDetail from "./VoteDetail";
 import SuggestionEdit from "./SuggestionEdit";
 import NoticeEdit from "./NoticeEdit";
+import VoteEdit from "./VoteEdit";
 
 export default function RoutePostEdit() {
   const { post_id } = useParams();
+  const [{ user_id }] = useStore();
   const { data, error, loading } = useQuery<PagePost>(queryByPostId, {
-    variables: { post_id },
+    variables: { post_id, user_id, isAnonymous: !user_id },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
@@ -29,7 +31,7 @@ export default function RoutePostEdit() {
       postByType = <NoticeEdit post={p} />;
       break;
     case "vote":
-      postByType = <VoteDetail post={p} />;
+      postByType = <VoteEdit post={p} />;
       break;
     case "suggestion":
       postByType = <SuggestionEdit post={p} />;

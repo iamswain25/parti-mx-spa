@@ -80,7 +80,7 @@ export const queryBoardType = gql`
 `;
 
 export const queryByPostId = gql`
-  query($post_id: Int!) {
+  query($post_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_posts_by_pk(id: $post_id) {
       id
       title
@@ -97,8 +97,12 @@ export const queryByPostId = gql`
         title
         type
       }
+      candidates {
+        ...candidates
+      }
     }
   }
+  ${candidates}
 `;
 
 export const searchDuplicateNameWithoutMine = gql`
