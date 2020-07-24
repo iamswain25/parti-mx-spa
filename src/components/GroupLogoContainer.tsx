@@ -106,11 +106,13 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   useErrorEffect(error);
   const [isDesktop] = useDesktop();
   const {
-    bg_img_url,
     title,
+    users: [user] = [null],
     created_at,
-    users_aggregate,
-    users: [user],
+    bg_img_url,
+    users_aggregate: {
+      aggregate: { count: userCount = 0 },
+    },
   } = group;
   const toJoinTag = user ? (
     <div>{user?.status}</div>
@@ -133,7 +135,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
           </Box>
           <div className={classes.groupInfo}>
             <Box>개설 {semanticDate(created_at)}</Box>
-            <Box paddingX={1}>멤버 {users_aggregate?.aggregate.count ?? 0}</Box>
+            <Box paddingX={1}>멤버 {userCount}</Box>
             {toJoinTag}
           </div>
         </div>
