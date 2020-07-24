@@ -1,6 +1,6 @@
 import React from "react";
 import { Comment, User } from "../types";
-import { Box, Divider, Grid, Button } from "@material-ui/core";
+import { Box, Divider, Grid, Button, Typography } from "@material-ui/core";
 import AvatarNameDate from "./AvatarNameDate";
 import CommentTextinput from "./CommentTextinput";
 import Comment2 from "./Comment2";
@@ -8,7 +8,8 @@ import useCommentInsert from "./useCommentInsert";
 import ButtonLikeComment from "./ButtonLikeComment";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
 import { useStyles } from "../helpers/styles";
-export default function Comment1({ comment: c }: { comment?: Comment }) {
+import { getAttitude } from "../helpers/attitude";
+export default function Comment1({ comment: c }: { comment: Comment }) {
   const classes = useStyles();
   const [isRe, setRe] = React.useState<User | undefined>(undefined);
   const insertHandler = useCommentInsert(() => setRe(undefined));
@@ -25,6 +26,7 @@ export default function Comment1({ comment: c }: { comment?: Comment }) {
           />
         </Grid>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
+          <Typography color="primary">{getAttitude(c)}</Typography>
           {c?.body}
           <Box
             className={classes.buttons}

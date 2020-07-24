@@ -1,6 +1,6 @@
 import React from "react";
 import { Comment, User } from "../types";
-import { Box, Divider, Grid, Button } from "@material-ui/core";
+import { Box, Divider, Grid, Button, Typography } from "@material-ui/core";
 import AvatarNameDate from "./AvatarNameDate";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
 import ButtonLikeComment from "./ButtonLikeComment";
@@ -9,12 +9,13 @@ import { Img } from "react-image";
 import sub1 from "../assets/images/subdirectory24Px.png";
 import sub2 from "../assets/images/subdirectory24Px@2x.png";
 import sub3 from "../assets/images/subdirectory24Px@3x.png";
+import { getAttitude } from "../helpers/attitude";
 
 export default function Comment2({
   comment: c,
   setRe,
 }: {
-  comment?: Comment;
+  comment: Comment;
   setRe: (user?: User) => void;
 }) {
   const classes = useStyles();
@@ -34,6 +35,7 @@ export default function Comment2({
           />
         </Grid>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
+          <Typography color="primary">{getAttitude(c)}</Typography>
           {c?.body}
           <Box
             className={classes.buttons}

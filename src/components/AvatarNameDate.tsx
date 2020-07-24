@@ -38,8 +38,13 @@ export default function AvatarNameDate({
 }) {
   const classes = useStyles();
   return (
-    <Grid container alignItems="center" justify={justify}>
-      <Box className={classes.font} display="flex" alignItems="center">
+    <Grid
+      container
+      alignItems="center"
+      justify={justify}
+      className={classes.font}
+    >
+      <Box display="flex" alignItems="center">
         <Avatar alt={name} src={photo_url} className={classes.small} />
         <Box ml={1} fontWeight={500} color="grey.900">
           {name}

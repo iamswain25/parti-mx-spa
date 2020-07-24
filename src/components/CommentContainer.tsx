@@ -29,8 +29,8 @@ export default function CommentContainer({
   post_id,
   count = 0,
 }: {
-  comments?: Comment[];
-  post_id?: number;
+  comments: Comment[];
+  post_id: number;
   count: number;
 }) {
   const comment = { post: { id: post_id } } as Comment;

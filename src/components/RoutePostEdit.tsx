@@ -24,6 +24,9 @@ export default function RoutePostEdit() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
+  if (loading) {
+    return null;
+  }
   if (!p) {
     return <Forbidden />;
   }

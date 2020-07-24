@@ -205,7 +205,7 @@ export type User = {
   photo_url: string;
   email?: string;
   checkedPosts?: [{ like_count: number }];
-  votes?: Vote[];
+  votes?: UserCandidate[];
 };
 export type UserStatus = "requested" | "organizer" | "user" | undefined;
 export type NotificationType = "all" | "mine" | "related" | null;
@@ -246,7 +246,7 @@ export interface Group {
   slug: string;
 }
 
-export type Vote = {
+export type UserCandidate = {
   user: User;
   count: number;
   created_at: string;
@@ -275,7 +275,7 @@ export type Candidate = {
       user?: User;
     }
   ];
-  votes: Vote[];
+  votes: UserCandidate[];
 };
 export interface VoteDetailType extends Post {
   users_aggregate: {
