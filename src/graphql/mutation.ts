@@ -92,8 +92,8 @@ export const updatePost = gql`
 
 export const deletePost = gql`
   mutation($id: Int!) {
-    delete_mx_posts(where: { id: { _eq: $id } }) {
-      affected_rows
+    delete_mx_posts_by_pk(id: $id) {
+      board_id
     }
   }
 `;
@@ -516,7 +516,10 @@ export const updateVote = gql`
     }
     insert_mx_candidates(
       objects: $candidates
-      on_conflict: { constraint: vote_candidates_pkey, update_columns: [body, order] }
+      on_conflict: {
+        constraint: vote_candidates_pkey
+        update_columns: [body, order]
+      }
     ) {
       affected_rows
     }
