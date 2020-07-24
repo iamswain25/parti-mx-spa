@@ -1,8 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { updatePost } from "../graphql/mutation";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -19,33 +17,10 @@ import {
 } from "../types";
 import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import SavedImageFile from "./SavedImageFile";
-import CustomTextField from "./CustomTextField";
 import { makeUpdateVariables } from "./makePostVariables";
 import CustomImageUploader from "./CustomImageUploader";
-import { suggestionOptions } from "../helpers/options";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  buttonProgress: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    marginTop: -9,
-    marginLeft: -9,
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import BtnSubmitDesktop from "./BtnSubmitDesktop";
+import SuggestionInputs from "./SuggestionInputs";
 
 export default function SuggestionEdit({ post: p }: { post: Post }) {
   const { id } = p;
@@ -59,9 +34,8 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
-  const { handleSubmit, register, errors, reset } = useForm<
-    SuggestionFormdata
-  >();
+  const formControl = useForm<SuggestionFormdata>();
+  const { handleSubmit, reset } = formControl;
   React.useEffect(() => {
     const { location, title, body, context, files, images } = p;
     const metadata = p.metadata as SuggestionMetadata;
@@ -77,7 +51,6 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       setLatLng({ lng, lat });
     }
   }, [reset, p]);
-  const classes = useStyles();
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
@@ -112,40 +85,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       <Box mt={2}>
         <Container component="main" maxWidth="md">
           <Typography variant="h2">제안글 수정</Typography>
-          <CustomTextField
-            label="제목"
-            name="title"
-            autoFocus
-            register={register}
-            errors={errors}
-          />
-          <CustomTextField
-            label="제안 배경"
-            multiline
-            name="context"
-            register={register}
-            errors={errors}
-          />
-          <CustomTextField
-            select
-            label="제안 종료 방법"
-            variant="filled"
-            name="closingMethod"
-            SelectProps={{ native: true }}
-            defaultValue="30days"
-            children={suggestionOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          />
-          <CustomTextField
-            label="내용"
-            multiline
-            name="body"
-            register={register}
-            errors={errors}
-          />
+          <SuggestionInputs formControl={formControl} />
           <GooglePlaceAutocomplete
             address={address}
             setAddress={setAddress}
@@ -160,17 +100,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
             setFiles={setFiles2}
             setImages={setImages2}
           />
-          <Hidden smDown implementation="css">
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              제안 수정
-            </Button>
-          </Hidden>
+          <BtnSubmitDesktop text="제안 수정" />
         </Container>
       </Box>
     </form>

@@ -2,8 +2,6 @@ import React from "react";
 import { useStore } from "../store/store";
 import { useMutation } from "@apollo/client";
 import { insertPost } from "../graphql/mutation";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
@@ -14,28 +12,7 @@ import CustomTextField from "./CustomTextField";
 import CustomImageUploader from "./CustomImageUploader";
 import { makeNewVariables } from "./makePostVariables";
 import { NoticeFormdata } from "../types";
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  buttonProgress: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    marginTop: -9,
-    marginLeft: -9,
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import BtnSubmitDesktop from "./BtnSubmitDesktop";
 
 export default function NoticeNew() {
   const { board_id } = useParams();
@@ -47,7 +24,6 @@ export default function NoticeNew() {
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const { handleSubmit, register, errors } = useForm<NoticeFormdata>();
-  const classes = useStyles();
   async function handleForm(form: NoticeFormdata) {
     setLoading(true);
     const variables = await makeNewVariables(form, {
@@ -89,17 +65,7 @@ export default function NoticeNew() {
             />
             <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
-            <Hidden smDown implementation="css">
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                소식 제출
-              </Button>
-            </Hidden>
+            <BtnSubmitDesktop text="소식 제출" />
           </Container>
         </Box>
       </form>
