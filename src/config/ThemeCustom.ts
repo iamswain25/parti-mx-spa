@@ -45,7 +45,7 @@ export const theme: Theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "NotoSansCJKkr",
+    fontFamily: "Noto Sans KR",
 
     h2: {
       fontSize: 20,
