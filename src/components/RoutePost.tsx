@@ -14,6 +14,7 @@ import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
 import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
+import Forbidden from "./Forbidden";
 
 export default function RoutePost() {
   const { post_id } = useParams();
@@ -25,8 +26,11 @@ export default function RoutePost() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
-  if (!p) {
+  if (loading) {
     return null;
+  }
+  if (!p) {
+    return <Forbidden />;
   }
   let postByType = null;
   switch (p?.board?.type) {
@@ -57,7 +61,7 @@ export default function RoutePost() {
           board_id={p?.board?.id}
         />
       ) : (
-        <Link to={`/home/${p?.board.id}`}>
+        <Link to={`/home/${p?.board?.id}`}>
           <Box
             mt={1}
             paddingX={2}

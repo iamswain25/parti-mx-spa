@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Grid, IconButton, Typography, Box } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import PostMenu from "./PostMenu";
@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function HeaderPost({ post: p }: { post: Post }) {
-  const title = p.board?.group.title || "로딩 중";
+  const title = p.board?.group?.title || "로딩 중";
+  const groupId = p.board?.group?.id;
   const classes = useStyles();
   const history = useHistory();
   function back() {
@@ -44,9 +45,11 @@ export default function HeaderPost({ post: p }: { post: Post }) {
         <ChevronLeftIcon />
       </IconButton>
       <Box flexShrink={1}>
-        <Typography variant="h3" color="textPrimary">
-          {title}
-        </Typography>
+        <Link to={`/home?group_id=${groupId}`}>
+          <Typography variant="h3" color="textPrimary">
+            {title}
+          </Typography>
+        </Link>
       </Box>
       <PostMenu post={p} />
     </Grid>

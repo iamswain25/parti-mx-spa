@@ -9,7 +9,7 @@ import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
-import { Box, Grid } from "@material-ui/core";
+import { Box, Grid, Button, Typography } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function GroupLogoContainer({ group }: { group: Group }) {
-  const [{ user_id, group_id }, dispatch] = useStore();
+  const [{ user_id, group_id }] = useStore();
   const classes = useStyles();
   const history = useHistory();
   const [join, { loading, error }] = useMutation(insertUserGroup, {
@@ -97,7 +97,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   async function joinHandler() {
     if (user_id) {
       await join();
-      dispatch({ type: "SET_USER", user_id });
+      history.replace(history.location.pathname);
     } else {
       history.push("/login");
     }
@@ -115,11 +115,11 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
     },
   } = group;
   const toJoinTag = user ? (
-    <div>{user?.status}</div>
+    <Typography>{user?.status}</Typography>
   ) : (
-    <button className={classes.groupJoin} onClick={joinHandler}>
+    <Button className={classes.groupJoin} onClick={joinHandler}>
       그룹가입
-    </button>
+    </Button>
   );
   return (
     <Grid container className={classes.container} justify="center">

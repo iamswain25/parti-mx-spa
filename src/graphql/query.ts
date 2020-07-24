@@ -96,9 +96,20 @@ export const queryByPostId = gql`
         id
         title
         type
+        group {
+          id
+          title
+        }
       }
       candidates {
         ...candidates
+      }
+      users_aggregate {
+        aggregate {
+          sum {
+            like_count
+          }
+        }
       }
     }
   }

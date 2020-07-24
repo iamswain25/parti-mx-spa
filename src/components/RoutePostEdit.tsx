@@ -12,6 +12,7 @@ import HeaderPost from "./HeaderPost";
 import SuggestionEdit from "./SuggestionEdit";
 import NoticeEdit from "./NoticeEdit";
 import VoteEdit from "./VoteEdit";
+import Forbidden from "./Forbidden";
 
 export default function RoutePostEdit() {
   const { post_id } = useParams();
@@ -23,7 +24,7 @@ export default function RoutePostEdit() {
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
   if (!p) {
-    return null;
+    return <Forbidden />;
   }
   let postByType = null;
   switch (p?.board?.type) {

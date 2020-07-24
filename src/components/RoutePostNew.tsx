@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import SuggestionNew from "./SuggestionNew";
 import NoticeNew from "./NoticeNew";
 import VoteNew from "./VoteNew";
+import Forbidden from "./Forbidden";
 
 export default function RoutePostNew() {
   const { board_id } = useParams();
@@ -18,7 +19,7 @@ export default function RoutePostNew() {
   useErrorEffect(error);
   const b = data?.mx_boards_by_pk;
   if (!b) {
-    return null;
+    return <Forbidden />;
   }
   let boardNew = null;
   switch (b.type) {
