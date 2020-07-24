@@ -1,24 +1,13 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { updateVote } from "../graphql/mutation";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import {
-  Container,
-  Typography,
-  Box,
-  Hidden,
-  Switch,
-  Grid,
-} from "@material-ui/core";
+import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import Dropzone from "./Dropzone";
-import CustomTextField from "./CustomTextField";
-import ControlledSwitch from "./ControlledSwitch";
-import VoteEditCandidates, { deletingIds } from "./VoteEditCandidates";
+import { deletingIds } from "./VoteEditCandidates";
 import {
   VoteEditFormdata,
   VoteMetadata,
@@ -26,46 +15,17 @@ import {
   File as File2,
   Post,
 } from "../types";
-import { voteOptions } from "../helpers/options";
 import { makeUpdateVariables } from "./makePostVariables";
 import CustomImageUploader from "./CustomImageUploader";
 import SavedImageFile from "./SavedImageFile";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  adorn: {
-    "& > div": {
-      flexWrap: "nowrap",
-    },
-  },
-  buttonProgress: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    marginTop: -9,
-    marginLeft: -9,
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import VoteInputs from "./VoteInputs";
+import BtnSubmitDesktop from "./BtnSubmitDesktop";
 
 export default function VoteEdit({ post: p }: { post: Post }) {
   const { id } = p;
-  const hasVoted = p.users_aggregate.aggregate.sum.like_count || 0;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [, setError] = useGlobalState(keys.ERROR);
   const [update] = useMutation(updateVote);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
@@ -73,14 +33,8 @@ export default function VoteEdit({ post: p }: { post: Post }) {
   const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
   const [isBinary, setBinary] = React.useState(false);
   const formControl = useForm<VoteEditFormdata>();
-  const { handleSubmit, register, errors, reset, control } = formControl;
-  const classes = useStyles();
-  function binaryHandler() {
-    if (hasVoted) {
-      return setError("이미 투표한 사람이 있어 변경할 수 없습니다.");
-    }
-    setBinary(!isBinary);
-  }
+  const { handleSubmit, reset } = formControl;
+
   React.useEffect(() => {
     deletingIds.length = 0;
     const { title, body, context, files, images, candidates } = p;
@@ -157,64 +111,13 @@ export default function VoteEdit({ post: p }: { post: Post }) {
         <Box mt={2}>
           <Container component="main" maxWidth="md">
             <Typography variant="h2">투표 쓰기</Typography>
-            <CustomTextField
-              label="제목"
-              name="title"
-              autoFocus
-              register={register}
-              errors={errors}
+            <VoteInputs
+              formControl={formControl}
+              isBinary={isBinary}
+              setBinary={setBinary}
+              isEdit={true}
             />
-            <CustomTextField
-              label="내용"
-              multiline
-              name="body"
-              register={register}
-              errors={errors}
-            />
-            <CustomTextField
-              register={register}
-              errors={errors}
-              select
-              label="투표 종료 방법"
-              variant="filled"
-              name="closingMethod"
-              SelectProps={{
-                native: true,
-              }}
-              defaultValue="7days"
-              children={voteOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            />
-            <Grid container justify="space-between" alignItems="center">
-              찬반투표
-              <Switch
-                color="primary"
-                disabled
-                checked={isBinary}
-                onChange={binaryHandler}
-              />
-            </Grid>
-            <VoteEditCandidates formControl={formControl} isBinary={isBinary} />
             <CustomImageUploader setImageArr={setImageArr} />
-            <Grid container justify="space-between" alignItems="center">
-              <Typography>익명투표</Typography>
-              <ControlledSwitch control={control} name="isAnonymous" disabled />
-            </Grid>
-            <Grid container justify="space-between" alignItems="center">
-              <Typography>중복투표</Typography>
-              <ControlledSwitch control={control} name="isMultiple" disabled />
-            </Grid>
-            <Grid container justify="space-between" alignItems="center">
-              <Typography>종료 될 때까지 중간 투표 집계를 숨깁니다.</Typography>
-              <ControlledSwitch
-                control={control}
-                name="isResultHidden"
-                disabled
-              />
-            </Grid>
             <Dropzone files={fileArr} setFiles={setFileArr} />
             <SavedImageFile
               files={files2}
@@ -222,17 +125,7 @@ export default function VoteEdit({ post: p }: { post: Post }) {
               setFiles={setFiles2}
               setImages={setImages2}
             />
-            <Hidden smDown implementation="css">
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                투표 제출
-              </Button>
-            </Hidden>
+            <BtnSubmitDesktop text="투표 수정" />
           </Container>
         </Box>
       </form>
