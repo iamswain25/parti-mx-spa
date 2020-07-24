@@ -166,7 +166,7 @@ export type Post = {
   likedUsers: UserPost[];
   board: Board;
 };
-export interface SuggestionPost {
+export interface Suggestion {
   mx_posts_by_pk: Post;
 }
 export type NoticeMetadata = { announcement: boolean };
@@ -184,10 +184,10 @@ export type EventMetadata = {
   deadline: string;
   countPeople: number;
 };
-export interface VoteType extends Post {
+export interface Vote extends Post {
   metadata: VoteMetadata;
 }
-export interface EventType extends Post {
+export interface Event extends Post {
   metadata: EventMetadata;
 }
 

@@ -74,10 +74,10 @@ export const theme: Theme = createMuiTheme({
       lineHeight: "normal",
     },
     h5: {
+      fontSize: 14,
       "@media (max-width: 960px)": {
         fontSize: 11,
       },
-      fontSize: 14,
       letterSpacing: -0.3,
       fontWeight: "inherit",
       lineHeight: "normal",

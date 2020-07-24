@@ -4,6 +4,7 @@ import {
   format,
   isAfter,
   formatDistanceToNow,
+  addHours,
 } from "date-fns";
 import { ko } from "date-fns/locale";
 export function calculateDays(date: string, days = 30) {
@@ -105,4 +106,14 @@ export function getUnix(date: Date) {
 }
 export function getIosDateRef(date: Date) {
   return getUnix(date) - getUnix(new Date("2001-01-01"));
+}
+const GOOGLE_CALENDAR_FORMAT = "yyyyMMdd'T'HHmmss";
+export function getGoogleCalendarDate(date: string = "") {
+  const eventStart = new Date(date);
+  const eventEnd = addHours(eventStart, 3);
+  return (
+    format(eventStart, GOOGLE_CALENDAR_FORMAT) +
+    "/" +
+    format(eventEnd, GOOGLE_CALENDAR_FORMAT)
+  );
 }

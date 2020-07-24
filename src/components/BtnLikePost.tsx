@@ -28,6 +28,17 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: 1,
     borderStyle: "solid",
   },
+  event: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: 16,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 14,
+      width: "100%",
+    },
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.common.white,
+  },
 }));
 export default function BtnLikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
@@ -43,7 +54,14 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
   async function handler() {
     if (user_id) {
       await vote();
-      setSuccess("공감하였습니다.");
+      switch (type) {
+        case "suggestion":
+          return setSuccess("공감 하였습니다.");
+        case "event":
+          return setSuccess("참석 신청 하였습니다.");
+        default:
+          return setSuccess("공감 하였습니다.");
+      }
     } else {
       showLogin(true);
     }
@@ -59,6 +77,17 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           disableElevation
         >
           제안 동의
+        </Button>
+      );
+    case "event":
+      return (
+        <Button
+          onClick={handler}
+          variant="contained"
+          className={classes.event}
+          disableElevation
+        >
+          참석신청
         </Button>
       );
     default:

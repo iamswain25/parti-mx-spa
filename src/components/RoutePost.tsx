@@ -15,6 +15,7 @@ import useDesktop from "./useDesktop";
 import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
 import Forbidden from "./Forbidden";
+import EventDetail from "./EventDetail";
 
 export default function RoutePost() {
   const { post_id } = useParams();
@@ -43,9 +44,9 @@ export default function RoutePost() {
     case "suggestion":
       postByType = <SuggestionDetail post={p} />;
       break;
-    // case "event":
-    //   postByType = <RouteBoardEvent post={p} />;
-    //   break;
+    case "event":
+      postByType = <EventDetail post={p} />;
+      break;
     default:
       postByType = <SuggestionDetail post={p} />;
   }

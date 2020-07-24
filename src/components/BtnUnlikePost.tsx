@@ -29,6 +29,19 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: 1,
     borderStyle: "solid",
   },
+  event: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: 16,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 14,
+      width: "100%",
+    },
+    // backgroundColor: theme.palette.primary.dark,
+    // color: theme.palette.common.white,
+    color: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.light,
+  },
 }));
 export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
@@ -46,6 +59,8 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
     switch (type) {
       case "suggestion":
         return setSuccess("제안 취소 하였습니다.");
+      case "event":
+        return setSuccess("참석 취소 하였습니다.");
       default:
         return setSuccess("공감 취소 하였습니다.");
     }
@@ -60,6 +75,17 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           disableElevation
         >
           제안 동의 취소
+        </Button>
+      );
+    case "event":
+      return (
+        <Button
+          onClick={handler}
+          variant="contained"
+          className={classes.event}
+          disableElevation
+        >
+          참석 취소
         </Button>
       );
     default:
