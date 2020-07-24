@@ -3,10 +3,10 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { useFieldArray, FormContextValues, Controller } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Box } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import AddIcon from "@material-ui/icons/Add";
-import { VoteEditFormdata } from "../types";
+import { VoteEditFormdata, Candidate } from "../types";
 const useStyles = makeStyles((theme) => ({
   adorn: {
     "& > div": {
@@ -14,27 +14,27 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+export const deletingIds: any[] = [];
 export default function VoteEditCandidates({
   formControl,
   isBinary = false,
 }: any) {
-  const {
-    errors,
-    control,
-    getValues,
-    clearError,
-    unregister,
-  } = formControl as FormContextValues<VoteEditFormdata>;
+  const { errors, control, getValues } = formControl as FormContextValues<
+    VoteEditFormdata
+  >;
   const classes = useStyles();
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<Candidate>({
     name: "candidates",
     control,
   });
   function removeHandler(i: number) {
     if (fields.length > 2) {
       remove(i);
+      if (fields[i].__typename) {
+        deletingIds.push(fields[i].id);
+      }
     } else {
-      const ref = control.fieldsRef.current?.[`candidates[${i}]`]?.ref;
+      const ref = control.fieldsRef.current?.[`candidates[${i}].body`]?.ref;
       if (ref) {
         ref.value = "";
       }
@@ -43,21 +43,8 @@ export default function VoteEditCandidates({
   function addHandler() {
     append({ body: "" });
   }
-  React.useEffect(() => {
-    const { candidates } = getValues({ nest: true });
-    if (!candidates) return;
-    wasBinary.current = isBinary;
-    if (isBinary) {
-      clearError("candidates");
-      fields.forEach((f, i) => {
-        f.value = candidates[i];
-      });
-    }
-  }, [isBinary, getValues, fields, clearError, unregister]);
-  console.log(fields);
-  const wasBinary = React.useRef(false);
   function validate(value: string) {
-    if (!wasBinary.current && !value) {
+    if (!isBinary && !value) {
       return "필수 입력";
     }
   }
@@ -75,33 +62,42 @@ export default function VoteEditCandidates({
   return (
     <>
       {fields.map((field, index) => {
-        const disabled = field?.votes_aggregate?.aggregate?.sum?.count > 0;
+        const voteCount = field?.votes_aggregate?.aggregate?.sum?.count || 0;
+        const hasVote = voteCount > 0;
         return (
-          <Controller
-            as={
-              <CustomTextField
-                defaultValue=""
-                label={`${index + 1}. 투표항목`}
-                classes={{ root: classes.adorn }}
-                disabled={disabled}
-                InputProps={{
-                  endAdornment: !disabled && (
-                    <IconButton onClick={() => removeHandler(index)}>
-                      <CloseIcon />
-                    </IconButton>
-                  ),
-                }}
-                error={!!errors?.candidates?.[index] && !wasBinary.current}
-                required={!!errors?.candidates?.[index] && !wasBinary.current}
-                helperText={errors?.candidates?.[index]?.body?.message}
-              />
-            }
-            control={control}
-            defaultValue={field.body}
-            key={field.id}
-            name={`candidates[${index}].body`}
-            rules={{ validate: { required: validate, duplicate } }}
-          />
+          <Box key={field.id}>
+            <Controller
+              name={`candidates[${index}].id`}
+              control={control}
+              defaultValue={field.id}
+              as={<input type="hidden" />}
+            />
+            <Controller
+              as={
+                <CustomTextField
+                  label={`${index + 1}. 투표항목`}
+                  classes={{ root: classes.adorn }}
+                  disabled={hasVote}
+                  InputProps={{
+                    endAdornment: hasVote ? (
+                      <Box>{voteCount}</Box>
+                    ) : (
+                      <IconButton onClick={() => removeHandler(index)}>
+                        <CloseIcon />
+                      </IconButton>
+                    ),
+                  }}
+                  error={!!errors?.candidates?.[index] && !isBinary}
+                  required={!!errors?.candidates?.[index] && !isBinary}
+                  helperText={errors?.candidates?.[index]?.body?.message}
+                />
+              }
+              control={control}
+              defaultValue={field.body}
+              name={`candidates[${index}].body`}
+              rules={{ validate: { required: validate, duplicate } }}
+            />
+          </Box>
         );
       })}
       <Button onClick={addHandler} startIcon={<AddIcon />}>

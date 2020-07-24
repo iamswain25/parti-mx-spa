@@ -18,7 +18,7 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import Dropzone from "./Dropzone";
 import CustomTextField from "./CustomTextField";
 import ControlledSwitch from "./ControlledSwitch";
-import VoteEditCandidates from "./VoteEditCandidates";
+import VoteEditCandidates, { deletingIds } from "./VoteEditCandidates";
 import {
   VoteEditFormdata,
   VoteMetadata,
@@ -61,10 +61,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function VoteEdit({ post: p }: { post: Post }) {
   const { id } = p;
+  const hasVoted = p.users_aggregate.aggregate.sum.like_count || 0;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [insert] = useMutation(updateVote);
+  const [, setError] = useGlobalState(keys.ERROR);
+  const [update] = useMutation(updateVote);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
@@ -73,9 +75,15 @@ export default function VoteEdit({ post: p }: { post: Post }) {
   const formControl = useForm<VoteEditFormdata>();
   const { handleSubmit, register, errors, reset, control } = formControl;
   const classes = useStyles();
+  function binaryHandler() {
+    if (hasVoted) {
+      return setError("이미 투표한 사람이 있어 변경할 수 없습니다.");
+    }
+    setBinary(!isBinary);
+  }
   React.useEffect(() => {
-    const { title, body, context, files, images, candidates} = p;
-    // const candidates = cs.map((c) => c.body);
+    deletingIds.length = 0;
+    const { title, body, context, files, images, candidates } = p;
     const metadata = p.metadata as VoteMetadata;
     const {
       closingMethod,
@@ -102,12 +110,21 @@ export default function VoteEdit({ post: p }: { post: Post }) {
     setLoading(true);
     const {
       closingMethod,
-      candidates,
+      candidates: inputCandidates,
       isMultiple,
       isAnonymous,
       isResultHidden,
       ...rest
     } = form;
+    const candidates = inputCandidates.map((c, i) => {
+      const { id, ...rest } = c;
+      const newC: any = { ...rest, post_id: p.id, order: i + 1 };
+      if (typeof id === "number") {
+        newC.id = id;
+      }
+      return newC;
+    });
+
     const metadata = {
       isBinary,
       isMultiple,
@@ -123,9 +140,11 @@ export default function VoteEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
       metadata,
+      candidates,
+      deletingIds,
     });
 
-    await insert({ variables });
+    await update({ variables });
     history.push("/post/" + id);
   }
 
@@ -173,23 +192,28 @@ export default function VoteEdit({ post: p }: { post: Post }) {
               찬반투표
               <Switch
                 color="primary"
+                disabled
                 checked={isBinary}
-                onChange={() => setBinary(!isBinary)}
+                onChange={binaryHandler}
               />
             </Grid>
             <VoteEditCandidates formControl={formControl} isBinary={isBinary} />
             <CustomImageUploader setImageArr={setImageArr} />
             <Grid container justify="space-between" alignItems="center">
               <Typography>익명투표</Typography>
-              <ControlledSwitch control={control} name="isAnonymous" />
+              <ControlledSwitch control={control} name="isAnonymous" disabled />
             </Grid>
             <Grid container justify="space-between" alignItems="center">
               <Typography>중복투표</Typography>
-              <ControlledSwitch control={control} name="isMultiple" />
+              <ControlledSwitch control={control} name="isMultiple" disabled />
             </Grid>
             <Grid container justify="space-between" alignItems="center">
               <Typography>종료 될 때까지 중간 투표 집계를 숨깁니다.</Typography>
-              <ControlledSwitch control={control} name="isResultHidden" />
+              <ControlledSwitch
+                control={control}
+                name="isResultHidden"
+                disabled
+              />
             </Grid>
             <Dropzone files={fileArr} setFiles={setFileArr} />
             <SavedImageFile

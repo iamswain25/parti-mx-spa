@@ -514,7 +514,10 @@ export const updateVote = gql`
     delete_mx_candidates(where: { id: { _in: $deletingIds } }) {
       affected_rows
     }
-    insert_mx_candidates(objects: $candidates) {
+    insert_mx_candidates(
+      objects: $candidates
+      on_conflict: { constraint: vote_candidates_pkey, update_columns: [body, order] }
+    ) {
       affected_rows
     }
   }

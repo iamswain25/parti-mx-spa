@@ -246,6 +246,7 @@ export type Vote = {
 };
 
 export type Candidate = {
+  __typename: string;
   id: number;
   body: string;
   post: {
