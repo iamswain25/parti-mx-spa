@@ -16,6 +16,7 @@ import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 import { Box } from "@material-ui/core";
 import DesktopHeader from "./DesktopHeader";
+import Forbidden from "./Forbidden";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -63,8 +64,11 @@ export default function Home() {
   useErrorEffect(error);
   const [isDesktop] = useDesktop();
   const group = data?.mx_groups_by_pk;
-  if (!group) {
+  if (loading) {
     return null;
+  }
+  if (!group) {
+    return <Forbidden />;
   }
   const { notice, suggestion, vote, event, boards } = group;
 

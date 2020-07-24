@@ -38,7 +38,7 @@ export type Board = {
   title: string;
   body: string;
   slug: string;
-  permission: "member" | "all";
+  permission: "member" | "all" | "observer";
   type: BoardTypes;
   updated_at: string;
   last_posted_at: string;

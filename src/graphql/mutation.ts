@@ -351,11 +351,11 @@ export const incrementUserPostCheck = gql`
 `;
 export const updateBoardPermission = gql`
   mutation($board_id: Int!, $permission: String!) {
-    update_mx_boards(
-      where: { id: { _eq: $board_id } }
+    update_mx_boards_by_pk(
+      pk_columns: { id: $board_id }
       _set: { permission: $permission }
     ) {
-      affected_rows
+      id
     }
   }
 `;

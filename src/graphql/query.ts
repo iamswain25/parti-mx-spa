@@ -23,6 +23,25 @@ export const queryByGroupId = gql`
   ${groups}
 `;
 
+export const queryBoardsByGroupId = gql`
+  query($group_id: Int!) {
+    mx_groups_by_pk(id: $group_id) {
+      boards {
+        id
+        type
+        title
+        body
+        permission
+        posts_aggregate {
+          aggregate {
+            count
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const queryByBoardId = gql`
   query(
     $board_id: Int!

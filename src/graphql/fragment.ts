@@ -137,6 +137,8 @@ export const groups = gql`
       id
       type
       title
+      body
+      permission
     }
     users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       status

@@ -11,6 +11,7 @@ import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
 import { Box, Grid, Button, Typography } from "@material-ui/core";
 import useDesktop from "./useDesktop";
+import MenuGroup from "./MenuGroup";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -75,11 +76,10 @@ const useStyles = makeStyles((theme) => {
       width: 69,
       height: theme.spacing(3),
       borderRadius: 2,
-      [theme.breakpoints.down("sm")]: {
-        backgroundColor: theme.palette.background.paper,
-      },
+      color: theme.palette.common.white,
       backgroundColor: theme.palette.grey[900],
-      paddingLeft: theme.spacing(1),
+      padding: 0,
+      marginLeft: theme.spacing(1),
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
@@ -137,6 +137,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             <Box>개설 {semanticDate(created_at)}</Box>
             <Box paddingX={1}>멤버 {userCount}</Box>
             {toJoinTag}
+            <MenuGroup group={group} />
           </div>
         </div>
       </div>

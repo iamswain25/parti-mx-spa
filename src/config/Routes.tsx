@@ -17,6 +17,7 @@ import RouteMap from "../components/RouteMap";
 import RoutePhoto from "../components/RoutePhoto";
 import RoutePostEdit from "../components/RoutePostEdit";
 import RoutePostNew from "../components/RoutePostNew";
+import BoardsSetting from "../components/BoardsSetting";
 
 export default function Routes() {
   useParseGroupId();
@@ -43,6 +44,7 @@ export default function Routes() {
             </Route>
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
+            <Route path="/boards" exact component={BoardsSetting} />
           </Dashboard>
         </Switch>
       )}
