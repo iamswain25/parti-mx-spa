@@ -13,6 +13,7 @@ import SuggestionEdit from "./SuggestionEdit";
 import NoticeEdit from "./NoticeEdit";
 import VoteEdit from "./VoteEdit";
 import Forbidden from "./Forbidden";
+import EventEdit from "./EventEdit";
 
 export default function RoutePostEdit() {
   const { post_id } = useParams();
@@ -37,9 +38,9 @@ export default function RoutePostEdit() {
     case "suggestion":
       postByType = <SuggestionEdit post={p} />;
       break;
-    // case "event":
-    //   postByType = <RouteBoardEvent post={p} />;
-    //   break;
+    case "event":
+      postByType = <EventEdit post={p} />;
+      break;
     default:
       postByType = <SuggestionDetail post={p} />;
   }

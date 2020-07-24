@@ -1,19 +1,20 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { useMutation } from "@apollo/client";
-import { insertPost } from "../graphql/mutation";
+import { updatePost } from "../graphql/mutation";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import Dropzone from "./Dropzone";
+import { Post, Image, File as File2, EventFormdata } from "../types";
+import SavedImageFile from "./SavedImageFile";
+import { makeUpdateVariables } from "./makePostVariables";
 import CustomImageUploader from "./CustomImageUploader";
-import { makeNewVariables } from "./makePostVariables";
-import { EventFormdata } from "../types";
 import EventInputs from "./EventInputs";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,17 +37,26 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-export default function EventNew() {
-  const { board_id } = useParams();
+
+export default function EventEdit({ post: p }: { post: Post }) {
+  const { id } = p;
   const history = useHistory();
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [, setLoading] = useGlobalState(keys.LOADING);
-  const [insert] = useMutation(insertPost);
-  const [{ group_id }] = useStore();
+  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [update] = useMutation(updatePost);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const { handleSubmit, register, errors } = useForm<EventFormdata>();
+  const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
+  const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
+  const { handleSubmit, register, errors, reset } = useForm<EventFormdata>();
+  React.useEffect(() => {
+    const { title, body, files, images, metadata } = p;
+    reset({ title, body, ...metadata });
+    setImages2(images);
+    setFiles2(files);
+  }, [reset, p]);
   const classes = useStyles();
+
   async function handleForm(form: EventFormdata) {
     setLoading(true);
     const { eventDate, deadline, countPeople, place, ...rest } = form;
@@ -56,33 +66,40 @@ export default function EventNew() {
       countPeople,
       place,
     };
-    const variables = await makeNewVariables(rest, {
-      board_id,
-      group_id,
+    const variables = await makeUpdateVariables(rest, {
       imageArr,
       fileArr,
+      images2,
+      files2,
       setSuccess,
+      id,
       metadata,
     });
-    const res = await insert({
+    const res = await update({
       variables,
     });
-    const id = res?.data?.insert_mx_posts_one?.id;
+    console.log(res);
     history.push("/post/" + id);
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
+      <form onSubmit={handleSubmit(handleForm)} noValidate>
         <Hidden mdUp>
-          <HeaderNew title="모임" />
+          <HeaderNew title="소식 수정" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">모임</Typography>
+            <Typography variant="h2">소식 수정</Typography>
             <EventInputs register={register} errors={errors} />
             <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
+            <SavedImageFile
+              files={files2}
+              images={images2}
+              setFiles={setFiles2}
+              setImages={setImages2}
+            />
             <Hidden smDown implementation="css">
               <Button
                 type="submit"
@@ -91,7 +108,7 @@ export default function EventNew() {
                 color="primary"
                 className={classes.submit}
               >
-                모임
+                소식 수정
               </Button>
             </Hidden>
           </Container>
