@@ -9,6 +9,7 @@ import SuggestionNew from "./SuggestionNew";
 import NoticeNew from "./NoticeNew";
 import VoteNew from "./VoteNew";
 import Forbidden from "./Forbidden";
+import EventNew from "./EventNew";
 
 export default function RoutePostNew() {
   const { board_id } = useParams();
@@ -18,6 +19,9 @@ export default function RoutePostNew() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const b = data?.mx_boards_by_pk;
+  if (loading) {
+    return null;
+  }
   if (!b) {
     return <Forbidden />;
   }
@@ -32,9 +36,9 @@ export default function RoutePostNew() {
     case "suggestion":
       boardNew = <SuggestionNew />;
       break;
-    // case "event":
-    //   boardNew = <RouteBoardEvent />;
-    //   break;
+    case "event":
+      boardNew = <EventNew />;
+      break;
     default:
       boardNew = <SuggestionNew />;
   }

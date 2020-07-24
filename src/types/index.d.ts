@@ -6,6 +6,14 @@ export interface NoticeFormdata {
   title: string;
   body: string;
 }
+export interface EventFormdata {
+  eventDate: string;
+  place: string;
+  deadline: string;
+  countPeople: number;
+  title: string;
+  body: string;
+}
 export interface SuggestionFormdata {
   title: string;
   context: string;

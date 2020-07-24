@@ -1,19 +1,11 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import { useFieldArray, FormContextValues, Controller } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton, Box } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import AddIcon from "@material-ui/icons/Add";
 import { VoteEditFormdata, Candidate } from "../types";
-const useStyles = makeStyles((theme) => ({
-  adorn: {
-    "& > div": {
-      flexWrap: "nowrap",
-    },
-  },
-}));
 export const deletingIds: any[] = [];
 export default function VoteEditCandidates({
   formControl,
@@ -22,7 +14,6 @@ export default function VoteEditCandidates({
   const { errors, control, getValues } = formControl as FormContextValues<
     VoteEditFormdata
   >;
-  const classes = useStyles();
   const { fields, append, remove } = useFieldArray<Candidate>({
     name: "candidates",
     control,
@@ -76,7 +67,6 @@ export default function VoteEditCandidates({
               as={
                 <CustomTextField
                   label={`${index + 1}. 투표항목`}
-                  classes={{ root: classes.adorn }}
                   disabled={hasVote}
                   InputProps={{
                     endAdornment: hasVote ? (

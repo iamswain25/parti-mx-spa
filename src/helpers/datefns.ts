@@ -108,6 +108,7 @@ export function getIosDateRef(date: Date) {
   return getUnix(date) - getUnix(new Date("2001-01-01"));
 }
 const GOOGLE_CALENDAR_FORMAT = "yyyyMMdd'T'HHmmss";
+const DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm";
 export function getGoogleCalendarDate(date: string = "") {
   const eventStart = new Date(date);
   const eventEnd = addHours(eventStart, 3);
@@ -116,4 +117,8 @@ export function getGoogleCalendarDate(date: string = "") {
     "/" +
     format(eventEnd, GOOGLE_CALENDAR_FORMAT)
   );
+}
+export function getDatetimeFormat(date: Date, days = 7) {
+  const after = addDays(date, days);
+  return format(after, DATETIME_FORMAT);
 }
