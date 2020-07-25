@@ -25,22 +25,16 @@ export default function RoutePostNew() {
   if (!b) {
     return <Forbidden />;
   }
-  let boardNew = null;
   switch (b.type) {
     case "notice":
-      boardNew = <NoticeNew />;
-      break;
+      return <NoticeNew />;
     case "vote":
-      boardNew = <VoteNew />;
-      break;
+      return <VoteNew />;
     case "suggestion":
-      boardNew = <SuggestionNew />;
-      break;
+      return <SuggestionNew />;
     case "event":
-      boardNew = <EventNew />;
-      break;
+      return <EventNew />;
     default:
-      boardNew = <SuggestionNew />;
+      return <SuggestionNew />;
   }
-  return boardNew;
 }

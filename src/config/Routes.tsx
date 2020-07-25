@@ -33,7 +33,11 @@ export default function Routes() {
           <Route path="/home" exact component={Home} />
           <Dashboard>
             <Route path="/post/:post_id" exact component={RoutePost} />
-            <Route path="/edit/:post_id" exact component={RoutePostEdit} />
+            <PrivateRoute
+              path="/edit/:post_id"
+              exact
+              component={RoutePostEdit}
+            />
             <PrivateRoute
               path="/new/:board_id"
               exact
@@ -44,7 +48,7 @@ export default function Routes() {
             </Route>
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
-            <Route path="/boards" exact component={BoardsSetting} />
+            <PrivateRoute path="/boards" exact component={BoardsSetting} />
           </Dashboard>
         </Switch>
       )}

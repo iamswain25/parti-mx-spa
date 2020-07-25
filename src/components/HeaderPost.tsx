@@ -1,10 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Grid, IconButton, Typography, Box } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import PostMenu from "./PostMenu";
 import { Post } from "../types";
+import useGoBack from "./useGoBack";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -25,14 +26,7 @@ export default function HeaderPost({ post: p }: { post: Post }) {
   const title = p.board?.group?.title || "로딩 중";
   const groupId = p.board?.group?.id;
   const classes = useStyles();
-  const history = useHistory();
-  function back() {
-    if (history.length < 3) {
-      return history.replace("/");
-    } else {
-      history.goBack();
-    }
-  }
+  const back = useGoBack();
   return (
     <Grid
       container

@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
 import { Grid, IconButton, Typography, Box, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import useGoBack from "./useGoBack";
 const useStyles = makeStyles((theme) => {
   return {
     top: {
@@ -19,14 +19,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function HeaderNew({ title = "로딩 중" }: { title: string }) {
   const classes = useStyles();
-  const history = useHistory();
-  function back() {
-    if (history.length < 3) {
-      return history.replace("/");
-    } else {
-      history.goBack();
-    }
-  }
+  const back = useGoBack();
   return (
     <Grid
       container

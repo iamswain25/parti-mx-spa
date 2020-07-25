@@ -1,9 +1,17 @@
 import React from "react";
 import { Hidden, Button, makeStyles } from "@material-ui/core";
+import useGoBack from "./useGoBack";
 const useStyles = makeStyles((theme) => ({
   btn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    "& button": {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+    },
     [theme.breakpoints.up("md")]: {
       fontSize: 16,
       marginLeft: "auto",
@@ -18,16 +26,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BtnSubmitDesktop({ text = "투표 제출" }) {
   const classes = useStyles();
+  const back = useGoBack();
   return (
     <Hidden smDown implementation="css">
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        className={classes.btn}
-      >
-        {text}
-      </Button>
+      <div className={classes.btn}>
+        <Button variant="outlined" color="secondary" onClick={back}>
+          취소
+        </Button>
+        <Button type="submit" variant="contained" color="primary">
+          {text}
+        </Button>
+      </div>
     </Hidden>
   );
 }

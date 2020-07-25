@@ -7,8 +7,6 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useParams } from "react-router-dom";
 import SuggestionDetail from "./SuggestionDetail";
-import { Divider, Hidden } from "@material-ui/core";
-import HeaderPost from "./HeaderPost";
 import SuggestionEdit from "./SuggestionEdit";
 import NoticeEdit from "./NoticeEdit";
 import VoteEdit from "./VoteEdit";
@@ -30,30 +28,16 @@ export default function RoutePostEdit() {
   if (!p) {
     return <Forbidden />;
   }
-  let postByType = null;
   switch (p?.board?.type) {
     case "notice":
-      postByType = <NoticeEdit post={p} />;
-      break;
+      return <NoticeEdit post={p} />;
     case "vote":
-      postByType = <VoteEdit post={p} />;
-      break;
+      return <VoteEdit post={p} />;
     case "suggestion":
-      postByType = <SuggestionEdit post={p} />;
-      break;
+      return <SuggestionEdit post={p} />;
     case "event":
-      postByType = <EventEdit post={p} />;
-      break;
+      return <EventEdit post={p} />;
     default:
-      postByType = <SuggestionDetail post={p} />;
+      return <SuggestionDetail post={p} />;
   }
-  return (
-    <>
-      <Hidden mdUp>
-        <HeaderPost post={p} />
-      </Hidden>
-      <Divider />
-      {postByType}
-    </>
-  );
 }
