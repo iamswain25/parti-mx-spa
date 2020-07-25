@@ -40,7 +40,7 @@ export default function HeaderPost({ post: p }: { post: Post }) {
       </IconButton>
       <Box flexShrink={1}>
         <Link to={`/home?group_id=${groupId}`}>
-          <Typography variant="h3" color="textPrimary">
+          <Typography variant="h2" color="textPrimary">
             {title}
           </Typography>
         </Link>

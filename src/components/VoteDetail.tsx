@@ -178,6 +178,9 @@ export default function VoteDetail({ post: p }: { post: Post }) {
             <Box display="flex" alignItems="center">
               {metadata?.isAnonymous && <Box mr={1}>익명투표</Box>}
               {metadata?.isMultiple && <Box mr={1}>복수응답가능</Box>}
+              {metadata?.isResultHidden && (
+                <Box mr={1}>중간 투표 집계를 숨김</Box>
+              )}
             </Box>
             <Box color="grey.900">참여자 {participantCount}명</Box>
           </Grid>

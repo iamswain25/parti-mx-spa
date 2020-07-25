@@ -30,7 +30,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
     setAnchorEl(null);
   };
   if (!isMine && !isOrganizer) {
-    return null;
+    return <div />;
   }
   return (
     <>
