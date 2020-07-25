@@ -104,7 +104,7 @@ export default function VoteEdit({ post: p }: { post: Post }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleForm)} noValidate>
+      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
           <HeaderNew title="투표 쓰기" />
         </Hidden>

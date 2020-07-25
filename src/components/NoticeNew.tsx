@@ -42,7 +42,7 @@ export default function NoticeNew() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleForm)} noValidate>
+      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
           <HeaderNew title="소식 쓰기" />
         </Hidden>

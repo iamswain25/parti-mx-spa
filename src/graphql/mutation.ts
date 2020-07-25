@@ -228,12 +228,16 @@ export const insertBoard = gql`
     }
   }
 `;
-export const updateBoard = gql`
-  mutation($title: String!, $body: String!, $id: Int!) {
-    update_mx_boards(
-      _set: { body: $body, title: $title }
-      where: { id: { _eq: $id } }
+export const updateBoards = gql`
+  mutation($boards: [mx_boards_insert_input!]!, $deletingIds: [Int!]) {
+    insert_mx_boards(
+      objects: $boards
+      on_conflict: { constraint: boards_pkey, update_columns: [body, title] }
     ) {
+      affected_rows
+    }
+
+    delete_mx_boards(where: { id: { _in: $deletingIds } }) {
       affected_rows
     }
   }

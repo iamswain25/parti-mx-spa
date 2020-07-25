@@ -1,13 +1,12 @@
 import React from "react";
-import { Select } from "@material-ui/core";
-import { Board } from "../types";
+import { Select, FormControl, InputLabel } from "@material-ui/core";
 import { useGlobalState, keys } from "../store/useGlobalState";
 
 export default function SelectBoardPermission({
   board,
   update,
 }: {
-  board: Board;
+  board: any;
   update: any;
 }) {
   const { permission } = board;
@@ -27,12 +26,18 @@ export default function SelectBoardPermission({
     }
   }
   return (
-    <Select native defaultValue={permission} onChange={handleChange}>
-      <option value="all">전체공개</option>
-      <option value="member">멤버공개</option>
-      <option value="observer">
-        멤버공개(보기,댓글,공감 가능, 글쓰기 제외)
-      </option>
-    </Select>
+    <FormControl
+      // variant="outlined"
+      variant="filled"
+    >
+      <InputLabel>게시판 권한</InputLabel>
+      <Select native defaultValue={permission} onChange={handleChange}>
+        <option value="all">전체공개</option>
+        <option value="member">멤버공개</option>
+        <option value="observer">
+          멤버공개(보기,댓글,공감 가능, 글쓰기 제외)
+        </option>
+      </Select>
+    </FormControl>
   );
 }

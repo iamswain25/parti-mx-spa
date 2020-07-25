@@ -51,7 +51,7 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleForm)} noValidate>
+      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
           <HeaderNew title="소식 수정" />
         </Hidden>

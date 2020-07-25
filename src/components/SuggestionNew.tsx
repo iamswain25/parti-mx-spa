@@ -56,7 +56,7 @@ export default function SuggestionNew() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleForm)} noValidate>
+      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
           <HeaderNew title="제안글 쓰기" />
         </Hidden>

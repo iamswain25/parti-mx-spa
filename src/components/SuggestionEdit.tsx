@@ -78,7 +78,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleForm)} noValidate>
+    <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Hidden mdUp>
         <HeaderNew title="제안글 수정" />
       </Hidden>

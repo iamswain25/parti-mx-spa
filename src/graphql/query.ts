@@ -24,8 +24,11 @@ export const queryByGroupId = gql`
 `;
 
 export const queryBoardsByGroupId = gql`
-  query($group_id: Int!) {
+  query($group_id: Int!, $user_id: Int) {
     mx_groups_by_pk(id: $group_id) {
+      users(where: { user_id: { _eq: $user_id } }) {
+        status
+      }
       boards {
         id
         type

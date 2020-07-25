@@ -121,6 +121,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       그룹가입
     </Button>
   );
+  const isOrg = user?.status === "organizer";
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
@@ -137,7 +138,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             <Box>개설 {semanticDate(created_at)}</Box>
             <Box paddingX={1}>멤버 {userCount}</Box>
             {toJoinTag}
-            <MenuGroup group={group} />
+            {isOrg && <MenuGroup group={group} />}
           </div>
         </div>
       </div>
