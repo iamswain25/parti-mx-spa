@@ -19,8 +19,7 @@ import { useStore } from "../store/store";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import Forbidden from "./Forbidden";
-import SelectBoardPermission from "./SelectBoardPermission";
-import { updateBoardPermission, updateBoards } from "../graphql/mutation";
+import { updateBoards } from "../graphql/mutation";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link, useHistory } from "react-router-dom";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
@@ -66,7 +65,6 @@ export default function BoardsSetting() {
   });
   const history = useHistory();
   const [updateBoardsAll] = useMutation(updateBoards);
-  const [updatePermission] = useMutation(updateBoardPermission);
   const { handleSubmit, register, errors, control, reset } = useForm<
     BoardsForm
   >();
@@ -104,6 +102,7 @@ export default function BoardsSetting() {
       return b;
     });
     const variables = { boards, deletingIds };
+    // return console.log(variables);
     await updateBoardsAll({ variables });
     history.push("/home");
   }
@@ -187,10 +186,24 @@ export default function BoardsSetting() {
                   helperText={errors?.boards?.[i]?.body?.message}
                 />
                 <div>
-                  <SelectBoardPermission
-                    board={field}
-                    update={updatePermission}
-                  />
+                  <FormControl variant="filled">
+                    <InputLabel>게시판 권한</InputLabel>
+                    <Select
+                      native
+                      label="게시판 권한"
+                      defaultValue={field.permission}
+                      name={`boards[${i}].permission`}
+                      inputRef={register({
+                        required: "필수 입력",
+                      })}
+                    >
+                      <option value="all">전체공개</option>
+                      <option value="member">멤버공개</option>
+                      <option value="observer">
+                        멤버공개(보기,댓글,공감 가능, 글쓰기 제외)
+                      </option>
+                    </Select>
+                  </FormControl>
                   <div className={classes.ml}>
                     {postCount > 0 ? (
                       <div>{postCount}개의 포스트</div>

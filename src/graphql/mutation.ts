@@ -231,7 +231,7 @@ export const updateBoards = gql`
   mutation($boards: [mx_boards_insert_input!]!, $deletingIds: [Int!]) {
     insert_mx_boards(
       objects: $boards
-      on_conflict: { constraint: boards_pkey, update_columns: [body, title] }
+      on_conflict: { constraint: boards_pkey, update_columns: [body, title, permission] }
     ) {
       affected_rows
     }
