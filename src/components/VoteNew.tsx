@@ -23,7 +23,7 @@ export default function VoteNew() {
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [isBinary, setBinary] = React.useState(false);
+  const [isBinary, setBinary] = React.useState(true);
   const formControl = useForm<VoteFormdata>({
     defaultValues: { candidates: ["", ""] },
   });

@@ -1,17 +1,18 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { useFieldArray, FormContextValues, Controller } from "react-hook-form";
+import { useFieldArray, Controller } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton, Box } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import AddIcon from "@material-ui/icons/Add";
 import { VoteEditFormdata, Candidate } from "../types";
+import { UseFormMethods } from "react-hook-form/dist/types/form";
 export const deletingIds: any[] = [];
 export default function VoteEditCandidates({
   formControl,
   isBinary = false,
 }: any) {
-  const { errors, control, getValues } = formControl as FormContextValues<
+  const { errors, control, getValues } = formControl as UseFormMethods<
     VoteEditFormdata
   >;
   const { fields, append, remove } = useFieldArray<Candidate>({
@@ -40,8 +41,8 @@ export default function VoteEditCandidates({
     }
   }
   function duplicate(value: string) {
-    const { candidates } = getValues({ nest: true });
-    const isDup = candidates.filter((c) => c.body === value).length > 1;
+    const candidates = getValues("candidates");
+    const isDup = candidates?.filter((c) => c.body === value).length > 1;
     if (isDup) {
       return "중복입니다";
     }

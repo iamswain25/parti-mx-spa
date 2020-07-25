@@ -191,11 +191,12 @@ export const updateGroupName = gql`
   }
 `;
 export const createNewGroup = gql`
-  mutation($groupName: String!, $bg_img_url: String) {
-    insert_mx_groups(
-      objects: {
-        title: $groupName
+  mutation($title: String!, $bg_img_url: String, $mb_img_url: String) {
+    insert_mx_groups_one(
+      object: {
+        title: $title
         bg_img_url: $bg_img_url
+        mb_img_url: $mb_img_url
         users: { data: { status: "organizer" } }
         boards: {
           data: [
@@ -211,9 +212,7 @@ export const createNewGroup = gql`
         }
       }
     ) {
-      returning {
-        id
-      }
+      id
     }
   }
 `;

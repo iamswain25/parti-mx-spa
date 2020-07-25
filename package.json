@@ -31,7 +31,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-dropzone": "^11.0.2",
-    "react-hook-form": "^5.0.2",
+    "react-hook-form": "^6.0.8",
     "react-hooks-global-state": "^1.0.1",
     "react-image": "^4.0.3",
     "react-images-upload": "^1.2.8",

@@ -70,14 +70,19 @@ export default function VoteEdit({ post: p }: { post: Post }) {
       isResultHidden,
       ...rest
     } = form;
-    const candidates = inputCandidates.map((c, i) => {
-      const { id, ...rest } = c;
-      const newC: any = { ...rest, post_id: p.id, order: i + 1 };
-      if (typeof id === "number") {
-        newC.id = id;
-      }
-      return newC;
-    });
+    const candidates = inputCandidates
+      ? inputCandidates?.map((c, i) => {
+          const { id, ...rest } = c;
+          const newC: any = { ...rest, post_id: p.id, order: i + 1 };
+          if (typeof id === "number") {
+            newC.id = id;
+          }
+          return newC;
+        })
+      : p.candidates.map((p) => {
+          const { id, body, order } = p;
+          return { id, body, order, post_id: p.id };
+        });
 
     const metadata = {
       isBinary,

@@ -75,3 +75,10 @@ export async function uploadFileGetUriArray(file: File) {
     return res({ uri, name, lastModified, type, size });
   });
 }
+
+export async function uploadFileByPath(file: File, dir: string) {
+  console.log({ dir });
+  const ref = firebase.storage().ref().child(dir);
+  const fileSnapshot = await ref.put(file);
+  return await fileSnapshot.ref.getDownloadURL();
+}

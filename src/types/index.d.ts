@@ -263,6 +263,7 @@ export type UserCandidate = {
 export type Candidate = {
   __typename: string;
   id: number;
+  order: number;
   body: string;
   post: {
     id: number;

@@ -439,7 +439,7 @@ export const subsByPostId = gql`
           photo_url
         }
       }
-      candidates {
+      candidates(order_by: { order: asc_nulls_last }) {
         ...candidates
       }
     }

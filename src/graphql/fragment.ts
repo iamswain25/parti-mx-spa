@@ -100,6 +100,7 @@ export const candidates = gql`
   fragment candidates on mx_candidates {
     id
     body
+    order
     votes_aggregate {
       aggregate {
         sum {
@@ -128,7 +129,9 @@ export const groups = gql`
     title
     bg_img_url
     created_at
-    users_aggregate {
+    users_aggregate(
+      where: { status: { _in: ["organizer", "user", "participant"] } }
+    ) {
       aggregate {
         count
       }

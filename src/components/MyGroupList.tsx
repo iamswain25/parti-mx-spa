@@ -8,6 +8,7 @@ import { useStore } from "../store/store";
 import { UserGroup, Whoami } from "../types";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
+import AddIcon from "@material-ui/icons/Add";
 import {
   Avatar,
   makeStyles,
@@ -16,6 +17,7 @@ import {
   Typography,
   Divider,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
     display: "flex",
@@ -30,6 +32,7 @@ export default function MyGroupList(props: {
   const { clickHandler } = props;
   const classes = useStyles();
   const [{ user_id, group_id }] = useStore();
+  const history = useHistory();
   const { loading, data, error } = useSubscription<Whoami>(
     subscribeGroupsByUserId,
     {
@@ -84,6 +87,12 @@ export default function MyGroupList(props: {
       </Typography>
       <Divider />
       {list}
+      <ListItem button onClick={() => history.push("/group/new")}>
+        <ListItemIcon>
+          <Avatar variant="square" children={<AddIcon />} />
+        </ListItemIcon>
+        <ListItemText primary="그룹 만들기" />
+      </ListItem>
     </List>
   );
 }

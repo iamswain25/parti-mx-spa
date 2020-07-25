@@ -1,12 +1,13 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { useFieldArray, FormContextValues } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import AddIcon from "@material-ui/icons/Add";
 import { VoteFormdata } from "../types";
+import { UseFormMethods } from "react-hook-form/dist/types/form";
 const useStyles = makeStyles((theme) => ({
   adorn: {
     "& > div": {
@@ -23,9 +24,9 @@ export default function VoteNewCandidates({
     errors,
     control,
     getValues,
-    clearError,
+    clearErrors,
     unregister,
-  } = formControl as FormContextValues<VoteFormdata>;
+  } = formControl as UseFormMethods<VoteFormdata>;
   const classes = useStyles();
   const { fields, append, remove } = useFieldArray({
     name: "candidates",
@@ -46,16 +47,16 @@ export default function VoteNewCandidates({
     append({ value: "" });
   }
   React.useEffect(() => {
-    const { candidates } = getValues({ nest: true });
+    const candidates = getValues("candidates");
     if (!candidates) return;
     wasBinary.current = isBinary;
     if (isBinary) {
-      clearError("candidates");
+      clearErrors("candidates");
       fields.forEach((f, i) => {
         f.value = candidates[i];
       });
     }
-  }, [isBinary, getValues, fields, clearError, unregister]);
+  }, [isBinary, getValues, fields, clearErrors, unregister]);
   const wasBinary = React.useRef(false);
   function validate(value: string) {
     if (!wasBinary.current && !value) {
@@ -63,8 +64,8 @@ export default function VoteNewCandidates({
     }
   }
   function duplicate(value: string) {
-    const { candidates } = getValues({ nest: true });
-    const isDup = candidates.filter((c) => c === value).length > 1;
+    const candidates = getValues("candidates");
+    const isDup = candidates?.filter((c) => c === value).length > 1;
     if (isDup) {
       return "중복입니다";
     }
