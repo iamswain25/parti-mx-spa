@@ -7,6 +7,7 @@ import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
+import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme) => {
       },
       "&.ontop": {
         backgroundColor: theme.palette.primary.main,
+        "& button": {
+          backgroundColor: theme.palette.common.white,
+          color: theme.palette.primary.main,
+        },
         "& a": {
           color: "rgba(255, 255, 255, 0.6)",
           "&.active": {
@@ -84,6 +89,7 @@ export default function BoardTabNavigator({
   board_id?: number;
 }) {
   const classes = useStyles();
+  const [userStatus] = useGlobalState(keys.PERMISSION);
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
   const history = useHistory();
@@ -127,28 +133,31 @@ export default function BoardTabNavigator({
             </NavLink>
           ))}
         </Box>
-        <Hidden smDown>
-          <Box display="flex" alignItems="center" width={98}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={btnHandler}
-            >
-              글쓰기
-            </Button>
-          </Box>
-        </Hidden>
-        <Hidden mdUp>
-          <Fab
-            color="primary"
-            aria-label="write"
-            className={classes.fab}
-            onClick={btnHandler}
-          >
-            <CreateIcon />
-          </Fab>
-        </Hidden>
+        {(userStatus === "user" || userStatus === "organizer") && (
+          <>
+            <Hidden smDown>
+              <Box display="flex" alignItems="center" width={98}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={btnHandler}
+                >
+                  글쓰기
+                </Button>
+              </Box>
+            </Hidden>
+            <Hidden mdUp>
+              <Fab
+                color="primary"
+                aria-label="write"
+                className={classes.fab}
+                onClick={btnHandler}
+              >
+                <CreateIcon />
+              </Fab>
+            </Hidden>
+          </>
+        )}
       </div>
     </Grid>
   );

@@ -14,6 +14,7 @@ import RouteBoardEvent from "./RouteBoardEvent";
 import HeaderBoard from "./HeaderBoard";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import usePermEffect from "./usePermEffect";
 
 export default function RouteBoard() {
   const { board_id } = useParams();
@@ -45,6 +46,7 @@ export default function RouteBoard() {
       boardByType = <RouteBoardEvent board={data?.mx_boards_by_pk} />;
       break;
   }
+  usePermEffect(group?.users?.[0]?.status);
   return (
     <>
       <HeaderBoard title={group?.title} />

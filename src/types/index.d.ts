@@ -207,7 +207,13 @@ export type User = {
   checkedPosts?: [{ like_count: number }];
   votes?: UserCandidate[];
 };
-export type UserStatus = "requested" | "organizer" | "user" | undefined;
+export type UserStatus =
+  | "requested"
+  | "organizer"
+  | "user"
+  | "exit"
+  | "participant"
+  | undefined;
 export type NotificationType = "all" | "mine" | "related" | null;
 
 export interface UserGroup {

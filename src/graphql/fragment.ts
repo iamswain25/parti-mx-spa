@@ -142,7 +142,6 @@ export const groups = gql`
     }
     users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       status
-      notification_type
     }
   }
 `;

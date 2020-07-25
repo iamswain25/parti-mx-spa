@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { Box, Grid, Button, Typography } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import MenuGroup from "./MenuGroup";
+import usePermEffect from "./usePermEffect";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -97,7 +98,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   async function joinHandler() {
     if (user_id) {
       await join();
-      history.replace(history.location.pathname);
+      window.location.reload();
     } else {
       history.push("/login");
     }
@@ -114,14 +115,18 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       aggregate: { count: userCount = 0 },
     },
   } = group;
-  const toJoinTag = user ? (
-    <Typography>{user?.status}</Typography>
-  ) : (
-    <Button className={classes.groupJoin} onClick={joinHandler}>
-      그룹가입
-    </Button>
-  );
-  const isOrg = user?.status === "organizer";
+  const userStatus = user?.status;
+  usePermEffect(userStatus);
+  const isOrg = userStatus === "organizer";
+  const isUser = userStatus === "user";
+  const toJoinTag =
+    isUser || isOrg ? (
+      <Typography>{user?.status}</Typography>
+    ) : (
+      <Button className={classes.groupJoin} onClick={joinHandler}>
+        그룹가입
+      </Button>
+    );
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
@@ -138,7 +143,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             <Box>개설 {semanticDate(created_at)}</Box>
             <Box paddingX={1}>멤버 {userCount}</Box>
             {toJoinTag}
-            {isOrg && <MenuGroup group={group} />}
+            <MenuGroup group={group} />
           </div>
         </div>
       </div>
