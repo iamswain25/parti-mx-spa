@@ -104,6 +104,7 @@ export interface Whoami {
     email: string;
     photo_url: string;
     push_tokens: { token: string; created_at: string };
+    groups: UserGroup[];
   };
 }
 export interface CommentInput {
@@ -222,7 +223,7 @@ export interface UserGroup {
   created_at: string;
   notification_type: NotificationType;
   updated_at: string;
-  group?: Group;
+  group: Group;
   group_id: number;
   user_id: number;
 }

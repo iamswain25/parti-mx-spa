@@ -7,7 +7,7 @@ import { Typography, Grid, Box, Button, Divider } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import useDesktop from "./useDesktop";
-import { calculateDays, daysLeftMeta } from "../helpers/datefns";
+import { daysLeftMeta } from "../helpers/datefns";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoutePostVoteCandidate from "./RoutePostVoteCandidate";
 import GreyDivider from "./GreyDivider";

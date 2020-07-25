@@ -1,15 +1,14 @@
 import React from "react";
-import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import List from "@material-ui/core/List";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import { useStore } from "../store/store";
 import { Box } from "@material-ui/core";
 import MyGroupList from "./MyGroupList";
 import { useHistory } from "react-router-dom";
+const DRAWER_WIDTH = 304;
 const useStyles = makeStyles((theme: Theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -17,8 +16,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 24,
     height: 24,
   },
+  drawer: {
+    width: DRAWER_WIDTH,
+    [theme.breakpoints.up("md")]: {
+      flexShrink: 0,
+    },
+  },
 }));
-
 export default function DrawerGroup() {
   const [{ user_id }] = useStore();
   const classes = useStyles();
@@ -54,16 +58,13 @@ export default function DrawerGroup() {
               variant="temporary"
               anchor={theme.direction === "rtl" ? "right" : "left"}
               open={mobileOpen}
+              classes={{ paper: classes.drawer }}
               onClose={handleDrawerToggle}
               ModalProps={{
                 keepMounted: true,
               }}
             >
-              <Box>version: 0.5.3</Box>
-              <Divider />
-              <List>
-                <MyGroupList clickHandler={navigateGroupHandler} />
-              </List>
+              <MyGroupList clickHandler={navigateGroupHandler} />
             </Drawer>
           </Hidden>
         </nav>

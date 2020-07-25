@@ -8,15 +8,8 @@ import { useStore } from "../store/store";
 import LogoutButton from "./LogoutButton";
 import DrawerGroup from "./DrawerGroup";
 import LoginButton from "./LoginButton";
-const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme: Theme) => ({
-  drawer: {
-    [theme.breakpoints.up("md")]: {
-      width: DRAWER_WIDTH,
-      flexShrink: 0,
-    },
-  },
   appBar: {
     [theme.breakpoints.up("md")]: {
       backgroundColor: theme.palette.background.paper,
@@ -40,9 +33,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       minHeight: 48,
     },
     justifyContent: "center",
-  },
-  content: {
-    flexGrow: 1,
   },
   header: {
     display: "flex",
