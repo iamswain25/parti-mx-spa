@@ -1,11 +1,11 @@
 import React from "react";
 import useNavigateToPost from "./useNavigateToPost";
-import { Post } from "../types";
+import { Post, VoteMetadata } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Button, Box } from "@material-ui/core";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
-import { calculateDays } from "../helpers/datefns";
+import { daysLeftMeta } from "../helpers/datefns";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -60,13 +60,18 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
-  const daysLeft = calculateDays(p.created_at) ?? 30;
+  const created_at = p.created_at;
+  const metadata = p.metadata as VoteMetadata;
+  const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
+    metadata,
+    created_at,
+  ]);
   return (
     <div className={classes.container}>
-      <Grid container direction="row" justify="center">
+      <Grid container alignItems="center" justify="center">
         <HowToVoteIcon color="primary" className={classes.icon} />
         <Box color="primary.dark" fontWeight={500}>
-          <Typography variant="h5">{daysLeft}일 남음</Typography>
+          <Typography variant="h5">{daysLeft}</Typography>
         </Box>
       </Grid>
       <Box

@@ -104,9 +104,9 @@ export const theme: Theme = createMuiTheme({
       wordBreak: "break-all",
     },
     body2: {
-      fontSize: 11,
+      fontSize: 14,
       "@media (max-width: 960px)": {
-        fontSize: 8,
+        fontSize: 11,
       },
       fontWeight: "inherit",
       display: "flex",

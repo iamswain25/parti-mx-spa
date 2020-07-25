@@ -1,13 +1,13 @@
 import React from "react";
 import useNavigateToPost from "./useNavigateToPost";
-import { Post } from "../types";
+import { Post, VoteMetadata } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button, Divider } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import useDesktop from "./useDesktop";
-import { calculateDays } from "../helpers/datefns";
+import { calculateDays, daysLeftMeta } from "../helpers/datefns";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoutePostVoteCandidate from "./RoutePostVoteCandidate";
 import GreyDivider from "./GreyDivider";
@@ -66,7 +66,12 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const navigatePost = useNavigateToPost(p.id);
-  const daysLeft = calculateDays(p.created_at) ?? 30;
+  const created_at = p.created_at;
+  const metadata = p.metadata as VoteMetadata;
+  const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
+    metadata,
+    created_at,
+  ]);
   const [isVoted, setVoted] = React.useState(false);
   React.useEffect(() => {
     setVoted(!!p.meLiked?.[0]?.like_count);
@@ -87,10 +92,10 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   return (
     <>
       <div className={classes.container}>
-        <Grid container direction="row" alignItems="center">
+        <Grid container alignItems="center">
           <HowToVoteIcon color="primary" className={classes.icon} />
-          <Box color="primary.dark">
-            <Typography variant="body2">{daysLeft}일 남음</Typography>
+          <Box color="primary.dark" fontWeight={500}>
+            <Typography variant="body1">{daysLeft}</Typography>
           </Box>
         </Grid>
         <Box className={classes.titleContainer} mt={1} onClick={navigatePost}>

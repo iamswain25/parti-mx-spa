@@ -7,7 +7,7 @@ export default function BoardPostSub2({ post: p }: { post: Post }) {
   const count = p.users_aggregate.aggregate.sum.like_count ?? 0;
   return (
     <Box color="grey.600">
-      <Typography variant="subtitle2">
+      <Typography variant="body2">
         <Box component="span" mr={1}>
           {p.createdBy.name}
         </Box>

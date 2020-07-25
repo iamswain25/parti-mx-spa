@@ -17,7 +17,7 @@ import Linkify from "react-linkify";
 import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
-import { calculateDays } from "../helpers/datefns";
+import { daysLeftMeta } from "../helpers/datefns";
 import VoteCandidate from "./VoteCandidate";
 import useVoteCandidate from "./useVoteCandidate";
 import PostMenu from "./PostMenu";
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => {
     icon: {
       width: 15,
       height: 17,
-      marginRight: theme.spacing(1),
+      marginRight: theme.spacing(0.5),
     },
     sub: {
       letterSpacing: -0.3,
@@ -103,15 +103,10 @@ export default function VoteDetail({ post: p }: { post: Post }) {
   const metadata = p.metadata as VoteMetadata;
   const commentCount = p.comments_aggregate?.aggregate?.count || 0;
   const participantCount = p.users_aggregate?.aggregate?.sum?.like_count;
-  const daysLeft = React.useMemo(() => {
-    let after = undefined;
-    try {
-      after = Number(metadata?.closingMethod?.replace("days", ""));
-      return calculateDays(created_at, after);
-    } catch (err) {
-      return "버그";
-    }
-  }, [metadata, created_at]);
+  const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
+    metadata,
+    created_at,
+  ]);
   const classes = useStyles();
   const voteHandler = useVoteCandidate(p);
   const [isVoted, setVoted] = React.useState(false);
@@ -152,10 +147,10 @@ export default function VoteDetail({ post: p }: { post: Post }) {
         <Box my={2}>
           <Divider light />
         </Box>
-        <Grid container direction="row">
+        <Grid container alignItems="center">
           <HowToVoteIcon color="primary" className={classes.icon} />
           <Box color="primary.dark" fontWeight={500}>
-            <Typography variant="h5">{daysLeft}일 남음</Typography>
+            <Typography variant="body1">{daysLeft}</Typography>
           </Box>
         </Grid>
         <Box className={classes.image}>
