@@ -16,7 +16,7 @@ export default function GroupSearchList(props: {
   });
   const groups = data?.mx_groups;
   if (!groups?.length) {
-    return <ListItem> 검색된 그룹이 없습니다.</ListItem>;
+    return <ListItem>검색된 그룹이 없습니다.</ListItem>;
   }
   return data.mx_groups.map((group: any, i: number) => (
     <ListItem key={i} button onClick={() => clickHandler(group.id)}>
@@ -27,7 +27,10 @@ export default function GroupSearchList(props: {
           children={group.title.substr(0, 1)}
         />
       </ListItemIcon>
-      <ListItemText primary={group?.title} />
+      <ListItemText
+        primaryTypographyProps={{ variant: "h4" }}
+        primary={group?.title}
+      />
     </ListItem>
   ));
 }

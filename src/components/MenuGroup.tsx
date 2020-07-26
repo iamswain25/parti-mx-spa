@@ -5,7 +5,8 @@ import { Group } from "../types";
 import { useHistory } from "react-router-dom";
 import useGroupExit from "./useGroupExit";
 export default function MenuGroup({ group }: { group: Group }) {
-  const [{ status }] = group?.users || [{ status: null }];
+  const users = group?.users;
+  const status = users?.[0]?.status;
   const isOrg = status === "organizer";
   const isUser = status === "user";
   const { push } = useHistory();
