@@ -1,6 +1,5 @@
 import React from "react";
 import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
@@ -33,8 +32,11 @@ export default function DrawerGroup() {
   if (!user_id) {
     return <Box className={classes.menuButton} />;
   }
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerOpen = () => {
+    setMobileOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setMobileOpen(false);
   };
   function navigateGroupHandler(group_id: number) {
     dispatch({ type: "SET_GROUP", group_id });
@@ -43,32 +45,28 @@ export default function DrawerGroup() {
   }
 
   return (
-    <Box color="inherit">
+    <>
       <IconButton
         color="inherit"
         aria-label="open drawer"
         edge="start"
-        onClick={handleDrawerToggle}
+        onClick={handleDrawerOpen}
         className={classes.menuButton}
       >
         <MenuIcon />
-        <nav aria-label="groups">
-          <Hidden mdUp implementation="css">
-            <Drawer
-              variant="temporary"
-              anchor={theme.direction === "rtl" ? "right" : "left"}
-              open={mobileOpen}
-              classes={{ paper: classes.drawer }}
-              onClose={handleDrawerToggle}
-              ModalProps={{
-                keepMounted: true,
-              }}
-            >
-              <MyGroupList clickHandler={navigateGroupHandler} />
-            </Drawer>
-          </Hidden>
-        </nav>
       </IconButton>
-    </Box>
+      <Drawer
+        variant="temporary"
+        anchor={theme.direction === "rtl" ? "right" : "left"}
+        open={mobileOpen}
+        classes={{ paper: classes.drawer }}
+        onClose={handleDrawerClose}
+        ModalProps={{
+          keepMounted: true,
+        }}
+      >
+        <MyGroupList clickHandler={navigateGroupHandler} />
+      </Drawer>
+    </>
   );
 }

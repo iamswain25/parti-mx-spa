@@ -2,6 +2,16 @@ import { Theme, createMuiTheme } from "@material-ui/core";
 const DRAWER_MIN_HEIGHT = 56;
 export const theme: Theme = createMuiTheme({
   overrides: {
+    MuiInputBase: {
+      root: {
+        flexWrap: "nowrap",
+      },
+    },
+    MuiTypography: {
+      root: {
+        flexWrap: "wrap",
+      },
+    },
     MuiCssBaseline: {
       "@global": {
         body: {
@@ -100,7 +110,6 @@ export const theme: Theme = createMuiTheme({
       fontWeight: "inherit",
       lineHeight: "normal",
       display: "flex",
-      flexWrap: "wrap",
       wordBreak: "break-all",
     },
     body2: {
@@ -111,7 +120,6 @@ export const theme: Theme = createMuiTheme({
       fontWeight: "inherit",
       display: "flex",
       lineHeight: "normal",
-      flexWrap: "wrap",
       wordBreak: "break-all",
     },
     subtitle1: {
@@ -121,7 +129,6 @@ export const theme: Theme = createMuiTheme({
       },
       letterSpacing: -0.38,
       display: "flex",
-      flexWrap: "wrap",
       lineHeight: "normal",
       wordBreak: "break-all",
       fontWeight: "inherit",
@@ -132,7 +139,6 @@ export const theme: Theme = createMuiTheme({
         fontSize: 8,
       },
       display: "flex",
-      flexWrap: "wrap",
       lineHeight: "normal",
       wordBreak: "break-all",
       fontWeight: "inherit",
@@ -142,7 +148,6 @@ export const theme: Theme = createMuiTheme({
       letterSpacing: 0.2,
       display: "flex",
       lineHeight: "normal",
-      flexWrap: "wrap",
       wordBreak: "break-all",
       fontWeight: "inherit",
     },

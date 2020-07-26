@@ -222,7 +222,9 @@ export const getBoardsByGroupId = gql`
 
 export const searchGroups = gql`
   query($searchKeyword: String!) {
-    mx_groups(where: { title: { _ilike: $searchKeyword } }) {
+    mx_groups(
+      where: { title: { _ilike: $searchKeyword }, private: { _eq: false } }
+    ) {
       title
       id
     }
