@@ -128,6 +128,7 @@ export const groups = gql`
     id
     title
     bg_img_url
+    mb_img_url
     created_at
     users_aggregate(
       where: { status: { _in: ["organizer", "user", "participant"] } }

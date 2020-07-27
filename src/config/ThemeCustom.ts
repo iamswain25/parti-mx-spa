@@ -28,6 +28,9 @@ export const theme: Theme = createMuiTheme({
         a: {
           textDecoration: "none",
         },
+        img: {
+          maxWidth: "100%",
+        },
       },
     },
   },

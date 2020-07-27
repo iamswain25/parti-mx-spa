@@ -1,6 +1,20 @@
 import gql from "graphql-tag";
 import { boards, posts, candidates, groups } from "./fragment";
 
+export const queryGroupEdit = gql`
+  query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
+    mx_groups_by_pk(id: $group_id) {
+      id
+      title
+      bg_img_url
+      mb_img_url
+      users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
+        status
+      }
+    }
+  }
+`;
+
 export const queryByGroupId = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_groups_by_pk(id: $group_id) {
@@ -152,15 +166,6 @@ export const searchDuplicateName = gql`
   query($name: String!) {
     mx_users(where: { _and: [{ name: { _ilike: $name } }] }) {
       name
-    }
-  }
-`;
-
-export const getGroups = gql`
-  query {
-    mx_groups {
-      title
-      id
     }
   }
 `;

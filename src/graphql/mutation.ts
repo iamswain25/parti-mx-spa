@@ -180,13 +180,18 @@ export const insertUserGroup = gql`
     }
   }
 `;
-export const updateGroupName = gql`
-  mutation($group_id: Int!, $groupName: String!, $bg_img_url: String) {
-    update_mx_groups(
-      where: { id: { _eq: $group_id } }
-      _set: { title: $groupName, bg_img_url: $bg_img_url }
+export const updateGroup = gql`
+  mutation(
+    $group_id: Int!
+    $title: String!
+    $bg_img_url: String
+    $mb_img_url: String
+  ) {
+    update_mx_groups_by_pk(
+      pk_columns: { id: $group_id }
+      _set: { title: $title, bg_img_url: $bg_img_url, mb_img_url: $mb_img_url }
     ) {
-      affected_rows
+      id
     }
   }
 `;
@@ -231,7 +236,10 @@ export const updateBoards = gql`
   mutation($boards: [mx_boards_insert_input!]!, $deletingIds: [Int!]) {
     insert_mx_boards(
       objects: $boards
-      on_conflict: { constraint: boards_pkey, update_columns: [body, title, permission] }
+      on_conflict: {
+        constraint: boards_pkey
+        update_columns: [body, title, permission]
+      }
     ) {
       affected_rows
     }

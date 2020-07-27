@@ -68,9 +68,10 @@ export interface LatLng {
   lng: number;
 }
 export interface Group {
-  id: string;
+  id: number;
   title: string;
   bg_img_url: string;
+  mb_img_url: string;
   created_at: string;
   boards: Board[];
   suggestion: Board[];

@@ -21,6 +21,9 @@ export default function MenuGroup({ group }: { group: Group }) {
   function boardHandler() {
     push("/boards");
   }
+  function groupHandler() {
+    push("/group/edit");
+  }
   if (!(isOrg || isUser)) {
     return null;
   }
@@ -40,6 +43,7 @@ export default function MenuGroup({ group }: { group: Group }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        {isOrg && <MenuItem onClick={groupHandler}>그룹 정보 수정</MenuItem>}
         {isOrg && <MenuItem onClick={boardHandler}>게시판 수정</MenuItem>}
         <MenuItem onClick={exitGroup}>그룹 탈퇴</MenuItem>
       </Menu>
