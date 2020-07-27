@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BtnSubmitDesktop({ text = "투표 제출" }) {
+export default function BtnSubmitDesktop({ text = "저장" }) {
   const classes = useStyles();
   const back = useGoBack();
   return (

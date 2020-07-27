@@ -24,6 +24,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link, useHistory } from "react-router-dom";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
+import BtnSubmitDesktop from "./BtnSubmitDesktop";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -225,6 +226,7 @@ export default function BoardsSetting() {
           <AddIcon />
           게시판 추가
         </Button>
+        <BtnSubmitDesktop />
       </Container>
     </form>
   );
