@@ -15,7 +15,7 @@ export const subscribeGroupsByUserId = gql`
       name
       photo_url
       groups(
-        where: { status: { _in: ["user", "organizer", "participants"] } }
+        where: { status: { _in: ["user", "organizer", "participant"] } }
         order_by: { updated_at: desc_nulls_last }
       ) {
         updated_at

@@ -297,15 +297,13 @@ export const deleteBoard = gql`
     }
   }
 `;
-export const setOrganizer = gql`
-  mutation($group_id: Int!, $user_id: Int!) {
-    update_mx_users_group(
-      where: {
-        _and: [{ user_id: { _eq: $user_id } }, { group_id: { _eq: $group_id } }]
-      }
-      _set: { status: "organizer" }
+export const setUserGroupStatus = gql`
+  mutation($group_id: Int!, $user_id: Int!, $status: String! = "user") {
+    update_mx_users_group_by_pk(
+      pk_columns: { group_id: $group_id, user_id: $user_id }
+      _set: { status: $status }
     ) {
-      affected_rows
+      user_id
     }
   }
 `;

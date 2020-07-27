@@ -263,12 +263,12 @@ export const getMemberCount = gql`
 `;
 
 export const searchMembers = gql`
-  query($searchKeyword: String!, $group_id: Int!, $memberType: String!) {
+  query($keyword: String!, $group_id: Int!) {
     mx_users_group(
       where: {
         group_id: { _eq: $group_id }
-        status: { _eq: $memberType }
-        user: { name: { _ilike: $searchKeyword } }
+        status: { _in: ["organizer", "user", "participant"] }
+        user: { name: { _ilike: $keyword } }
       }
     ) {
       user {
@@ -277,6 +277,8 @@ export const searchMembers = gql`
         email
         photo_url
       }
+      group_id
+      user_id
       status
       created_at
     }

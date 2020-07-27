@@ -8,8 +8,8 @@ import useErrorEffect from "./useErrorEffect";
 import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
-import { useHistory } from "react-router-dom";
-import { Box, Grid, Button, Typography } from "@material-ui/core";
+import { useHistory, Link } from "react-router-dom";
+import { Grid, Button, Typography } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
 const useStyles = makeStyles((theme) => {
@@ -71,6 +71,9 @@ const useStyles = makeStyles((theme) => {
       },
       [theme.breakpoints.down("sm")]: {
         marginTop: theme.spacing(1),
+      },
+      "& a": {
+        color: "inherit",
       },
     },
     groupJoin: {
@@ -136,7 +139,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
           </Typography>
           <div className={classes.groupInfo}>
             <span>개설 {semanticDate(created_at)}</span>
-            <span>멤버 {userCount}</span>
+            <Link to="members">멤버 {userCount}</Link>
             {toJoinTag}
             <MenuGroup group={group} />
           </div>

@@ -10,3 +10,10 @@ export const voteOptions = [
 ];
 
 export const suggestionOptions = [{ label: "30일 후 종료", value: "30days" }];
+
+export const userGroupStatusList = [
+  { label: "운영자", value: "organizer" },
+  { label: "청년참여단", value: "user" },
+  { label: "패널", value: "participant" },
+  { label: "탈퇴", value: "exit" },
+];
