@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => {
     },
     groupInfo: {
       display: "flex",
-      gap: 10,
+      gap: "10px",
       fontSize: 12,
       fontWeight: 500,
       letterSpacing: 0,
@@ -135,8 +135,8 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             {title}
           </Typography>
           <div className={classes.groupInfo}>
-            <Box>개설 {semanticDate(created_at)}</Box>
-            <Box paddingX={1}>멤버 {userCount}</Box>
+            <span>개설 {semanticDate(created_at)}</span>
+            <span>멤버 {userCount}</span>
             {toJoinTag}
             <MenuGroup group={group} />
           </div>
