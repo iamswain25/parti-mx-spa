@@ -29,7 +29,35 @@ export default function PostMenu({ post: p }: { post: Post }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  if (!isMine && !isOrganizer) {
+  const menuItems = [];
+  if (isMine) {
+    menuItems.push(
+      <MenuItem onClick={edit} key={1}>
+        수정하기
+      </MenuItem>
+    );
+    menuItems.push(
+      <MenuItem onClick={remove} key={2}>
+        삭제하기
+      </MenuItem>
+    );
+  }
+  if (isNotice && isOrganizer) {
+    if (isAnnounced) {
+      menuItems.push(
+        <MenuItem onClick={denounce} key={3}>
+          공지 내리기
+        </MenuItem>
+      );
+    } else {
+      menuItems.push(
+        <MenuItem onClick={announce} key={4}>
+          공지 올리기
+        </MenuItem>
+      );
+    }
+  }
+  if (!menuItems.length) {
     return <div />;
   }
   return (
@@ -48,15 +76,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {isMine && <MenuItem onClick={edit}>수정하기</MenuItem>}
-        {isMine && <MenuItem onClick={remove}>삭제하기</MenuItem>}
-        {isNotice &&
-          isOrganizer &&
-          (isAnnounced ? (
-            <MenuItem onClick={denounce}>공지 내리기</MenuItem>
-          ) : (
-            <MenuItem onClick={announce}>공지 올리기</MenuItem>
-          ))}
+        {menuItems}
       </Menu>
     </>
   );

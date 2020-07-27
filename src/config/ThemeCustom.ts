@@ -59,7 +59,15 @@ export const theme: Theme = createMuiTheme({
   },
   typography: {
     fontFamily: "Noto Sans KR",
-
+    h1: {
+      fontWeight: 400,
+      fontSize: 34,
+      letterSpacing: -1.8,
+      "@media (max-width: 960px)": {
+        fontSize: 24,
+        letterSpacing: -0.5,
+      },
+    },
     h2: {
       fontSize: 20,
       "@media (max-width: 960px)": {

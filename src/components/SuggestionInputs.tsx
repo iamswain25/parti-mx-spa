@@ -1,9 +1,13 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
 import { suggestionOptions } from "../helpers/options";
+import { UseFormMethods } from "react-hook-form";
+import { SuggestionFormdata } from "../types";
 
-export default function SuggestionInputs(formControl: any) {
-  const { register, errors } = formControl;
+export default function SuggestionInputs(props: {
+  formControl: UseFormMethods<SuggestionFormdata>;
+}) {
+  const { register, errors } = props.formControl;
   return (
     <>
       <CustomTextField

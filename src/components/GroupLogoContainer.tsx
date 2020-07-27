@@ -10,7 +10,6 @@ import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory } from "react-router-dom";
 import { Box, Grid, Button, Typography } from "@material-ui/core";
-import useDesktop from "./useDesktop";
 import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
 const useStyles = makeStyles((theme) => {
@@ -54,6 +53,7 @@ const useStyles = makeStyles((theme) => {
         color: theme.palette.common.white,
         padding: 19,
       },
+      color: theme.palette.text.primary,
       padding: theme.spacing(2),
       display: "flex",
       flexDirection: "column",
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => {
       letterSpacing: 0,
       alignItems: "center",
       [theme.breakpoints.up("md")]: {
-        marginTop: theme.spacing(3),
+        height: theme.spacing(6),
       },
       [theme.breakpoints.down("sm")]: {
         marginTop: theme.spacing(1),
@@ -105,7 +105,6 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   }
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const [isDesktop] = useDesktop();
   const {
     title,
     users: [user] = [null],
@@ -132,13 +131,9 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       <div className={classes.groupLogoContainer}>
         <img src={bg_img_url ?? publicsphere} alt="group logo" />
         <div className={classes.groupLogoOverlay}>
-          <Box
-            fontSize={isDesktop ? 34 : 24}
-            letterSpacing={isDesktop ? -1.8 : -0.5}
-            color={isDesktop ? "common.white" : "text.primary"}
-          >
+          <Typography variant="h1" color="inherit">
             {title}
-          </Box>
+          </Typography>
           <div className={classes.groupInfo}>
             <Box>개설 {semanticDate(created_at)}</Box>
             <Box paddingX={1}>멤버 {userCount}</Box>
