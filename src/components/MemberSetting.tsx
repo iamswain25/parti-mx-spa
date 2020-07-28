@@ -12,15 +12,13 @@ import {
 } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import { useDebounce } from "use-debounce";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { searchMembers } from "../graphql/query";
 import { useStore } from "../store/store";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-import Forbidden from "./Forbidden";
-import { updateBoards } from "../graphql/mutation";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
 import AvatarNameEmail from "./AvatarNameEmail";
@@ -56,15 +54,11 @@ export default function MemberSetting() {
   const [{ group_id }] = useStore();
   const [keyword, setKeyword] = React.useState("");
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 500);
-  const { data, loading, error } = useQuery<UserGroups>(
-    searchMembers,
-    {
-      variables: { keyword: debouncedKeyword, group_id },
-      fetchPolicy: "network-only",
-    }
-  );
+  const { data, loading, error } = useQuery<UserGroups>(searchMembers, {
+    variables: { keyword: debouncedKeyword, group_id },
+    fetchPolicy: "network-only",
+  });
   const setStatus = useSetStatus();
-  const history = useHistory();
   useLoadingEffect(loading);
   useErrorEffect(error);
   if (loading) {
