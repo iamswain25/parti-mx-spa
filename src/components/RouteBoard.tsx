@@ -15,6 +15,7 @@ import HeaderBoard from "./HeaderBoard";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import usePermEffect from "./usePermEffect";
+import Forbidden from "./Forbidden";
 
 export default function RouteBoard() {
   const { board_id } = useParams();
@@ -30,7 +31,15 @@ export default function RouteBoard() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const { group, type } = data?.mx_boards_by_pk ?? {};
+  const board = data?.mx_boards_by_pk;
+  usePermEffect(board?.group?.users?.[0]?.status);
+  if (loading) {
+    return null;
+  }
+  if (!board) {
+    return <Forbidden />;
+  }
+  const { group, type } = board;
   let boardByType = null;
   switch (type) {
     case "notice":
@@ -46,15 +55,11 @@ export default function RouteBoard() {
       boardByType = <RouteBoardEvent board={data?.mx_boards_by_pk} />;
       break;
   }
-  usePermEffect(group?.users?.[0]?.status);
+
   return (
     <>
       <HeaderBoard title={group?.title} />
-      <BoardTabNavigator
-        boards={group?.boards}
-        type={type}
-        board_id={board_id}
-      />
+      <BoardTabNavigator group={group} type={type} board_id={board_id} />
       {boardByType}
     </>
   );

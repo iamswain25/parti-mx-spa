@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
-import { PageBoard, Board } from "../types";
+import { PageBoard } from "../types";
 import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
@@ -17,6 +17,8 @@ import PostSort from "./PostSort";
 import { useStyles } from "../helpers/styles";
 import { Img } from "react-image";
 import PinDropIcon from "@material-ui/icons/PinDrop";
+import usePermEffect from "./usePermEffect";
+import Forbidden from "./Forbidden";
 
 export default function RoutePhoto() {
   const { board_id } = useParams();
@@ -34,13 +36,20 @@ export default function RoutePhoto() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const [isDesktop] = useDesktop();
-  const { group, group: { boards = [], title = "로딩 중" } = {}, ...b } =
-    data?.mx_boards_by_pk || ({} as Board);
+  const board = data?.mx_boards_by_pk;
+  usePermEffect(board?.group?.users?.[0]?.status);
+  if (loading) {
+    return null;
+  }
+  if (!board) {
+    return <Forbidden />;
+  }
+  const { group, group: { title = "로딩 중" } = {}, ...b } = board;
   return (
     <>
       <HeaderBoard title={title} />
       <Box mt={isDesktop ? 3 : 0} />
-      <BoardTabNavigator boards={boards} />
+      <BoardTabNavigator group={group} />
       <section className={classes.container}>
         <Grid
           container

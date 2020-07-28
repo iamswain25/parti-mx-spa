@@ -12,7 +12,8 @@ export default function PostMenu({ post: p }: { post: Post }) {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
   const postId = Number(post_id);
-  const [{ status }] = p?.board?.group?.users || [{ status: null }];
+  const [user] = p?.board?.group?.users || [null];
+  const status = user?.status;
   const isMine = user_id && p?.createdBy?.id === user_id;
   const isOrganizer = status === "organizer";
   const metadata = p?.metadata as NoticeMetadata;

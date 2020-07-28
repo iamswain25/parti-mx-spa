@@ -70,7 +70,7 @@ export default function Home() {
   if (!group) {
     return <Forbidden />;
   }
-  const { notice, suggestion, vote, event, boards } = group;
+  const { notice, suggestion, vote, event } = group;
 
   return (
     <>
@@ -79,7 +79,7 @@ export default function Home() {
         <GroupLogoContainer group={group} />
       </Box>
       {!isDesktop && <GreyDivider />}
-      <BoardTabNavigator boards={boards} />
+      <BoardTabNavigator group={group} />
       {isDesktop ? (
         <section className={classes.grid}>
           <ul className={classes.left}>

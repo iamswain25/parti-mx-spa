@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
-import { PageBoard, Board, Post } from "../types";
+import { PageBoard, Post } from "../types";
 import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
@@ -19,6 +19,8 @@ import { makeStyles, Theme } from "@material-ui/core";
 import RouteMapPost from "./RouteMapPost";
 import MapPlace from "./MapPlace";
 import RouteMapPostBottom from "./RouteMapPostBottom";
+import usePermEffect from "./usePermEffect";
+import Forbidden from "./Forbidden";
 export const useStyles = makeStyles((theme: Theme) => ({
   smallIcon: {
     padding: theme.spacing(0.5),
@@ -98,8 +100,15 @@ export default function RoutePhoto() {
   const [selectedPlace, setSelectedPlace] = React.useState<Post | undefined>(
     undefined
   );
-  const { group, group: { boards = [], title = "로딩 중" } = {}, ...b } =
-    data?.mx_boards_by_pk || ({} as Board);
+  const board = data?.mx_boards_by_pk;
+  usePermEffect(board?.group?.users?.[0]?.status);
+  if (loading) {
+    return null;
+  }
+  if (!board) {
+    return <Forbidden />;
+  }
+  const { group, group: { title = "로딩 중" } = {}, ...b } = board;
   function childClickHandler(key: number, childProps: any) {
     const post = b?.posts?.[key];
     setSelectedPlace(post);
@@ -107,7 +116,7 @@ export default function RoutePhoto() {
   return (
     <>
       <HeaderBoard title={title} />
-      <BoardTabNavigator boards={boards} />
+      <BoardTabNavigator group={group} />
       <section className={classes.container}>
         <Grid
           container

@@ -60,7 +60,7 @@ export default function RoutePost() {
       <Divider />
       {isDesktop ? (
         <BoardTabNavigator
-          boards={p?.board?.group?.boards}
+          group={p?.board?.group}
           board_id={p?.board?.id}
         />
       ) : (
