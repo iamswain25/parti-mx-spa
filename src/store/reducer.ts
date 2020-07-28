@@ -3,15 +3,13 @@ import createReducer from "../store/createReducer";
 export const PERSIST_KEY = "coop-parti-demos";
 export const initialState = {
   isInit: false,
-  group_id: 34,
-  // group_title: null,
+  group_id: 100,
   user_id: null,
 };
 export type State = typeof initialState;
 export type Action =
   | { type: "CHANGE_ALL"; isInit: boolean }
   | { type: "SET_GROUP"; group_id: number }
-  // | { type: "SET_GROUP_AND_TITLE"; group_id: number; group_title: string }
   | { type: "SET_USER"; user_id: number | null }
   | { type: "LOGOUT" };
 function persistSecureStore(state: State, payload: any) {
@@ -27,5 +25,4 @@ export const reducer = createReducer<State, Action>(initialState, {
     return initialState;
   },
   SET_GROUP: persistSecureStore,
-  // SET_GROUP_AND_TITLE: persistSecureStore,
 });
