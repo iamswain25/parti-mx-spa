@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import firebaseConfig from "./firebaseConfig";
+import { univTomorrowConfig } from "./firebaseConfig";
 // import "firebase/analytics";
 import "firebase/auth";
 import "firebase/storage";
@@ -8,7 +8,7 @@ import * as uuid from "uuid";
 type Modify<T, R> = Omit<T, keyof R> & R;
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(univTomorrowConfig);
 // firebase.analytics();
 
 export const auth = firebase.auth();

@@ -11,7 +11,6 @@ mutation($email: String!, $uid: String!) {
       email: $email
       firebase_uid: $uid
       name: $email
-      groups: { data: [{ group_id: 5 }, { group_id: 25 }] }
     }
   ) {
     id
