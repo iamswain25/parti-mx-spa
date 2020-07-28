@@ -1,5 +1,5 @@
 import React from "react";
-import { Board, BoardTypes } from "../types";
+import { BoardTypes, Group } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink, useHistory } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
@@ -80,14 +80,15 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function BoardTabNavigator({
-  boards,
+  group,
   type,
   board_id,
 }: {
-  boards?: Board[];
+  group: Group;
   type?: BoardTypes;
   board_id?: number;
 }) {
+  const { boards = [] } = group;
   const classes = useStyles();
   const [userStatus] = useGlobalState(keys.PERMISSION);
   const [isTop, setTop] = React.useState(false);
@@ -118,7 +119,11 @@ export default function BoardTabNavigator({
     >
       <div className={classes.tab}>
         <Box display="flex" flexWrap="nowrap">
-          <NavLink exact to={`/home`} className={classes.tabLink}>
+          <NavLink
+            exact
+            to={`/home?group_id=${group.id}`}
+            className={classes.tabLink}
+          >
             홈
           </NavLink>
           {boards?.map((b, i) => (

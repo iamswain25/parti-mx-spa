@@ -48,7 +48,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.posts_aggregate_closed.aggregate.count}
+                {b?.posts_aggregate_open.aggregate.count}
               </Typography>
             </Box>
           </Button>
