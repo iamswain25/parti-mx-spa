@@ -2,7 +2,7 @@ import React from "react";
 import Routes from "./config/Routes";
 import { ApolloProvider } from "@apollo/client";
 import { StoreProvider } from "./store/store";
-import { client } from "./components/ApolloSetup";
+import { client } from "./config/ApolloSetup";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, LinearProgress } from "@material-ui/core";
 import { theme } from "./config/ThemeCustom";

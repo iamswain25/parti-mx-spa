@@ -1,5 +1,5 @@
-import firebase, { User } from "firebase/app";
-import firebaseConfig from "./firebaseConfig";
+import firebase from "firebase/app";
+import { univTomorrowConfig } from "./firebaseConfig";
 // import "firebase/analytics";
 import "firebase/auth";
 import "firebase/functions";
@@ -9,7 +9,7 @@ import * as uuid from "uuid";
 type Modify<T, R> = Omit<T, keyof R> & R;
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(univTomorrowConfig);
 // firebase.analytics();
 
 export const auth = firebase.auth();
@@ -82,7 +82,7 @@ export async function uploadFileByPath(file: File, dir: string) {
   const fileSnapshot = await ref.put(file);
   return await fileSnapshot.ref.getDownloadURL();
 }
-const secondApp = firebase.initializeApp(firebaseConfig, "new");
+const secondApp = firebase.initializeApp(univTomorrowConfig, "new");
 export const secondAuth = secondApp.auth();
 export async function inviteNewUser(email: string, password: string) {
   const newUserCredential = await secondAuth.createUserWithEmailAndPassword(

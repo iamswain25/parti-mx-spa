@@ -76,7 +76,7 @@ export default function MemberNew() {
       .filter((u: AuthResult) => u.success)
       .map((u: AuthResult) => u.email);
     const actionCodeSettings = {
-      url: "https://spa.parti.mx?group_id=" + group_id,
+      url: "https://youthwagle.kr/home?group_id=" + group_id,
     };
     while (registeredEmails.length) {
       setError(
