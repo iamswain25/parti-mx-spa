@@ -8,10 +8,11 @@ import useErrorEffect from "./useErrorEffect";
 import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Grid, Button, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
+import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -95,9 +96,9 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function GroupLogoContainer({ group }: { group: Group }) {
+  const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [{ user_id, group_id }] = useStore();
   const classes = useStyles();
-  const history = useHistory();
   const [join, { loading, error }] = useMutation(insertUserGroup, {
     variables: { group_id },
   });
@@ -106,7 +107,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       await join();
       window.location.reload();
     } else {
-      history.push("/login");
+      setVisible(true);
     }
   }
   useLoadingEffect(loading);
