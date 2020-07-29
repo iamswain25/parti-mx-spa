@@ -67,7 +67,8 @@ export default function Signup() {
         <Typography variant="h2">회원가입</Typography>
         <form
           onSubmit={handleSubmit(formHandler)}
-          noValidate autoComplete="off"
+          noValidate
+          autoComplete="off"
           className={classes.form}
         >
           <TextField
@@ -120,7 +121,7 @@ export default function Signup() {
           </div>
         </form>
         <Box className={classes.label}>
-          이미 로그인 하셨나요?
+          이미 회원이신가요?
           <Link to={`/login`} className={classes.link}>
             로그인
           </Link>
