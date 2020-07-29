@@ -34,10 +34,13 @@ export default function LoginModal() {
       setError(error);
     }
   }
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <Modal
-      open={isVisible}
+      open={true}
       onClose={handleClose}
       className={classes.modal}
       aria-labelledby="simple-modal-title"

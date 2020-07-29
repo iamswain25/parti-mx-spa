@@ -14,13 +14,16 @@ export default function SnackbarSuccess() {
     }
     setSuccess(null);
   }
+  if (!success) {
+    return null;
+  }
   return (
     <Snackbar
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "left",
       }}
-      open={!!success}
+      open={true}
       autoHideDuration={1000}
       onClose={handleClose}
       action={
