@@ -154,7 +154,11 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
           </Typography>
           <div className={classes.groupInfo}>
             <span>개설 {semanticDate(created_at)}</span>
-            <Link to="members">멤버 {userCount}</Link>
+            {isOrg ? (
+              <Link to="members">멤버 {userCount}</Link>
+            ) : (
+              <span>멤버 {userCount}</span>
+            )}
             {toJoinTag}
             <MenuGroup group={group} />
           </div>

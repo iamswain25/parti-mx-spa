@@ -18,13 +18,14 @@ import { useStore } from "../store/store";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
 import AvatarNameEmail from "./AvatarNameEmail";
 import UserGroupStatus from "./UserGroupStatus";
 import useSetStatus from "./useSetStatus";
 import { UserGroup } from "../types";
+import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => ({
   top: {
     height: theme.mixins.toolbar.minHeight,
@@ -54,6 +55,7 @@ export default function MemberSetting() {
   const [{ group_id }] = useStore();
   const [keyword, setKeyword] = React.useState("");
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 500);
+  const [status] = useGlobalState(keys.PERMISSION);
   const { data, loading, error } = useQuery<UserGroups>(searchMembers, {
     variables: { keyword: debouncedKeyword, group_id },
     fetchPolicy: "network-only",
@@ -63,6 +65,9 @@ export default function MemberSetting() {
   useErrorEffect(error);
   if (loading) {
     return null;
+  }
+  if (status !== "organizer") {
+    return <Redirect to="/" />;
   }
   const list = data?.mx_users_group;
 
