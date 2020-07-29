@@ -14,14 +14,16 @@ export default function SnackbarCustom() {
     }
     setError(null);
   }
+  if (!error) {
+    return null;
+  }
   return (
     <Snackbar
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "left",
       }}
-      open={!!error}
-      // autoHideDuration={6000}
+      open={true}
       onClose={handleClose}
       message={JSON.stringify(error)}
       action={
