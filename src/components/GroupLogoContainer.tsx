@@ -9,7 +9,7 @@ import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { useHistory, Link } from "react-router-dom";
-import { Grid, Button, Typography } from "@material-ui/core";
+import { Grid, Button, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
 const useStyles = makeStyles((theme) => {
@@ -24,10 +24,13 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up("md")]: {
         height: 260,
         maxWidth: 1140,
-        "& img": {
+        "& > div": {
           height: "100%",
-          width: "100%",
-          objectFit: "cover",
+          "& > img": {
+            height: "100%",
+            width: "100%",
+            objectFit: "cover",
+          },
         },
       },
       [theme.breakpoints.down("sm")]: {
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => {
         width: "100%",
         top: 0,
         backgroundImage:
-          "linear-gradient(rgba(0, 0 ,0, 0.02), rgba(0, 0, 0, 0.64))",
+          "linear-gradient(rgba(0, 0 ,0, 0) 50%, rgba(0, 0, 0, 0.64))",
         color: theme.palette.common.white,
         padding: 19,
       },
@@ -113,6 +116,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
     users: [user] = [null],
     created_at,
     bg_img_url,
+    mb_img_url,
     users_aggregate: {
       aggregate: { count: userCount = 0 },
     },
@@ -132,7 +136,18 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
-        <img src={bg_img_url ?? publicsphere} alt="group logo" />
+        <Hidden mdUp implementation="css">
+          <img
+            src={mb_img_url ?? bg_img_url ?? publicsphere}
+            alt="group logo"
+          />
+        </Hidden>
+        <Hidden smDown implementation="css">
+          <img
+            src={bg_img_url ?? mb_img_url ?? publicsphere}
+            alt="group logo"
+          />
+        </Hidden>
         <div className={classes.groupLogoOverlay}>
           <Typography variant="h1" color="inherit">
             {title}

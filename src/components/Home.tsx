@@ -65,10 +65,15 @@ export default function Home() {
   const [isDesktop] = useDesktop();
   const group = data?.mx_groups_by_pk;
   if (loading) {
-    return null;
+    return <DesktopHeader />;
   }
   if (!group) {
-    return <Forbidden />;
+    return (
+      <>
+        <DesktopHeader />
+        <Forbidden />
+      </>
+    );
   }
   const { notice, suggestion, vote, event } = group;
 
