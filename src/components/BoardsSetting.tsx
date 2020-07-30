@@ -139,7 +139,7 @@ export default function BoardsSetting() {
                 key={i}
                 className={classes.bb}
               >
-                <FormControl variant="outlined">
+                <FormControl variant="filled">
                   <InputLabel>게시판 유형</InputLabel>
                   <Select
                     native
