@@ -267,7 +267,7 @@ export const searchMembers = gql`
     mx_users_group(
       where: {
         group_id: { _eq: $group_id }
-        status: { _in: ["organizer", "user", "participant"] }
+        # status: { _in: ["organizer", "user", "participant", "requested"] }
         user: { name: { _ilike: $keyword } }
       }
     ) {
