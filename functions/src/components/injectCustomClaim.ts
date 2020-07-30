@@ -13,7 +13,7 @@ const client = new ApolloClient({
 });
 export default async function injectCustomClaim(
   user: admin.auth.UserRecord,
-  groups = [{ group_id: 5 }, { group_id: 25 }]
+  groups = [{ group_id: 100, status: "requested" }]
 ) {
   const { uid, email } = user;
   const variables = { uid, email, groups };
