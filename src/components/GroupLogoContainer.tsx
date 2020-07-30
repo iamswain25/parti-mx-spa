@@ -13,6 +13,7 @@ import { Grid, Button, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { showStatusLabelByValue } from "../helpers/options";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -128,7 +129,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   const isUser = userStatus === "user";
   const toJoinTag =
     isUser || isOrg ? (
-      <Typography>{user?.status}</Typography>
+      <span>{showStatusLabelByValue(user?.status)}</span>
     ) : (
       <Button className={classes.groupJoin} onClick={joinHandler}>
         그룹가입
