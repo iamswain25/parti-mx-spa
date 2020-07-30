@@ -116,6 +116,7 @@ export default function MemberNew() {
           native
           defaultValue="user"
           name="status"
+          label="권한"
           inputRef={register({ required: "필수 입력" })}
         >
           {userGroupStatusList.map((l, i) => (
