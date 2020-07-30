@@ -1,3 +1,5 @@
+import { UserStatus } from "../types";
+
 export const postSortOptions = [
   { created_at: "desc" },
   { updated_at: "desc" },
@@ -12,8 +14,17 @@ export const voteOptions = [
 export const suggestionOptions = [{ label: "30일 후 종료", value: "30days" }];
 
 export const userGroupStatusList = [
-  { label: "운영자", value: "organizer" },
-  { label: "청년참여단", value: "user" },
-  { label: "패널", value: "participant" },
+  { label: "오거나이저", value: "organizer" },
+  { label: "유저", value: "user" },
+  { label: "참관자", value: "participant" },
   { label: "탈퇴", value: "exit" },
 ];
+
+export function showStatusLabelByValue(value: UserStatus) {
+  const userStatus = userGroupStatusList.find((ug) => ug.value === value);
+  if (userStatus) {
+    return userStatus.label;
+  } else {
+    return null;
+  }
+}
