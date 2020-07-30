@@ -63,7 +63,7 @@ export default function DesktopHeader() {
         <div className={classes.header}>
           <DrawerGroup />
           <Link to="/home" className={classes.logoFont}>
-            Parti Mix
+            와글와글 정책실
           </Link>
           <Typography variant="h3" noWrap>
             {user_id ? <LogoutButton /> : <LoginButton />}

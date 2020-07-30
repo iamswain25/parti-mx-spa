@@ -1,3 +1,5 @@
+import { UserStatus } from "../types";
+
 export const postSortOptions = [
   { created_at: "desc" },
   { updated_at: "desc" },
@@ -17,3 +19,12 @@ export const userGroupStatusList = [
   { label: "패널", value: "participant" },
   { label: "탈퇴", value: "exit" },
 ];
+
+export function showStatusLabelByValue(value: UserStatus) {
+  const userStatus = userGroupStatusList.find((ug) => ug.value === value);
+  if (userStatus) {
+    return userStatus.label;
+  } else {
+    return null;
+  }
+}

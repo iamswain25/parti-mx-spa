@@ -15,7 +15,7 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { validateEmail } from "../helpers/emailValidator";
-import { functions, secondAuth } from "../config/firebase";
+import { functions, auth } from "../config/firebase";
 import { userGroupStatusList } from "../helpers/options";
 const authInvite = functions.httpsCallable("authInvite");
 const useStyles = makeStyles((theme) => ({
@@ -51,9 +51,7 @@ export default function MemberNew() {
   const [{ group_id }] = useStore();
   const [status] = useGlobalState(keys.PERMISSION);
   const [, setError] = useGlobalState(keys.ERROR);
-  const { handleSubmit, register, errors } = useForm<FormType>({
-    defaultValues: { emails: "swain@parti.xyz" },
-  });
+  const { handleSubmit, register, errors } = useForm<FormType>();
   if (status !== "organizer") {
     return <Redirect to="/" />;
   }
@@ -72,9 +70,8 @@ export default function MemberNew() {
       emails: arr,
       groups: [{ group_id, status }],
     });
-    const registeredEmails = data
-      .filter((u: AuthResult) => u.success)
-      .map((u: AuthResult) => u.email);
+    const successed = data.filter((u: AuthResult) => u.success);
+    const registeredEmails = successed.map((u: AuthResult) => u.email);
     const actionCodeSettings = {
       url: "https://youthwagle.kr/home?group_id=" + group_id,
     };
@@ -83,9 +80,9 @@ export default function MemberNew() {
         `${data.length}명의 유저를 생성했습니다. 초대 이메일을 보냅니다. ${registeredEmails.length}개 남았습니다.`
       );
       const email = registeredEmails.shift();
-      await secondAuth.sendPasswordResetEmail(email, actionCodeSettings);
+      await auth.sendPasswordResetEmail(email, actionCodeSettings);
     }
-    setError(undefined);
+    setError(`${successed.length}개의 이메일 전송을 완료했습니다.`);
   }
 
   return (
@@ -130,6 +127,7 @@ export default function MemberNew() {
           name="emails"
           variant="outlined"
           fullWidth
+          placeholder={`noreply1@youthwagle.kr\nnoreply2@youthwagle.kr\nnoreply3@youthwagle.kr\n`}
           inputRef={register({ required: "필수 입력" })}
           label="초대 이메일"
           helperText="쉼표(,)나 세미콜론(;)혹은 엔터(다음 줄)로 이메일을 구분해주세요."

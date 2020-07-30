@@ -1,6 +1,6 @@
 import SecureStorage from "../config/SecureStorage";
 import createReducer from "../store/createReducer";
-export const PERSIST_KEY = "coop-parti-demos";
+export const PERSIST_KEY = "https://youthwagle.kr";
 export const initialState = {
   isInit: false,
   group_id: 100,
