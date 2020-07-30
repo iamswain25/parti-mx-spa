@@ -1,18 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Typography,
-  Container,
-  Grid,
-  IconButton,
-} from "@material-ui/core";
+import { Typography, Container, IconButton } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import { useStore } from "../store/store";
 import { updateGroup } from "../graphql/mutation";
 import { queryGroupEdit } from "../graphql/query";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -22,21 +15,25 @@ import { HomeGroup } from "../types";
 import Forbidden from "./Forbidden";
 import CloseIcon from "@material-ui/icons/Close";
 import { Img } from "react-image";
+import HeaderBack from "./HeaderBack";
 
 const useStyles = makeStyles((theme) => ({
-  top: {
-    height: theme.mixins.toolbar.minHeight,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    overflow: "hidden",
-    position: "sticky",
-    top: 0,
-    backgroundColor: theme.palette.background.paper,
-    zIndex: theme.zIndex.appBar,
-  },
   grid: {
     display: "grid",
     gridGap: theme.spacing(2),
+  },
+  btn: {
+    // position: "absolute",
+    // right: 0,
+    // top: -theme.spacing(3),
+  },
+  flex: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    position: "relative",
+    alignItems: "flex-start",
+    // marginTop: theme.spacing(4),
   },
 }));
 interface GroupForm {
@@ -91,26 +88,9 @@ export default function GroupEdit() {
       setError(error);
     }
   }
-  console.log(images);
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-      <Grid
-        container
-        justify="space-between"
-        alignItems="center"
-        wrap="nowrap"
-        className={classes.top}
-      >
-        <Link to={`/home`}>
-          <ChevronLeftIcon />
-        </Link>
-        <Typography variant="h3" color="textPrimary">
-          그룹 정보 수정
-        </Typography>
-        <Button type="submit" color="primary">
-          저장
-        </Button>
-      </Grid>
+      <HeaderBack title="그룹 정보 수정" submit="저장" />
       <Container maxWidth="lg" className={classes.grid}>
         <CustomTextField
           label="그룹 명"
@@ -128,14 +108,15 @@ export default function GroupEdit() {
         <div>
           <div>데스크탑 배너 이미지 (1140 X 260)</div>
           {images.bg_img_url ? (
-            <Container>
+            <div className={classes.flex}>
               <IconButton
+                classes={{ root: classes.btn }}
                 onClick={() => setImages({ ...images, bg_img_url: undefined })}
               >
                 <CloseIcon />
               </IconButton>
               <Img src={[images.bg_img_url]} />
-            </Container>
+            </div>
           ) : (
             <>
               <Typography color="error">{errors?.bgFiles?.message}</Typography>
@@ -146,14 +127,15 @@ export default function GroupEdit() {
         <div>
           <div>모바일 배너 이미지 (360 X 180)</div>
           {images.mb_img_url ? (
-            <Container>
+            <div className={classes.flex}>
               <IconButton
+                classes={{ root: classes.btn }}
                 onClick={() => setImages({ ...images, mb_img_url: undefined })}
               >
                 <CloseIcon />
               </IconButton>
               <Img src={[images.mb_img_url]} />
-            </Container>
+            </div>
           ) : (
             <>
               <Typography color="error">{errors?.mbFiles?.message}</Typography>
