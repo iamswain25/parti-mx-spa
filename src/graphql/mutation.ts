@@ -12,11 +12,11 @@ export const insertUser = gql`
 
 export const updateUserName = gql`
   mutation($id: Int!, $name: String!, $photo_url: String) {
-    update_mx_users(
+    update_mx_users_by_pk(
+      pk_columns: { id: $id }
       _set: { name: $name, photo_url: $photo_url }
-      where: { id: { _eq: $id } }
     ) {
-      affected_rows
+      id
     }
   }
 `;

@@ -362,3 +362,13 @@ export const queryUserIdsByEmail = gql`
     }
   }
 `;
+export const whoami = gql`
+  query($id: Int!) {
+    mx_users_by_pk(id: $id) {
+      id
+      name
+      email
+      photo_url
+    }
+  }
+`;

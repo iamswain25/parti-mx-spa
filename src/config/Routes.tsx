@@ -22,6 +22,7 @@ import GroupNew from "../components/GroupNew";
 import GroupEdit from "../components/GroupEdit";
 import MemberSetting from "../components/MemberSetting";
 import MemberNew from "../components/MemberNew";
+import Profile from "../components/Profile";
 
 export default function Routes() {
   useParseGroupId();
@@ -56,6 +57,7 @@ export default function Routes() {
             <PrivateRoute path="/members" exact component={MemberSetting} />
             <PrivateRoute path="/members/new" exact component={MemberNew} />
             <PrivateRoute path="/group/new" exact component={GroupNew} />
+            <PrivateRoute path="/profile" exact component={Profile} />
             <PrivateRoute path="/group/edit" exact component={GroupEdit} />
           </Dashboard>
         </Switch>

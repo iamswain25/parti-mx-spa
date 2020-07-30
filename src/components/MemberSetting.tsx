@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
   Container,
-  Grid,
   OutlinedInput,
   InputAdornment,
   IconButton,
@@ -17,7 +16,6 @@ import { searchMembers } from "../graphql/query";
 import { useStore } from "../store/store";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
@@ -27,6 +25,7 @@ import useSetStatus from "./useSetStatus";
 import { UserGroup } from "../types";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import UserGroupAdmit from "./UserGroupAdmit";
+import HeaderBack from "./HeaderBack";
 const useStyles = makeStyles((theme) => ({
   top: {
     height: theme.mixins.toolbar.minHeight,
@@ -57,10 +56,13 @@ export default function MemberSetting() {
   const [keyword, setKeyword] = React.useState("");
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 500);
   const [status] = useGlobalState(keys.PERMISSION);
-  const { data, loading, error, refetch } = useQuery<UserGroups>(searchMembers, {
-    variables: { keyword: debouncedKeyword, group_id },
-    fetchPolicy: "network-only",
-  });
+  const { data, loading, error, refetch } = useQuery<UserGroups>(
+    searchMembers,
+    {
+      variables: { keyword: debouncedKeyword, group_id },
+      fetchPolicy: "network-only",
+    }
+  );
   const setStatus = useSetStatus(refetch);
   useLoadingEffect(loading);
   useErrorEffect(error);
@@ -74,23 +76,14 @@ export default function MemberSetting() {
 
   return (
     <Container component="main">
-      <Grid
-        container
-        justify="space-between"
-        alignItems="center"
-        wrap="nowrap"
-        className={classes.top}
-      >
-        <Link to={`/home?group_id=${group_id}`}>
-          <ChevronLeftIcon />
-        </Link>
-        <Typography variant="h3" color="textPrimary">
-          회원 관리
-        </Typography>
-        <Link to="/members/new">
-          <PersonAddIcon />
-        </Link>
-      </Grid>
+      <HeaderBack
+        title="회원 관리"
+        right={
+          <Link to="/members/new">
+            <PersonAddIcon />
+          </Link>
+        }
+      />
       <Typography>
         <OutlinedInput
           fullWidth
