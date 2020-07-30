@@ -43,8 +43,7 @@ export default function RouteBoardEvent({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "textSecondary" : "textPrimary"}
               >
-                {/* {b?.title} */}
-                진행 중인 제안
+                진행 중인 모임
               </Typography>
               <Box mr={1} />
               <Typography
@@ -62,8 +61,7 @@ export default function RouteBoardEvent({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "textPrimary" : "textSecondary"}
               >
-                {/* {b?.title} */}
-                완료 된 제안
+                완료 된 모임
               </Typography>
               <Box mr={1} />
               <Typography
