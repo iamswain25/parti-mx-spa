@@ -354,3 +354,11 @@ export const queryNewPostCount = gql`
     }
   }
 `;
+
+export const queryUserIdsByEmail = gql`
+  query($emails: [String!]) {
+    mx_users(where: { email: { _in: $emails } }) {
+      id
+    }
+  }
+`;

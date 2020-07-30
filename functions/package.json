@@ -6,7 +6,7 @@
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
+    "deploy": "tsc && firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "engines": {
@@ -19,9 +19,12 @@
     "@types/jsdom": "^16.2.3",
     "@types/node": "^13.13.9",
     "amo-html-to-mrkdwn": "^3.4.1",
+    "apollo-boost": "^0.4.9",
+    "cross-fetch": "^3.0.5",
     "expo-server-sdk": "^3.5.0",
     "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.6.2",
+    "graphql": "^15.3.0",
     "jquery": "^3.5.1",
     "jsdom": "^16.2.2",
     "node-fetch": "^2.6.0"

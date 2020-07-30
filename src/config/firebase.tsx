@@ -1,7 +1,8 @@
-import firebase from "firebase/app";
+import firebase, { User } from "firebase/app";
 import firebaseConfig from "./firebaseConfig";
 // import "firebase/analytics";
 import "firebase/auth";
+import "firebase/functions";
 import "firebase/storage";
 import * as uuid from "uuid";
 // 패키징 할 때만 넣는다.
@@ -38,13 +39,12 @@ export async function getUserId(refresh = false): Promise<number | null> {
     return Number(string);
   }
 }
-
+export async function delay(t: number) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, t);
+  });
+}
 export async function getUserId2(user: firebase.User): Promise<number | null> {
-  async function delay(t: number) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, t);
-    });
-  }
   let refreshCounts = 0;
   async function extractValidToken(refresh = false): Promise<number> {
     const res: IdTokenResult = await user.getIdTokenResult(refresh);
@@ -55,7 +55,7 @@ export async function getUserId2(user: firebase.User): Promise<number | null> {
     } else {
       if (refresh) {
         refreshCounts++;
-        await delay(500);
+        await delay(1000);
         console.log("token try: " + refreshCounts);
       }
       return extractValidToken(true);
@@ -82,3 +82,18 @@ export async function uploadFileByPath(file: File, dir: string) {
   const fileSnapshot = await ref.put(file);
   return await fileSnapshot.ref.getDownloadURL();
 }
+const secondApp = firebase.initializeApp(firebaseConfig, "new");
+export const secondAuth = secondApp.auth();
+export async function inviteNewUser(email: string, password: string) {
+  const newUserCredential = await secondAuth.createUserWithEmailAndPassword(
+    email,
+    password
+  );
+  if (!newUserCredential.user) {
+    throw new Error("no user created");
+  }
+  await getUserId2(newUserCredential.user);
+  const token = await newUserCredential.user.getIdToken();
+  return [token] as [string];
+}
+export const functions = firebase.app().functions("asia-northeast1");

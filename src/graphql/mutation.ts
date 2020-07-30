@@ -172,11 +172,12 @@ export const unlikeComment = gql`
 
 export const insertUserGroup = gql`
   mutation($group_id: Int!) {
-    insert_mx_users_group(
-      objects: { group_id: $group_id, status: "user" }
+    insert_mx_users_group_one(
+      object: { group_id: $group_id, status: "user" }
       on_conflict: { update_columns: [status], constraint: users_group_pkey }
     ) {
-      affected_rows
+      user_id
+      group_id
     }
   }
 `;
@@ -542,6 +543,17 @@ export const updateNotificationToken = gql`
       _set: { push_tokens: $push_tokens }
     ) {
       push_tokens
+    }
+  }
+`;
+
+export const massInsertUserGroup = gql`
+  mutation($usergroups: [mx_users_group_insert_input!]!) {
+    insert_mx_users_group(
+      objects: usergroups
+      on_conflict: { constraint: users_group_pkey, update_columns: [] }
+    ) {
+      affected_rows
     }
   }
 `;
