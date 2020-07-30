@@ -21,7 +21,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import GroupSearchList from "./GroupSearchList";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -87,7 +87,9 @@ export default function MyGroupList(props: {
       <Typography variant="h2">
         <div className={classes.title}>
           <span>믹스 그룹</span>
-          <Avatar src={me.photo_url} children={me.name.substr(0, 1)} />
+          <Link to="/profile">
+            <Avatar src={me.photo_url} children={me.name.substr(0, 1)} />
+          </Link>
         </div>
       </Typography>
       <Typography variant="h4">

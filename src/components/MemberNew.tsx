@@ -1,37 +1,17 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Container,
-  Grid,
-  TextField,
-  Button,
-  Select,
-} from "@material-ui/core";
+import { Container, TextField, Button, Select } from "@material-ui/core";
 import { useStore } from "../store/store";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { validateEmail } from "../helpers/emailValidator";
 import { functions, auth } from "../config/firebase";
 import { userGroupStatusList } from "../helpers/options";
+import HeaderBack from "./HeaderBack";
 const authInvite = functions.httpsCallable("authInvite");
 const useStyles = makeStyles((theme) => ({
-  top: {
-    height: theme.mixins.toolbar.minHeight,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    overflow: "hidden",
-    position: "sticky",
-    top: 0,
-    backgroundColor: theme.palette.background.paper,
-    zIndex: theme.zIndex.appBar,
-    "& a": {
-      color: "inherit",
-    },
-  },
   texts: {
     "& textarea": {
       minHeight: 400,
@@ -88,26 +68,17 @@ export default function MemberNew() {
   return (
     <Container>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          wrap="nowrap"
-          className={classes.top}
-        >
-          <Link to={`/home?group_id=${group_id}`}>
-            <ChevronLeftIcon />
-          </Link>
-          <Typography variant="h3" color="textPrimary">
-            회원 초대
-          </Typography>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            children="초대"
-          />
-        </Grid>
+        <HeaderBack
+          title="회원 초대"
+          right={
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              children="초대"
+            />
+          }
+        />
         <Select
           fullWidth
           native

@@ -20,11 +20,11 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import Forbidden from "./Forbidden";
 import { updateBoards } from "../graphql/mutation";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
+import HeaderBack from "./HeaderBack";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -42,16 +42,6 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid " + theme.palette.grey[300],
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1),
-  },
-  top: {
-    height: theme.mixins.toolbar.minHeight,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    overflow: "hidden",
-    position: "sticky",
-    top: 0,
-    backgroundColor: theme.palette.background.paper,
-    zIndex: theme.zIndex.appBar,
   },
 }));
 const deletingIds: number[] = [];
@@ -111,23 +101,7 @@ export default function BoardsSetting() {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Container component="main" className={classes.root}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          wrap="nowrap"
-          className={classes.top}
-        >
-          <Link to={`/home?group_id=${group_id}`}>
-            <ChevronLeftIcon />
-          </Link>
-          <Typography variant="h3" color="textPrimary">
-            게시판 관리
-          </Typography>
-          <Button type="submit" color="primary">
-            저장
-          </Button>
-        </Grid>
+        <HeaderBack title="게시판 관리" submit="저장" />
         <Typography>
           {fields.map((field, i) => {
             const postCount = field?.posts_aggregate?.aggregate?.count || 0;
