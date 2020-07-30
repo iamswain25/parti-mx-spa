@@ -1,25 +1,17 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { HASURA_GRAPHQL_ENGINE_URL, ADMIN_SECRET } from "../env";
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
+import ApolloClient, { gql } from "apollo-boost";
+const client = new ApolloClient({
+  fetch,
+  uri: HASURA_GRAPHQL_ENGINE_URL,
+  headers: {
+    "x-hasura-admin-secret": ADMIN_SECRET,
+    "x-hasura-use-backend-only-permissions": "true",
+  },
+});
 type UserRecord = admin.auth.UserRecord;
-
-const query = `
-mutation($uid: String!) {
-  update_mx_users_group(
-    where:{user:{firebase_uid:{_eq: $uid}}},
-    _set:{status:"exit"}
-  ){
-    affected_rows
-  }
-
-  update_mx_users(
-    where:{firebase_uid:{_eq: $uid}}, 
-    _set:{deleted_at: "now()"}
-  ){
-    affected_rows
-  }
-}`;
 
 export default functions
   .region("asia-northeast1")
@@ -27,17 +19,26 @@ export default functions
   .onDelete(async (user: UserRecord) => {
     const { uid } = user;
     const variables = { uid };
-    const res = await fetch(HASURA_GRAPHQL_ENGINE_URL, {
-      method: "POST",
-      body: JSON.stringify({ query, variables }),
-      headers: {
-        "Content-Type": "application/json",
-        "x-hasura-admin-secret": ADMIN_SECRET,
-        "x-hasura-use-backend-only-permissions": "true",
-      },
-    })
-      .then((r) => r.json())
-      .catch(console.error);
+    const res = await client.mutate({
+      mutation: gql`
+        mutation($uid: String!) {
+          update_mx_users_group(
+            where: { user: { firebase_uid: { _eq: $uid } } }
+            _set: { status: "exit" }
+          ) {
+            affected_rows
+          }
+
+          update_mx_users(
+            where: { firebase_uid: { _eq: $uid } }
+            _set: { deleted_at: "now()" }
+          ) {
+            affected_rows
+          }
+        }
+      `,
+      variables,
+    });
     if (res.data?.update_mx_users_group?.affected_rows > 0) {
       console.log("success");
     } else {

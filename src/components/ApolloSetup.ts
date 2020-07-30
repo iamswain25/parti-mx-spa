@@ -64,16 +64,12 @@ async function extractValidToken(refresh = false): Promise<string | null> {
   }
 }
 async function getFirebaseAuthHeader(_previousHeader?: Object) {
-  const header = {};
-  if (_previousHeader) {
-    Object.assign(header, _previousHeader);
-  }
   let token = await extractValidToken();
   if (token) {
     const Authorization = "Bearer " + token;
-    return { headers: { ...header, Authorization } };
+    return { headers: { Authorization, ..._previousHeader } };
   }
-  return { headers: header };
+  return { headers: _previousHeader };
 }
 const authLink = setContext((_, { headers }) => getFirebaseAuthHeader(headers));
 
