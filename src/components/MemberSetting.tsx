@@ -26,6 +26,7 @@ import UserGroupStatus from "./UserGroupStatus";
 import useSetStatus from "./useSetStatus";
 import { UserGroup } from "../types";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import UserGroupAdmit from "./UserGroupAdmit";
 const useStyles = makeStyles((theme) => ({
   top: {
     height: theme.mixins.toolbar.minHeight,
@@ -56,11 +57,11 @@ export default function MemberSetting() {
   const [keyword, setKeyword] = React.useState("");
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 500);
   const [status] = useGlobalState(keys.PERMISSION);
-  const { data, loading, error } = useQuery<UserGroups>(searchMembers, {
+  const { data, loading, error, refetch } = useQuery<UserGroups>(searchMembers, {
     variables: { keyword: debouncedKeyword, group_id },
     fetchPolicy: "network-only",
   });
-  const setStatus = useSetStatus();
+  const setStatus = useSetStatus(refetch);
   useLoadingEffect(loading);
   useErrorEffect(error);
   if (loading) {
@@ -115,7 +116,11 @@ export default function MemberSetting() {
             return (
               <ListItem key={i}>
                 <AvatarNameEmail user={l.user} />
-                <UserGroupStatus userGroup={l} update={setStatus} />
+                {l.status === "requested" ? (
+                  <UserGroupAdmit userGroup={l} update={setStatus} />
+                ) : (
+                  <UserGroupStatus userGroup={l} update={setStatus} />
+                )}
               </ListItem>
             );
           })}

@@ -126,15 +126,15 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   const userStatus = user?.status;
   usePermEffect(userStatus);
   const isOrg = userStatus === "organizer";
-  const isUser = userStatus === "user";
-  const toJoinTag =
-    isUser || isOrg ? (
-      <span>{showStatusLabelByValue(user?.status)}</span>
-    ) : (
-      <Button className={classes.groupJoin} onClick={joinHandler}>
-        그룹가입
-      </Button>
-    );
+  const toJoinTag = ["organizer", "user", "participant", "requested"].includes(
+    userStatus as string
+  ) ? (
+    <span>{showStatusLabelByValue(user?.status)}</span>
+  ) : (
+    <Button className={classes.groupJoin} onClick={joinHandler}>
+      그룹가입
+    </Button>
+  );
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
