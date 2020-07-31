@@ -8,7 +8,6 @@ import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import Dropzone from "./Dropzone";
-import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import { makeNewVariables } from "./makePostVariables";
 import CustomImageUploader from "./CustomImageUploader";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -21,8 +20,6 @@ export default function SuggestionNew() {
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [insert] = useMutation(insertPost);
-  const [address, setAddress] = React.useState("");
-  const [latLng, setLatLng] = React.useState<undefined | any>(undefined);
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
@@ -32,7 +29,7 @@ export default function SuggestionNew() {
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
     const { closingMethod, ...rest } = form;
-    const metadata = { closingMethod, address };
+    const metadata = { closingMethod };
     const variables = await makeNewVariables(rest, {
       board_id,
       group_id,
@@ -41,14 +38,6 @@ export default function SuggestionNew() {
       setSuccess,
       metadata,
     });
-    if (latLng) {
-      const { lat, lng } = latLng;
-      const location = {
-        type: "Point",
-        coordinates: [lng, lat],
-      };
-      variables.location = location;
-    }
     const res = await insert({ variables });
     const id = res?.data?.insert_mx_posts_one?.id;
     history.push("/post/" + id);
@@ -64,12 +53,6 @@ export default function SuggestionNew() {
           <Container component="main" maxWidth="md">
             <Typography variant="h2">제안글 쓰기</Typography>
             <SuggestionInputs formControl={formControl} />
-            <GooglePlaceAutocomplete
-              address={address}
-              setAddress={setAddress}
-              latLng={latLng}
-              setLatLng={setLatLng}
-            />
             <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
             <BtnSubmitDesktop text="제안 제출" />

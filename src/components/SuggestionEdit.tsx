@@ -11,11 +11,9 @@ import {
   Post,
   Image,
   File as File2,
-  LatLng,
   SuggestionMetadata,
   SuggestionFormdata,
 } from "../types";
-import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
 import CustomImageUploader from "./CustomImageUploader";
@@ -28,8 +26,6 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [update] = useMutation(updatePost);
-  const [address, setAddress] = React.useState<undefined | string>(undefined);
-  const [latLng, setLatLng] = React.useState<undefined | LatLng>(undefined);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
@@ -37,25 +33,17 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const formControl = useForm<SuggestionFormdata>();
   const { handleSubmit, reset } = formControl;
   React.useEffect(() => {
-    const { location, title, body, context, files, images } = p;
+    const { title, body, context, files, images } = p;
     const metadata = p.metadata as SuggestionMetadata;
     reset({ title, body, context, closingMethod: metadata.closingMethod });
     setImages2(images);
     setFiles2(files);
-    setAddress(metadata?.address);
-
-    if (location) {
-      const {
-        coordinates: [lng, lat],
-      } = location;
-      setLatLng({ lng, lat });
-    }
   }, [reset, p]);
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
     const { closingMethod, ...rest } = form;
-    const metadata = { closingMethod, address };
+    const metadata = { closingMethod };
     const variables = await makeUpdateVariables(rest, {
       imageArr,
       fileArr,
@@ -65,14 +53,6 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       id,
       metadata,
     });
-    if (latLng) {
-      const { lat, lng } = latLng;
-      const location = {
-        type: "Point",
-        coordinates: [lng, lat],
-      };
-      variables.location = location;
-    }
     await update({ variables });
     history.push("/post/" + id);
   }
@@ -86,12 +66,6 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
         <Container component="main" maxWidth="md">
           <Typography variant="h2">제안글 수정</Typography>
           <SuggestionInputs formControl={formControl} />
-          <GooglePlaceAutocomplete
-            address={address}
-            setAddress={setAddress}
-            latLng={latLng}
-            setLatLng={setLatLng}
-          />
           <CustomImageUploader setImageArr={setImageArr} />
           <Dropzone files={fileArr} setFiles={setFileArr} />
           <SavedImageFile
