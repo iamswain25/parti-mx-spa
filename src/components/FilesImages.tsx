@@ -1,15 +1,14 @@
 import React from "react";
 import { File, Image } from "../types";
 import { Box, Grid, makeStyles, IconButton } from "@material-ui/core";
-import ImageCarousel from "./ImageCarousel";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import ImagesWidth100 from "./ImagesWidth100";
 const useStyles = makeStyles((theme) => {
-  //   const colors = {
-  //     emerald: theme.palette.primary.dark,
-  //     grey900: theme.palette.grey[900],
-  //   };
   return {
     image: {
+      display: "grid",
+      gridGap: "10px",
+      gridAutoFlow: "row",
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3),
@@ -44,9 +43,9 @@ export default function FilesImages(props: {
         </Box>
       )}
       {images?.length && (
-        <Box className={classes.image}>
-          <ImageCarousel images={images} />
-        </Box>
+        <div className={classes.image}>
+          <ImagesWidth100 images={images} />
+        </div>
       )}
     </>
   );
