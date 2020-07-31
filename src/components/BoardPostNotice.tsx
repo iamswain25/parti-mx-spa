@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => {
       cursor: "pointer",
     },
     body: {
+      whiteSpace: "pre-wrap",
       maxHeight: theme.spacing(5),
       marginBottom: theme.spacing(1),
       overflow: "hidden",

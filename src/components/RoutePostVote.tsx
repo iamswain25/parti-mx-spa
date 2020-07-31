@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => {
       maxHeight: theme.spacing(6),
     },
     body: {
+      whiteSpace: "pre-wrap",
       maxHeight: theme.spacing(5),
       marginBottom: theme.spacing(1),
       overflow: "hidden",

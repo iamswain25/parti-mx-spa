@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     body: {
+      whiteSpace: "pre-wrap",
       [theme.breakpoints.up("md")]: {
         fontSize: 16,
         letterSpacing: -0.4,
