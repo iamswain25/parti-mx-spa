@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
-import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
@@ -21,6 +20,7 @@ import FilesImages from "./FilesImages";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import EventMetadataInfo from "./EventMetadataInfo";
 import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
+import EventComment from "./EventComment";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -79,16 +79,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function EventDetail({ post: p }: { post: Post }) {
-  const {
-    body,
-    images,
-    comments,
-    createdBy,
-    created_at,
-    files,
-    metadata,
-  } = p as Event;
-  const commentCount = p.comments_aggregate?.aggregate?.count || 0;
+  const { body, images, createdBy, created_at, files, metadata } = p as Event;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -140,11 +131,7 @@ export default function EventDetail({ post: p }: { post: Post }) {
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
       <Box className={classes.root}>
-        <CommentContainer
-          comments={comments}
-          post_id={p.id}
-          count={commentCount}
-        />
+        <EventComment post={p} />
       </Box>
     </Box>
   );
