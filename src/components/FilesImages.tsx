@@ -1,10 +1,10 @@
 import React from "react";
 import { File, Image } from "../types";
-import { Box, Grid, makeStyles, IconButton } from "@material-ui/core";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import { Grid, makeStyles, IconButton, Typography } from "@material-ui/core";
 import ImagesWidth100 from "./ImagesWidth100";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import filesize from "filesize";
 const useStyles = makeStyles((theme) => {
   return {
     grid: {
@@ -53,6 +53,13 @@ export default function FilesImages(props: {
               <div className={classes.flex}>
                 <AttachFileIcon />
                 {f.name}
+                <Typography
+                  variant="subtitle2"
+                  style={{ paddingLeft: 4 }}
+                  color="textSecondary"
+                >
+                  {filesize(f.size)}
+                </Typography>
               </div>
               <IconButton href={f.uri} target="_blank">
                 <GetAppIcon />
