@@ -19,16 +19,22 @@ export const queryByGroupId = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_groups_by_pk(id: $group_id) {
       ...groups
-      notice: boards(where: { type: { _eq: "notice" } }) {
+      notice: boards(
+        where: { type: { _eq: "notice" } }
+        order_by: { id: asc }
+      ) {
         ...boards
       }
-      suggestion: boards(where: { type: { _eq: "suggestion" } }) {
+      suggestion: boards(
+        where: { type: { _eq: "suggestion" } }
+        order_by: { id: asc }
+      ) {
         ...boards
       }
-      vote: boards(where: { type: { _eq: "vote" } }) {
+      vote: boards(where: { type: { _eq: "vote" } }, order_by: { id: asc }) {
         ...boards
       }
-      event: boards(where: { type: { _eq: "event" } }) {
+      event: boards(where: { type: { _eq: "event" } }, order_by: { id: asc }) {
         ...boards
       }
     }
@@ -43,7 +49,7 @@ export const queryBoardsByGroupId = gql`
       users(where: { user_id: { _eq: $user_id } }) {
         status
       }
-      boards {
+      boards(order_by: { id: asc }) {
         id
         type
         title
@@ -215,7 +221,7 @@ export const getBoardsByGroupId = gql`
     mx_groups_by_pk(id: $group_id) {
       id
       title
-      boards {
+      boards(order_by: { id: asc }) {
         id
         title
         body
