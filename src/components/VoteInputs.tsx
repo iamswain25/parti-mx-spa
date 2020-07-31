@@ -72,14 +72,16 @@ export default function VoteInputs({
           disabled={isEdit}
         />
       </Grid>
-      <Grid container justify="space-between" alignItems="center">
-        <Typography>중복투표</Typography>
-        <ControlledSwitch
-          control={control}
-          name="isMultiple"
-          disabled={isEdit}
-        />
-      </Grid>
+      {!isBinary && (
+        <Grid container justify="space-between" alignItems="center">
+          <Typography>중복투표</Typography>
+          <ControlledSwitch
+            control={control}
+            name="isMultiple"
+            disabled={isEdit}
+          />
+        </Grid>
+      )}
       <Grid container justify="space-between" alignItems="center">
         <Typography>종료 될 때까지 중간 투표 집계를 숨깁니다.</Typography>
         <ControlledSwitch
