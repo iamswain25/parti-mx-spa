@@ -59,6 +59,7 @@ export default function Home() {
   const classes = useStyles();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
     variables: { group_id, user_id, isAnonymous: !user_id },
+    fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);

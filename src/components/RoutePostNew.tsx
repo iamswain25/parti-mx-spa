@@ -17,6 +17,7 @@ export default function RoutePostNew() {
   const { board_id } = useParams();
   const { data, error, loading } = useQuery<PageBoard>(queryBoardType, {
     variables: { board_id },
+    fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
