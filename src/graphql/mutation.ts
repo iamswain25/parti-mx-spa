@@ -206,14 +206,10 @@ export const createNewGroup = gql`
         users: { data: { status: "organizer" } }
         boards: {
           data: [
-            {
-              title: "제안 게시판"
-              body: "제안 게시판입니다"
-              type: "suggestion"
-            }
-            { title: "소식 게시판", body: "소식 게시판입니다", type: "notice" }
-            { title: "투표 게시판", body: "투표 게시판입니다", type: "vote" }
-            { title: "모임 게시판", body: "모임 게시판입니다", type: "event" }
+            { title: "제안", body: "제안입니다", type: "suggestion" }
+            { title: "소식", body: "소식입니다", type: "notice" }
+            { title: "투표", body: "투표입니다", type: "vote" }
+            { title: "모임", body: "모임입니다", type: "event" }
           ]
         }
       }
