@@ -101,12 +101,14 @@ export interface PagePost {
   mx_posts_by_pk: Post;
 }
 export interface Whoami {
+  mx_groups: Group[];
   mx_users_by_pk: {
     name: string;
     email: string;
     photo_url: string;
     push_tokens: { token: string; created_at: string };
     groups: UserGroup[];
+    rest: UserGroup[];
   };
 }
 export interface CommentInput {

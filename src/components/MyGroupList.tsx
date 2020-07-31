@@ -2,10 +2,10 @@ import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { subscribeGroupsByUserId } from "../graphql/subscription";
+import { queryGroupsByUserId } from "../graphql/query";
 import { useSubscription } from "@apollo/client";
 import { useStore } from "../store/store";
-import { UserGroup, Whoami } from "../types";
+import { UserGroup, Whoami, Group } from "../types";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import AddIcon from "@material-ui/icons/Add";
@@ -20,6 +20,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  Divider,
 } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
 import GroupSearchList from "./GroupSearchList";
@@ -45,7 +46,7 @@ export default function MyGroupList(props: {
   const [{ user_id, group_id }] = useStore();
   const history = useHistory();
   const { loading, data, error } = useSubscription<Whoami>(
-    subscribeGroupsByUserId,
+    queryGroupsByUserId,
     {
       variables: { user_id },
     }
@@ -58,29 +59,58 @@ export default function MyGroupList(props: {
   }
   const me = data?.mx_users_by_pk;
   const ugs = data?.mx_users_by_pk?.groups;
+  const rest = data?.mx_groups;
   if (!(me && ugs)) {
     return null;
   }
-
-  const list =
-    ugs.length > 0 &&
-    ugs.map((ug: UserGroup, i: number) => (
+  const list = [];
+  list.push(
+    ...ugs?.map((ug: UserGroup, i: number) => {
+      const groupId = ug.group_id;
+      const ind = rest?.findIndex((g) => g.id === groupId);
+      if (typeof ind === "number" && ind > -1) {
+        rest?.splice(ind, 1);
+      }
+      return (
+        <ListItem
+          key={`group${i}`}
+          button
+          onClick={() => clickHandler(groupId)}
+          selected={groupId === group_id}
+        >
+          <ListItemIcon>
+            <Avatar
+              variant="square"
+              src={ug.group.bg_img_url}
+              children={ug.group.title.substr(0, 1)}
+            />
+          </ListItemIcon>
+          <ListItemText primary={ug.group?.title} />
+        </ListItem>
+      );
+    })
+  );
+  list.push(<Divider key="divider" />);
+  list.push(<ListItem key="label">아래는 가입하지 않은 그룹입니다</ListItem>);
+  list.push(
+    rest?.map((g: Group, i: number) => (
       <ListItem
-        key={i}
+        key={`rest${i}`}
         button
-        onClick={() => clickHandler(ug.group_id)}
-        selected={ug.group_id === group_id}
+        onClick={() => clickHandler(g.id)}
+        selected={g.id === group_id}
       >
         <ListItemIcon>
           <Avatar
             variant="square"
-            src={ug.group.bg_img_url}
-            children={ug.group.title.substr(0, 1)}
+            src={g.bg_img_url}
+            children={g.title.substr(0, 1)}
           />
         </ListItemIcon>
-        <ListItemText primary={ug.group?.title} />
+        <ListItemText primary={g.title} />
       </ListItem>
-    ));
+    ))
+  );
 
   return (
     <>
