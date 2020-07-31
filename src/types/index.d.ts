@@ -33,12 +33,13 @@ export interface VoteFormdata {
 export interface VoteEditFormdata extends VoteFormdata {
   candidates: Candidate[];
 }
+export type BoardPermission = "member" | "all" | "observer";
 export type Board = {
   id: number;
   title: string;
   body: string;
   slug: string;
-  permission: "member" | "all" | "observer";
+  permission: BoardPermission;
   type: BoardTypes;
   updated_at: string;
   last_posted_at: string;

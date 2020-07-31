@@ -1,8 +1,9 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   div: {
+    marginTop: theme.spacing(10),
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -10,5 +11,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Forbidden() {
   const classes = useStyles();
-  return <div className={classes.div}>비공개 게시물 입니다.</div>;
+  return (
+    <Typography variant="h1">
+      <div className={classes.div}>접근 권한이 없습니다.</div>
+    </Typography>
+  );
 }
