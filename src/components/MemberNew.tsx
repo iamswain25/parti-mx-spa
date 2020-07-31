@@ -37,14 +37,15 @@ export default function MemberNew() {
   }
 
   async function handleForm({ emails, status }: FormType) {
-    const arr = emails.split(/[\n,;]+/);
-    const badEmail = arr.find((e) => !validateEmail(e));
-    if (badEmail) {
-      return setError(
-        badEmail +
-          " 이메일 형식이 잘못되었습니다. 이것은 빼고 다시 초대 해주세요"
-      );
-    }
+    const arr = emails.split(/[\r\n,;]+/).filter((e) => e);
+    // const badEmail = arr.find((e) => !validateEmail(e));
+    // if (badEmail) {
+    //   console.log(arr);
+    //   return setError(
+    //     badEmail +
+    //       " 이메일 형식이 잘못되었습니다. 이것은 빼고 다시 초대 해주세요"
+    //   );
+    // }
     setError(`${arr.length}명의 유저를 생성 중입니다.`);
     const { data } = await authInvite({
       emails: arr,
