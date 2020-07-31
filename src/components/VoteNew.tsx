@@ -28,7 +28,6 @@ export default function VoteNew() {
     defaultValues: { candidates: ["", ""] },
   });
   const { handleSubmit } = formControl;
-
   async function handleForm(form: VoteFormdata) {
     setLoading(true);
     const {
@@ -75,7 +74,7 @@ export default function VoteNew() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off" >
+      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
           <HeaderNew title="투표 쓰기" />
         </Hidden>
