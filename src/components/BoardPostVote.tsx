@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "center",
     },
     body: {
+      whiteSpace: "pre-wrap",
       marginBottom: theme.spacing(1),
       overflow: "hidden",
     },

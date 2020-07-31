@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => {
       marginBottom: theme.spacing(1),
     },
     body: {
+      whiteSpace: "pre-wrap",
       maxHeight: 60,
       marginBottom: theme.spacing(1),
       overflow: "hidden",
