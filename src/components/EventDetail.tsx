@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => {
         paddingRight: 60,
         marginLeft: "auto",
         marginRight: "auto",
-        marginTop: theme.spacing(2),
         backgroundColor: theme.palette.background.paper,
         borderStyle: "solid",
         borderWidth: 1,
@@ -85,7 +84,7 @@ export default function EventDetail({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
-    <Box bgcolor="grey.100">
+    <Box bgcolor="grey.100" pt={2}>
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
