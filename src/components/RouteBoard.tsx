@@ -28,6 +28,7 @@ export default function RouteBoard() {
       isAnonymous: !user_id,
       sort: [postSortOptions[sort]],
     },
+    fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);

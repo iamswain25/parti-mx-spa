@@ -18,6 +18,7 @@ export default function RoutePostEdit() {
   const [{ user_id }] = useStore();
   const { data, error, loading } = useQuery<PagePost>(queryByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
+    fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
