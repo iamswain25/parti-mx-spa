@@ -111,7 +111,7 @@ export default function MyGroupList(props: {
     <>
       <Typography variant="h2">
         <div className={classes.title}>
-          <span>믹스 그룹</span>
+          <span>카테고리 선택</span>
           <Link to="/profile">
             <Avatar src={me.photo_url} children={me.name.substr(0, 1)} />
           </Link>
