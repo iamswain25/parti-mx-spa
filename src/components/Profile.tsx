@@ -72,7 +72,7 @@ export default function Profile() {
     const { bgFiles, username } = form;
     setLoading(true);
     const variables = { id: user_id, name: username, photo_url: undefined };
-    if (bgFiles.length) {
+    if (bgFiles?.length) {
       variables.photo_url = await uploadFileByPath(
         bgFiles[0],
         `profile/${user_id}`
