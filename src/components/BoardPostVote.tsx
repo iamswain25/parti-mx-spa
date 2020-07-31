@@ -88,7 +88,7 @@ export default function BoardPostVote({ post: p }: { post: Post }) {
           참여자 {p.users_aggregate.aggregate.sum.like_count}명
         </Typography>
       </Box>
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={navigatePost}>
         <Box fontWeight={500}>투표하러 가기</Box>
       </Button>
     </div>
