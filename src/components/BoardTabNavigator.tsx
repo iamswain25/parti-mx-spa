@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => {
         margin: "0 auto",
       },
       height: 48,
-      overflow: "unset",
+      overflow: "auto",
       fontSize: 14,
       fontWeight: 500,
       letterSpacing: 0.2,
