@@ -149,3 +149,17 @@ export const groups = gql`
     }
   }
 `;
+export const usersgroup = gql`
+  fragment usersgroup on mx_users_group {
+    updated_at
+    group_id
+    group {
+      slug
+      title
+      id
+      bg_img_url
+      updated_at
+      last_posted_at
+    }
+  }
+`;

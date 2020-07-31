@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { boards, posts, candidates, groups } from "./fragment";
+import { boards, posts, candidates, groups, usersgroup } from "./fragment";
 
 export const queryGroupEdit = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
@@ -385,4 +385,29 @@ export const whoami = gql`
       photo_url
     }
   }
+`;
+
+export const queryGroupsByUserId = gql`
+  query($user_id: Int!) {
+    mx_users_by_pk(id: $user_id) {
+      id
+      name
+      photo_url
+      groups(
+        where: { status: { _in: ["user", "organizer", "participant"] } }
+        order_by: { updated_at: desc_nulls_last }
+      ) {
+        ...usersgroup
+      }
+    }
+    mx_groups {
+      slug
+      title
+      id
+      bg_img_url
+      updated_at
+      last_posted_at
+    }
+  }
+  ${usersgroup}
 `;
