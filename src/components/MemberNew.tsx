@@ -6,7 +6,6 @@ import { Redirect } from "react-router-dom";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
-import { validateEmail } from "../helpers/emailValidator";
 import { functions, auth } from "../config/firebase";
 import { userGroupStatusList } from "../helpers/options";
 import HeaderBack from "./HeaderBack";
