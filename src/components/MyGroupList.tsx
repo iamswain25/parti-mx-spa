@@ -9,21 +9,15 @@ import { UserGroup, Whoami, Group } from "../types";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/Close";
-import SearchIcon from "@material-ui/icons/Search";
 import {
   Avatar,
   makeStyles,
   Theme,
   List,
   Typography,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
   Divider,
 } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
-import GroupSearchList from "./GroupSearchList";
 import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -53,7 +47,6 @@ export default function MyGroupList(props: {
       variables: { user_id },
     }
   );
-  const [keyword, setKeyword] = React.useState("");
   useLoadingEffect(loading);
   useErrorEffect(error);
   if (loading) {
@@ -126,32 +119,7 @@ export default function MyGroupList(props: {
       </Typography>
       <Typography variant="h4">
         <List>
-          <ListItem>
-            <OutlinedInput
-              fullWidth
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              startAdornment={
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-              endAdornment={
-                keyword ? (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setKeyword("")}>
-                      <CloseIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ) : undefined
-              }
-            />
-          </ListItem>
-          {keyword ? (
-            <GroupSearchList keyword={keyword} clickHandler={clickHandler} />
-          ) : (
-            list
-          )}
+          {list}
           {status === "organizer" && (
             <ListItem button onClick={() => history.push("/group/new")}>
               <ListItemIcon>
