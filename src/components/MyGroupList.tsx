@@ -23,6 +23,7 @@ import {
 } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
 import GroupSearchList from "./GroupSearchList";
+import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
     display: "flex",
@@ -43,6 +44,7 @@ export default function MyGroupList(props: {
   const { clickHandler } = props;
   const classes = useStyles();
   const [{ user_id, group_id }] = useStore();
+  const [status] = useGlobalState(keys.PERMISSION);
   const history = useHistory();
   const { loading, data, error } = useSubscription<Whoami>(
     subscribeGroupsByUserId,
@@ -120,15 +122,17 @@ export default function MyGroupList(props: {
           ) : (
             list
           )}
-          <ListItem button onClick={() => history.push("/group/new")}>
-            <ListItemIcon>
-              <Avatar variant="square" children={<AddIcon />} />
-            </ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{ variant: "h4" }}
-              primary="그룹 만들기"
-            />
-          </ListItem>
+          {status === "organizer" && (
+            <ListItem button onClick={() => history.push("/group/new")}>
+              <ListItemIcon>
+                <Avatar variant="square" children={<AddIcon />} />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ variant: "h4" }}
+                primary="그룹 만들기"
+              />
+            </ListItem>
+          )}
           {!list && (
             <div className={classes.last}>
               아직, 가입된 그룹이 없나요?{"\n"}
