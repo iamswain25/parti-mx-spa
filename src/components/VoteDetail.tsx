@@ -14,13 +14,13 @@ import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
 import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
-import ImageCarousel from "./ImageCarousel";
 import useDesktop from "./useDesktop";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { daysLeftMeta } from "../helpers/datefns";
 import VoteCandidate from "./VoteCandidate";
 import useVoteCandidate from "./useVoteCandidate";
 import PostMenu from "./PostMenu";
+import FilesImages from "./FilesImages";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const { body, images = [], comments, createdBy, created_at = "" } = p;
+  const { body, images, comments, createdBy, created_at = "", files } = p;
   const metadata = p.metadata as VoteMetadata;
   const commentCount = p.comments_aggregate?.aggregate?.count || 0;
   const participantCount = p.users_aggregate?.aggregate?.sum?.like_count;
@@ -154,9 +154,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
             <Typography variant="body1">{daysLeft}</Typography>
           </Box>
         </Grid>
-        <Box className={classes.image}>
-          <ImageCarousel images={images} />
-        </Box>
+        <FilesImages images={images} files={files} />
         <Box className={classes.body} color="grey.900">
           <Linkify
             componentDecorator={(decoratedHref, decoratedText, key) => (
