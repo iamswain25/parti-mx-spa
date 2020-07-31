@@ -1,7 +1,7 @@
 import React from "react";
 import { BoardTypes, Group } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, useRouteMatch } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
 import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
@@ -90,6 +90,7 @@ export default function BoardTabNavigator({
 }) {
   const { boards = [] } = group;
   const classes = useStyles();
+  const isHome = useRouteMatch("/home");
   const [userStatus] = useGlobalState(keys.PERMISSION);
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
@@ -138,31 +139,32 @@ export default function BoardTabNavigator({
             </NavLink>
           ))}
         </Box>
-        {(userStatus === "user" || userStatus === "organizer") && (
-          <>
-            <Hidden smDown>
-              <Box display="flex" alignItems="center" width={98}>
-                <Button
-                  variant="contained"
+        {["user", "organizer"].includes(userStatus as string) &&
+          !isHome?.isExact && (
+            <>
+              <Hidden smDown>
+                <Box display="flex" alignItems="center" width={98}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={btnHandler}
+                  >
+                    글쓰기
+                  </Button>
+                </Box>
+              </Hidden>
+              <Hidden mdUp>
+                <Fab
                   color="primary"
+                  aria-label="write"
+                  className={classes.fab}
                   onClick={btnHandler}
                 >
-                  글쓰기
-                </Button>
-              </Box>
-            </Hidden>
-            <Hidden mdUp>
-              <Fab
-                color="primary"
-                aria-label="write"
-                className={classes.fab}
-                onClick={btnHandler}
-              >
-                <CreateIcon />
-              </Fab>
-            </Hidden>
-          </>
-        )}
+                  <CreateIcon />
+                </Fab>
+              </Hidden>
+            </>
+          )}
       </div>
     </Grid>
   );
