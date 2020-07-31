@@ -106,8 +106,12 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const closingAt = React.useMemo(() => {
     let after = undefined;
+    const closingMethod = metadata?.closingMethod;
+    if (!closingMethod) {
+      return "계속";
+    }
     try {
-      after = Number(metadata?.closingMethod?.replace("days", ""));
+      after = Number(closingMethod?.replace("days", ""));
       return closingDateFrom(created_at, after);
     } catch (err) {
       console.log(metadata);

@@ -31,6 +31,8 @@ export default function SuggestionInputs(props: {
         name="closingMethod"
         SelectProps={{ native: true }}
         defaultValue="30days"
+        register={register}
+        errors={errors}
         children={suggestionOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
