@@ -29,9 +29,9 @@ export default function RoutePostNew() {
   if (!b) {
     return <Forbidden />;
   }
-  if (permissionBlocked(b.permission, userStatus)) {
-    return <Forbidden />;
-  }
+  // if (permissionBlocked(b.permission, userStatus)) {
+  //   return <Forbidden />;
+  // }
   switch (b.type) {
     case "notice":
       return <NoticeNew />;
