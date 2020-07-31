@@ -32,7 +32,6 @@ export default function VoteNewCandidates({
     name: "candidates",
     control,
   });
-
   function removeHandler(i: number) {
     if (fields.length > 2) {
       remove(i);
@@ -47,16 +46,11 @@ export default function VoteNewCandidates({
     append({ value: "" });
   }
   React.useEffect(() => {
-    const candidates = getValues("candidates");
-    if (!candidates) return;
     wasBinary.current = isBinary;
     if (isBinary) {
       clearErrors("candidates");
-      fields.forEach((f, i) => {
-        f.value = candidates[i];
-      });
     }
-  }, [isBinary, getValues, fields, clearErrors, unregister]);
+  }, [isBinary]);
   const wasBinary = React.useRef(false);
   function validate(value: string) {
     if (!wasBinary.current && !value) {
