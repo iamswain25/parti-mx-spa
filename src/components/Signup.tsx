@@ -54,11 +54,16 @@ export default function Signup() {
   useRedirectIfLogin();
   const classes = useStyles();
   const [, setLoading] = useGlobalState(keys.LOADING);
+  const [, setError] = useGlobalState(keys.ERROR);
   const { handleSubmit, register, errors } = useForm<FormData>();
   async function formHandler(form: FormData) {
     const { email, password } = form;
     setLoading(true);
-    await auth.createUserWithEmailAndPassword(email, password);
+    try {
+      await auth.createUserWithEmailAndPassword(email, password);
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
