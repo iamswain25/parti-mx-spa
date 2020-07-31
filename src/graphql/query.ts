@@ -111,6 +111,11 @@ export const queryBoardType = gql`
       id
       title
       type
+      permission
+      group {
+        id
+        title
+      }
     }
   }
 `;
