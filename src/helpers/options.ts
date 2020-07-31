@@ -25,11 +25,7 @@ export function showStatusLabelByValue(value: UserStatus) {
   const userStatus = userGroupStatusList.find((ug) => ug.value === value);
   if (userStatus) {
     return userStatus.label;
-  }
-  switch (value) {
-    case "requested":
-      return "승인대기";
-    default:
-      return null;
+  } else {
+    return null;
   }
 }
