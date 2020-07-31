@@ -3,7 +3,7 @@ import createReducer from "../store/createReducer";
 export const PERSIST_KEY = "https://youthwagle.kr";
 export const initialState = {
   isInit: false,
-  group_id: 100,
+  group_id: 101,
   user_id: null,
 };
 export type State = typeof initialState;
