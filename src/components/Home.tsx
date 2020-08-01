@@ -14,16 +14,10 @@ import HomeBoardEvent from "./HomeBoardEvent";
 import BoardTabNavigator from "./BoardTabNavigator";
 import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
-import { Box } from "@material-ui/core";
 import DesktopHeader from "./DesktopHeader";
 import Forbidden from "./Forbidden";
 const useStyles = makeStyles((theme) => {
   return {
-    root: {
-      [theme.breakpoints.down("sm")]: {
-        marginTop: -(theme.mixins.toolbar.minHeight || 0),
-      },
-    },
     grid: {
       display: "flex",
       [theme.breakpoints.up("md")]: {
@@ -81,9 +75,7 @@ export default function Home() {
   return (
     <>
       <DesktopHeader />
-      <Box className={classes.root}>
-        <GroupLogoContainer group={group} />
-      </Box>
+      <GroupLogoContainer group={group} />
       {!isDesktop && <GreyDivider />}
       <BoardTabNavigator group={group} />
       {isDesktop ? (

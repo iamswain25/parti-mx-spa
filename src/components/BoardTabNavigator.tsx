@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => {
     gridTab: {
       overflowX: "scroll",
       position: "sticky",
-      top: 0,
+      top: -1,
       boxShadow: `0 4px 2px -2px ${grey[300]}`,
       backgroundColor: theme.palette.background.paper,
       //  theme.shadows[1],
@@ -97,7 +97,7 @@ export default function BoardTabNavigator({
   const history = useHistory();
   useScrollPosition(
     ({ prevPos, currPos }) => {
-      const isShow = currPos.y === 0;
+      const isShow = currPos.y < 1;
       if (isShow !== isTop) setTop(isShow);
     },
     [isTop],

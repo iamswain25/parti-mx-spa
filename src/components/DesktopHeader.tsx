@@ -8,6 +8,7 @@ import { useStore } from "../store/store";
 import LogoutButton from "./LogoutButton";
 import DrawerGroup from "./DrawerGroup";
 import LoginButton from "./LoginButton";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -26,16 +27,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: "none",
   },
   toolbar: {
-    display: "flex",
-    alignItems: "center",
+    display: "grid",
+    gridTemplateColumns: "1fr 3fr 1fr",
     [theme.breakpoints.up("md")]: {
       padding: 0,
       minHeight: 48,
     },
-    justifyContent: "center",
-  },
-  header: {
-    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: "1fr 2fr",
+    },
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
@@ -60,15 +60,29 @@ export default function DesktopHeader() {
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }}>
-        <div className={classes.header}>
-          <DrawerGroup />
-          <Link to="/home" className={classes.logoFont}>
-            Parti Mix
-          </Link>
-          <Typography variant="h3" noWrap>
-            {user_id ? <LogoutButton /> : <LoginButton />}
-          </Typography>
-        </div>
+        <DrawerGroup />
+        <Link to="/home" className={classes.logoFont}>
+          와글와글 정책실
+        </Link>
+        <Typography
+          variant="h3"
+          noWrap
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          {user_id ? <LogoutButton /> : <LoginButton />}
+          {user_id && (
+            <Link
+              to="/search"
+              style={{ display: "flex", alignItems: "center", padding: 10 }}
+            >
+              <SearchIcon />
+            </Link>
+          )}
+        </Typography>
       </Toolbar>
     </AppBar>
   );

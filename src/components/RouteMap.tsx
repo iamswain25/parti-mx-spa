@@ -9,7 +9,6 @@ import BoardTabNavigator from "./BoardTabNavigator";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
 import { Box, Grid, Typography, Hidden } from "@material-ui/core";
-import HeaderBoard from "./HeaderBoard";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import PostSort from "./PostSort";
@@ -108,14 +107,13 @@ export default function RoutePhoto() {
   if (!board) {
     return <Forbidden />;
   }
-  const { group, group: { title = "로딩 중" } = {}, ...b } = board;
+  const { group, ...b } = board;
   function childClickHandler(key: number, childProps: any) {
     const post = b?.posts?.[key];
     setSelectedPlace(post);
   }
   return (
     <>
-      <HeaderBoard title={title} />
       <BoardTabNavigator group={group} />
       <section className={classes.container}>
         <Grid

@@ -17,6 +17,9 @@ import { showStatusLabelByValue } from "../helpers/options";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
+      [theme.breakpoints.down("sm")]: {
+        marginTop: -(theme.mixins.toolbar.minHeight || 0),
+      },
       [theme.breakpoints.up("md")]: {
         padding: "0 30px",
         position: "relative",

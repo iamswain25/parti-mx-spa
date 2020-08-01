@@ -10,7 +10,6 @@ import useDesktop from "./useDesktop";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
 import { Box, Grid, Typography } from "@material-ui/core";
-import HeaderBoard from "./HeaderBoard";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import PostSort from "./PostSort";
@@ -44,10 +43,9 @@ export default function RoutePhoto() {
   if (!board) {
     return <Forbidden />;
   }
-  const { group, group: { title = "로딩 중" } = {}, ...b } = board;
+  const { group, ...b } = board;
   return (
     <>
-      <HeaderBoard title={title} />
       <Box mt={isDesktop ? 3 : 0} />
       <BoardTabNavigator group={group} />
       <section className={classes.container}>
