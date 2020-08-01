@@ -335,8 +335,16 @@ export const searchPosts = gql`
                 { group: { id: { _eq: $group_id } } }
                 {
                   _or: [
-                    { permission: { _eq: "member" } }
-                    { group: { users: { user_id: { _eq: $user_id } } } }
+                    { permission: { _in: ["all"] } }
+                    {
+                      permission: { _in: ["member", "observer"] }
+                      group: {
+                        users: {
+                          user_id: { _eq: $user_id }
+                          status: { _in: ["organizer", "user", "participants"] }
+                        }
+                      }
+                    }
                   ]
                 }
               ]
@@ -347,14 +355,27 @@ export const searchPosts = gql`
     ) {
       id
       title
+      body
       created_at
-      createdBy {
-        id
-        name
-      }
       board {
         title
         type
+      }
+      users_aggregate {
+        aggregate {
+          sum {
+            like_count
+          }
+        }
+      }
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+      createdBy {
+        id
+        name
       }
     }
   }

@@ -23,6 +23,7 @@ import GroupEdit from "../components/GroupEdit";
 import MemberSetting from "../components/MemberSetting";
 import MemberNew from "../components/MemberNew";
 import Profile from "../components/Profile";
+import Search from "../components/Search";
 
 export default function Routes() {
   useParseGroupId();
@@ -38,6 +39,7 @@ export default function Routes() {
           <Route path="/home" exact component={Home} />
           <Dashboard>
             <Route path="/post/:post_id" exact component={RoutePost} />
+            <Route path="/search" exact component={Search} />
             <PrivateRoute
               path="/edit/:post_id"
               exact
