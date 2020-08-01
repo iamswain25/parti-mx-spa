@@ -4,7 +4,6 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import { useStore } from "../store/store";
-import { Box } from "@material-ui/core";
 import MyGroupList from "./MyGroupList";
 import { useHistory } from "react-router-dom";
 const DRAWER_WIDTH = 304;
@@ -30,7 +29,7 @@ export default function DrawerGroup() {
   const [, dispatch] = useStore();
   const history = useHistory();
   if (!user_id) {
-    return <Box className={classes.menuButton} />;
+    return <div className={classes.menuButton} />;
   }
   const handleDrawerOpen = () => {
     setMobileOpen(true);
