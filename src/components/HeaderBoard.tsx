@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, IconButton, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import DrawerGroup from "./DrawerGroup";
 import SearchIcon from "@material-ui/icons/Search";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     top: {
@@ -32,14 +33,9 @@ export default function HeaderBoard({ title = "로딩 중" }) {
       <Typography variant="h3" color="textPrimary">
         {title}
       </Typography>
-      <IconButton
-        color="inherit"
-        aria-label="back"
-        edge="start"
-        // onClick={}
-      >
+      <Link to="/search">
         <SearchIcon />
-      </IconButton>
+      </Link>
     </Grid>
   );
 }
