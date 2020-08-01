@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       backgroundColor: "transparent",
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
       color: theme.palette.common.white,
     },
     boxShadow: "none",
@@ -30,7 +32,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "grid",
     gridTemplateColumns: "1fr 3fr 1fr",
     [theme.breakpoints.up("md")]: {
-      padding: 0,
       minHeight: 48,
     },
     [theme.breakpoints.down("sm")]: {
@@ -59,7 +60,7 @@ export default function DesktopHeader() {
   const classes = useStyles();
   return (
     <AppBar position="sticky" className={classes.appBar}>
-      <Toolbar classes={{ regular: classes.toolbar }}>
+      <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
         <DrawerGroup />
         <Link to="/home" className={classes.logoFont}>
           와글와글 정책실
