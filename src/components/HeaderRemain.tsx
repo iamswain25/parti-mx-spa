@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 1200,
     margin: "0 auto",
     boxShadow: "none",
+    paddingLeft: 30,
+    paddingRight: 30,
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+    },
   },
   toolbar: {
     display: "grid",
@@ -49,7 +55,7 @@ export default function HeaderRemain(props: { children?: any }) {
   return (
     <>
       <AppBar position="sticky" className={classes.appBar}>
-        <Toolbar classes={{ regular: classes.toolbar }}>
+        <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
           <DrawerGroup />
           <Link to="/home" className={classes.logoFont}>
             와글와글 정책실
