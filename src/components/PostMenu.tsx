@@ -59,7 +59,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
     }
   }
   if (!menuItems.length) {
-    return <div />;
+    return <div style={{ width: 48, height: 48 }} />;
   }
   return (
     <>
