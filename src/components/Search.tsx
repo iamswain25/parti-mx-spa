@@ -5,7 +5,6 @@ import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { Divider, Hidden, Typography, Container } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import SearchInput from "./SearchInput";
 import HeaderBack from "./HeaderBack";
 import { Post } from "../types";

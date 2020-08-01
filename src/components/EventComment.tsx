@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => {
     grid: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fill, 190px)",
+      gridGap: theme.spacing(1),
       [theme.breakpoints.up("md")]: {},
       [theme.breakpoints.down("sm")]: {},
     },
