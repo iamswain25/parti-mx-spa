@@ -76,6 +76,11 @@ const useStyles = makeStyles((theme) => {
       bottom: theme.spacing(2),
       right: theme.spacing(2),
     },
+    btn: {
+      width: 98,
+      padding: 0,
+      height: 38,
+    },
   };
 });
 
@@ -143,15 +148,14 @@ export default function BoardTabNavigator({
           !isHome?.isExact && (
             <>
               <Hidden smDown>
-                <Box display="flex" alignItems="center" width={98}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={btnHandler}
-                  >
-                    글쓰기
-                  </Button>
-                </Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={btnHandler}
+                  className={classes.btn}
+                >
+                  글쓰기
+                </Button>
               </Hidden>
               <Hidden mdUp>
                 <Fab

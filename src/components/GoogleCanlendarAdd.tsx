@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => {
     underline: {
       textDecoration: "underline",
       cursor: "pointer",
+      marginTop: theme.spacing(1),
+      display: "block",
     },
   };
 });
