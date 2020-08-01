@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => {
         paddingTop: 60,
         fontSize: 24,
         letterSpacing: -0.6,
-        paddingBottom: theme.spacing(2),
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",

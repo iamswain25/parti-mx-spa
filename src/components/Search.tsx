@@ -29,7 +29,7 @@ export default function Search() {
         />
       </Hidden>
       <Divider />
-      <main>
+      <Container maxWidth="lg">
         <SearchInput keyword={keyword} setKeyword={setKeyword} />
         {keyword &&
           (results?.length ? (
@@ -41,7 +41,7 @@ export default function Search() {
               <Typography variant="h4">검색 결과가 없습니다</Typography>
             </Container>
           ))}
-      </main>
+      </Container>
     </>
   );
 }

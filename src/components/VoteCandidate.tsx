@@ -11,12 +11,14 @@ export default function VoteCandidate({
   isResultHidden = false,
   max = 1,
   onClick,
+  isClosed,
 }: {
   candidate: Candidate;
   total: number;
   max: number;
   voted: boolean;
   isResultHidden: boolean;
+  isClosed: boolean;
   onClick: (candidate_id: number, myVote: boolean) => Promise<any>;
 }) {
   const [myVote, percentage, width, count] = React.useMemo(() => {
@@ -29,6 +31,7 @@ export default function VoteCandidate({
     ];
   }, [c, max, total]);
   function handler() {
+    if (isClosed) return;
     onClick(c?.id, myVote);
   }
   const { modal, setVisible } = useWhoVotedModal(c);
@@ -67,7 +70,7 @@ export default function VoteCandidate({
             </Box>
           )}
         </Grid>
-        {!isResultHidden && voted && (
+        {((!isResultHidden && voted) || isClosed) && (
           <Box mt={1}>
             {myVote ? (
               <LinearProgressActive variant="determinate" value={width} />
@@ -81,7 +84,7 @@ export default function VoteCandidate({
         width={50}
         display="flex"
         alignItems="center"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: isClosed ? "default" : "pointer" }}
         justifyContent="center"
         onClick={handler}
         bgcolor={myVote && voted ? "primary.dark" : "grey.200"}

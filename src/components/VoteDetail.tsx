@@ -99,7 +99,16 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const { body, images, comments, createdBy, created_at = "", files } = p;
+  const {
+    body,
+    images,
+    comments,
+    createdBy,
+    created_at = "",
+    files,
+    closed_at,
+  } = p;
+  const isClosed = !!closed_at;
   const metadata = p.metadata as VoteMetadata;
   const commentCount = p.comments_aggregate?.aggregate?.count || 0;
   const participantCount = p.users_aggregate?.aggregate?.sum?.like_count;
@@ -129,7 +138,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
   const [isDesktop] = useDesktop();
 
   return (
-     <Box bgcolor="grey.100" pt={2}>
+    <Box bgcolor="grey.100" pt={2}>
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
@@ -147,12 +156,14 @@ export default function VoteDetail({ post: p }: { post: Post }) {
         <Box my={2}>
           <Divider light />
         </Box>
-        <Grid container alignItems="center">
-          <HowToVoteIcon color="primary" className={classes.icon} />
-          <Box color="primary.dark" fontWeight={500}>
-            <Typography variant="body1">{daysLeft}</Typography>
-          </Box>
-        </Grid>
+        {!isClosed && (
+          <Grid container alignItems="center">
+            <HowToVoteIcon color="primary" className={classes.icon} />
+            <Box color="primary.dark" fontWeight={500}>
+              <Typography variant="body1">{daysLeft}</Typography>
+            </Box>
+          </Grid>
+        )}
         <FilesImages images={images} files={files} />
         <Box className={classes.body} color="grey.900">
           <Linkify
@@ -187,12 +198,13 @@ export default function VoteDetail({ post: p }: { post: Post }) {
               total={totalVoteCount}
               onClick={voteHandler}
               key={i}
+              isClosed={isClosed}
               isResultHidden={metadata?.isResultHidden}
             />
           ))}
         </Box>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
-          {isVoted && (
+          {!isClosed && isVoted && (
             <Button
               variant="outlined"
               fullWidth

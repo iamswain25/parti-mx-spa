@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => {
       gridGap: "10px",
       gridAutoFlow: "row",
       [theme.breakpoints.up("md")]: {
-        paddingTop: theme.spacing(1),
-        paddingBottom: theme.spacing(1),
+        // paddingTop: theme.spacing(1),
+        // paddingBottom: theme.spacing(1),
       },
       // [theme.breakpoints.down("sm")]: {
       //   paddingTop: theme.spacing(2),
