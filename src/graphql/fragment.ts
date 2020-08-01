@@ -137,7 +137,7 @@ export const groups = gql`
         count
       }
     }
-    boards {
+    boards(order_by: { id: asc }) {
       id
       type
       title
