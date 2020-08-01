@@ -98,6 +98,18 @@ export const deletePost = gql`
   }
 `;
 
+export const resolvePost = gql`
+  mutation($id: Int!) {
+    update_mx_posts_by_pk(
+      pk_columns: { id: $id }
+      _set: { closed_at: "now()" }
+    ) {
+      id
+      board_id
+    }
+  }
+`;
+
 export const likePost = gql`
   mutation($id: Int!) {
     insert_mx_users_post(

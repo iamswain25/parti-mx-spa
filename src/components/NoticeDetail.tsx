@@ -83,14 +83,16 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
             <PostMenu post={p} />
           </Hidden>
         </Box>
-        <Box mb={2} mt={1}>
+        <Box mt={1}>
           <AvatarNameDate
             name={createdBy?.name}
             photo_url={createdBy?.photo_url}
             created_at={created_at}
           />
         </Box>
-        <Divider light />
+        <Box my={2}>
+          <Divider light />
+        </Box>
         <FilesImages images={images} files={files} />
         <Box className={classes.body} color="grey.900">
           <Linkify

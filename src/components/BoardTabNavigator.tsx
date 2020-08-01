@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => {
       fontWeight: 500,
       letterSpacing: 0.2,
       textAlign: "center",
+      alignItems: "center",
       display: "flex",
       flexWrap: "nowrap",
       justifyContent: "space-between",

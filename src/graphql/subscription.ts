@@ -381,6 +381,7 @@ export const subsByPostId = gql`
       metadata
       images
       files
+      closed_at
       board {
         id
         title
