@@ -59,16 +59,14 @@ export default function RoutePost() {
       </Hidden>
       <Divider />
       {isDesktop ? (
-        <BoardTabNavigator
-          group={p?.board?.group}
-          board_id={p?.board?.id}
-        />
+        <BoardTabNavigator group={p?.board?.group} board_id={p?.board?.id} />
       ) : (
         <Link to={`/home/${p?.board?.id}`}>
           <Box
-            mt={1}
+            pt={1}
             paddingX={2}
             color="primary.dark"
+            bgcolor="grey.100"
             display="flex"
             alignItems="center"
           >
