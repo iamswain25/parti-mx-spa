@@ -8,12 +8,17 @@ export function getAttitude(comment: Comment) {
     }
   }
   if (user?.checkedPosts?.[0]?.like_count) {
-    if (post?.board?.type === "event") {
-      return "참석";
-    } else if (post?.board?.type === "suggestion") {
-      return "동의";
-    } else {
-      return "동의";
+    switch (post?.board?.type) {
+      case "event":
+        return "참석";
+      case "suggestion":
+        return "동의";
+      case "notice":
+        return "공감";
+      case "vote":
+        return "투표완료";
+      default:
+        return "동의";
     }
   }
 
