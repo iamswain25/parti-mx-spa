@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Dashboard from "../components/Dashboard";
 import Login from "../components/Login";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../components/Home";
@@ -24,6 +23,7 @@ import MemberSetting from "../components/MemberSetting";
 import MemberNew from "../components/MemberNew";
 import Profile from "../components/Profile";
 import Search from "../components/Search";
+import HeaderRemain from "../components/HeaderRemain";
 
 export default function Routes() {
   useParseGroupId();
@@ -33,13 +33,21 @@ export default function Routes() {
       <CssBaseline />
       {isInit && (
         <Switch>
-          <Route path="/photo/:board_id" exact component={RoutePhoto} />
-          <Route path="/map/:board_id" exact component={RouteMap} />
-          <Route path="/home/:board_id" exact component={RouteBoard} />
           <Route path="/home" exact component={Home} />
-          <Dashboard>
-            <Route path="/post/:post_id" exact component={RoutePost} />
+          <HeaderRemain>
+            <Route path="/photo/:board_id" exact component={RoutePhoto} />
+            <Route path="/map/:board_id" exact component={RouteMap} />
+            <Route path="/home/:board_id" exact component={RouteBoard} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/signup" exact component={Signup} />
+            <PrivateRoute path="/boards" exact component={BoardsSetting} />
+            <PrivateRoute path="/members" exact component={MemberSetting} />
+            <PrivateRoute path="/members/new" exact component={MemberNew} />
+            <PrivateRoute path="/group/new" exact component={GroupNew} />
+            <PrivateRoute path="/profile" exact component={Profile} />
+            <PrivateRoute path="/group/edit" exact component={GroupEdit} />
             <Route path="/search" exact component={Search} />
+            <Route path="/post/:post_id" exact component={RoutePost} />
             <PrivateRoute
               path="/edit/:post_id"
               exact
@@ -53,15 +61,7 @@ export default function Routes() {
             <Route exact path="/">
               <Redirect to="/home" />
             </Route>
-            <Route path="/login" exact component={Login} />
-            <Route path="/signup" exact component={Signup} />
-            <PrivateRoute path="/boards" exact component={BoardsSetting} />
-            <PrivateRoute path="/members" exact component={MemberSetting} />
-            <PrivateRoute path="/members/new" exact component={MemberNew} />
-            <PrivateRoute path="/group/new" exact component={GroupNew} />
-            <PrivateRoute path="/profile" exact component={Profile} />
-            <PrivateRoute path="/group/edit" exact component={GroupEdit} />
-          </Dashboard>
+          </HeaderRemain>
         </Switch>
       )}
       <LoginModal />

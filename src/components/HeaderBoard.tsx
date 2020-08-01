@@ -4,6 +4,7 @@ import { Grid, Typography } from "@material-ui/core";
 import DrawerGroup from "./DrawerGroup";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
+import { useStore } from "../store/store";
 const useStyles = makeStyles((theme) => {
   return {
     top: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function HeaderBoard({ title = "로딩 중" }) {
   const classes = useStyles();
+  const [{ user_id }] = useStore();
   return (
     <Grid
       container
@@ -33,9 +35,13 @@ export default function HeaderBoard({ title = "로딩 중" }) {
       <Typography variant="h3" color="textPrimary">
         {title}
       </Typography>
-      <Link to="/search">
-        <SearchIcon />
-      </Link>
+      {user_id ? (
+        <Link to="/search">
+          <SearchIcon />
+        </Link>
+      ) : (
+        <div />
+      )}
     </Grid>
   );
 }

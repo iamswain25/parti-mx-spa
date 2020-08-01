@@ -24,7 +24,10 @@ export default function Search() {
   return (
     <>
       <Hidden mdUp>
-        <HeaderBack title="검색" right={<CloseIcon />} />
+        <HeaderBack
+          title="검색"
+          right={<div style={{ width: 24, height: 24 }} />}
+        />
       </Hidden>
       <Divider />
       <main>

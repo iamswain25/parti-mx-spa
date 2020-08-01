@@ -11,7 +11,6 @@ import { useParams } from "react-router-dom";
 import RouteBoardVote from "./RouteBoardVote";
 import RouteBoardSuggestion from "./RouteBoardSuggestion";
 import RouteBoardEvent from "./RouteBoardEvent";
-import HeaderBoard from "./HeaderBoard";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import usePermEffect from "./usePermEffect";
@@ -59,7 +58,6 @@ export default function RouteBoard() {
 
   return (
     <>
-      <HeaderBoard title={group?.title} />
       <BoardTabNavigator group={group} type={type} board_id={board_id} />
       {boardByType}
     </>
