@@ -56,7 +56,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
   const classes = useStyles();
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const { handleSubmit, register, errors } = useForm<FormData>();
-  function signupHandler() {
+  function closeLoginModal() {
     setVisible(false);
   }
   return (
@@ -118,8 +118,22 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
         </form>
         <Box className={classes.label}>
           아직 회원이 아니신가요?
-          <Link to={`/signup`} onClick={signupHandler} className={classes.link}>
+          <Link
+            to={`/signup`}
+            onClick={closeLoginModal}
+            className={classes.link}
+          >
             회원가입
+          </Link>
+        </Box>
+        <Box className={classes.label}>
+          비밀번호를 잊으셨나요?
+          <Link
+            to={`/forgot`}
+            onClick={closeLoginModal}
+            className={classes.link}
+          >
+            비밀번호 찾기
           </Link>
         </Box>
       </div>

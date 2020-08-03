@@ -24,6 +24,7 @@ import MemberNew from "../components/MemberNew";
 import Profile from "../components/Profile";
 import Search from "../components/Search";
 import HeaderRemain from "../components/HeaderRemain";
+import PasswordForgot from "../components/PasswordForgot";
 
 export default function Routes() {
   useParseGroupId();
@@ -35,6 +36,7 @@ export default function Routes() {
         <Switch>
           <Route path="/home" exact component={Home} />
           <HeaderRemain>
+            <Route path="/forgot" exact component={PasswordForgot} />
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
             <Route path="/map/:board_id" exact component={RouteMap} />
             <Route path="/home/:board_id" exact component={RouteBoard} />
