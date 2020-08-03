@@ -43,16 +43,16 @@ export default function RouteBoard() {
   let boardByType = null;
   switch (type) {
     case "notice":
-      boardByType = <RouteBoardNotice board={data?.mx_boards_by_pk} />;
+      boardByType = <RouteBoardNotice board={board} />;
       break;
     case "vote":
-      boardByType = <RouteBoardVote board={data?.mx_boards_by_pk} />;
+      boardByType = <RouteBoardVote board={board} />;
       break;
     case "suggestion":
-      boardByType = <RouteBoardSuggestion board={data?.mx_boards_by_pk} />;
+      boardByType = <RouteBoardSuggestion board={board} />;
       break;
     case "event":
-      boardByType = <RouteBoardEvent board={data?.mx_boards_by_pk} />;
+      boardByType = <RouteBoardEvent board={board} />;
       break;
   }
 
