@@ -10,6 +10,9 @@ import sub1 from "../assets/images/subdirectory24Px.png";
 import sub2 from "../assets/images/subdirectory24Px@2x.png";
 import sub3 from "../assets/images/subdirectory24Px@3x.png";
 import { getAttitude } from "../helpers/attitude";
+import CommentEdit from "./CommentEdit";
+import useCommentDelete from "./useCommentDelete";
+import { useStore } from "../store/store";
 
 export default function Comment2({
   comment: c,
@@ -19,7 +22,10 @@ export default function Comment2({
   setRe: (user?: User) => void;
 }) {
   const classes = useStyles();
-
+  const [{ user_id }] = useStore();
+  const [edit, setEdit] = React.useState<boolean>(false);
+  const remove = useCommentDelete(c.id);
+  const isMine = c?.user?.id === user_id;
   return (
     <Box position="relative">
       <Box position="absolute" left={-16} top={16}>
@@ -36,27 +42,41 @@ export default function Comment2({
         </Grid>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
           <Typography color="primary">{getAttitude(c)}</Typography>
-          {c?.body}
-          <Box
-            className={classes.buttons}
-            color="grey.600"
-            display="flex"
-            mt={1}
-          >
-            <Button className={classes.button} onClick={() => setRe(c?.user)}>
-              댓글달기
-            </Button>
-            {c?.likes?.[0] ? (
-              <ButtonUnlikeComment
-                id={c?.id}
-                count={c?.likes_aggregate?.aggregate?.count}
-              />
-            ) : (
-              <ButtonLikeComment
-                id={c?.id}
-                count={c?.likes_aggregate?.aggregate?.count}
-              />
-            )}
+          {edit ? (
+            <CommentEdit c={c} setEdit={setEdit} />
+          ) : (
+            <Typography>{c?.body || "삭제되었습니다."}</Typography>
+          )}
+          <Box color="grey.600" display="flex" mt={1}>
+            <div className={classes.buttons}>
+              <Button className={classes.button} onClick={() => setRe(c?.user)}>
+                댓글달기
+              </Button>
+              {c?.likes?.[0] ? (
+                <ButtonUnlikeComment
+                  id={c?.id}
+                  count={c?.likes_aggregate?.aggregate?.count}
+                />
+              ) : (
+                <ButtonLikeComment
+                  id={c?.id}
+                  count={c?.likes_aggregate?.aggregate?.count}
+                />
+              )}
+              {isMine && (
+                <>
+                  <Button
+                    className={classes.button}
+                    onClick={() => setEdit(true)}
+                  >
+                    댓글수정
+                  </Button>
+                  <Button className={classes.button} onClick={remove}>
+                    댓글삭제
+                  </Button>
+                </>
+              )}
+            </div>
           </Box>
         </Box>
       </Box>

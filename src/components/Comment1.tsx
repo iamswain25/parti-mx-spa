@@ -11,12 +11,14 @@ import { useStyles } from "../helpers/styles";
 import { getAttitude } from "../helpers/attitude";
 import CommentEdit from "./CommentEdit";
 import { useStore } from "../store/store";
+import useCommentDelete from "./useCommentDelete";
 export default function Comment1({ comment: c }: { comment: Comment }) {
   const [{ user_id }] = useStore();
   const classes = useStyles();
   const [isRe, setRe] = React.useState<User | undefined>(undefined);
   const insertHandler = useCommentInsert(() => setRe(undefined));
   const [edit, setEdit] = React.useState<boolean>(false);
+  const remove = useCommentDelete(c.id);
   const isMine = c?.user?.id === user_id;
   return (
     <>
@@ -34,7 +36,7 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
-            <Typography>{c?.body}</Typography>
+            <Typography>{c?.body || "삭제되었습니다."}</Typography>
           )}
           <Box color="grey.600" display="flex" mt={1}>
             <div className={classes.buttons}>
@@ -53,12 +55,17 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
                 />
               )}
               {isMine && (
-                <Button
-                  className={classes.button}
-                  onClick={() => setEdit(true)}
-                >
-                  댓글수정
-                </Button>
+                <>
+                  <Button
+                    className={classes.button}
+                    onClick={() => setEdit(true)}
+                  >
+                    댓글수정
+                  </Button>
+                  <Button className={classes.button} onClick={remove}>
+                    댓글삭제
+                  </Button>
+                </>
               )}
             </div>
           </Box>
