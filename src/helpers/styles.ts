@@ -5,7 +5,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(0),
     minWidth: "auto",
     fontSize: "inherit",
-    color: "inherit",
     [theme.breakpoints.down("sm")]: {
       fontSize: 12,
     },
@@ -72,9 +71,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     objectFit: "cover",
     maxHeight: "100%",
     width: "100%",
+    position: "absolute",
+    height: "100%",
   },
   aspectRatio: {
     display: "flex",
+    position: "relative",
     "&::before": {
       content: "''",
       paddingBottom: "100%",
