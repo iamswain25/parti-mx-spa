@@ -6,9 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import { FormData } from "../types";
-import { useGlobalState, keys } from "../store/useGlobalState";
-import { Box } from "@material-ui/core";
-import { Link } from "react-router-dom";
+// import { useGlobalState, keys } from "../store/useGlobalState";
+// import { Box } from "@material-ui/core";
+// import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -54,11 +54,11 @@ type LoginFormProps = {
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
   const classes = useStyles();
-  const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  // const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const { handleSubmit, register, errors } = useForm<FormData>();
-  function signupHandler() {
-    setVisible(false);
-  }
+  // function signupHandler() {
+  //   setVisible(false);
+  // }
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -116,12 +116,12 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             로그인
           </Button>
         </form>
-        <Box className={classes.label}>
+        {/* <Box className={classes.label}>
           아직 회원이 아니신가요?
           <Link to={`/signup`} onClick={signupHandler} className={classes.link}>
             회원가입
           </Link>
-        </Box>
+        </Box> */}
       </div>
     </Container>
   );

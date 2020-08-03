@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Login from "../components/Login";
+// import Login from "../components/Login";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../components/Home";
 import RouteBoard from "../components/RouteBoard";
-import Signup from "../components/Signup";
+// import Signup from "../components/Signup";
 import RoutePost from "../components/RoutePost";
 import useParseGroupId from "../components/useParseGroupId";
 import LoginModal from "../components/LoginModal";
@@ -38,8 +38,8 @@ export default function Routes() {
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
             <Route path="/map/:board_id" exact component={RouteMap} />
             <Route path="/home/:board_id" exact component={RouteBoard} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/signup" exact component={Signup} />
+            {/* <Route path="/login" exact component={Login} /> */}
+            {/* <Route path="/signup" exact component={Signup} /> */}
             <PrivateRoute path="/boards" exact component={BoardsSetting} />
             <PrivateRoute path="/members" exact component={MemberSetting} />
             <PrivateRoute path="/members/new" exact component={MemberNew} />
@@ -62,6 +62,9 @@ export default function Routes() {
               <Redirect to="/home" />
             </Route>
           </HeaderRemain>
+          <Route path="*">
+            <Redirect to="/home" />
+          </Route>
         </Switch>
       )}
       <LoginModal />

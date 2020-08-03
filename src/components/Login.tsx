@@ -7,7 +7,13 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 
 export default function Login() {
   const [, setError] = useGlobalState(keys.ERROR);
+  const [, setLoading] = useGlobalState(keys.LOADING);
   useRedirectIfLogin();
+
+  React.useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
+
   const handleForm = async (form: FormData) => {
     const { email, password } = form;
     try {

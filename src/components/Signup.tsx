@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { Button, Typography, Container, Box } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -40,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   link: {
     marginLeft: theme.spacing(1),
     color: "#002bff",
+    cursor: "pointer",
   },
   label: {
     fontSize: 12,
@@ -56,6 +56,10 @@ export default function Signup() {
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setError] = useGlobalState(keys.ERROR);
   const { handleSubmit, register, errors } = useForm<FormData>();
+  const [, setLoginVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  function loginHandler() {
+    setLoginVisible(true);
+  }
   async function formHandler(form: FormData) {
     const { email, password } = form;
     setLoading(true);
@@ -65,6 +69,10 @@ export default function Signup() {
       setError(error.message);
     }
   }
+
+  React.useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
 
   return (
     <div className={classes.paper}>
@@ -127,9 +135,9 @@ export default function Signup() {
         </form>
         <Box className={classes.label}>
           이미 회원이신가요?
-          <Link to={`/login`} className={classes.link}>
+          <span onClick={loginHandler} className={classes.link}>
             로그인
-          </Link>
+          </span>
         </Box>
       </Container>
     </div>
