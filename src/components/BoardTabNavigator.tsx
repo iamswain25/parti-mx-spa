@@ -78,9 +78,16 @@ const useStyles = makeStyles((theme) => {
       right: theme.spacing(2),
     },
     btn: {
-      width: 98,
-      padding: 0,
-      height: 38,
+      display: "flex",
+      alignItems: "center",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+      "& button": {
+        width: 98,
+        padding: 0,
+        height: 38,
+      },
     },
   };
 });
@@ -148,17 +155,16 @@ export default function BoardTabNavigator({
         {["user", "organizer"].includes(userStatus as string) &&
           !isHome?.isExact && (
             <>
-              <Hidden smDown>
+              <div className={classes.btn}>
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={btnHandler}
-                  className={classes.btn}
                 >
                   글쓰기
                 </Button>
-              </Hidden>
-              <Hidden mdUp>
+              </div>
+              <Hidden mdUp implementation="css">
                 <Fab
                   color="primary"
                   aria-label="write"
