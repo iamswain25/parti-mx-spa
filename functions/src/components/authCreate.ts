@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import createHasuraUser from "./createHasuraUser";
 import injectCustomClaim from "./injectCustomClaim";
 
 export default functions
@@ -9,6 +10,7 @@ export default functions
     if (user.disabled) {
       admin.auth().updateUser(user.uid, { disabled: false });
     } else {
-      return injectCustomClaim(user);
+      const userId = await createHasuraUser(user);
+      return injectCustomClaim(user, userId);
     }
   });
