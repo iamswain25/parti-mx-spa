@@ -73,10 +73,14 @@ export default function Comment2({
                     className={classes.button}
                     onClick={() => setEdit(true)}
                   >
-                    댓글수정
+                    수정
                   </Button>
-                  <Button className={classes.button} onClick={remove}>
-                    댓글삭제
+                  <Button
+                    className={classes.button}
+                    onClick={remove}
+                    color="secondary"
+                  >
+                    삭제
                   </Button>
                 </>
               )}
