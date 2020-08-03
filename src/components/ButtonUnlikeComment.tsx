@@ -31,7 +31,7 @@ export default function ButtonUnlikeComment(props: {
   }
 
   return (
-    <Box alignItems="center" display="flex" ml={1} color="primary.main">
+    <Box alignItems="center" display="flex" color="primary.main">
       <Button className={classes.button} onClick={pressHandler}>
         공감취소
       </Button>
