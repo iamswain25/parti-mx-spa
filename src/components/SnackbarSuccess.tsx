@@ -24,7 +24,7 @@ export default function SnackbarSuccess() {
         horizontal: "left",
       }}
       open={true}
-      autoHideDuration={1000}
+      autoHideDuration={3000}
       onClose={handleClose}
       action={
         <React.Fragment>
