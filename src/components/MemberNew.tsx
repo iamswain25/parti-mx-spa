@@ -7,7 +7,7 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { validateEmail } from "../helpers/emailValidator";
-import { functions, secondAuth } from "../config/firebase";
+import { functions, secondAuth, auth } from "../config/firebase";
 import { userGroupStatusList } from "../helpers/options";
 import HeaderBack from "./HeaderBack";
 const authInvite = functions.httpsCallable("authInvite");
@@ -31,9 +31,8 @@ export default function MemberNew() {
   const [{ group_id }] = useStore();
   const [status] = useGlobalState(keys.PERMISSION);
   const [, setError] = useGlobalState(keys.ERROR);
-  const { handleSubmit, register, errors } = useForm<FormType>({
-    defaultValues: { emails: "swain@parti.xyz" },
-  });
+  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const { handleSubmit, register, errors } = useForm<FormType>();
   if (status !== "organizer") {
     return <Redirect to="/" />;
   }
@@ -53,20 +52,26 @@ export default function MemberNew() {
       emails: arr,
       groups: [{ group_id, status }],
     });
-    const registeredEmails = data
-      .filter((u: AuthResult) => u.success)
+    const successed = data.filter((u: AuthResult) => u.success);
+    const existing = data
+      .filter((u: AuthResult) => !u.success)
       .map((u: AuthResult) => u.email);
+    const registeredEmails = successed.map((u: AuthResult) => u.email);
     const actionCodeSettings = {
-      url: "https://spa.parti.mx?group_id=" + group_id,
+      url: "https://youthwagle.kr/home?group_id=" + group_id,
+      handleCodeInApp: true,
     };
-    while (registeredEmails.length) {
+    for (const email of registeredEmails) {
       setError(
         `${data.length}명의 유저를 생성했습니다. 초대 이메일을 보냅니다. ${registeredEmails.length}개 남았습니다.`
       );
-      const email = registeredEmails.shift();
-      await secondAuth.sendPasswordResetEmail(email, actionCodeSettings);
+      await auth.sendPasswordResetEmail(email, actionCodeSettings);
+    }
+    for (const email of existing) {
+      await auth.sendSignInLinkToEmail(email, actionCodeSettings);
     }
     setError(undefined);
+    setSuccess(`${successed.length}개의 이메일 전송을 완료했습니다.`);
   }
 
   return (
