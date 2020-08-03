@@ -85,27 +85,27 @@ export default function MyGroupList(props: {
       );
     })
   );
-  list.push(<Divider key="divider" />);
-  list.push(<ListItem key="label">아래는 가입하지 않은 그룹입니다</ListItem>);
-  list.push(
-    rest?.map((g: Group, i: number) => (
-      <ListItem
-        key={`rest${i}`}
-        button
-        onClick={() => clickHandler(g.id)}
-        selected={g.id === group_id}
-      >
-        <ListItemIcon>
-          <Avatar
-            variant="square"
-            src={g.bg_img_url}
-            children={g.title.substr(0, 1)}
-          />
-        </ListItemIcon>
-        <ListItemText primary={g.title} />
-      </ListItem>
-    ))
-  );
+  // list.push(<Divider key="divider" />);
+  // list.push(<ListItem key="label">아래는 가입하지 않은 그룹입니다</ListItem>);
+  // list.push(
+  //   rest?.map((g: Group, i: number) => (
+  //     <ListItem
+  //       key={`rest${i}`}
+  //       button
+  //       onClick={() => clickHandler(g.id)}
+  //       selected={g.id === group_id}
+  //     >
+  //       <ListItemIcon>
+  //         <Avatar
+  //           variant="square"
+  //           src={g.bg_img_url}
+  //           children={g.title.substr(0, 1)}
+  //         />
+  //       </ListItemIcon>
+  //       <ListItemText primary={g.title} />
+  //     </ListItem>
+  //   ))
+  // );
 
   return (
     <>
