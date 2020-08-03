@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function RouteBoardNotice({ board: b }: { board?: Board }) {
+export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   return (
@@ -42,7 +42,7 @@ export default function RouteBoardNotice({ board: b }: { board?: Board }) {
         >
           <Box display="flex">
             <Typography variant="h4" color="textPrimary">
-              소식
+              {b.title}
             </Typography>
             <Box mr={1} />
             <Typography variant="h4" color="primary">
