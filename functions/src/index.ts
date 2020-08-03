@@ -3,4 +3,5 @@ admin.initializeApp();
 import authCreate from "./components/authCreate";
 import authInvite from "./components/authInvite";
 import authDelete from "./components/authDelete";
-export { authCreate, authDelete, authInvite };
+import closePostAtNight from "./components/closePostAtNight";
+export { authCreate, authDelete, authInvite, closePostAtNight };

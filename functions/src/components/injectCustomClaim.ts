@@ -1,16 +1,7 @@
 // import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { HASURA_GRAPHQL_ENGINE_URL, ADMIN_SECRET } from "../env";
-import fetch from "cross-fetch";
-import ApolloClient, { gql } from "apollo-boost";
-const client = new ApolloClient({
-  fetch,
-  uri: HASURA_GRAPHQL_ENGINE_URL,
-  headers: {
-    "x-hasura-admin-secret": ADMIN_SECRET,
-    "x-hasura-use-backend-only-permissions": "true",
-  },
-});
+import { gql } from "apollo-boost";
+import { client } from "./ApolloClient";
 export default async function injectCustomClaim(
   user: admin.auth.UserRecord,
   groups = [{ group_id: 100, status: "requested" }]
