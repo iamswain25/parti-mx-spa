@@ -37,7 +37,7 @@ export default function ButtonLikeComment(props: {
   }
 
   return (
-    <Box alignItems="center" display="flex" ml={1}>
+    <Box alignItems="center" display="flex">
       <Button className={classes.button} onClick={pressHandler}>
         공감
       </Button>

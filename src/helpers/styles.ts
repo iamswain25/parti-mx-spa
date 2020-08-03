@@ -41,6 +41,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   buttons: {
+    display: "grid",
+    gridAutoFlow: "column",
+    gridGap: theme.spacing(1) + "px",
     [theme.breakpoints.up("md")]: {
       fontSize: 12,
     },

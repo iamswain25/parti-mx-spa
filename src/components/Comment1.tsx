@@ -9,11 +9,15 @@ import ButtonLikeComment from "./ButtonLikeComment";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
 import { useStyles } from "../helpers/styles";
 import { getAttitude } from "../helpers/attitude";
+import CommentEdit from "./CommentEdit";
+import { useStore } from "../store/store";
 export default function Comment1({ comment: c }: { comment: Comment }) {
+  const [{ user_id }] = useStore();
   const classes = useStyles();
   const [isRe, setRe] = React.useState<User | undefined>(undefined);
   const insertHandler = useCommentInsert(() => setRe(undefined));
-
+  const [edit, setEdit] = React.useState<boolean>(false);
+  const isMine = c?.user?.id === user_id;
   return (
     <>
       <Box pt={2}>
@@ -27,27 +31,36 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
         </Grid>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
           <Typography color="primary">{getAttitude(c)}</Typography>
-          {c?.body}
-          <Box
-            className={classes.buttons}
-            color="grey.600"
-            display="flex"
-            mt={1}
-          >
-            <Button className={classes.button} onClick={() => setRe(c?.user)}>
-              댓글달기
-            </Button>
-            {c?.likes?.[0] ? (
-              <ButtonUnlikeComment
-                id={c?.id}
-                count={c?.likes_aggregate?.aggregate?.count}
-              />
-            ) : (
-              <ButtonLikeComment
-                id={c?.id}
-                count={c?.likes_aggregate?.aggregate?.count}
-              />
-            )}
+          {edit ? (
+            <CommentEdit c={c} setEdit={setEdit} />
+          ) : (
+            <Typography>{c?.body}</Typography>
+          )}
+          <Box color="grey.600" display="flex" mt={1}>
+            <div className={classes.buttons}>
+              <Button className={classes.button} onClick={() => setRe(c?.user)}>
+                댓글달기
+              </Button>
+              {c?.likes?.[0] ? (
+                <ButtonUnlikeComment
+                  id={c?.id}
+                  count={c?.likes_aggregate?.aggregate?.count}
+                />
+              ) : (
+                <ButtonLikeComment
+                  id={c?.id}
+                  count={c?.likes_aggregate?.aggregate?.count}
+                />
+              )}
+              {isMine && (
+                <Button
+                  className={classes.button}
+                  onClick={() => setEdit(true)}
+                >
+                  댓글수정
+                </Button>
+              )}
+            </div>
           </Box>
           {(c?.re?.length || 0) > 0 && (
             <Box mt={1}>
