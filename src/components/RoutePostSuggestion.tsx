@@ -55,6 +55,7 @@ export default function RoutePostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
   const daysLeft = calculateDays(p.created_at) ?? 30;
+  const count = p?.users_aggregate?.aggregate?.sum?.like_count ?? 0;
   return (
     <div className={classes.container}>
       <Box mb={1}>
@@ -64,7 +65,7 @@ export default function RoutePostSuggestion({ post: p }: { post: Post }) {
           </Box>
           <Box color="primary.dark" fontWeight={500}>
             <Typography variant="h5">
-              {p.users_aggregate.aggregate.sum.like_count}명 동의 / D{daysLeft}
+              {count}명 동의 / D{daysLeft}
             </Typography>
           </Box>
         </Grid>
