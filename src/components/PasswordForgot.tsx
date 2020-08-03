@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 type FormEmail = { email: string };
 export default function PasswordForgot() {
-  useRedirectIfLogin();
   const classes = useStyles();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setError] = useGlobalState(keys.ERROR);
