@@ -36,7 +36,11 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
-            <Typography>{c?.body || "삭제되었습니다."}</Typography>
+            <Typography>
+              {c?.body || (
+                <Typography color="textSecondary">삭제되었습니다.</Typography>
+              )}
+            </Typography>
           )}
           <Box color="grey.600" display="flex" mt={1}>
             <div className={classes.buttons}>
