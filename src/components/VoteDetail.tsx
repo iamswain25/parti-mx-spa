@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => {
     btn: {
       backgroundColor: theme.palette.primary.light,
       color: theme.palette.primary.dark,
-      borderColor: "#bbe7d6",
+      borderColor: theme.palette.primary.main,
     },
   };
 });

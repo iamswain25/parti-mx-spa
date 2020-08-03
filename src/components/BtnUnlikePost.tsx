@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: -0.33,
     color: theme.palette.primary.dark,
     backgroundColor: theme.palette.primary.light,
-    borderColor: "#bbe7d6", // theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
     borderWidth: 1,
     borderStyle: "solid",
   },

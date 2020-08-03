@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: theme.palette.primary.light,
       borderStyle: "solid",
       borderWidth: 1,
-      borderColor: "#bbe7d6",
+      borderColor: theme.palette.primary.main,
       color: theme.palette.primary.dark,
     },
     btnDark: {
