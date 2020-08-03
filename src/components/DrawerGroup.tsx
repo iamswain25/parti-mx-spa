@@ -6,6 +6,7 @@ import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import { useStore } from "../store/store";
 import MyGroupList from "./MyGroupList";
 import { useHistory } from "react-router-dom";
+import { Grid } from "@material-ui/core";
 const DRAWER_WIDTH = 304;
 const useStyles = makeStyles((theme: Theme) => ({
   menuButton: {
@@ -45,15 +46,17 @@ export default function DrawerGroup() {
 
   return (
     <>
-      <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        edge="start"
-        onClick={handleDrawerOpen}
-        className={classes.menuButton}
-      >
-        <MenuIcon />
-      </IconButton>
+      <Grid container item xs={2} alignItems="center">
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerOpen}
+          className={classes.menuButton}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Grid>
       <Drawer
         variant="temporary"
         anchor={theme.direction === "rtl" ? "right" : "left"}

@@ -9,6 +9,7 @@ import LogoutButton from "./LogoutButton";
 import DrawerGroup from "./DrawerGroup";
 import LoginButton from "./LoginButton";
 import SearchIcon from "@material-ui/icons/Search";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: "none",
   },
   toolbar: {
-    display: "grid",
+    display: "flex",
     gridTemplateColumns: "1fr 3fr 1fr",
     [theme.breakpoints.up("md")]: {
       minHeight: 48,
@@ -43,6 +44,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   logoFont: {
     fontFamily: "Lato",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     fontSize: 20,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -62,28 +66,24 @@ export default function DesktopHeader() {
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
         <DrawerGroup />
-        <Link to="/home" className={classes.logoFont}>
-          와글와글 정책실
-        </Link>
-        <Typography
-          variant="h3"
-          noWrap
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          {user_id ? <LogoutButton /> : <LoginButton />}
-          {user_id && (
-            <Link
-              to="/search"
-              style={{ display: "flex", alignItems: "center", padding: 10 }}
-            >
-              <SearchIcon />
-            </Link>
-          )}
-        </Typography>
+        <Grid item xs={8} className={classes.logoFont}>
+          <Link to="/home?group_id=101">빠띠 믹스</Link>
+        </Grid>
+        <Grid container item xs={2} alignItems="center" justify="flex-end">
+          <Typography variant="h3" noWrap>
+            <Grid container alignItems="center">
+              {user_id ? <LogoutButton /> : <LoginButton />}
+              {user_id && (
+                <Link
+                  to="/search"
+                  style={{ display: "flex", alignItems: "center", padding: 10 }}
+                >
+                  <SearchIcon />
+                </Link>
+              )}
+            </Grid>
+          </Typography>
+        </Grid>
       </Toolbar>
     </AppBar>
   );

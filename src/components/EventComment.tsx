@@ -32,13 +32,6 @@ const useStyles = makeStyles((theme) => {
         },
       },
     },
-    grid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, 190px)",
-      gridGap: theme.spacing(1),
-      [theme.breakpoints.up("md")]: {},
-      [theme.breakpoints.down("sm")]: {},
-    },
   };
 });
 
@@ -100,11 +93,11 @@ export default function EventComment({ post: p }: { post: Post }) {
             <Box my={2}>
               <Divider />
             </Box>
-            <Box className={classes.grid}>
+            <Grid container wrap="wrap" spacing={2}>
               {p.likedUsers?.map((u, i) => (
                 <AvatarNameDate2 key={i} userPost={u} />
               ))}
-            </Box>
+            </Grid>
           </Box>
         )}
       </Box>

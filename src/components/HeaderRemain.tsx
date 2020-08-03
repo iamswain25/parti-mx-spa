@@ -9,7 +9,7 @@ import LogoutButton from "./LogoutButton";
 import DrawerGroup from "./DrawerGroup";
 import LoginButton from "./LoginButton";
 import SearchIcon from "@material-ui/icons/Search";
-import { Hidden } from "@material-ui/core";
+import { Hidden, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -26,13 +26,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   toolbar: {
-    display: "grid",
-    gridTemplateColumns: "1fr 3fr 1fr",
+    display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
   },
   logoFont: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     fontFamily: "Lato",
     fontSize: 20,
     fontWeight: "bold",
@@ -56,23 +58,33 @@ export default function HeaderRemain(props: { children?: any }) {
     <>
       <AppBar position="sticky" className={classes.appBar}>
         <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
-          <DrawerGroup />
-          <Link to="/home" className={classes.logoFont}>
-            와글와글 정책실
-          </Link>
-          <Typography variant="h3" noWrap className={classes.flexend}>
-            <Hidden smDown implementation="css">
-              {user_id ? <LogoutButton /> : <LoginButton />}
-            </Hidden>
-            {user_id && (
-              <Link
-                to="/search"
-                style={{ display: "flex", alignItems: "center", padding: 10 }}
-              >
-                <SearchIcon />
-              </Link>
-            )}
-          </Typography>
+          <Grid container>
+            <DrawerGroup />
+            <Grid item xs={8} className={classes.logoFont}>
+              <Link to="/home">와글와글 정책실</Link>
+            </Grid>
+            <Grid item xs={2} className={classes.flexend}>
+              <Typography variant="h3" noWrap>
+                <Grid container alignItems="center">
+                  <Hidden smDown implementation="css">
+                    {user_id ? <LogoutButton /> : <LoginButton />}
+                  </Hidden>
+                  {user_id && (
+                    <Link
+                      to="/search"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: 10,
+                      }}
+                    >
+                      <SearchIcon />
+                    </Link>
+                  )}
+                </Grid>
+              </Typography>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       {children && isInit && children}

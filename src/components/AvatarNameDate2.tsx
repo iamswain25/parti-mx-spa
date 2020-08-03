@@ -29,7 +29,7 @@ export default function AvatarNameDate2({ userPost }: { userPost: UserPost }) {
     created_at = "로딩중",
   } = userPost;
   return (
-    <Grid className={classes.container}>
+    <Grid item xs={6} sm={4} md={3} className={classes.container}>
       <Box display="flex" alignItems="center" mr={1}>
         <Avatar alt={name} src={photo_url} className={classes.small} />
       </Box>
