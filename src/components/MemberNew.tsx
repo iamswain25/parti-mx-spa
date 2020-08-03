@@ -107,6 +107,7 @@ export default function MemberNew() {
           name="emails"
           variant="outlined"
           fullWidth
+          rowsMax={30}
           placeholder={`noreply1@youthwagle.kr\nnoreply2@youthwagle.kr\nnoreply3@youthwagle.kr\n`}
           inputRef={register({ required: "필수 입력" })}
           label="초대 이메일"
