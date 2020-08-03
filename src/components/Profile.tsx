@@ -11,7 +11,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useStore } from "../store/store";
 import { updateUserName } from "../graphql/mutation";
 import { useHistory } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
@@ -53,7 +53,9 @@ export default function Profile() {
   const [updateName] = useMutation(updateUserName);
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
   const [, setLoading] = useGlobalState(keys.LOADING);
-  const { handleSubmit, register, errors, reset } = useForm<GroupForm>();
+  const { handleSubmit, register, errors, reset, control } = useForm<
+    GroupForm
+  >();
   const { refetch } = useQuery(searchDuplicateNameWithoutMine, {
     fetchPolicy: "network-only",
   });
@@ -101,9 +103,24 @@ export default function Profile() {
             <input type="file" name="bgFiles" ref={register} />
           </>
         )}
-        <TextField
-          label="닉네임"
-          inputRef={register({
+        <Controller
+          control={control}
+          name="username"
+          defaultValue=""
+          as={
+            <TextField
+              label="닉네임"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              autoFocus
+              required
+              error={errors.username ? true : false}
+              helperText={errors.username && errors.username.message}
+            />
+          }
+          rules={{
+            required: "닉네임을 입력해야 합니다.",
             validate: async function (value): Promise<ValidateResult> {
               const res = await refetch({ name: value, id: user_id });
               if (res.data?.mx_users?.length) {
@@ -111,14 +128,7 @@ export default function Profile() {
               }
               return undefined;
             },
-          })}
-          name="username"
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          required={errors.username ? true : false}
-          error={errors.username ? true : false}
-          helperText={errors.username && errors.username.message}
+          }}
         />
       </Container>
       <BtnSubmitDesktop text="수정" />
