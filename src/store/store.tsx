@@ -48,6 +48,7 @@ export const StoreProvider = (props: ComponentProps<any>) => {
           ...initialState,
           ...JSON.parse(storeJSON),
           user_id,
+          group_id: 101,
           isInit: true,
           loading: false,
         });
@@ -58,6 +59,7 @@ export const StoreProvider = (props: ComponentProps<any>) => {
         dispatch({
           type: "CHANGE_ALL",
           ...initialState,
+          group_id: 101,
           isInit: true,
         });
       }

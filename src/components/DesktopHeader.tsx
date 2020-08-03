@@ -62,7 +62,7 @@ export default function DesktopHeader() {
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
         <DrawerGroup />
-        <Link to="/home" className={classes.logoFont}>
+        <Link to="/home?group_id=101" className={classes.logoFont}>
           와글와글 정책실
         </Link>
         <Typography
