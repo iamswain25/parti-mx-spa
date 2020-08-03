@@ -15,8 +15,8 @@ export default function useCommentUpdate(id: number) {
   useErrorEffect(error);
   async function handler(body: string) {
     const res = await mutate({ variables: { id, body } });
-    const board_id = res.data?.update_mx_comments_by_pk.id;
-    if (id) {
+    const comment_id = res.data?.update_mx_comments_by_pk.id;
+    if (comment_id) {
       setSuccess("댓글을 수정했습니다.");
     }
   }
