@@ -59,7 +59,9 @@ export default function HeaderRemain(props: { children?: any }) {
       <AppBar position="sticky" className={classes.appBar}>
         <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
           <Grid container>
-            <DrawerGroup />
+            <Grid container item xs={2} alignItems="center">
+              <DrawerGroup />
+            </Grid>
             <Grid item xs={8} className={classes.logoFont}>
               <Link to="/home">와글와글 정책실</Link>
             </Grid>

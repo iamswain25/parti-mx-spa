@@ -65,7 +65,9 @@ export default function DesktopHeader() {
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
-        <DrawerGroup />
+        <Grid container item xs={2} alignItems="center">
+          <DrawerGroup />
+        </Grid>
         <Grid item xs={8} className={classes.logoFont}>
           <Link to="/home?group_id=101">빠띠 믹스</Link>
         </Grid>
