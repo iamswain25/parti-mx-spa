@@ -392,7 +392,7 @@ export const subsByPostId = gql`
           users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
             status
           }
-          boards {
+          boards(order_by: { id: asc }) {
             id
             type
             title
