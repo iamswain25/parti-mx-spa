@@ -10,7 +10,7 @@ import { validateEmail } from "../helpers/emailValidator";
 import { functions, secondAuth, auth } from "../config/firebase";
 import { userGroupStatusList } from "../helpers/options";
 import HeaderBack from "./HeaderBack";
-const authInvite = functions.httpsCallable("authInvite");
+const authInvite = functions.httpsCallable("authInvite", { timeout: 300000 });
 const useStyles = makeStyles((theme) => ({
   texts: {
     "& textarea": {
