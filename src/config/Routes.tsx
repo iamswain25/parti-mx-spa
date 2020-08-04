@@ -25,9 +25,11 @@ import Profile from "../components/Profile";
 import Search from "../components/Search";
 import HeaderRemain from "../components/HeaderRemain";
 import PasswordForgot from "../components/PasswordForgot";
+import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 
 export default function Routes() {
   useParseGroupId();
+  useSignInWithEmailLink();
   const [{ isInit }] = useStore();
   return (
     <>
