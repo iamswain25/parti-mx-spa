@@ -46,8 +46,12 @@ export default functions
         ?.filter((e: any) => {
           const now = new Date();
           const createdDate = new Date(e.created_at);
-          const days = Number(e.metadata.closingMethod.replace("days", ""));
-          return differenceInDays(now, createdDate) >= days;
+          try {
+            const days = Number(e.metadata.closingMethod.replace("days", ""));
+            return differenceInDays(now, createdDate) >= days;
+          } catch (error) {
+            return true;
+          }
         })
         ?.map((e: any) => {
           return { id: e.id, closed_at: "now()" };
