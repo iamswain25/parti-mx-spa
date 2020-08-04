@@ -10,8 +10,7 @@ async function delay(t: number) {
   });
 }
 const runtimeOpts = {
-  timeoutSeconds: 540,
-  memory: "512MB" as "512MB",
+  timeoutSeconds: 300,
 };
 export default functions
   .region("asia-northeast1")
