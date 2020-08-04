@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Button, Typography, Container } from "@material-ui/core";
-import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => ({
   paper: {
