@@ -6,6 +6,7 @@ import BoardPostNotice from "./BoardPostNotice";
 import { Typography, Grid, Box, Divider, Hidden } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import PostSort from "./PostSort";
+import RouteBoardAnnounce from "./RouteBoardAnnounce";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -84,7 +85,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
                       : false
                   )
                   .map((p, i) => (
-                    <BoardPostNotice key={i} post={p} />
+                    <RouteBoardAnnounce key={i} post={p} />
                   ))}
               </Box>
             </Box>
