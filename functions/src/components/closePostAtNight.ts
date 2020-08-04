@@ -23,8 +23,12 @@ export default functions
             }
           ) {
             id
+            title
             metadata
             created_at
+            created_by
+            updated_by
+            board_id
           }
 
           events: mx_posts(
@@ -35,35 +39,60 @@ export default functions
             }
           ) {
             id
+            title
             metadata
+            created_by
+            updated_by
+            board_id
           }
         }
       `,
     });
-    const objects: any[] = [];
-    objects.concat(
-      suggestionsAndPosts
-        ?.filter((e: any) => {
-          const now = new Date();
-          const createdDate = new Date(e.created_at);
+    let objects: any[] = [];
+    const arrPosts = suggestionsAndPosts
+      ?.filter((e: any) => {
+        const now = new Date();
+        const createdDate = new Date(e.created_at);
+        try {
           const days = Number(e.metadata.closingMethod.replace("days", ""));
-          return differenceInDays(now, createdDate) >= days;
-        })
-        ?.map((e: any) => {
-          return { id: e.id, closed_at: "now()" };
-        })
-    );
-    objects.concat(
-      events
-        ?.filter((e: any) => {
-          const eventDate = new Date(e.metadata.eventDate);
-          const now = new Date();
-          return isAfter(eventDate, now);
-        })
-        ?.map((e: any) => {
-          return { id: e.id, closed_at: "now()" };
-        })
-    );
+          const isClosingTime = differenceInDays(now, createdDate) >= days;
+          return isClosingTime;
+        } catch (error) {
+          return true;
+        }
+      })
+      ?.map((e: any) => {
+        const { id, created_by, updated_by, title, board_id } = e;
+        return {
+          id,
+          closed_at: "now()",
+          created_by,
+          updated_by,
+          title,
+          board_id,
+        };
+      });
+    const arrEvent = events
+      ?.filter((e: any) => {
+        const eventDate = new Date(e.metadata.eventDate);
+        const now = new Date();
+        const isClosingTime = isAfter(now, eventDate);
+        return isClosingTime;
+      })
+      ?.map((e: any) => {
+        const { id, created_by, updated_by, title, board_id } = e;
+        return {
+          id,
+          closed_at: "now()",
+          created_by,
+          updated_by,
+          title,
+          board_id,
+        };
+      });
+
+    objects = objects.concat(arrPosts);
+    objects = objects.concat(arrEvent);
     let affected_rows = 0;
     if (objects.length) {
       const { data } = await client.mutate<{
