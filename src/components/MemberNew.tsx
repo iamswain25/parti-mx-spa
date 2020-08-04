@@ -48,46 +48,50 @@ export default function MemberNew() {
     //   );
     // }
     setError(`${arr.length}명의 유저를 생성 중입니다.`);
-    const { data } = await authInvite({
-      emails: arr,
-      groups: [{ group_id, status }],
-    });
-    const successed = data.filter((u: AuthResult) => u.success);
-    const existing = data
-      .filter((u: AuthResult) => !u.success)
-      .map((u: AuthResult) => u.email);
-    const registeredEmails = successed.map((u: AuthResult) => u.email);
-    const actionCodeSettings = {
-      url: "https://youthwagle.kr/home?group_id=" + group_id,
-      handleCodeInApp: true,
-    };
-    let i = 0;
-    for (const email of registeredEmails) {
-      i++;
-      setError(
-        `${data.length}명의 유저를 생성했습니다. ${i}개의 초대 이메일을 보냈습니다.`
-      );
-      await auth.sendPasswordResetEmail(email, actionCodeSettings);
-    }
-    if (existing.length) {
+    try {
+      const { data } = await authInvite({
+        emails: arr,
+        groups: [{ group_id, status }],
+      });
+      const successed = data.filter((u: AuthResult) => u.success);
+      const existing = data
+        .filter((u: AuthResult) => !u.success)
+        .map((u: AuthResult) => u.email);
+      const registeredEmails = successed.map((u: AuthResult) => u.email);
+      const actionCodeSettings = {
+        url: "https://youthwagle.kr/home?group_id=" + group_id,
+        handleCodeInApp: true,
+      };
       let i = 0;
-      setError("이미 가입된 유저: \n" + existing.join("\n"));
-      if (
-        window.confirm(
-          `이미 가입된 유저 ${existing.length}명 에게 로그인 링크 이메일을 전송하시겠습니까?`
-        )
-      ) {
-        for (const email of existing) {
-          i++;
-          setError(
-            `${existing.length}명의 이미 가입된 유저가 있습니다. ${i}개의 로그인 링크 이메일을 보냅니다.`
-          );
-          await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+      for (const email of registeredEmails) {
+        i++;
+        setError(
+          `${data.length}명의 유저를 생성했습니다. ${i}개의 초대 이메일을 보냈습니다.`
+        );
+        await auth.sendPasswordResetEmail(email, actionCodeSettings);
+      }
+      if (existing.length) {
+        let i = 0;
+        setError("이미 가입된 유저: \n" + existing.join("\n"));
+        if (
+          window.confirm(
+            `이미 가입된 유저 ${existing.length}명 에게 로그인 링크 이메일을 전송하시겠습니까?`
+          )
+        ) {
+          for (const email of existing) {
+            i++;
+            setError(
+              `${existing.length}명의 이미 가입된 유저가 있습니다. ${i}개의 로그인 링크 이메일을 보냅니다.`
+            );
+            await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+          }
         }
       }
+      setError(undefined);
+      setSuccess(`이메일 전송을 완료했습니다.`);
+    } catch (error) {
+      setError(error.message);
     }
-    setError(undefined);
-    setSuccess(`이메일 전송을 완료했습니다.`);
   }
 
   return (
