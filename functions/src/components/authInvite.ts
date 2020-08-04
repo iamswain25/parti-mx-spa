@@ -28,11 +28,11 @@ export default functions
           });
           const userId = await createHasuraUser(user, groups);
           await injectCustomClaim(user, userId);
-          users.push({ email, success: true });
+          return { email, success: true };
         } catch (error) {
           const user = await auth.getUserByEmail(email);
           if (user.customClaims?.["https://hasura.io/jwt/claims"]) {
-            users.push({ error, email, success: false });
+            return { error, email, success: false };
           } else {
             let userId;
             userId = await getHasuraUser(user);
@@ -41,7 +41,7 @@ export default functions
             }
             await injectCustomClaim(user, userId);
             await auth.updateUser(user.uid, { disabled: false });
-            users.push({ email, success: true });
+            return { email, success: true };
           }
         }
       })
