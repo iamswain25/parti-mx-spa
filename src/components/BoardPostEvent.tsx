@@ -69,7 +69,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     place = p.metadata.place;
     deadline = getEventDate3(p.metadata.deadline);
   }
-  const firstImage = p.images?.[0].uri;
+  const firstImage = p.images?.[0]?.uri;
   const attending = !!p.meLiked?.[0]?.like_count;
   return (
     <div className={classes.container}>
