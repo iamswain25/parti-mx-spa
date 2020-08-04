@@ -18,7 +18,7 @@ export default functions
   .https.onCall(async ({ emails, groups }) => {
     const users = await Promise.all(
       emails.map(async (email: string, i: number) => {
-        await delay(i * 100);
+        await delay(i * 150);
         try {
           const user = await auth.createUser({
             email,
