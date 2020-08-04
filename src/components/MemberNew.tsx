@@ -57,47 +57,49 @@ export default function MemberNew() {
       const existing = data
         .filter((u: AuthResult) => !u.success)
         .map((u: AuthResult) => u.email);
-      const registeredEmails = successed.map((u: AuthResult) => u.email);
+      const registeredEmails = successed.map(
+        (u: AuthResult) => u.email as string
+      );
       const actionCodeSettings = {
         url: "https://youthwagle.kr/home?group_id=" + group_id,
         handleCodeInApp: true,
       };
-      let i = 0;
-      for (const email of registeredEmails) {
-        i++;
-        setError(
-          `${data.length}명의 유저를 생성했습니다. ${i}개의 초대 이메일을 보냈습니다.`
-        );
-        await auth.sendPasswordResetEmail(email, actionCodeSettings);
-      }
+      setError(
+        `${data.length}명의 유저를 생성했습니다. 초대 이메일을 보냅니다.`
+      );
+      await Promise.all(
+        registeredEmails.map((email: string) =>
+          auth.sendPasswordResetEmail(email, actionCodeSettings)
+        )
+      );
       if (existing.length) {
-        let i = 0;
-        setError("이미 가입된 유저: \n" + existing.join("\n"));
         if (
           window.confirm(
             `이미 가입된 유저 ${existing.length}명 에게 로그인 링크 이메일을 전송하시겠습니까?`
           )
         ) {
-          for (const email of existing) {
-            i++;
-            setError(
-              `${existing.length}명의 이미 가입된 유저가 있습니다. ${i}개의 로그인 링크 이메일을 보냅니다.`
-            );
-            await auth.sendSignInLinkToEmail(email, actionCodeSettings);
-          }
+          setError(
+            `${existing.length}명의 이미 가입된 유저에게 비밀번호 변경 이메일을 보냅니다.`
+          );
+          await Promise.all(
+            existing.map((email: string) =>
+              auth.sendSignInLinkToEmail(email, actionCodeSettings)
+            )
+          );
         } else {
           if (
             window.confirm(
               `이미 가입된 유저 ${existing.length}명 에게 비밀번호 변경 이메일을 전송하시겠습니까?`
             )
           ) {
-            for (const email of existing) {
-              i++;
-              setError(
-                `${existing.length}명의 이미 가입된 유저가 있습니다. ${i}개의 비밀번호 변경 이메일을 보냅니다.`
-              );
-              await auth.sendPasswordResetEmail(email, actionCodeSettings);
-            }
+            setError(
+              `${existing.length}명의 이미 가입된 유저에게 비밀번호 변경 이메일을 보냅니다.`
+            );
+            await Promise.all(
+              existing.map((email: string) =>
+                auth.sendPasswordResetEmail(email, actionCodeSettings)
+              )
+            );
           }
         }
       }
