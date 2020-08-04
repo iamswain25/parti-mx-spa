@@ -218,10 +218,10 @@ export const createNewGroup = gql`
         users: { data: { status: "organizer" } }
         boards: {
           data: [
-            { title: "제안", body: "제안입니다", type: "suggestion" }
-            { title: "소식", body: "소식입니다", type: "notice" }
-            { title: "투표", body: "투표입니다", type: "vote" }
-            { title: "모임", body: "모임입니다", type: "event" }
+            { title: "소식", body: "소식입니다", type: "notice", order: 1 }
+            { title: "모임", body: "모임입니다", type: "event", order: 4 }
+            { title: "제안", body: "제안입니다", type: "suggestion", order: 2 }
+            { title: "투표", body: "투표입니다", type: "vote", order: 3 }
           ]
         }
       }
@@ -247,7 +247,7 @@ export const updateBoards = gql`
       objects: $boards
       on_conflict: {
         constraint: boards_pkey
-        update_columns: [body, title, permission]
+        update_columns: [body, title, permission, order]
       }
     ) {
       affected_rows

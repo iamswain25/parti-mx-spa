@@ -49,9 +49,10 @@ export const queryBoardsByGroupId = gql`
       users(where: { user_id: { _eq: $user_id } }) {
         status
       }
-      boards(order_by: { id: asc }) {
+      boards(order_by: { order: asc_nulls_last }) {
         id
         type
+        order
         title
         body
         permission
@@ -221,9 +222,10 @@ export const getBoardsByGroupId = gql`
     mx_groups_by_pk(id: $group_id) {
       id
       title
-      boards(order_by: { id: asc }) {
+      boards(order_by: { order: asc_nulls_last }) {
         id
         title
+        order
         body
         permission
       }
