@@ -61,17 +61,33 @@ export default function MemberNew() {
       url: "https://youthwagle.kr/home?group_id=" + group_id,
       handleCodeInApp: true,
     };
+    let i = 0;
     for (const email of registeredEmails) {
+      i++;
       setError(
-        `${data.length}명의 유저를 생성했습니다. 초대 이메일을 보냅니다. ${registeredEmails.length}개 남았습니다.`
+        `${data.length}명의 유저를 생성했습니다. ${i}개의 초대 이메일을 보냈습니다.`
       );
       await auth.sendPasswordResetEmail(email, actionCodeSettings);
     }
-    for (const email of existing) {
-      await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+    if (existing.length) {
+      let i = 0;
+      setError("이미 가입된 유저: \n" + existing.join("\n"));
+      if (
+        window.confirm(
+          `이미 가입된 유저 ${existing.length}명 에게 로그인 링크 이메일을 전송하시겠습니까?`
+        )
+      ) {
+        for (const email of existing) {
+          i++;
+          setError(
+            `${existing.length}명의 이미 가입된 유저가 있습니다. ${i}개의 로그인 링크 이메일을 보냅니다.`
+          );
+          await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+        }
+      }
     }
     setError(undefined);
-    setSuccess(`${successed.length}개의 이메일 전송을 완료했습니다.`);
+    setSuccess(`이메일 전송을 완료했습니다.`);
   }
 
   return (
