@@ -65,13 +65,20 @@ export default function DesktopHeader() {
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
-        <Grid container item xs={2} alignItems="center">
+        <Grid container item xs={3} md={2} alignItems="center">
           <DrawerGroup />
         </Grid>
         <Grid item xs={8} className={classes.logoFont}>
           <Link to="/home?group_id=101">Parti Mix</Link>
         </Grid>
-        <Grid container item xs={2} alignItems="center" justify="flex-end">
+        <Grid
+          container
+          item
+          xs={9}
+          md={2}
+          alignItems="center"
+          justify="flex-end"
+        >
           <Typography variant="h3" noWrap>
             <Grid container alignItems="center">
               {user_id ? <LogoutButton /> : <LoginButton />}
