@@ -63,7 +63,7 @@ export default function HeaderRemain(props: { children?: any }) {
               <DrawerGroup />
             </Grid>
             <Grid item xs={8} className={classes.logoFont}>
-              <Link to="/home">와글와글 정책실</Link>
+              <Link to="/home">Parti Mix</Link>
             </Grid>
             <Grid item xs={2} className={classes.flexend}>
               <Typography variant="h3" noWrap>

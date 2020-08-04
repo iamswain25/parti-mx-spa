@@ -69,7 +69,7 @@ export default function DesktopHeader() {
           <DrawerGroup />
         </Grid>
         <Grid item xs={8} className={classes.logoFont}>
-          <Link to="/home?group_id=101">빠띠 믹스</Link>
+          <Link to="/home?group_id=101">Parti Mix</Link>
         </Grid>
         <Grid container item xs={2} alignItems="center" justify="flex-end">
           <Typography variant="h3" noWrap>
