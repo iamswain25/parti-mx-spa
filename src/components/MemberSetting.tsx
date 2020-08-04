@@ -10,12 +10,10 @@ import {
   List,
 } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
-import { useDebounce } from "use-debounce";
-import { useQuery } from "@apollo/client";
+import { useDebouncedCallback, useDebounce } from "use-debounce";
+import { useApolloClient } from "@apollo/client";
 import { searchMembers } from "../graphql/query";
 import { useStore } from "../store/store";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
 import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
@@ -26,6 +24,7 @@ import { UserGroup } from "../types";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import UserGroupAdmit from "./UserGroupAdmit";
 import HeaderBack from "./HeaderBack";
+import InfiniteScroll from "react-infinite-scroll-component";
 const useStyles = makeStyles((theme) => ({
   top: {
     height: theme.mixins.toolbar.minHeight,
@@ -50,29 +49,48 @@ const useStyles = makeStyles((theme) => ({
 interface UserGroups {
   mx_users_group: UserGroup[];
 }
+const LIMIT = 20;
 export default function MemberSetting() {
   const classes = useStyles();
   const [{ group_id }] = useStore();
   const [keyword, setKeyword] = React.useState("");
-  const [debouncedKeyword] = useDebounce(`%${keyword}%`, 500);
+  const [items, setItems] = React.useState<UserGroup[]>([]);
+  const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
   const [status] = useGlobalState(keys.PERMISSION);
-  const { data, loading, error, refetch } = useQuery<UserGroups>(
-    searchMembers,
-    {
-      variables: { keyword: debouncedKeyword, group_id },
-      fetchPolicy: "network-only",
+  const client = useApolloClient();
+  const setStatus = useSetStatus(fetchData);
+
+  React.useEffect(() => {
+    if (debouncedKeyword) {
+      fetchData(true);
+    } else {
+      fetchData();
     }
-  );
-  const setStatus = useSetStatus(refetch);
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-  if (loading) {
-    return null;
-  }
+  }, [debouncedKeyword]);
   if (status !== "organizer") {
     return <Redirect to="/" />;
   }
-  const list = data?.mx_users_group;
+  function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setKeyword(e.target.value);
+  }
+  async function fetchData(isSearching = false) {
+    const usergroups = await client.query<UserGroups>({
+      query: searchMembers,
+      variables: {
+        keyword: debouncedKeyword,
+        group_id,
+        limit: LIMIT,
+        offset: isSearching ? 0 : items.length,
+      },
+      fetchPolicy: "network-only",
+    });
+    console.log(usergroups.data?.mx_users_group);
+    if (isSearching) {
+      setItems(usergroups.data?.mx_users_group || []);
+    } else {
+      setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
+    }
+  }
 
   return (
     <Container component="main">
@@ -88,7 +106,7 @@ export default function MemberSetting() {
         <OutlinedInput
           fullWidth
           value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          onChange={changeHandler}
           startAdornment={
             <InputAdornment position="start">
               <SearchIcon />
@@ -105,18 +123,32 @@ export default function MemberSetting() {
           }
         />
         <List className={classes.list}>
-          {list?.map((l, i) => {
-            return (
-              <ListItem key={i}>
-                <AvatarNameEmail user={l.user} />
-                {l.status === "requested" ? (
-                  <UserGroupAdmit userGroup={l} update={setStatus} />
-                ) : (
-                  <UserGroupStatus userGroup={l} update={setStatus} />
-                )}
-              </ListItem>
-            );
-          })}
+          <InfiniteScroll
+            dataLength={items.length} //This is important field to render the next data
+            next={fetchData}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>여기가 끝입니다.</b>
+              </p>
+            }
+          >
+            {items?.length
+              ? items?.map((l, i) => {
+                  return (
+                    <ListItem key={i}>
+                      <AvatarNameEmail user={l.user} />
+                      {l.status === "requested" ? (
+                        <UserGroupAdmit userGroup={l} update={setStatus} />
+                      ) : (
+                        <UserGroupStatus userGroup={l} update={setStatus} />
+                      )}
+                    </ListItem>
+                  );
+                })
+              : ["검색 결과가 없습니다."]}
+          </InfiniteScroll>
         </List>
       </Typography>
     </Container>
