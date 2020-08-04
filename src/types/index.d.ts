@@ -37,6 +37,7 @@ export type BoardPermission = "member" | "all" | "observer";
 export type Board = {
   id: number;
   title: string;
+  order: number;
   body: string;
   slug: string;
   permission: BoardPermission;

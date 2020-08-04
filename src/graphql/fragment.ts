@@ -137,9 +137,10 @@ export const groups = gql`
         count
       }
     }
-    boards {
+    boards(order_by: { order: asc_nulls_last }) {
       id
       type
+      order
       title
       body
       permission

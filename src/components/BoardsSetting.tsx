@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "center",
     },
   },
-  btn: {
-    // marginTop: theme.spacing(5),
-  },
   ml: {
     marginLeft: theme.spacing(2),
   },
@@ -46,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const deletingIds: number[] = [];
 interface BoardsForm {
-  boards: Array<{ id: number; body: string; title: string }>;
+  boards: Array<{ id: number; body: string; title: string; order: number }>;
 }
 export default function BoardsSetting() {
   const classes = useStyles();
@@ -130,6 +127,20 @@ export default function BoardsSetting() {
                     <option value="vote">투표</option>
                   </Select>
                 </FormControl>
+                <CustomTextField
+                  type="number"
+                  label="게시판 순서"
+                  fullWidth={false}
+                  name={`boards[${i}].order`}
+                  defaultValue={field.order}
+                  inputRef={register({
+                    required: "필수 입력",
+                    min: 0,
+                  })}
+                  error={!!errors?.boards?.[i]?.order}
+                  required={true}
+                  helperText={errors?.boards?.[i]?.order?.message}
+                />
                 <Controller
                   name={`boards[${i}].id`}
                   control={control}
@@ -193,10 +204,7 @@ export default function BoardsSetting() {
             );
           })}
         </Typography>
-        <Button
-          className={classes.btn}
-          onClick={() => append({ title: "", body: "" })}
-        >
+        <Button onClick={() => append({ title: "", body: "" })}>
           <AddIcon />
           게시판 추가
         </Button>
