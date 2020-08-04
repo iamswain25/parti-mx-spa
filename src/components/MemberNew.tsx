@@ -85,6 +85,20 @@ export default function MemberNew() {
             );
             await auth.sendSignInLinkToEmail(email, actionCodeSettings);
           }
+        } else {
+          if (
+            window.confirm(
+              `이미 가입된 유저 ${existing.length}명 에게 비밀번호 변경 이메일을 전송하시겠습니까?`
+            )
+          ) {
+            for (const email of existing) {
+              i++;
+              setError(
+                `${existing.length}명의 이미 가입된 유저가 있습니다. ${i}개의 비밀번호 변경 이메일을 보냅니다.`
+              );
+              await auth.sendPasswordResetEmail(email, actionCodeSettings);
+            }
+          }
         }
       }
       setError(undefined);
