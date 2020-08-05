@@ -29,10 +29,9 @@ export default function ImagesWidth100({ images = [] }: { images: Image[] }) {
       {images?.map((p, i) => {
         return (
           <IconButton
-            disableRipple
             key={i}
             onClick={() => setVisible(i)}
-            style={{ padding: 0 }}
+            style={{ padding: 0, borderRadius: 0 }}
           >
             <Img src={p.uri} />
           </IconButton>
