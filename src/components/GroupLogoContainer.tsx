@@ -7,7 +7,8 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
-import publicsphere from "../assets/images/publicsphere.jpg";
+import desktopImg from "../assets/images/desktop.png";
+import mobileImg from "../assets/images/mobile.png";
 import { Link } from "react-router-dom";
 import { Grid, Button, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
@@ -142,16 +143,10 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
         <Hidden mdUp implementation="css">
-          <img
-            src={mb_img_url ?? bg_img_url ?? publicsphere}
-            alt="group logo"
-          />
+          <img src={mb_img_url ?? desktopImg} alt="group logo" />
         </Hidden>
         <Hidden smDown implementation="css">
-          <img
-            src={bg_img_url ?? mb_img_url ?? publicsphere}
-            alt="group logo"
-          />
+          <img src={bg_img_url ?? mobileImg} alt="group logo" />
         </Hidden>
         <div className={classes.groupLogoOverlay}>
           <Typography variant="h1" color="inherit">
