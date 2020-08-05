@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: -0.55,
     color: "#212121",
     textAlign: "center",
+  },
+  labelContainer: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
@@ -116,26 +118,28 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             로그인
           </Button>
         </form>
-        <Box className={classes.label}>
-          아직 회원이 아니신가요?
-          <Link
-            to={`/signup`}
-            onClick={closeLoginModal}
-            className={classes.link}
-          >
-            회원가입
-          </Link>
-        </Box>
-        <Box className={classes.label}>
-          비밀번호를 잊으셨나요?
-          <Link
-            to={`/forgot`}
-            onClick={closeLoginModal}
-            className={classes.link}
-          >
-            비밀번호 찾기
-          </Link>
-        </Box>
+        <div className={classes.labelContainer}>
+          <Box className={classes.label}>
+            아직 회원이 아니신가요?
+            <Link
+              to={`/signup`}
+              onClick={closeLoginModal}
+              className={classes.link}
+            >
+              회원가입
+            </Link>
+          </Box>
+          <Box className={classes.label}>
+            비밀번호를 잊으셨나요?
+            <Link
+              to={`/forgot`}
+              onClick={closeLoginModal}
+              className={classes.link}
+            >
+              비밀번호 찾기
+            </Link>
+          </Box>
+        </div>
       </div>
     </Container>
   );
