@@ -10,7 +10,7 @@ import {
   List,
 } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
-import { useDebouncedCallback, useDebounce } from "use-debounce";
+import { useDebounce } from "use-debounce";
 import { useApolloClient } from "@apollo/client";
 import { searchMembers } from "../graphql/query";
 import { useStore } from "../store/store";
@@ -58,6 +58,28 @@ export default function MemberSetting() {
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
   const [status] = useGlobalState(keys.PERMISSION);
   const client = useApolloClient();
+
+  const fetchData = React.useCallback(
+    async function (isSearching = false) {
+      const usergroups = await client.query<UserGroups>({
+        query: searchMembers,
+        variables: {
+          keyword: debouncedKeyword,
+          group_id,
+          limit: LIMIT,
+          offset: isSearching ? 0 : items.length,
+        },
+        fetchPolicy: "network-only",
+      });
+      if (isSearching) {
+        setItems(usergroups.data?.mx_users_group || []);
+      } else {
+        setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
+      }
+    },
+    [items, setItems, client, debouncedKeyword, group_id]
+  );
+
   const setStatus = useSetStatus(fetchData);
 
   React.useEffect(() => {
@@ -66,30 +88,12 @@ export default function MemberSetting() {
     } else {
       fetchData();
     }
-  }, [debouncedKeyword]);
+  }, [debouncedKeyword, fetchData]);
   if (status !== "organizer") {
     return <Redirect to="/" />;
   }
   function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     setKeyword(e.target.value);
-  }
-  async function fetchData(isSearching = false) {
-    const usergroups = await client.query<UserGroups>({
-      query: searchMembers,
-      variables: {
-        keyword: debouncedKeyword,
-        group_id,
-        limit: LIMIT,
-        offset: isSearching ? 0 : items.length,
-      },
-      fetchPolicy: "network-only",
-    });
-    console.log(usergroups.data?.mx_users_group);
-    if (isSearching) {
-      setItems(usergroups.data?.mx_users_group || []);
-    } else {
-      setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
-    }
   }
 
   return (

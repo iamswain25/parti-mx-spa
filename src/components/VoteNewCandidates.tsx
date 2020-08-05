@@ -25,7 +25,6 @@ export default function VoteNewCandidates({
     control,
     getValues,
     clearErrors,
-    unregister,
   } = formControl as UseFormMethods<VoteFormdata>;
   const classes = useStyles();
   const { fields, append, remove } = useFieldArray({
@@ -50,7 +49,7 @@ export default function VoteNewCandidates({
     if (isBinary) {
       clearErrors("candidates");
     }
-  }, [isBinary]);
+  }, [isBinary, clearErrors]);
   const wasBinary = React.useRef(false);
   function validate(value: string) {
     if (!wasBinary.current && !value) {
