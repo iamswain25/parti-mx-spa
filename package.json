@@ -55,8 +55,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "firebase deploy --only hosting",
-    "bd": "react-scripts build && firebase deploy --only hosting",
+    "deploy": "firebase deploy --only hosting --project seoul-city-architecture",
+    "bd": "react-scripts build && firebase deploy --only hosting --project seoul-city-architecture",
     "firelogin": "firebase login --reauth",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
