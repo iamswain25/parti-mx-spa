@@ -137,7 +137,7 @@ export default function MemberSetting() {
             {items?.length
               ? items?.map((l, i) => {
                   return (
-                    <ListItem key={i}>
+                    <ListItem key={l.user_id}>
                       <AvatarNameEmail user={l.user} />
                       {l.status === "requested" ? (
                         <UserGroupAdmit userGroup={l} update={setStatus} />
