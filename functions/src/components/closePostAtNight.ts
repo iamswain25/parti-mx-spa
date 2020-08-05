@@ -3,7 +3,7 @@ import { gql } from "apollo-boost";
 import { client } from "./ApolloClient";
 import { differenceInDays, isAfter } from "date-fns";
 export default functions
-  .region("asia-northeast1")
+  .region("asia-northeast3")
   .https.onRequest(async (req, res) => {
     const {
       data: { events = [], suggestionsAndPosts = [] },
