@@ -13,7 +13,7 @@ const runtimeOpts = {
   timeoutSeconds: 300,
 };
 export default functions
-  .region("asia-northeast1")
+  .region("asia-northeast3")
   .runWith(runtimeOpts)
   .https.onCall(async ({ emails, groups }) => {
     const users = await Promise.all(

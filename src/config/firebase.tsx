@@ -96,4 +96,4 @@ export async function inviteNewUser(email: string, password: string) {
   const token = await newUserCredential.user.getIdToken();
   return [token] as [string];
 }
-export const functions = firebase.app().functions("asia-northeast1");
+export const functions = firebase.app().functions("asia-northeast3");
