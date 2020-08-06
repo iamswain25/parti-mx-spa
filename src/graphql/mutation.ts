@@ -32,6 +32,7 @@ export const insertPost = gql`
     $images: jsonb
     $files: jsonb
     $location: geography
+    $tags: jsonb
   ) {
     insert_mx_posts_one(
       object: {
@@ -43,6 +44,7 @@ export const insertPost = gql`
         images: $images
         files: $files
         location: $location
+        tags: $tags
       }
     ) {
       id
@@ -72,6 +74,7 @@ export const updatePost = gql`
     $images: jsonb
     $files: jsonb
     $location: geography
+    $tags: jsonb
   ) {
     update_mx_posts(
       where: { id: { _eq: $id } }
@@ -82,6 +85,7 @@ export const updatePost = gql`
         images: $images
         files: $files
         location: $location
+        tags: $tags
       }
       _append: { metadata: $metadata }
     ) {

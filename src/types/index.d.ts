@@ -2,6 +2,10 @@ export type FormData = {
   email: string;
   password: string;
 };
+export interface ChipData {
+  selected: boolean;
+  label: string;
+}
 export interface NoticeFormdata {
   title: string;
   body: string;
@@ -161,6 +165,7 @@ export type Post = {
   created_at: string;
   updated_at: string;
   location: { type: "Point"; coordinates: [number, number] };
+  tags: string[];
   users_aggregate: {
     aggregate: {
       sum: {

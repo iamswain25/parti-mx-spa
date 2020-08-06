@@ -3,16 +3,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Chip, TextField, FormControl } from "@material-ui/core";
 import { UseFormMethods, Controller } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
-const names = [
-  "publicspace",
-  "공공공간",
-  "community",
-  "커뮤니티",
-  "history",
-  "역사",
-  "density",
-  "밀도",
-];
+import { defaultHashtags } from "../helpers/options";
 
 export default function Hashtags(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
@@ -27,7 +18,7 @@ export default function Hashtags(props: {
         render={({ onChange, ...props }) => (
           <Autocomplete
             multiple
-            options={names}
+            options={defaultHashtags}
             freeSolo
             renderTags={(value: string[], getTagProps) =>
               value.map((option: string, index: number) => (

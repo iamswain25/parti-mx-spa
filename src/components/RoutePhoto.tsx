@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
-import { PageBoard } from "../types";
+import { PageBoard, Post } from "../types";
 import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
@@ -18,12 +18,18 @@ import { Img } from "react-image";
 import PinDropIcon from "@material-ui/icons/PinDrop";
 import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
-
+import Chips from "./Chips";
+import { defaultHashtags } from "../helpers/options";
+import { ChipData } from "../types";
 export default function RoutePhoto() {
   const { board_id } = useParams();
   const [{ user_id }] = useStore();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
+  const [chipData, setChipData] = React.useState<ChipData[]>(
+    defaultHashtags.map((c) => ({ label: c, selected: false }))
+  );
+  const [posts, setPosts] = React.useState<Post[] | undefined>(undefined);
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
     variables: {
       board_id,
@@ -36,6 +42,21 @@ export default function RoutePhoto() {
   useErrorEffect(error);
   const [isDesktop] = useDesktop();
   const board = data?.mx_boards_by_pk;
+  React.useEffect(() => {
+    if (board?.posts) {
+      const selectedTags = chipData
+        .filter((c) => c.selected)
+        .map((c) => c.label);
+      if (!selectedTags.length) {
+        setPosts(board?.posts);
+      } else {
+        const selectedPosts = board?.posts.filter((p) =>
+          selectedTags.every((t) => p.tags?.includes(t))
+        );
+        setPosts(selectedPosts);
+      }
+    }
+  }, [board, chipData]);
   usePermEffect(board?.group?.users?.[0]?.status);
   if (loading) {
     return null;
@@ -49,6 +70,7 @@ export default function RoutePhoto() {
       <Box mt={isDesktop ? 3 : 0} />
       <BoardTabNavigator group={group} />
       <section className={classes.container}>
+        <Chips chips={chipData} setChips={setChipData} />
         <Grid
           container
           justify="space-between"
@@ -57,11 +79,11 @@ export default function RoutePhoto() {
         >
           <Box display="flex">
             <Typography variant="h4" color="textPrimary">
-              제안
+              {b.title}
             </Typography>
             <Box mr={1} />
             <Typography variant="h4" color="primary">
-              {b?.posts_aggregate?.aggregate?.count}
+              {posts?.length ?? 0}
             </Typography>
           </Box>
           <Box display="flex">
@@ -82,8 +104,9 @@ export default function RoutePhoto() {
             </NavLink>
           </Box>
         </Grid>
+
         <Box className={classes.photoGrid}>
-          {b?.posts?.map((p, i) => (
+          {posts?.map((p, i) => (
             <NavLink
               key={i}
               className={classes.aspectRatio}

@@ -66,7 +66,8 @@ export const queryByBoardId = gql`
     $user_id: Int
     $isAnonymous: Boolean!
     $sort: [mx_posts_order_by!]
-  ) {
+  ) # $tags: [String!]
+  {
     mx_boards_by_pk(id: $board_id) {
       id
       title
@@ -93,7 +94,8 @@ export const queryByBoardId = gql`
           count
         }
       }
-      posts(order_by: $sort) {
+      posts(order_by: $sort) # , where: { tags: { _has_keys_any: $tags } }
+      {
         ...posts
         candidates {
           ...candidates

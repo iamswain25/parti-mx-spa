@@ -382,6 +382,8 @@ export const subsByPostId = gql`
       images
       files
       closed_at
+      tags
+      location
       board {
         id
         title

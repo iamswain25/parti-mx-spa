@@ -51,6 +51,7 @@ export const posts = gql`
     updated_at
     images
     location
+    tags
     board {
       id
       type
