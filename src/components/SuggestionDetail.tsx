@@ -7,6 +7,8 @@ import {
   makeStyles,
   Avatar,
   Hidden,
+  Paper,
+  Chip,
 } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
@@ -89,6 +91,21 @@ const useStyles = makeStyles((theme) => {
       color: colors.emerald,
       marginRight: theme.spacing(0.5),
     },
+    chips: {
+      display: "flex",
+      flexWrap: "wrap",
+      listStyle: "none",
+      paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0.5),
+      paddingLeft: -2,
+      margin: 0,
+      fontFamily: "Roboto",
+    },
+    chip: {
+      margin: theme.spacing(0.5),
+      color: theme.palette.text.primary,
+      borderColor: theme.palette.divider,
+    },
   };
 });
 function aTag(decoratedHref: string, decoratedText: string, key: number) {
@@ -99,7 +116,15 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { body, images = [], createdBy, created_at, context, files = [] } = p;
+  const {
+    body,
+    images = [],
+    createdBy,
+    created_at,
+    context,
+    files = [],
+    tags,
+  } = p;
   const metadata = p.metadata as SuggestionMetadata;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const closingAt = React.useMemo(() => {
@@ -156,6 +181,22 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             </Box>
           </Grid>
         </Box>
+        {tags && (
+          <Paper component="ul" className={classes.chips} elevation={0}>
+            {tags.map((chip) => {
+              return (
+                <li key={chip}>
+                  <Chip
+                    variant="outlined"
+                    label={chip}
+                    className={classes.chip}
+                  />
+                </li>
+              );
+            })}
+          </Paper>
+        )}
+
         <FilesImages images={images} files={files} />
         <Box className={classes.body}>
           <Box className={classes.label}>제안배경</Box>

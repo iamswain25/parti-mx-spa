@@ -20,6 +20,9 @@ import MapPlace from "./MapPlace";
 import RouteMapPostBottom from "./RouteMapPostBottom";
 import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
+import { defaultHashtags } from "../helpers/options";
+import { ChipData } from "../types";
+import Chips from "./Chips";
 export const useStyles = makeStyles((theme: Theme) => ({
   smallIcon: {
     padding: theme.spacing(0.5),
@@ -48,6 +51,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
       paddingRight: 30,
       margin: "0 auto",
     },
+    [theme.breakpoints.down("sm")]: {
+      height: "calc(100vh - 104px)",
+      display: "flex",
+      flexDirection: "column",
+    },
   },
   titleContainer: {
     borderBottom: `1px solid ${theme.palette.grey[400]}`,
@@ -60,9 +68,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   mapContainer: {
     [theme.breakpoints.down("sm")]: {
-      height: "calc(100vh - 164px)",
       display: "flex",
       flexDirection: "column",
+      flex: 1,
     },
     [theme.breakpoints.up("md")]: {
       display: "flex",
@@ -73,7 +81,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
       position: "sticky",
       top: 48,
       width: "100%",
-      height: "100vh",
+      height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     },
     [theme.breakpoints.down("sm")]: {
       flex: 1,
@@ -86,6 +94,10 @@ export default function RoutePhoto() {
   const [{ user_id }] = useStore();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
+  const [chipData, setChipData] = React.useState<ChipData[]>(
+    defaultHashtags.map((c) => ({ label: c, selected: false }))
+  );
+  const [posts, setPosts] = React.useState<Post[] | undefined>(undefined);
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
     variables: {
       board_id,
@@ -100,6 +112,26 @@ export default function RoutePhoto() {
     undefined
   );
   const board = data?.mx_boards_by_pk;
+  React.useEffect(() => {
+    if (board?.posts) {
+      const selectedTags = chipData
+        .filter((c) => c.selected)
+        .map((c) => c.label);
+      if (!selectedTags.length) {
+        setPosts(board?.posts);
+      } else {
+        const selectedPosts = board?.posts.filter((p) =>
+          selectedTags.every((t) => p.tags?.includes(t))
+        );
+        setPosts(selectedPosts);
+        if (selectedPlace) {
+          if (!selectedPosts.includes(selectedPlace)) {
+            setSelectedPlace(undefined);
+          }
+        }
+      }
+    }
+  }, [board, chipData, selectedPlace]);
   usePermEffect(board?.group?.users?.[0]?.status);
   if (loading) {
     return null;
@@ -116,6 +148,7 @@ export default function RoutePhoto() {
     <>
       <BoardTabNavigator group={group} />
       <section className={classes.container}>
+        <Chips chips={chipData} setChips={setChipData} />
         <Grid
           container
           justify="space-between"
@@ -124,11 +157,11 @@ export default function RoutePhoto() {
         >
           <Box display="flex">
             <Typography variant="h4" color="textPrimary">
-              제안
+              {b.title}
             </Typography>
             <Box mr={1} />
             <Typography variant="h4" color="primary">
-              {b?.posts_aggregate?.aggregate?.count}
+              {posts?.length ?? 0}
             </Typography>
           </Box>
           <Box display="flex">
@@ -149,15 +182,15 @@ export default function RoutePhoto() {
             </NavLink>
           </Box>
         </Grid>
-        <Box className={classes.mapContainer}>
+        <div className={classes.mapContainer}>
           <Hidden smDown implementation="js">
             <Box width={267} mr={3} mt={3}>
-              {b?.posts?.map((p, i) => (
+              {posts?.map((p, i) => (
                 <RouteMapPost key={i} post={p} selectedPlace={selectedPlace} />
               ))}
             </Box>
           </Hidden>
-          <Box className={classes.map}>
+          <div className={classes.map}>
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyBmxQGhxC-UzPzxIMlE9Sy09Dv9zUtiiW4",
@@ -169,7 +202,7 @@ export default function RoutePhoto() {
               defaultZoom={11}
               onChildClick={childClickHandler}
             >
-              {b?.posts?.map((p, i) => {
+              {posts?.map((p, i) => {
                 const {
                   coordinates: [lng, lat],
                 } = p?.location || { coordinates: [null, null] };
@@ -183,7 +216,7 @@ export default function RoutePhoto() {
                 );
               })}
             </GoogleMapReact>
-          </Box>
+          </div>
           <Hidden mdUp implementation="css">
             {selectedPlace && (
               <RouteMapPostBottom
@@ -192,7 +225,7 @@ export default function RoutePhoto() {
               />
             )}
           </Hidden>
-        </Box>
+        </div>
       </section>
     </>
   );

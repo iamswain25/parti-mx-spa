@@ -36,3 +36,14 @@ export function showStatusLabelByValue(value: UserStatus) {
       return null;
   }
 }
+
+export const defaultHashtags = [
+  "publicspace",
+  "공공공간",
+  "community",
+  "커뮤니티",
+  "history",
+  "역사",
+  "density",
+  "밀도",
+];

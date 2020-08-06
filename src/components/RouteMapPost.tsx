@@ -28,6 +28,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: 251,
     height: 112,
     objectFit: "cover",
+    cursor: "pointer",
   },
 }));
 
@@ -57,6 +58,7 @@ export default function RouteMapPost({
       <Img
         src={[...(p.images?.map((i) => i.uri) || []), "/favicon.ico"]}
         className={classes.img}
+        onClick={navigatePost}
       />
       <Box className={classes.titleContainer} onClick={navigatePost}>
         {p.title}

@@ -22,6 +22,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: 112,
     height: 112,
     objectFit: "cover",
+    cursor: "pointer",
   },
   icon: {
     width: 20,
@@ -55,6 +56,7 @@ export default function RouteMapPostBottom({
         <Img
           src={[...(p?.images?.map((i) => i.uri) || []), "/favicon.ico"]}
           className={classes.img}
+          onClick={navigatePost}
         />
         <Box ml={1}>
           <Box className={classes.titleContainer} onClick={navigatePost}>
