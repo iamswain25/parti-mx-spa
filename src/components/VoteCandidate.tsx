@@ -4,11 +4,13 @@ import { Grid, Box, Typography } from "@material-ui/core";
 import { LinearProgressActive, LinearProgressGrey } from "./LinearProgress";
 import CheckIcon from "@material-ui/icons/Check";
 import useWhoVotedModal from "./useWhoVotedModal";
+import { useGlobalState, keys } from "../store/useGlobalState";
 export default function VoteCandidate({
   candidate: c,
   total = 0,
   voted = false,
   isResultHidden = false,
+  isAnonymous = false,
   max = 1,
   onClick,
   isClosed,
@@ -18,9 +20,11 @@ export default function VoteCandidate({
   max: number;
   voted: boolean;
   isResultHidden: boolean;
+  isAnonymous: boolean;
   isClosed: boolean;
   onClick: (candidate_id: number, myVote: boolean) => Promise<any>;
 }) {
+  const [, setError] = useGlobalState(keys.ERROR);
   const [myVote, percentage, width, count] = React.useMemo(() => {
     const count = c?.votes_aggregate?.aggregate?.sum?.count || 0;
     return [
@@ -36,6 +40,9 @@ export default function VoteCandidate({
   }
   const { modal, setVisible } = useWhoVotedModal(c);
   function resultHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
+    if (isAnonymous) {
+      return setError("익명투표 입니다.");
+    }
     setVisible(true);
   }
   return (
