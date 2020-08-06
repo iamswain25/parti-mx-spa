@@ -175,9 +175,9 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
       <Hidden mdUp implementation="css">
         <GreyDivider height={0.5} />
       </Hidden>
-      <Box className={classes.root}>
+      <div className={classes.root}>
         <SuggestionComment post={p} />
-      </Box>
+      </div>
     </Box>
   );
 }

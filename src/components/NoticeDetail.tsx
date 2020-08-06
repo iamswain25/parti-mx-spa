@@ -3,7 +3,6 @@ import { Post } from "../types";
 import { Box, Grid, Divider, makeStyles, Hidden } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
-import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
@@ -11,6 +10,7 @@ import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
+import NoticeComment from "./NoticeComment";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -69,8 +69,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function NoticeDetail({ post: p }: { post: Post }) {
-  const { body, images, comments, createdBy, created_at, files } = p;
-  const commentCount = p.comments_aggregate?.aggregate?.count || 0;
+  const { body, images, createdBy, created_at, files } = p;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -113,13 +112,9 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
         </Box>
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
-      <Box className={classes.root}>
-        <CommentContainer
-          comments={comments}
-          post_id={p.id}
-          count={commentCount}
-        />
-      </Box>
+      <div className={classes.root}>
+        <NoticeComment post={p} />
+      </div>
     </Box>
   );
 }
