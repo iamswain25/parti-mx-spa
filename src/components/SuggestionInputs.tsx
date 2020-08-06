@@ -3,6 +3,7 @@ import CustomTextField from "./CustomTextField";
 import { suggestionOptions } from "../helpers/options";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
+import Hashtags from "./Hashtags";
 
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
@@ -46,6 +47,7 @@ export default function SuggestionInputs(props: {
         register={register}
         errors={errors}
       />
+      <Hashtags formControl={props.formControl} />
     </>
   );
 }
