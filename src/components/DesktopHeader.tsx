@@ -69,7 +69,7 @@ export default function DesktopHeader() {
           <DrawerGroup />
         </Grid>
         <Grid item xs={8} className={classes.logoFont}>
-          <Link to="/home?group_id=101">Parti Mix</Link>
+          <Link to="/home?group_id=101">WTA PLATFORM</Link>
         </Grid>
         <Grid
           container
