@@ -61,7 +61,7 @@ export default function MemberSetting() {
   const setStatus = useSetStatus(fetchData);
 
   React.useEffect(() => {
-    if (debouncedKeyword) {
+    if (debouncedKeyword.length > 2) {
       fetchData(true);
     } else {
       fetchData();
