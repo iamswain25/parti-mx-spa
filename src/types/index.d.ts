@@ -19,6 +19,7 @@ export interface SuggestionFormdata {
   context: string;
   body: string;
   closingMethod: string;
+  tags: string[];
 }
 export interface VoteFormdata {
   title: string;
