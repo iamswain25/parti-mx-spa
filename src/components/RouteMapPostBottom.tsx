@@ -53,7 +53,7 @@ export default function RouteMapPostBottom({
       </Box>
       <Box p={2} pt={1} display="flex">
         <Img
-          src={[...(p?.images?.map((i) => i.uri) || []), "/favicon.ico"]}
+          src={[...(p?.images?.map((i) => i.uri) || []), "/ogp.png"]}
           className={classes.img}
         />
         <Box ml={1}>

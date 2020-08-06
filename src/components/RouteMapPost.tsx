@@ -55,7 +55,7 @@ export default function RouteMapPost({
   return (
     <div className={classes.container} ref={divRef}>
       <Img
-        src={[...(p.images?.map((i) => i.uri) || []), "/favicon.ico"]}
+        src={[...(p.images?.map((i) => i.uri) || []), "/ogp.png"]}
         className={classes.img}
       />
       <Box className={classes.titleContainer} onClick={navigatePost}>

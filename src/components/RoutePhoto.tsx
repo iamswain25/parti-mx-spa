@@ -91,7 +91,7 @@ export default function RoutePhoto() {
               to={`/post/${p.id}`}
             >
               <Img
-                src={[...(p.images?.map((i) => i.uri) || []), "/favicon.ico"]}
+                src={[...(p.images?.map((i) => i.uri) || []), "/ogp.png"]}
                 className={classes.img}
               />
             </NavLink>
