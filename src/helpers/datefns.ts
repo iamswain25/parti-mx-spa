@@ -69,8 +69,8 @@ export function semanticDate(date = "") {
   try {
     const newDate = new Date(date);
     const now = new Date();
+    return format(newDate, "yyyy-MM-dd HH:mm");
     if (isAfter(now, addDays(newDate, 1))) {
-      return format(newDate, "yyyy-MM-dd");
     }
     return formatDistanceToNow(newDate, { locale: ko }) + " 전";
   } catch (error) {
