@@ -130,9 +130,9 @@ export default function EventDetail({ post: p }: { post: Post }) {
         </Box>
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
-      <Box className={classes.root}>
+      <div className={classes.root}>
         <EventComment post={p} />
-      </Box>
+      </div>
     </Box>
   );
 }

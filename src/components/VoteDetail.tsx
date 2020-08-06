@@ -217,13 +217,13 @@ export default function VoteDetail({ post: p }: { post: Post }) {
         </Box>
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
-      <Box className={classes.root}>
+      <div className={classes.root}>
         <CommentContainer
           comments={comments}
           post_id={p.id}
           count={commentCount}
         />
-      </Box>
+      </div>
     </Box>
   );
 }
