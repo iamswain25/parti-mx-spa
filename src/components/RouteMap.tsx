@@ -114,7 +114,7 @@ export default function RoutePhoto() {
   }
   return (
     <>
-      <BoardTabNavigator group={group} />
+      <BoardTabNavigator board={board} />
       <section className={classes.container}>
         <Grid
           container

@@ -137,14 +137,6 @@ export const groups = gql`
         count
       }
     }
-    boards(order_by: { order: asc_nulls_last }) {
-      id
-      type
-      order
-      title
-      body
-      permission
-    }
     users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       status
     }

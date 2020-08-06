@@ -39,7 +39,7 @@ export default function RouteBoard() {
   if (!board) {
     return <Forbidden />;
   }
-  const { group, type } = board;
+  const { type } = board;
   let boardByType = null;
   switch (type) {
     case "notice":
@@ -58,7 +58,7 @@ export default function RouteBoard() {
 
   return (
     <>
-      <BoardTabNavigator group={group} type={type} board_id={board_id} />
+      <BoardTabNavigator board={board} />
       {boardByType}
     </>
   );

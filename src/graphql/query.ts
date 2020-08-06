@@ -66,6 +66,26 @@ export const queryBoardsByGroupId = gql`
   }
 `;
 
+export const queryBoardsOnly = gql`
+  query($group_id: Int!, $user_id: Int) {
+    mx_groups_by_pk(id: $group_id) {
+      boards(order_by: { order: asc_nulls_last }) {
+        id
+        type
+        order
+        title
+        body
+        permission
+        posts_aggregate {
+          aggregate {
+            count
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const queryByBoardId = gql`
   query(
     $board_id: Int!
