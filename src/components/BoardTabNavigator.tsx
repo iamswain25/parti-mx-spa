@@ -11,7 +11,7 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
-      overflowX: "scroll",
+      overflowX: "auto",
       position: "sticky",
       top: -1,
       boxShadow: `0 4px 2px -2px ${grey[300]}`,
@@ -50,19 +50,20 @@ const useStyles = makeStyles((theme) => {
         margin: "0 auto",
       },
       height: 48,
-      overflow: "auto",
+      overflow: "unset",
       fontSize: 14,
       fontWeight: 500,
       letterSpacing: 0.2,
       textAlign: "center",
-      alignItems: "center",
+      alignItems: "stretch",
       display: "flex",
       flexWrap: "nowrap",
       justifyContent: "space-between",
     },
     tabLink: {
       minWidth: 72,
-      padding: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
       overflow: "hidden",
       display: "flex",
       flexDirection: "row",
