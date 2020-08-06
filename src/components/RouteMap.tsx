@@ -146,7 +146,7 @@ export default function RoutePhoto() {
   }
   return (
     <>
-      <BoardTabNavigator group={group} />
+      <BoardTabNavigator board={board} />
       <section className={classes.container}>
         <Chips chips={chipData} setChips={setChipData} />
         <Grid

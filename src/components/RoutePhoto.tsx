@@ -6,7 +6,6 @@ import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import BoardTabNavigator from "./BoardTabNavigator";
-import useDesktop from "./useDesktop";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
 import { Box, Grid, Typography } from "@material-ui/core";
@@ -40,7 +39,6 @@ export default function RoutePhoto() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const [isDesktop] = useDesktop();
   const board = data?.mx_boards_by_pk;
   React.useEffect(() => {
     if (board?.posts) {
@@ -67,8 +65,7 @@ export default function RoutePhoto() {
   const { group, ...b } = board;
   return (
     <>
-      <Box mt={isDesktop ? 3 : 0} />
-      <BoardTabNavigator group={group} />
+      <BoardTabNavigator board={board} />
       <section className={classes.container}>
         <Chips chips={chipData} setChips={setChipData} />
         <Grid

@@ -36,8 +36,8 @@ export default function Routes() {
       <CssBaseline />
       {isInit && (
         <Switch>
-          <Route path="/home" exact component={Home} />
           <HeaderRemain>
+            <Route path="/home" exact component={Home} />
             <Route path="/forgot" exact component={PasswordForgot} />
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
             <Route path="/map/:board_id" exact component={RouteMap} />

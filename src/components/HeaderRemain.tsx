@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
+    [theme.breakpoints.up("md")]: {
+      minHeight: 48,
+      height: 48,
+    },
   },
   logoFont: {
     display: "flex",

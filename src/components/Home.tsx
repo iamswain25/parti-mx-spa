@@ -14,7 +14,6 @@ import HomeBoardEvent from "./HomeBoardEvent";
 import BoardTabNavigator from "./BoardTabNavigator";
 import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
-import DesktopHeader from "./DesktopHeader";
 import Forbidden from "./Forbidden";
 const useStyles = makeStyles((theme) => {
   return {
@@ -60,12 +59,11 @@ export default function Home() {
   const [isDesktop] = useDesktop();
   const group = data?.mx_groups_by_pk;
   if (loading) {
-    return <DesktopHeader />;
+    return null;
   }
   if (!group) {
     return (
       <>
-        <DesktopHeader />
         <Forbidden />
       </>
     );
@@ -74,10 +72,9 @@ export default function Home() {
 
   return (
     <>
-      <DesktopHeader />
       <GroupLogoContainer group={group} />
       {!isDesktop && <GreyDivider />}
-      <BoardTabNavigator group={group} />
+      <BoardTabNavigator />
       {isDesktop ? (
         <section className={classes.grid}>
           <ul className={classes.left}>
