@@ -199,6 +199,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
               onClick={voteHandler}
               key={i}
               isClosed={isClosed}
+              isAnonymous={metadata?.isAnonymous}
               isResultHidden={metadata?.isResultHidden}
             />
           ))}
