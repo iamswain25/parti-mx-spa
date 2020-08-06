@@ -31,8 +31,8 @@ export default function SuggestionNew() {
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
-    const { closingMethod, ...rest } = form;
-    const metadata = { closingMethod, address };
+    const { closingMethod, tags, ...rest } = form;
+    const metadata = { closingMethod, address, tags };
     const variables = await makeNewVariables(rest, {
       board_id,
       group_id,
