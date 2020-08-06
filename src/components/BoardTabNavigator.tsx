@@ -64,8 +64,6 @@ const useStyles = makeStyles((theme) => {
       minWidth: 72,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
-      // paddingTop: theme.spacing(1),
-      // paddingBottom: theme.spacing(1),
       overflow: "hidden",
       display: "flex",
       flexDirection: "row",
