@@ -159,6 +159,7 @@ export const queryByPostId = gql`
       files
       created_at
       updated_at
+      tags
       board {
         id
         title

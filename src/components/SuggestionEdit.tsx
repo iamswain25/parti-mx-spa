@@ -37,9 +37,15 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const formControl = useForm<SuggestionFormdata>();
   const { handleSubmit, reset } = formControl;
   React.useEffect(() => {
-    const { location, title, body, context, files, images } = p;
+    const { location, title, body, context, files, images, tags } = p;
     const metadata = p.metadata as SuggestionMetadata;
-    reset({ title, body, context, closingMethod: metadata.closingMethod });
+    reset({
+      title,
+      body,
+      context,
+      closingMethod: metadata.closingMethod,
+      tags,
+    });
     setImages2(images);
     setFiles2(files);
     setAddress(metadata?.address);
