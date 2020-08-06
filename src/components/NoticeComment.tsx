@@ -32,10 +32,13 @@ const useStyles = makeStyles((theme) => {
         },
       },
     },
+    grid: {
+      display: "flex",
+    },
   };
 });
 
-export default function SuggestionComment({ post: p }: { post: Post }) {
+export default function NoticeComment({ post: p }: { post: Post }) {
   const count = p.comments_aggregate?.aggregate?.count || 0;
   const count2 = p.users_aggregate?.aggregate?.sum?.like_count || 0;
   const comments = p.comments;
@@ -72,7 +75,7 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "" : "active"}`}
             onClick={() => setCommentVisible(false)}
           >
-            제안 동의 멤버
+            공감 멤버
             <Box ml={0.5} className="count">
               {count2}
             </Box>
