@@ -10,6 +10,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   smallIcon: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: theme.spacing(0.5),
     width: theme.spacing(3),
     height: theme.spacing(3),

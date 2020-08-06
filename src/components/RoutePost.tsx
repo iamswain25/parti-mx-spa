@@ -61,7 +61,13 @@ export default function RoutePost() {
       {isDesktop ? (
         <BoardTabNavigator group={p?.board?.group} board_id={p?.board?.id} />
       ) : (
-        <Link to={`/home/${p?.board?.id}`}>
+        <Link
+          to={
+            p?.board?.type === "suggestion"
+              ? `/photo/${p?.board?.id}`
+              : `/home/${p?.board?.id}`
+          }
+        >
           <Box
             pt={1}
             paddingX={2}

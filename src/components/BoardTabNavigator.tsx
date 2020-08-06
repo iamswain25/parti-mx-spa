@@ -142,7 +142,7 @@ export default function BoardTabNavigator({
           </NavLink>
           {boards?.map((b, i) => (
             <NavLink
-              to={`/home/${b.id}`}
+              to={b.type === "suggestion" ? `/photo/${b.id}` : `/home/${b.id}`}
               key={i}
               className={`${classes.tabLink} ${
                 board_id && board_id === b.id ? "active" : ""
