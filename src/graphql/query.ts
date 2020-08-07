@@ -443,7 +443,7 @@ export const queryGroupsByUserId = gql`
       photo_url
       groups(
         where: { status: { _in: ["user", "organizer", "participant"] } }
-        order_by: { updated_at: desc_nulls_last }
+        order_by: { group_id: asc_nulls_last }
       ) {
         ...usersgroup
       }
