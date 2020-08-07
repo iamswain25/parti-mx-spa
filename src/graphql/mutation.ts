@@ -159,7 +159,10 @@ export const updateComment = gql`
 export const deleteComment = gql`
   mutation($comment_id: Int!) {
     delete_mx_comments_by_pk(id: $comment_id) {
-      parent_id
+      parent {
+        body
+        id
+      }
     }
   }
 `;
