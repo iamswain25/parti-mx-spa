@@ -148,21 +148,23 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
         <Hidden smDown implementation="css">
           <img src={bg_img_url ?? mobileImg} alt="group logo" />
         </Hidden>
-        <div className={classes.groupLogoOverlay}>
-          <Typography variant="h1" color="inherit">
-            {title}
-          </Typography>
-          <div className={classes.groupInfo}>
-            <span>개설 {semanticDate(created_at)}</span>
-            {isOrg ? (
-              <Link to="members">멤버 {userCount}</Link>
-            ) : (
-              <span>멤버 {userCount}</span>
-            )}
-            {toJoinTag}
-            <MenuGroup group={group} />
+        {isOrg && (
+          <div className={classes.groupLogoOverlay}>
+            <Typography variant="h1" color="inherit">
+              {title}
+            </Typography>
+            <div className={classes.groupInfo}>
+              <span>개설 {semanticDate(created_at)}</span>
+              {isOrg ? (
+                <Link to="members">멤버 {userCount}</Link>
+              ) : (
+                <span>멤버 {userCount}</span>
+              )}
+              {toJoinTag}
+              <MenuGroup group={group} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Grid>
   );
