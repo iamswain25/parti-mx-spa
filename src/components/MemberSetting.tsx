@@ -59,36 +59,30 @@ export default function MemberSetting() {
   const [status] = useGlobalState(keys.PERMISSION);
   const client = useApolloClient();
 
-  const fetchData = React.useCallback(
-    async function (isSearching = false) {
-      const usergroups = await client.query<UserGroups>({
-        query: searchMembers,
-        variables: {
-          keyword: debouncedKeyword,
-          group_id,
-          limit: LIMIT,
-          offset: isSearching ? 0 : items.length,
-        },
-        fetchPolicy: "network-only",
-      });
-      if (isSearching) {
-        setItems(usergroups.data?.mx_users_group || []);
-      } else {
-        setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
-      }
-    },
-    [items, setItems, client, debouncedKeyword, group_id]
-  );
+  async function fetchData(isSearching = false) {
+    const usergroups = await client.query<UserGroups>({
+      query: searchMembers,
+      variables: {
+        keyword: debouncedKeyword,
+        group_id,
+        limit: LIMIT,
+        offset: isSearching ? 0 : items.length,
+      },
+      fetchPolicy: "network-only",
+    });
+    if (isSearching) {
+      setItems(usergroups.data?.mx_users_group || []);
+    } else {
+      setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
+    }
+  }
 
   const setStatus = useSetStatus(fetchData);
 
   React.useEffect(() => {
-    if (debouncedKeyword.length > 2) {
-      fetchData(true);
-    } else {
-      fetchData();
-    }
-  }, [debouncedKeyword, fetchData]);
+    fetchData(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedKeyword]);
   if (status !== "organizer") {
     return <Redirect to="/" />;
   }
