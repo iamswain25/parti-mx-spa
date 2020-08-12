@@ -4,4 +4,5 @@ import authCreate from "./components/authCreate";
 import authInvite from "./components/authInvite";
 import authDelete from "./components/authDelete";
 import closePostAtNight from "./components/closePostAtNight";
-export { authCreate, authDelete, authInvite, closePostAtNight };
+import SharePost from "./components/SharePost";
+export { authCreate, authDelete, authInvite, closePostAtNight, SharePost };

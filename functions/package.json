@@ -7,6 +7,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions --project seoul-city-architecture",
+    "deployshare": "tsc && firebase deploy --only functions:SharePost --project seoul-city-architecture",
     "logs": "firebase functions:log"
   },
   "engines": {
@@ -24,7 +25,8 @@
     "date-fns": "^2.15.0",
     "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.8.0",
-    "graphql": "^15.3.0"
+    "graphql": "^15.3.0",
+    "isbot": "^3.0.7"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6",
