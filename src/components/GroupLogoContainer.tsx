@@ -143,10 +143,10 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
         <Hidden mdUp implementation="css">
-          <img src={mb_img_url ?? desktopImg} alt="group logo" />
+          <img src={mb_img_url ?? mobileImg} alt="group logo" />
         </Hidden>
         <Hidden smDown implementation="css">
-          <img src={bg_img_url ?? mobileImg} alt="group logo" />
+          <img src={bg_img_url ?? desktopImg} alt="group logo" />
         </Hidden>
         {isOrg && (
           <div className={classes.groupLogoOverlay}>
