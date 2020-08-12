@@ -58,21 +58,7 @@ export default function MemberSetting() {
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
   const [status] = useGlobalState(keys.PERMISSION);
   const client = useApolloClient();
-  const setStatus = useSetStatus(fetchData);
 
-  React.useEffect(() => {
-    if (debouncedKeyword.length > 2) {
-      fetchData(true);
-    } else {
-      fetchData();
-    }
-  }, [debouncedKeyword]);
-  if (status !== "organizer") {
-    return <Redirect to="/" />;
-  }
-  function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setKeyword(e.target.value);
-  }
   async function fetchData(isSearching = false) {
     const usergroups = await client.query<UserGroups>({
       query: searchMembers,
@@ -84,12 +70,24 @@ export default function MemberSetting() {
       },
       fetchPolicy: "network-only",
     });
-    console.log(usergroups.data?.mx_users_group);
     if (isSearching) {
       setItems(usergroups.data?.mx_users_group || []);
     } else {
       setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
     }
+  }
+
+  const setStatus = useSetStatus(fetchData);
+
+  React.useEffect(() => {
+    fetchData(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedKeyword]);
+  if (status !== "organizer") {
+    return <Redirect to="/" />;
+  }
+  function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setKeyword(e.target.value);
   }
 
   return (
