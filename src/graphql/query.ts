@@ -448,7 +448,7 @@ export const queryGroupsByUserId = gql`
         ...usersgroup
       }
     }
-    mx_groups {
+    mx_groups(where: { private: { _eq: false } }) {
       slug
       title
       id

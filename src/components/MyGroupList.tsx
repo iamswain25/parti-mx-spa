@@ -3,7 +3,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { queryGroupsByUserId } from "../graphql/query";
-import { useSubscription } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useStore } from "../store/store";
 import { UserGroup, Whoami, Group } from "../types";
 import useLoadingEffect from "./useLoadingEffect";
@@ -41,12 +41,9 @@ export default function MyGroupList(props: {
   const [{ user_id, group_id }] = useStore();
   const [status] = useGlobalState(keys.PERMISSION);
   const history = useHistory();
-  const { loading, data, error } = useSubscription<Whoami>(
-    queryGroupsByUserId,
-    {
-      variables: { user_id },
-    }
-  );
+  const { loading, data, error } = useQuery<Whoami>(queryGroupsByUserId, {
+    variables: { user_id },
+  });
   useLoadingEffect(loading);
   useErrorEffect(error);
   if (loading) {
@@ -54,7 +51,7 @@ export default function MyGroupList(props: {
   }
   const me = data?.mx_users_by_pk;
   const ugs = data?.mx_users_by_pk?.groups;
-  const rest = data?.mx_groups;
+  const rest = data?.mx_groups?.slice();
   if (!(me && ugs)) {
     return null;
   }
@@ -85,27 +82,27 @@ export default function MyGroupList(props: {
       );
     })
   );
-  // list.push(<Divider key="divider" />);
-  // list.push(<ListItem key="label">아래는 가입하지 않은 그룹입니다</ListItem>);
-  // list.push(
-  //   rest?.map((g: Group, i: number) => (
-  //     <ListItem
-  //       key={`rest${i}`}
-  //       button
-  //       onClick={() => clickHandler(g.id)}
-  //       selected={g.id === group_id}
-  //     >
-  //       <ListItemIcon>
-  //         <Avatar
-  //           variant="square"
-  //           src={g.bg_img_url}
-  //           children={g.title.substr(0, 1)}
-  //         />
-  //       </ListItemIcon>
-  //       <ListItemText primary={g.title} />
-  //     </ListItem>
-  //   ))
-  // );
+  list.push(<Divider key="divider" />);
+  list.push(<ListItem key="label">아래는 가입하지 않은 그룹입니다</ListItem>);
+  list.push(
+    rest?.map((g: Group, i: number) => (
+      <ListItem
+        key={`rest${i}`}
+        button
+        onClick={() => clickHandler(g.id)}
+        selected={g.id === group_id}
+      >
+        <ListItemIcon>
+          <Avatar
+            variant="square"
+            src={g.bg_img_url}
+            children={g.title.substr(0, 1)}
+          />
+        </ListItemIcon>
+        <ListItemText primary={g.title} />
+      </ListItem>
+    ))
+  );
 
   return (
     <>
