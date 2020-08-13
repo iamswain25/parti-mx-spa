@@ -10,7 +10,7 @@ import {
   List,
 } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
-import { useDebouncedCallback, useDebounce } from "use-debounce";
+import { useDebounce } from "use-debounce";
 import { useApolloClient } from "@apollo/client";
 import { searchMembers } from "../graphql/query";
 import { useStore } from "../store/store";
