@@ -25,6 +25,9 @@ import { ChipData } from "../types";
 import Chips from "./Chips";
 export const useStyles = makeStyles((theme: Theme) => ({
   smallIcon: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: theme.spacing(0.5),
     width: theme.spacing(3),
     height: theme.spacing(3),
@@ -168,15 +171,15 @@ export default function RoutePhoto() {
             <PostSort />
             <NavLink
               exact
-              to={`/photo/${board_id}`}
               className={classes.smallIcon}
+              to={`/photo/${board_id}`}
             >
               <GridOnIcon />
             </NavLink>
             <NavLink
               exact
-              to={`/map/${board_id}`}
               className={classes.smallIcon}
+              to={`/map/${board_id}`}
             >
               <PinDropIcon />
             </NavLink>
