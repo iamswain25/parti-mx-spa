@@ -3,7 +3,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { queryGroupsByUserId } from "../graphql/query";
-import { useSubscription } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useStore } from "../store/store";
 import { UserGroup, Whoami, Group } from "../types";
 import useLoadingEffect from "./useLoadingEffect";
@@ -45,12 +45,9 @@ export default function MyGroupList(props: {
   const classes = useStyles();
   const [{ user_id, group_id }] = useStore();
   const history = useHistory();
-  const { loading, data, error } = useSubscription<Whoami>(
-    queryGroupsByUserId,
-    {
-      variables: { user_id },
-    }
-  );
+  const { loading, data, error } = useQuery<Whoami>(queryGroupsByUserId, {
+    variables: { user_id },
+  });
   const [keyword, setKeyword] = React.useState("");
   useLoadingEffect(loading);
   useErrorEffect(error);
