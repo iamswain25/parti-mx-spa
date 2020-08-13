@@ -1,10 +1,7 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { Group } from "../types";
-import { useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
 import { semanticDate } from "../helpers/datefns";
 import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
@@ -14,6 +11,7 @@ import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { showStatusLabelByValue } from "../helpers/options";
+import { client } from "./ApolloSetup";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -103,19 +101,6 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [{ user_id, group_id }] = useStore();
   const classes = useStyles();
-  const [join, { loading, error }] = useMutation(insertUserGroup, {
-    variables: { group_id },
-  });
-  async function joinHandler() {
-    if (user_id) {
-      await join();
-      window.location.reload();
-    } else {
-      setVisible(true);
-    }
-  }
-  useLoadingEffect(loading);
-  useErrorEffect(error);
   const {
     title,
     users: [user] = [null],
@@ -126,6 +111,20 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       aggregate: { count: userCount = 0 },
     },
   } = group;
+  async function joinHandler() {
+    if (user_id) {
+      await client.mutate({
+        mutation: insertUserGroup,
+        variables: {
+          group_id,
+          status: userCount > 0 ? "requested" : "organizer",
+        },
+      });
+      window.location.reload();
+    } else {
+      setVisible(true);
+    }
+  }
   const userStatus = user?.status;
   usePermEffect(userStatus);
   const isOrg = userStatus === "organizer";
