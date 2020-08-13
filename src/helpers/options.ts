@@ -1,5 +1,5 @@
 import { UserStatus } from "../types";
-export const DOMAIN = "https://mix.beyondcovid19-opencall.org";
+export const DOMAIN = "https://parti.mx";
 export const postSortOptions = [
   { created_at: "desc" },
   { updated_at: "desc" },
@@ -7,7 +7,7 @@ export const postSortOptions = [
 ];
 export const voteOptions = [
   { label: "7일 후 종료", value: "7days" },
-  { label: "30일 후 종료", value: "3days" },
+  { label: "30일 후 종료", value: "30days" },
   { label: "토론 정리시 종료", value: "manual" },
 ];
 
