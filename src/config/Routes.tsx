@@ -35,8 +35,8 @@ export default function Routes() {
     <>
       <CssBaseline />
       {isInit && (
-        <Switch>
-          <HeaderRemain>
+        <HeaderRemain>
+          <Switch>
             <Route path="/home" exact component={Home} />
             <Route path="/forgot" exact component={PasswordForgot} />
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
@@ -65,11 +65,11 @@ export default function Routes() {
             <Route exact path="/">
               <Redirect to="/home" />
             </Route>
-          </HeaderRemain>
-          <Route path="*">
-            <Redirect to="/home" />
-          </Route>
-        </Switch>
+            <Route path="*">
+              <Redirect to="/home" />
+            </Route>
+          </Switch>
+        </HeaderRemain>
       )}
       <LoginModal />
       <SnackbarCustom />
