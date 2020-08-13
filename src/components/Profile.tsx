@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 interface GroupForm {
-  username: string;
+  name: string;
+  email: string;
   bgFiles: any;
 }
 export default function Profile() {
@@ -65,16 +66,16 @@ export default function Profile() {
       })
       .then((res) => {
         if (res.data?.mx_users_by_pk) {
-          const { photo_url, name } = res.data?.mx_users_by_pk;
-          reset({ username: name });
+          const { photo_url, name, email } = res.data?.mx_users_by_pk;
+          reset({ name, email });
           setPhoto(photo_url);
         }
       });
   }, [reset, setPhoto, user_id]);
   async function handleForm(form: GroupForm) {
-    const { bgFiles, username } = form;
+    const { bgFiles, name } = form;
     setLoading(true);
-    const variables = { id: user_id, name: username, photo_url: undefined };
+    const variables = { id: user_id, name, photo_url: undefined };
     if (bgFiles?.length) {
       variables.photo_url = await uploadFileByPath(
         bgFiles[0],
@@ -106,7 +107,7 @@ export default function Profile() {
         )}
         <Controller
           control={control}
-          name="username"
+          name="name"
           defaultValue=""
           as={
             <TextField
@@ -116,8 +117,8 @@ export default function Profile() {
               fullWidth
               autoFocus
               required
-              error={errors.username ? true : false}
-              helperText={errors.username && errors.username.message}
+              error={errors.name ? true : false}
+              helperText={errors.name && errors.name.message}
             />
           }
           rules={{
@@ -134,6 +135,24 @@ export default function Profile() {
               return undefined;
             },
           }}
+        />
+        <Controller
+          control={control}
+          name="email"
+          defaultValue=""
+          as={
+            <TextField
+              disabled
+              label="이메일"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              autoFocus
+              required
+              error={errors.email ? true : false}
+              helperText={errors.email && errors.email.message}
+            />
+          }
         />
       </Container>
       <BtnSubmitDesktop text="수정" />
