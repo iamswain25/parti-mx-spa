@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Button, Typography, Container } from "@material-ui/core";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { DOMAIN } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -59,7 +60,7 @@ export default function PasswordForgot() {
     const { email } = form;
     setLoading(true);
     const actionCodeSettings = {
-      url: "https://youthwagle.kr",
+      url: DOMAIN,
       handleCodeInApp: true,
     };
     try {
