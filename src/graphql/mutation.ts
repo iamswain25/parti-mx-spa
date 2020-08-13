@@ -186,9 +186,9 @@ export const unlikeComment = gql`
 `;
 
 export const insertUserGroup = gql`
-  mutation($group_id: Int!) {
+  mutation($group_id: Int!, $status: String = "requested") {
     insert_mx_users_group_one(
-      object: { group_id: $group_id, status: "requested" }
+      object: { group_id: $group_id, status: $status }
       on_conflict: { update_columns: [status], constraint: users_group_pkey }
     ) {
       user_id
