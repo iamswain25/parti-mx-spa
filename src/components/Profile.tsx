@@ -20,7 +20,7 @@ import { ValidateResult } from "react-hook-form/dist/types/form";
 import { searchDuplicateNameWithoutMine } from "../graphql/query";
 import { whoami } from "../graphql/query";
 import CloseIcon from "@material-ui/icons/Close";
-import { client } from "./ApolloSetup";
+import { client } from "../config/ApolloSetup";
 const useStyles = makeStyles((theme) => ({
   grid: {
     display: "grid",
