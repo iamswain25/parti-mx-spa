@@ -37,7 +37,7 @@ export const theme: Theme = createMuiTheme({
     },
   },
   palette: {
-    primary: { main: "#00a270", dark: "#009062", light: "#e3f5ef" },
+    primary: { main: "#6484FF", dark: "#000000", light: "#CBD7FF" },
   },
   mixins: {
     toolbar: {
