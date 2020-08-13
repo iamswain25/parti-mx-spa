@@ -37,10 +37,12 @@ export default function DrawerGroup() {
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
-  function navigateGroupHandler(group_id: number) {
-    dispatch({ type: "SET_GROUP", group_id });
+  function navigateGroupHandler(group_id?: number) {
     setMobileOpen(false);
-    history.push("/");
+    if (group_id) {
+      dispatch({ type: "SET_GROUP", group_id });
+      history.push("/");
+    }
   }
 
   return (

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 export default function MyGroupList(props: {
-  clickHandler: (group_id: number) => void;
+  clickHandler: (group_id?: number) => void;
 }) {
   const { clickHandler } = props;
   const classes = useStyles();
@@ -109,7 +109,7 @@ export default function MyGroupList(props: {
       <Typography variant="h2">
         <div className={classes.title}>
           <span>카테고리 선택</span>
-          <Link to="/profile">
+          <Link to="/profile" onClick={() => clickHandler()}>
             <Avatar src={me.photo_url} children={me.name.substr(0, 1)} />
           </Link>
         </div>
