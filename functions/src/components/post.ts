@@ -36,13 +36,13 @@ export default functions
       <meta property="og:title" content="${title}" />
       <meta property="og:description" content="${context || body}" />
       <meta property="og:image" content="${
-        images?.[0]?.uri || `https://mix.beyondcovid19-opencall.org/ogp.png`
+        images?.[0]?.uri || `https://parti.mx/ogp.png`
       }"
     </head>
     <body>${body}</body>
   </html>`);
       }
     } else {
-      res.redirect("https://mix.beyondcovid19-opencall.org/p/" + post_id);
+      res.redirect("https://parti.mx/p/" + post_id);
     }
   });
