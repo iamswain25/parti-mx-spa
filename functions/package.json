@@ -7,7 +7,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions",
-    "deployshare": "tsc && firebase deploy --only functions:SharePost",
+    "deployshare": "tsc && firebase deploy --only functions:post",
     "logs": "firebase functions:log"
   },
   "engines": {

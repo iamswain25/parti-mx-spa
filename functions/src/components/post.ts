@@ -6,7 +6,7 @@ export default functions
   .region("asia-northeast3")
   .https.onRequest(async (req, res) => {
     const { path } = req;
-    const [, post_id] = path.substr(1).split("/");
+    const [post_id] = path.substr(1).split("/");
     if (isbot(req.headers["user-agent"] || "")) {
       if (post_id) {
         const { data } = await client.query({
