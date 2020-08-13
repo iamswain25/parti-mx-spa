@@ -394,6 +394,15 @@ export const exitUsersGroup = gql`
     }
   }
 `;
+
+export const deleteGroup = gql`
+  mutation($group_id: Int!) {
+    delete_mx_groups_by_pk(id: $group_id) {
+      id
+    }
+  }
+`;
+
 export const fileReport = gql`
   mutation($id: Int!, $body: String!, $type: String = "post") {
     insert_mx_reports(objects: { body: $body, type: $type, type_id: $id }) {

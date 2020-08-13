@@ -80,6 +80,7 @@ export interface Group {
   bg_img_url: string;
   mb_img_url: string;
   created_at: string;
+  createdBy: User;
   boards: Board[];
   suggestion: Board[];
   notice: Board[];
