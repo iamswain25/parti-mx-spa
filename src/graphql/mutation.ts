@@ -11,10 +11,21 @@ export const insertUser = gql`
 `;
 
 export const updateUserName = gql`
-  mutation($id: Int!, $name: String!, $photo_url: String) {
+  mutation($id: Int!, $name: String!, $photo_url: String, $metadata: jsonb) {
     update_mx_users_by_pk(
       pk_columns: { id: $id }
-      _set: { name: $name, photo_url: $photo_url }
+      _set: { name: $name, photo_url: $photo_url, metadata: $metadata }
+    ) {
+      id
+    }
+  }
+`;
+
+export const updateUserInfo = gql`
+  mutation($user_id: Int!, $name: String!, $metadata: jsonb) {
+    update_mx_users_by_pk(
+      pk_columns: { id: $user_id }
+      _set: { name: $name, metadata: $metadata }
     ) {
       id
     }

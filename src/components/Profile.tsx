@@ -1,26 +1,20 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Container,
-  TextField,
-  IconButton,
-  Avatar,
-} from "@material-ui/core";
+import { Typography, Container, IconButton, Avatar } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import { useStore } from "../store/store";
 import { updateUserName } from "../graphql/mutation";
 import { useHistory } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import HeaderBack from "./HeaderBack";
-import { ValidateResult } from "react-hook-form/dist/types/form";
-import { searchDuplicateNameWithoutMine } from "../graphql/query";
 import { whoami } from "../graphql/query";
 import CloseIcon from "@material-ui/icons/Close";
 import { client } from "./ApolloSetup";
+import CountryRegionLocal from "./CountryRegionLocal";
+import { ProfileForm } from "../types";
 const useStyles = makeStyles((theme) => ({
   grid: {
     display: "grid",
@@ -42,8 +36,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
 }));
-interface GroupForm {
-  username: string;
+interface GroupForm extends ProfileForm {
   bgFiles: any;
 }
 export default function Profile() {
@@ -53,9 +46,8 @@ export default function Profile() {
   const [updateName] = useMutation(updateUserName);
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
   const [, setLoading] = useGlobalState(keys.LOADING);
-  const { handleSubmit, register, errors, reset, control } = useForm<
-    GroupForm
-  >();
+  const formControl = useForm<GroupForm>();
+  const { handleSubmit, register, errors, reset } = formControl;
   React.useEffect(() => {
     client
       .query({
@@ -65,16 +57,21 @@ export default function Profile() {
       })
       .then((res) => {
         if (res.data?.mx_users_by_pk) {
-          const { photo_url, name } = res.data?.mx_users_by_pk;
-          reset({ username: name });
+          const { photo_url, name, metadata } = res.data?.mx_users_by_pk;
+          reset({ name, ...metadata });
           setPhoto(photo_url);
         }
       });
   }, [reset, setPhoto, user_id]);
   async function handleForm(form: GroupForm) {
-    const { bgFiles, username } = form;
+    const { bgFiles, name, country, region, local } = form;
     setLoading(true);
-    const variables = { id: user_id, name: username, photo_url: undefined };
+    const variables = {
+      id: user_id,
+      name,
+      photo_url: undefined,
+      metadata: { country, region, local },
+    };
     if (bgFiles?.length) {
       variables.photo_url = await uploadFileByPath(
         bgFiles[0],
@@ -104,37 +101,7 @@ export default function Profile() {
             <input type="file" name="bgFiles" ref={register} />
           </>
         )}
-        <Controller
-          control={control}
-          name="username"
-          defaultValue=""
-          as={
-            <TextField
-              label="닉네임"
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              autoFocus
-              required
-              error={errors.username ? true : false}
-              helperText={errors.username && errors.username.message}
-            />
-          }
-          rules={{
-            required: "닉네임을 입력해야 합니다.",
-            validate: async function (value): Promise<ValidateResult> {
-              const res = await client.query({
-                query: searchDuplicateNameWithoutMine,
-                variables: { name: value, id: user_id },
-                fetchPolicy: "network-only",
-              });
-              if (res.data?.mx_users?.length) {
-                return `이미 사용중인 닉네임 입니다.`;
-              }
-              return undefined;
-            },
-          }}
-        />
+        <CountryRegionLocal formControl={formControl} />
       </Container>
       <BtnSubmitDesktop text="수정" />
     </form>

@@ -427,6 +427,7 @@ export const whoami = gql`
       id
       name
       email
+      metadata
       photo_url
     }
   }

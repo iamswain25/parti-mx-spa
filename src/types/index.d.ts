@@ -1,6 +1,21 @@
+import { Country, Region } from "react-country-region-selector";
 export type FormData = {
   email: string;
   password: string;
+};
+export type SignupForm = {
+  email: string;
+  password: string;
+  name: string;
+  country: string;
+  region: string;
+  local: string;
+};
+export type ProfileForm = {
+  name: string;
+  country: string;
+  region: string;
+  local: string;
 };
 export interface ChipData {
   selected: boolean;

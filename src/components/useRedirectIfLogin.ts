@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { useStore } from "../store/store";
-export default function useRedirectIfLogin() {
+export default function useRedirectIfLogin(cb?: Function) {
   const [{ user_id, isInit }] = useStore();
 
   const location = useLocation<{ from: { pathname: string } }>();
@@ -11,6 +11,7 @@ export default function useRedirectIfLogin() {
   React.useEffect(() => {
     if (isInit) {
       if (user_id) {
+        cb && cb(user_id);
         console.log("leave!!!");
         history.replace(from);
       }

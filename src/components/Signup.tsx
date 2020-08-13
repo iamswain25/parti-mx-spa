@@ -1,5 +1,5 @@
 import React from "react";
-import { FormData } from "../types";
+import { SignupForm } from "../types";
 import { auth } from "../config/firebase";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,16 +8,15 @@ import { Button, Typography, Container, Box } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { Link } from "react-router-dom";
+import { client } from "./ApolloSetup";
+import { updateUserInfo } from "../graphql/mutation";
+import CountryRegionLocal from "./CountryRegionLocal";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -26,13 +25,6 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     margin: theme.spacing(1),
     position: "relative",
-  },
-  buttonProgress: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    marginTop: -9,
-    marginLeft: -9,
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -50,16 +42,28 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
   },
 }));
+let updateUser: Function | undefined = undefined;
 export default function Signup() {
-  useRedirectIfLogin();
+  useRedirectIfLogin(updateUser);
   const classes = useStyles();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setError] = useGlobalState(keys.ERROR);
-  const { handleSubmit, register, errors } = useForm<FormData>();
-  async function formHandler(form: FormData) {
-    const { email, password } = form;
+  const formControl = useForm<SignupForm>();
+  const { handleSubmit, register, errors } = formControl;
+  React.useEffect(() => {
+    setLoading(false);
+  }, [setLoading]);
+  async function formHandler(form: SignupForm) {
+    const { email, password, name, country, region, local } = form;
     setLoading(true);
     try {
+      updateUser = (user_id: number) => {
+        const metadata = { country, region, local };
+        return client.mutate({
+          mutation: updateUserInfo,
+          variables: { metadata, name, user_id },
+        });
+      };
       await auth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
       setError(error.message);
@@ -69,7 +73,7 @@ export default function Signup() {
   return (
     <div className={classes.paper}>
       <Container component="main" maxWidth="xs">
-        <Typography variant="h2">회원가입</Typography>
+        <Typography variant="h2">Register</Typography>
         <form
           onSubmit={handleSubmit(formHandler)}
           noValidate
@@ -113,6 +117,7 @@ export default function Signup() {
             error={errors.password ? true : false}
             helperText={errors.password && errors.password.message}
           />
+          <CountryRegionLocal formControl={formControl} />
           <div className={classes.wrapper}>
             <Button
               type="submit"

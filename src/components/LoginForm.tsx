@@ -126,7 +126,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
               onClick={closeLoginModal}
               className={classes.link}
             >
-              회원가입
+              Register
             </Link>
           </Box>
           <Box className={classes.label}>
