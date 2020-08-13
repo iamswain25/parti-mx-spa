@@ -1,5 +1,5 @@
 import { UserStatus } from "../types";
-
+export const DOMAIN = "https://mix.beyondcovid19-opencall.org";
 export const postSortOptions = [
   { created_at: "desc" },
   { updated_at: "desc" },
