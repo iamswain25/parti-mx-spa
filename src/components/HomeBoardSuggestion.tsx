@@ -49,14 +49,14 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
-          {isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+          {isDesktop && <BoardMoreTag to={`/photo/${b.id}`} />}
         </Grid>
         <div className={classes.postContainer}>
           {b.posts.map((p, i) => (
             <BoardPostSuggestion key={i} post={p} />
           ))}
         </div>
-        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+        {!isDesktop && <BoardMoreTag to={`/photo/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>
