@@ -11,7 +11,7 @@ import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { showStatusLabelByValue } from "../helpers/options";
-import { client } from "./ApolloSetup";
+import { client } from "../config/ApolloSetup";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
