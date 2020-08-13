@@ -7,7 +7,7 @@ import {
   IconButton,
   Avatar,
 } from "@material-ui/core";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useStore } from "../store/store";
 import { updateUserName } from "../graphql/mutation";
 import { useHistory } from "react-router-dom";
@@ -20,7 +20,7 @@ import { ValidateResult } from "react-hook-form/dist/types/form";
 import { searchDuplicateNameWithoutMine } from "../graphql/query";
 import { whoami } from "../graphql/query";
 import CloseIcon from "@material-ui/icons/Close";
-import useErrorEffect from "./useErrorEffect";
+import { client } from "./ApolloSetup";
 const useStyles = makeStyles((theme) => ({
   grid: {
     display: "grid",
@@ -56,20 +56,21 @@ export default function Profile() {
   const { handleSubmit, register, errors, reset, control } = useForm<
     GroupForm
   >();
-  const { refetch } = useQuery(searchDuplicateNameWithoutMine, {
-    fetchPolicy: "network-only",
-  });
-  const { data, error } = useQuery(whoami, {
-    variables: { id: user_id },
-  });
-  useErrorEffect(error);
   React.useEffect(() => {
-    if (data?.mx_users_by_pk) {
-      const { photo_url, name } = data?.mx_users_by_pk;
-      reset({ username: name });
-      setPhoto(photo_url);
-    }
-  }, [data, reset, setPhoto]);
+    client
+      .query({
+        query: whoami,
+        variables: { id: user_id },
+        fetchPolicy: "network-only",
+      })
+      .then((res) => {
+        if (res.data?.mx_users_by_pk) {
+          const { photo_url, name } = res.data?.mx_users_by_pk;
+          reset({ username: name });
+          setPhoto(photo_url);
+        }
+      });
+  }, [reset, setPhoto, user_id]);
   async function handleForm(form: GroupForm) {
     const { bgFiles, username } = form;
     setLoading(true);
@@ -122,7 +123,11 @@ export default function Profile() {
           rules={{
             required: "닉네임을 입력해야 합니다.",
             validate: async function (value): Promise<ValidateResult> {
-              const res = await refetch({ name: value, id: user_id });
+              const res = await client.query({
+                query: searchDuplicateNameWithoutMine,
+                variables: { name: value, id: user_id },
+                fetchPolicy: "network-only",
+              });
               if (res.data?.mx_users?.length) {
                 return `이미 사용중인 닉네임 입니다.`;
               }
