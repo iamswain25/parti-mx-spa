@@ -2,7 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client";
 import { WebSocketLink } from "@apollo/link-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { setContext } from "@apollo/link-context";
-import { IdTokenResult, auth } from "../config/firebase";
+import { IdTokenResult, auth } from "./firebase";
 const HASURA_DOMAIN = `api-seoul-city-architecture.parti.mx/v1/graphql`;
 
 const wsLink = new WebSocketLink({

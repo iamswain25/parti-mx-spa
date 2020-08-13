@@ -8,7 +8,7 @@ import { Button, Typography, Container, Box } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { Link } from "react-router-dom";
-import { client } from "./ApolloSetup";
+import { client } from "../config/ApolloSetup";
 import { updateUserInfo } from "../graphql/mutation";
 import CountryRegionLocal from "./CountryRegionLocal";
 const useStyles = makeStyles((theme) => ({

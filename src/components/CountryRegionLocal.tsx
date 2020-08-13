@@ -6,7 +6,7 @@ import {
   ValidateResult,
 } from "react-hook-form/dist/types/form";
 import { CountryRegionData } from "react-country-region-selector";
-import { client } from "./ApolloSetup";
+import { client } from "../config/ApolloSetup";
 import { searchDuplicateName } from "../graphql/query";
 export default function CountryRegionLocal(props: {
   formControl: UseFormMethods<any>;

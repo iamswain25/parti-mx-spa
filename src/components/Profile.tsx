@@ -12,7 +12,7 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import HeaderBack from "./HeaderBack";
 import { whoami } from "../graphql/query";
 import CloseIcon from "@material-ui/icons/Close";
-import { client } from "./ApolloSetup";
+import { client } from "../config/ApolloSetup";
 import CountryRegionLocal from "./CountryRegionLocal";
 import { ProfileForm } from "../types";
 const useStyles = makeStyles((theme) => ({
