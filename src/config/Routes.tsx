@@ -35,8 +35,8 @@ export default function Routes() {
     <>
       <CssBaseline />
       {isInit && (
-        <Switch>
-          <HeaderRemain>
+        <HeaderRemain>
+          <Switch>
             <Route path="/home" exact component={Home} />
             <Route path="/forgot" exact component={PasswordForgot} />
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
@@ -51,6 +51,13 @@ export default function Routes() {
             <PrivateRoute path="/profile" exact component={Profile} />
             <PrivateRoute path="/group/edit" exact component={GroupEdit} />
             <Route path="/search" exact component={Search} />
+            <Route
+              exact
+              path="/p/:id"
+              render={(props) => (
+                <Redirect to={`/post/${props.match.params.id}`} />
+              )}
+            />
             <Route path="/post/:post_id" exact component={RoutePost} />
             <PrivateRoute
               path="/edit/:post_id"
@@ -65,8 +72,11 @@ export default function Routes() {
             <Route exact path="/">
               <Redirect to="/home" />
             </Route>
-          </HeaderRemain>
-        </Switch>
+            <Route path="*">
+              <Redirect to="/home" />
+            </Route>
+          </Switch>
+        </HeaderRemain>
       )}
       <LoginModal />
       <SnackbarCustom />

@@ -3,10 +3,10 @@ import * as isbot from "isbot";
 import { gql } from "apollo-boost";
 import { client } from "./ApolloClient";
 export default functions
-  .region("asia-northeast3")
+  .region("us-central1")
   .https.onRequest(async (req, res) => {
     const { path } = req;
-    const [post_id] = path.substr(1).split("/");
+    const [, post_id] = path.substr(1).split("/");
     if (isbot(req.headers["user-agent"] || "")) {
       if (post_id) {
         const { data } = await client.query({
@@ -43,8 +43,6 @@ export default functions
   </html>`);
       }
     } else {
-      res.redirect(
-        "https://mix.beyondcovid19-opencall.org" + "/post/" + post_id
-      );
+      res.redirect("https://mix.beyondcovid19-opencall.org/p/" + post_id);
     }
   });
