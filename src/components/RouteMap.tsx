@@ -201,7 +201,7 @@ export default function RoutePhoto() {
                 lat: 37.5696629,
                 lng: 126.9134388,
               }}
-              defaultZoom={11}
+              defaultZoom={1}
               onChildClick={childClickHandler}
             >
               {posts?.map((p, i) => {
