@@ -53,7 +53,7 @@ export default function VoteNewCandidates({
   const wasBinary = React.useRef(false);
   function validate(value: string) {
     if (!wasBinary.current && !value) {
-      return "필수 입력";
+      return "Required";
     }
   }
   function duplicate(value: string) {

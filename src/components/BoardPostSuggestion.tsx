@@ -65,7 +65,7 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
             <PanToolIcon color="primary" className={classes.icon} />
           </Box>
           <Box color="primary.dark" fontWeight={500}>
-            <Typography variant="h5">{count}명 동의</Typography>
+            <Typography variant="h5">{count} people Agree</Typography>
           </Box>
         </Grid>
       </Box>

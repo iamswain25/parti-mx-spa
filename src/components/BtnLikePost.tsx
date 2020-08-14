@@ -55,12 +55,12 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
     if (user_id) {
       await vote();
       switch (type) {
-        case "suggestion":
-          return setSuccess("공감 하였습니다.");
-        case "event":
-          return setSuccess("참석 신청 하였습니다.");
+        // case "suggestion":
+        //   return setSuccess("");
+        // case "event":
+        //   return setSuccess("참석 신청 하였습니다.");
         default:
-          return setSuccess("공감 하였습니다.");
+          return setSuccess("liked");
       }
     } else {
       showLogin(true);
@@ -99,7 +99,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           startIcon={<FavoriteIcon className={classes.icon} />}
           disableElevation
         >
-          공감 {count}
+          like {count}
         </Button>
       );
   }

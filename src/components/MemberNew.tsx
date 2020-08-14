@@ -129,7 +129,7 @@ export default function MemberNew() {
           defaultValue="user"
           name="status"
           label="권한"
-          inputRef={register({ required: "필수 입력" })}
+          inputRef={register({ required: "Required" })}
         >
           {userGroupStatusList.map((l, i) => (
             <option value={l.value} key={i}>
@@ -143,7 +143,7 @@ export default function MemberNew() {
           name="emails"
           variant="outlined"
           fullWidth
-          inputRef={register({ required: "필수 입력" })}
+          inputRef={register({ required: "Required" })}
           label="초대 이메일"
           helperText="쉼표(,)나 세미콜론(;)혹은 엔터(다음 줄)로 이메일을 구분해주세요."
           classes={{ root: classes.texts }}

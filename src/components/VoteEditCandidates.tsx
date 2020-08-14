@@ -37,7 +37,7 @@ export default function VoteEditCandidates({
   }
   function validate(value: string) {
     if (!isBinary && !value) {
-      return "필수 입력";
+      return "Required";
     }
   }
   function duplicate(value: string) {

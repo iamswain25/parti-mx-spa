@@ -38,7 +38,7 @@ export default function EventInputs({ register, errors }: any) {
           endAdornment: <span>명</span>,
         }}
         inputRef={register({
-          required: "필수 입력",
+          required: "Required",
           min: {
             value: 1,
             message: "모집 최소 인원은 1명 입니다.",

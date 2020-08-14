@@ -74,7 +74,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
                 letterSpacing={0.23}
                 color="grey.900"
               >
-                공지
+                Notice
               </Box>
               <Divider />
               <Box padding={2}>

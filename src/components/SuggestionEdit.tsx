@@ -87,11 +87,11 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Hidden mdUp>
-        <HeaderNew title="제안글 수정" />
+        <HeaderNew title="Edit Key Concept" />
       </Hidden>
       <Box mt={2}>
         <Container component="main" maxWidth="md">
-          <Typography variant="h2">제안글 수정</Typography>
+          <Typography variant="h2">Edit Key Concept</Typography>
           <SuggestionInputs formControl={formControl} />
           <GooglePlaceAutocomplete
             address={address}
@@ -107,7 +107,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
             setFiles={setFiles2}
             setImages={setImages2}
           />
-          <BtnSubmitDesktop text="제안 수정" />
+          <BtnSubmitDesktop text="Submit changes" />
         </Container>
       </Box>
     </form>

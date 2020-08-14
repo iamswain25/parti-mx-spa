@@ -17,7 +17,7 @@ export default function useCommentUpdate(id: number) {
     const res = await mutate({ variables: { id, body } });
     const comment_id = res.data?.update_mx_comments_by_pk.id;
     if (comment_id) {
-      setSuccess("댓글을 수정했습니다.");
+      setSuccess("Edit comment");
     }
   }
   return handler;

@@ -5,12 +5,12 @@ export async function makeNewVariables(form: any, other: any) {
   let images = null;
   if (imageArr.length) {
     images = await Promise.all(imageArr.map(uploadFileGetUriArray));
-    setSuccess(images?.length + " 개의 사진 업로드 성공");
+    setSuccess(images?.length + " photos uploaded");
   }
   let files = null;
   if (fileArr.length) {
     files = await Promise.all(fileArr.map(uploadFileGetUriArray));
-    setSuccess(files?.length + " 개의 파일 업로드 성공");
+    setSuccess(files?.length + " files uploaded");
   }
   return {
     images,
@@ -26,7 +26,7 @@ export async function makeUpdateVariables(form: any, other: any) {
 
   if (imageArr.length) {
     images = await Promise.all(imageArr.map(uploadFileGetUriArray));
-    setSuccess(images?.length + " 개의 사진 업로드 성공");
+    setSuccess(images?.length + " photos uploaded");
   }
   if (images2) {
     images = [...images2, ...(images || [])];
@@ -34,7 +34,7 @@ export async function makeUpdateVariables(form: any, other: any) {
   let files = null;
   if (fileArr.length) {
     files = await Promise.all(fileArr.map(uploadFileGetUriArray));
-    setSuccess(files?.length + " 개의 파일 업로드 성공");
+    setSuccess(files?.length + " files uploaded");
   }
   if (files2) {
     files = [...files2, ...(files || [])];

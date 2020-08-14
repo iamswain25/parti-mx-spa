@@ -24,7 +24,7 @@ export default function CommentEdit({
         variant="outlined"
         defaultValue={c.body}
         name="body"
-        inputRef={register({ required: "수정 할 댓글을 입력하세요." })}
+        inputRef={register({ required: "Required" })}
         required
         error={!!errors.body}
         helperText={errors.body && errors.body.message}
@@ -35,7 +35,7 @@ export default function CommentEdit({
                 Cancel
               </Button>
               <Button variant="contained" type="submit" color="primary">
-                수정
+                Edit
               </Button>
             </InputAdornment>
           ),

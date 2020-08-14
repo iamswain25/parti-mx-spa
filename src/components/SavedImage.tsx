@@ -12,7 +12,7 @@ export default function SavedImage(props: { images: Image[]; setImages: any }) {
   }
   return (
     <Box>
-      이미 저장된 이미지
+      Saved images
       {images.map((f, i: number) => (
         <Grid container key={i} alignItems="center">
           {f.name}

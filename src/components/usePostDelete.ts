@@ -18,14 +18,14 @@ export default function usePostDelete(id: number) {
       const res = await del();
       const board_id = res.data?.delete_mx_posts_by_pk.board_id;
       if (board_id) {
-        setSuccess("삭제 되었습니다");
+        setSuccess("Deleted");
         push("/home/" + board_id);
       }
     } catch (error) {}
   }
 
   return function () {
-    if (window.confirm("삭제하겠습니까? 복구할 수 없습니다.")) {
+    if (window.confirm("Are you sure to delete? It will be unable to recover.")) {
       handler();
     }
   };

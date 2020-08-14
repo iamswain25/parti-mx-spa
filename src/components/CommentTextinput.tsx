@@ -72,7 +72,7 @@ export default function CommentTextinput({
           // rows={4}
           fullWidth
           disabled={!user_id}
-          label="댓글 입력"
+          label="Comment"
           name="body"
           classes={{ root: classes.root }}
           // autoComplete="off"
@@ -81,7 +81,7 @@ export default function CommentTextinput({
           inputRef={(r) => {
             ref.current = r;
             register(r, {
-              required: "댓글을 입력하세요",
+              required: "Required",
             });
           }}
           required={errors.body ? true : false}

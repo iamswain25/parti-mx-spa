@@ -63,7 +63,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "active" : ""}`}
             onClick={() => setCommentVisible(true)}
           >
-            댓글
+            comment
             <Box ml={0.5} className="count">
               {count}
             </Box>
@@ -75,7 +75,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "" : "active"}`}
             onClick={() => setCommentVisible(false)}
           >
-            공감 멤버
+            liked members
             <Box ml={0.5} className="count">
               {count2}
             </Box>

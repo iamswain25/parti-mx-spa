@@ -49,7 +49,7 @@ export default function CommentContainer({
     <>
       <Box className={classes.text}>
         <Box color="text.primary" display="flex">
-          댓글
+          Comment
           <Box ml={0.5} color="primary.dark">
             {count}
           </Box>

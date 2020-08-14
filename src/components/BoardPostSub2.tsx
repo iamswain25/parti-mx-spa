@@ -16,7 +16,7 @@ export default function BoardPostSub2({ post: p }: { post: Post }) {
           {semanticDate(p.created_at)}
         </Box>
         <Box component="span" mr={1}>
-          댓글 {commentCount}
+          Comment {commentCount}
         </Box>
         <Box component="span" mr={1}>
           {isVote ? `참여자 ${likeCount}명` : `Like ${likeCount}`}

@@ -83,7 +83,7 @@ export default function Profile() {
   }
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-      <HeaderBack title="Profile" submit="수정" />
+      <HeaderBack title="Profile" submit="save change" />
       <Container maxWidth="lg" className={classes.grid}>
         {photo ? (
           <div className={classes.flex}>
@@ -103,7 +103,7 @@ export default function Profile() {
         )}
         <CountryRegionLocal formControl={formControl} />
       </Container>
-      <BtnSubmitDesktop text="수정" />
+      <BtnSubmitDesktop text="Edit" />
     </form>
   );
 }

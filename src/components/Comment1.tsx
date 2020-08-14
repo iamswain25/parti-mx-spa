@@ -38,7 +38,7 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
           ) : (
             <Typography>
               {c?.body || (
-                <Typography color="textSecondary">삭제되었습니다.</Typography>
+                <Typography color="textSecondary">Deleted</Typography>
               )}
             </Typography>
           )}
@@ -64,14 +64,14 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
                     className={classes.button}
                     onClick={() => setEdit(true)}
                   >
-                    수정
+                    Edit
                   </Button>
                   <Button
                     className={classes.button}
                     onClick={remove}
                     color="secondary"
                   >
-                    삭제
+                    Delete
                   </Button>
                 </>
               )}

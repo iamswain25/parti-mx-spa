@@ -118,7 +118,7 @@ export default function BoardsSetting() {
                     defaultValue={field.type}
                     name={`boards[${i}].type`}
                     inputRef={register({
-                      required: "필수 입력",
+                      required: "Required",
                     })}
                   >
                     <option value="notice">소식</option>
@@ -134,7 +134,7 @@ export default function BoardsSetting() {
                   name={`boards[${i}].order`}
                   defaultValue={field.order}
                   inputRef={register({
-                    required: "필수 입력",
+                    required: "Required",
                     min: 0,
                   })}
                   error={!!errors?.boards?.[i]?.order}
@@ -180,7 +180,7 @@ export default function BoardsSetting() {
                       defaultValue={field.permission}
                       name={`boards[${i}].permission`}
                       inputRef={register({
-                        required: "필수 입력",
+                        required: "Required",
                       })}
                     >
                       <option value="all">전체공개</option>

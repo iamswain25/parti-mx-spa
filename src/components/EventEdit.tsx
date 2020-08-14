@@ -61,11 +61,11 @@ export default function EventEdit({ post: p }: { post: Post }) {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
-          <HeaderNew title="소식 수정" />
+          <HeaderNew title="EDit" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">소식 수정</Typography>
+            <Typography variant="h2">Edit</Typography>
             <EventInputs register={register} errors={errors} />
             <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
@@ -75,7 +75,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
               setFiles={setFiles2}
               setImages={setImages2}
             />
-            <BtnSubmitDesktop text="모임 수정" />
+            <BtnSubmitDesktop text="Edit" />
           </Container>
         </Box>
       </form>

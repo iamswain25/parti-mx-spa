@@ -53,11 +53,11 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
-          <HeaderNew title="소식 수정" />
+          <HeaderNew title="Notice Edit" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">소식 수정</Typography>
+            <Typography variant="h2">Notice Edit</Typography>
             <CustomTextField
               label="Insert your question"
               name="title"
@@ -80,7 +80,7 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
               setFiles={setFiles2}
               setImages={setImages2}
             />
-            <BtnSubmitDesktop text="소식 수정" />
+            <BtnSubmitDesktop text="Notice Edit" />
           </Container>
         </Box>
       </form>

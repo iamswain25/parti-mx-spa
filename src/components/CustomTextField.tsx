@@ -16,7 +16,7 @@ export default function CustomTextField({
       inputRef={
         register
           ? register({
-              required: "필수 입력",
+              required: "Required",
             })
           : undefined
       }

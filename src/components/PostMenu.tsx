@@ -58,13 +58,13 @@ export default function PostMenu({ post: p }: { post: Post }) {
     if (isAnnounced) {
       menuItems.push(
         <MenuItem onClick={denounce} key={3}>
-          공지 내리기
+          cancel notice
         </MenuItem>
       );
     } else {
       menuItems.push(
         <MenuItem onClick={announce} key={4}>
-          공지 올리기
+          important notice
         </MenuItem>
       );
     }

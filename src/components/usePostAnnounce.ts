@@ -18,12 +18,12 @@ export default function usePostAnnounce(id: number) {
     const res = await announce();
     const board_id = res.data?.update_mx_posts_by_pk.board_id;
     if (board_id) {
-      setSuccess("공지 했습니다");
+      setSuccess("important notice");
       push("/home/" + board_id);
     }
   }
   return function () {
-    if (window.confirm("공지 하겠습니까?")) {
+    if (window.confirm("make it an important notice")) {
       handler();
     }
   };

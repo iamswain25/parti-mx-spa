@@ -14,14 +14,14 @@ export default (id: number) => {
   useLoadingEffect(loading || l2);
   useErrorEffect(e2);
   async function handler() {
-    if (window.confirm("댓글을 삭제하시겠습니까?")) {
+    if (window.confirm("Delete Comment?")) {
       let parent_id = null;
       let parent_body = null;
       try {
         const res = await remove();
         parent_id = res.data.delete_mx_comments_by_pk.parent.id;
         parent_body = res.data.delete_mx_comments_by_pk.parent.body;
-        setSuccess("댓글을 삭제 했습니다");
+        setSuccess("Deleted");
       } catch (error) {
         await nullify();
       }

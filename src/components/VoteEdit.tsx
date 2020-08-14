@@ -111,11 +111,11 @@ export default function VoteEdit({ post: p }: { post: Post }) {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
-          <HeaderNew title="투표 쓰기" />
+          <HeaderNew title="Vote edit" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">투표 쓰기</Typography>
+            <Typography variant="h2">Vote edit</Typography>
             <VoteInputs
               formControl={formControl}
               isBinary={isBinary}
@@ -130,7 +130,7 @@ export default function VoteEdit({ post: p }: { post: Post }) {
               setFiles={setFiles2}
               setImages={setImages2}
             />
-            <BtnSubmitDesktop text="투표 수정" />
+            <BtnSubmitDesktop text="Save changes" />
           </Container>
         </Box>
       </form>
