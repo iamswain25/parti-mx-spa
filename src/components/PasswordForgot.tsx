@@ -95,7 +95,7 @@ export default function PasswordForgot() {
             fullWidth
             type="email"
             id="email"
-            label="이메일 주소"
+            label="E-mail address"
             name="email"
             autoComplete="email"
             autoFocus

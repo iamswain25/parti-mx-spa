@@ -14,7 +14,7 @@ export function getAttitude(comment: Comment) {
       case "suggestion":
         return "동의";
       case "notice":
-        return "공감";
+        return "Like";
       case "vote":
         return "투표완료";
       default:

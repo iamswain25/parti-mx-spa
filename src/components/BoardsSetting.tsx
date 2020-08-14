@@ -154,7 +154,7 @@ export default function BoardsSetting() {
                   as={<input type="hidden" />}
                 />
                 <CustomTextField
-                  label="게시판 제목"
+                  label="게시판 Insert your question"
                   name={`boards[${i}].title`}
                   defaultValue={field.title}
                   register={register}

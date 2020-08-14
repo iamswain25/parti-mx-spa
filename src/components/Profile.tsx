@@ -83,7 +83,7 @@ export default function Profile() {
   }
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-      <HeaderBack title="프로필" submit="수정" />
+      <HeaderBack title="Profile" submit="수정" />
       <Container maxWidth="lg" className={classes.grid}>
         {photo ? (
           <div className={classes.flex}>

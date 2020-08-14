@@ -58,11 +58,11 @@ export default function SuggestionNew() {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
-          <HeaderNew title="제안글 쓰기" />
+          <HeaderNew title="Key Concepts" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">제안글 쓰기</Typography>
+            <Typography variant="h2">Key Concepts</Typography>
             <SuggestionInputs formControl={formControl} />
             <GooglePlaceAutocomplete
               address={address}
@@ -72,7 +72,7 @@ export default function SuggestionNew() {
             />
             <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
-            <BtnSubmitDesktop text="제안 제출" />
+            <BtnSubmitDesktop text="Submit Key Concept" />
           </Container>
         </Box>
       </form>

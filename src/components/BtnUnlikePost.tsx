@@ -57,12 +57,12 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
   async function handler() {
     await unlike();
     switch (type) {
-      case "suggestion":
-        return setSuccess("제안 취소 하였습니다.");
-      case "event":
-        return setSuccess("참석 취소 하였습니다.");
+      // case "suggestion":
+      //   return setSuccess("제안 취소 하였습니다.");
+      // case "event":
+      //   return setSuccess("참석 취소 하였습니다.");
       default:
-        return setSuccess("공감 취소 하였습니다.");
+        return setSuccess("Cancelled");
     }
   }
   switch (type) {
@@ -74,7 +74,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          제안 동의 취소
+          Cancel
         </Button>
       );
     case "event":
@@ -85,7 +85,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.event}
           disableElevation
         >
-          참석 취소
+          Cancel
         </Button>
       );
     default:
@@ -97,7 +97,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           disableElevation
           startIcon={<FavoriteIcon className={classes.icon} />}
         >
-          공감 취소 {count}
+          Cancel {count}
         </Button>
       );
   }

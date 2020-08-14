@@ -59,7 +59,7 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
           <Container component="main" maxWidth="md">
             <Typography variant="h2">소식 수정</Typography>
             <CustomTextField
-              label="제목"
+              label="Insert your question"
               name="title"
               autoFocus
               register={register}

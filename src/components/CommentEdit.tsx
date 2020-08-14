@@ -32,7 +32,7 @@ export default function CommentEdit({
           endAdornment: (
             <InputAdornment position="end">
               <Button variant="text" onClick={() => setEdit(false)}>
-                취소
+                Cancel
               </Button>
               <Button variant="contained" type="submit" color="primary">
                 수정

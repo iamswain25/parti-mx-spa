@@ -158,7 +158,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </Box>
         <Box mb={2}>
           <Grid container alignItems="center">
-            <Box className={classes.label}>제안자</Box>
+            <Box className={classes.label}>Proposer</Box>
             <Avatar
               alt={createdBy?.name}
               src={createdBy?.photo_url}
@@ -172,13 +172,13 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         <Box mb={2}>
           <Grid container alignItems="center" justify="space-between">
             <Box display="flex" alignItems="center">
-              <Box className={classes.label}>제안일</Box>
+              <Box className={classes.label}>Date of Proposal</Box>
               <Box>{semanticDate(created_at)}</Box>
             </Box>
-            <Box display="flex" alignItems="center">
+            {/* <Box display="flex" alignItems="center">
               <Box className={classes.label}>제안동의 마감</Box>
               <Box>{closingAt}</Box>
-            </Box>
+            </Box> */}
           </Grid>
         </Box>
         {tags && (
@@ -198,12 +198,12 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         )}
 
         <FilesImages images={images} files={files} />
-        <Box className={classes.body}>
+        {/* <Box className={classes.body}>
           <Box className={classes.label}>제안배경</Box>
           <Linkify componentDecorator={aTag}>{context}</Linkify>
-        </Box>
+        </Box> */}
         <Box className={classes.body}>
-          <Box className={classes.label}>제안내용</Box>
+          <Box className={classes.label}>Details</Box>
           <Linkify componentDecorator={aTag}>{body}</Linkify>
         </Box>
         <LinkPreview text={body} />

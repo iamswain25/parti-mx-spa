@@ -7,7 +7,7 @@ export default function CustomImageUploader({ setImageArr }: any) {
   return (
     <ImageUploader
       withIcon={true}
-      buttonText="이미지를 첨부하세요"
+      buttonText="Please insert image"
       onChange={imageUploaderHandler}
       withPreview={true}
       imgExtension={[".jpg", ".gif", ".png", ".gif"]}

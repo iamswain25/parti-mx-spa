@@ -45,12 +45,12 @@ export default function PostMenu({ post: p }: { post: Post }) {
   if (isMine) {
     menuItems.push(
       <MenuItem onClick={edit} key={1}>
-        수정하기
+        Edit
       </MenuItem>
     );
     menuItems.push(
       <MenuItem onClick={remove} key={2}>
-        삭제하기
+        Delete
       </MenuItem>
     );
   }

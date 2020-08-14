@@ -19,7 +19,7 @@ export default function BoardPostSub2({ post: p }: { post: Post }) {
           댓글 {commentCount}
         </Box>
         <Box component="span" mr={1}>
-          {isVote ? `참여자 ${likeCount}명` : `공감 ${likeCount}`}
+          {isVote ? `참여자 ${likeCount}명` : `Like ${likeCount}`}
         </Box>
       </Typography>
     </Box>

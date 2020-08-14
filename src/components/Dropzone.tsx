@@ -20,7 +20,7 @@ export default function Dropzone(props: { files: File[]; setFiles: any }) {
     <Box>
       <Container {...getRootProps()}>
         <input {...getInputProps()} />
-        클릭이나 드래그 하여 파일을 업로드 하세요.
+        Upload your file by clicking or dragging
       </Container>
       <Box>
         {files.map((f, i) => (

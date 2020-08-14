@@ -11,7 +11,7 @@ export default function LoginButton() {
   return (
     <>
       <Button onClick={handleLogin} color="inherit">
-        로그인
+        Log-in
       </Button>
     </>
   );

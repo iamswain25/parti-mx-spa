@@ -12,20 +12,20 @@ export default function SuggestionInputs(props: {
   return (
     <>
       <CustomTextField
-        label="제목"
+        label="Insert your question"
         name="title"
         autoFocus
         register={register}
         errors={errors}
       />
-      <CustomTextField
+      {/* <CustomTextField
         label="제안 배경"
         multiline
         name="context"
         register={register}
         errors={errors}
-      />
-      <CustomTextField
+      /> */}
+      {/* <CustomTextField
         select
         label="제안 종료 방법"
         variant="filled"
@@ -39,7 +39,7 @@ export default function SuggestionInputs(props: {
             {option.label}
           </option>
         ))}
-      />
+      /> */}
       <CustomTextField
         label="내용"
         multiline

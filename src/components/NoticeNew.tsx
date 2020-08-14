@@ -50,7 +50,7 @@ export default function NoticeNew() {
           <Container component="main" maxWidth="md">
             <Typography variant="h2">소식 쓰기</Typography>
             <CustomTextField
-              label="제목"
+              label="Insert your question"
               name="title"
               autoFocus
               register={register}

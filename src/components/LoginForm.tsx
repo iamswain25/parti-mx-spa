@@ -64,7 +64,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Typography variant="h2">로그인</Typography>
+        <Typography variant="h2">Log-in</Typography>
         <form
           className={classes.form}
           onSubmit={handleSubmit(handleForm)}
@@ -76,7 +76,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             fullWidth
             type="email"
             id="email"
-            label="이메일 주소"
+            label="E-mail address"
             name="email"
             autoComplete="email"
             autoFocus
@@ -115,12 +115,12 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             disableElevation
             className={classes.submit}
           >
-            로그인
+            Log-in
           </Button>
         </form>
         <div className={classes.labelContainer}>
           <Box className={classes.label}>
-            아직 회원이 아니신가요?
+            Not a member yet?
             <Link
               to={`/signup`}
               onClick={closeLoginModal}
@@ -130,13 +130,13 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             </Link>
           </Box>
           <Box className={classes.label}>
-            비밀번호를 잊으셨나요?
+            Forgot password?
             <Link
               to={`/forgot`}
               onClick={closeLoginModal}
               className={classes.link}
             >
-              비밀번호 찾기
+              Find Password
             </Link>
           </Box>
         </div>

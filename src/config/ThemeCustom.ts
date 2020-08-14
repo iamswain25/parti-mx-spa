@@ -80,7 +80,7 @@ export const theme: Theme = createMuiTheme({
       lineHeight: "normal",
     },
     h3: {
-      //제목
+      //Insert your question
       fontSize: 18,
       "@media (max-width: 960px)": {
         fontSize: 14,

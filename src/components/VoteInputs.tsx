@@ -20,7 +20,7 @@ export default function VoteInputs({
   return (
     <>
       <CustomTextField
-        label="제목"
+        label="Insert your question"
         name="title"
         autoFocus
         register={register}

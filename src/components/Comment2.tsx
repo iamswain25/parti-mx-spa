@@ -54,7 +54,7 @@ export default function Comment2({
           <Box color="grey.600" display="flex" mt={1}>
             <div className={classes.buttons}>
               <Button className={classes.button} onClick={() => setRe(c?.user)}>
-                댓글달기
+                Reply
               </Button>
               {c?.likes?.[0] ? (
                 <ButtonUnlikeComment

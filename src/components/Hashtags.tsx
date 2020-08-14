@@ -33,8 +33,8 @@ export default function Hashtags(props: {
               <TextField
                 {...params}
                 variant="outlined"
-                label="태그"
-                placeholder="태그를 입력해주세요"
+                label="Hashtag"
+                placeholder="Enter your Hashtag"
               />
             )}
             onChange={(e, data) => onChange(data)}

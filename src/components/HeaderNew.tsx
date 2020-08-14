@@ -37,7 +37,7 @@ export default function HeaderNew({ title = "로딩 중" }: { title: string }) {
         </Typography>
       </Box>
       <Button aria-label="back" type="submit">
-        <Box color="primary.dark">등록</Box>
+        <Box color="primary.dark">Submit</Box>
       </Button>
     </Grid>
   );

@@ -19,7 +19,7 @@ export default function BoardMoreTag({ to = "/" }: { to: string }) {
   return (
     <Link to={to} className={classes.link}>
       <Box color="grey.600" display="flex" alignItems="center">
-        <Typography variant={"body2"}>더 보기</Typography>
+        <Typography variant={"body2"}>More</Typography>
         <Box fontSize={16} display="flex" alignItems="center">
           <ChevronRightIcon />
         </Box>

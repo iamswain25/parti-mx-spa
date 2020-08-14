@@ -86,7 +86,7 @@ export default function Signup() {
             fullWidth
             type="email"
             id="email"
-            label="이메일 주소"
+            label="E-mail address"
             name="email"
             autoComplete="email"
             autoFocus
@@ -131,9 +131,9 @@ export default function Signup() {
           </div>
         </form>
         <Box className={classes.label}>
-          이미 회원이신가요?
+          Already a member?
           <Link to={`/login`} className={classes.link}>
-            로그인
+            Log-in
           </Link>
         </Box>
       </Container>

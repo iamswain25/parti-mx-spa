@@ -31,7 +31,7 @@ export default function BtnSubmitDesktop({ text = "저장" }) {
     <Hidden smDown implementation="css">
       <div className={classes.btn}>
         <Button variant="outlined" color="secondary" onClick={back}>
-          취소
+          Cancel
         </Button>
         <Button type="submit" variant="contained" color="primary">
           {text}

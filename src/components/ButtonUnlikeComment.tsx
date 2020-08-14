@@ -33,7 +33,7 @@ export default function ButtonUnlikeComment(props: {
   return (
     <Box alignItems="center" display="flex" color="primary.main">
       <Button className={classes.button} onClick={pressHandler}>
-        공감취소
+        Unlike
       </Button>
       <Box ml={0.5} alignItems="center" display="flex">
         {count}

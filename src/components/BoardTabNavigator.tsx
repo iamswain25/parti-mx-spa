@@ -188,7 +188,7 @@ export default function BoardTabNavigator() {
                       color="primary"
                       onClick={btnHandler}
                     >
-                      글쓰기
+                      Write
                     </Button>
                   </div>
                   <Hidden mdUp implementation="css">
