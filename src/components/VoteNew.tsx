@@ -7,12 +7,11 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
 import { VoteFormdata } from "../types";
 import { makeNewVariables } from "./makePostVariables";
-import CustomImageUploader from "./CustomImageUploader";
 import VoteInputs from "./VoteInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
+import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteNew() {
   const { board_id } = useParams();
@@ -86,8 +85,12 @@ export default function VoteNew() {
               isBinary={isBinary}
               setBinary={setBinary}
             />
-            <CustomImageUploader setImageArr={setImageArr} />
-            <Dropzone files={fileArr} setFiles={setFileArr} />
+            <ImageFileDropzone
+              images={imageArr}
+              setImages={setImageArr}
+              files={fileArr}
+              setFiles={setFileArr}
+            />
             <BtnSubmitDesktop text="투표 제출" />
           </Container>
         </Box>

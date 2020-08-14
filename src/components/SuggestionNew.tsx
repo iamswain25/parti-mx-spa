@@ -7,9 +7,8 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
+import ImageFileDropzone from "./ImageFileDropzone";
 import { makeNewVariables } from "./makePostVariables";
-import CustomImageUploader from "./CustomImageUploader";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import SuggestionInputs from "./SuggestionInputs";
 import { SuggestionFormdata } from "../types";
@@ -53,8 +52,12 @@ export default function SuggestionNew() {
           <Container component="main" maxWidth="md">
             <Typography variant="h2">제안글 쓰기</Typography>
             <SuggestionInputs formControl={formControl} />
-            <CustomImageUploader setImageArr={setImageArr} />
-            <Dropzone files={fileArr} setFiles={setFileArr} />
+            <ImageFileDropzone
+              images={imageArr}
+              setImages={setImageArr}
+              files={fileArr}
+              setFiles={setFileArr}
+            />
             <BtnSubmitDesktop text="제안 제출" />
           </Container>
         </Box>

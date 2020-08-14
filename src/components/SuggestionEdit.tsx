@@ -6,7 +6,6 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
 import {
   Post,
   Image,
@@ -16,9 +15,9 @@ import {
 } from "../types";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
-import CustomImageUploader from "./CustomImageUploader";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import SuggestionInputs from "./SuggestionInputs";
+import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function SuggestionEdit({ post: p }: { post: Post }) {
   const { id } = p;
@@ -66,8 +65,12 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
         <Container component="main" maxWidth="md">
           <Typography variant="h2">제안글 수정</Typography>
           <SuggestionInputs formControl={formControl} />
-          <CustomImageUploader setImageArr={setImageArr} />
-          <Dropzone files={fileArr} setFiles={setFileArr} />
+          <ImageFileDropzone
+            images={imageArr}
+            setImages={setImageArr}
+            files={fileArr}
+            setFiles={setFileArr}
+          />
           <SavedImageFile
             files={files2}
             images={images2}
