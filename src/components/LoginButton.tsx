@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { MenuItem } from "@material-ui/core";
 
 export default function LoginButton() {
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
@@ -10,9 +10,9 @@ export default function LoginButton() {
   }
   return (
     <>
-      <Button onClick={handleLogin} color="inherit">
+      <MenuItem onClick={handleLogin} color="inherit">
         로그인
-      </Button>
+      </MenuItem>
     </>
   );
 }

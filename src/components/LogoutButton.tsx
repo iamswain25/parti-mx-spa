@@ -7,12 +7,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { MenuItem } from "@material-ui/core";
 
 export default function LogoutButton() {
   const history = useHistory();
   async function logoutHandler() {
     await auth.signOut();
-    history.push("/");
+    history.replace("/");
   }
   const [open, setOpen] = React.useState(false);
 
@@ -26,9 +27,9 @@ export default function LogoutButton() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} color="inherit">
-        Logout
-      </Button>
+      <MenuItem onClick={handleClickOpen} color="inherit">
+        로그아웃
+      </MenuItem>
       <Dialog
         open={open}
         onClose={handleClose}

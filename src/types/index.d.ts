@@ -119,6 +119,7 @@ export interface PagePost {
 export interface Whoami {
   mx_groups: Group[];
   mx_users_by_pk: {
+    id: number;
     name: string;
     email: string;
     photo_url: string;

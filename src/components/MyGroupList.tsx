@@ -22,8 +22,9 @@ import {
   IconButton,
   Divider,
 } from "@material-ui/core";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import GroupSearchList from "./GroupSearchList";
+import MenuProfile from "./MenuProfile";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
     display: "flex",
@@ -114,9 +115,7 @@ export default function MyGroupList(props: {
       <Typography variant="h2">
         <div className={classes.title}>
           <span>믹스 그룹</span>
-          <Link to="/profile" onClick={() => clickHandler()}>
-            <Avatar src={me.photo_url} children={me.name.substr(0, 1)} />
-          </Link>
+          <MenuProfile user={me} />
         </div>
       </Typography>
       <Typography variant="h4">
