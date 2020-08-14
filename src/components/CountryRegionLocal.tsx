@@ -7,10 +7,17 @@ import {
 } from "react-hook-form/dist/types/form";
 import { CountryRegionData } from "react-country-region-selector";
 import { client } from "../config/ApolloSetup";
-import { searchDuplicateName } from "../graphql/query";
+import {
+  searchDuplicateName,
+  searchDuplicateNameWithoutMine,
+} from "../graphql/query";
+import { useRouteMatch } from "react-router-dom";
+import { useStore } from "../store/store";
 export default function CountryRegionLocal(props: {
   formControl: UseFormMethods<any>;
 }) {
+  const isProfile = useRouteMatch("/profile");
+  const [{ user_id }] = useStore();
   const { errors, control, watch } = props.formControl;
   const { country } = watch();
   const region =
@@ -39,8 +46,12 @@ export default function CountryRegionLocal(props: {
           required: "Required",
           validate: async function (value): Promise<ValidateResult> {
             const res = await client.query({
-              query: searchDuplicateName,
-              variables: { name: value },
+              query: isProfile?.isExact
+                ? searchDuplicateNameWithoutMine
+                : searchDuplicateName,
+              variables: isProfile?.isExact
+                ? { name: value, id: user_id }
+                : { name: value },
               fetchPolicy: "network-only",
             });
             if (res.data?.mx_users?.length) {

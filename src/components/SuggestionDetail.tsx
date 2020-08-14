@@ -153,7 +153,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </Box>
         <LinkPreview text={body} />
         <div>
-          {tags.map((chip) => {
+          {tags?.map((chip) => {
             return (
               <span key={chip} className={classes.tag}>
                 #{chip}

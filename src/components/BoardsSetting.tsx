@@ -47,7 +47,10 @@ interface BoardsForm {
 }
 export default function BoardsSetting() {
   const classes = useStyles();
-  const [{ group_id, user_id }] = useStore();
+  const [{ group_id, user_id }, dispatch] = useStore();
+  React.useEffect(() => {
+    dispatch({ type: "SET_BOARD", board_id: null });
+  }, [dispatch]);
   const { data, error, loading } = useQuery<HomeGroup>(queryBoardsByGroupId, {
     variables: { group_id, user_id },
   });

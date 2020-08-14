@@ -347,7 +347,7 @@ export const searchOrganizer = gql`
 `;
 
 export const searchPosts = gql`
-  query($searchKeyword: String!, $group_id: Int!, $user_id: Int!) {
+  query($searchKeyword: String!, $group_id: Int!) {
     mx_posts(
       where: {
         _and: [
@@ -358,27 +358,7 @@ export const searchPosts = gql`
               { context: { _ilike: $searchKeyword } }
             ]
           }
-          {
-            board: {
-              _and: [
-                { group: { id: { _eq: $group_id } } }
-                {
-                  _or: [
-                    { permission: { _in: ["all"] } }
-                    {
-                      permission: { _in: ["member", "observer"] }
-                      group: {
-                        users: {
-                          user_id: { _eq: $user_id }
-                          status: { _in: ["organizer", "user", "participants"] }
-                        }
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          }
+          { board: { _and: [{ group: { id: { _eq: $group_id } } }] } }
         ]
       }
     ) {

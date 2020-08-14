@@ -8,14 +8,14 @@ import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
 import { useQuery } from "@apollo/client";
-import { queryBoardsOnly } from "../graphql/query";
+import { queryBoardsOnly, whoami } from "../graphql/query";
 import { useStore } from "../store/store";
 import usePermEffect from "./usePermEffect";
 import GroupLogoContainer from "./GroupLogoContainer";
 import GreyDivider from "./GreyDivider";
-import LogoutButton from "./LogoutButton";
-import LoginButton from "./LoginButton";
 import SearchIcon from "@material-ui/icons/Search";
+import MenuProfile from "./MenuProfile";
+import LoginButton from "./LoginButton";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -110,8 +110,10 @@ export default function BoardTabNavigator() {
     variables: { group_id, user_id, isAnonymous: !user_id },
     fetchPolicy: "network-only",
   });
+  const ami = useQuery(whoami, { variables: { id: user_id } });
   const group = data?.mx_groups_by_pk;
   const boards = data?.mx_groups_by_pk?.boards;
+  const user = ami?.data?.mx_users_by_pk;
   const userStatus = data?.mx_groups_by_pk?.users?.[0]?.status;
   usePermEffect(userStatus);
   const history = useHistory();
@@ -143,6 +145,9 @@ export default function BoardTabNavigator() {
       >
         <div className={classes.tab}>
           <Box display="flex" flexWrap="nowrap">
+            <NavLink to="/home" className={classes.tabLink} exact>
+              WTA PLATFORM
+            </NavLink>
             {boards.map((b, i) => (
               <NavLink
                 to={
@@ -158,19 +163,17 @@ export default function BoardTabNavigator() {
             ))}
           </Box>
           <Grid container alignItems="center" justify="flex-end">
-            {user_id ? <LogoutButton /> : <LoginButton />}
-            {user_id && (
-              <Link
-                to="/search"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  padding: 10,
-                }}
-              >
-                <SearchIcon />
-              </Link>
-            )}
+            {user ? <MenuProfile user={user} /> : <LoginButton />}
+            <Link
+              to="/search"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: 10,
+              }}
+            >
+              <SearchIcon />
+            </Link>
             {["user", "organizer"].includes(userStatus as string) && board_id && (
               <>
                 <div className={classes.btn}>

@@ -7,6 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { MenuItem } from "@material-ui/core";
 
 export default function LogoutButton() {
   const history = useHistory();
@@ -26,27 +27,27 @@ export default function LogoutButton() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} color="inherit">
+      <MenuItem onClick={handleClickOpen} color="inherit">
         Logout
-      </Button>
+      </MenuItem>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">로그아웃</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Logout</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            로그아웃 하시겠습니까?
+            Do you want to logout?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            아니요
+            No
           </Button>
           <Button onClick={logoutHandler} color="primary" autoFocus>
-            네, 로그아웃
+            Yes Logout!
           </Button>
         </DialogActions>
       </Dialog>

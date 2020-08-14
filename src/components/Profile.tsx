@@ -41,8 +41,11 @@ interface GroupForm extends ProfileForm {
 }
 export default function Profile() {
   const classes = useStyles();
-  const [{ user_id }] = useStore();
+  const [{ user_id }, dispatch] = useStore();
   const history = useHistory();
+  React.useEffect(() => {
+    dispatch({ type: "SET_BOARD", board_id: null });
+  }, [dispatch]);
   const [updateName] = useMutation(updateUserName);
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
   const [, setLoading] = useGlobalState(keys.LOADING);
@@ -72,6 +75,7 @@ export default function Profile() {
       photo_url: undefined,
       metadata: { country, region, local },
     };
+    // return console.log(variables);
     if (bgFiles?.length) {
       variables.photo_url = await uploadFileByPath(
         bgFiles[0],
@@ -103,7 +107,7 @@ export default function Profile() {
         )}
         <CountryRegionLocal formControl={formControl} />
       </Container>
-      <BtnSubmitDesktop text="Edit" />
+      <BtnSubmitDesktop text="Save Change" />
     </form>
   );
 }

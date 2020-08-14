@@ -115,6 +115,7 @@ export interface Group {
 }
 export interface HomeGroup {
   mx_groups_by_pk: Group;
+  mx_users_by_pk: User;
 }
 export interface PageBoard {
   mx_boards_by_pk: Board;
