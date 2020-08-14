@@ -7,12 +7,11 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
 import CustomTextField from "./CustomTextField";
-import CustomImageUploader from "./CustomImageUploader";
 import { makeNewVariables } from "./makePostVariables";
 import { NoticeFormdata } from "../types";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
+import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function NoticeNew() {
   const { board_id } = useParams();
@@ -63,8 +62,12 @@ export default function NoticeNew() {
               register={register}
               errors={errors}
             />
-            <CustomImageUploader setImageArr={setImageArr} />
-            <Dropzone files={fileArr} setFiles={setFileArr} />
+            <ImageFileDropzone
+              images={imageArr}
+              setImages={setImageArr}
+              files={fileArr}
+              setFiles={setFileArr}
+            />
             <BtnSubmitDesktop text="소식 제출" />
           </Container>
         </Box>
