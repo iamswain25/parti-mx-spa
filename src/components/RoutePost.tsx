@@ -28,7 +28,7 @@ export default function RoutePost() {
   const board_id = data?.mx_posts_by_pk?.board?.id;
   React.useEffect(() => {
     if (board_id) {
-      dispatch({ type: "SET_BOARD", board_id });
+      dispatch({ type: "SET_BOARD", board_id: Number(board_id) });
     }
   }, [board_id, dispatch]);
   if (loading) {

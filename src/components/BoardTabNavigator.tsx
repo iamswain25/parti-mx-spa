@@ -16,6 +16,7 @@ import GreyDivider from "./GreyDivider";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuProfile from "./MenuProfile";
 import LoginButton from "./LoginButton";
+import MenuBoard from "./MenuBoard";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -145,22 +146,23 @@ export default function BoardTabNavigator() {
       >
         <div className={classes.tab}>
           <Box display="flex" flexWrap="nowrap">
-            <NavLink to="/home" className={classes.tabLink} exact>
+            <NavLink
+              to="/home"
+              className={classes.tabLink}
+              exact
+              isActive={(match, location) => {
+                if (match) {
+                  return true;
+                }
+                if (location.pathname === "/photo/2") {
+                  return true;
+                }
+                return false;
+              }}
+            >
               WTA PLATFORM
             </NavLink>
-            {boards.map((b, i) => (
-              <NavLink
-                to={
-                  b.type === "suggestion" ? `/photo/${b.id}` : `/home/${b.id}`
-                }
-                key={i}
-                className={`${classes.tabLink} ${
-                  board_id === b.id ? "active" : ""
-                }`}
-              >
-                {b.title}
-              </NavLink>
-            ))}
+            <MenuBoard boards={boards} />
           </Box>
           <Grid container alignItems="center" justify="flex-end">
             {user ? <MenuProfile user={user} /> : <LoginButton />}

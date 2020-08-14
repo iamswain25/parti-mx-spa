@@ -85,6 +85,16 @@ export default function RoutePhoto() {
           <Box display="flex">
             <PostSort />
             <NavLink
+              isActive={(match, location) => {
+                if (match) {
+                  return true;
+                }
+                if (location.pathname === "/home") {
+                  return true;
+                } else {
+                  return false;
+                }
+              }}
               exact
               to={`/photo/${board_id}`}
               className={classes.smallIcon}

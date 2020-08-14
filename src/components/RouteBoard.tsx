@@ -28,7 +28,7 @@ export default function RouteBoard() {
     fetchPolicy: "network-only",
   });
   React.useEffect(() => {
-    dispatch({ type: "SET_BOARD", board_id });
+    dispatch({ type: "SET_BOARD", board_id: Number(board_id) });
   }, [board_id, dispatch]);
   useLoadingEffect(loading);
   useErrorEffect(error);

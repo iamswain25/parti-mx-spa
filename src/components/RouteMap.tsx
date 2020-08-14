@@ -96,7 +96,7 @@ export default function RoutePhoto() {
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
   React.useEffect(() => {
-    dispatch({ type: "SET_BOARD", board_id });
+    dispatch({ type: "SET_BOARD", board_id: Number(board_id) });
   }, [board_id, dispatch]);
   const [chipData, setChipData] = React.useState<ChipData[]>(
     defaultHashtags.map((c) => ({ label: c, selected: false }))
