@@ -53,7 +53,7 @@ export default function Chips({
           <li key={chip.label}>
             <Chip
               variant="outlined"
-              label={chip.label}
+              label={"#" + chip.label}
               onClick={handleSelect(chip)}
               className={chip.selected ? classes.selected : classes.chip}
             />

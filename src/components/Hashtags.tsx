@@ -3,12 +3,18 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Chip, TextField, FormControl } from "@material-ui/core";
 import { UseFormMethods, Controller } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
-// import { defaultHashtags } from "../helpers/options";
-
 export default function Hashtags(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
 }) {
   const { control } = props.formControl;
+  const changeHandler = (onChange: any) => (e: any, data: any) => {
+    return onChange(
+      data
+        .join(",")
+        .split(/[\r\n,;#]+/)
+        .filter((e: any) => e)
+    );
+  };
   return (
     <FormControl margin="normal" fullWidth>
       <Controller
@@ -37,11 +43,10 @@ export default function Hashtags(props: {
                 placeholder="Enter your Hashtag"
               />
             )}
-            onChange={(e, data) => onChange(data)}
+            onChange={changeHandler(onChange)}
             {...props}
           />
         )}
-        onChange={([, data]: [any, any]) => data}
       />
     </FormControl>
   );
