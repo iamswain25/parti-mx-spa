@@ -1,5 +1,5 @@
 import React from "react";
-import { Post, SuggestionMetadata } from "../types";
+import { Post } from "../types";
 import {
   Box,
   Grid,
@@ -16,7 +16,7 @@ import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
-import { semanticDate, closingDateFrom } from "../helpers/datefns";
+import { semanticDate } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
 import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
@@ -116,32 +116,8 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const {
-    body,
-    images = [],
-    createdBy,
-    created_at,
-    context,
-    files = [],
-    tags,
-  } = p;
-  const metadata = p.metadata as SuggestionMetadata;
+  const { body, images = [], createdBy, created_at, files = [], tags } = p;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
-  const closingAt = React.useMemo(() => {
-    let after = undefined;
-    const closingMethod = metadata?.closingMethod;
-    if (!closingMethod) {
-      return "계속";
-    }
-    try {
-      after = Number(closingMethod?.replace("days", ""));
-      return closingDateFrom(created_at, after);
-    } catch (err) {
-      console.log(metadata);
-      return "버그";
-    }
-  }, [metadata, created_at]);
-
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
@@ -175,10 +151,6 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
               <Box className={classes.label}>Date of Proposal</Box>
               <Box>{semanticDate(created_at)}</Box>
             </Box>
-            {/* <Box display="flex" alignItems="center">
-              <Box className={classes.label}>제안동의 마감</Box>
-              <Box>{closingAt}</Box>
-            </Box> */}
           </Grid>
         </Box>
         {tags && (

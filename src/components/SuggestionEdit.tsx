@@ -37,15 +37,15 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const formControl = useForm<SuggestionFormdata>();
   const { handleSubmit, reset } = formControl;
   React.useEffect(() => {
-    const { location, title, body, context, files, images } = p;
+    const { location, title, body, files, images } = p;
     const tags = p.tags || [];
     const metadata = p.metadata as SuggestionMetadata;
     reset({
       title,
       body,
-      context,
-      closingMethod: metadata.closingMethod,
-      tags,
+      // context,
+      // closingMethod: metadata.closingMethod,
+      customTags: tags,
     });
     setImages2(images);
     setFiles2(files);
@@ -61,9 +61,11 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
-    const { closingMethod, ...rest } = form;
-    const metadata = { closingMethod, address };
+    const { customTags, tags, ...rest } = form;
+    const tagSet = new Set([...tags, ...customTags]);
+    const metadata = { address };
     const variables = await makeUpdateVariables(rest, {
+      tags: Array.from(tagSet),
       imageArr,
       fileArr,
       images2,

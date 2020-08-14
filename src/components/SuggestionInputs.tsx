@@ -1,9 +1,16 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
-import { suggestionOptions } from "../helpers/options";
+import { defaultHashtags } from "../helpers/options";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
 import Hashtags from "./Hashtags";
+import {
+  FormControlLabel,
+  Checkbox,
+  FormLabel,
+  FormGroup,
+  FormControl,
+} from "@material-ui/core";
 
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
@@ -47,6 +54,25 @@ export default function SuggestionInputs(props: {
         register={register}
         errors={errors}
       />
+      <FormControl margin="normal">
+        <FormLabel component="legend">Hashtags</FormLabel>
+        <FormGroup row>
+          {defaultHashtags.map((tag, i) => (
+            <FormControlLabel
+              key={i}
+              control={
+                <Checkbox
+                  name="tags"
+                  color="primary"
+                  inputRef={register()}
+                  value={tag}
+                />
+              }
+              label={tag}
+            />
+          ))}
+        </FormGroup>
+      </FormControl>
       <Hashtags formControl={props.formControl} />
     </>
   );

@@ -12,13 +12,12 @@ export default function Hashtags(props: {
   return (
     <FormControl margin="normal" fullWidth>
       <Controller
-        name="tags"
+        name="customTags"
         control={control}
         defaultValue={[]}
         render={({ onChange, ...props }) => (
           <Autocomplete
             multiple
-            options={defaultHashtags}
             freeSolo
             renderTags={(value: string[], getTagProps) =>
               value.map((option: string, index: number) => (

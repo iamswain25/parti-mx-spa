@@ -31,9 +31,11 @@ export default function SuggestionNew() {
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
-    const { ...rest } = form;
+    const { customTags, tags, ...rest } = form;
+    const tagSet = new Set([...tags, ...customTags]);
     const metadata = { address };
     const variables = await makeNewVariables(rest, {
+      tags: Array.from(tagSet),
       board_id,
       group_id,
       imageArr,
@@ -41,6 +43,7 @@ export default function SuggestionNew() {
       setSuccess,
       metadata,
     });
+    // return console.log(variables);
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {
