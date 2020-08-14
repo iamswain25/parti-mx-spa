@@ -52,7 +52,10 @@ interface UserGroups {
 const LIMIT = 20;
 export default function MemberSetting() {
   const classes = useStyles();
-  const [{ group_id }] = useStore();
+  const [{ group_id }, dispatch] = useStore();
+  React.useEffect(() => {
+    dispatch({ type: "SET_BOARD", board_id: null });
+  }, [dispatch]);
   const [keyword, setKeyword] = React.useState("");
   const [items, setItems] = React.useState<UserGroup[]>([]);
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);

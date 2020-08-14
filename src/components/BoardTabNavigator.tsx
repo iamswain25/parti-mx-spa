@@ -179,30 +179,29 @@ export default function BoardTabNavigator() {
                 <SearchIcon />
               </Link>
             )}
-            {["user", "organizer"].includes(userStatus as string) &&
-              !isHome?.isExact && (
-                <>
-                  <div className={classes.btn}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={btnHandler}
-                    >
-                      Write
-                    </Button>
-                  </div>
-                  <Hidden mdUp implementation="css">
-                    <Fab
-                      color="primary"
-                      aria-label="write"
-                      className={classes.fab}
-                      onClick={btnHandler}
-                    >
-                      <CreateIcon />
-                    </Fab>
-                  </Hidden>
-                </>
-              )}
+            {["user", "organizer"].includes(userStatus as string) && board_id && (
+              <>
+                <div className={classes.btn}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={btnHandler}
+                  >
+                    Write
+                  </Button>
+                </div>
+                <Hidden mdUp implementation="css">
+                  <Fab
+                    color="primary"
+                    aria-label="write"
+                    className={classes.fab}
+                    onClick={btnHandler}
+                  >
+                    <CreateIcon />
+                  </Fab>
+                </Hidden>
+              </>
+            )}
           </Grid>
         </div>
       </Grid>
