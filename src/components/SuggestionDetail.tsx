@@ -7,8 +7,6 @@ import {
   makeStyles,
   Avatar,
   Hidden,
-  Paper,
-  Chip,
 } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
@@ -91,20 +89,10 @@ const useStyles = makeStyles((theme) => {
       color: colors.emerald,
       marginRight: theme.spacing(0.5),
     },
-    chips: {
-      display: "flex",
-      flexWrap: "wrap",
-      listStyle: "none",
-      paddingTop: theme.spacing(0.5),
-      paddingBottom: theme.spacing(0.5),
-      paddingLeft: -2,
-      margin: 0,
-      fontFamily: "Roboto",
-    },
-    chip: {
+    tag: {
       margin: theme.spacing(0.5),
-      color: theme.palette.text.primary,
-      borderColor: theme.palette.divider,
+      color: theme.palette.primary.main,
+      // borderColor: theme.palette.divider,
     },
   };
 });
@@ -153,32 +141,21 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             </Box>
           </Grid>
         </Box>
-        {tags && (
-          <Paper component="ul" className={classes.chips} elevation={0}>
-            {tags.map((chip) => {
-              return (
-                <li key={chip}>
-                  <Chip
-                    variant="outlined"
-                    label={chip}
-                    className={classes.chip}
-                  />
-                </li>
-              );
-            })}
-          </Paper>
-        )}
-
         <FilesImages images={images} files={files} />
-        {/* <Box className={classes.body}>
-          <Box className={classes.label}>제안배경</Box>
-          <Linkify componentDecorator={aTag}>{context}</Linkify>
-        </Box> */}
         <Box className={classes.body}>
           <Box className={classes.label}>Details</Box>
           <Linkify componentDecorator={aTag}>{body}</Linkify>
         </Box>
         <LinkPreview text={body} />
+        <div>
+          {tags.map((chip) => {
+            return (
+              <span key={chip} className={classes.tag}>
+                #{chip}
+              </span>
+            );
+          })}
+        </div>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}
