@@ -17,15 +17,22 @@ export default function usePostDelete(id: number) {
     try {
       const res = await del();
       const board_id = res.data?.delete_mx_posts_by_pk.board_id;
+      const type = res.data?.delete_mx_posts_by_pk?.board?.type;
       if (board_id) {
         setSuccess("Deleted");
-        push("/home/" + board_id);
+        if (type === "suggestion") {
+          push("/photo/" + board_id);
+        } else {
+          push("/home/" + board_id);
+        }
       }
     } catch (error) {}
   }
 
   return function () {
-    if (window.confirm("Are you sure to delete? It will be unable to recover.")) {
+    if (
+      window.confirm("Are you sure to delete? It will be unable to recover.")
+    ) {
       handler();
     }
   };

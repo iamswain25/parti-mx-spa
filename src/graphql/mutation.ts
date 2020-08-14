@@ -109,6 +109,9 @@ export const deletePost = gql`
   mutation($id: Int!) {
     delete_mx_posts_by_pk(id: $id) {
       board_id
+      board {
+        type
+      }
     }
   }
 `;
