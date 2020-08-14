@@ -77,7 +77,11 @@ export default function Footer() {
         className={classes.second}
       >
         <Grid item>
-          <a target="_blank" href="http://www.seoulhour.kr/main/ko/">
+          <a
+            target="_blank"
+            href="http://www.seoulhour.kr/main/ko/"
+            rel="noopener noreferrer"
+          >
             <Img src={[homepage]} />
           </a>
         </Grid>
@@ -85,12 +89,17 @@ export default function Footer() {
           <a
             target="_blank"
             href="https://www.facebook.com/seoulhour.kr/?modal=admin_todo_tour"
+            rel="noopener noreferrer"
           >
             <Img src={[facebook]} />
           </a>
         </Grid>
         <Grid item>
-          <a target="_blank" href="https://www.instagram.com/seoulhour/">
+          <a
+            target="_blank"
+            href="https://www.instagram.com/seoulhour/"
+            rel="noopener noreferrer"
+          >
             <Img src={[instagram]} />
           </a>
         </Grid>
@@ -98,6 +107,7 @@ export default function Footer() {
         <Grid item>
           <a
             target="_blank"
+            rel="noopener noreferrer"
             href="https://www.youtube.com/channel/UCKLjFesxLmTcshZu-FlvrMw?view_as=subscriber"
           >
             <Img src={[youtube]} />
