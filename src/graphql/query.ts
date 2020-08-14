@@ -133,7 +133,7 @@ export const queryByBoardId = gql`
 `;
 
 export const queryBoardType = gql`
-  query($board_id: Int!, $user_id: Int) {
+  query($board_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_boards_by_pk(id: $board_id) {
       id
       title
@@ -142,7 +142,7 @@ export const queryBoardType = gql`
       group {
         id
         title
-        users(where: { user_id: { _eq: $user_id } }) {
+        users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
           status
         }
       }
