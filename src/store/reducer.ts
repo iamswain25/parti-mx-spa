@@ -4,6 +4,7 @@ export const PERSIST_KEY = "seoul-city-architecture";
 export const initialState = {
   isInit: false,
   group_id: 1,
+  board_id: null,
   // group_title: null,
   user_id: null,
 };
@@ -11,6 +12,7 @@ export type State = typeof initialState;
 export type Action =
   | { type: "CHANGE_ALL"; isInit: boolean }
   | { type: "SET_GROUP"; group_id: number }
+  | { type: "SET_BOARD"; board_id: number | null }
   // | { type: "SET_GROUP_AND_TITLE"; group_id: number; group_title: string }
   | { type: "SET_USER"; user_id: number | null }
   | { type: "LOGOUT" };

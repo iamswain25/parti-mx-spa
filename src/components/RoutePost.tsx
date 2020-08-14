@@ -5,13 +5,12 @@ import { PagePost } from "../types";
 import { useSubscription } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SuggestionDetail from "./SuggestionDetail";
-import { Box, Divider, Typography, Hidden } from "@material-ui/core";
-import HeaderPost from "./HeaderPost";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import BoardTabNavigator from "./BoardTabNavigator";
-import useDesktop from "./useDesktop";
+// import { Box, Divider, Typography, Hidden } from "@material-ui/core";
+// import HeaderPost from "./HeaderPost";
+// import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+// import useDesktop from "./useDesktop";
 import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
 import Forbidden from "./Forbidden";
@@ -19,14 +18,19 @@ import EventDetail from "./EventDetail";
 
 export default function RoutePost() {
   const { post_id } = useParams();
-  const [{ user_id }] = useStore();
-  const [isDesktop] = useDesktop();
+  const [{ user_id }, dispatch] = useStore();
   const { data, error, loading } = useSubscription<PagePost>(subsByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
+  const board_id = data?.mx_posts_by_pk?.board?.id;
+  React.useEffect(() => {
+    if (board_id) {
+      dispatch({ type: "SET_BOARD", board_id });
+    }
+  }, [board_id, dispatch]);
   if (loading) {
     return null;
   }
@@ -52,13 +56,11 @@ export default function RoutePost() {
   }
   return (
     <>
-      <Hidden mdUp>
+      {/* <Hidden mdUp>
         <HeaderPost post={p} />
       </Hidden>
       <Divider />
-      {isDesktop ? (
-        <BoardTabNavigator board={p?.board} />
-      ) : (
+      {!isDesktop && (
         <Link
           to={
             p?.board?.type === "suggestion"
@@ -78,7 +80,7 @@ export default function RoutePost() {
             <ChevronRightIcon color="primary" fontSize="small" />
           </Box>
         </Link>
-      )}
+      )} */}
       {postByType}
     </>
   );

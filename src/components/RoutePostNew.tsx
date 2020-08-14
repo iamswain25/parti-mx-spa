@@ -10,8 +10,8 @@ import NoticeNew from "./NoticeNew";
 import VoteNew from "./VoteNew";
 import Forbidden from "./Forbidden";
 import EventNew from "./EventNew";
-import usePermEffect from "./usePermEffect";
 import permissionBlocked from "./permissionBlocked";
+import { useGlobalState, keys } from "../store/useGlobalState";
 
 export default function RoutePostNew() {
   const { board_id } = useParams();
@@ -21,9 +21,8 @@ export default function RoutePostNew() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
+  const [userStatus] = useGlobalState(keys.PERMISSION);
   const b = data?.mx_boards_by_pk;
-  const userStatus = b?.group?.users?.[0]?.status;
-  usePermEffect(userStatus);
   if (loading) {
     return null;
   }

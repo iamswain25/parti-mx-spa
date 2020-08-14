@@ -1,17 +1,21 @@
 import React from "react";
-import { HomeGroup, Board } from "../types";
+import { HomeGroup } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavLink, useHistory, useRouteMatch } from "react-router-dom";
+import { NavLink, useHistory, useRouteMatch, Link } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
 import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { useQuery } from "@apollo/client";
 import { queryBoardsOnly } from "../graphql/query";
 import { useStore } from "../store/store";
 import usePermEffect from "./usePermEffect";
+import GroupLogoContainer from "./GroupLogoContainer";
+import GreyDivider from "./GreyDivider";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
+import SearchIcon from "@material-ui/icons/Search";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -97,20 +101,20 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function BoardTabNavigator({ board }: { board?: Board }) {
-  const [{ group_id, user_id }] = useStore();
+export default function BoardTabNavigator() {
+  const [{ group_id, user_id, board_id }] = useStore();
   const classes = useStyles();
   const isHome = useRouteMatch("/home");
-  const [userStatus] = useGlobalState(keys.PERMISSION);
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
   const { data } = useQuery<HomeGroup>(queryBoardsOnly, {
     variables: { group_id, user_id, isAnonymous: !user_id },
     fetchPolicy: "network-only",
   });
+  const group = data?.mx_groups_by_pk;
   const boards = data?.mx_groups_by_pk?.boards;
-  const userstatus = data?.mx_groups_by_pk?.users?.[0]?.status;
-  usePermEffect(userstatus);
+  const userStatus = data?.mx_groups_by_pk?.users?.[0]?.status;
+  usePermEffect(userStatus);
   const history = useHistory();
   useScrollPosition(
     ({ prevPos, currPos }) => {
@@ -121,64 +125,87 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     stickyHeader,
     false
   );
-  if (!boards) {
+  if (!boards || !group) {
     return null;
   }
   function btnHandler() {
-    history.push("/new/" + board?.id);
+    history.push("/new/" + board_id);
   }
   return (
-    <Grid
-      container
-      className={`${classes.gridTab} ${isTop ? "ontop" : ""}`}
-      ref={stickyHeader}
-    >
-      <div className={classes.tab}>
-        <Box display="flex" flexWrap="nowrap">
-          <NavLink
-            exact
-            to={`/home?group_id=${group_id}`}
-            className={classes.tabLink}
-          >
-            홈
-          </NavLink>
-          {boards.map((b, i) => (
-            <NavLink
-              to={b.type === "suggestion" ? `/photo/${b.id}` : `/home/${b.id}`}
-              key={i}
-              className={`${classes.tabLink} ${
-                board?.id === b.id ? "active" : ""
-              }`}
+    <>
+      <GroupLogoContainer group={group} />
+      <Hidden mdUp implementation="css">
+        <GreyDivider />
+      </Hidden>
+      <Grid
+        container
+        className={`${classes.gridTab} ${isTop ? "ontop" : ""}`}
+        ref={stickyHeader}
+      >
+        <div className={classes.tab}>
+          <Box display="flex" flexWrap="nowrap">
+            {/* <NavLink
+              exact
+              to={`/home?group_id=${group_id}`}
+              className={classes.tabLink}
             >
-              {b.title}
-            </NavLink>
-          ))}
-        </Box>
-        {["user", "organizer"].includes(userStatus as string) &&
-          !isHome?.isExact && (
-            <>
-              <div className={classes.btn}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={btnHandler}
-                >
-                  글쓰기
-                </Button>
-              </div>
-              <Hidden mdUp implementation="css">
-                <Fab
-                  color="primary"
-                  aria-label="write"
-                  className={classes.fab}
-                  onClick={btnHandler}
-                >
-                  <CreateIcon />
-                </Fab>
-              </Hidden>
-            </>
-          )}
-      </div>
-    </Grid>
+              홈
+            </NavLink> */}
+            {boards.map((b, i) => (
+              <NavLink
+                to={
+                  b.type === "suggestion" ? `/photo/${b.id}` : `/home/${b.id}`
+                }
+                key={i}
+                className={`${classes.tabLink} ${
+                  board_id === b.id ? "active" : ""
+                }`}
+              >
+                {b.title}
+              </NavLink>
+            ))}
+          </Box>
+          <Grid container alignItems="center" justify="flex-end">
+            {user_id ? <LogoutButton /> : <LoginButton />}
+            {user_id && (
+              <Link
+                to="/search"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: 10,
+                }}
+              >
+                <SearchIcon />
+              </Link>
+            )}
+            {["user", "organizer"].includes(userStatus as string) &&
+              !isHome?.isExact && (
+                <>
+                  <div className={classes.btn}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={btnHandler}
+                    >
+                      글쓰기
+                    </Button>
+                  </div>
+                  <Hidden mdUp implementation="css">
+                    <Fab
+                      color="primary"
+                      aria-label="write"
+                      className={classes.fab}
+                      onClick={btnHandler}
+                    >
+                      <CreateIcon />
+                    </Fab>
+                  </Hidden>
+                </>
+              )}
+          </Grid>
+        </div>
+      </Grid>
+    </>
   );
 }

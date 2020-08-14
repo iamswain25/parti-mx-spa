@@ -6,13 +6,10 @@ import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-import GroupLogoContainer from "./GroupLogoContainer";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
 import HomeBoardEvent from "./HomeBoardEvent";
-import BoardTabNavigator from "./BoardTabNavigator";
-import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 import Forbidden from "./Forbidden";
 const useStyles = makeStyles((theme) => {
@@ -48,8 +45,11 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Home() {
-  const [{ user_id, group_id }] = useStore();
+  const [{ user_id, group_id }, dispatch] = useStore();
   const classes = useStyles();
+  React.useEffect(() => {
+    dispatch({ type: "SET_BOARD", board_id: null });
+  }, [dispatch]);
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
     variables: { group_id, user_id, isAnonymous: !user_id },
     fetchPolicy: "network-only",
@@ -72,9 +72,6 @@ export default function Home() {
 
   return (
     <>
-      <GroupLogoContainer group={group} />
-      {!isDesktop && <GreyDivider />}
-      <BoardTabNavigator />
       {isDesktop ? (
         <section className={classes.grid}>
           <ul className={classes.left}>

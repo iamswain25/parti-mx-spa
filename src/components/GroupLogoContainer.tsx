@@ -138,7 +138,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   );
   return (
     <Grid container className={classes.container} justify="center">
-      <div className={classes.groupLogoContainer}>
+      <a href="https://beyondcovid19-opencall.org" className={classes.groupLogoContainer}>
         <Hidden mdUp implementation="css">
           <img src={mb_img_url ?? mobileImg} alt="group logo" />
         </Hidden>
@@ -162,7 +162,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             </div>
           </div>
         )}
-      </div>
+      </a>
     </Grid>
   );
 }

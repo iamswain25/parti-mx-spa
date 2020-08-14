@@ -63,6 +63,7 @@ export const queryBoardsByGroupId = gql`
 export const queryBoardsOnly = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_groups_by_pk(id: $group_id) {
+      ...groups
       users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
         status
       }
@@ -81,6 +82,7 @@ export const queryBoardsOnly = gql`
       }
     }
   }
+  ${groups}
 `;
 
 export const queryByBoardId = gql`

@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "../components/Login";
 import PrivateRoute from "./PrivateRoute";
-import Home from "../components/Home";
+// import Home from "../components/Home";
 import RouteBoard from "../components/RouteBoard";
 import Signup from "../components/Signup";
 import RoutePost from "../components/RoutePost";
@@ -37,7 +37,7 @@ export default function Routes() {
       {isInit && (
         <HeaderRemain>
           <Switch>
-            <Route path="/home" exact component={Home} />
+            <Route path="/home" exact component={RoutePhoto} />
             <Route path="/forgot" exact component={PasswordForgot} />
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
             <Route path="/map/:board_id" exact component={RouteMap} />

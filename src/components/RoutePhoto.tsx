@@ -5,7 +5,6 @@ import { PageBoard, Post } from "../types";
 import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-import BoardTabNavigator from "./BoardTabNavigator";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
 import { Box, Grid, Typography } from "@material-ui/core";
@@ -20,13 +19,16 @@ import Chips from "./Chips";
 import { defaultHashtags } from "../helpers/options";
 import { ChipData } from "../types";
 export default function RoutePhoto() {
-  const { board_id } = useParams();
-  const [{ user_id }] = useStore();
+  const { board_id = 2 } = useParams();
+  const [{ user_id }, dispatch] = useStore();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
   const [chipData, setChipData] = React.useState<ChipData[]>(
     defaultHashtags.map((c) => ({ label: c, selected: false }))
   );
+  React.useEffect(() => {
+    dispatch({ type: "SET_BOARD", board_id: Number(board_id) });
+  }, [board_id, dispatch]);
   const [posts, setPosts] = React.useState<Post[] | undefined>(undefined);
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
     variables: {
@@ -63,7 +65,6 @@ export default function RoutePhoto() {
   const { group, ...b } = board;
   return (
     <>
-      <BoardTabNavigator board={board} />
       <section className={classes.container}>
         <Chips chips={chipData} setChips={setChipData} />
         <Grid
