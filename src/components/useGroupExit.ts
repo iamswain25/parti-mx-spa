@@ -15,7 +15,7 @@ export default function useGroupExit() {
   async function handler() {
     if (window.confirm("그룹을 나가시겠습니까?")) {
       await exit();
-      window.location.reload();
+      window.location.replace("/home?group_id=" + group_id);
     }
   }
   return handler;

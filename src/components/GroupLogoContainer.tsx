@@ -120,7 +120,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
           status: userCount > 0 ? "requested" : "organizer",
         },
       });
-      window.location.reload();
+      window.location.replace("/home?group_id=" + group_id);
     } else {
       setVisible(true);
     }
