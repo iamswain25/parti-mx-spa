@@ -77,6 +77,18 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: "absolute",
     height: "100%",
   },
+  hover: {
+    "&:hover": {
+      backgroundColor: theme.palette.text.primary,
+      opacity: "100%",
+    },
+    opacity: 0,
+    color: theme.palette.common.white,
+    padding: theme.spacing(2),
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
   aspectRatio: {
     display: "flex",
     position: "relative",
@@ -88,15 +100,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   photoGrid: {
-    display: "grid",
     [theme.breakpoints.down("sm")]: {
-      gridTemplateColumns: "repeat(2, 1fr)",
-      gridGap: 8,
       padding: theme.spacing(2),
     },
     [theme.breakpoints.up("md")]: {
-      gridTemplateColumns: "repeat(4, 1fr)",
-      gridGap: theme.spacing(3),
       paddingTop: theme.spacing(3),
     },
   },

@@ -111,21 +111,34 @@ export default function RoutePhoto() {
           </Box>
         </Grid>
 
-        <Box className={classes.photoGrid}>
+        <Grid container spacing={1} className={classes.photoGrid}>
           {posts?.map((p, i) => (
-            <NavLink
-              key={i}
-              className={classes.aspectRatio}
-              exact
-              to={`/post/${p.id}`}
-            >
-              <Img
-                src={[...(p.images?.map((i) => i.uri) || []), "/ogp.png"]}
-                className={classes.img}
-              />
-            </NavLink>
+            <Grid item key={i} xs={6} md={3}>
+              <NavLink
+                className={classes.aspectRatio}
+                exact
+                to={`/post/${p.id}`}
+              >
+                <Img
+                  src={[...(p.images?.map((i) => i.uri) || []), "/ogp.png"]}
+                  className={classes.img}
+                />
+                <div className={classes.hover}>
+                  <div>
+                    <Typography variant="h3">{p.title}</Typography>
+                  </div>
+                  <Typography variant="h6" color="primary">
+                    <Grid container>
+                      {p?.tags?.map((chip) => {
+                        return <span key={chip}>#{chip}&nbsp;</span>;
+                      })}
+                    </Grid>
+                  </Typography>
+                </div>
+              </NavLink>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </section>
     </>
   );
