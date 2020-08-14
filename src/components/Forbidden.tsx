@@ -13,7 +13,7 @@ export default function Forbidden() {
   const classes = useStyles();
   return (
     <Typography variant="h1">
-      <div className={classes.div}>접근 권한이 없습니다.</div>
+      <div className={classes.div}>Forbidden</div>
     </Typography>
   );
 }

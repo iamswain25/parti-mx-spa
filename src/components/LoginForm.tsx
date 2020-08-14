@@ -96,7 +96,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
             margin="normal"
             fullWidth
             name="password"
-            label="비밀번호"
+            label="Password"
             type="password"
             id="password"
             autoComplete="current-password"

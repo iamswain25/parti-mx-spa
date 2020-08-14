@@ -94,7 +94,7 @@ export default function Signup() {
               required: "Required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "맞지 않는 이메일 형식 입니다.",
+                message: "wrong email format",
               },
             })}
             required={errors.email ? true : false}
@@ -106,7 +106,7 @@ export default function Signup() {
             margin="normal"
             fullWidth
             name="password"
-            label="비밀번호"
+            label="Password"
             type="password"
             id="password"
             autoComplete="current-password"

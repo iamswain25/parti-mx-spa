@@ -11,7 +11,7 @@ export default function SavedFile(props: { files: File[]; setFiles: any }) {
   }
   return (
     <Box>
-      이미 저장된 파일
+      Saved files
       {files.map((f, i: number) => (
         <Grid container key={i} alignItems="center">
           {f.name} {f.size}

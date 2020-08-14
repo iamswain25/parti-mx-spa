@@ -44,11 +44,11 @@ export default function NoticeNew() {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
-          <HeaderNew title="소식 쓰기" />
+          <HeaderNew title="New Notice" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">소식 쓰기</Typography>
+            <Typography variant="h2">New Notice</Typography>
             <CustomTextField
               label="Insert your question"
               name="title"
@@ -65,7 +65,7 @@ export default function NoticeNew() {
             />
             <CustomImageUploader setImageArr={setImageArr} />
             <Dropzone files={fileArr} setFiles={setFileArr} />
-            <BtnSubmitDesktop text="소식 제출" />
+            <BtnSubmitDesktop text="Submit Notice" />
           </Container>
         </Box>
       </form>

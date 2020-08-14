@@ -11,7 +11,7 @@ export default function useSetStatus(callback?: (isNew: boolean) => void) {
   async function handler(variables: any) {
     await set(variables);
     callback && callback(true);
-    setSuccess("반영 하였습니다.");
+    setSuccess("updated");
   }
   return handler;
 }

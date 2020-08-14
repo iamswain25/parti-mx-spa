@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     groupJoin: {
-      width: 69,
+      width: 100,
       height: theme.spacing(3),
       borderRadius: 2,
       color: theme.palette.common.white,
@@ -134,7 +134,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
     <span>{showStatusLabelByValue(userStatus)}</span>
   ) : (
     <Button className={classes.groupJoin} onClick={joinHandler}>
-      그룹가입
+      Join Group
     </Button>
   );
   return (

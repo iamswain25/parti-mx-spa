@@ -66,7 +66,7 @@ export default function PasswordForgot() {
     try {
       await auth.sendPasswordResetEmail(email, actionCodeSettings);
       // await auth.sendSignInLinkToEmail(email, actionCodeSettings);
-      setSuccess(email + "로 이메일을 보냈습니다. 1시간 이내에 확인 바랍니다.");
+      setSuccess(email + " email sent, please check within an hour");
       reset();
     } catch (error) {
       setError(error.message);
@@ -82,7 +82,7 @@ export default function PasswordForgot() {
   return (
     <div className={classes.paper}>
       <Container component="main" maxWidth="xs">
-        <Typography variant="h2">비밀번호 찾기</Typography>
+        <Typography variant="h2">Find Password</Typography>
         <form
           onSubmit={handleSubmit(formHandler)}
           noValidate
@@ -103,7 +103,7 @@ export default function PasswordForgot() {
               required: "Required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "맞지 않는 이메일 형식 입니다.",
+                message: "wrong email format",
               },
             })}
             required={errors.email ? true : false}
@@ -118,7 +118,7 @@ export default function PasswordForgot() {
               color="primary"
               className={classes.submit}
             >
-              비밀번호 찾기
+              send password email
             </Button>
           </div>
         </form>

@@ -6,7 +6,7 @@ import {
   formatDistanceToNow,
   addHours,
 } from "date-fns";
-import { ko } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 export function calculateDays(date: string, days = 30) {
   // const time = (_ => _.setDate(_.getDate() + 30))(new Date(date));
   // const timeDiff = new Date().getTime() - time;
@@ -72,7 +72,7 @@ export function semanticDate(date = "") {
     if (isAfter(now, addDays(newDate, 1))) {
       return format(newDate, "yyyy-MM-dd");
     }
-    return formatDistanceToNow(newDate, { locale: ko }) + " 전";
+    return formatDistanceToNow(newDate, { locale: enUS }) + " ago";
   } catch (error) {
     return error.message;
   }
@@ -80,7 +80,7 @@ export function semanticDate(date = "") {
 export function getEventDate(date: string) {
   try {
     const newDate = new Date(date);
-    return format(newDate, "yyyy/MM/dd(eee) HH:mm", { locale: ko });
+    return format(newDate, "yyyy/MM/dd(eee) HH:mm", { locale: enUS });
   } catch (error) {
     return error.message;
   }
@@ -88,7 +88,7 @@ export function getEventDate(date: string) {
 export function getEventDate2(date: string) {
   try {
     const newDate = new Date(date);
-    return format(newDate, "MM/dd(eee) aaa HH:mm", { locale: ko });
+    return format(newDate, "MM/dd(eee) aaa HH:mm", { locale: enUS });
   } catch (error) {
     return error.message;
   }
@@ -96,7 +96,7 @@ export function getEventDate2(date: string) {
 export function getEventDate3(date: string) {
   try {
     const newDate = new Date(date);
-    return format(newDate, "MM/dd(eee)", { locale: ko });
+    return format(newDate, "MM/dd(eee)", { locale: enUS });
   } catch (error) {
     return error.message;
   }
