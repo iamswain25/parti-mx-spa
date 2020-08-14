@@ -20,6 +20,7 @@ import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useStore } from "../store/store";
+import ShareButtons from "./ShareButtons";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -41,13 +42,13 @@ const useStyles = makeStyles((theme) => {
       },
     },
     title: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
       [theme.breakpoints.up("md")]: {
         paddingTop: 60,
         fontSize: 24,
         letterSpacing: -0.6,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
       },
       [theme.breakpoints.down("sm")]: {
         fontSize: 16,
@@ -117,10 +118,11 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
     <Box bgcolor="grey.100" pt={2}>
       <Box paddingX={2} className={classes.root}>
         <Box className={classes.title}>
-          {p.title}
-          <Hidden smDown>
+          <div>{p.title}</div>
+          <Box display="flex" alignItems="center">
+            <ShareButtons post={p} />
             <PostMenu post={p} />
-          </Hidden>
+          </Box>
         </Box>
         <Box my={2}>
           <Divider light />

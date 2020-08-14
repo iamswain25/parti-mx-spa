@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => {
         padding: "0 30px",
         margin: "0 auto",
       },
+      flex: 1,
       height: 48,
       overflow: "unset",
       fontSize: 14,

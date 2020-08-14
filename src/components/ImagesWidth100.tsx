@@ -33,7 +33,7 @@ export default function ImagesWidth100({ images = [] }: { images: Image[] }) {
             onClick={() => setVisible(i)}
             style={{ padding: 0, borderRadius: 0 }}
           >
-            <Img src={p.uri} />
+            <Img src={[p.uri]} />
           </IconButton>
         );
       })}
