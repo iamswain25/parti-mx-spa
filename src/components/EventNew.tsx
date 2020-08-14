@@ -7,12 +7,11 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
-import CustomImageUploader from "./CustomImageUploader";
 import { makeNewVariables } from "./makePostVariables";
 import { EventFormdata } from "../types";
 import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
+import ImageFileDropzone from "./ImageFileDropzone";
 export default function EventNew() {
   const { board_id } = useParams();
   const history = useHistory();
@@ -57,8 +56,12 @@ export default function EventNew() {
           <Container component="main" maxWidth="md">
             <Typography variant="h2">모임</Typography>
             <EventInputs register={register} errors={errors} />
-            <CustomImageUploader setImageArr={setImageArr} />
-            <Dropzone files={fileArr} setFiles={setFileArr} />
+            <ImageFileDropzone
+              images={imageArr}
+              setImages={setImageArr}
+              files={fileArr}
+              setFiles={setFileArr}
+            />
             <BtnSubmitDesktop text="모임 생성" />
           </Container>
         </Box>

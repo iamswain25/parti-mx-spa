@@ -7,10 +7,9 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
+import ImageFileDropzone from "./ImageFileDropzone";
 import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import { makeNewVariables } from "./makePostVariables";
-import CustomImageUploader from "./CustomImageUploader";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import SuggestionInputs from "./SuggestionInputs";
 import { SuggestionFormdata } from "../types";
@@ -73,8 +72,12 @@ export default function SuggestionNew() {
               latLng={latLng}
               setLatLng={setLatLng}
             />
-            <CustomImageUploader setImageArr={setImageArr} />
-            <Dropzone files={fileArr} setFiles={setFileArr} />
+            <ImageFileDropzone
+              images={imageArr}
+              setImages={setImageArr}
+              files={fileArr}
+              setFiles={setFileArr}
+            />
             <BtnSubmitDesktop text="Submit Key Concept" />
           </Container>
         </Box>

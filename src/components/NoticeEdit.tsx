@@ -6,13 +6,12 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
 import { Post, Image, File as File2, NoticeFormdata } from "../types";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
 import CustomTextField from "./CustomTextField";
-import CustomImageUploader from "./CustomImageUploader";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
+import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function NoticeEdit({ post: p }: { post: Post }) {
   const { id } = p;
@@ -72,8 +71,12 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
               register={register}
               errors={errors}
             />
-            <CustomImageUploader setImageArr={setImageArr} />
-            <Dropzone files={fileArr} setFiles={setFileArr} />
+            <ImageFileDropzone
+              images={imageArr}
+              setImages={setImageArr}
+              files={fileArr}
+              setFiles={setFileArr}
+            />
             <SavedImageFile
               files={files2}
               images={images2}

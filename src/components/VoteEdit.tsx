@@ -6,7 +6,6 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Dropzone from "./Dropzone";
 import { deletingIds } from "./VoteEditCandidates";
 import {
   VoteEditFormdata,
@@ -16,10 +15,10 @@ import {
   Post,
 } from "../types";
 import { makeUpdateVariables } from "./makePostVariables";
-import CustomImageUploader from "./CustomImageUploader";
 import SavedImageFile from "./SavedImageFile";
 import VoteInputs from "./VoteInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
+import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteEdit({ post: p }: { post: Post }) {
   const { id } = p;
@@ -122,8 +121,12 @@ export default function VoteEdit({ post: p }: { post: Post }) {
               setBinary={setBinary}
               isEdit={true}
             />
-            <CustomImageUploader setImageArr={setImageArr} />
-            <Dropzone files={fileArr} setFiles={setFileArr} />
+            <ImageFileDropzone
+              images={imageArr}
+              setImages={setImageArr}
+              files={fileArr}
+              setFiles={setFileArr}
+            />
             <SavedImageFile
               files={files2}
               images={images2}
