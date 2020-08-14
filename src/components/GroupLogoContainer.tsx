@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => {
       },
       width: "100%",
       position: "relative",
+      cursor: "pointer",
     },
     groupLogoOverlay: {
       [theme.breakpoints.up("md")]: {
@@ -115,6 +116,14 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       setVisible(true);
     }
   }
+  async function toDifferentPage() {
+    window.location.href = "https://beyondcovid19-opencall.org";
+  }
+  async function stopPropagation(
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) {
+    event.stopPropagation();
+  }
   useLoadingEffect(loading);
   useErrorEffect(error);
   const {
@@ -138,7 +147,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   );
   return (
     <Grid container className={classes.container} justify="center">
-      <a href="https://beyondcovid19-opencall.org" className={classes.groupLogoContainer}>
+      <div onClick={toDifferentPage} className={classes.groupLogoContainer}>
         <Hidden mdUp implementation="css">
           <img src={mb_img_url ?? mobileImg} alt="group logo" />
         </Hidden>
@@ -150,7 +159,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             <Typography variant="h1" color="inherit">
               {title}
             </Typography>
-            <div className={classes.groupInfo}>
+            <div className={classes.groupInfo} onClick={stopPropagation}>
               <span>개설 {semanticDate(created_at)}</span>
               {isOrg ? (
                 <Link to="members">멤버 {userCount}</Link>
@@ -162,7 +171,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             </div>
           </div>
         )}
-      </a>
+      </div>
     </Grid>
   );
 }
