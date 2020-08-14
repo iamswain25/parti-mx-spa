@@ -90,8 +90,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function RoutePhoto() {
-  const { board_id } = useParams();
+export default function RouteMap() {
+  const { board_id, post_id } = useParams();
   const [{ user_id }, dispatch] = useStore();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
@@ -116,6 +116,12 @@ export default function RoutePhoto() {
     undefined
   );
   const board = data?.mx_boards_by_pk;
+  React.useEffect(() => {
+    if (board && post_id) {
+      const post = board?.posts?.find((p) => p.id === Number(post_id));
+      setSelectedPlace(post);
+    }
+  }, [post_id, board]);
   React.useEffect(() => {
     if (board?.posts) {
       const selectedTags = chipData
@@ -201,6 +207,14 @@ export default function RoutePhoto() {
                 lat: 37.5696629,
                 lng: 126.9134388,
               }}
+              center={
+                selectedPlace
+                  ? {
+                      lat: selectedPlace?.location?.coordinates?.[1],
+                      lng: selectedPlace?.location?.coordinates?.[0],
+                    }
+                  : undefined
+              }
               defaultZoom={1}
               onChildClick={childClickHandler}
             >

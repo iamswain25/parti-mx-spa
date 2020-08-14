@@ -40,6 +40,7 @@ export default function Routes() {
             <Route path="/home" exact component={RoutePhoto} />
             <Route path="/forgot" exact component={PasswordForgot} />
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
+            <Route path="/map/:board_id/:post_id" exact component={RouteMap} />
             <Route path="/map/:board_id" exact component={RouteMap} />
             <Route path="/home/:board_id" exact component={RouteBoard} />
             <Route path="/login" exact component={Login} />

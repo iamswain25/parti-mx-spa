@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "../types";
+import { Post, SuggestionMetadata } from "../types";
 import {
   Box,
   Grid,
@@ -21,6 +21,7 @@ import PostMenu from "./PostMenu";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useStore } from "../store/store";
 import ShareButtons from "./ShareButtons";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -111,6 +112,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
   const [{ user_id }] = useStore();
   const { body, images = [], createdBy, created_at, files = [], tags } = p;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
+  const metadata = p.metadata as SuggestionMetadata;
   const showFile = userStatus === "organizer" || createdBy.id === user_id;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -154,6 +156,17 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           <Linkify componentDecorator={aTag}>{body}</Linkify>
         </Box>
         <LinkPreview text={body} />
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item>Address:</Grid>
+          <Grid item>
+            <Link
+              to={`/map/${p.board.id}/${p.id}`}
+              style={{ textDecoration: "underline" }}
+            >
+              {metadata?.address}
+            </Link>
+          </Grid>
+        </Grid>
         <div>
           {tags?.map((chip) => {
             return (
