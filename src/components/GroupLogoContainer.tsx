@@ -116,14 +116,6 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       setVisible(true);
     }
   }
-  async function toDifferentPage() {
-    window.location.href = "https://beyondcovid19-opencall.org";
-  }
-  async function stopPropagation(
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) {
-    event.stopPropagation();
-  }
   useLoadingEffect(loading);
   useErrorEffect(error);
   const {
@@ -147,7 +139,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   );
   return (
     <Grid container className={classes.container} justify="center">
-      <div onClick={toDifferentPage} className={classes.groupLogoContainer}>
+      <div className={classes.groupLogoContainer}>
         <Hidden mdUp implementation="css">
           <img src={mb_img_url ?? mobileImg} alt="group logo" />
         </Hidden>
@@ -159,10 +151,10 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
             <Typography variant="h1" color="inherit">
               {title}
             </Typography>
-            <div className={classes.groupInfo} onClick={stopPropagation}>
+            <div className={classes.groupInfo}>
               <span>개설 {semanticDate(created_at)}</span>
               {isOrg ? (
-                <Link to="members">멤버 {userCount}</Link>
+                <Link to="/members">멤버 {userCount}</Link>
               ) : (
                 <span>멤버 {userCount}</span>
               )}
