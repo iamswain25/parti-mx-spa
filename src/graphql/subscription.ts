@@ -391,9 +391,9 @@ export const subsByPostId = gql`
         group {
           id
           title
-          users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
-            status
-          }
+          # users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
+          #   status
+          # }
         }
       }
       updatedBy {

@@ -11,6 +11,7 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import { useQuery } from "@apollo/client";
 import { queryBoardsOnly } from "../graphql/query";
 import { useStore } from "../store/store";
+import usePermEffect from "./usePermEffect";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -97,17 +98,19 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function BoardTabNavigator({ board }: { board?: Board }) {
-  const [{ group_id }] = useStore();
+  const [{ group_id, user_id }] = useStore();
   const classes = useStyles();
   const isHome = useRouteMatch("/home");
   const [userStatus] = useGlobalState(keys.PERMISSION);
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
   const { data } = useQuery<HomeGroup>(queryBoardsOnly, {
-    variables: { group_id },
+    variables: { group_id, user_id, isAnonymous: !user_id },
     fetchPolicy: "network-only",
   });
   const boards = data?.mx_groups_by_pk?.boards;
+  const userstatus = data?.mx_groups_by_pk?.users?.[0]?.status;
+  usePermEffect(userstatus);
   const history = useHistory();
   useScrollPosition(
     ({ prevPos, currPos }) => {

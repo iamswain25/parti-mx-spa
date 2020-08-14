@@ -16,7 +16,6 @@ import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
 import Forbidden from "./Forbidden";
 import EventDetail from "./EventDetail";
-import usePermEffect from "./usePermEffect";
 
 export default function RoutePost() {
   const { post_id } = useParams();
@@ -28,7 +27,6 @@ export default function RoutePost() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
-  usePermEffect(p?.board?.group?.users?.[0]?.status);
   if (loading) {
     return null;
   }

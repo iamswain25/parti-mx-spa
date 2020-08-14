@@ -12,7 +12,6 @@ import mobileImg from "../assets/images/mobile.png";
 import { Link } from "react-router-dom";
 import { Grid, Button, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
-import usePermEffect from "./usePermEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { showStatusLabelByValue } from "../helpers/options";
 const useStyles = makeStyles((theme) => {
@@ -104,6 +103,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [{ user_id, group_id }] = useStore();
   const classes = useStyles();
+  const [userStatus] = useGlobalState(keys.PERMISSION);
   const [join, { loading, error }] = useMutation(insertUserGroup, {
     variables: { group_id },
   });
@@ -119,7 +119,6 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   useErrorEffect(error);
   const {
     title,
-    users: [user] = [null],
     created_at,
     bg_img_url,
     mb_img_url,
@@ -127,13 +126,11 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
       aggregate: { count: userCount = 0 },
     },
   } = group;
-  const userStatus = user?.status;
-  usePermEffect(userStatus);
   const isOrg = userStatus === "organizer";
   const toJoinTag = ["organizer", "user", "participant", "requested"].includes(
     userStatus as string
   ) ? (
-    <span>{showStatusLabelByValue(user?.status)}</span>
+    <span>{showStatusLabelByValue(userStatus)}</span>
   ) : (
     <Button className={classes.groupJoin} onClick={joinHandler}>
       그룹가입

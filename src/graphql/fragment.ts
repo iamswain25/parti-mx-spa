@@ -138,9 +138,9 @@ export const groups = gql`
         count
       }
     }
-    users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
-      status
-    }
+    # users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
+    #   status
+    # }
   }
 `;
 export const usersgroup = gql`

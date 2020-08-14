@@ -13,7 +13,6 @@ import RouteBoardSuggestion from "./RouteBoardSuggestion";
 import RouteBoardEvent from "./RouteBoardEvent";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
 
 export default function RouteBoard() {
@@ -32,7 +31,6 @@ export default function RouteBoard() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const board = data?.mx_boards_by_pk;
-  usePermEffect(board?.group?.users?.[0]?.status);
   if (loading) {
     return null;
   }

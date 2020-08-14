@@ -18,7 +18,6 @@ import { makeStyles, Theme } from "@material-ui/core";
 import RouteMapPost from "./RouteMapPost";
 import MapPlace from "./MapPlace";
 import RouteMapPostBottom from "./RouteMapPostBottom";
-import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
 import { defaultHashtags } from "../helpers/options";
 import { ChipData } from "../types";
@@ -135,7 +134,6 @@ export default function RoutePhoto() {
       }
     }
   }, [board, chipData, selectedPlace]);
-  usePermEffect(board?.group?.users?.[0]?.status);
   if (loading) {
     return null;
   }

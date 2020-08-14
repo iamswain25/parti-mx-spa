@@ -15,7 +15,6 @@ import PostSort from "./PostSort";
 import { useStyles } from "../helpers/styles";
 import { Img } from "react-image";
 import PinDropIcon from "@material-ui/icons/PinDrop";
-import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
 import Chips from "./Chips";
 import { defaultHashtags } from "../helpers/options";
@@ -55,7 +54,6 @@ export default function RoutePhoto() {
       }
     }
   }, [board, chipData]);
-  usePermEffect(board?.group?.users?.[0]?.status);
   if (loading) {
     return null;
   }
