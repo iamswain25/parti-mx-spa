@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => {
       },
       width: "100%",
       position: "relative",
-      cursor: "pointer",
     },
     groupLogoOverlay: {
       [theme.breakpoints.up("md")]: {
