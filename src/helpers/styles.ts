@@ -78,16 +78,19 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: "100%",
   },
   hover: {
-    "&:hover": {
-      backgroundColor: theme.palette.text.primary,
-      opacity: "100%",
+    [theme.breakpoints.up("md")]: {
+      "&:hover": {
+        backgroundColor: theme.palette.text.primary,
+        opacity: "100%",
+      },
+      opacity: 0,
+      color: theme.palette.common.white,
+      width: "100%",
+      height: "100%",
+      position: "absolute",
     },
-    opacity: 0,
-    color: theme.palette.common.white,
+    [theme.breakpoints.down("sm")]: {},
     padding: theme.spacing(2),
-    width: "100%",
-    height: "100%",
-    position: "absolute",
   },
   aspectRatio: {
     display: "flex",

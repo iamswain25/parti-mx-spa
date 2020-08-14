@@ -7,7 +7,7 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography, Hidden } from "@material-ui/core";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import PostSort from "./PostSort";
@@ -136,6 +136,20 @@ export default function RoutePhoto() {
                   </Typography>
                 </div>
               </NavLink>
+              <Hidden mdUp implementation="css">
+                <NavLink exact to={`/post/${p.id}`}>
+                  <div style={{ paddingTop: 4 }}>
+                    <Typography variant="h4">{p.title}</Typography>
+                  </div>
+                  <Typography variant="h5" color="primary">
+                    <Grid container style={{ paddingTop: 4 }}>
+                      {p?.tags?.map((chip) => {
+                        return <span key={chip}>#{chip}&nbsp;</span>;
+                      })}
+                    </Grid>
+                  </Typography>
+                </NavLink>
+              </Hidden>
             </Grid>
           ))}
         </Grid>
