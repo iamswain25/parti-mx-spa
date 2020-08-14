@@ -11,6 +11,7 @@ import { useStore } from "../store/store";
 // import SearchIcon from "@material-ui/icons/Search";
 // import { Grid } from "@material-ui/core";
 import BoardTabNavigator from "./BoardTabNavigator";
+import Footer from "./Footer";
 
 // const useStyles = makeStyles((theme: Theme) => ({
 //   appBar: {
@@ -94,6 +95,7 @@ export default function HeaderRemain(props: { children?: any }) {
       </AppBar> */}
       <BoardTabNavigator />
       {children && isInit && children}
+      <Footer />
     </>
   );
 }
