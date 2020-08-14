@@ -19,6 +19,7 @@ export default function SuggestionNew() {
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setError] = useGlobalState(keys.ERROR);
   const [insert] = useMutation(insertPost);
   const [address, setAddress] = React.useState("");
   const [latLng, setLatLng] = React.useState<undefined | any>(undefined);
@@ -31,10 +32,17 @@ export default function SuggestionNew() {
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
     const { customTags, tags, ...rest } = form;
+    if (imageArr.length < 1) {
+      return setError("must upload minimum 1 image");
+    }
     const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
+    if (tagArr.length < 3) {
+      return setError("must select minimum 3 tags");
+    }
     const metadata = { address };
     const variables = await makeNewVariables(rest, {
-      tags: Array.from(tagSet),
+      tags: tagArr,
       board_id,
       group_id,
       imageArr,

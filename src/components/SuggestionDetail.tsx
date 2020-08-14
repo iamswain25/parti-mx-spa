@@ -18,6 +18,8 @@ import { semanticDate } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
 import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
+import { useGlobalState, keys } from "../store/useGlobalState";
+import { useStore } from "../store/store";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -104,8 +106,11 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 export default function SuggestionDetail({ post: p }: { post: Post }) {
+  const [userStatus] = useGlobalState(keys.PERMISSION);
+  const [{ user_id }] = useStore();
   const { body, images = [], createdBy, created_at, files = [], tags } = p;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
+  const showFile = userStatus === "organizer" || createdBy.id === user_id;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
@@ -141,7 +146,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             </Box>
           </Grid>
         </Box>
-        <FilesImages images={images} files={files} />
+        <FilesImages images={images} files={showFile ? files : undefined} />
         <Box className={classes.body}>
           <Box className={classes.label}>Details</Box>
           <Linkify componentDecorator={aTag}>{body}</Linkify>

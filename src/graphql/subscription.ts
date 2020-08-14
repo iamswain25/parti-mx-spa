@@ -380,7 +380,7 @@ export const subsByPostId = gql`
       context
       metadata
       images
-      files
+      files @skip(if: $isAnonymous)
       closed_at
       tags
       location

@@ -26,6 +26,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setError] = useGlobalState(keys.ERROR);
   const [update] = useMutation(updatePost);
   const [address, setAddress] = React.useState<undefined | string>(undefined);
   const [latLng, setLatLng] = React.useState<undefined | LatLng>(undefined);
@@ -62,9 +63,13 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
     setLoading(true);
     const { customTags, tags, ...rest } = form;
     const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
+    if (tagArr.length < 3) {
+      return setError("must select minimum 3 tags");
+    }
     const metadata = { address };
     const variables = await makeUpdateVariables(rest, {
-      tags: Array.from(tagSet),
+      tags: tagArr,
       imageArr,
       fileArr,
       images2,

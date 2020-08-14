@@ -166,6 +166,7 @@ export interface File {
   name: string;
   size: number;
   path: string;
+  uploadDate: string;
 }
 
 export type Post = {
