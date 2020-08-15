@@ -29,6 +29,10 @@ export default function RoutePostNew() {
   if (!b) {
     return <Forbidden />;
   }
+  if (b.type === "notice" && userStatus !== "organizer") {
+    // 오거나이저만 소식 게시 가능
+    return <Forbidden />;
+  }
   if (permissionBlocked(b.permission, userStatus)) {
     return <Forbidden />;
   }

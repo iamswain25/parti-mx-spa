@@ -131,6 +131,13 @@ export default function BoardTabNavigator() {
   if (!boards || !group) {
     return null;
   }
+  let notOrganizerNotice = true;
+  if (
+    boards?.find((b) => b.id === board_id)?.type === "notice" &&
+    userStatus !== "organizer"
+  ) {
+    notOrganizerNotice = false;
+  }
   function btnHandler() {
     history.push("/new/" + board_id);
   }
@@ -177,29 +184,31 @@ export default function BoardTabNavigator() {
             >
               <SearchIcon />
             </Link>
-            {["user", "organizer"].includes(userStatus as string) && board_id && (
-              <>
-                <div className={classes.btn}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={btnHandler}
-                  >
-                    Write
-                  </Button>
-                </div>
-                <Hidden mdUp implementation="css">
-                  <Fab
-                    color="primary"
-                    aria-label="write"
-                    className={classes.fab}
-                    onClick={btnHandler}
-                  >
-                    <CreateIcon />
-                  </Fab>
-                </Hidden>
-              </>
-            )}
+            {notOrganizerNotice &&
+              ["user", "organizer"].includes(userStatus as string) &&
+              board_id && (
+                <>
+                  <div className={classes.btn}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={btnHandler}
+                    >
+                      Write
+                    </Button>
+                  </div>
+                  <Hidden mdUp implementation="css">
+                    <Fab
+                      color="primary"
+                      aria-label="write"
+                      className={classes.fab}
+                      onClick={btnHandler}
+                    >
+                      <CreateIcon />
+                    </Fab>
+                  </Hidden>
+                </>
+              )}
           </Grid>
         </div>
       </Grid>
