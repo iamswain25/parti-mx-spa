@@ -48,7 +48,7 @@ export default function SuggestionInputs(props: {
         ))}
       /> */}
       <CustomTextField
-        label="내용"
+        label="Details"
         multiline
         name="body"
         register={register}

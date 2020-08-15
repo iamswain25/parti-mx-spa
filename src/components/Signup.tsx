@@ -126,7 +126,7 @@ export default function Signup() {
               color="primary"
               className={classes.submit}
             >
-              가입
+              Signup
             </Button>
           </div>
         </form>

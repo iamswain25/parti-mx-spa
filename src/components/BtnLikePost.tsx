@@ -76,7 +76,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          제안 동의
+          like
         </Button>
       );
     case "event":

@@ -10,15 +10,15 @@ export function getAttitude(comment: Comment) {
   if (user?.checkedPosts?.[0]?.like_count) {
     switch (post?.board?.type) {
       case "event":
-        return "참석";
+        return "Attend";
       case "suggestion":
-        return "동의";
+        return "Liked";
       case "notice":
-        return "Like";
+        return "Liked";
       case "vote":
-        return "투표완료";
+        return "voted";
       default:
-        return "동의";
+        return "Liked";
     }
   }
 

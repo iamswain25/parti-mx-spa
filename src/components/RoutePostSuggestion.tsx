@@ -65,7 +65,7 @@ export default function RoutePostSuggestion({ post: p }: { post: Post }) {
           </Box>
           <Box color="primary.dark" fontWeight={500}>
             <Typography variant="h5">
-              {count} people Agree / D{daysLeft}
+              {count} people liked / D{daysLeft}
             </Typography>
           </Box>
         </Grid>

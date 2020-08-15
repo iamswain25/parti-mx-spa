@@ -94,7 +94,7 @@ export default function CommentTextinput({
             color="primary"
             disableElevation
           >
-            등록
+            Submit
           </Button>
         </Grid>
       </form>

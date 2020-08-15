@@ -27,7 +27,7 @@ export default function VoteInputs({
         errors={errors}
       />
       <CustomTextField
-        label="내용"
+        label="Details"
         multiline
         name="body"
         register={register}

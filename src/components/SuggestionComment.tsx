@@ -72,7 +72,7 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "" : "active"}`}
             onClick={() => setCommentVisible(false)}
           >
-            제안 동의 멤버
+            liked member
             <Box ml={0.5} className="count">
               {count2}
             </Box>

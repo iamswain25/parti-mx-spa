@@ -65,7 +65,7 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
               errors={errors}
             />
             <CustomTextField
-              label="내용"
+              label="Details"
               multiline
               name="body"
               register={register}

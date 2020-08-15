@@ -56,7 +56,7 @@ export default function EventInputs({ register, errors }: any) {
         errors={errors}
       />
       <CustomTextField
-        label="내용"
+        label="Details"
         multiline
         name="body"
         register={register}
