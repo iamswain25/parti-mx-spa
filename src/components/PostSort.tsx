@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Select, MenuItem } from "@material-ui/core";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { postSortOptions } from "../helpers/options";
 const useStyles = makeStyles((theme) => {
   return {
     sort: {
@@ -31,9 +32,11 @@ export default function PostSort() {
   return (
     <Box display="flex">
       <Select value={sort} onChange={handleChange} className={classes.sort}>
-        <MenuItem value={0}>Most recent registered</MenuItem>
-        <MenuItem value={1}>Most recent Updated</MenuItem>
-        <MenuItem value={2}>Most recent Comment</MenuItem>
+        {postSortOptions.map(({ label }, i) => (
+          <MenuItem value={i} key={i}>
+            {label}
+          </MenuItem>
+        ))}
       </Select>
     </Box>
   );

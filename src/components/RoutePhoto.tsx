@@ -35,7 +35,7 @@ export default function RoutePhoto() {
       board_id,
       user_id,
       isAnonymous: !user_id,
-      sort: [postSortOptions[sort]],
+      sort: [postSortOptions[sort].sort],
     },
   });
   useLoadingEffect(loading);

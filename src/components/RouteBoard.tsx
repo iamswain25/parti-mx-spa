@@ -23,7 +23,7 @@ export default function RouteBoard() {
       board_id,
       user_id,
       isAnonymous: !user_id,
-      sort: [postSortOptions[sort]],
+      sort: [postSortOptions[sort].sort],
     },
     fetchPolicy: "network-only",
   });
