@@ -20,7 +20,7 @@ import MenuBoard from "./MenuBoard";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
-      overflowX: "auto",
+      // overflowX: "auto",
       position: "sticky",
       top: -1,
       boxShadow: `0 4px 2px -2px ${grey[300]}`,
@@ -39,8 +39,9 @@ const useStyles = makeStyles((theme) => {
       "&.ontop": {
         backgroundColor: theme.palette.primary.main,
         "& button": {
-          backgroundColor: theme.palette.common.white,
-          color: theme.palette.primary.main,
+          // backgroundColor: theme.palette.common.white,
+          // color: theme.palette.primary.main,
+          color: theme.palette.common.white,
         },
         "& a": {
           color: "rgba(255, 255, 255, 0.6)",
