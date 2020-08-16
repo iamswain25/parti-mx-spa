@@ -4,7 +4,18 @@ import { auth } from "../config/firebase";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { Button, Typography, Container, Box } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  Container,
+  Box,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  FormHelperText,
+  Grid,
+} from "@material-ui/core";
+import MLink from "@material-ui/core/Link";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { Link } from "react-router-dom";
@@ -97,8 +108,8 @@ export default function Signup() {
                 message: "wrong email format",
               },
             })}
-            required={errors.email ? true : false}
-            error={errors.email ? true : false}
+            required={!!errors.email}
+            error={!!errors.email}
             helperText={errors.email && errors.email.message}
           />
           <TextField
@@ -113,11 +124,68 @@ export default function Signup() {
             inputRef={register({
               required: "Required",
             })}
-            required={errors.password ? true : false}
-            error={errors.password ? true : false}
+            required={!!errors.password}
+            error={!!errors.password}
             helperText={errors.password && errors.password.message}
           />
           <CountryRegionLocal formControl={formControl} />
+          <Grid container alignItems="center">
+            <FormControl required error={!!errors.service} variant="outlined">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="service"
+                    color="primary"
+                    inputRef={register({
+                      required: "Required",
+                    })}
+                    required
+                  />
+                }
+                label="Terms of Service"
+              />
+            </FormControl>
+            <MLink
+              href="https://drive.google.com/file/d/1Fzxn1WCKUBy1__ZlT6qq18n6KtsuVgEL/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="primary"
+            >
+              View
+            </MLink>
+          </Grid>
+          <FormHelperText error={!!errors.service}>
+            {errors.service && errors.service.message}
+          </FormHelperText>
+          <Grid container alignItems="center">
+            <FormControl required error={!!errors.privacy} variant="outlined">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="privacy"
+                    color="primary"
+                    inputRef={register({
+                      required: "Required",
+                    })}
+                    required
+                  />
+                }
+                label="Terms of Privacy"
+              />
+            </FormControl>
+            <MLink
+              href="https://drive.google.com/file/d/1oF-srgLVz7IdIaiqcm7EelwD_zDmhiAO/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="primary"
+            >
+              View
+            </MLink>
+          </Grid>
+          <FormHelperText error={!!errors.privacy}>
+            {errors.privacy && errors.privacy.message}
+          </FormHelperText>
+
           <div className={classes.wrapper}>
             <Button
               type="submit"

@@ -10,6 +10,8 @@ export type SignupForm = {
   country: string;
   region: string;
   local: string;
+  service: boolean;
+  privacy: boolean;
 };
 export type ProfileForm = {
   name: string;

@@ -114,6 +114,24 @@ export default function Footer() {
           </a>
         </Grid>
       </Grid>
+      <div className={classes.third}>
+        <a
+          href="https://drive.google.com/file/d/1Fzxn1WCKUBy1__ZlT6qq18n6KtsuVgEL/view"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Terms of Service
+        </a>
+      </div>
+      <div className={classes.third}>
+        <a
+          href="https://drive.google.com/file/d/1oF-srgLVz7IdIaiqcm7EelwD_zDmhiAO/view"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Terms of Privacy
+        </a>
+      </div>
     </footer>
   );
 }
