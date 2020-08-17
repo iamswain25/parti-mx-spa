@@ -167,7 +167,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             </Link>
           </Grid>
         </Grid>
-        <div>
+        <Grid container>
           {tags?.map((chip) => {
             return (
               <span key={chip} className={classes.tag}>
@@ -175,7 +175,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
               </span>
             );
           })}
-        </div>
+        </Grid>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}
