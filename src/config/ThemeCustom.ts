@@ -18,6 +18,7 @@ export const theme: Theme = createMuiTheme({
           display: "block",
           backgroundColor: "#fff",
           fontSize: 14,
+          wordBreak: "normal",
           "@media (max-width: 960px)": {
             fontSize: 12,
           },
