@@ -152,12 +152,12 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </Box>
         <FilesImages images={images} files={showFile ? files : undefined} />
         <Box className={classes.body}>
-          <Box className={classes.label}>Details</Box>
+          <Box className={classes.label}>Description (Question & Image)</Box>
           <Linkify componentDecorator={aTag}>{body}</Linkify>
         </Box>
         <LinkPreview text={body} />
         <Grid container alignItems="center" spacing={1}>
-          <Grid item>Address:</Grid>
+          <Grid item>Area:</Grid>
           <Grid item>
             <Link
               to={`/map/${p.board.id}/${p.id}`}

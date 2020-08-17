@@ -101,7 +101,7 @@ export default function ImageFileDropzone(props: {
             variant="contained"
             disableElevation
           >
-            Attach Files
+            Key Concept Submission
           </Button>
         </Grid>
       </Grid>

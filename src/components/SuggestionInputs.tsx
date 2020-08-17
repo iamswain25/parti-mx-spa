@@ -48,14 +48,14 @@ export default function SuggestionInputs(props: {
         ))}
       /> */}
       <CustomTextField
-        label="Details"
+        label="Description (Question & Image)"
         multiline
         name="body"
         register={register}
         errors={errors}
       />
       <FormControl margin="normal">
-        <FormLabel component="legend">Hashtags</FormLabel>
+        <FormLabel component="legend">Keywords (Common: Choose at least 2)</FormLabel>
         <FormGroup row>
           {defaultHashtags.map((tag, i) => (
             <FormControlLabel

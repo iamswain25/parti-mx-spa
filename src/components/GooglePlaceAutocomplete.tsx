@@ -43,7 +43,7 @@ export default function GooglePlaceAutocomplete(props: {
                 variant="outlined"
                 name="address"
                 fullWidth
-                label="Address"
+                label="Area"
                 helperText="Example) 119, Sejong-daero, Jung-gu, Seoul, Korea, 04519 "
                 {...getInputProps({
                   placeholder: "search your address",

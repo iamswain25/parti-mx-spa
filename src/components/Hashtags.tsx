@@ -39,7 +39,7 @@ export default function Hashtags(props: {
               <TextField
                 {...params}
                 variant="outlined"
-                label="Hashtag"
+                label="Keywords (individual)"
                 placeholder="Enter your Hashtag"
               />
             )}

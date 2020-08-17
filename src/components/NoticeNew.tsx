@@ -56,7 +56,7 @@ export default function NoticeNew() {
               errors={errors}
             />
             <CustomTextField
-              label="Details"
+              label="Description (Question & Image)"
               multiline
               name="body"
               register={register}

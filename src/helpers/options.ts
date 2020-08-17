@@ -51,7 +51,7 @@ export const defaultHashtags = [
   "privacy",
   "public_space",
   "density",
-  "health",
+  "public_health",
   "disaster_management",
   "mobility",
   "resilience",

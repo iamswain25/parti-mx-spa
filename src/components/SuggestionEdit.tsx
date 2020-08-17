@@ -64,8 +64,8 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
     const { customTags, tags, ...rest } = form;
     const tagSet = new Set([...tags, ...customTags]);
     const tagArr = Array.from(tagSet);
-    if (tagArr.length < 3) {
-      return setError("must select minimum 3 tags");
+    if (tagArr.length < 2) {
+      return setError("must select minimum 2 keywords");
     }
     const metadata = { address };
     const variables = await makeUpdateVariables(rest, {
@@ -93,11 +93,11 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Hidden mdUp>
-        <HeaderNew title="Edit Key Concept" />
+        <HeaderNew title="Edit " />
       </Hidden>
       <Box mt={2}>
         <Container component="main" maxWidth="md">
-          <Typography variant="h2">Edit Key Concept</Typography>
+          <Typography variant="h2">Edit Raising Questions</Typography>
           <SuggestionInputs formControl={formControl} />
           <GooglePlaceAutocomplete
             address={address}
