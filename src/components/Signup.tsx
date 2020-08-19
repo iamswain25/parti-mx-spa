@@ -65,7 +65,9 @@ export default function Signup() {
       setError(error.message);
     }
   }
-
+  React.useEffect(() => {
+    setLoading(false);
+  }, []);
   return (
     <div className={classes.paper}>
       <Container component="main" maxWidth="xs">
