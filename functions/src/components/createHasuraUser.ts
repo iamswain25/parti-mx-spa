@@ -4,7 +4,11 @@ import { gql } from "apollo-boost";
 import { client } from "./ApolloClient";
 export default async function createHasuraUser(
   user: admin.auth.UserRecord,
-  groups = [{ group_id: 101, status: "requested" }]
+  groups = [
+    { group_id: 1, status: "user" },
+    { group_id: 5, status: "user" },
+    { group_id: 25, status: "user" },
+  ]
 ) {
   const { uid, email } = user;
   const variables = { uid, email, groups };
