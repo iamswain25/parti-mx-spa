@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import { univTomorrowConfig } from "./firebaseConfig";
-// import "firebase/analytics";
+import "firebase/analytics";
 import "firebase/auth";
 import "firebase/functions";
 import "firebase/storage";
@@ -10,7 +10,7 @@ type Modify<T, R> = Omit<T, keyof R> & R;
 
 // Initialize Firebase
 firebase.initializeApp(univTomorrowConfig);
-// firebase.analytics();
+firebase.analytics();
 
 export const auth = firebase.auth();
 export const Firebase = firebase;
