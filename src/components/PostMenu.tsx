@@ -77,16 +77,11 @@ export default function PostMenu({ post: p }: { post: Post }) {
     );
   }
   if (!menuItems.length) {
-    return <div style={{ width: 48, height: 48 }} />;
+    return <div />;
   }
   return (
     <>
-      <IconButton
-        color="inherit"
-        aria-label="back"
-        edge="start"
-        onClick={handleClick}
-      >
+      <IconButton color="inherit" aria-label="back" onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu
