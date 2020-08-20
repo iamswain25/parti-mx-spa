@@ -3,7 +3,7 @@ import createReducer from "../store/createReducer";
 export const PERSIST_KEY = "coop-parti-demos";
 export const initialState = {
   isInit: false,
-  group_id: 34,
+  group_id: 1,
   // group_title: null,
   user_id: null,
 };
