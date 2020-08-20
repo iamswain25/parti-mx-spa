@@ -43,7 +43,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 const deletingIds: number[] = [];
 interface BoardsForm {
-  boards: Array<{ id: number; body: string; title: string; order: number }>;
+  boards: Array<{
+    id: number;
+    body: string;
+    title: string;
+    order: number;
+    type: string;
+  }>;
 }
 export default function BoardsSetting() {
   const classes = useStyles();

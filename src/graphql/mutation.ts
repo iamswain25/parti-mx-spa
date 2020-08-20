@@ -254,7 +254,7 @@ export const updateBoards = gql`
       objects: $boards
       on_conflict: {
         constraint: boards_pkey
-        update_columns: [body, title, permission, order]
+        update_columns: [body, title, permission, order, type]
       }
     ) {
       affected_rows
