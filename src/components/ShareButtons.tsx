@@ -31,6 +31,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [open, setOpen] = React.useState(false);
   const url = window.location.href;
+  const pathname = window.location.pathname;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -76,7 +77,9 @@ export default function ShareButtons({ post: p }: { post: Post }) {
               <KaKaoTalkButton
                 id="kakaotalk"
                 jsKey="21cd8a6129205163194430f64b6ce4ef"
-                url={url}
+                pathname={pathname}
+                message={p.title}
+                media={p?.images?.[0]?.uri}
                 children={
                   <Img
                     src={[kakaotalk]}
@@ -87,7 +90,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
             </Grid>
             <Grid item>
               <KaKaoStoryButton
-                url={url}
+                pathname={pathname}
                 children={
                   <Img
                     src={[kakaostory]}
@@ -98,7 +101,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
             </Grid>
             <Grid item>
               <NaverBlogButton
-                url={url}
+                pathname={pathname}
                 children={
                   <Img
                     src={[naverblog]}
