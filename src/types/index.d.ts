@@ -1,3 +1,4 @@
+import { RawDraftContentState } from "draft-js";
 export type FormData = {
   email: string;
   password: string;
@@ -22,6 +23,8 @@ export interface SuggestionFormdata {
   title: string;
   context: string;
   body: string;
+  isHtml: boolean;
+  html: RawDraftContentState;
   closingMethod: string;
   tags: string[];
 }
@@ -158,6 +161,7 @@ export type Post = {
   title: string;
   context: string;
   body: string;
+  html: RawDraftContentState;
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;
   images: Image[];
   files: File[];

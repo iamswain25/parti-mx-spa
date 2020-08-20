@@ -377,6 +377,7 @@ export const subsByPostId = gql`
       id
       title
       body
+      html
       context
       metadata
       images

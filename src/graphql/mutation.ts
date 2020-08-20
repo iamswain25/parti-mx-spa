@@ -27,7 +27,8 @@ export const insertPost = gql`
     $group_id: Int!
     $title: String!
     $context: String
-    $body: String!
+    $body: String
+    $html: jsonb
     $metadata: jsonb = {}
     $images: jsonb
     $files: jsonb
@@ -37,6 +38,7 @@ export const insertPost = gql`
     insert_mx_posts_one(
       object: {
         body: $body
+        html: $html
         title: $title
         context: $context
         board_id: $board_id
@@ -69,7 +71,8 @@ export const updatePost = gql`
     $id: Int!
     $title: String!
     $context: String
-    $body: String!
+    $body: String
+    $html: jsonb
     $metadata: jsonb = {}
     $images: jsonb
     $files: jsonb
@@ -80,6 +83,7 @@ export const updatePost = gql`
       where: { id: { _eq: $id } }
       _set: {
         body: $body
+        html: $html
         title: $title
         context: $context
         images: $images

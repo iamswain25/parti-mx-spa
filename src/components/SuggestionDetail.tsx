@@ -13,7 +13,6 @@ import {
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
-import LinkPreview from "./LinkPreview";
 import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
 import { semanticDate, closingDateFrom } from "../helpers/datefns";
@@ -21,6 +20,7 @@ import SuggestionComment from "./SuggestionComment";
 import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
 import ShareButtons from "./ShareButtons";
+import HtmlOrBody from "./HtmlOrBody";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -117,15 +117,7 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const {
-    body,
-    images = [],
-    createdBy,
-    created_at,
-    context,
-    files = [],
-    tags,
-  } = p;
+  const { images = [], createdBy, created_at, context, files = [], tags } = p;
   const metadata = p.metadata as SuggestionMetadata;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const closingAt = React.useMemo(() => {
@@ -198,17 +190,12 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             })}
           </Paper>
         )}
-
         <FilesImages images={images} files={files} />
         <Box className={classes.body}>
           <Box className={classes.label}>제안배경</Box>
           <Linkify componentDecorator={aTag}>{context}</Linkify>
         </Box>
-        <Box className={classes.body}>
-          <Box className={classes.label}>제안내용</Box>
-          <Linkify componentDecorator={aTag}>{body}</Linkify>
-        </Box>
-        <LinkPreview text={body} />
+        <HtmlOrBody post={p} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

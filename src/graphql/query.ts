@@ -152,6 +152,7 @@ export const queryByPostId = gql`
       id
       title
       body
+      html
       context
       metadata
       location
