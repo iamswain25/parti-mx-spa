@@ -67,7 +67,7 @@ export default function Signup() {
   }
   React.useEffect(() => {
     setLoading(false);
-  }, []);
+  }, [setLoading]);
   return (
     <div className={classes.paper}>
       <Container component="main" maxWidth="xs">
