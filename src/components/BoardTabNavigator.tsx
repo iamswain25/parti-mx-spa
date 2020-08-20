@@ -118,6 +118,13 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     stickyHeader,
     false
   );
+  let notOrganizerNotSuggestion = true;
+  if (
+    boards?.find((b) => b.id === board?.id)?.type !== "suggestion" &&
+    userStatus !== "organizer"
+  ) {
+    notOrganizerNotSuggestion = false;
+  }
   if (!boards) {
     return null;
   }
@@ -152,6 +159,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
           ))}
         </Box>
         {["user", "organizer"].includes(userStatus as string) &&
+          notOrganizerNotSuggestion &&
           !isHome?.isExact && (
             <>
               <div className={classes.btn}>
