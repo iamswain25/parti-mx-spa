@@ -147,15 +147,17 @@ export default function MyGroupList(props: {
           ) : (
             list
           )}
-          <ListItem button onClick={() => history.push("/group/new")}>
-            <ListItemIcon>
-              <Avatar variant="square" children={<AddIcon />} />
-            </ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{ variant: "h4" }}
-              primary="그룹 만들기"
-            />
-          </ListItem>
+          {me.email.indexOf("@parti.") > -1 && (
+            <ListItem button onClick={() => history.push("/group/new")}>
+              <ListItemIcon>
+                <Avatar variant="square" children={<AddIcon />} />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ variant: "h4" }}
+                primary="그룹 만들기"
+              />
+            </ListItem>
+          )}
           {!list && (
             <div className={classes.last}>
               아직, 가입된 그룹이 없나요?{"\n"}

@@ -438,6 +438,7 @@ export const queryGroupsByUserId = gql`
       id
       name
       photo_url
+      email
       groups(
         where: { status: { _in: ["user", "organizer", "participant"] } }
         order_by: { updated_at: desc_nulls_last }
