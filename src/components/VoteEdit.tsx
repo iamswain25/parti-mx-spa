@@ -21,44 +21,44 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteEdit({ post: p }: { post: Post }) {
-  const { id } = p;
+  const { id, title, body, context, files, images, candidates, html } = p;
+  const metadata = p.metadata as VoteMetadata;
+  const {
+    closingMethod,
+    isBinary: binary,
+    isMultiple,
+    isAnonymous,
+    isResultHidden,
+  } = metadata;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [update] = useMutation(updateVote);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
-  const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
-  const [isBinary, setBinary] = React.useState(false);
-  const formControl = useForm<VoteEditFormdata>();
-  const { handleSubmit, reset } = formControl;
-
-  React.useEffect(() => {
-    deletingIds.length = 0;
-    const { title, body, context, files, images, candidates } = p;
-    const metadata = p.metadata as VoteMetadata;
-    const {
-      closingMethod,
-      isBinary: binary,
-      isMultiple,
-      isAnonymous,
-      isResultHidden,
-    } = metadata;
-    reset({
+  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
+  const [isBinary, setBinary] = React.useState(binary);
+  const formControl = useForm<VoteEditFormdata>({
+    defaultValues: {
       title,
       body,
+      html,
+      isHtml: !!html,
       context,
       closingMethod,
       isMultiple,
       isAnonymous,
       isResultHidden,
       candidates,
-    });
-    setBinary(binary);
-    setImages2(images);
-    setFiles2(files);
-  }, [reset, p]);
+    },
+  });
+  const { handleSubmit } = formControl;
+
+  React.useEffect(() => {
+    deletingIds.length = 0;
+  }, []);
+
   async function handleForm(form: VoteEditFormdata) {
     setLoading(true);
     const {

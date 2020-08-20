@@ -5,8 +5,6 @@ import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
 import BtnUnlikePost from "./BtnUnlikePost";
-import LinkPreview from "./LinkPreview";
-import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
@@ -15,6 +13,7 @@ import EventMetadataInfo from "./EventMetadataInfo";
 import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
 import EventComment from "./EventComment";
 import ShareButtons from "./ShareButtons";
+import HtmlOrBody from "./HtmlOrBody";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -45,35 +44,11 @@ const useStyles = makeStyles((theme) => {
         fontWeight: 500,
       },
     },
-    image: {
-      [theme.breakpoints.up("md")]: {
-        paddingTop: theme.spacing(3),
-        paddingBottom: theme.spacing(3),
-      },
-      [theme.breakpoints.down("sm")]: {
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
-      },
-    },
-    body: {
-      whiteSpace: "pre-wrap",
-      [theme.breakpoints.up("md")]: {
-        fontSize: 16,
-        letterSpacing: -0.4,
-        marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(3),
-      },
-      [theme.breakpoints.down("sm")]: {
-        fontSize: 14,
-        letterSpacing: -0.3,
-        marginTop: theme.spacing(1.5),
-      },
-    },
   };
 });
 
 export default function EventDetail({ post: p }: { post: Post }) {
-  const { body, images, createdBy, created_at, files, metadata } = p as Event;
+  const { images, createdBy, created_at, files, metadata } = p as Event;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -101,18 +76,7 @@ export default function EventDetail({ post: p }: { post: Post }) {
           </Typography>
         </Box>
         <FilesImages images={images} files={files} />
-        <Box className={classes.body} color="grey.900">
-          <Linkify
-            componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a target="blank" href={decoratedHref} key={key}>
-                {decoratedText}
-              </a>
-            )}
-          >
-            {body}
-          </Linkify>
-        </Box>
-        <LinkPreview text={body} />
+        <HtmlOrBody post={p} />
         <Box my={2}>
           <Divider />
         </Box>

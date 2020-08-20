@@ -10,6 +10,8 @@ export interface ChipData {
 export interface NoticeFormdata {
   title: string;
   body: string;
+  isHtml: boolean;
+  html: RawDraftContentState;
 }
 export interface EventFormdata {
   eventDate: string;
@@ -18,6 +20,8 @@ export interface EventFormdata {
   countPeople: number;
   title: string;
   body: string;
+  isHtml: boolean;
+  html: RawDraftContentState;
 }
 export interface SuggestionFormdata {
   title: string;
@@ -37,6 +41,8 @@ export interface VoteFormdata {
   isMultiple;
   isAnonymous;
   isResultHidden;
+  isHtml: boolean;
+  html: RawDraftContentState;
 }
 export interface VoteEditFormdata extends VoteFormdata {
   candidates: Candidate[];

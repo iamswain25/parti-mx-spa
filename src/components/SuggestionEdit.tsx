@@ -22,24 +22,27 @@ import SuggestionInputs from "./SuggestionInputs";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const { id } = p;
+  const { id, location, title, body, context, files, images, tags, html } = p;
   const history = useHistory();
+  const metadata = p.metadata as SuggestionMetadata;
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [update] = useMutation(updatePost);
-  const [address, setAddress] = React.useState<undefined | string>(undefined);
-  const [latLng, setLatLng] = React.useState<undefined | LatLng>(undefined);
+  const [address, setAddress] = React.useState<undefined | string>(
+    metadata?.address
+  );
+  const [latLng, setLatLng] = React.useState<undefined | LatLng>(() => {
+    const {
+      coordinates: [lng, lat],
+    } = location;
+    return { lng, lat };
+  });
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
-  const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
-  const formControl = useForm<SuggestionFormdata>();
-  const { handleSubmit, reset } = formControl;
-  React.useEffect(() => {
-    const { location, title, body, context, files, images, tags, html } = p;
-    console.log(html, !!html);
-    const metadata = p.metadata as SuggestionMetadata;
-    reset({
+  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
+  const formControl = useForm<SuggestionFormdata>({
+    defaultValues: {
       title,
       body,
       context,
@@ -47,18 +50,9 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       html,
       closingMethod: metadata.closingMethod,
       tags,
-    });
-    setImages2(images);
-    setFiles2(files);
-    setAddress(metadata?.address);
-
-    if (location) {
-      const {
-        coordinates: [lng, lat],
-      } = location;
-      setLatLng({ lng, lat });
-    }
-  }, [reset, p]);
+    },
+  });
+  const { handleSubmit } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
@@ -72,13 +66,13 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
       metadata,
-      html,
+      // html,
     });
-    if (isHtml) {
-      variables.body = html.blocks
-        .map((block) => (!block.text.trim() && "\n") || block.text)
-        .join("\n");
-    }
+    // if (isHtml) {
+    //   variables.body = html.blocks
+    //     .map((block) => (!block.text.trim() && "\n") || block.text)
+    //     .join("\n");
+    // }
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {
@@ -99,7 +93,10 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       <Box mt={2}>
         <Container component="main" maxWidth="md">
           <Typography variant="h2">제안글 수정</Typography>
-          <SuggestionInputs formControl={formControl} />
+          <SuggestionInputs
+            formControl={formControl}
+            // children={<HtmlInput formControl={formControl} />}
+          />
           <GooglePlaceAutocomplete
             address={address}
             setAddress={setAddress}

@@ -11,8 +11,6 @@ import {
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
-import LinkPreview from "./LinkPreview";
-import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { daysLeftMeta } from "../helpers/datefns";
@@ -21,6 +19,7 @@ import useVoteCandidate from "./useVoteCandidate";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 import ShareButtons from "./ShareButtons";
+import HtmlOrBody from "./HtmlOrBody";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -99,15 +98,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const {
-    body,
-    images,
-    comments,
-    createdBy,
-    created_at = "",
-    files,
-    closed_at,
-  } = p;
+  const { images, comments, createdBy, created_at = "", files, closed_at } = p;
   const isClosed = !!closed_at;
   const metadata = p.metadata as VoteMetadata;
   const commentCount = p.comments_aggregate?.aggregate?.count || 0;
@@ -166,18 +157,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
           </Grid>
         )}
         <FilesImages images={images} files={files} />
-        <Box className={classes.body} color="grey.900">
-          <Linkify
-            componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a target="blank" href={decoratedHref} key={key}>
-                {decoratedText}
-              </a>
-            )}
-          >
-            {body}
-          </Linkify>
-        </Box>
-        <LinkPreview text={body} />
+        <HtmlOrBody post={p} />
         <Box className={classes.sub} mt={2} mb={1}>
           <Grid container alignItems="center" justify="space-between">
             <Box display="flex" alignItems="center">

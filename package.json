@@ -27,7 +27,6 @@
     "@types/uuid": "^8.0.0",
     "create-react-class": "^15.6.3",
     "date-fns": "^2.14.0",
-    "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "filesize": "^6.1.0",
     "firebase": "^7.15.1",

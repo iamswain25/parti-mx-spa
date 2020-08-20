@@ -5,6 +5,7 @@ import ControlledSwitch from "./ControlledSwitch";
 import { voteOptions } from "../helpers/options";
 import VoteEditCandidates from "./VoteEditCandidates";
 import VoteNewCandidates from "./VoteNewCandidates";
+import HtmlInput from "./HtmlInput";
 
 export default function VoteInputs({
   formControl,
@@ -26,13 +27,7 @@ export default function VoteInputs({
         register={register}
         errors={errors}
       />
-      <CustomTextField
-        label="내용"
-        multiline
-        name="body"
-        register={register}
-        errors={errors}
-      />
+      <HtmlInput formControl={formControl} />
       <CustomTextField
         register={register}
         errors={errors}

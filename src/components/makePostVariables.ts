@@ -1,4 +1,5 @@
 import { uploadFileGetUriArray } from "../config/firebase";
+import { RawDraftContentState } from "react-draft-wysiwyg";
 
 export async function makeNewVariables(form: any, other: any) {
   const { imageArr, fileArr, setSuccess, ...rest } = other;
@@ -12,6 +13,13 @@ export async function makeNewVariables(form: any, other: any) {
     files = await Promise.all(fileArr.map(uploadFileGetUriArray));
     setSuccess(files?.length + " 개의 파일 업로드 성공");
   }
+  if (form.isHtml) {
+    delete form.isHtml;
+    const html = form.html as RawDraftContentState;
+    form.body = html.blocks
+      .map((block) => (!block.text.trim() && "\n") || block.text)
+      .join("\n");
+  }
   return {
     images,
     files,
@@ -21,6 +29,9 @@ export async function makeNewVariables(form: any, other: any) {
 }
 
 export async function makeUpdateVariables(form: any, other: any) {
+  if ("isHtml" in form) {
+    delete form.isHtml;
+  }
   const { imageArr, fileArr, images2, files2, setSuccess, ...rest } = other;
   let images = null;
 
@@ -35,6 +46,13 @@ export async function makeUpdateVariables(form: any, other: any) {
   if (fileArr.length) {
     files = await Promise.all(fileArr.map(uploadFileGetUriArray));
     setSuccess(files?.length + " 개의 파일 업로드 성공");
+  }
+  if (form.isHtml) {
+    delete form.isHtml;
+    const html = form.html as RawDraftContentState;
+    form.body = html.blocks
+      .map((block) => (!block.text.trim() && "\n") || block.text)
+      .join("\n");
   }
   if (files2) {
     files = [...files2, ...(files || [])];

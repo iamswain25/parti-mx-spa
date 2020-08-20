@@ -1,8 +1,10 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
 import { getDatetimeFormat } from "../helpers/datefns";
+import HtmlInput from "./HtmlInput";
 const now = getDatetimeFormat(new Date());
-export default function EventInputs({ register, errors }: any) {
+export default function EventInputs({ formControl }: any) {
+  const { register, errors } = formControl;
   return (
     <>
       <CustomTextField
@@ -55,13 +57,7 @@ export default function EventInputs({ register, errors }: any) {
         register={register}
         errors={errors}
       />
-      <CustomTextField
-        label="내용"
-        multiline
-        name="body"
-        register={register}
-        errors={errors}
-      />
+      <HtmlInput formControl={formControl} />
     </>
   );
 }

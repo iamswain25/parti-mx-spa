@@ -421,7 +421,8 @@ export const insertVote = gql`
     $group_id: Int!
     $title: String!
     $context: String
-    $body: String!
+    $body: String
+    $html: jsonb
     $metadata: jsonb = {}
     $images: jsonb
     $files: jsonb
@@ -430,6 +431,7 @@ export const insertVote = gql`
     insert_mx_posts_one(
       object: {
         body: $body
+        html: $html
         title: $title
         context: $context
         board_id: $board_id
@@ -535,7 +537,8 @@ export const updateVote = gql`
   mutation(
     $id: Int!
     $title: String!
-    $body: String!
+    $body: String
+    $html: jsonb
     $metadata: jsonb = {}
     $images: jsonb
     $files: jsonb
@@ -544,7 +547,13 @@ export const updateVote = gql`
   ) {
     update_mx_posts(
       where: { id: { _eq: $id } }
-      _set: { body: $body, title: $title, images: $images, files: $files }
+      _set: {
+        body: $body
+        html: $html
+        title: $title
+        images: $images
+        files: $files
+      }
       _append: { metadata: $metadata }
     ) {
       affected_rows

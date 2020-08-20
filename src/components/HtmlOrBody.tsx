@@ -46,13 +46,17 @@ function aTag(decoratedHref: string, decoratedText: string, key: number) {
   );
 }
 export default function HtmlOrBody({ post: p }: { post: Post }) {
-  const { body, html } = p;
+  const {
+    body,
+    html,
+    board: { type },
+  } = p;
   const isHtml = !!html;
   const classes = useStyles(isHtml);
   return (
     <>
       <div className={classes.body}>
-        <div className={classes.label}>제안내용</div>
+        {type === "suggestion" && <div className={classes.label}>제안내용</div>}
         {html ? (
           <div
             className="draftjs"
