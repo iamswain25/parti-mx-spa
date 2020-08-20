@@ -6,7 +6,6 @@ export default async function createHasuraUser(
   user: admin.auth.UserRecord,
   groups = [
     { group_id: 1, status: "user" },
-    { group_id: 5, status: "user" },
     { group_id: 25, status: "user" },
   ]
 ) {
