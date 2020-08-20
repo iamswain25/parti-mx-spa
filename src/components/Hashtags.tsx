@@ -11,7 +11,7 @@ export default function Hashtags(props: {
     return onChange(
       data
         .join(",")
-        .split(/[\r\n,;#]+/)
+        .split(/[\s,;#]+/)
         .filter((e: any) => e)
     );
   };

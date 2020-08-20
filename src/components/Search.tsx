@@ -14,7 +14,7 @@ export default function Search() {
   const [{ group_id }] = useStore();
   const [keyword, setKeyword] = React.useState("");
   const { loading, data, error } = useQuery(searchPosts, {
-    variables: { searchKeyword: `%${keyword}%`, group_id },
+    variables: { searchKeyword: `%${keyword}%`, group_id, tags: keyword.split((/[\s,;#]+/)) },
     fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
