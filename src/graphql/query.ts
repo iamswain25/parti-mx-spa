@@ -342,7 +342,12 @@ export const searchOrganizer = gql`
 `;
 
 export const searchPosts = gql`
-  query($searchKeyword: String!, $group_id: Int!, $user_id: Int!) {
+  query(
+    $searchKeyword: String!
+    $group_id: Int!
+    $user_id: Int!
+    $tags: [String!]
+  ) {
     mx_posts(
       where: {
         _and: [
@@ -351,6 +356,7 @@ export const searchPosts = gql`
               { title: { _ilike: $searchKeyword } }
               { body: { _ilike: $searchKeyword } }
               { context: { _ilike: $searchKeyword } }
+              { tags: { _has_keys_any: $tags } }
             ]
           }
           {
