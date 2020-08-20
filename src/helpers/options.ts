@@ -18,7 +18,7 @@ export const suggestionOptions = [
 
 export const userGroupStatusList = [
   { label: "운영자", value: "organizer" },
-  { label: "청년참여단", value: "user" },
+  { label: "멤버", value: "user" },
   { label: "패널", value: "participant" },
   { label: "탈퇴", value: "exit" },
   { label: "승인대기", value: "requested" },
