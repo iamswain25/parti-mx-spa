@@ -18,6 +18,15 @@ import {
   TelegramIcon,
   TwitterIcon,
 } from "react-share";
+import {
+  NaverBlogButton,
+  KaKaoStoryButton,
+  KaKaoTalkButton,
+} from "react-social-kr";
+import { Img } from "react-image";
+import kakaotalk from "../assets/images/kakaotalk.png";
+import kakaostory from "../assets/images/kakaostory.png";
+import naverblog from "../assets/images/naverblog.png";
 export default function ShareButtons({ post: p }: { post: Post }) {
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [open, setOpen] = React.useState(false);
@@ -61,6 +70,41 @@ export default function ShareButtons({ post: p }: { post: Post }) {
               <FacebookShareButton
                 url={url}
                 children={<FacebookIcon round />}
+              />
+            </Grid>
+            <Grid item>
+              <KaKaoTalkButton
+                id="kakaotalk"
+                jsKey="21cd8a6129205163194430f64b6ce4ef"
+                url={url}
+                children={
+                  <Img
+                    src={[kakaotalk]}
+                    style={{ width: 64, height: 64, borderRadius: 32 }}
+                  />
+                }
+              />
+            </Grid>
+            <Grid item>
+              <KaKaoStoryButton
+                url={url}
+                children={
+                  <Img
+                    src={[kakaostory]}
+                    style={{ width: 64, height: 64, borderRadius: 32 }}
+                  />
+                }
+              />
+            </Grid>
+            <Grid item>
+              <NaverBlogButton
+                url={url}
+                children={
+                  <Img
+                    src={[naverblog]}
+                    style={{ width: 64, height: 64, borderRadius: 32 }}
+                  />
+                }
               />
             </Grid>
             <Grid item>
