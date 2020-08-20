@@ -28,14 +28,16 @@ export default function AvatarNameDate2({ userPost }: { userPost: UserPost }) {
     user: { name = "로딩중", photo_url = "로딩중" },
     created_at = "로딩중",
   } = userPost;
+  const alteredName =
+    name.indexOf("@") > 0 ? name.substr(0, name.indexOf("@")) : name;
   return (
     <Grid item xs={6} sm={4} md={3} className={classes.container}>
       <Box display="flex" alignItems="center" mr={1}>
-        <Avatar alt={name} src={photo_url} className={classes.small} />
+        <Avatar alt={alteredName} src={photo_url} className={classes.small} />
       </Box>
       <Box>
         <Box fontWeight={500} color="grey.900">
-          {name}
+          {alteredName}
         </Box>
         <Box color="grey.600">{semanticDate(created_at)}</Box>
       </Box>

@@ -37,6 +37,8 @@ export default function AvatarNameDate({
   justify?: GridJustification;
 }) {
   const classes = useStyles();
+  const alteredName =
+    name.indexOf("@") > 0 ? name.substr(0, name.indexOf("@")) : name;
   return (
     <Grid
       container
@@ -45,9 +47,9 @@ export default function AvatarNameDate({
       className={classes.font}
     >
       <Box display="flex" alignItems="center">
-        <Avatar alt={name} src={photo_url} className={classes.small} />
+        <Avatar alt={alteredName} src={photo_url} className={classes.small} />
         <Box ml={1} fontWeight={500} color="grey.900">
-          {name}
+          {alteredName}
         </Box>
       </Box>
       <Box color="grey.600" ml={1}>
