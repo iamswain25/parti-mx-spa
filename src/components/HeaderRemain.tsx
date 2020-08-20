@@ -9,7 +9,7 @@ import LogoutButton from "./LogoutButton";
 import DrawerGroup from "./DrawerGroup";
 import LoginButton from "./LoginButton";
 import SearchIcon from "@material-ui/icons/Search";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -72,7 +72,9 @@ export default function HeaderRemain(props: { children?: any }) {
             <Grid item xs={2} className={classes.flexend}>
               <Typography variant="h3" noWrap>
                 <Grid container alignItems="center">
-                  {user_id ? <LogoutButton /> : <LoginButton />}
+                  <Hidden smDown implementation="css">
+                    {user_id ? <LogoutButton /> : <LoginButton />}
+                  </Hidden>
                   {user_id && (
                     <Link
                       to="/search"
