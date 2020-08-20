@@ -12,7 +12,7 @@ export default function MenuGroup({ group }: { group: Group }) {
   const status = users?.[0]?.status;
   const isOrg = status === "organizer";
   const isUser = status === "user";
-  const isMine = user_id === group.createdBy.id;
+  const isMine = user_id === group.createdBy?.id;
   const { push } = useHistory();
   const exitGroup = useGroupExit();
   const deleteGroup = useGroupDelete();
