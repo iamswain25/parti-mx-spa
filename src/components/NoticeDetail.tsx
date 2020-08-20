@@ -1,6 +1,6 @@
 import React from "react";
 import { Post } from "../types";
-import { Box, Grid, Divider, makeStyles, Hidden } from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
@@ -11,6 +11,7 @@ import useDesktop from "./useDesktop";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 import NoticeComment from "./NoticeComment";
+import ShareButtons from "./ShareButtons";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -78,9 +79,10 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Hidden smDown>
+          <Box display="flex" alignItems="center">
+            <ShareButtons post={p} />
             <PostMenu post={p} />
-          </Hidden>
+          </Box>
         </Box>
         <Box mt={1}>
           <AvatarNameDate

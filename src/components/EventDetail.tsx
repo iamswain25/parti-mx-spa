@@ -1,13 +1,6 @@
 import React from "react";
 import { Post, Event } from "../types";
-import {
-  Box,
-  Grid,
-  Divider,
-  makeStyles,
-  Hidden,
-  Typography,
-} from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles, Typography } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
@@ -21,6 +14,7 @@ import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import EventMetadataInfo from "./EventMetadataInfo";
 import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
 import EventComment from "./EventComment";
+import ShareButtons from "./ShareButtons";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -88,9 +82,10 @@ export default function EventDetail({ post: p }: { post: Post }) {
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Hidden smDown>
+          <Box display="flex" alignItems="center">
+            <ShareButtons post={p} />
             <PostMenu post={p} />
-          </Hidden>
+          </Box>
         </Box>
         <Box mb={2} mt={1}>
           <AvatarNameDate

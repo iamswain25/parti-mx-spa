@@ -7,7 +7,6 @@ import {
   makeStyles,
   Typography,
   Button,
-  Hidden,
 } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
@@ -21,6 +20,7 @@ import VoteCandidate from "./VoteCandidate";
 import useVoteCandidate from "./useVoteCandidate";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
+import ShareButtons from "./ShareButtons";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -142,9 +142,10 @@ export default function VoteDetail({ post: p }: { post: Post }) {
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Hidden smDown>
+          <Box display="flex" alignItems="center">
+            <ShareButtons post={p} />
             <PostMenu post={p} />
-          </Hidden>
+          </Box>
         </Box>
         <Box mt={1}>
           <AvatarNameDate
