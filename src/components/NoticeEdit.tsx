@@ -9,27 +9,24 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import { Post, Image, File as File2, NoticeFormdata } from "../types";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
-import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
+import NoticeInput from "./NoticeInput";
 
 export default function NoticeEdit({ post: p }: { post: Post }) {
-  const { id } = p;
+  const { id, title, body, files, images, html } = p;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [update] = useMutation(updatePost);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
-  const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
-  const { handleSubmit, register, errors, reset } = useForm<NoticeFormdata>();
-  React.useEffect(() => {
-    const { title, body, files, images } = p;
-    reset({ title, body });
-    setImages2(images);
-    setFiles2(files);
-  }, [reset, p]);
+  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
+  const formControl = useForm<NoticeFormdata>({
+    defaultValues: { title, body, html, isHtml: !!html },
+  });
+  const { handleSubmit } = formControl;
 
   async function handleForm(form: NoticeFormdata) {
     setLoading(true);
@@ -56,21 +53,8 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">Notice Edit</Typography>
-            <CustomTextField
-              label="Insert your question"
-              name="title"
-              autoFocus
-              register={register}
-              errors={errors}
-            />
-            <CustomTextField
-              label="Description (Question & Image)"
-              multiline
-              name="body"
-              register={register}
-              errors={errors}
-            />
+            <Typography variant="h2">Edit</Typography>
+            <NoticeInput formControl={formControl} />
             <ImageFileDropzone
               images={imageArr}
               setImages={setImageArr}

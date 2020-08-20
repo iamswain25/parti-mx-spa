@@ -14,22 +14,19 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function EventEdit({ post: p }: { post: Post }) {
-  const { id } = p;
+  const { id, title, body, files, images, metadata, html } = p;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [update] = useMutation(updatePost);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
-  const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
-  const { handleSubmit, register, errors, reset } = useForm<EventFormdata>();
-  React.useEffect(() => {
-    const { title, body, files, images, metadata } = p;
-    reset({ title, body, ...metadata });
-    setImages2(images);
-    setFiles2(files);
-  }, [reset, p]);
+  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
+  const formControl = useForm<EventFormdata>({
+    defaultValues: { title, body, html, isHtml: !!html, ...metadata },
+  });
+  const { handleSubmit } = formControl;
 
   async function handleForm(form: EventFormdata) {
     setLoading(true);
@@ -65,7 +62,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
         <Box mt={2}>
           <Container component="main" maxWidth="md">
             <Typography variant="h2">Edit</Typography>
-            <EventInputs register={register} errors={errors} />
+            <EventInputs formControl={formControl} />
             <ImageFileDropzone
               images={imageArr}
               setImages={setImageArr}

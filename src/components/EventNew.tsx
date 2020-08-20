@@ -21,7 +21,8 @@ export default function EventNew() {
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const { handleSubmit, register, errors } = useForm<EventFormdata>();
+  const formControl = useForm<EventFormdata>();
+  const { handleSubmit } = formControl;
   async function handleForm(form: EventFormdata) {
     setLoading(true);
     const { eventDate, deadline, countPeople, place, ...rest } = form;
@@ -55,7 +56,7 @@ export default function EventNew() {
         <Box mt={2}>
           <Container component="main" maxWidth="md">
             <Typography variant="h2">모임</Typography>
-            <EventInputs register={register} errors={errors} />
+            <EventInputs formControl={formControl} />
             <ImageFileDropzone
               images={imageArr}
               setImages={setImageArr}

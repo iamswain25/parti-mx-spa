@@ -50,7 +50,13 @@ export default function SuggestionNew() {
       fileArr,
       setSuccess,
       metadata,
+      // html,
     });
+    // if (isHtml) {
+    //   variables.body = html.blocks
+    //     .map((block) => (!block.text.trim() && "\n") || block.text)
+    //     .join("\n");
+    // }
     // return console.log(variables);
     if (latLng) {
       const { lat, lng } = latLng;

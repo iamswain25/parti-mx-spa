@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => {
 });
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
+  children?: React.ReactNode;
 }) {
   const { register, errors } = props.formControl;
   const classes = useStyles();

@@ -7,11 +7,11 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import CustomTextField from "./CustomTextField";
 import { makeNewVariables } from "./makePostVariables";
 import { NoticeFormdata } from "../types";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
+import NoticeInput from "./NoticeInput";
 
 export default function NoticeNew() {
   const { board_id } = useParams();
@@ -22,7 +22,8 @@ export default function NoticeNew() {
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const { handleSubmit, register, errors } = useForm<NoticeFormdata>();
+  const formControl = useForm<NoticeFormdata>();
+  const { handleSubmit } = formControl;
   async function handleForm(form: NoticeFormdata) {
     setLoading(true);
     const variables = await makeNewVariables(form, {
@@ -48,20 +49,7 @@ export default function NoticeNew() {
         <Box mt={2}>
           <Container component="main" maxWidth="md">
             <Typography variant="h2">New Notice</Typography>
-            <CustomTextField
-              label="Insert your question"
-              name="title"
-              autoFocus
-              register={register}
-              errors={errors}
-            />
-            <CustomTextField
-              label="Description (Question & Image)"
-              multiline
-              name="body"
-              register={register}
-              errors={errors}
-            />
+            <NoticeInput formControl={formControl} />
             <ImageFileDropzone
               images={imageArr}
               setImages={setImageArr}

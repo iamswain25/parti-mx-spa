@@ -23,42 +23,42 @@ import ImageFileDropzone from "./ImageFileDropzone";
 import { MINIMUM_TAG_COUNT } from "../helpers/options";
 
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const { id } = p;
+  const { id, location, title, body, context, files, images, tags, html } = p;
   const history = useHistory();
+  const metadata = p.metadata as SuggestionMetadata;
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [, setError] = useGlobalState(keys.ERROR);
   const [update] = useMutation(updatePost);
-  const [address, setAddress] = React.useState<undefined | string>(undefined);
-  const [latLng, setLatLng] = React.useState<undefined | LatLng>(undefined);
-  const [imageArr, setImageArr] = React.useState<File[]>([]);
-  const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(undefined);
-  const [files2, setFiles2] = React.useState<File2[] | undefined>(undefined);
-  const formControl = useForm<SuggestionFormdata>();
-  const { handleSubmit, reset } = formControl;
-  React.useEffect(() => {
-    const { location, title, body, files, images } = p;
-    const tags = p.tags || [];
-    const metadata = p.metadata as SuggestionMetadata;
-    reset({
-      title,
-      body,
-      // context,
-      // closingMethod: metadata.closingMethod,
-      customTags: tags,
-    });
-    setImages2(images);
-    setFiles2(files);
-    setAddress(metadata?.address);
-
+  const [address, setAddress] = React.useState<undefined | string>(
+    metadata?.address
+  );
+  const [latLng, setLatLng] = React.useState<undefined | LatLng>(() => {
     if (location) {
       const {
         coordinates: [lng, lat],
       } = location;
-      setLatLng({ lng, lat });
+      return { lng, lat };
+    } else {
+      return undefined;
     }
-  }, [reset, p]);
+  });
+  const [imageArr, setImageArr] = React.useState<File[]>([]);
+  const [fileArr, setFileArr] = React.useState<File[]>([]);
+  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
+  const formControl = useForm<SuggestionFormdata>({
+    defaultValues: {
+      title,
+      body,
+      context,
+      isHtml: !!html,
+      html,
+      closingMethod: metadata.closingMethod,
+      tags,
+    },
+  });
+  const { handleSubmit } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
@@ -78,7 +78,13 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
       metadata,
+      // html,
     });
+    // if (isHtml) {
+    //   variables.body = html.blocks
+    //     .map((block) => (!block.text.trim() && "\n") || block.text)
+    //     .join("\n");
+    // }
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {
@@ -99,7 +105,10 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       <Box mt={2}>
         <Container component="main" maxWidth="md">
           <Typography variant="h2">Edit Raising Questions</Typography>
-          <SuggestionInputs formControl={formControl} />
+          <SuggestionInputs
+            formControl={formControl}
+            // children={<HtmlInput formControl={formControl} />}
+          />
           <GooglePlaceAutocomplete
             address={address}
             setAddress={setAddress}
