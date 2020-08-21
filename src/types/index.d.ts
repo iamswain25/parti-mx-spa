@@ -1,4 +1,4 @@
-import { RawDraftContentState } from "draft-js";
+import { RawDraftContentState } from "react-draft-wysiwyg";
 export type FormData = {
   email: string;
   password: string;
