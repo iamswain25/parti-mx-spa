@@ -21,8 +21,9 @@ const useStyles = makeStyles((theme) => {
     },
     body: {
       "& p": {
-        margin: 0,
+        margin: "1em 0",
       },
+      wordBreak: "keep-all",
       whiteSpace: (isHtml) => (isHtml ? "normal" : "pre-wrap"),
       [theme.breakpoints.up("md")]: {
         fontSize: 16,
