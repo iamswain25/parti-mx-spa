@@ -7,6 +7,7 @@ import {
   makeStyles,
   Typography,
   Button,
+  Hidden,
 } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
@@ -36,16 +37,17 @@ const useStyles = makeStyles((theme) => {
       },
     },
     title: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
       [theme.breakpoints.up("md")]: {
         paddingTop: 60,
         fontSize: 24,
         letterSpacing: -0.6,
         paddingBottom: theme.spacing(2),
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
       },
       [theme.breakpoints.down("sm")]: {
+        paddingBottom: theme.spacing(1),
         fontSize: 16,
         fontWeight: 500,
       },
@@ -129,14 +131,16 @@ export default function VoteDetail({ post: p }: { post: Post }) {
   const [isDesktop] = useDesktop();
 
   return (
-    <Box bgcolor="grey.100" pt={2}>
+    <Box pt={2}>
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Box display="flex" alignItems="center">
-            <ShareButtons post={p} />
-            <PostMenu post={p} />
-          </Box>
+          <Hidden smDown implementation="css">
+            <Box display="flex" alignItems="center">
+              <ShareButtons post={p} />
+              <PostMenu post={p} />
+            </Box>
+          </Hidden>
         </Box>
         <Box mt={1}>
           <AvatarNameDate

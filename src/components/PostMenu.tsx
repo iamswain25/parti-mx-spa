@@ -9,9 +9,12 @@ import usePostAnnounce from "./usePostAnnounce";
 import usePostDenounce from "./usePostDenounce";
 import usePostEdit from "./usePostEdit";
 import usePostResolve from "./usePostResolve";
+import ShareButtons from "./ShareButtons";
+import useDesktop from "./useDesktop";
 export default function PostMenu({ post: p }: { post: Post }) {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
+  const [isDesktop] = useDesktop();
   const postId = Number(post_id);
   const [user] = p?.board?.group?.users || [null];
   const status = user?.status;
@@ -73,6 +76,14 @@ export default function PostMenu({ post: p }: { post: Post }) {
     menuItems.push(
       <MenuItem onClick={resolve} key={5}>
         토론 정리
+      </MenuItem>
+    );
+  }
+  console.log(isDesktop);
+  if (!isDesktop) {
+    menuItems.push(
+      <MenuItem key={6}>
+        <ShareButtons post={p} />
       </MenuItem>
     );
   }

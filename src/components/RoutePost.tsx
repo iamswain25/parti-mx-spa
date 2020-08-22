@@ -66,7 +66,7 @@ export default function RoutePost() {
             pt={1}
             paddingX={2}
             color="primary.dark"
-            bgcolor="grey.100"
+            // bgcolor="grey.100"
             display="flex"
             alignItems="center"
           >
