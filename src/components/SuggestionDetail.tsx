@@ -120,12 +120,14 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
-    <Box bgcolor="grey.100" pt={2}>
+    <Box pt={2}>
       <Box paddingX={2} className={classes.root}>
         <Box className={classes.title}>
-          {p.title}
-          <Hidden smDown>
-            <PostMenu post={p} />
+          <div>{p.title}</div>
+          <Hidden smDown implementation="css">
+            <Box display="flex" alignItems="center">
+              <PostMenu post={p} />
+            </Box>
           </Hidden>
         </Box>
         <Box my={2}>
