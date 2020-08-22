@@ -310,7 +310,7 @@ export const searchMembers = gql`
       }
       limit: $limit
       offset: $offset
-      order_by: { created_at: asc_nulls_last }
+      order_by: [{ status: desc_nulls_first }, { created_at: asc_nulls_last }]
     ) {
       user {
         id
