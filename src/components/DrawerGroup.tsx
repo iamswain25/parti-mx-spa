@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: 24,
-    height: 24,
   },
   drawer: {
     width: DRAWER_WIDTH,
