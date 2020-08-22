@@ -85,7 +85,7 @@ export const theme: Theme = createMuiTheme({
       "@media (max-width: 960px)": {
         fontSize: 14,
       },
-      lineHeight: "normal",
+      lineHeight: "24px",
       letterSpacing: -0.5,
     },
     h4: {
