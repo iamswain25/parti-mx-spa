@@ -14,12 +14,12 @@ export async function makeNewVariables(form: any, other: any) {
     setSuccess(files?.length + " 개의 파일 업로드 성공");
   }
   if (form.isHtml) {
-    delete form.isHtml;
     const html = form.html as RawDraftContentState;
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
   }
+  delete form.isHtml;
   return {
     images,
     files,
@@ -48,12 +48,12 @@ export async function makeUpdateVariables(form: any, other: any) {
     setSuccess(files?.length + " 개의 파일 업로드 성공");
   }
   if (form.isHtml) {
-    delete form.isHtml;
     const html = form.html as RawDraftContentState;
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
   }
+  delete form.isHtml;
   if (files2) {
     files = [...files2, ...(files || [])];
   }
