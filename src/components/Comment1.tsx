@@ -12,6 +12,7 @@ import { getAttitude } from "../helpers/attitude";
 import CommentEdit from "./CommentEdit";
 import { useStore } from "../store/store";
 import useCommentDelete from "./useCommentDelete";
+import Linkify from "./Linkify";
 export default function Comment1({ comment: c }: { comment: Comment }) {
   const [{ user_id }] = useStore();
   const classes = useStyles();
@@ -36,8 +37,10 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
-            <Typography>
-              {c?.body || (
+            <Typography display="block">
+              {c?.body ? (
+                <Linkify body={c?.body} />
+              ) : (
                 <Typography color="textSecondary">삭제되었습니다.</Typography>
               )}
             </Typography>

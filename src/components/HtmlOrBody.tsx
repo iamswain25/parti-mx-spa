@@ -1,8 +1,8 @@
 import React from "react";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core";
-import Linkify from "react-linkify";
 import LinkPreview from "./LinkPreview";
+import Linkify from "./Linkify";
 import draftToHtml from "draftjs-to-html";
 const useStyles = makeStyles((theme) => {
   const colors = {
@@ -39,13 +39,6 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-function aTag(decoratedHref: string, decoratedText: string, key: number) {
-  return (
-    <a target="_blank" rel="noopener noreferrer" href={decoratedHref} key={key}>
-      {decoratedText}
-    </a>
-  );
-}
 export default function HtmlOrBody({ post: p }: { post: Post }) {
   const {
     body,
@@ -65,7 +58,7 @@ export default function HtmlOrBody({ post: p }: { post: Post }) {
           />
         ) : (
           <>
-            <Linkify componentDecorator={aTag}>{body}</Linkify>
+            <Linkify body={body} />
           </>
         )}
       </div>

@@ -13,7 +13,6 @@ import {
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
-import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
 import { semanticDate, closingDateFrom } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
@@ -21,6 +20,7 @@ import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
 import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
+import Linkify from "./Linkify";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -109,13 +109,6 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-function aTag(decoratedHref: string, decoratedText: string, key: number) {
-  return (
-    <a target="_blank" rel="noopener noreferrer" href={decoratedHref} key={key}>
-      {decoratedText}
-    </a>
-  );
-}
 export default function SuggestionDetail({ post: p }: { post: Post }) {
   const { images = [], createdBy, created_at, context, files = [], tags } = p;
   const metadata = p.metadata as SuggestionMetadata;
@@ -195,7 +188,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         <FilesImages images={images} files={files} />
         <Box className={classes.body}>
           <Box className={classes.label}>제안배경</Box>
-          <Linkify componentDecorator={aTag}>{context}</Linkify>
+          <Linkify body={context} />
         </Box>
         <HtmlOrBody post={p} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
