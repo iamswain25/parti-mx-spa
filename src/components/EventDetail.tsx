@@ -13,7 +13,7 @@ import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
-import Linkify from "react-linkify";
+import Linkify from "./Linkify";
 import useDesktop from "./useDesktop";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
@@ -110,15 +110,7 @@ export default function EventDetail({ post: p }: { post: Post }) {
         </Box>
         <FilesImages images={images} files={files} />
         <Box className={classes.body} color="grey.900">
-          <Linkify
-            componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a target="blank" href={decoratedHref} key={key}>
-                {decoratedText}
-              </a>
-            )}
-          >
-            {body}
-          </Linkify>
+          <Linkify body={body} />
         </Box>
         <LinkPreview text={body} />
         <Box my={2}>

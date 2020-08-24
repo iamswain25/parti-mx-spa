@@ -13,12 +13,12 @@ import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
 import LinkPreview from "./LinkPreview";
-import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { daysLeftMeta } from "../helpers/datefns";
 import VoteCandidate from "./VoteCandidate";
 import useVoteCandidate from "./useVoteCandidate";
+import Linkify from "./Linkify";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 const useStyles = makeStyles((theme) => {
@@ -169,15 +169,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
         )}
         <FilesImages images={images} files={files} />
         <Box className={classes.body} color="grey.900">
-          <Linkify
-            componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a target="blank" href={decoratedHref} key={key}>
-                {decoratedText}
-              </a>
-            )}
-          >
-            {body}
-          </Linkify>
+          <Linkify body={body} />
         </Box>
         <LinkPreview text={body} />
         <Box className={classes.sub} mt={2} mb={1}>
