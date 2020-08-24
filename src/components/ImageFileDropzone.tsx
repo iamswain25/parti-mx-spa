@@ -80,7 +80,8 @@ export default function ImageFileDropzone(props: {
     <Paper variant="outlined" elevation={0} className={classes.root}>
       <Grid
         container
-        alignItems="center"
+        alignItems="flex-start"
+        direction="column"
         spacing={1}
         className={classes.padding}
       >
@@ -91,7 +92,7 @@ export default function ImageFileDropzone(props: {
             variant="contained"
             disableElevation
           >
-            Attach Images
+            Share My Images (required) :: 내 이미지 공유
           </Button>
         </Grid>
         <Grid item {...filesDrop.getRootProps()}>
@@ -101,7 +102,7 @@ export default function ImageFileDropzone(props: {
             variant="contained"
             disableElevation
           >
-            Key Concept Submission
+            Key Concept Submission (For application only) :: 주제 제안서 제출
           </Button>
         </Grid>
       </Grid>

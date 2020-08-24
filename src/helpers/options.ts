@@ -40,6 +40,8 @@ export function showStatusLabelByValue(value: UserStatus) {
   }
 }
 
+export const MINIMUM_TAG_COUNT = 3;
+
 export const defaultHashtags = [
   "global",
   "local",

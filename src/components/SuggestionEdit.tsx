@@ -20,6 +20,7 @@ import { makeUpdateVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import SuggestionInputs from "./SuggestionInputs";
 import ImageFileDropzone from "./ImageFileDropzone";
+import { MINIMUM_TAG_COUNT } from "../helpers/options";
 
 export default function SuggestionEdit({ post: p }: { post: Post }) {
   const { id } = p;
@@ -64,8 +65,8 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
     const { customTags, tags, ...rest } = form;
     const tagSet = new Set([...tags, ...customTags]);
     const tagArr = Array.from(tagSet);
-    if (tagArr.length < 2) {
-      return setError("must select minimum 2 keywords");
+    if (tagArr.length < MINIMUM_TAG_COUNT) {
+      return setError(`must select minimum ${MINIMUM_TAG_COUNT} keywords`);
     }
     const metadata = { address };
     const variables = await makeUpdateVariables(rest, {

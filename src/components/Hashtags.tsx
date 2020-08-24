@@ -39,7 +39,7 @@ export default function Hashtags(props: {
               <TextField
                 {...params}
                 variant="outlined"
-                label="Keywords (individual)"
+                label="My Own Keywords :: 나만의 키워드"
                 placeholder="Enter your Hashtag"
               />
             )}

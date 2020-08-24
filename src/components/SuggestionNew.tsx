@@ -13,6 +13,7 @@ import { makeNewVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import SuggestionInputs from "./SuggestionInputs";
 import { SuggestionFormdata } from "../types";
+import { MINIMUM_TAG_COUNT } from "../helpers/options";
 
 export default function SuggestionNew() {
   const { board_id } = useParams();
@@ -37,8 +38,8 @@ export default function SuggestionNew() {
     }
     const tagSet = new Set([...tags, ...customTags]);
     const tagArr = Array.from(tagSet);
-    if (tagArr.length < 2) {
-      return setError("must select minimum 2 keywords");
+    if (tagArr.length < MINIMUM_TAG_COUNT) {
+      return setError(`must select minimum ${MINIMUM_TAG_COUNT} keywords`);
     }
     const metadata = { address };
     const variables = await makeNewVariables(rest, {
@@ -72,7 +73,21 @@ export default function SuggestionNew() {
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">Raising Questions</Typography>
+            <Box my={4}>
+              <Typography variant="h4">
+                Share your images that depict the scene of a shift due to
+                COVID19, and raise your questions that we can find mutual
+                solutions. Let’s draw a common map of crisis together and figure
+                out a new rule of life. <br />
+                <br />
+                코로나의 상황에서 변화된 일상 공간의 한 장면, 함께 답을
+                찾아볼만한 질문을 공유해주세요. 위기의 지도를 만들고 그 위에서
+                함께 새로운 규칙을 상상하기를 제안합니다.
+              </Typography>
+            </Box>
+            <Typography variant="h2">
+              Raising Questions :: 새롭게 맞닥뜨린 질문은 무엇인가요?
+            </Typography>
             <SuggestionInputs formControl={formControl} />
             <GooglePlaceAutocomplete
               address={address}
