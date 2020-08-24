@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => {
       color: "white",
     },
     img: { objectFit: "cover", width: "100%", height: "100%" },
+    label: { textAlign: "left" },
   };
 });
 export default function ImageFileDropzone(props: {
@@ -91,6 +92,7 @@ export default function ImageFileDropzone(props: {
             startIcon={<ImageIcon />}
             variant="contained"
             disableElevation
+            classes={{ label: classes.label }}
           >
             Share My Images (required) :: 내 이미지 공유
           </Button>
@@ -101,6 +103,7 @@ export default function ImageFileDropzone(props: {
             startIcon={<AttachFileIcon />}
             variant="contained"
             disableElevation
+            classes={{ label: classes.label }}
           >
             Key Concept Submission (For application only) :: 주제 제안서 제출
           </Button>
