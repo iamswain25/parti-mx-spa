@@ -5,6 +5,7 @@ import ImagesWidth100 from "./ImagesWidth100";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import filesize from "filesize";
+import { downloadFileDirectly } from "../helpers/download";
 const useStyles = makeStyles((theme) => {
   return {
     grid: {
@@ -61,7 +62,7 @@ export default function FilesImages(props: {
                   {filesize(f.size)}
                 </Typography>
               </div>
-              <IconButton href={f.uri} target="_blank">
+              <IconButton onClick={() => downloadFileDirectly(f.uri, f.name)}>
                 <GetAppIcon />
               </IconButton>
             </Grid>
