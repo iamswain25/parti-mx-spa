@@ -12,7 +12,6 @@ import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
 import LinkPreview from "./LinkPreview";
-import Linkify from "react-linkify";
 import useDesktop from "./useDesktop";
 import { semanticDate } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
@@ -21,6 +20,7 @@ import PostMenu from "./PostMenu";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useStore } from "../store/store";
 import ShareButtons from "./ShareButtons";
+import Linkify from "./Linkify";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   const colors = {
@@ -100,13 +100,6 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-function aTag(decoratedHref: string, decoratedText: string, key: number) {
-  return (
-    <a target="_blank" rel="noopener noreferrer" href={decoratedHref} key={key}>
-      {decoratedText}
-    </a>
-  );
-}
 export default function SuggestionDetail({ post: p }: { post: Post }) {
   const [userStatus] = useGlobalState(keys.PERMISSION);
   const [{ user_id }] = useStore();
@@ -153,7 +146,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         <FilesImages images={images} files={showFile ? files : undefined} />
         <Box className={classes.body}>
           <Box className={classes.label}>Description (Question & Image)</Box>
-          <Linkify componentDecorator={aTag}>{body}</Linkify>
+          <Linkify body={body} />
         </Box>
         <LinkPreview text={body} />
         <Grid container alignItems="center" spacing={1}>

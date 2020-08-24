@@ -13,6 +13,7 @@ import { getAttitude } from "../helpers/attitude";
 import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import { useStore } from "../store/store";
+import Linkify from "./Linkify";
 
 export default function Comment2({
   comment: c,
@@ -45,8 +46,10 @@ export default function Comment2({
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
-            <Typography>
-              {c?.body || (
+            <Typography display="block">
+              {c?.body ? (
+                <Linkify body={c?.body} />
+              ) : (
                 <Typography color="textSecondary">Deleted</Typography>
               )}
             </Typography>
