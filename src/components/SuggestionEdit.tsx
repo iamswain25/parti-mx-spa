@@ -34,7 +34,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const [latLng, setLatLng] = React.useState<undefined | LatLng>(() => {
     const {
       coordinates: [lng, lat],
-    } = location;
+    } = location || { coordinates: [null, null] };
     return { lng, lat };
   });
   const [imageArr, setImageArr] = React.useState<File[]>([]);
