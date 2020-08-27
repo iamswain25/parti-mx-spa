@@ -166,6 +166,9 @@ export const queryByPostId = gql`
       created_at
       updated_at
       tags
+      createdBy {
+        id
+      }
       board {
         id
         title
@@ -313,7 +316,7 @@ export const searchMembers = gql`
       }
       limit: $limit
       offset: $offset
-      order_by: { created_at: asc_nulls_last }
+      order_by: { created_at: desc_nulls_last }
     ) {
       user {
         id

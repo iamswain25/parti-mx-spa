@@ -12,10 +12,12 @@ import NoticeEdit from "./NoticeEdit";
 import VoteEdit from "./VoteEdit";
 import Forbidden from "./Forbidden";
 import EventEdit from "./EventEdit";
+import { useGlobalState, keys } from "../store/useGlobalState";
 
 export default function RoutePostEdit() {
   const { post_id } = useParams();
   const [{ user_id }] = useStore();
+  const [userStatus] = useGlobalState(keys.PERMISSION);
   const { data, error, loading } = useQuery<PagePost>(queryByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
     fetchPolicy: "network-only",
@@ -25,6 +27,9 @@ export default function RoutePostEdit() {
   const p = data?.mx_posts_by_pk;
   if (loading) {
     return null;
+  }
+  if (userStatus !== "organizer" && p?.createdBy?.id !== user_id) {
+    return <Forbidden />;
   }
   if (!p) {
     return <Forbidden />;
