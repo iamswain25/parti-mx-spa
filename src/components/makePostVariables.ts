@@ -29,9 +29,6 @@ export async function makeNewVariables(form: any, other: any) {
 }
 
 export async function makeUpdateVariables(form: any, other: any) {
-  if ("isHtml" in form) {
-    delete form.isHtml;
-  }
   const { imageArr, fileArr, images2, files2, setSuccess, ...rest } = other;
   let images = null;
 

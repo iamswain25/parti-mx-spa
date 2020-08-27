@@ -149,17 +149,20 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           <Linkify body={body} />
         </Box>
         <LinkPreview text={body} />
-        <Grid container alignItems="center" spacing={1}>
-          <Grid item>Area:</Grid>
-          <Grid item>
-            <Link
-              to={`/map/${p.board.id}/${p.id}`}
-              style={{ textDecoration: "underline" }}
-            >
-              {metadata?.address}
-            </Link>
+        {metadata?.address && (
+          <Grid container alignItems="center" spacing={1}>
+            <Grid item>Area:</Grid>
+            <Grid item>
+              <Link
+                to={`/map/${p.board.id}/${p.id}`}
+                style={{ textDecoration: "underline" }}
+              >
+                {metadata?.address}
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
+
         <Grid container>
           {tags?.map((chip) => {
             return (

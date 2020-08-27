@@ -24,7 +24,7 @@ export default function HtmlInput(props: { formControl: UseFormMethods<any> }) {
             )}
           />
         }
-        label="내용에 HTML 편집기를 씁니다. *주의: 버전이 낮아 버그가 있습니다."
+        label="내용에 HTML 편집기를 씁니다."
       />
       {isHtml ? (
         <Controller
