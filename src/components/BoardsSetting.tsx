@@ -25,6 +25,7 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import HeaderBack from "./HeaderBack";
+import { boardPermissionList } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -189,11 +190,11 @@ export default function BoardsSetting() {
                         required: "필수 입력",
                       })}
                     >
-                      <option value="all">전체공개</option>
-                      <option value="member">멤버공개</option>
-                      <option value="observer">
-                        멤버공개(보기,댓글,공감 가능, 글쓰기 제외)
-                      </option>
+                      {boardPermissionList.map(({ label, value }) => (
+                        <option value={value} key={value}>
+                          {label}
+                        </option>
+                      ))}
                     </Select>
                   </FormControl>
                   <div className={classes.ml}>

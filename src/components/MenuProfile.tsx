@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useStore } from "../store/store";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
+// import AccountDelete from "./AccountDelete";
 export default function MenuProfile({ user }: { user: User }) {
   const [{ user_id }] = useStore();
   const history = useHistory();
@@ -37,6 +38,7 @@ export default function MenuProfile({ user }: { user: User }) {
       >
         <MenuItem onClick={profileHandler}>프로필</MenuItem>
         {user_id ? <LogoutButton /> : <LoginButton />}
+        {/* <AccountDelete /> */}
       </Menu>
     </>
   );

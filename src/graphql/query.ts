@@ -91,6 +91,7 @@ export const queryByBoardId = gql`
       id
       title
       type
+      permission
       group {
         ...groups
       }
@@ -372,7 +373,7 @@ export const searchPosts = gql`
                       group: {
                         users: {
                           user_id: { _eq: $user_id }
-                          status: { _in: ["organizer", "user", "participants"] }
+                          status: { _in: ["organizer", "user"] }
                         }
                       }
                     }

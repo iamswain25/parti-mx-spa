@@ -10,7 +10,7 @@ export default function permissionBlocked(
   }
   switch (permission) {
     case "member": {
-      if (["exit", "requested"].includes(status)) {
+      if (["exit", "requested", null].includes(status)) {
         return true;
       }
       break;
@@ -18,7 +18,7 @@ export default function permissionBlocked(
     case "all":
       break;
     case "observer":
-      if (["user", "organizer"].includes(status)) {
+      if (["organizer"].includes(status)) {
         break;
       } else {
         return true;

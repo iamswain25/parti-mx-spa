@@ -117,7 +117,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
         mutation: insertUserGroup,
         variables: {
           group_id,
-          status: userCount > 0 ? "requested" : "organizer",
+          status: userCount > 0 ? "user" : "organizer",
         },
       });
       window.location.reload();
@@ -128,9 +128,13 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   const userStatus = user?.status;
   usePermEffect(userStatus);
   const isOrg = userStatus === "organizer";
-  const toJoinTag = ["organizer", "user", "participant", "requested"].includes(
-    userStatus as string
-  ) ? (
+  const toJoinTag = [
+    "organizer",
+    "user",
+    "participant",
+    "requested",
+    null,
+  ].includes(userStatus as string) ? (
     <span>{showStatusLabelByValue(user?.status)}</span>
   ) : (
     <Button className={classes.groupJoin} onClick={joinHandler}>

@@ -11,6 +11,7 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import { useQuery } from "@apollo/client";
 import { queryBoardsOnly } from "../graphql/query";
 import { useStore } from "../store/store";
+import permissionBlocked from "./permissionBlocked";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -119,13 +120,6 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     stickyHeader,
     false
   );
-  let notOrganizerNotSuggestion = true;
-  if (
-    boards?.find((b) => b.id === board?.id)?.type !== "suggestion" &&
-    userStatus !== "organizer"
-  ) {
-    notOrganizerNotSuggestion = false;
-  }
   if (!boards) {
     return null;
   }
@@ -159,8 +153,8 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
             </NavLink>
           ))}
         </Box>
-        {["user", "organizer"].includes(userStatus as string) &&
-          notOrganizerNotSuggestion &&
+        {board &&
+          !permissionBlocked(board.permission, userStatus) &&
           !isHome?.isExact && (
             <>
               <div className={classes.btn}>
