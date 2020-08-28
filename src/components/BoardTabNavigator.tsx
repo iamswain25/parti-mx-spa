@@ -15,7 +15,6 @@ import permissionBlocked from "./permissionBlocked";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
-      overflowX: "auto",
       position: "sticky",
       top: -1,
       boxShadow: `0 4px 2px -2px ${grey[300]}`,
