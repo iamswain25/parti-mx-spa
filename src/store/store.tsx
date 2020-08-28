@@ -58,7 +58,6 @@ export const StoreProvider = (props: ComponentProps<any>) => {
         dispatch({
           type: "CHANGE_ALL",
           ...initialState,
-          group_id: 34,
           isInit: true,
         });
       }
