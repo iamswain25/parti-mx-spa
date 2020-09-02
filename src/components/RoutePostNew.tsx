@@ -11,18 +11,21 @@ import VoteNew from "./VoteNew";
 import Forbidden from "./Forbidden";
 import EventNew from "./EventNew";
 import permissionBlocked from "./permissionBlocked";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useStore } from "../store/store";
+import usePermEffect from "./usePermEffect";
 
 export default function RoutePostNew() {
   const { board_id } = useParams();
+  const [{ user_id }] = useStore();
   const { data, error, loading } = useQuery<PageBoard>(queryBoardType, {
-    variables: { board_id },
+    variables: { board_id, user_id },
     fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const [userStatus] = useGlobalState(keys.PERMISSION);
   const b = data?.mx_boards_by_pk;
+  const userStatus = b?.group?.users?.[0]?.status;
+  usePermEffect(userStatus);
   if (loading) {
     return null;
   }
