@@ -1,7 +1,7 @@
 import React from "react";
 import { HomeGroup } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavLink, useHistory, Link } from "react-router-dom";
+import { NavLink, useHistory, Link, useRouteMatch } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
 import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
@@ -107,6 +107,7 @@ const useStyles = makeStyles((theme) => {
 export default function BoardTabNavigator() {
   const [{ group_id, user_id, board_id }] = useStore();
   const classes = useStyles();
+  const matchNew = useRouteMatch("/new/:id");
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
   const { data } = useQuery<HomeGroup>(queryBoardsOnly, {
@@ -187,6 +188,7 @@ export default function BoardTabNavigator() {
             </Link>
             {notOrganizerNotice &&
               ["user", "organizer"].includes(userStatus as string) &&
+              !matchNew?.isExact &&
               board_id && (
                 <>
                   <div className={classes.btn}>
