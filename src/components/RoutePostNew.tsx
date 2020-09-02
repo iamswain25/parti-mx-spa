@@ -12,17 +12,20 @@ import Forbidden from "./Forbidden";
 import EventNew from "./EventNew";
 import usePermEffect from "./usePermEffect";
 import permissionBlocked from "./permissionBlocked";
+import { useStore } from "../store/store";
 
 export default function RoutePostNew() {
   const { board_id } = useParams();
+  const [{ user_id }] = useStore();
   const { data, error, loading } = useQuery<PageBoard>(queryBoardType, {
-    variables: { board_id },
+    variables: { board_id, user_id },
     fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
   const b = data?.mx_boards_by_pk;
   const userStatus = b?.group?.users?.[0]?.status;
+  console.log(userStatus);
   usePermEffect(userStatus);
   if (loading) {
     return null;
