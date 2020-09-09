@@ -12,11 +12,11 @@ import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import PostSort from "./PostSort";
 import { useStyles } from "../helpers/styles";
-import { Img } from "react-image";
 import PinDropIcon from "@material-ui/icons/PinDrop";
 import Forbidden from "./Forbidden";
 import Chips from "./Chips";
 import { defaultHashtags } from "../helpers/options";
+import { LazyImage } from "react-lazy-images";
 import { ChipData } from "../types";
 export default function RoutePhoto() {
   const { board_id = 2 } = useParams();
@@ -119,9 +119,19 @@ export default function RoutePhoto() {
                 exact
                 to={`/post/${p.id}`}
               >
-                <Img
-                  src={[...(p.images?.map((i) => i.uri) || []), "/ogp.png"]}
-                  className={classes.img}
+                <LazyImage
+                  alt={p.title}
+                  placeholder={({ imageProps, ref }) => (
+                    <div ref={ref} className={classes.img} />
+                  )}
+                  src={p?.images?.[0]?.uri || "/ogp.png"}
+                  actual={({ imageProps }) => (
+                    <img
+                      {...imageProps}
+                      alt={imageProps.alt}
+                      className={classes.img}
+                    />
+                  )}
                 />
                 <div className={classes.hover}>
                   <div>
