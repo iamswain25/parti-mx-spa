@@ -33,6 +33,7 @@ export default functions
         res.status(200).send(`<!doctype html>
     <head>
       <title>${title}</title>
+      <meta name="twitter:card" content="summary" />
       <meta property="og:title" content="${title}" />
       <meta property="og:description" content="${context || body}" />
       <meta property="og:image" content="${
