@@ -94,7 +94,7 @@ export default function ImageFileDropzone(props: {
             disableElevation
             classes={{ label: classes.label }}
           >
-            Share My Images (required) :: 내 이미지 공유
+            Share My Images (required) :: 내 이미지 공유 (최적 가로폭 778 픽셀)
           </Button>
         </Grid>
         <Grid item {...filesDrop.getRootProps()}>
