@@ -3,9 +3,9 @@ import { Comment } from "../types";
 export function getAttitude(comment: Comment) {
   const { user, post } = comment;
   if (user?.votes?.length) {
-    if (post?.metadata.isAnonymous !== true) {
-      return user.votes.map((v) => v?.candidate.body).join(",");
-    }
+    if (post?.metadata?.isAnonymous) return null;
+    if (post?.metadata?.isResultHidden) return null;
+    return user.votes.map((v) => v?.candidate.body).join(",");
   }
   if (user?.checkedPosts?.[0]?.like_count) {
     switch (post?.board?.type) {
