@@ -63,7 +63,7 @@ export default function VoteCandidate({
           <Box fontSize={12} letterSpacing={-0.26} color="grey.900">
             {c.body}
           </Box>
-          {!isResultHidden && voted && (
+          {((!isResultHidden && voted) || isClosed) && (
             <Box
               letterSpacing={-0.26}
               color="grey.900"
