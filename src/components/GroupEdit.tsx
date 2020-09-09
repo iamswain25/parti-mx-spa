@@ -76,10 +76,10 @@ export default function GroupEdit() {
     try {
       setLoading(true);
       const bg_img_url = bgFiles[0]
-        ? await uploadFileByPath(bgFiles[0], `${group_id}/bg_img_url`)
+        ? await uploadFileByPath(bgFiles[0], `${id}/bg_img_url`)
         : group?.bg_img_url;
       const mb_img_url = mbFiles[0]
-        ? await uploadFileByPath(mbFiles[0], `${group_id}/mb_img_url`)
+        ? await uploadFileByPath(mbFiles[0], `${id}/mb_img_url`)
         : group?.mb_img_url;
       const variables = { bg_img_url, mb_img_url, title, group_id: id };
       await update({ variables });
