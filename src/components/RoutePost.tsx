@@ -17,6 +17,7 @@ import VoteDetail from "./VoteDetail";
 import Forbidden from "./Forbidden";
 import EventDetail from "./EventDetail";
 import usePermEffect from "./usePermEffect";
+import useGroupIdEffect from "./useGroupIdEffect";
 
 export default function RoutePost() {
   const { post_id } = useParams();
@@ -29,6 +30,7 @@ export default function RoutePost() {
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
   usePermEffect(p?.board?.group?.users?.[0]?.status);
+  useGroupIdEffect(p?.board?.group?.id);
   if (loading) {
     return null;
   }
