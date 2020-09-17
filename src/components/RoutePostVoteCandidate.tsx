@@ -8,11 +8,15 @@ export default function RoutePostVoteCandidate({
   total = 0,
   voted = false,
   max = 1,
+  isClosed = false,
+  isResultHidden = false,
 }: {
   candidate: Candidate;
   total: number;
   max: number;
   voted: boolean;
+  isClosed: boolean;
+  isResultHidden: boolean;
 }) {
   const [myVote, percentage, width] = React.useMemo(() => {
     const count = c?.votes_aggregate?.aggregate?.sum?.count || 0;
@@ -40,7 +44,7 @@ export default function RoutePostVoteCandidate({
         <Box fontSize={12} letterSpacing={-0.26} color="grey.900">
           {c.body}
         </Box>
-        {voted && (
+        {((!isResultHidden && voted) || isClosed) && (
           <Box
             fontSize={12}
             letterSpacing={-0.26}
@@ -51,7 +55,7 @@ export default function RoutePostVoteCandidate({
           </Box>
         )}
       </Grid>
-      {voted && (
+      {((!isResultHidden && voted) || isClosed) && (
         <Box mt={1}>
           {myVote ? (
             <LinearProgressActive variant="determinate" value={width} />
