@@ -30,6 +30,7 @@ export default function LoginModal() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       handleClose();
+      window.location.reload();
     } catch (error) {
       setError(error);
     }
