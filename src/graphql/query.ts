@@ -21,20 +21,26 @@ export const queryByGroupId = gql`
       ...groups
       notice: boards(
         where: { type: { _eq: "notice" } }
-        order_by: { id: asc }
+        order_by: { order: asc_nulls_last }
       ) {
         ...boards
       }
       suggestion: boards(
         where: { type: { _eq: "suggestion" } }
-        order_by: { id: asc }
+        order_by: { order: asc_nulls_last }
       ) {
         ...boards
       }
-      vote: boards(where: { type: { _eq: "vote" } }, order_by: { id: asc }) {
+      vote: boards(
+        where: { type: { _eq: "vote" } }
+        order_by: { order: asc_nulls_last }
+      ) {
         ...boards
       }
-      event: boards(where: { type: { _eq: "event" } }, order_by: { id: asc }) {
+      event: boards(
+        where: { type: { _eq: "event" } }
+        order_by: { order: asc_nulls_last }
+      ) {
         ...boards
       }
     }
