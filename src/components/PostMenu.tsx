@@ -12,7 +12,7 @@ import usePostResolve from "./usePostResolve";
 import ShareButtons from "./ShareButtons";
 import useDesktop from "./useDesktop";
 export default function PostMenu({ post: p }: { post: Post }) {
-  const { post_id } = useParams();
+  const { post_id } = useParams<{ post_id: string }>();
   const [{ user_id }] = useStore();
   const [isDesktop] = useDesktop();
   const postId = Number(post_id);
@@ -42,18 +42,26 @@ export default function PostMenu({ post: p }: { post: Post }) {
     setAnchorEl(null);
   };
   const menuItems = [];
-  if (isClosed) {
-    return null;
-  }
   if (isMine) {
+    if (!isClosed) {
+      menuItems.push(
+        <MenuItem onClick={edit} key={1}>
+          수정하기
+        </MenuItem>
+      );
+    }
+    if (!isClosed || isOrganizer) {
+      menuItems.push(
+        <MenuItem onClick={remove} key={2}>
+          삭제하기
+        </MenuItem>
+      );
+    }
+  }
+  if (isManualClosingVote && !isClosed) {
     menuItems.push(
-      <MenuItem onClick={edit} key={1}>
-        수정하기
-      </MenuItem>
-    );
-    menuItems.push(
-      <MenuItem onClick={remove} key={2}>
-        삭제하기
+      <MenuItem onClick={resolve} key={5}>
+        토론 정리
       </MenuItem>
     );
   }
@@ -72,14 +80,6 @@ export default function PostMenu({ post: p }: { post: Post }) {
       );
     }
   }
-  if (isManualClosingVote) {
-    menuItems.push(
-      <MenuItem onClick={resolve} key={5}>
-        토론 정리
-      </MenuItem>
-    );
-  }
-  console.log(isDesktop);
   if (!isDesktop) {
     menuItems.push(
       <MenuItem key={6}>
