@@ -119,6 +119,9 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
     if (!closingMethod) {
       return "계속";
     }
+    if (closingMethod === "manual") {
+      return "토론 정리 시 종료";
+    }
     try {
       after = Number(closingMethod?.replace("days", ""));
       return closingDateFrom(created_at, after);

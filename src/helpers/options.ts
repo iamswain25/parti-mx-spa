@@ -14,6 +14,7 @@ export const voteOptions = [
 export const suggestionOptions = [
   { label: "7일 후 종료", value: "7days" },
   { label: "30일 후 종료", value: "30days" },
+  { label: "토론 정리시 종료", value: "manual" },
 ];
 
 export const userGroupStatusList = [
