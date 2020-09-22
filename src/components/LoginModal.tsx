@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import LoginForm from "./LoginForm";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { loginError } from "../helpers/firebaseErrorCode";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -32,7 +33,7 @@ export default function LoginModal() {
       handleClose();
       window.location.reload();
     } catch (error) {
-      setError(error);
+      loginError(error, setError);
     }
   }
   if (!isVisible) {

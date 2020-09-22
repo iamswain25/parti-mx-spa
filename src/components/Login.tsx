@@ -4,6 +4,7 @@ import LoginForm from "./LoginForm";
 import { auth } from "../config/firebase";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { loginError } from "../helpers/firebaseErrorCode";
 
 export default function Login() {
   const [, setError] = useGlobalState(keys.ERROR);
@@ -13,7 +14,7 @@ export default function Login() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (error) {
-      setError(error);
+      loginError(error, setError);
     }
   };
 
