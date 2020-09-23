@@ -12,8 +12,10 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import ImageIcon from "@material-ui/icons/Image";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { Img } from "react-image";
 import filesize from "filesize";
+import SortableList from "./SortableList";
+import { SortEnd } from "react-sortable-hoc";
+import arrayMove from "array-move";
 const useStyles = makeStyles((theme) => {
   return {
     root: { marginTop: theme.spacing(2) },
@@ -25,21 +27,7 @@ const useStyles = makeStyles((theme) => {
     hover: {
       paddingLeft: theme.spacing(1),
       backgroundColor: theme.palette.grey[100],
-      // "&:hover": {
-      //   backgroundColor: theme.palette.grey[200],
-      // },
     },
-    closePic: {
-      right: 0,
-      position: "absolute",
-      cursor: "pointer",
-      width: theme.spacing(3),
-      height: theme.spacing(3),
-      backgroundColor: "rgba(0, 0, 0, 0.74)",
-      borderRadius: 0,
-      color: "white",
-    },
-    img: { objectFit: "cover", width: "100%", height: "100%" },
   };
 });
 export default function ImageFileDropzone(props: {
@@ -76,6 +64,9 @@ export default function ImageFileDropzone(props: {
   }
   const filesDrop = useDropzone({ onDrop: onFileDrop });
   const imagesDrop = useDropzone({ onDrop: onImageDrop });
+  function onSortEnd({ oldIndex, newIndex }: SortEnd) {
+    setImages(arrayMove(images, oldIndex, newIndex));
+  }
   return (
     <Paper variant="outlined" elevation={0} className={classes.root}>
       <Grid
@@ -109,23 +100,13 @@ export default function ImageFileDropzone(props: {
       {Boolean(images?.length) && (
         <>
           <Divider />
-          <Grid container spacing={1} className={classes.padding}>
-            {images.map((f: any, i: number) => (
-              <Grid
-                item
-                key={i}
-                style={{ width: 76, height: 76, position: "relative" }}
-              >
-                <Img src={[f.preview]} className={classes.img} />
-                <IconButton
-                  onClick={() => imageRemove(i)}
-                  className={classes.closePic}
-                >
-                  <CloseIcon color="inherit" />
-                </IconButton>
-              </Grid>
-            ))}
-          </Grid>
+          <SortableList
+            items={images}
+            imageRemove={imageRemove}
+            axis="x"
+            onSortEnd={onSortEnd}
+            useDragHandle
+          />
         </>
       )}
       {Boolean(files?.length) && (
