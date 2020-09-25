@@ -11,6 +11,7 @@
 # production
 /build
 /.firebase
+/hasura/config.yaml
 
 # misc
 .DS_Store
