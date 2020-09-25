@@ -1,17 +1,15 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { Group } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { semanticDate } from "../helpers/datefns";
-import { insertUserGroup } from "../graphql/mutation";
 import publicsphere from "../assets/images/publicsphere.jpg";
 import { Link } from "react-router-dom";
 import { Grid, Button, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { showStatusLabelByValue } from "../helpers/options";
-import { client } from "./ApolloSetup";
+import useGroupJoin from "./useGroupJoin";
+
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -98,8 +96,6 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function GroupLogoContainer({ group }: { group: Group }) {
-  const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
-  const [{ user_id, group_id }] = useStore();
   const classes = useStyles();
   const {
     title,
@@ -108,23 +104,10 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
     bg_img_url,
     mb_img_url,
     users_aggregate: {
-      aggregate: { count: userCount = 0 },
+      aggregate: { count: userCount = 1 },
     },
   } = group;
-  async function joinHandler() {
-    if (user_id) {
-      await client.mutate({
-        mutation: insertUserGroup,
-        variables: {
-          group_id,
-          status: userCount > 0 ? "user" : "organizer",
-        },
-      });
-      window.location.reload();
-    } else {
-      setVisible(true);
-    }
-  }
+  const joinHandler = useGroupJoin(userCount);
   const userStatus = user?.status;
   usePermEffect(userStatus);
   const isOrg = userStatus === "organizer";

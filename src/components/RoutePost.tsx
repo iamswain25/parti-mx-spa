@@ -1,8 +1,9 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { subsByPostId } from "../graphql/subscription";
+import { getGroupByPostId } from "../graphql/query";
 import { PagePost } from "../types";
-import { useSubscription } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useParams, Link } from "react-router-dom";
@@ -20,17 +21,18 @@ import usePermEffect from "./usePermEffect";
 import useGroupIdEffect from "./useGroupIdEffect";
 
 export default function RoutePost() {
-  const { post_id } = useParams();
+  const { post_id } = useParams<{ post_id: string }>();
   const [{ user_id }] = useStore();
   const [isDesktop] = useDesktop();
   const { data, error, loading } = useSubscription<PagePost>(subsByPostId, {
     variables: { post_id, user_id, isAnonymous: !user_id },
   });
+  const groupQuery = useQuery(getGroupByPostId, { variables: { post_id } });
   useLoadingEffect(loading);
   useErrorEffect(error);
   const p = data?.mx_posts_by_pk;
-  usePermEffect(p?.board?.group?.users?.[0]?.status);
-  useGroupIdEffect(p?.board?.group?.id);
+  usePermEffect(groupQuery.data?.group?.[0]?.status);
+  useGroupIdEffect(groupQuery.data?.group?.[0]?.id);
   if (loading) {
     return null;
   }
@@ -68,7 +70,6 @@ export default function RoutePost() {
             pt={1}
             paddingX={2}
             color="primary.dark"
-            // bgcolor="grey.100"
             display="flex"
             alignItems="center"
           >

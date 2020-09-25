@@ -477,3 +477,12 @@ export const queryGroupsByUserId = gql`
   }
   ${usersgroup}
 `;
+
+export const getGroupByPostId = gql`
+  query($post_id: Int!) {
+    group: mx_get_group_by_post_id(args: { post_id: $post_id }) {
+      id
+      status
+    }
+  }
+`;
