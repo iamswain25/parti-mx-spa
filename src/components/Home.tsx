@@ -1,6 +1,6 @@
 import React from "react";
 import { useStore } from "../store/store";
-import { queryByGroupId } from "../graphql/query";
+import { homeGroup } from "../graphql/query";
 import { HomeGroup, Board } from "../types";
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
@@ -50,13 +50,10 @@ const useStyles = makeStyles((theme) => {
 export default function Home() {
   const [{ group_id, user_id }] = useStore();
   const classes = useStyles();
-  const { data, error, loading, refetch } = useQuery<HomeGroup>(
-    queryByGroupId,
-    {
-      variables: { group_id },
-      fetchPolicy: "network-only",
-    }
-  );
+  const { data, error, loading, refetch } = useQuery<HomeGroup>(homeGroup, {
+    variables: { group_id },
+    fetchPolicy: "network-only",
+  });
   React.useEffect(() => {
     refetch && refetch();
   }, [user_id, refetch]);
@@ -74,7 +71,7 @@ export default function Home() {
 
   return (
     <>
-      <GroupLogoContainer group={group} />
+      <GroupLogoContainer />
       {!isDesktop && <GreyDivider />}
       <BoardTabNavigator />
       {isDesktop ? (

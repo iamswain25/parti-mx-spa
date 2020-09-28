@@ -31,12 +31,10 @@ export default function RoutePost() {
   const p = data?.mx_posts_by_pk;
   usePermEffect(groupQuery.data?.group?.[0]?.status);
   useGroupIdEffect(groupQuery.data?.group?.[0]?.id);
-  if (loading) {
-    return null;
-  }
-  if (!p) {
-    return <Forbidden />;
-  }
+
+  if (loading) return null;
+  if (!p) return <Forbidden />;
+
   let postByType = null;
   switch (p?.board?.type) {
     case "notice":

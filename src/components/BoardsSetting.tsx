@@ -54,9 +54,9 @@ interface BoardsForm {
 }
 export default function BoardsSetting() {
   const classes = useStyles();
-  const [{ group_id, user_id }] = useStore();
+  const [{ group_id }] = useStore();
   const { data, error, loading } = useQuery<HomeGroup>(queryBoardsByGroupId, {
-    variables: { group_id, user_id },
+    variables: { group_id },
   });
   const history = useHistory();
   const [updateBoardsAll] = useMutation(updateBoards);

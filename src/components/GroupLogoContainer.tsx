@@ -1,5 +1,5 @@
 import React from "react";
-import { Group } from "../types";
+import { HomeGroup } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { semanticDate } from "../helpers/datefns";
 import publicsphere from "../assets/images/publicsphere.jpg";
@@ -9,6 +9,9 @@ import MenuGroup from "./MenuGroup";
 import usePermEffect from "./usePermEffect";
 import { showStatusLabelByValue } from "../helpers/options";
 import useGroupJoin from "./useGroupJoin";
+import { useQuery } from "@apollo/client";
+import { logoGroup } from "../graphql/query";
+import { useStore } from "../store/store";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -95,20 +98,22 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-export default function GroupLogoContainer({ group }: { group: Group }) {
+export default function GroupLogoContainer() {
+  const [{ group_id }] = useStore();
+  const { data, loading } = useQuery<HomeGroup>(logoGroup, {
+    variables: { group_id },
+    fetchPolicy: "network-only",
+  });
+
+  const group = data?.mx_groups_by_pk;
   const classes = useStyles();
-  const {
-    title,
-    status,
-    created_at,
-    bg_img_url,
-    mb_img_url,
-    users_aggregate: {
-      aggregate: { count: userCount = 1 },
-    },
-  } = group;
+  const { title, status, created_at, bg_img_url, mb_img_url, users_aggregate } =
+    group || {};
+  const userCount = users_aggregate?.aggregate?.count || 1;
   const joinHandler = useGroupJoin(userCount);
   usePermEffect(status);
+  if (loading) return null;
+  if (!group) return null;
   const isOrg = status === "organizer";
   const toJoinTag = [
     "organizer",

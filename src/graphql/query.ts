@@ -13,10 +13,18 @@ export const queryGroupEdit = gql`
   }
 `;
 
-export const queryByGroupId = gql`
+export const logoGroup = gql`
   query($group_id: Int!) {
     mx_groups_by_pk(id: $group_id) {
       ...groups
+    }
+  }
+  ${groups}
+`;
+
+export const homeGroup = gql`
+  query($group_id: Int!) {
+    mx_groups_by_pk(id: $group_id) {
       notice: boards(
         where: { type: { _eq: "notice" } }
         order_by: { order: asc_nulls_last }
@@ -44,15 +52,12 @@ export const queryByGroupId = gql`
     }
   }
   ${boards}
-  ${groups}
 `;
 
 export const queryBoardsByGroupId = gql`
-  query($group_id: Int!, $user_id: Int) {
+  query($group_id: Int!) {
     mx_groups_by_pk(id: $group_id) {
-      users(where: { user_id: { _eq: $user_id } }) {
-        status
-      }
+      status
       boards(order_by: { order: asc_nulls_last }) {
         id
         type
