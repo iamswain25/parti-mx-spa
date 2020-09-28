@@ -2,9 +2,11 @@ import { useStore } from "../store/store";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { insertUserGroup } from "../graphql/mutation";
 import { client } from "../config/ApolloSetup";
-export default function useGroupJoin(refetch?: any, userCount = 1) {
+import useEffectRefetch from "./useEffectRefetch";
+export default function useGroupJoin(userCount = 1) {
   const [{ user_id, group_id }] = useStore();
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  const trigger = useEffectRefetch();
   async function handler() {
     if (user_id) {
       await client.mutate({
@@ -14,7 +16,7 @@ export default function useGroupJoin(refetch?: any, userCount = 1) {
           status: userCount > 0 ? "user" : "organizer",
         },
       });
-      refetch && refetch();
+      trigger();
     } else {
       setVisible(true);
     }

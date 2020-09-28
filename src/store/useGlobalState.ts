@@ -7,6 +7,7 @@ const initialState = {
   loading: true,
   sort: 0,
   permission: undefined,
+  refetch: {},
 };
 interface GlobalType {
   success: any;
@@ -15,6 +16,7 @@ interface GlobalType {
   showLoginModal: boolean;
   loading: boolean;
   sort: number;
+  refetch: object;
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 // const SHOW_LOGIN_MODAL = "showLoginModal";
@@ -28,4 +30,5 @@ export enum keys {
   SORT = "sort",
   SUCCESS = "success",
   PERMISSION = "permission",
+  REFETCH = "refetch",
 }

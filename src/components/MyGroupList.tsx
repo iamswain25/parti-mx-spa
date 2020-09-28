@@ -25,6 +25,7 @@ import {
 import { useHistory } from "react-router-dom";
 import GroupSearchList from "./GroupSearchList";
 import MenuProfile from "./MenuProfile";
+import useEffectRefetch from "./useEffectRefetch";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
     display: "flex",
@@ -46,10 +47,14 @@ export default function MyGroupList(props: {
   const classes = useStyles();
   const [{ user_id, group_id }] = useStore();
   const history = useHistory();
-  const { loading, data, error } = useQuery<Whoami>(queryGroupsByUserId, {
-    variables: { user_id },
-  });
+  const { loading, data, error, refetch } = useQuery<Whoami>(
+    queryGroupsByUserId,
+    {
+      variables: { user_id },
+    }
+  );
   const [keyword, setKeyword] = React.useState("");
+  useEffectRefetch(refetch);
   useLoadingEffect(loading);
   useErrorEffect(error);
   if (loading) {

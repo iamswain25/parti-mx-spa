@@ -6,20 +6,14 @@ import { useHistory } from "react-router-dom";
 import useGroupExit from "./useGroupExit";
 import { useStore } from "../store/store";
 import useGroupDelete from "./useGroupDelete";
-export default function MenuGroup({
-  group,
-  refetch,
-}: {
-  group: Group;
-  refetch?: any;
-}) {
+export default function MenuGroup({ group }: { group: Group }) {
   const [{ user_id }] = useStore();
   const status = group?.status;
   const isOrg = status === "organizer";
   const isUser = status === "user";
   const isMine = user_id === group.createdBy?.id;
   const { push } = useHistory();
-  const exitGroup = useGroupExit(refetch);
+  const exitGroup = useGroupExit();
   const deleteGroup = useGroupDelete();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

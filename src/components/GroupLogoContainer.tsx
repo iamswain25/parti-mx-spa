@@ -12,6 +12,7 @@ import useGroupJoin from "./useGroupJoin";
 import { useQuery } from "@apollo/client";
 import { logoGroup } from "../graphql/query";
 import { useStore } from "../store/store";
+import useEffectRefetch from "./useEffectRefetch";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -109,7 +110,8 @@ export default function GroupLogoContainer() {
   const { title, status, created_at, bg_img_url, mb_img_url, users_aggregate } =
     group || {};
   const userCount = users_aggregate?.aggregate?.count || 1;
-  const joinHandler = useGroupJoin(refetch, userCount);
+  const joinHandler = useGroupJoin(userCount);
+  useEffectRefetch(refetch);
   usePermEffect(status);
   if (loading) return null;
   if (!group) return null;
@@ -154,7 +156,7 @@ export default function GroupLogoContainer() {
               <span>멤버 {userCount}</span>
             )}
             {toJoinTag}
-            <MenuGroup group={group} refetch={refetch} />
+            <MenuGroup group={group} />
           </div>
         </div>
       </div>
