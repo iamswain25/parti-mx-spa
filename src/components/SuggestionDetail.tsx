@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => {
 export default function SuggestionDetail({ post: p }: { post: Post }) {
   const { images = [], createdBy, created_at, context, files = [], tags } = p;
   const metadata = p.metadata as SuggestionMetadata;
-  const liked = p.meLiked?.[0]?.like_count ?? 0;
+  const liked = p.my_like_count;
   const closingAt = React.useMemo(() => {
     let after = undefined;
     const closingMethod = metadata?.closingMethod;

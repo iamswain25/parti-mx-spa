@@ -77,7 +77,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   const isClosed = !!p?.closed_at;
   const isResultHidden = metadata.isResultHidden;
   React.useEffect(() => {
-    setVoted(!!p.meLiked?.[0]?.like_count);
+    setVoted(!!p.my_like_count);
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [

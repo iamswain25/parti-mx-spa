@@ -52,6 +52,7 @@ export const posts = gql`
     images
     location
     tags
+    my_like_count
     board {
       id
       type
@@ -59,10 +60,6 @@ export const posts = gql`
     users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
       like_count
       updated_at
-    }
-    meLiked: users(where: { user_id: { _eq: $user_id } })
-      @skip(if: $isAnonymous) {
-      like_count
     }
     users_aggregate {
       aggregate {

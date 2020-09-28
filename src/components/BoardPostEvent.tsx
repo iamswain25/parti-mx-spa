@@ -70,7 +70,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     deadline = getEventDate3(p.metadata.deadline);
   }
   const firstImage = p.images?.[0]?.uri;
-  const attending = !!p.meLiked?.[0]?.like_count;
+  const attending = p?.my_like_count;
   return (
     <div className={classes.container}>
       <Box mb={1} color="#a9aaad">

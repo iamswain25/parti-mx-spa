@@ -194,7 +194,7 @@ export type Post = {
     };
   };
   comments: Comment[];
-  meLiked: [UserPost];
+  my_like_count: number | null;
   likedUsers: UserPost[];
   board: Board;
 };

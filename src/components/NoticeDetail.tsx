@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function NoticeDetail({ post: p }: { post: Post }) {
   const { images, createdBy, created_at, files } = p;
-  const liked = p.meLiked?.[0]?.like_count ?? 0;
+  const liked = p.my_like_count;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (

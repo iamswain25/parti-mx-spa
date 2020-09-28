@@ -113,7 +113,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
   const voteHandler = useVoteCandidate(p);
   const [isVoted, setVoted] = React.useState(false);
   React.useEffect(() => {
-    setVoted(!!p.meLiked?.[0]?.like_count);
+    setVoted(!!p.my_like_count);
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [

@@ -53,105 +53,6 @@ export const subscribePostsByBoardId = gql`
   ${posts}
 `;
 
-export const subscribeSuggestion = gql`
-  subscription($id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
-    mx_posts_by_pk(id: $id) {
-      id
-      title
-      body
-      context
-      metadata
-      images
-      files
-      board {
-        title
-      }
-      updatedBy {
-        name
-        photo_url
-        id
-      }
-      createdBy {
-        name
-        photo_url
-        id
-      }
-      comments(
-        order_by: { created_at: asc }
-        where: { parent_id: { _is_null: true } }
-      ) {
-        ...comments
-        re(order_by: { created_at: asc }) {
-          ...comments
-        }
-      }
-      created_at
-      updated_at
-      meLiked: users(where: { user_id: { _eq: $user_id } })
-        @skip(if: $isAnonymous) {
-        like_count
-      }
-      likedUsers: users(where: { like_count: { _gt: 0 } }) {
-        created_at
-        user {
-          name
-          photo_url
-        }
-      }
-    }
-  }
-  ${comments}
-`;
-
-export const subscribeNotice = gql`
-  subscription($id: Int!, $user_id: Int!) {
-    mx_posts_by_pk(id: $id) {
-      id
-      title
-      body
-      context
-      metadata
-      images
-      files
-      board {
-        title
-      }
-      updatedBy {
-        id
-        name
-        photo_url
-      }
-      createdBy {
-        id
-        name
-        photo_url
-      }
-      comments(
-        order_by: { created_at: asc }
-        where: { parent_id: { _is_null: true } }
-      ) {
-        ...comments
-        re(order_by: { created_at: asc }) {
-          ...comments
-        }
-      }
-      created_at
-      updated_at
-      meLiked: users(where: { user_id: { _eq: $user_id } }) {
-        like_count
-      }
-      users_aggregate {
-        aggregate {
-          sum {
-            like_count
-          }
-        }
-      }
-    }
-  }
-  ${comments}
-`;
-
 export const subscribeBoardsByGroupId = gql`
   subscription($group_id: Int!, $user_id: Int!) {
     mx_groups_by_pk(id: $group_id) {
@@ -214,163 +115,6 @@ export const subscribeMemberCount = gql`
   }
 `;
 
-export const subscribeNoticeList = gql`
-  subscription($id: Int!, $user_id: Int!, $sort: [mx_posts_order_by!]) {
-    mx_boards_by_pk(id: $id) {
-      id
-      body
-      title
-      slug
-      posts_aggregate {
-        aggregate {
-          count
-        }
-      }
-      announcements: posts(
-        order_by: $sort
-        limit: 20
-        where: { metadata: { _contains: { announcement: true } } }
-      ) {
-        ...posts
-      }
-
-      posts: posts(
-        order_by: $sort
-        limit: 20
-        where: { _not: { metadata: { _contains: { announcement: true } } } }
-      ) {
-        ...posts
-      }
-    }
-  }
-  ${posts}
-`;
-
-export const subscribeVote = gql`
-  subscription($id: Int!, $user_id: Int!) {
-    mx_posts_by_pk(id: $id) {
-      id
-      title
-      body
-      context
-      metadata
-      images
-      files
-      board {
-        title
-      }
-      updatedBy {
-        name
-        photo_url
-        id
-      }
-      createdBy {
-        name
-        photo_url
-        id
-      }
-      comments(
-        order_by: { created_at: asc }
-        where: { parent_id: { _is_null: true } }
-      ) {
-        ...comments
-        re(order_by: { created_at: asc }) {
-          ...comments
-        }
-      }
-      created_at
-      updated_at
-      meLiked: users(where: { user_id: { _eq: $user_id } }) {
-        like_count
-      }
-      users_aggregate {
-        aggregate {
-          sum {
-            like_count
-          }
-        }
-      }
-      candidates {
-        id
-        body
-        post {
-          id
-          metadata
-        }
-        votes_aggregate {
-          aggregate {
-            sum {
-              count
-            }
-          }
-        }
-        myVote: votes(where: { user_id: { _eq: $user_id } }) {
-          count
-        }
-        votes {
-          count
-          created_at
-          user {
-            name
-            photo_url
-            id
-          }
-        }
-      }
-    }
-  }
-  ${comments}
-`;
-
-export const subscribeEvent = gql`
-  subscription($id: Int!, $user_id: Int!) {
-    mx_posts_by_pk(id: $id) {
-      id
-      title
-      body
-      context
-      metadata
-      images
-      files
-      board {
-        title
-      }
-      updatedBy {
-        name
-        photo_url
-        id
-      }
-      createdBy {
-        name
-        photo_url
-        id
-      }
-      comments(
-        order_by: { created_at: asc }
-        where: { parent_id: { _is_null: true } }
-      ) {
-        ...comments
-        re(order_by: { created_at: asc }) {
-          ...comments
-        }
-      }
-      created_at
-      updated_at
-      meLiked: users(where: { user_id: { _eq: $user_id } }) {
-        like_count
-      }
-      likedUsers: users(where: { like_count: { _gt: 0 } }) {
-        created_at
-        user {
-          name
-          photo_url
-        }
-      }
-    }
-  }
-  ${comments}
-`;
-
 export const subsByPostId = gql`
   subscription($post_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_posts_by_pk(id: $post_id) {
@@ -385,6 +129,7 @@ export const subsByPostId = gql`
       closed_at
       tags
       location
+      my_like_count
       board {
         id
         title
@@ -426,10 +171,6 @@ export const subsByPostId = gql`
             like_count
           }
         }
-      }
-      meLiked: users(where: { user_id: { _eq: $user_id } })
-        @skip(if: $isAnonymous) {
-        like_count
       }
       likedUsers: users(where: { like_count: { _gt: 0 } }) {
         created_at
