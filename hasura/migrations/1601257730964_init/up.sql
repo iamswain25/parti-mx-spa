@@ -92,6 +92,22 @@ CREATE FUNCTION mx.user_like_count_in_post(posts_row mx.posts, hasura_session js
     FROM mx.users_post UP
     WHERE UP.user_id = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND UP.post_id = posts_row.id;
 $$;
+CREATE TABLE mx.comments (
+    id integer NOT NULL,
+    user_id integer,
+    body text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    parent_id integer,
+    post_id integer
+);
+CREATE FUNCTION mx.user_like_in_comment(comments_row mx.comments, hasura_session json) RETURNS integer
+    LANGUAGE sql STABLE
+    AS $$
+    SELECT count(CL.*)::integer
+    FROM mx.comments_like CL
+    WHERE CL.user_id = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND CL.comment_id = comments_row.id;
+$$;
 CREATE FUNCTION mx.user_status_in_group(groups_row mx.groups, hasura_session json) RETURNS text
     LANGUAGE sql STABLE
     AS $$
@@ -132,15 +148,6 @@ CREATE TABLE mx.candidates (
     post_id integer NOT NULL,
     user_id integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL
-);
-CREATE TABLE mx.comments (
-    id integer NOT NULL,
-    user_id integer,
-    body text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    parent_id integer,
-    post_id integer
 );
 CREATE SEQUENCE mx.comments_id_seq
     AS integer

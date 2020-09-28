@@ -262,6 +262,14 @@
           name: comments
         column_mapping:
           id: parent_id
+  computed_fields:
+  - name: my_like
+    definition:
+      function:
+        schema: mx
+        name: user_like_in_comment
+      session_argument: hasura_session
+    comment: whether liked by user session
   insert_permissions:
   - role: user
     permission:
@@ -305,6 +313,8 @@
       - post_id
       - updated_at
       - user_id
+      computed_fields:
+      - my_like
       filter: {}
       allow_aggregations: true
   update_permissions:
