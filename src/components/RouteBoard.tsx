@@ -1,5 +1,4 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
 import { PageBoard } from "../types";
 import { useQuery } from "@apollo/client";
@@ -18,27 +17,21 @@ import Forbidden from "./Forbidden";
 
 export default function RouteBoard() {
   const { board_id } = useParams<{ board_id: string }>();
-  const [{ user_id }] = useStore();
   const [sort] = useGlobalState(keys.SORT);
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
     variables: {
       board_id,
-      user_id,
-      isAnonymous: !user_id,
       sort: [postSortOptions[sort]],
     },
-    fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
   const board = data?.mx_boards_by_pk;
   usePermEffect(board?.group?.status);
-  if (loading) {
-    return null;
-  }
-  if (!board) {
-    return <Forbidden />;
-  }
+
+  if (loading) return null;
+  if (!board) return <Forbidden />;
+
   const { type } = board;
   let boardByType = null;
   switch (type) {

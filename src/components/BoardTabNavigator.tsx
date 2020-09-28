@@ -106,7 +106,6 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
   const stickyHeader = React.useRef(null);
   const { data } = useQuery<HomeGroup>(queryBoardsOnly, {
     variables: { group_id },
-    fetchPolicy: "network-only",
   });
   const boards = data?.mx_groups_by_pk?.boards;
   const history = useHistory();

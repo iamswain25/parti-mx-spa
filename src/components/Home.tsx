@@ -52,7 +52,6 @@ export default function Home() {
   const classes = useStyles();
   const { data, error, loading, refetch } = useQuery<HomeGroup>(homeGroup, {
     variables: { group_id },
-    fetchPolicy: "network-only",
   });
   React.useEffect(() => {
     refetch && refetch();

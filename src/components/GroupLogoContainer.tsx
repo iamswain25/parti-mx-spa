@@ -100,9 +100,8 @@ const useStyles = makeStyles((theme) => {
 });
 export default function GroupLogoContainer() {
   const [{ group_id }] = useStore();
-  const { data, loading } = useQuery<HomeGroup>(logoGroup, {
+  const { data, loading, refetch } = useQuery<HomeGroup>(logoGroup, {
     variables: { group_id },
-    fetchPolicy: "network-only",
   });
 
   const group = data?.mx_groups_by_pk;
@@ -110,7 +109,7 @@ export default function GroupLogoContainer() {
   const { title, status, created_at, bg_img_url, mb_img_url, users_aggregate } =
     group || {};
   const userCount = users_aggregate?.aggregate?.count || 1;
-  const joinHandler = useGroupJoin(userCount);
+  const joinHandler = useGroupJoin(refetch, userCount);
   usePermEffect(status);
   if (loading) return null;
   if (!group) return null;
@@ -155,7 +154,7 @@ export default function GroupLogoContainer() {
               <span>멤버 {userCount}</span>
             )}
             {toJoinTag}
-            <MenuGroup group={group} />
+            <MenuGroup group={group} refetch={refetch} />
           </div>
         </div>
       </div>

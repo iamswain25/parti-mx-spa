@@ -1,5 +1,4 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
 import { PageBoard, Post } from "../types";
 import { useQuery } from "@apollo/client";
@@ -21,8 +20,7 @@ import Chips from "./Chips";
 import { defaultHashtags } from "../helpers/options";
 import { ChipData } from "../types";
 export default function RoutePhoto() {
-  const { board_id } = useParams();
-  const [{ user_id }] = useStore();
+  const { board_id } = useParams<{ board_id: string }>();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
   const [chipData, setChipData] = React.useState<ChipData[]>(
@@ -32,8 +30,6 @@ export default function RoutePhoto() {
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
     variables: {
       board_id,
-      user_id,
-      isAnonymous: !user_id,
       sort: [postSortOptions[sort]],
     },
   });

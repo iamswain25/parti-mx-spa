@@ -98,8 +98,6 @@ export const queryBoardsOnly = gql`
 export const queryByBoardId = gql`
   query(
     $board_id: Int!
-    $user_id: Int
-    $isAnonymous: Boolean!
     $sort: [mx_posts_order_by!] # $tags: [String!]
   ) {
     mx_boards_by_pk(id: $board_id) {
