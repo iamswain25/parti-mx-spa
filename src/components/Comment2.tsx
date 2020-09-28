@@ -59,7 +59,7 @@ export default function Comment2({
               <Button className={classes.button} onClick={() => setRe(c?.user)}>
                 댓글달기
               </Button>
-              {c?.likes?.[0] ? (
+              {c?.my_like ? (
                 <ButtonUnlikeComment
                   id={c?.id}
                   count={c?.likes_aggregate?.aggregate?.count}

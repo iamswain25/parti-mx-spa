@@ -95,6 +95,7 @@ export interface Group {
   notice: Board[];
   event: Board[];
   vote: Board[];
+  status: UserStatus;
   users_aggregate: {
     aggregate: {
       count: number;
@@ -138,11 +139,7 @@ export interface Comment {
   body: string;
   updated_at: string;
   user: User;
-  likes: [
-    {
-      user: User;
-    }
-  ];
+  my_like: number;
   likes_aggregate: {
     aggregate: {
       count: number;

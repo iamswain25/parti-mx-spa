@@ -4,6 +4,7 @@ export const comments = gql`
     id
     body
     updated_at
+    my_like
     post {
       id
       metadata
@@ -24,11 +25,6 @@ export const comments = gql`
         candidate {
           body
         }
-      }
-    }
-    likes(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
-      user {
-        name
       }
     }
     likes_aggregate {
@@ -56,10 +52,6 @@ export const posts = gql`
     board {
       id
       type
-    }
-    users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
-      like_count
-      updated_at
     }
     users_aggregate {
       aggregate {
