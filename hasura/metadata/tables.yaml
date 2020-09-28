@@ -482,6 +482,8 @@
       - title
       - updated_at
       - updated_by
+      computed_fields:
+      - status
       filter: {}
       allow_aggregations: true
   update_permissions:
@@ -554,6 +556,14 @@
         table:
           schema: mx
           name: users_post
+  computed_fields:
+  - name: my_like_count
+    definition:
+      function:
+        schema: mx
+        name: user_like_count_in_post
+      session_argument: hasura_session
+    comment: like count by user in session
   insert_permissions:
   - role: user
     permission:
@@ -631,6 +641,8 @@
       - files
       - images
       - closed_at
+      computed_fields:
+      - my_like_count
       filter:
         _not:
           _and:

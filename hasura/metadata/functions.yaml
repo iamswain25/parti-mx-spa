@@ -1,5 +1,8 @@
 - function:
     schema: mx
+    name: get_group_by_post_id
+- function:
+    schema: mx
     name: get_new_post_count
 - function:
     schema: public
