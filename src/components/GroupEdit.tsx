@@ -67,7 +67,7 @@ export default function GroupEdit() {
   if (loading) {
     return null;
   }
-  if (group?.users?.[0]?.status !== "organizer") {
+  if (group?.status !== "organizer") {
     return <Forbidden />;
   }
 

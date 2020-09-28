@@ -16,8 +16,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
   const [{ user_id }] = useStore();
   const [isDesktop] = useDesktop();
   const postId = Number(post_id);
-  const [user] = p?.board?.group?.users || [null];
-  const status = user?.status;
+  const status = p?.board?.group?.status;
   const isMine = user_id && p?.createdBy?.id === user_id;
   const isOrganizer = status === "organizer";
   const isClosed = !!p?.closed_at;

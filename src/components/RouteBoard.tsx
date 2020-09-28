@@ -17,7 +17,7 @@ import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
 
 export default function RouteBoard() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const [{ user_id }] = useStore();
   const [sort] = useGlobalState(keys.SORT);
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
@@ -32,7 +32,7 @@ export default function RouteBoard() {
   useLoadingEffect(loading);
   useErrorEffect(error);
   const board = data?.mx_boards_by_pk;
-  usePermEffect(board?.group?.users?.[0]?.status);
+  usePermEffect(board?.group?.status);
   if (loading) {
     return null;
   }

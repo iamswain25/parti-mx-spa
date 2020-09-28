@@ -28,7 +28,7 @@ export default function VoteCandidate({
   const [myVote, percentage, width, count] = React.useMemo(() => {
     const count = c?.votes_aggregate?.aggregate?.sum?.count || 0;
     return [
-      !!c?.myVote?.[0]?.count,
+      !!c?.my_like_count,
       Math.round((count * 100) / total) ?? 0,
       Math.round((count * 100) / max) || 0,
       count,

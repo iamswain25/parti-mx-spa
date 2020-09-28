@@ -16,7 +16,7 @@ export const queryGroupEdit = gql`
 `;
 
 export const queryByGroupId = gql`
-  query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
+  query($group_id: Int!) {
     mx_groups_by_pk(id: $group_id) {
       ...groups
       notice: boards(

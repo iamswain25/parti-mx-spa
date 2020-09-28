@@ -91,16 +91,13 @@ export const candidates = gql`
     id
     body
     order
+    my_like_count
     votes_aggregate {
       aggregate {
         sum {
           count
         }
       }
-    }
-    myVote: votes(where: { user_id: { _eq: $user_id } })
-      @skip(if: $isAnonymous) {
-      count
     }
     votes {
       count
@@ -117,6 +114,7 @@ export const groups = gql`
   fragment groups on mx_groups {
     id
     title
+    status
     bg_img_url
     mb_img_url
     created_at
@@ -129,9 +127,6 @@ export const groups = gql`
       aggregate {
         count
       }
-    }
-    users(where: { user_id: { _eq: $user_id } }) @skip(if: $isAnonymous) {
-      status
     }
   }
 `;

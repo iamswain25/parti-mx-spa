@@ -1,5 +1,4 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { subsByPostId } from "../graphql/subscription";
 import { getGroupByPostId } from "../graphql/query";
 import { PagePost } from "../types";
@@ -22,10 +21,9 @@ import useGroupIdEffect from "./useGroupIdEffect";
 
 export default function RoutePost() {
   const { post_id } = useParams<{ post_id: string }>();
-  const [{ user_id }] = useStore();
   const [isDesktop] = useDesktop();
   const { data, error, loading } = useSubscription<PagePost>(subsByPostId, {
-    variables: { post_id, user_id, isAnonymous: !user_id },
+    variables: { post_id },
   });
   const groupQuery = useQuery(getGroupByPostId, { variables: { post_id } });
   useLoadingEffect(loading);

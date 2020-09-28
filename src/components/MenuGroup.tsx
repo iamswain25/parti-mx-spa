@@ -8,8 +8,7 @@ import { useStore } from "../store/store";
 import useGroupDelete from "./useGroupDelete";
 export default function MenuGroup({ group }: { group: Group }) {
   const [{ user_id }] = useStore();
-  const users = group?.users;
-  const status = users?.[0]?.status;
+  const status = group?.status;
   const isOrg = status === "organizer";
   const isUser = status === "user";
   const isMine = user_id === group.createdBy?.id;

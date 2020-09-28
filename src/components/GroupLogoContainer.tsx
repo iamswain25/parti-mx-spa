@@ -99,7 +99,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
   const classes = useStyles();
   const {
     title,
-    users: [user] = [null],
+    status,
     created_at,
     bg_img_url,
     mb_img_url,
@@ -108,17 +108,16 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
     },
   } = group;
   const joinHandler = useGroupJoin(userCount);
-  const userStatus = user?.status;
-  usePermEffect(userStatus);
-  const isOrg = userStatus === "organizer";
+  usePermEffect(status);
+  const isOrg = status === "organizer";
   const toJoinTag = [
     "organizer",
     "user",
     "participant",
     "requested",
     null,
-  ].includes(userStatus as string) ? (
-    <span>{showStatusLabelByValue(user?.status)}</span>
+  ].includes(status as string) ? (
+    <span>{showStatusLabelByValue(status)}</span>
   ) : (
     <Button className={classes.groupJoin} onClick={joinHandler}>
       그룹가입

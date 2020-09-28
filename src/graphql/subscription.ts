@@ -116,7 +116,7 @@ export const subscribeMemberCount = gql`
 `;
 
 export const subsByPostId = gql`
-  subscription($post_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
+  subscription($post_id: Int!) {
     mx_posts_by_pk(id: $post_id) {
       id
       title
@@ -137,6 +137,7 @@ export const subsByPostId = gql`
         group {
           id
           title
+          status
         }
       }
       updatedBy {

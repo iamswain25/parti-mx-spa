@@ -48,10 +48,10 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Home() {
-  const [{ user_id, group_id }] = useStore();
+  const [{ group_id }] = useStore();
   const classes = useStyles();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
-    variables: { group_id, user_id, isAnonymous: !user_id },
+    variables: { group_id },
     fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
@@ -62,11 +62,7 @@ export default function Home() {
     return null;
   }
   if (!group) {
-    return (
-      <>
-        <Forbidden />
-      </>
-    );
+    return <Forbidden />;
   }
   const { notice, suggestion, vote, event } = group;
 

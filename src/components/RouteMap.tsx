@@ -90,7 +90,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function RoutePhoto() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const [{ user_id }] = useStore();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
@@ -132,7 +132,7 @@ export default function RoutePhoto() {
       }
     }
   }, [board, chipData, selectedPlace]);
-  usePermEffect(board?.group?.users?.[0]?.status);
+  usePermEffect(board?.group?.status);
   if (loading) {
     return null;
   }

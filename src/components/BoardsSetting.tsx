@@ -77,7 +77,7 @@ export default function BoardsSetting() {
   if (loading) {
     return null;
   }
-  if (!group || group.users[0].status !== "organizer") {
+  if (!group || group.status !== "organizer") {
     return <Forbidden />;
   }
   function removeHandler(i: number) {

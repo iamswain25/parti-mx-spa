@@ -166,6 +166,14 @@
         table:
           schema: mx
           name: users_candidates
+  computed_fields:
+  - name: my_like_count
+    definition:
+      function:
+        schema: mx
+        name: user_like_count_in_candidate
+      session_argument: hasura_session
+    comment: candidate like count by user session
   insert_permissions:
   - role: user
     permission:
@@ -207,6 +215,8 @@
       - post_id
       - user_id
       - created_at
+      computed_fields:
+      - my_like_count
       filter: {}
       allow_aggregations: true
   update_permissions:

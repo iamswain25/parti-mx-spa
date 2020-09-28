@@ -55,7 +55,7 @@ export default function RoutePhoto() {
       }
     }
   }, [board, chipData]);
-  usePermEffect(board?.group?.users?.[0]?.status);
+  usePermEffect(board?.group?.status);
   if (loading) {
     return null;
   }

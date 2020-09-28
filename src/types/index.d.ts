@@ -101,12 +101,6 @@ export interface Group {
       count: number;
     };
   };
-  users: [
-    {
-      status: UserStatus;
-      notification_type: NotificationType;
-    }
-  ];
 }
 export interface HomeGroup {
   mx_groups_by_pk: Group;
@@ -285,6 +279,7 @@ export type Candidate = {
   id: number;
   order: number;
   body: string;
+  my_like_count: number | null;
   post: {
     id: number;
     metadata: VoteMetadata;
@@ -296,13 +291,6 @@ export type Candidate = {
       };
     };
   };
-  myVote: [
-    {
-      count: number;
-      created_at?: string;
-      user?: User;
-    }
-  ];
   votes: UserCandidate[];
 };
 export interface VoteDetailType extends Post {
