@@ -48,12 +48,18 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Home() {
-  const [{ group_id }] = useStore();
+  const [{ group_id, user_id }] = useStore();
   const classes = useStyles();
-  const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
-    variables: { group_id },
-    fetchPolicy: "network-only",
-  });
+  const { data, error, loading, refetch } = useQuery<HomeGroup>(
+    queryByGroupId,
+    {
+      variables: { group_id },
+      fetchPolicy: "network-only",
+    }
+  );
+  React.useEffect(() => {
+    refetch && refetch();
+  }, [user_id, refetch]);
   useLoadingEffect(loading);
   useErrorEffect(error);
   const [isDesktop] = useDesktop();

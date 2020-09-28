@@ -6,6 +6,7 @@ import Modal from "@material-ui/core/Modal";
 import LoginForm from "./LoginForm";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
+import { wsLink } from "../config/ApolloSetup";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -31,7 +32,9 @@ export default function LoginModal() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       handleClose();
-      window.location.reload();
+      // @ts-ignore
+      wsLink.subscriptionClient.close(false);
+      // window.location.reload();
     } catch (error) {
       loginError(error, setError);
     }

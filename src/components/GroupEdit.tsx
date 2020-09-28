@@ -44,12 +44,12 @@ interface GroupForm {
 }
 export default function GroupEdit() {
   const classes = useStyles();
-  const [{ group_id, user_id }] = useStore();
+  const [{ group_id }] = useStore();
   const history = useHistory();
   const [update] = useMutation(updateGroup);
   const [images, setImages] = React.useState<any>({});
   const { data, loading } = useQuery<HomeGroup>(queryGroupEdit, {
-    variables: { group_id, user_id, isAnonymous: !user_id },
+    variables: { group_id },
   });
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setError] = useGlobalState(keys.ERROR);

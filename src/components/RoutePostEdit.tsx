@@ -1,5 +1,4 @@
 import React from "react";
-import { useStore } from "../store/store";
 import { queryByPostId } from "../graphql/query";
 import { PagePost } from "../types";
 import { useQuery } from "@apollo/client";
@@ -14,10 +13,9 @@ import Forbidden from "./Forbidden";
 import EventEdit from "./EventEdit";
 
 export default function RoutePostEdit() {
-  const { post_id } = useParams();
-  const [{ user_id }] = useStore();
+  const { post_id } = useParams<{ post_id: string }>();
   const { data, error, loading } = useQuery<PagePost>(queryByPostId, {
-    variables: { post_id, user_id, isAnonymous: !user_id },
+    variables: { post_id },
     fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);

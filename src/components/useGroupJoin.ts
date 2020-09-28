@@ -1,7 +1,7 @@
 import { useStore } from "../store/store";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { insertUserGroup } from "../graphql/mutation";
-import { client } from "./ApolloSetup";
+import { client } from "../config/ApolloSetup";
 export default function useGroupJoin(userCount = 1) {
   const [{ user_id, group_id }] = useStore();
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
