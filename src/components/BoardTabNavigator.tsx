@@ -7,7 +7,6 @@ import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { useQuery } from "@apollo/client";
 import { queryBoardsOnly } from "../graphql/query";
 import { useStore } from "../store/store";
@@ -101,13 +100,13 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
   const [{ group_id }] = useStore();
   const classes = useStyles();
   const isHome = useRouteMatch("/home");
-  const [userStatus] = useGlobalState(keys.PERMISSION);
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
   const { data } = useQuery<HomeGroup>(queryBoardsOnly, {
     variables: { group_id },
   });
   const boards = data?.mx_groups_by_pk?.boards;
+  const status = data?.mx_groups_by_pk?.status;
   const history = useHistory();
   useScrollPosition(
     ({ prevPos, currPos }) => {
@@ -152,7 +151,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
           ))}
         </Box>
         {board &&
-          !permissionBlocked(board.permission, userStatus) &&
+          !permissionBlocked(board.permission, status) &&
           !isHome?.isExact && (
             <>
               <div className={classes.btn}>

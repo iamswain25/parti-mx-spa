@@ -9,10 +9,10 @@ export default function permissionBlocked(
   }
   switch (permission) {
     case "member": {
-      if (["exit", "requested", null].includes(status)) {
-        return true;
+      if (["organizer", "user", "participant"].includes(status)) {
+        break;
       }
-      break;
+      return true;
     }
     case "all":
       break;

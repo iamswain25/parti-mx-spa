@@ -78,6 +78,7 @@ export const queryBoardsByGroupId = gql`
 export const queryBoardsOnly = gql`
   query($group_id: Int!, $user_id: Int) {
     mx_groups_by_pk(id: $group_id) {
+      status
       boards(order_by: { order: asc_nulls_last }) {
         id
         type
