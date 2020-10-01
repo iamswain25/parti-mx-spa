@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => {
       },
       flex: 1,
       height: 48,
-      overflow: "unset",
+      overflow: "auto",
       fontSize: 14,
       fontWeight: 500,
       letterSpacing: 0.2,
