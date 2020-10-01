@@ -22,7 +22,7 @@ export const userGroupStatusList = [
   { label: "멤버", value: "user" },
   { label: "패널 (곧 삭제예정)", value: "participant" },
   { label: "탈퇴", value: "exit" },
-  // { label: "승인대기", value: "requested" },
+  { label: "승인대기", value: "requested" },
 ];
 
 export const boardPermissionList = [
@@ -38,7 +38,6 @@ export function showStatusLabelByValue(value: UserStatus) {
   }
   switch (value) {
     case "requested":
-    case null:
       return "승인대기";
     default:
       return null;

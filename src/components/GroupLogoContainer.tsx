@@ -116,13 +116,9 @@ export default function GroupLogoContainer() {
   if (loading) return null;
   if (!group) return null;
   const isOrg = status === "organizer";
-  const toJoinTag = [
-    "organizer",
-    "user",
-    "participant",
-    "requested",
-    null,
-  ].includes(status as string) ? (
+  const toJoinTag = ["organizer", "user", "participant", "requested"].includes(
+    status as string
+  ) ? (
     <span>{showStatusLabelByValue(status)}</span>
   ) : (
     <Button className={classes.groupJoin} onClick={joinHandler}>
