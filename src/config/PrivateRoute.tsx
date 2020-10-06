@@ -3,7 +3,7 @@ import { Route, Redirect, RouteProps } from "react-router-dom";
 import { useStore } from "../store/store";
 export default function PrivateRoute(props: RouteProps) {
   const { component, ...rest } = props;
-  const Comp = component as React.ReactType;
+  const Comp = component as React.ElementType;
   const [{ user_id }] = useStore();
   return (
     <Route
