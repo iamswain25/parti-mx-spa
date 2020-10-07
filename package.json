@@ -1,6 +1,6 @@
 {
   "name": "parti-mx-spa",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.0.2",
@@ -68,7 +68,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "firebase deploy --only hosting --project seoul-city-architecture",
-    "bd": "react-scripts build && firebase deploy --only hosting --project seoul-city-architecture",
+    "bd": "yarn version --no-git-tag-version --patch && react-scripts build && firebase deploy --only hosting --project seoul-city-architecture",
     "firelogin": "firebase login --reauth",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
