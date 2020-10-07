@@ -14,7 +14,7 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
@@ -24,7 +24,7 @@ export default function VoteNew() {
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [isBinary, setBinary] = React.useState(true);
   const formControl = useForm<VoteFormdata>({
-    defaultValues: { candidates: ["", ""] },
+    defaultValues: { candidates: ["", ""] } as VoteFormdata,
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {

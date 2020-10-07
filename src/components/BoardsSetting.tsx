@@ -12,7 +12,7 @@ import {
   Select,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { HomeGroup, Board } from "../types";
+import { Board } from "../types";
 import { useQuery, useMutation } from "@apollo/client";
 import { queryBoardsByGroupId } from "../graphql/query";
 import { useStore } from "../store/store";
@@ -51,7 +51,7 @@ export default function BoardsSetting() {
   React.useEffect(() => {
     dispatch({ type: "SET_BOARD", board_id: null });
   }, [dispatch]);
-  const { data, error, loading } = useQuery<HomeGroup>(queryBoardsByGroupId, {
+  const { data, error, loading } = useQuery(queryBoardsByGroupId, {
     variables: { group_id, user_id },
   });
   const history = useHistory();

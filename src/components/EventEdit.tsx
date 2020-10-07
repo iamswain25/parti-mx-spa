@@ -23,7 +23,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Image[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
-  const formControl = useForm<EventFormdata>({
+  const formControl = useForm<any>({
     defaultValues: { title, body, html, isHtml: !!html, ...metadata },
   });
   const { handleSubmit } = formControl;

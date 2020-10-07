@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject } from "react";
 import { HomeGroup } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink, useHistory, Link, useRouteMatch } from "react-router-dom";
@@ -109,7 +109,7 @@ export default function BoardTabNavigator() {
   const classes = useStyles();
   const matchNew = useRouteMatch("/new/:id");
   const [isTop, setTop] = React.useState(false);
-  const stickyHeader = React.useRef(null);
+  const stickyHeader = React.useRef<null | HTMLDivElement>(null);
   const { data } = useQuery<HomeGroup>(queryBoardsOnly, {
     variables: { group_id, user_id, isAnonymous: !user_id },
     fetchPolicy: "network-only",
@@ -127,7 +127,7 @@ export default function BoardTabNavigator() {
       if (isShow !== isTop) setTop(isShow);
     },
     [isTop],
-    stickyHeader,
+    stickyHeader as MutableRefObject<HTMLElement>,
     false
   );
   if (!boards || !group) {

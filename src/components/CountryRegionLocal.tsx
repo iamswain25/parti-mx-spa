@@ -1,10 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { Controller } from "react-hook-form";
-import {
-  UseFormMethods,
-  ValidateResult,
-} from "react-hook-form/dist/types/form";
+import { UseFormMethods } from "react-hook-form/dist/types/form";
 import { CountryRegionData } from "react-country-region-selector";
 import { client } from "../config/ApolloSetup";
 import {
@@ -44,7 +41,7 @@ export default function CountryRegionLocal(props: {
         }
         rules={{
           required: "Required",
-          validate: async function (value): Promise<ValidateResult> {
+          validate: async function (value): Promise<any> {
             const res = await client.query({
               query: isProfile?.isExact
                 ? searchDuplicateNameWithoutMine

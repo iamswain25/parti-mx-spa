@@ -56,7 +56,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       html,
       closingMethod: metadata.closingMethod,
       customTags: tags,
-    },
+    } as SuggestionFormdata,
   });
   const { handleSubmit } = formControl;
 

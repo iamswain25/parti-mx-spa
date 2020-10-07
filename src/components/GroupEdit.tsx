@@ -11,7 +11,6 @@ import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { HomeGroup } from "../types";
 import Forbidden from "./Forbidden";
 import CloseIcon from "@material-ui/icons/Close";
 import { Img } from "react-image";
@@ -51,7 +50,7 @@ export default function GroupEdit() {
   const history = useHistory();
   const [update] = useMutation(updateGroup);
   const [images, setImages] = React.useState<any>({});
-  const { data, loading } = useQuery<HomeGroup>(queryGroupEdit, {
+  const { data, loading } = useQuery(queryGroupEdit, {
     variables: { group_id, user_id, isAnonymous: !user_id },
   });
   const [, setLoading] = useGlobalState(keys.LOADING);
@@ -64,7 +63,7 @@ export default function GroupEdit() {
     if (group) {
       const { title, bg_img_url, mb_img_url, id } = group;
       setImages({ bg_img_url, mb_img_url });
-      reset({ title, id });
+      reset({ title, id } as GroupForm);
     }
   }, [group, reset, setImages]);
   if (loading) {

@@ -19,7 +19,7 @@ import { defaultHashtags } from "../helpers/options";
 import { LazyImage } from "react-lazy-images";
 import { ChipData } from "../types";
 export default function RoutePhoto() {
-  const { board_id = 2 } = useParams();
+  const { board_id = 2 } = useParams<{ board_id: string }>();
   const [{ user_id }, dispatch] = useStore();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
