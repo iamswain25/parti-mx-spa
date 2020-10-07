@@ -450,7 +450,10 @@ export const queryGroupsByUserId = gql`
 
 export const queryReport = gql`
   query {
-    mx_posts(where: { files: { _is_null: false }, board_id: { _eq: 2 } }) {
+    mx_posts(
+      where: { files: { _is_null: false }, board_id: { _eq: 2 } }
+      order_by: { created_at: desc_nulls_last }
+    ) {
       id
       title
       files
