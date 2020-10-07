@@ -447,3 +447,20 @@ export const queryGroupsByUserId = gql`
   }
   ${usersgroup}
 `;
+
+export const queryReport = gql`
+  query {
+    mx_posts(where: { files: { _is_null: false }, board_id: { _eq: 2 } }) {
+      id
+      title
+      files
+      images
+      metadata
+      user: createdBy {
+        metadata
+        name
+        email
+      }
+    }
+  }
+`;

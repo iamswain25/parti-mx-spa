@@ -26,6 +26,7 @@ import Search from "../components/Search";
 import HeaderRemain from "../components/HeaderRemain";
 import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
+import Report from "../components/Report";
 
 export default function Routes() {
   useParseGroupId();
@@ -70,6 +71,7 @@ export default function Routes() {
               exact
               component={RoutePostNew}
             />
+            <PrivateRoute path="/report" exact component={Report} />
             <Route exact path="/">
               <Redirect to="/home" />
             </Route>
