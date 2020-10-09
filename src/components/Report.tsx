@@ -2,11 +2,12 @@ import React from "react";
 import { queryReport } from "../graphql/query";
 import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper } from "@material-ui/core";
+import { Button, Grid, Paper } from "@material-ui/core";
 import { downloadFileDirectly } from "../helpers/download";
 import { Link } from "react-router-dom";
 import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
+import { Parser, transforms } from "json2csv";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -40,8 +41,55 @@ export default function Report() {
   if (!(userStatus && userStatus === "organizer")) {
     return <Forbidden />;
   }
+  function csvDownload() {
+    const fields = [
+      "id",
+      "title",
+      "created_at",
+      "files.uri",
+      "files.name",
+      "files.type",
+      "files.uploadDate",
+      "metadata.address",
+      "user.metadata.local",
+      "user.metadata.region",
+      "user.metadata.country",
+      "user.email",
+      "user.name",
+    ];
+    const opts = {
+      fields,
+      transforms: [
+        transforms.unwind({ paths: ["files"], blankOut: true }),
+        transforms.flatten(),
+      ],
+    };
+
+    try {
+      const parser = new Parser(opts);
+      const csv = parser.parse(data?.mx_posts);
+      var csvData = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const exportFilename = new Date().toLocaleString() + ".csv";
+      if (navigator.msSaveBlob) {
+        navigator.msSaveBlob(csvData, exportFilename);
+      } else {
+        //In FF link must be added to DOM to be clicked
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(csvData);
+        link.setAttribute("download", exportFilename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
   return (
     <div className={classes.root}>
+      <Button variant="contained" color="primary" onClick={csvDownload}>
+        download as csv
+      </Button>
       {data?.mx_posts?.map((p: any, i: number) => {
         return (
           <Grid container key={i}>

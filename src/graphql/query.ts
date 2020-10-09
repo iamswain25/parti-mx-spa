@@ -459,6 +459,7 @@ export const queryReport = gql`
       files
       images
       metadata
+      created_at
       user: createdBy {
         metadata
         name
