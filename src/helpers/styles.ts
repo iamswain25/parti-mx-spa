@@ -89,7 +89,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
       height: "100%",
       position: "absolute",
     },
-    [theme.breakpoints.down("sm")]: {},
+    [theme.breakpoints.down("sm")]: {
+      overflow: "hidden",
+      display: "none",
+    },
     padding: theme.spacing(2),
   },
   aspectRatio: {
