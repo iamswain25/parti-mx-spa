@@ -98,6 +98,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   aspectRatio: {
     display: "flex",
     position: "relative",
+    overflow: "hidden",
     "&::before": {
       content: "''",
       paddingBottom: "100%",

@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => {
     },
     titleContainer: {
       overflow: "hidden",
-      maxHeight: theme.spacing(6),
       cursor: "pointer",
     },
     body: {
@@ -29,6 +28,10 @@ const useStyles = makeStyles((theme) => {
     img: {
       width: 176,
       height: 120,
+      [theme.breakpoints.down("sm")]: {
+        width: 93,
+        height: 70,
+      },
       objectFit: "cover",
       backgroundColor: grey[200],
       marginRight: 18,

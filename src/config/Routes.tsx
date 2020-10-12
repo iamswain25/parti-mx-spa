@@ -27,6 +27,7 @@ import HeaderRemain from "../components/HeaderRemain";
 import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import Report from "../components/Report";
+import Home from "../components/Home";
 
 export default function Routes() {
   useParseGroupId();
@@ -38,7 +39,7 @@ export default function Routes() {
       {isInit && (
         <HeaderRemain>
           <Switch>
-            <Route path="/home" exact component={RoutePhoto} />
+            <Route path="/home" exact component={Home} />
             <Route path="/forgot" exact component={PasswordForgot} />
             <Route path="/photo/:board_id" exact component={RoutePhoto} />
             <Route path="/map/:board_id/:post_id" exact component={RouteMap} />

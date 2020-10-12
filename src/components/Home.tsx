@@ -29,18 +29,6 @@ const useStyles = makeStyles((theme) => {
         marginTop: theme.spacing(1),
       },
     },
-    left: {
-      [theme.breakpoints.up("md")]: {
-        marginRight: theme.spacing(3),
-        width: `calc(66% - ${theme.spacing(3)}px)`,
-      },
-    },
-    right: {
-      [theme.breakpoints.up("md")]: {
-        marginLeft: theme.spacing(3),
-        width: `calc(34% - ${theme.spacing(3)}px)`,
-      },
-    },
   };
 });
 
@@ -74,20 +62,12 @@ export default function Home() {
     <>
       {isDesktop ? (
         <section className={classes.grid}>
-          <ul className={classes.left}>
+          <ul>
             {notice?.map((b: Board, i: number) => (
               <HomeBoardNotice key={i} board={b} />
             ))}
             {suggestion?.map((b: Board, i: number) => (
               <HomeBoardSuggestion key={i} board={b} />
-            ))}
-          </ul>
-          <ul className={classes.right}>
-            {vote?.map((b: Board, i: number) => (
-              <HomeBoardVote key={i} board={b} />
-            ))}
-            {event?.map((b: Board, i: number) => (
-              <HomeBoardEvent key={i} board={b} />
             ))}
           </ul>
         </section>

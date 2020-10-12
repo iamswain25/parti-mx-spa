@@ -7,7 +7,7 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import { useParams, NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
-import { Box, Grid, Typography, Hidden } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import PostSort from "./PostSort";
@@ -16,8 +16,8 @@ import PinDropIcon from "@material-ui/icons/PinDrop";
 import Forbidden from "./Forbidden";
 import Chips from "./Chips";
 import { defaultHashtags } from "../helpers/options";
-import { LazyImage } from "react-lazy-images";
 import { ChipData } from "../types";
+import HomeBoardPhoto from "./HomeBoardPhoto";
 export default function RoutePhoto() {
   const { board_id = 2 } = useParams<{ board_id: string }>();
   const [{ user_id }, dispatch] = useStore();
@@ -113,54 +113,7 @@ export default function RoutePhoto() {
 
         <Grid container spacing={1} className={classes.photoGrid}>
           {posts?.map((p, i) => (
-            <Grid item key={i} xs={6} md={3}>
-              <NavLink
-                className={classes.aspectRatio}
-                exact
-                to={`/post/${p.id}`}
-              >
-                <LazyImage
-                  alt={p.title}
-                  placeholder={({ imageProps, ref }) => (
-                    <div ref={ref} className={classes.img} />
-                  )}
-                  src={p?.images?.[0]?.uri || "/ogp.png"}
-                  actual={({ imageProps }) => (
-                    <img
-                      {...imageProps}
-                      alt={imageProps.alt}
-                      className={classes.img}
-                    />
-                  )}
-                />
-                <div className={classes.hover}>
-                  <div>
-                    <Typography variant="h3">{p.title}</Typography>
-                  </div>
-                  <Typography variant="h6" color="primary">
-                    <Grid container>
-                      {p?.tags?.map((chip) => {
-                        return <span key={chip}>#{chip}&nbsp;</span>;
-                      })}
-                    </Grid>
-                  </Typography>
-                </div>
-              </NavLink>
-              <Hidden mdUp implementation="css">
-                <NavLink exact to={`/post/${p.id}`}>
-                  <div style={{ paddingTop: 4 }}>
-                    <Typography variant="h4">{p.title}</Typography>
-                  </div>
-                  <Typography variant="h5" color="primary">
-                    <Grid container style={{ paddingTop: 4 }}>
-                      {p?.tags?.map((chip) => {
-                        return <span key={chip}>#{chip}&nbsp;</span>;
-                      })}
-                    </Grid>
-                  </Typography>
-                </NavLink>
-              </Hidden>
-            </Grid>
+            <HomeBoardPhoto key={i} p={p} />
           ))}
         </Grid>
       </section>

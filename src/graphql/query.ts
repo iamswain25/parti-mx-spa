@@ -23,7 +23,16 @@ export const queryByGroupId = gql`
         ...boards
       }
       suggestion: boards(where: { type: { _eq: "suggestion" } }) {
-        ...boards
+        id
+        title
+        body
+        permission
+        type
+        updated_at
+        last_posted_at
+        posts(limit: 12, order_by: { created_at: desc_nulls_last }) {
+          ...posts
+        }
       }
       vote: boards(where: { type: { _eq: "vote" } }) {
         ...boards
