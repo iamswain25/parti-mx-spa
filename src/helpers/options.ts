@@ -1,12 +1,12 @@
 import { UserStatus } from "../types";
 export const DOMAIN = "https://mix.beyondcovid19-opencall.org";
 export const postSortOptions = [
+  { sort: { created_at: "desc" }, label: "Most recent registered" },
   {
     sort: { last_commented_at: "desc_nulls_last" },
     label: "Most recent Comment",
   },
   { sort: { updated_at: "desc" }, label: "Most recent Updated" },
-  { sort: { created_at: "desc" }, label: "Most recent registered" },
 ];
 export const voteOptions = [
   { label: "7일 후 종료", value: "7days" },
