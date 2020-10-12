@@ -3,6 +3,13 @@ import { client } from "../config/ApolloSetup";
 import { queryReportAll } from "../graphql/query";
 export function csvDownloadAll() {
   client.query({ query: queryReportAll }).then((result) => {
+    const tagsStats = result.data?.mx_posts?.reduce((prev: any, curr: any) => {
+      curr.tags.forEach((tag: string) => {
+        prev[tag] ? prev[tag]++ : (prev[tag] = 1);
+      });
+      return prev;
+    }, {});
+    return console.log(tagsStats);
     const fields = [
       "id",
       "title",
