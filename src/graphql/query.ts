@@ -468,3 +468,24 @@ export const queryReport = gql`
     }
   }
 `;
+export const queryReportAll = gql`
+  query {
+    mx_posts(
+      where: { board_id: { _eq: 2 } }
+      order_by: { created_at: desc_nulls_last }
+    ) {
+      id
+      title
+      files
+      images
+      metadata
+      tags
+      created_at
+      user: createdBy {
+        metadata
+        name
+        email
+      }
+    }
+  }
+`;

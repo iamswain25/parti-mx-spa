@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import usePermEffect from "./usePermEffect";
 import Forbidden from "./Forbidden";
 import { Parser, transforms } from "json2csv";
+import { csvDownloadAll } from "../helpers/csvDownload";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -88,7 +89,10 @@ export default function Report() {
   return (
     <div className={classes.root}>
       <Button variant="contained" color="primary" onClick={csvDownload}>
-        download as csv
+        download csv (with files)
+      </Button>
+      <Button variant="contained" color="secondary" onClick={csvDownloadAll}>
+        download csv (all)
       </Button>
       {data?.mx_posts?.map((p: any, i: number) => {
         return (
