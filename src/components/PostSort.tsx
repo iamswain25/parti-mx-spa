@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => {
       "&::before": {
         borderBottom: 0,
       },
+      "& .MuiSelect-icon": {
+        top: "auto",
+      },
       fontSize: 11,
       letterSpacing: -0.31,
       color: theme.palette.grey[900],
