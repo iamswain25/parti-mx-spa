@@ -24,7 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BtnSubmitDesktop({ text = "저장" }) {
+export default function BtnSubmitDesktop({
+  text = "저장",
+  isSubmitting = false,
+}) {
   const classes = useStyles();
   const back = useGoBack();
   return (
@@ -32,7 +35,12 @@ export default function BtnSubmitDesktop({ text = "저장" }) {
       <Button variant="outlined" color="secondary" onClick={back}>
         Cancel
       </Button>
-      <Button type="submit" variant="contained" color="primary">
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={isSubmitting}
+      >
         {text}
       </Button>
     </div>

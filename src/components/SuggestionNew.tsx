@@ -28,7 +28,7 @@ export default function SuggestionNew() {
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<SuggestionFormdata>();
-  const { handleSubmit } = formControl;
+  const { handleSubmit, formState } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
@@ -50,14 +50,7 @@ export default function SuggestionNew() {
       fileArr,
       setSuccess,
       metadata,
-      // html,
     });
-    // if (isHtml) {
-    //   variables.body = html.blocks
-    //     .map((block) => (!block.text.trim() && "\n") || block.text)
-    //     .join("\n");
-    // }
-    // return console.log(variables);
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {
@@ -107,7 +100,10 @@ export default function SuggestionNew() {
               files={fileArr}
               setFiles={setFileArr}
             />
-            <BtnSubmitDesktop text="Submit" />
+            <BtnSubmitDesktop
+              text="Submit"
+              isSubmitting={formState.isSubmitting}
+            />
           </Container>
         </Box>
       </form>
