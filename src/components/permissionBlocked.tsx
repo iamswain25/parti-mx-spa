@@ -4,13 +4,13 @@ export default function permissionBlocked(
   permission: BoardPermission,
   status: UserStatus
 ) {
-  console.log(permission, status);
+  // console.log(permission, status);
   if (!status) {
     return true;
   }
   switch (permission) {
     case "member": {
-      if (["exit", "requested"].includes(status)) {
+      if (["exit", "requested", null].includes(status)) {
         return true;
       }
       break;
@@ -18,11 +18,10 @@ export default function permissionBlocked(
     case "all":
       break;
     case "observer":
-      if (["user", "organizer"].includes(status)) {
-        break;
-      } else {
+      if (!["participant", "organizer"].includes(status)) {
         return true;
       }
+      break;
   }
   return false;
 }

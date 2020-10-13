@@ -145,7 +145,7 @@ export default function GroupLogoContainer({ group }: { group: Group }) {
         <Hidden smDown implementation="css">
           <img src={bg_img_url ?? desktopImg} alt="group logo" />
         </Hidden>
-        {isOrg && (
+        {((isOrg && group_id === 1) || group_id !== 1) && (
           <div className={classes.groupLogoOverlay}>
             <Typography variant="h1" color="inherit">
               {title}

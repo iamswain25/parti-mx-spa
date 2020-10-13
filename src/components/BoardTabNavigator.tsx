@@ -17,6 +17,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import MenuProfile from "./MenuProfile";
 import LoginButton from "./LoginButton";
 import MenuBoard from "./MenuBoard";
+import permissionBlocked from "./permissionBlocked";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -133,10 +134,15 @@ export default function BoardTabNavigator() {
   if (!boards || !group) {
     return null;
   }
+  const theBoard = boards?.find((b) => b.id === board_id);
+  // console.log(theBoard, userStatus, board_id);
   let notOrganizerNotice = true;
+  if (theBoard?.type === "notice" && userStatus !== "organizer") {
+    notOrganizerNotice = false;
+  }
   if (
-    boards?.find((b) => b.id === board_id)?.type === "notice" &&
-    userStatus !== "organizer"
+    theBoard?.permission &&
+    permissionBlocked(theBoard?.permission, userStatus)
   ) {
     notOrganizerNotice = false;
   }
@@ -186,32 +192,29 @@ export default function BoardTabNavigator() {
             >
               <SearchIcon />
             </Link>
-            {notOrganizerNotice &&
-              ["user", "organizer"].includes(userStatus as string) &&
-              !matchNew?.isExact &&
-              board_id && (
-                <>
-                  <div className={classes.btn}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={btnHandler}
-                    >
-                      Write
-                    </Button>
-                  </div>
-                  <Hidden mdUp implementation="css">
-                    <Fab
-                      color="primary"
-                      aria-label="write"
-                      className={classes.fab}
-                      onClick={btnHandler}
-                    >
-                      <CreateIcon />
-                    </Fab>
-                  </Hidden>
-                </>
-              )}
+            {notOrganizerNotice && !matchNew?.isExact && board_id && (
+              <>
+                <div className={classes.btn}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={btnHandler}
+                  >
+                    Write
+                  </Button>
+                </div>
+                <Hidden mdUp implementation="css">
+                  <Fab
+                    color="primary"
+                    aria-label="write"
+                    className={classes.fab}
+                    onClick={btnHandler}
+                  >
+                    <CreateIcon />
+                  </Fab>
+                </Hidden>
+              </>
+            )}
           </Grid>
         </div>
       </Grid>

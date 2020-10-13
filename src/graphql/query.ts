@@ -19,10 +19,16 @@ export const queryByGroupId = gql`
   query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
     mx_groups_by_pk(id: $group_id) {
       ...groups
-      notice: boards(where: { type: { _eq: "notice" } }) {
+      notice: boards(
+        where: { type: { _eq: "notice" } }
+        order_by: { order: asc_nulls_last }
+      ) {
         ...boards
       }
-      suggestion: boards(where: { type: { _eq: "suggestion" } }) {
+      suggestion: boards(
+        where: { type: { _eq: "suggestion" } }
+        order_by: { order: asc_nulls_last }
+      ) {
         id
         title
         body

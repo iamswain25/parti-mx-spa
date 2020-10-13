@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => {
         marginLeft: "auto",
         marginRight: "auto",
         maxWidth: 1200,
+        flexDirection: "column",
       },
       [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
@@ -62,14 +63,12 @@ export default function Home() {
     <>
       {isDesktop ? (
         <section className={classes.grid}>
-          <ul>
-            {notice?.map((b: Board, i: number) => (
-              <HomeBoardNotice key={i} board={b} />
-            ))}
-            {suggestion?.map((b: Board, i: number) => (
-              <HomeBoardSuggestion key={i} board={b} />
-            ))}
-          </ul>
+          {suggestion?.map((b: Board, i: number) => (
+            <HomeBoardSuggestion key={i} board={b} />
+          ))}
+          {notice?.map((b: Board, i: number) => (
+            <HomeBoardNotice key={i} board={b} />
+          ))}
         </section>
       ) : (
         //모바일

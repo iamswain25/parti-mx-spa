@@ -9,7 +9,7 @@ export function csvDownloadAll() {
       });
       return prev;
     }, {});
-    return console.log(tagsStats);
+    console.log(tagsStats);
     const fields = [
       "id",
       "title",

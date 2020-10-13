@@ -189,7 +189,7 @@ export default function BoardsSetting() {
                       <option value="all">전체공개</option>
                       <option value="member">멤버공개</option>
                       <option value="observer">
-                        멤버공개(보기,댓글,공감 가능, 글쓰기 제외)
+                        전체공개(글쓰기 제한)
                       </option>
                     </Select>
                   </FormControl>
