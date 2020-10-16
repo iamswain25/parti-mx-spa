@@ -21,7 +21,18 @@ import permissionBlocked from "./permissionBlocked";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
-      // overflowX: "auto",
+      "& .btn-write": {
+        display: "flex",
+        alignItems: "center",
+        [theme.breakpoints.down("sm")]: {
+          display: "none",
+        },
+        "& button": {
+          width: 98,
+          padding: 0,
+          height: 38,
+        },
+      },
       position: "sticky",
       top: -1,
       boxShadow: `0 4px 2px -2px ${grey[300]}`,
@@ -39,6 +50,12 @@ const useStyles = makeStyles((theme) => {
       },
       "&.ontop": {
         backgroundColor: theme.palette.primary.main,
+        "& .btn-write": {
+          "& button": {
+            backgroundColor: theme.palette.common.white,
+            color: theme.palette.primary.main,
+          },
+        },
         "& button": {
           // backgroundColor: theme.palette.common.white,
           // color: theme.palette.primary.main,
@@ -89,18 +106,6 @@ const useStyles = makeStyles((theme) => {
       zIndex: theme.zIndex.speedDial,
       bottom: theme.spacing(2),
       right: theme.spacing(2),
-    },
-    btn: {
-      display: "flex",
-      alignItems: "center",
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-      },
-      "& button": {
-        width: 98,
-        padding: 0,
-        height: 38,
-      },
     },
   };
 });
@@ -194,7 +199,7 @@ export default function BoardTabNavigator() {
             </Link>
             {notOrganizerNotice && !matchNew?.isExact && board_id && (
               <>
-                <div className={classes.btn}>
+                <div className="btn-write">
                   <Button
                     variant="contained"
                     color="primary"
