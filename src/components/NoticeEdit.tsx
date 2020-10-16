@@ -14,7 +14,7 @@ import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
 
 export default function NoticeEdit({ post: p }: { post: Post }) {
-  const { id, title, body, files, images, html } = p;
+  const { id, title, body, files, images, html, tags } = p;
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
@@ -24,13 +24,23 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
   const [images2, setImages2] = React.useState<Image[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const formControl = useForm<NoticeFormdata>({
-    defaultValues: { title, body, html, isHtml: !!html },
+    defaultValues: {
+      title,
+      body,
+      html,
+      isHtml: !!html,
+      customTags: tags,
+    } as NoticeFormdata,
   });
   const { handleSubmit } = formControl;
 
   async function handleForm(form: NoticeFormdata) {
     setLoading(true);
-    const variables = await makeUpdateVariables(form, {
+    const { customTags, tags, ...rest } = form;
+    const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
+    const variables = await makeUpdateVariables(rest, {
+      tags: tagArr,
       imageArr,
       fileArr,
       images2,

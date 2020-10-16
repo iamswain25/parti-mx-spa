@@ -23,6 +23,7 @@ export default function RoutePhoto() {
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
   const [chipData, setChipData, selectedTags] = useHashtags();
+  const hashtags = <Chips chips={chipData} setChips={setChipData} />;
   React.useEffect(() => {
     dispatch({ type: "SET_BOARD", board_id: Number(board_id) });
   }, [board_id, dispatch]);
@@ -39,66 +40,65 @@ export default function RoutePhoto() {
   useErrorEffect(error);
   const board = data?.mx_boards_by_pk;
   if (loading) {
-    return null;
+    return <section className={classes.container}>{hashtags}</section>;
   }
   if (!board) {
-    return <Forbidden />;
+    return (
+      <section className={classes.container}>
+        {hashtags}
+        <Forbidden />
+      </section>
+    );
   }
   const { group, posts, posts_aggregate, ...b } = board;
   return (
-    <>
-      <section className={classes.container}>
-        <Chips chips={chipData} setChips={setChipData} />
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          className={classes.titleContainer}
-        >
-          <Box display="flex">
-            <Typography variant="h4" color="textPrimary">
-              {b.title}
-            </Typography>
-            <Box mr={1} />
-            <Typography variant="h4" color="primary">
-              {posts_aggregate?.aggregate?.count ?? 0}
-            </Typography>
-          </Box>
-          <Box display="flex">
-            <PostSort />
-            <NavLink
-              isActive={(match, location) => {
-                if (match) {
-                  return true;
-                }
-                if (location.pathname === "/home") {
-                  return true;
-                } else {
-                  return false;
-                }
-              }}
-              exact
-              to={`/photo/${board_id}`}
-              className={classes.smallIcon}
-            >
-              <GridOnIcon />
-            </NavLink>
-            <NavLink
-              exact
-              to={`/map/${board_id}`}
-              className={classes.smallIcon}
-            >
-              <PinDropIcon />
-            </NavLink>
-          </Box>
-        </Grid>
+    <section className={classes.container}>
+      {hashtags}
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
+        className={classes.titleContainer}
+      >
+        <Box display="flex">
+          <Typography variant="h4" color="textPrimary">
+            {b?.title}
+          </Typography>
+          <Box mr={1} />
+          <Typography variant="h4" color="primary">
+            {posts_aggregate?.aggregate?.count ?? 0}
+          </Typography>
+        </Box>
+        <Box display="flex">
+          <PostSort />
+          <NavLink
+            isActive={(match, location) => {
+              if (match) {
+                return true;
+              }
+              if (location.pathname === "/home") {
+                return true;
+              } else {
+                return false;
+              }
+            }}
+            exact
+            to={`/photo/${board_id}`}
+            className={classes.smallIcon}
+          >
+            <GridOnIcon />
+          </NavLink>
+          <NavLink exact to={`/map/${board_id}`} className={classes.smallIcon}>
+            <PinDropIcon />
+          </NavLink>
+        </Box>
+      </Grid>
 
-        <Grid container spacing={1} className={classes.photoGrid}>
-          {posts?.map((p, i) => (
-            <HomeBoardPhoto key={i} p={p} />
-          ))}
-        </Grid>
-      </section>
-    </>
+      <Grid container spacing={1} className={classes.photoGrid}>
+        {posts?.map((p, i) => (
+          <HomeBoardPhoto key={i} p={p} />
+        ))}
+      </Grid>
+    </section>
   );
 }

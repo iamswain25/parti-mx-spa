@@ -12,12 +12,12 @@ import { NoticeFormdata } from "../types";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
-
 export default function NoticeNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [, setLoading] = useGlobalState(keys.LOADING);
+  const [, setError] = useGlobalState(keys.ERROR);
   const [insert] = useMutation(insertPost);
   const [{ group_id }] = useStore();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
@@ -26,7 +26,14 @@ export default function NoticeNew() {
   const { handleSubmit } = formControl;
   async function handleForm(form: NoticeFormdata) {
     setLoading(true);
-    const variables = await makeNewVariables(form, {
+    const { customTags, tags, ...rest } = form;
+    if (imageArr.length < 1) {
+      return setError("must upload minimum 1 image");
+    }
+    const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
+    const variables = await makeNewVariables(rest, {
+      tags: tagArr,
       board_id,
       group_id,
       imageArr,

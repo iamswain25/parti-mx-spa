@@ -10,7 +10,6 @@ import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
 import HomeBoardEvent from "./HomeBoardEvent";
-import Forbidden from "./Forbidden";
 import useHashtags from "./useHashtags";
 import Chips from "./Chips";
 const useStyles = makeStyles((theme) => {
@@ -43,33 +42,32 @@ export default function Home() {
   const [chipData, setChipData, selectedTags] = useHashtags();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
     variables: { group_id, user_id, isAnonymous: !user_id, tags: selectedTags },
+    fetchPolicy: "network-only",
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
   const group = data?.mx_groups_by_pk;
-  if (loading) {
-    return null;
+  let boards = null;
+  if (group) {
+    const { notice, suggestion, vote, event } = group || {};
+    boards = [...suggestion, ...notice, ...vote, ...event]
+      .sort((a, b) => a.order - b.order)
+      .map((b: Board, i: number) => {
+        switch (b.type) {
+          case "suggestion":
+            return <HomeBoardSuggestion key={i} board={b} />;
+          case "notice":
+            return <HomeBoardNotice key={i} board={b} />;
+          case "vote":
+            return <HomeBoardVote key={i} board={b} />;
+          case "event":
+            return <HomeBoardEvent key={i} board={b} />;
+          default:
+            return null;
+        }
+      });
   }
-  if (!group) {
-    return <Forbidden />;
-  }
-  const { notice, suggestion, vote, event } = group;
-  const boards = [...suggestion, ...notice, ...vote, ...event]
-    .sort((a, b) => a.order - b.order)
-    .map((b: Board, i: number) => {
-      switch (b.type) {
-        case "suggestion":
-          return <HomeBoardSuggestion key={i} board={b} />;
-        case "notice":
-          return <HomeBoardNotice key={i} board={b} />;
-        case "vote":
-          return <HomeBoardVote key={i} board={b} />;
-        case "event":
-          return <HomeBoardEvent key={i} board={b} />;
-        default:
-          return null;
-      }
-    });
+
   return (
     <section className={classes.grid}>
       <Chips chips={chipData} setChips={setChipData} />

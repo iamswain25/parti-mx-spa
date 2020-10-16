@@ -28,6 +28,8 @@ export interface NoticeFormdata {
   body: string;
   isHtml: boolean;
   html: RawDraftContentState;
+  tags: string[];
+  customTags: string[];
 }
 export interface EventFormdata {
   eventDate: string;

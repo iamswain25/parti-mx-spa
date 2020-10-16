@@ -16,7 +16,7 @@ import { SuggestionFormdata } from "../types";
 import { MINIMUM_TAG_COUNT } from "../helpers/options";
 
 export default function SuggestionNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);

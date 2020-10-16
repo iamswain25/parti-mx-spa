@@ -78,13 +78,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
       metadata,
-      // html,
     });
-    // if (isHtml) {
-    //   variables.body = html.blocks
-    //     .map((block) => (!block.text.trim() && "\n") || block.text)
-    //     .join("\n");
-    // }
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {
