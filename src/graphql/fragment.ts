@@ -91,7 +91,11 @@ export const boards = gql`
     type
     updated_at
     last_posted_at
-    posts(limit: 4, order_by: { created_at: desc_nulls_last }) {
+    posts(
+      limit: 4
+      order_by: { created_at: desc_nulls_last }
+      where: { tags: { _contains: $tags } }
+    ) {
       ...posts
     }
   }

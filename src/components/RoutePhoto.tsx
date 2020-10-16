@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../store/store";
 import { queryByBoardId } from "../graphql/query";
-import { PageBoard, Post } from "../types";
+import { PageBoard } from "../types";
 import { useQuery } from "@apollo/client";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
@@ -15,54 +15,36 @@ import { useStyles } from "../helpers/styles";
 import PinDropIcon from "@material-ui/icons/PinDrop";
 import Forbidden from "./Forbidden";
 import Chips from "./Chips";
-import { defaultHashtags } from "../helpers/options";
-import { ChipData } from "../types";
 import HomeBoardPhoto from "./HomeBoardPhoto";
+import useHashtags from "./useHashtags";
 export default function RoutePhoto() {
   const { board_id = 2 } = useParams<{ board_id: string }>();
   const [{ user_id }, dispatch] = useStore();
   const classes = useStyles();
   const [sort] = useGlobalState(keys.SORT);
-  const [chipData, setChipData] = React.useState<ChipData[]>(
-    defaultHashtags.map((c) => ({ label: c, selected: false }))
-  );
+  const [chipData, setChipData, selectedTags] = useHashtags();
   React.useEffect(() => {
     dispatch({ type: "SET_BOARD", board_id: Number(board_id) });
   }, [board_id, dispatch]);
-  const [posts, setPosts] = React.useState<Post[] | undefined>(undefined);
   const { data, error, loading } = useQuery<PageBoard>(queryByBoardId, {
     variables: {
       board_id,
       user_id,
       isAnonymous: !user_id,
       sort: [postSortOptions[sort].sort],
+      tags: selectedTags,
     },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
   const board = data?.mx_boards_by_pk;
-  React.useEffect(() => {
-    if (board?.posts) {
-      const selectedTags = chipData
-        .filter((c) => c.selected)
-        .map((c) => c.label);
-      if (!selectedTags.length) {
-        setPosts(board?.posts);
-      } else {
-        const selectedPosts = board?.posts.filter((p) =>
-          selectedTags.every((t) => p.tags?.includes(t))
-        );
-        setPosts(selectedPosts);
-      }
-    }
-  }, [board, chipData]);
   if (loading) {
     return null;
   }
   if (!board) {
     return <Forbidden />;
   }
-  const { group, ...b } = board;
+  const { group, posts, posts_aggregate, ...b } = board;
   return (
     <>
       <section className={classes.container}>
@@ -79,7 +61,7 @@ export default function RoutePhoto() {
             </Typography>
             <Box mr={1} />
             <Typography variant="h4" color="primary">
-              {posts?.length ?? 0}
+              {posts_aggregate?.aggregate?.count ?? 0}
             </Typography>
           </Box>
           <Box display="flex">

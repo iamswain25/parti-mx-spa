@@ -11,6 +11,8 @@ import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
 import HomeBoardEvent from "./HomeBoardEvent";
 import Forbidden from "./Forbidden";
+import useHashtags from "./useHashtags";
+import Chips from "./Chips";
 const useStyles = makeStyles((theme) => {
   return {
     grid: {
@@ -38,9 +40,9 @@ export default function Home() {
   React.useEffect(() => {
     dispatch({ type: "SET_BOARD", board_id: null });
   }, [dispatch]);
+  const [chipData, setChipData, selectedTags] = useHashtags();
   const { data, error, loading } = useQuery<HomeGroup>(queryByGroupId, {
-    variables: { group_id, user_id, isAnonymous: !user_id },
-    fetchPolicy: "network-only",
+    variables: { group_id, user_id, isAnonymous: !user_id, tags: selectedTags },
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
@@ -68,5 +70,10 @@ export default function Home() {
           return null;
       }
     });
-  return <section className={classes.grid}>{boards}</section>;
+  return (
+    <section className={classes.grid}>
+      <Chips chips={chipData} setChips={setChipData} />
+      {boards}
+    </section>
+  );
 }

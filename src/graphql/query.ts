@@ -16,7 +16,7 @@ export const queryGroupEdit = gql`
 `;
 
 export const queryByGroupId = gql`
-  query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!) {
+  query($group_id: Int!, $user_id: Int, $isAnonymous: Boolean!, $tags: jsonb) {
     mx_groups_by_pk(id: $group_id) {
       ...groups
       notice: boards(
@@ -36,7 +36,11 @@ export const queryByGroupId = gql`
         type
         updated_at
         last_posted_at
-        posts(limit: 12, order_by: { created_at: desc_nulls_last }) {
+        posts(
+          limit: 12
+          order_by: { created_at: desc_nulls_last }
+          where: { tags: { _contains: $tags } }
+        ) {
           ...posts
         }
       }
@@ -105,7 +109,8 @@ export const queryByBoardId = gql`
     $board_id: Int!
     $user_id: Int
     $isAnonymous: Boolean!
-    $sort: [mx_posts_order_by!] # $tags: [String!]
+    $sort: [mx_posts_order_by!]
+    $tags: jsonb
   ) {
     mx_boards_by_pk(id: $board_id) {
       id
@@ -114,7 +119,7 @@ export const queryByBoardId = gql`
       group {
         ...groups
       }
-      posts_aggregate {
+      posts_aggregate(where: { tags: { _contains: $tags } }) {
         aggregate {
           count
         }
@@ -133,9 +138,7 @@ export const queryByBoardId = gql`
           count
         }
       }
-      posts(
-        order_by: $sort # , where: { tags: { _has_keys_any: $tags } }
-      ) {
+      posts(order_by: $sort, where: { tags: { _contains: $tags } }) {
         ...posts
         candidates {
           ...candidates
