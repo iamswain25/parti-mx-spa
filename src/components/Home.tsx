@@ -10,7 +10,6 @@ import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
 import HomeBoardEvent from "./HomeBoardEvent";
-import useDesktop from "./useDesktop";
 import Forbidden from "./Forbidden";
 const useStyles = makeStyles((theme) => {
   return {
@@ -45,48 +44,29 @@ export default function Home() {
   });
   useLoadingEffect(loading);
   useErrorEffect(error);
-  const [isDesktop] = useDesktop();
   const group = data?.mx_groups_by_pk;
   if (loading) {
     return null;
   }
   if (!group) {
-    return (
-      <>
-        <Forbidden />
-      </>
-    );
+    return <Forbidden />;
   }
   const { notice, suggestion, vote, event } = group;
-
-  return (
-    <>
-      {isDesktop ? (
-        <section className={classes.grid}>
-          {suggestion?.map((b: Board, i: number) => (
-            <HomeBoardSuggestion key={i} board={b} />
-          ))}
-          {notice?.map((b: Board, i: number) => (
-            <HomeBoardNotice key={i} board={b} />
-          ))}
-        </section>
-      ) : (
-        //모바일
-        <section className={classes.grid}>
-          {notice?.map((b: Board, i: number) => (
-            <HomeBoardNotice key={i} board={b} />
-          ))}
-          {vote?.map((b: Board, i: number) => (
-            <HomeBoardVote key={i} board={b} />
-          ))}
-          {suggestion?.map((b: Board, i: number) => (
-            <HomeBoardSuggestion key={i} board={b} />
-          ))}
-          {event?.map((b: Board, i: number) => (
-            <HomeBoardEvent key={i} board={b} />
-          ))}
-        </section>
-      )}
-    </>
-  );
+  const boards = [...suggestion, ...notice, ...vote, ...event]
+    .sort((a, b) => a.order - b.order)
+    .map((b: Board, i: number) => {
+      switch (b.type) {
+        case "suggestion":
+          return <HomeBoardSuggestion key={i} board={b} />;
+        case "notice":
+          return <HomeBoardNotice key={i} board={b} />;
+        case "vote":
+          return <HomeBoardVote key={i} board={b} />;
+        case "event":
+          return <HomeBoardEvent key={i} board={b} />;
+        default:
+          return null;
+      }
+    });
+  return <section className={classes.grid}>{boards}</section>;
 }
