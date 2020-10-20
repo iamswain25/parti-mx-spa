@@ -10,6 +10,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  MenuItem,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Board } from "../types";
@@ -105,30 +106,31 @@ export default function BoardsSetting() {
         <Typography>
           {fields.map((field, i) => {
             const postCount = field?.posts_aggregate?.aggregate?.count || 0;
+            const readOnly = postCount > 0;
             return (
               <Grid
                 container
                 alignItems="center"
                 justify="space-between"
-                key={i}
+                key={field.id}
                 className={classes.bb}
               >
                 <FormControl variant="filled">
                   <InputLabel>게시판 유형</InputLabel>
-                  <Select
-                    native
+                  <Controller
+                    control={control}
                     label="게시판 유형"
                     defaultValue={field.type}
                     name={`boards[${i}].type`}
-                    inputRef={register({
-                      required: "Required",
-                    })}
-                  >
-                    <option value="notice">소식</option>
-                    <option value="suggestion">제안</option>
-                    <option value="event">모임</option>
-                    <option value="vote">투표</option>
-                  </Select>
+                    render={(props) => (
+                      <Select {...props} inputProps={{ readOnly }}>
+                        <MenuItem value="notice">소식</MenuItem>
+                        <MenuItem value="suggestion">제안</MenuItem>
+                        <MenuItem value="event">모임</MenuItem>
+                        <MenuItem value="vote">투표</MenuItem>
+                      </Select>
+                    )}
+                  />
                 </FormControl>
                 <CustomTextField
                   type="number"
@@ -157,7 +159,7 @@ export default function BoardsSetting() {
                   as={<input type="hidden" />}
                 />
                 <CustomTextField
-                  label="게시판 Insert your question"
+                  label="게시판 명"
                   name={`boards[${i}].title`}
                   defaultValue={field.title}
                   register={register}
@@ -188,9 +190,7 @@ export default function BoardsSetting() {
                     >
                       <option value="all">전체공개</option>
                       <option value="member">멤버공개</option>
-                      <option value="observer">
-                        전체공개(글쓰기 제한)
-                      </option>
+                      <option value="observer">전체공개(글쓰기 제한)</option>
                     </Select>
                   </FormControl>
                   <div className={classes.ml}>
