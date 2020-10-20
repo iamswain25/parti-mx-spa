@@ -1,6 +1,7 @@
 import SecureStorage from "../config/SecureStorage";
 import createReducer from "../store/createReducer";
-export const PERSIST_KEY = "coop-parti-demos";
+import { ywcaFirebaseConfig } from "../config/firebaseConfig";
+export const PERSIST_KEY = ywcaFirebaseConfig.projectId;
 export const initialState = {
   isInit: false,
   group_id: 1,

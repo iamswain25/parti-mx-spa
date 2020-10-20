@@ -1,5 +1,5 @@
 import firebase, { User } from "firebase/app";
-import firebaseConfig from "./firebaseConfig";
+import { ywcaFirebaseConfig as firebaseConfig } from "./firebaseConfig";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/functions";
