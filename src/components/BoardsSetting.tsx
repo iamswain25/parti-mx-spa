@@ -10,6 +10,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  MenuItem,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { HomeGroup, Board } from "../types";
@@ -71,8 +72,10 @@ export default function BoardsSetting() {
   useErrorEffect(error);
   const group = data?.mx_groups_by_pk;
   React.useEffect(() => {
-    reset({ boards: group?.boards });
-    deletingIds.length = 0;
+    if (group) {
+      reset({ boards: group.boards });
+      deletingIds.length = 0;
+    }
   }, [group, reset]);
   if (loading) {
     return null;
@@ -109,30 +112,31 @@ export default function BoardsSetting() {
         <Typography>
           {fields.map((field, i) => {
             const postCount = field?.posts_aggregate?.aggregate?.count || 0;
+            const readOnly = postCount > 0;
             return (
               <Grid
                 container
                 alignItems="center"
                 justify="space-between"
-                key={i}
+                key={field.id}
                 className={classes.bb}
               >
                 <FormControl variant="filled">
                   <InputLabel>게시판 유형</InputLabel>
-                  <Select
-                    native
+                  <Controller
+                    control={control}
                     label="게시판 유형"
                     defaultValue={field.type}
                     name={`boards[${i}].type`}
-                    inputRef={register({
-                      required: "필수 입력",
-                    })}
-                  >
-                    <option value="notice">소식</option>
-                    <option value="suggestion">제안</option>
-                    <option value="event">모임</option>
-                    <option value="vote">투표</option>
-                  </Select>
+                    render={(props) => (
+                      <Select {...props} inputProps={{ readOnly }}>
+                        <MenuItem value="notice">소식</MenuItem>
+                        <MenuItem value="suggestion">제안</MenuItem>
+                        <MenuItem value="event">모임</MenuItem>
+                        <MenuItem value="vote">투표</MenuItem>
+                      </Select>
+                    )}
+                  />
                 </FormControl>
                 <CustomTextField
                   type="number"
