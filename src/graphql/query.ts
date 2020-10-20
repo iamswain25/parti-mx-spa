@@ -486,3 +486,22 @@ export const getGroupByPostId = gql`
     }
   }
 `;
+export const queryReportAll = gql`
+  query($group_id: Int!) {
+    mx_posts(
+      where: { board: { group_id: { _eq: $group_id } } }
+      order_by: { id: asc_nulls_last }
+    ) {
+      board {
+        title
+      }
+      id
+      title
+      created_at
+      user: createdBy {
+        name
+        email
+      }
+    }
+  }
+`;

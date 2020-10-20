@@ -26,6 +26,8 @@ import Search from "../components/Search";
 import HeaderRemain from "../components/HeaderRemain";
 import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
+import AdminRoute from "./AdminRoute";
+import Report from "../components/Report";
 
 export default function Routes() {
   useParseGroupId();
@@ -50,6 +52,7 @@ export default function Routes() {
             <PrivateRoute path="/group/new" exact component={GroupNew} />
             <PrivateRoute path="/profile" exact component={Profile} />
             <PrivateRoute path="/group/edit" exact component={GroupEdit} />
+            <AdminRoute path="/report" exact component={Report} />
             <Route path="/search" exact component={Search} />
             <Route
               exact

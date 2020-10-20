@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   link: {
     marginTop: theme.spacing(10),
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     fontSize: 40,
@@ -33,11 +34,26 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
 }));
-export default function Forbidden({ noPost = false }: { noPost?: boolean }) {
+export default function Forbidden({
+  noPost = false,
+  notAdmin = false,
+}: {
+  noPost?: boolean;
+  notAdmin?: boolean;
+}) {
   const [{ user_id }] = useStore();
   const classes = useStyles();
   const joinHandler = useGroupJoin();
   const [login, signup] = useLogin();
+  if (notAdmin) {
+    return (
+      <div className={classes.link}>
+        운영자 권한이 없습니다. <br />
+        운영자에게 운영자 권한을 요청하세요. <br />
+        <Link to="/">이전 그룹의 메인화면으로 돌아갑니다.</Link>
+      </div>
+    );
+  }
   if (noPost) {
     return (
       <div className={classes.link}>
