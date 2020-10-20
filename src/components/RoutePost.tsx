@@ -33,7 +33,7 @@ export default function RoutePost() {
   useGroupIdEffect(groupQuery.data?.group?.[0]?.id);
 
   if (loading) return null;
-  if (!p) return <Forbidden />;
+  if (!p) return <Forbidden noPost={!groupQuery.data?.group?.[0]?.id} />;
 
   let postByType = null;
   switch (p?.board?.type) {

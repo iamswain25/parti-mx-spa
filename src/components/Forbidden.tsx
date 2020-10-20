@@ -3,6 +3,7 @@ import { makeStyles, Typography } from "@material-ui/core";
 import { useStore } from "../store/store";
 import useGroupJoin from "./useGroupJoin";
 import useLogin from "./useLogin";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -21,12 +22,32 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
   },
+  link: {
+    marginTop: theme.spacing(10),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 40,
+    color: theme.palette.primary.main,
+    textDecoration: "underline",
+    cursor: "pointer",
+  },
 }));
-export default function Forbidden() {
+export default function Forbidden({ noPost = false }: { noPost?: boolean }) {
   const [{ user_id }] = useStore();
   const classes = useStyles();
   const joinHandler = useGroupJoin();
   const [login, signup] = useLogin();
+  if (noPost) {
+    return (
+      <div className={classes.link}>
+        <Link to="/">
+          삭제된 게시물입니다. <br />
+          이전 그룹의 메인화면으로 돌아갑니다.
+        </Link>
+      </div>
+    );
+  }
   return (
     <Typography variant="h1">
       <div className={classes.div}>
