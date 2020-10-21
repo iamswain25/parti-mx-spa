@@ -215,7 +215,7 @@ export default function BoardsSetting() {
             );
           })}
         </Typography>
-        <Button onClick={() => append({ title: "", body: "" })}>
+        <Button onClick={() => append({ title: "", body: "", type: "notice" })}>
           <AddIcon />
           게시판 추가
         </Button>
