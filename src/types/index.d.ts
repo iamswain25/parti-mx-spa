@@ -61,6 +61,7 @@ export type Board = {
   users: UserBoard[];
   newPostCount?: number;
   posts: Post[];
+  announcement?: Post[];
   group: Group;
   posts_aggregate: {
     aggregate: {

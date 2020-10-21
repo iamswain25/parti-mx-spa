@@ -505,3 +505,59 @@ export const queryReportAll = gql`
     }
   }
 `;
+
+export const queryByGroupId = gql`
+  query($group_id: Int!) {
+    mx_groups_by_pk(id: $group_id) {
+      ...groups
+      notice: boards(
+        where: { type: { _eq: "notice" } }
+        order_by: { order: asc_nulls_last }
+      ) {
+        id
+        title
+        body
+        permission
+        type
+        updated_at
+        last_posted_at
+        announcement: posts(
+          order_by: { created_at: desc_nulls_last }
+          where: { metadata: { _contains: { announcement: true } } }
+        ) {
+          ...posts
+        }
+        posts(
+          limit: 12
+          order_by: { created_at: desc_nulls_last }
+          where: { _not: { metadata: { _contains: { announcement: true } } } }
+        ) {
+          ...posts
+        }
+      }
+      suggestion: boards(
+        where: { type: { _eq: "suggestion" } }
+        order_by: { order: asc_nulls_last }
+      ) {
+        id
+        title
+        body
+        permission
+        type
+        updated_at
+        last_posted_at
+        posts(limit: 12, order_by: { created_at: desc_nulls_last }) {
+          ...posts
+        }
+      }
+      vote: boards(where: { type: { _eq: "vote" } }) {
+        ...boards
+      }
+      event: boards(where: { type: { _eq: "event" } }) {
+        ...boards
+      }
+    }
+  }
+  ${boards}
+  ${groups}
+`;

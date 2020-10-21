@@ -50,6 +50,7 @@
     "react-image": "^4.0.3",
     "react-images-upload": "^1.2.8",
     "react-infinite-scroll-component": "^5.0.5",
+    "react-lazy-images": "^1.1.0",
     "react-linkify": "^1.0.0-alpha",
     "react-multi-carousel": "^2.5.5",
     "react-places-autocomplete": "^7.3.0",

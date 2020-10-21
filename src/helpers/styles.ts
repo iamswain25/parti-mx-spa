@@ -10,6 +10,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   smallIcon: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     padding: theme.spacing(0.5),
     width: theme.spacing(3),
     height: theme.spacing(3),
@@ -74,9 +77,28 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: "absolute",
     height: "100%",
   },
+  hover: {
+    [theme.breakpoints.up("md")]: {
+      "&:hover": {
+        backgroundColor: theme.palette.text.primary,
+        opacity: "100%",
+      },
+      opacity: 0,
+      color: theme.palette.common.white,
+      width: "100%",
+      height: "100%",
+      position: "absolute",
+    },
+    [theme.breakpoints.down("sm")]: {
+      overflow: "hidden",
+      display: "none",
+    },
+    padding: theme.spacing(2),
+  },
   aspectRatio: {
     display: "flex",
     position: "relative",
+    overflow: "hidden",
     "&::before": {
       content: "''",
       paddingBottom: "100%",
@@ -85,15 +107,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   photoGrid: {
-    display: "grid",
     [theme.breakpoints.down("sm")]: {
-      gridTemplateColumns: "repeat(2, 1fr)",
-      gridGap: 8,
       padding: theme.spacing(2),
     },
     [theme.breakpoints.up("md")]: {
-      gridTemplateColumns: "repeat(4, 1fr)",
-      gridGap: theme.spacing(3),
       paddingTop: theme.spacing(3),
     },
   },
