@@ -1,17 +1,16 @@
 import SecureStorage from "../config/SecureStorage";
 import createReducer from "../store/createReducer";
-export const PERSIST_KEY = "coop-parti-demos";
+import { sharentingFirebaseConfig as FirebaseConfig } from "../config/firebaseConfig";
+export const PERSIST_KEY = FirebaseConfig.projectId;
 export const initialState = {
   isInit: false,
   group_id: 1,
-  // group_title: null,
   user_id: null,
 };
 export type State = typeof initialState;
 export type Action =
   | { type: "CHANGE_ALL"; isInit: boolean }
   | { type: "SET_GROUP"; group_id: number }
-  // | { type: "SET_GROUP_AND_TITLE"; group_id: number; group_title: string }
   | { type: "SET_USER"; user_id: number | null }
   | { type: "LOGOUT" };
 function persistSecureStore(state: State, payload: any) {

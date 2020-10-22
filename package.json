@@ -70,8 +70,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "firebase deploy --only hosting",
-    "bd": "yarn version --patch && react-scripts build && firebase deploy --only hosting",
+    "deploy": "firebase deploy --only hosting --project sharenting-mix",
+    "bd": "yarn build && yarn deploy",
     "firelogin": "firebase login --reauth",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
