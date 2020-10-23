@@ -36,7 +36,6 @@ export default function SuggestionInputs(props: {
         register={register}
         errors={errors}
       />
-      <CustomTextField name="password" register={register} errors={errors} />
       <TextField
         variant="outlined"
         margin="normal"

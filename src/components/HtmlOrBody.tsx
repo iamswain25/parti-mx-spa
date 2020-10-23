@@ -40,17 +40,13 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function HtmlOrBody({ post: p }: { post: Post }) {
-  const {
-    body,
-    html,
-    board: { type },
-  } = p;
+  const { body, html, type } = p;
   const isHtml = !!html;
   const classes = useStyles(isHtml);
   return (
     <>
       <div className={classes.body}>
-        {type === "suggestion" && <div className={classes.label}>제안내용</div>}
+        {type === "suggestion" && <div className={classes.label}>제보내용</div>}
         {html ? (
           <div
             className="draftjs"

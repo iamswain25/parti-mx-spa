@@ -23,14 +23,8 @@ export default function PostMenu({ post: p }: { post: Post }) {
   const isMine = userId && p?.createdBy?.id === userId;
   const isOrganizer = status === "organizer";
   const isClosed = !!p?.closed_at;
-  const isAnnounced =
-    "announcement" in p?.metadata ? p?.metadata?.announcement : false;
-  const isNotice = p?.board?.type === "notice";
-  const isManualClosingVote =
-    "closingMethod" in p?.metadata
-      ? p?.board?.type === "vote" && p?.metadata?.closingMethod === "manual"
-      : false;
-
+  const isAnnounced = p.is_announced;
+  const isNotice = p?.type === "notice";
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const remove = usePostDelete(postId);
   const announce = usePostAnnounce(postId);
@@ -60,13 +54,13 @@ export default function PostMenu({ post: p }: { post: Post }) {
       );
     }
   }
-  if (isManualClosingVote && !isClosed) {
-    menuItems.push(
-      <MenuItem onClick={resolve} key={5}>
-        토론 정리
-      </MenuItem>
-    );
-  }
+  // if (isManualClosingVote && !isClosed) {
+  //   menuItems.push(
+  //     <MenuItem onClick={resolve} key={5}>
+  //       토론 정리
+  //     </MenuItem>
+  //   );
+  // }
   if (isNotice && isOrganizer) {
     if (isAnnounced) {
       menuItems.push(

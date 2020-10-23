@@ -97,9 +97,9 @@ export default function NoticeComment({ post: p }: { post: Post }) {
               <Divider />
             </Box>
             <Grid container wrap="wrap" spacing={2}>
-              {p.likedUsers?.map((u, i) => (
+              {/* {p.likedUsers?.map((u, i) => (
                 <AvatarNameDate2 key={i} userPost={u} />
-              ))}
+              ))} */}
             </Grid>
           </Box>
         )}

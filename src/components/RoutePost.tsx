@@ -13,7 +13,7 @@ import usePost from "../store/usePost";
 
 export default function RoutePost() {
   const [isDesktop] = useDesktop();
-  const [p] = usePost();
+  const [p] = usePost(true);
   let postByType = null;
   switch (p?.type) {
     case "notice":
@@ -29,7 +29,7 @@ export default function RoutePost() {
       postByType = <EventDetail post={p} />;
       break;
     default:
-      postByType = <SuggestionDetail post={p} />;
+      postByType = null;
   }
   return (
     <>

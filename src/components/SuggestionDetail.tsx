@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { images = [], createdBy, created_at, context, files = [], tags } = p;
+  const { images = [], created_by, created_at, context, files = [], tags } = p;
   const metadata = p.metadata as SuggestionMetadata;
   const liked = p.my_like_count;
   const closingAt = React.useMemo(() => {
@@ -150,26 +150,17 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </Box>
         <Box mb={2}>
           <Grid container alignItems="center">
-            <Box className={classes.label}>제안자</Box>
-            <Avatar
-              alt={createdBy?.name}
-              src={createdBy?.photo_url}
-              className={classes.small}
-            />
+            <Box className={classes.label}>제보자</Box>
             <Box ml={1} fontWeight={500}>
-              {createdBy?.name}
+              {p?.name}
             </Box>
           </Grid>
         </Box>
         <Box mb={2}>
           <Grid container alignItems="center" justify="space-between">
             <Box display="flex" alignItems="center">
-              <Box className={classes.label}>제안일</Box>
+              <Box className={classes.label}>제보일</Box>
               <Box>{semanticDate(created_at)}</Box>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <Box className={classes.label}>제안동의 마감</Box>
-              <Box>{closingAt}</Box>
             </Box>
           </Grid>
         </Box>
@@ -189,11 +180,11 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           </Paper>
         )}
         <FilesImages images={images} files={files} />
+        <HtmlOrBody post={p} />
         <Box className={classes.body}>
-          <Box className={classes.label}>제안배경</Box>
+          <Box className={classes.label}>제보사유</Box>
           <Linkify body={context} />
         </Box>
-        <HtmlOrBody post={p} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

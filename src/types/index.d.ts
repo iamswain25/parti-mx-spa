@@ -51,6 +51,8 @@ export type Board = {
   id: string;
   title: string;
   order: number;
+  count_open: number;
+  count_closed: number;
   body: string;
   slug: string;
   permission: BoardPermission;
@@ -160,6 +162,10 @@ export type Post = {
   password: string;
   name: string;
   body: string;
+  created_by: string;
+  count_like: number;
+  count_comment: number;
+  count_view: number;
   html: RawDraftContentState;
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;
   images: Image[];
@@ -182,7 +188,6 @@ export type Post = {
   };
   comments: Comment[];
   my_like_count: number | null;
-  likedUsers: UserPost[];
   board: Board;
 };
 export interface Suggestion {

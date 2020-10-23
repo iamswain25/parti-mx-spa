@@ -1,7 +1,5 @@
 import * as functions from "firebase-functions";
 import * as isbot from "isbot";
-import { gql } from "apollo-boost";
-import { client } from "./ApolloClient";
 export default functions
   .region("us-central1")
   .https.onRequest(async (req, res) => {
@@ -9,27 +7,7 @@ export default functions
     const [, post_id] = path.substr(1).split("/");
     if (isbot(req.headers["user-agent"] || "")) {
       if (post_id) {
-        const { data } = await client.query({
-          query: gql`
-            query($post_id: Int!) {
-              mx_posts_by_pk(id: $post_id) {
-                id
-                title
-                body
-                context
-                metadata
-                location
-                images
-                files
-                created_at
-                updated_at
-                tags
-              }
-            }
-          `,
-          variables: { post_id },
-        });
-        const { title, body, images, context } = data.mx_posts_by_pk ?? {};
+        const { title, body, images, context } = {} as any;
         res.status(200).send(`<!doctype html>
     <head>
       <title>${title}</title>

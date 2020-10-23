@@ -48,7 +48,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "textSecondary" : "primary"}
               >
-                0
+                {b.count_open}
               </Typography>
             </Box>
           </Button>
@@ -66,7 +66,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                0
+                {b.count_closed}
               </Typography>
             </Box>
           </Button>

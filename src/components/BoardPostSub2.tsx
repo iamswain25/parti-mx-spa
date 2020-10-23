@@ -3,10 +3,10 @@ import { Post } from "../types";
 import { semanticDate } from "../helpers/datefns";
 import { Typography, Box } from "@material-ui/core";
 export default function BoardPostSub2({ post: p }: { post: Post }) {
-  const isVote = p.board.type === "vote";
-  const likeCount = 0;
-  const commentCount = 0;
-  const name = p?.createdBy?.name;
+  const isVote = p.type === "vote";
+  const likeCount = p.count_like || 0;
+  const commentCount = p.count_comment || 0;
+  const name = p?.name;
   const alteredName =
     name.indexOf("@") > 0 ? name.substr(0, name.indexOf("@")) : name;
   return (
