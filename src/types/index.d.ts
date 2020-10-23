@@ -27,10 +27,9 @@ export interface SuggestionFormdata {
   title: string;
   context: string;
   body: string;
-  isHtml: boolean;
-  html: RawDraftContentState;
-  closingMethod: string;
-  tags: string[];
+  password: string;
+  name: string;
+  tags?: string[];
 }
 export interface VoteFormdata {
   title: string;
@@ -158,6 +157,8 @@ export type Post = {
   group_id: string;
   type: string;
   context: string;
+  password: string;
+  name: string;
   body: string;
   html: RawDraftContentState;
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;

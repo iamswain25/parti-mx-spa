@@ -5,10 +5,9 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { version } from "../../package.json";
-import useAuth from "../store/useAuth";
-
+import { useCurrentUser } from "../store/useGlobalState";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function HeaderRemain(props: { children?: any }) {
   const { children } = props;
   const classes = useStyles();
-  const [user] = useAuth();
+  const [currentUser] = useCurrentUser();
   return (
     <>
       <AppBar position="sticky" className={classes.appBar}>

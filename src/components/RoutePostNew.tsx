@@ -2,7 +2,6 @@ import React from "react";
 
 import { PageBoard } from "../types";
 
-
 import useErrorEffect from "./useErrorEffect";
 import { useParams } from "react-router-dom";
 import SuggestionNew from "./SuggestionNew";
@@ -26,6 +25,6 @@ export default function RoutePostNew() {
     case "event":
       return <EventNew />;
     default:
-      return <SuggestionNew />;
+      return null;
   }
 }

@@ -2,8 +2,8 @@ import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import useGroupId from "../store/useGroupId";
-import { UserGroup, Whoami, Group } from "../types";
+import { useGroupId } from "../store/useGlobalState";
+import { Group } from "../types";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
@@ -16,13 +16,12 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
-  Divider,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import GroupSearchList from "./GroupSearchList";
 import MenuProfile from "./MenuProfile";
 import useGroups from "../store/useGroups";
-import useAuth from "../store/useAuth";
+import { useCurrentUser } from "../store/useGlobalState";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
     display: "flex",
@@ -46,7 +45,7 @@ export default function MyGroupList(props: {
   const history = useHistory();
   const [keyword, setKeyword] = React.useState("");
   const [groups] = useGroups(true);
-  const [user] = useAuth();
+  const [currentUser] = useCurrentUser();
   let list = [];
   list.push(
     ...groups?.map((g: Group, i: number) => {
@@ -127,7 +126,7 @@ export default function MyGroupList(props: {
           ) : (
             list
           )}
-          {user?.email?.includes("@parti.") && (
+          {currentUser?.email?.includes("@parti.") && (
             <ListItem button onClick={() => history.push("/group/new")}>
               <ListItemIcon>
                 <Avatar variant="square" children={<AddIcon />} />

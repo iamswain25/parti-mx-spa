@@ -1,33 +1,21 @@
 import React from "react";
 import { firestore, auth } from "../config/firebase";
 import { User } from "../types";
-export default function useUser({
-  id,
-  listen = false,
-}: {
-  id: string;
-  listen?: boolean;
-}): [User | null] {
+import { keys, useGlobalState } from "./useGlobalState";
+export default function useMe(): [User | null] {
+  const [firebaseUser] = useGlobalState(keys.USER);
   const [user, setUser] = React.useState<User | null>(null);
   React.useEffect(() => {
-    if (listen) {
+    if (firebaseUser) {
       firestore
         .collection("users")
-        .doc(id)
-        .onSnapshot((doc) => {
-          const item = { id: doc.id, ...doc.data() } as User;
-          setUser(item);
-        });
-    } else {
-      firestore
-        .collection("users")
-        .doc(id)
+        .doc(firebaseUser.uid)
         .get()
         .then((doc) => {
           const item = { id: doc.id, ...doc.data() } as User;
           setUser(item);
         });
     }
-  }, [id, listen]);
+  }, [firebaseUser]);
   return [user];
 }

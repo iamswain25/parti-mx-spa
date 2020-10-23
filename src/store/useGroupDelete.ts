@@ -1,6 +1,5 @@
-import useGroupId from "./useGroupId";
-
 import { firestore } from "../config/firebase";
+import { useGroupId } from "./useGlobalState";
 
 export default function useGroupDelete() {
   const [groupId] = useGroupId();

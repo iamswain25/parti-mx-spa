@@ -4,18 +4,19 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useParams } from "react-router-dom";
 import usePostDelete from "./usePostDelete";
 import { Post } from "../types";
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 import usePostAnnounce from "./usePostAnnounce";
 import usePostDenounce from "./usePostDenounce";
 import usePostEdit from "./usePostEdit";
 import usePostResolve from "./usePostResolve";
 import ShareButtons from "./ShareButtons";
 import useDesktop from "./useDesktop";
-import useAuth from "../store/useAuth";
+
+import { useCurrentUser } from "../store/useGlobalState";
 export default function PostMenu({ post: p }: { post: Post }) {
   const { post_id } = useParams<{ post_id: string }>();
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [currentUser] = useCurrentUser();
+  const userId = currentUser?.uid;
   const [isDesktop] = useDesktop();
   const postId = post_id;
   const status = p?.board?.group?.status;

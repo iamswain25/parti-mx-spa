@@ -13,7 +13,7 @@ import { getAttitude } from "../helpers/attitude";
 import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
-import useAuth from "../store/useAuth";
+import useMe from "../store/useMe";
 
 export default function Comment2({
   comment: c,
@@ -23,11 +23,10 @@ export default function Comment2({
   setRe: (user?: User) => void;
 }) {
   const classes = useStyles();
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [me] = useMe();
   const [edit, setEdit] = React.useState<boolean>(false);
   const remove = useCommentDelete(c.id);
-  const isMine = c.created_by === userId;
+  const isMine = c.created_by === me?.id;
   return (
     <Box position="relative">
       <Box position="absolute" left={-16} top={16}>

@@ -10,13 +10,12 @@ import ButtonUnlikeComment from "./ButtonUnlikeComment";
 import { useStyles } from "../helpers/styles";
 import { getAttitude } from "../helpers/attitude";
 import CommentEdit from "./CommentEdit";
-import useGroupId from "../store/useGroupId";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
-import useAuth from "../store/useAuth";
+import { useCurrentUser } from "../store/useGlobalState";
 export default function Comment1({ comment: c }: { comment: Comment }) {
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [currentUser] = useCurrentUser();
+  const userId = currentUser?.uid;
   const classes = useStyles();
   const [isRe, setRe] = React.useState<User | undefined>(undefined);
   const insertHandler = useCommentInsert(() => setRe(undefined));

@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, TextField, Button, Select } from "@material-ui/core";
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 import { Redirect } from "react-router-dom";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";

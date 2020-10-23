@@ -1,12 +1,8 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-
-import useErrorEffect from "./useErrorEffect";
-import { useGlobalState, keys } from "../store/useGlobalState";
-import useGroupId from "../store/useGroupId";
+import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
 import { Post } from "../types";
-import useAuth from "../store/useAuth";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -43,11 +39,10 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
   const count = 0;
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [currentUser] = useCurrentUser();
   const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   async function handler() {
-    if (userId) {
+    if (currentUser) {
       // await vote();
       switch (type) {
         case "suggestion":

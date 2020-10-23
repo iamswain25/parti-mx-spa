@@ -1,7 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Board } from "../types";
-import useGroupId from "./useGroupId";
+import { useGroupId } from "./useGlobalState";
 export default function useBoards(listen: boolean = false): [Board[]] {
   const [groupId] = useGroupId();
   const [boards, setBoards] = React.useState<Board[]>([]);

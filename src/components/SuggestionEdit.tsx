@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -21,10 +20,20 @@ import SuggestionInputs from "./SuggestionInputs";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const { id, location, title, body, context, files, images, tags, html } = p;
+  const {
+    id,
+    location,
+    title,
+    body,
+    context,
+    files,
+    images,
+    password,
+    name,
+  } = p;
   const history = useHistory();
   const metadata = p.metadata as SuggestionMetadata;
-  
+
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
 
   const [address, setAddress] = React.useState<undefined | string>(
@@ -45,42 +54,21 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       title,
       body,
       context,
-      isHtml: !!html,
-      html,
-      closingMethod: metadata.closingMethod,
-      tags,
+      password,
+      name,
     },
   });
   const { handleSubmit } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
-    
-    const { closingMethod, isHtml, html, ...rest } = form;
-    const metadata = { closingMethod, address };
-    const variables = await makeUpdateVariables(rest, {
+    const variables = await makeUpdateVariables(form, {
       imageArr,
       fileArr,
       images2,
       files2,
       setSuccess,
       id,
-      metadata,
-      // html,
     });
-    // if (isHtml) {
-    //   variables.body = html.blocks
-    //     .map((block) => (!block.text.trim() && "\n") || block.text)
-    //     .join("\n");
-    // }
-    if (latLng) {
-      const { lat, lng } = latLng;
-      const location = {
-        type: "Point",
-        coordinates: [lng, lat],
-      };
-      variables.location = location;
-    }
-    // await update({ variables });
     history.push("/post/" + id);
   }
 

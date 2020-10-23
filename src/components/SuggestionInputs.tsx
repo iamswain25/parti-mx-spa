@@ -1,12 +1,10 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
-import { suggestionOptions } from "../helpers/options";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
-import Hashtags from "./Hashtags";
+import { TextField } from "@material-ui/core";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
-  children?: React.ReactNode;
 }) {
   const { register, errors } = props.formControl;
   return (
@@ -19,39 +17,39 @@ export default function SuggestionInputs(props: {
         errors={errors}
       />
       <CustomTextField
-        label="제안 배경"
+        label="제보자"
+        name="name"
+        register={register}
+        errors={errors}
+      />
+      <CustomTextField
+        label="제보 내용"
+        multiline
+        name="body"
+        register={register}
+        errors={errors}
+      />
+      <CustomTextField
+        label="제보 사유"
         multiline
         name="context"
         register={register}
         errors={errors}
       />
-      <CustomTextField
-        select
-        label="제안 종료 방법"
-        variant="filled"
-        name="closingMethod"
-        SelectProps={{ native: true }}
-        defaultValue="30days"
-        register={register}
-        errors={errors}
-        children={suggestionOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+      <CustomTextField name="password" register={register} errors={errors} />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        name="password"
+        label="글 수정 비밀번호"
+        fullWidth
+        inputRef={register({
+          required: "필수 입력",
+        })}
+        required={errors.password ? true : false}
+        error={errors.password ? true : false}
+        helperText="글 수정 시 필요 함"
       />
-      {props.children ? (
-        props.children
-      ) : (
-        <CustomTextField
-          label="내용"
-          multiline
-          name="body"
-          register={register}
-          errors={errors}
-        />
-      )}
-      <Hashtags formControl={props.formControl} />
     </>
   );
 }

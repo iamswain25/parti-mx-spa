@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {

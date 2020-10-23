@@ -1,17 +1,15 @@
 import React from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
-import useAuth from "../store/useAuth";
-import useGroupId from "../store/useGroupId";
+import { useCurrentUser } from "../store/useGlobalState";
 export default function PrivateRoute(props: RouteProps) {
   const { component, ...rest } = props;
   const Comp = component as React.ElementType;
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [currentUser] = useCurrentUser();
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        userId ? (
+        currentUser?.email ? (
           <Comp />
         ) : (
           <Redirect

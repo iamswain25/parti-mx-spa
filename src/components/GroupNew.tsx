@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Typography, Container, Grid } from "@material-ui/core";
 
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link, useHistory } from "react-router-dom";

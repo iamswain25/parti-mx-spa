@@ -12,7 +12,7 @@ import {
 import ListItem from "@material-ui/core/ListItem";
 import { useDebounce } from "use-debounce";
 import { useApolloClient } from "@apollo/client";
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";

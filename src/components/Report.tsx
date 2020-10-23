@@ -1,8 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { csvDownloadAll } from "../helpers/csvDownload";
-import useGroupId from "../store/useGroupId";
-
+import { useGroupId } from "../store/useGlobalState";
 export default function Report() {
   const [groupId] = useGroupId();
   return (

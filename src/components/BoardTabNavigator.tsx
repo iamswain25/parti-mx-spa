@@ -110,7 +110,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     false
   );
   function btnHandler() {
-    history.push("/new/" + board?.id);
+    history.push(`/home/${board?.id}/new`);
   }
   return (
     <Grid

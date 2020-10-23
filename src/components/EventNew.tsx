@@ -1,5 +1,5 @@
 import React from "react";
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";

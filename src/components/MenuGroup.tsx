@@ -4,12 +4,11 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Group } from "../types";
 import { useHistory } from "react-router-dom";
 import useGroupExit from "./useGroupExit";
-import useGroupId from "../store/useGroupId";
 import useGroupDelete from "../store/useGroupDelete";
-import useAuth from "../store/useAuth";
+import { useCurrentUser } from "../store/useGlobalState";
 export default function MenuGroup({ group }: { group: Group }) {
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [currentUser] = useCurrentUser();
+  const userId = currentUser?.uid;
   const status = group?.status;
   const isOrg = status === "organizer";
   const isUser = status === "user";

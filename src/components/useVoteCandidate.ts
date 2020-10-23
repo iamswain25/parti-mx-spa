@@ -1,15 +1,14 @@
 import { Post, VoteMetadata } from "../types";
-import { useGlobalState, keys } from "../store/useGlobalState";
-import useAuth from "../store/useAuth";
+import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
+
 
 export default function useVoteCandidate(p?: Post) {
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [currentUser] = useCurrentUser();
   const metadata = p?.metadata as VoteMetadata;
   const isMultiple = metadata.isMultiple;
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   return async function handler(candidate_id: string, hasVoted = false) {
-    if (!userId) {
+    if (!currentUser) {
       return setVisible(true);
     }
     if (hasVoted) {

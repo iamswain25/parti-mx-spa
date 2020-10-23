@@ -1,15 +1,15 @@
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
 import { firestore } from "../config/firebase";
-import useAuth from "../store/useAuth";
+
+import { useCurrentUser } from "../store/useGlobalState";
 
 export default function useNavigateToPost(post_id?: string) {
   const { push } = useHistory();
-  const [user] = useAuth();
-  const userId = user?.uid;
-
+  const [currentUser] = useCurrentUser();
   function navigateHandler() {
-    if (!!userId) {
+    if (currentUser) {
+      const userId = currentUser.uid;
       firestore
         .collection("posts")
         .doc(post_id)

@@ -55,10 +55,6 @@ export default function GroupEdit() {
       reset({ title, id });
     }
   }, [group, reset, setImages]);
-  if (group?.status !== "organizer") {
-    return <Forbidden />;
-  }
-
   async function handleForm(form: GroupForm) {
     const { bgFiles = [null], mbFiles = [null], title, id } = form;
     try {

@@ -1,22 +1,23 @@
-import useGroupId from "../store/useGroupId";
 import { useGlobalState, keys } from "../store/useGlobalState";
-
 import useEffectRefetch from "./useEffectRefetch";
-import useUser from "../store/useUser";
-export default function useGroupJoin(userCount = 1) {
+import useMe from "../store/useMe";
+import { firestore } from "../config/firebase";
+import { useGroupId } from "../store/useGlobalState";
+export default function useGroupJoin() {
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
-  const [user] = useUser();
-  const trigger = useEffectRefetch();
+  const [groupId] = useGroupId();
+  const [me] = useMe();
   async function handler() {
-    if (user) {
-      // await client.mutate({
-      //   mutation: insertUserGroup,
-      //   variables: {
-      //     group_id,
-      //     status: userCount > 0 ? "user" : "organizer",
-      //   },
-      // });
-      trigger();
+    if (me) {
+      firestore
+        .collection("groups")
+        .doc(groupId)
+        .collection("users")
+        .doc(me.id)
+        .set(
+          { ...me, created_at: new Date(), checked_at: new Date() },
+          { merge: true }
+        );
     } else {
       setVisible(true);
     }

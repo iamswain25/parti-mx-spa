@@ -25,7 +25,7 @@ import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import HeaderBack from "./HeaderBack";
 import { boardPermissionList } from "../helpers/options";
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {

@@ -4,11 +4,12 @@ const initialState = {
   showLoginModal: false,
   error: null,
   success: null,
-  // loading: true,
+  currentUser: null,
   groupId: "home",
   sort: 0,
   permission: undefined,
   refetch: {},
+  // loading: true,
 };
 interface GlobalType {
   success: any;
@@ -16,9 +17,10 @@ interface GlobalType {
   error: any;
   permission: UserStatus;
   showLoginModal: boolean;
-  // loading: boolean;
+  currentUser: firebase.User | null;
   sort: number;
   refetch: object;
+  // loading: boolean;
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export enum keys {
@@ -30,4 +32,11 @@ export enum keys {
   PERMISSION = "permission",
   REFETCH = "refetch",
   GROUPID = "groupId",
+  USER = "currentUser",
+}
+export function useCurrentUser() {
+  return useGlobalState("currentUser");
+}
+export function useGroupId() {
+  return useGlobalState("groupId");
 }

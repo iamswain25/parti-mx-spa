@@ -7,19 +7,13 @@ import {
   IconButton,
   Avatar,
 } from "@material-ui/core";
-
-import useGroupId from "../store/useGroupId";
-
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
-import { uploadFileByPath } from "../config/firebase";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import HeaderBack from "./HeaderBack";
 import { ValidateResult } from "react-hook-form/dist/types/form";
-
 import CloseIcon from "@material-ui/icons/Close";
-import useUser from "../store/useUser";
+import useMe from "../store/useMe";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -49,18 +43,18 @@ interface GroupForm {
 }
 export default function Profile() {
   const classes = useStyles();
-  const [user] = useUser();
+  const [me] = useMe();
   const history = useHistory();
 
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
-  
+
   const { handleSubmit, register, errors, reset, control } = useForm<
     GroupForm
   >();
 
   async function handleForm(form: GroupForm) {
     const { bgFiles, name } = form;
-    
+
     // const variables = { id: userId, name, photo_url: undefined };
     // if (bgFiles?.length) {
     //   variables.photo_url = await uploadFileByPath(

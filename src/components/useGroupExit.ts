@@ -1,16 +1,16 @@
-import useGroupId from "../store/useGroupId";
+import { useGroupId } from "../store/useGlobalState";
 import { firestore } from "../config/firebase";
-import useAuth from "../store/useAuth";
+import { useCurrentUser } from "../store/useGlobalState";
 export default function useGroupExit(refetch?: any) {
   const [groupId] = useGroupId();
-  const [user] = useAuth();
+  const [currentUser] = useCurrentUser();
   async function handler() {
     if (window.confirm("그룹을 나가시겠습니까?")) {
       await firestore
         .collection("groups")
         .doc(groupId)
         .collection("users")
-        .doc(user?.uid)
+        .doc(currentUser?.uid)
         .delete();
     }
   }

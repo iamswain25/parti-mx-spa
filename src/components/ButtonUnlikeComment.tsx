@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, makeStyles, Theme } from "@material-ui/core";
-import useAuth from "../store/useAuth";
 import { firestore } from "../config/firebase";
 import firebase from "firebase";
+import { useCurrentUser } from "../store/useGlobalState";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -17,8 +17,8 @@ export default function ButtonUnlikeComment(props: {
 }) {
   const classes = useStyles();
   const { id, count } = props;
-  const [user] = useAuth();
-  const userId = user?.uid;
+  const [currentUser] = useCurrentUser();
+  const userId = currentUser?.uid;
 
   async function pressHandler() {
     const comment = (
