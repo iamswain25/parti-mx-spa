@@ -1,16 +1,9 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import createHasuraUser from "./createHasuraUser";
-import injectCustomClaim from "./injectCustomClaim";
-
+const firestore = admin.firestore();
 export default functions
   .region("asia-northeast3")
   .auth.user()
   .onCreate(async (user: admin.auth.UserRecord) => {
-    if (user.disabled) {
-      admin.auth().updateUser(user.uid, { disabled: false });
-    } else {
-      const userId = await createHasuraUser(user);
-      return injectCustomClaim(user, userId);
-    }
+    firestore.collection("users").doc(user.uid).set({ created_at: new Date() });
   });

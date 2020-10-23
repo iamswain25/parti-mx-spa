@@ -1,21 +1,17 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Container, IconButton } from "@material-ui/core";
-import { useMutation, useQuery } from "@apollo/client";
-import { useStore } from "../store/store";
-import { updateGroup } from "../graphql/mutation";
-import { queryGroupEdit } from "../graphql/query";
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { HomeGroup } from "../types";
 import Forbidden from "./Forbidden";
 import CloseIcon from "@material-ui/icons/Close";
 import { Img } from "react-image";
 import HeaderBack from "./HeaderBack";
+import useGroup from "../store/useGroup";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -37,26 +33,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 interface GroupForm {
-  id: number;
+  id: string;
   title: string;
   bgFiles: any;
   mbFiles: any;
 }
 export default function GroupEdit() {
   const classes = useStyles();
-  const [{ group_id }] = useStore();
   const history = useHistory();
-  const [update] = useMutation(updateGroup);
+
   const [images, setImages] = React.useState<any>({});
-  const { data, loading } = useQuery<HomeGroup>(queryGroupEdit, {
-    variables: { group_id },
-  });
-  const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setError] = useGlobalState(keys.ERROR);
   const { handleSubmit, register, errors, reset, control } = useForm<
     GroupForm
   >();
-  const group = data?.mx_groups_by_pk;
+  const [group] = useGroup();
   React.useEffect(() => {
     if (group) {
       const { title, bg_img_url, mb_img_url, id } = group;
@@ -64,9 +55,6 @@ export default function GroupEdit() {
       reset({ title, id });
     }
   }, [group, reset, setImages]);
-  if (loading) {
-    return null;
-  }
   if (group?.status !== "organizer") {
     return <Forbidden />;
   }
@@ -74,7 +62,6 @@ export default function GroupEdit() {
   async function handleForm(form: GroupForm) {
     const { bgFiles = [null], mbFiles = [null], title, id } = form;
     try {
-      setLoading(true);
       const bg_img_url = bgFiles[0]
         ? await uploadFileByPath(bgFiles[0], `${id}/bg_img_url`)
         : group?.bg_img_url;
@@ -82,7 +69,7 @@ export default function GroupEdit() {
         ? await uploadFileByPath(mbFiles[0], `${id}/mb_img_url`)
         : group?.mb_img_url;
       const variables = { bg_img_url, mb_img_url, title, group_id: id };
-      await update({ variables });
+      // await update({ variables });
       history.replace("/home");
     } catch (error) {
       setError(error);

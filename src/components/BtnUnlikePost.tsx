@@ -1,12 +1,7 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { useMutation } from "@apollo/client";
-import { unlikePost } from "../graphql/mutation";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { useStore } from "../store/store";
 import { Post } from "../types";
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -46,16 +41,10 @@ const useStyles = makeStyles((theme) => ({
 export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [{ user_id }] = useStore();
-  const count = p.users_aggregate?.aggregate?.sum?.like_count || 0;
-  const [unlike, { loading, error }] = useMutation(unlikePost, {
-    variables: { id: p.id, user_id },
-  });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-  const type = p.board?.type;
+  const count = 0;
+  const type = p.type;
   async function handler() {
-    await unlike();
+    // await unlike();
     switch (type) {
       case "suggestion":
         return setSuccess("제안 취소 하였습니다.");

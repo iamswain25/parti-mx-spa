@@ -3,9 +3,10 @@ import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import MyGroupList from "./MyGroupList";
 import { useHistory } from "react-router-dom";
+import useAuth from "../store/useAuth";
 const DRAWER_WIDTH = 304;
 const useStyles = makeStyles((theme: Theme) => ({
   menuButton: {
@@ -21,13 +22,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 export default function DrawerGroup() {
-  const [{ user_id }] = useStore();
+  const [user] = useAuth();
+  const [, setGroupId] = useGroupId();
+  const userId = user?.uid;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const theme = useTheme();
-  const [, dispatch] = useStore();
   const history = useHistory();
-  if (!user_id) {
+  if (!userId) {
     return <div className={classes.menuButton} />;
   }
   const handleDrawerOpen = () => {
@@ -36,10 +38,10 @@ export default function DrawerGroup() {
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
-  function navigateGroupHandler(group_id?: number) {
+  function navigateGroupHandler(group_id?: string) {
     setMobileOpen(false);
     if (group_id) {
-      dispatch({ type: "SET_GROUP", group_id });
+      setGroupId(group_id);
       history.push("/");
     }
   }

@@ -12,8 +12,7 @@ import {
 import ListItem from "@material-ui/core/ListItem";
 import { useDebounce } from "use-debounce";
 import { useApolloClient } from "@apollo/client";
-import { searchMembers } from "../graphql/query";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
@@ -52,7 +51,7 @@ interface UserGroups {
 const LIMIT = 20;
 export default function MemberSetting() {
   const classes = useStyles();
-  const [{ group_id }] = useStore();
+  const [groupId] = useGroupId();
   const [keyword, setKeyword] = React.useState("");
   const [items, setItems] = React.useState<UserGroup[]>([]);
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
@@ -60,21 +59,21 @@ export default function MemberSetting() {
   const client = useApolloClient();
 
   async function fetchData(isSearching = false) {
-    const usergroups = await client.query<UserGroups>({
-      query: searchMembers,
-      variables: {
-        keyword: debouncedKeyword,
-        group_id,
-        limit: LIMIT,
-        offset: isSearching ? 0 : items.length,
-      },
-      fetchPolicy: "network-only",
-    });
-    if (isSearching) {
-      setItems(usergroups.data?.mx_users_group || []);
-    } else {
-      setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
-    }
+    // const usergroups = await client.query<UserGroups>({
+    //   query: searchMembers,
+    //   variables: {
+    //     keyword: debouncedKeyword,
+    //     group_id,
+    //     limit: LIMIT,
+    //     offset: isSearching ? 0 : items.length,
+    //   },
+    //   fetchPolicy: "network-only",
+    // });
+    // if (isSearching) {
+    //   setItems(usergroups.data?.mx_users_group || []);
+    // } else {
+    //   setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
+    // }
   }
 
   const setStatus = useSetStatus(fetchData);
@@ -135,7 +134,7 @@ export default function MemberSetting() {
             {items?.length
               ? items?.map((l, i) => {
                   return (
-                    <ListItem key={l.user_id}>
+                    <ListItem key={l.userId}>
                       <AvatarNameEmail user={l.user} />
                       {l.status === "requested" ? (
                         <UserGroupAdmit userGroup={l} update={setStatus} />

@@ -1,22 +1,17 @@
-import { useMutation } from "@apollo/client";
-import useLoadingEffect from "./useLoadingEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useHistory } from "react-router-dom";
-import { deletePost } from "../graphql/mutation";
-import useErrorEffect from "./useErrorEffect";
+import { firestore } from "../config/firebase";
+import { Post } from "../types";
 
-export default function usePostDelete(id: number) {
+export default function usePostDelete(id: string) {
   const { replace } = useHistory();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [del, { loading, error }] = useMutation(deletePost, {
-    variables: { id },
-  });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
+
   async function handler() {
     try {
-      const res = await del();
-      const board_id = res.data?.delete_mx_posts_by_pk.board_id;
+      const post = await firestore.collection("posts").doc(id).get();
+      const { board_id } = post.data() as Post;
+      post.ref.delete();
       if (board_id) {
         setSuccess("삭제 되었습니다");
         replace("/home/" + board_id);

@@ -7,6 +7,7 @@ import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
+import usePosts from "../store/usePosts";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -27,10 +28,10 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function HomeBoardNotice({ board: b }: { board?: Board }) {
+export default function HomeBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
-
+  const [posts] = usePosts({ board_id: b.id });
   return (
     <>
       <section className={classes.container}>
@@ -46,8 +47,8 @@ export default function HomeBoardNotice({ board: b }: { board?: Board }) {
           {isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}
         </Grid>
         <div>
-          {b?.posts.map((p, i) => (
-            <BoardPostNotice key={i} post={p} />
+          {posts.map((p) => (
+            <BoardPostNotice key={p.id} post={p} />
           ))}
         </div>
         {!isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}

@@ -3,6 +3,7 @@ import { sharentingFirebaseConfig as firebaseConfig } from "./firebaseConfig";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/functions";
+import "firebase/firestore";
 import "firebase/storage";
 import * as uuid from "uuid";
 // 패키징 할 때만 넣는다.
@@ -13,56 +14,8 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 export const auth = firebase.auth();
-export const Firebase = firebase;
-export type IdTokenResult = Modify<
-  firebase.auth.IdTokenResult,
-  {
-    claims: {
-      "https://hasura.io/jwt/claims"?: {
-        "x-hasura-allowed-roles": string[];
-        "x-hasura-default-role": string;
-        "x-hasura-user-id": string;
-      };
-    };
-  }
->;
-
-export async function getUserId(refresh = false): Promise<number | null> {
-  const res:
-    | IdTokenResult
-    | undefined = await auth.currentUser?.getIdTokenResult(refresh);
-  const string =
-    res?.claims?.["https://hasura.io/jwt/claims"]?.["x-hasura-user-id"];
-  if (string === undefined) {
-    return null;
-  } else {
-    return Number(string);
-  }
-}
-export async function delay(t: number) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, t);
-  });
-}
-export async function getUserId2(user: firebase.User): Promise<number | null> {
-  let refreshCounts = 0;
-  async function extractValidToken(refresh = false): Promise<number> {
-    const res: IdTokenResult = await user.getIdTokenResult(refresh);
-    const string =
-      res?.claims?.["https://hasura.io/jwt/claims"]?.["x-hasura-user-id"];
-    if (string) {
-      return Number(string);
-    } else {
-      if (refresh) {
-        refreshCounts++;
-        await delay(1000);
-        console.log("token try: " + refreshCounts);
-      }
-      return extractValidToken(true);
-    }
-  }
-  return extractValidToken();
-}
+export const firestore = firebase.firestore();
+firestore.enablePersistence();
 
 export async function uploadFileGetUriArray(file: File) {
   const { name, lastModified, type, size } = file;
@@ -92,7 +45,6 @@ export async function inviteNewUser(email: string, password: string) {
   if (!newUserCredential.user) {
     throw new Error("no user created");
   }
-  await getUserId2(newUserCredential.user);
   const token = await newUserCredential.user.getIdToken();
   return [token] as [string];
 }

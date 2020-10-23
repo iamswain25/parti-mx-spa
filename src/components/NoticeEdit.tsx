@@ -1,6 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
-import { updatePost } from "../graphql/mutation";
+
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -16,9 +15,9 @@ import NoticeInput from "./NoticeInput";
 export default function NoticeEdit({ post: p }: { post: Post }) {
   const { id, title, body, files, images, html } = p;
   const history = useHistory();
-  const [, setLoading] = useGlobalState(keys.LOADING);
+  
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [update] = useMutation(updatePost);
+
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Image[] | undefined>(images);
@@ -29,7 +28,7 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
   const { handleSubmit } = formControl;
 
   async function handleForm(form: NoticeFormdata) {
-    setLoading(true);
+    
     const variables = await makeUpdateVariables(form, {
       imageArr,
       fileArr,
@@ -38,10 +37,10 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
     });
-    const res = await update({
-      variables,
-    });
-    console.log(res);
+    // const res = await update({
+    //   variables,
+    // });
+    // console.log(res);
     history.push("/post/" + id);
   }
 

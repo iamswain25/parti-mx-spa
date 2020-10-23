@@ -1,11 +1,5 @@
 import React from "react";
-import { useStore } from "../store/store";
-import { homeGroup } from "../graphql/query";
-import { HomeGroup, Board } from "../types";
-import { useQuery } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
 import GroupLogoContainer from "./GroupLogoContainer";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
@@ -14,7 +8,8 @@ import HomeBoardEvent from "./HomeBoardEvent";
 import BoardTabNavigator from "./BoardTabNavigator";
 import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
-import Forbidden from "./Forbidden";
+import useBoards from "../store/useBoards";
+import { Board } from "../types";
 const useStyles = makeStyles((theme) => {
   return {
     grid: {
@@ -48,26 +43,13 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Home() {
-  const [{ group_id, user_id }] = useStore();
   const classes = useStyles();
-  const { data, error, loading, refetch } = useQuery<HomeGroup>(homeGroup, {
-    variables: { group_id },
-  });
-  React.useEffect(() => {
-    refetch && refetch();
-  }, [user_id, refetch]);
-  useLoadingEffect(loading);
-  useErrorEffect(error);
   const [isDesktop] = useDesktop();
-  const group = data?.mx_groups_by_pk;
-  if (loading) {
-    return null;
-  }
-  if (!group) {
-    return <Forbidden />;
-  }
-  const { notice, suggestion, vote, event } = group;
-
+  const [boards] = useBoards(true);
+  const notice = boards.filter((b) => b.type === "notice");
+  const suggestion = boards.filter((b) => b.type === "suggestion");
+  const vote = boards.filter((b) => b.type === "vote");
+  const event = boards.filter((b) => b.type === "event");
   return (
     <>
       <GroupLogoContainer />
@@ -76,36 +58,36 @@ export default function Home() {
       {isDesktop ? (
         <section className={classes.grid}>
           <ul className={classes.left}>
-            {notice?.map((b: Board, i: number) => (
-              <HomeBoardNotice key={i} board={b} />
+            {notice?.map((b: Board) => (
+              <HomeBoardNotice key={b.id} board={b} />
             ))}
-            {suggestion?.map((b: Board, i: number) => (
-              <HomeBoardSuggestion key={i} board={b} />
+            {suggestion?.map((b: Board) => (
+              <HomeBoardSuggestion key={b.id} board={b} />
             ))}
           </ul>
           <ul className={classes.right}>
-            {vote?.map((b: Board, i: number) => (
-              <HomeBoardVote key={i} board={b} />
+            {vote?.map((b: Board) => (
+              <HomeBoardVote key={b.id} board={b} />
             ))}
-            {event?.map((b: Board, i: number) => (
-              <HomeBoardEvent key={i} board={b} />
+            {event?.map((b: Board) => (
+              <HomeBoardEvent key={b.id} board={b} />
             ))}
           </ul>
         </section>
       ) : (
         //모바일
         <section className={classes.grid}>
-          {notice?.map((b: Board, i: number) => (
-            <HomeBoardNotice key={i} board={b} />
+          {notice?.map((b: Board) => (
+            <HomeBoardNotice key={b.id} board={b} />
           ))}
-          {vote?.map((b: Board, i: number) => (
-            <HomeBoardVote key={i} board={b} />
+          {vote?.map((b: Board) => (
+            <HomeBoardVote key={b.id} board={b} />
           ))}
-          {suggestion?.map((b: Board, i: number) => (
-            <HomeBoardSuggestion key={i} board={b} />
+          {suggestion?.map((b: Board) => (
+            <HomeBoardSuggestion key={b.id} board={b} />
           ))}
-          {event?.map((b: Board, i: number) => (
-            <HomeBoardEvent key={i} board={b} />
+          {event?.map((b: Board) => (
+            <HomeBoardEvent key={b.id} board={b} />
           ))}
         </section>
       )}

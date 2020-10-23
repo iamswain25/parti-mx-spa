@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Typography, Container, Grid } from "@material-ui/core";
-import { useMutation } from "@apollo/client";
-import { useStore } from "../store/store";
-import { createNewGroup } from "../graphql/mutation";
+
+import useGroupId from "../store/useGroupId";
+
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -35,10 +35,10 @@ interface GroupForm {
 }
 export default function GroupNew() {
   const classes = useStyles();
-  const [{ group_id }] = useStore();
+  const [groupId] = useGroupId();
   const history = useHistory();
-  const [create] = useMutation(createNewGroup);
-  const [, setLoading] = useGlobalState(keys.LOADING);
+
+  
   const { handleSubmit, register, errors, setError } = useForm<GroupForm>();
   console.log(errors);
   async function handleForm(form: GroupForm) {
@@ -56,18 +56,18 @@ export default function GroupNew() {
       });
     }
     try {
-      setLoading(true);
+      
       const bg_img_url = await uploadFileByPath(
         bgFiles[0],
-        `${group_id}/bg_img_url`
+        `${groupId}/bg_img_url`
       );
       const mb_img_url = await uploadFileByPath(
         mbFiles[0],
-        `${group_id}/mb_img_url`
+        `${groupId}/mb_img_url`
       );
       const variables = { bg_img_url, mb_img_url, title };
-      const res = await create({ variables });
-      history.replace("/home?group_id=" + res.data.insert_mx_groups_one.id);
+      // const res = await create({ variables });
+      // history.replace("/home?group_id=" + res.data.insert_mx_groups_one.id);
     } catch (error) {}
   }
   return (

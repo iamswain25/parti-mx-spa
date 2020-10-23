@@ -6,7 +6,7 @@ import Modal from "@material-ui/core/Modal";
 import LoginForm from "./LoginForm";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
-import { wsLink } from "../config/ApolloSetup";
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",

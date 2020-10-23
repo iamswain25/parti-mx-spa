@@ -1,21 +1,16 @@
-import { useMutation } from "@apollo/client";
-import useLoadingEffect from "./useLoadingEffect";
+
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useHistory } from "react-router-dom";
-import { denouncePost } from "../graphql/mutation";
-interface AnnouncePost {
-  update_mx_posts_by_pk: { board_id: number };
-}
-export default function usePostDenounce(id: number) {
+import { firestore } from "../config/firebase";
+import { Post } from "../types";
+export default function usePostDenounce(id: string) {
   const { push } = useHistory();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [denounce, { loading }] = useMutation<AnnouncePost>(denouncePost, {
-    variables: { id },
-  });
-  useLoadingEffect(loading);
+
   async function handler() {
-    const res = await denounce();
-    const board_id = res.data?.update_mx_posts_by_pk.board_id;
+    const post = await firestore.collection("posts").doc(id).get();
+    const { board_id } = post.data() as Post;
+    await post.ref.update({ is_announced: false });
     if (board_id) {
       setSuccess("공지 내립니다");
       push("/home/" + board_id);

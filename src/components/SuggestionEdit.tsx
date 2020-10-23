@@ -1,6 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
-import { updatePost } from "../graphql/mutation";
+
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -25,9 +24,9 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const { id, location, title, body, context, files, images, tags, html } = p;
   const history = useHistory();
   const metadata = p.metadata as SuggestionMetadata;
-  const [, setLoading] = useGlobalState(keys.LOADING);
+  
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [update] = useMutation(updatePost);
+
   const [address, setAddress] = React.useState<undefined | string>(
     metadata?.address
   );
@@ -55,7 +54,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const { handleSubmit } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
-    setLoading(true);
+    
     const { closingMethod, isHtml, html, ...rest } = form;
     const metadata = { closingMethod, address };
     const variables = await makeUpdateVariables(rest, {
@@ -81,7 +80,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       };
       variables.location = location;
     }
-    await update({ variables });
+    // await update({ variables });
     history.push("/post/" + id);
   }
 

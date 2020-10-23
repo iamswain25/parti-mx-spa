@@ -1,5 +1,5 @@
 import React from "react";
-import { HomeGroup, Board } from "../types";
+import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink, useHistory, useRouteMatch } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
@@ -7,10 +7,7 @@ import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
-import { useQuery } from "@apollo/client";
-import { queryBoardsOnly } from "../graphql/query";
-import { useStore } from "../store/store";
-import permissionBlocked from "./permissionBlocked";
+import useBoards from "../store/useBoards";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -97,16 +94,11 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function BoardTabNavigator({ board }: { board?: Board }) {
-  const [{ group_id }] = useStore();
   const classes = useStyles();
   const isHome = useRouteMatch("/home");
+  const [boards] = useBoards(true);
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
-  const { data } = useQuery<HomeGroup>(queryBoardsOnly, {
-    variables: { group_id },
-  });
-  const boards = data?.mx_groups_by_pk?.boards;
-  const status = data?.mx_groups_by_pk?.status;
   const history = useHistory();
   useScrollPosition(
     ({ prevPos, currPos }) => {
@@ -117,9 +109,6 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     stickyHeader,
     false
   );
-  if (!boards) {
-    return null;
-  }
   function btnHandler() {
     history.push("/new/" + board?.id);
   }
@@ -131,11 +120,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     >
       <div className={classes.tab}>
         <Box display="flex" flexWrap="nowrap">
-          <NavLink
-            exact
-            to={`/home?group_id=${group_id}`}
-            className={classes.tabLink}
-          >
+          <NavLink exact to={`/home`} className={classes.tabLink}>
             홈
           </NavLink>
           {boards.map((b, i) => (
@@ -150,31 +135,25 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
             </NavLink>
           ))}
         </Box>
-        {board &&
-          !permissionBlocked(board.permission, status) &&
-          !isHome?.isExact && (
-            <>
-              <div className={classes.btn}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={btnHandler}
-                >
-                  글쓰기
-                </Button>
-              </div>
-              <Hidden mdUp implementation="css">
-                <Fab
-                  color="primary"
-                  aria-label="write"
-                  className={classes.fab}
-                  onClick={btnHandler}
-                >
-                  <CreateIcon />
-                </Fab>
-              </Hidden>
-            </>
-          )}
+        {board && !isHome?.isExact && (
+          <>
+            <div className={classes.btn}>
+              <Button variant="contained" color="primary" onClick={btnHandler}>
+                글쓰기
+              </Button>
+            </div>
+            <Hidden mdUp implementation="css">
+              <Fab
+                color="primary"
+                aria-label="write"
+                className={classes.fab}
+                onClick={btnHandler}
+              >
+                <CreateIcon />
+              </Fab>
+            </Hidden>
+          </>
+        )}
       </div>
     </Grid>
   );

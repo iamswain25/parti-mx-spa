@@ -157,7 +157,7 @@
           schema: mx
           name: users
         column_mapping:
-          user_id: id
+          userId: id
   array_relationships:
   - name: votes
     using:
@@ -179,13 +179,13 @@
     permission:
       check: {}
       set:
-        user_id: x-hasura-User-Id
+        userId: x-hasura-User-Id
       columns:
       - id
       - body
       - order
       - post_id
-      - user_id
+      - userId
       - created_at
       backend_only: false
   select_permissions:
@@ -196,7 +196,7 @@
       - body
       - order
       - post_id
-      - user_id
+      - userId
       - created_at
       filter:
         post:
@@ -213,7 +213,7 @@
       - body
       - order
       - post_id
-      - user_id
+      - userId
       - created_at
       computed_fields:
       - my_like_count
@@ -227,12 +227,12 @@
       - body
       - order
       - post_id
-      - user_id
+      - userId
       - created_at
       filter: {}
       check: {}
       set:
-        user_id: x-hasura-User-Id
+        userId: x-hasura-User-Id
   delete_permissions:
   - role: user
     permission:
@@ -254,7 +254,7 @@
           schema: mx
           name: users
         column_mapping:
-          user_id: id
+          userId: id
   array_relationships:
   - name: likes
     using:
@@ -285,7 +285,7 @@
     permission:
       check: {}
       set:
-        user_id: x-hasura-user-id
+        userId: x-hasura-user-id
       columns:
       - body
       - created_at
@@ -293,13 +293,13 @@
       - parent_id
       - post_id
       - updated_at
-      - user_id
+      - userId
   select_permissions:
   - role: anonymous
     permission:
       columns:
       - id
-      - user_id
+      - userId
       - body
       - created_at
       - updated_at
@@ -322,7 +322,7 @@
       - parent_id
       - post_id
       - updated_at
-      - user_id
+      - userId
       computed_fields:
       - my_like
       filter: {}
@@ -337,9 +337,9 @@
       - parent_id
       - post_id
       - updated_at
-      - user_id
+      - userId
       filter:
-        user_id:
+        userId:
           _eq: X-Hasura-User-Id
       check: null
   delete_permissions:
@@ -365,22 +365,22 @@
           schema: mx
           name: users
         column_mapping:
-          user_id: id
+          userId: id
   insert_permissions:
   - role: user
     permission:
       check: {}
       set:
-        user_id: x-hasura-user-id
+        userId: x-hasura-user-id
       columns:
-      - user_id
+      - userId
       - comment_id
       - created_at
   select_permissions:
   - role: anonymous
     permission:
       columns:
-      - user_id
+      - userId
       - comment_id
       - created_at
       filter:
@@ -395,7 +395,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - comment_id
       - created_at
       filter: {}
@@ -404,7 +404,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - comment_id
       - created_at
       filter: {}
@@ -676,7 +676,7 @@
                   users:
                     _or:
                     - _and:
-                      - user_id:
+                      - userId:
                           _eq: X-Hasura-User-Id
                       - status:
                           _in:
@@ -733,12 +733,12 @@
     permission:
       check: {}
       set:
-        user_id: x-hasura-user-id
+        userId: x-hasura-user-id
       columns:
       - id
       - created_at
       - updated_at
-      - user_id
+      - userId
       - type
       - type_id
       - body
@@ -750,7 +750,7 @@
       - id
       - created_at
       - updated_at
-      - user_id
+      - userId
       - type
       - type_id
       - body
@@ -763,7 +763,7 @@
       - id
       - created_at
       - updated_at
-      - user_id
+      - userId
       - type
       - type_id
       - body
@@ -784,11 +784,11 @@
           schema: mx
           name: users_board
         column_mapping:
-          id: user_id
+          id: userId
   - name: checkedPosts
     using:
       foreign_key_constraint_on:
-        column: user_id
+        column: userId
         table:
           schema: mx
           name: users_post
@@ -799,7 +799,7 @@
           schema: mx
           name: comments
         column_mapping:
-          id: user_id
+          id: userId
   - name: groups
     using:
       manual_configuration:
@@ -807,11 +807,11 @@
           schema: mx
           name: users_group
         column_mapping:
-          id: user_id
+          id: userId
   - name: votes
     using:
       foreign_key_constraint_on:
-        column: user_id
+        column: userId
         table:
           schema: mx
           name: users_candidates
@@ -881,15 +881,15 @@
       foreign_key_constraint_on: board_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   insert_permissions:
   - role: user
     permission:
       check: {}
       set:
-        user_id: x-hasura-user-id
+        userId: x-hasura-user-id
       columns:
-      - user_id
+      - userId
       - board_id
       - created_at
       - updated_at
@@ -900,7 +900,7 @@
       columns:
       - board_id
       - count_click
-      - user_id
+      - userId
       - created_at
       - updated_at
       filter: {}
@@ -910,7 +910,7 @@
       columns:
       - board_id
       - count_click
-      - user_id
+      - userId
       - created_at
       - updated_at
       filter: {}
@@ -928,15 +928,15 @@
       foreign_key_constraint_on: candidate_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   insert_permissions:
   - role: user
     permission:
       check: {}
       set:
-        user_id: x-hasura-user-id
+        userId: x-hasura-user-id
       columns:
-      - user_id
+      - userId
       - candidate_id
       - count
       - created_at
@@ -945,7 +945,7 @@
   - role: anonymous
     permission:
       columns:
-      - user_id
+      - userId
       - candidate_id
       - count
       - created_at
@@ -961,7 +961,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - candidate_id
       - count
       - created_at
@@ -971,14 +971,14 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - candidate_id
       - count
       - created_at
       filter: {}
       check: {}
       set:
-        user_id: x-hasura-user-id
+        userId: x-hasura-user-id
   delete_permissions:
   - role: user
     permission:
@@ -1002,13 +1002,13 @@
           schema: mx
           name: users
         column_mapping:
-          user_id: id
+          userId: id
   insert_permissions:
   - role: user
     permission:
       check: {}
       set:
-        user_id: x-hasura-User-Id
+        userId: x-hasura-User-Id
       columns:
       - count_click
       - created_at
@@ -1016,12 +1016,12 @@
       - notification_type
       - status
       - updated_at
-      - user_id
+      - userId
   select_permissions:
   - role: anonymous
     permission:
       columns:
-      - user_id
+      - userId
       - group_id
       - created_at
       - status
@@ -1042,7 +1042,7 @@
       - notification_type
       - status
       - updated_at
-      - user_id
+      - userId
       filter: {}
       allow_aggregations: true
   update_permissions:
@@ -1055,7 +1055,7 @@
       - notification_type
       - status
       - updated_at
-      - user_id
+      - userId
       filter: {}
       check: null
   delete_permissions:
@@ -1071,15 +1071,15 @@
       foreign_key_constraint_on: post_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   insert_permissions:
   - role: user
     permission:
       check: {}
       set:
-        user_id: x-hasura-user-id
+        userId: x-hasura-user-id
       columns:
-      - user_id
+      - userId
       - post_id
       - created_at
       - updated_at
@@ -1093,7 +1093,7 @@
       - like_count
       - post_id
       - updated_at
-      - user_id
+      - userId
       - view_count
       filter:
         post:
@@ -1107,7 +1107,7 @@
     permission:
       columns:
       - post_id
-      - user_id
+      - userId
       - created_at
       - updated_at
       - view_count
@@ -1119,13 +1119,13 @@
     permission:
       columns:
       - post_id
-      - user_id
+      - userId
       - created_at
       - updated_at
       - view_count
       - like_count
       filter:
-        user_id:
+        userId:
           _eq: X-Hasura-User-Id
       check: null
 - table:
@@ -1219,7 +1219,7 @@
       foreign_key_constraint_on: suggestion_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   array_relationships:
   - name: likes
     using:
@@ -1234,7 +1234,7 @@
       check: {}
       columns:
       - id
-      - user_id
+      - userId
       - suggestion_id
       - body
       - created_at
@@ -1244,7 +1244,7 @@
     permission:
       columns:
       - id
-      - user_id
+      - userId
       - suggestion_id
       - body
       - created_at
@@ -1256,7 +1256,7 @@
     permission:
       columns:
       - id
-      - user_id
+      - userId
       - suggestion_id
       - body
       - created_at
@@ -1276,20 +1276,20 @@
       foreign_key_constraint_on: comment_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   insert_permissions:
   - role: user
     permission:
       check: {}
       columns:
-      - user_id
+      - userId
       - comment_id
       - created_at
   select_permissions:
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - comment_id
       - created_at
       filter: {}
@@ -1298,7 +1298,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - comment_id
       - created_at
       filter: {}
@@ -1483,14 +1483,14 @@
   - name: boardsCheck
     using:
       foreign_key_constraint_on:
-        column: user_id
+        column: userId
         table:
           schema: parti_2020
           name: users_board
   - name: comments
     using:
       foreign_key_constraint_on:
-        column: user_id
+        column: userId
         table:
           schema: parti_2020
           name: comments
@@ -1504,14 +1504,14 @@
   - name: groupsCheck
     using:
       foreign_key_constraint_on:
-        column: user_id
+        column: userId
         table:
           schema: parti_2020
           name: users_group
   - name: likedComments
     using:
       foreign_key_constraint_on:
-        column: user_id
+        column: userId
         table:
           schema: parti_2020
           name: comments_like
@@ -1525,7 +1525,7 @@
   - name: votes
     using:
       foreign_key_constraint_on:
-        column: user_id
+        column: userId
         table:
           schema: parti_2020
           name: vote
@@ -1580,13 +1580,13 @@
       foreign_key_constraint_on: board_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   insert_permissions:
   - role: user
     permission:
       check: {}
       columns:
-      - user_id
+      - userId
       - board_id
       - created_at
       - updated_at
@@ -1595,7 +1595,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - board_id
       - created_at
       - updated_at
@@ -1606,7 +1606,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - board_id
       - created_at
       - updated_at
@@ -1626,13 +1626,13 @@
       foreign_key_constraint_on: group_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   insert_permissions:
   - role: user
     permission:
       check: {}
       columns:
-      - user_id
+      - userId
       - group_id
       - created_at
       - status
@@ -1642,7 +1642,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - group_id
       - created_at
       - status
@@ -1654,7 +1654,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - group_id
       - created_at
       - status
@@ -1675,13 +1675,13 @@
       foreign_key_constraint_on: suggestion_id
   - name: user
     using:
-      foreign_key_constraint_on: user_id
+      foreign_key_constraint_on: userId
   insert_permissions:
   - role: user
     permission:
       check: {}
       columns:
-      - user_id
+      - userId
       - suggestion_id
       - created_at
       - updated_at
@@ -1690,7 +1690,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - suggestion_id
       - created_at
       - updated_at
@@ -1701,7 +1701,7 @@
   - role: user
     permission:
       columns:
-      - user_id
+      - userId
       - suggestion_id
       - created_at
       - updated_at

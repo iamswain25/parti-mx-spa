@@ -1,24 +1,17 @@
-import { useMutation } from "@apollo/client";
-import { useStore } from "../store/store";
-import { exitUsersGroup } from "../graphql/mutation";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
-import useEffectRefetch from "./useEffectRefetch";
-
+import useGroupId from "../store/useGroupId";
+import { firestore } from "../config/firebase";
+import useAuth from "../store/useAuth";
 export default function useGroupExit(refetch?: any) {
-  const [{ user_id, group_id }] = useStore();
-  const [exit, { loading, error }] = useMutation(exitUsersGroup, {
-    variables: { group_id, user_id },
-  });
-  const trigger = useEffectRefetch();
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-
+  const [groupId] = useGroupId();
+  const [user] = useAuth();
   async function handler() {
     if (window.confirm("그룹을 나가시겠습니까?")) {
-      await exit();
-      trigger();
-      // window.location.reload();
+      await firestore
+        .collection("groups")
+        .doc(groupId)
+        .collection("users")
+        .doc(user?.uid)
+        .delete();
     }
   }
   return handler;

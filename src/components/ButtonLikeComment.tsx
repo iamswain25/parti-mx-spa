@@ -1,12 +1,9 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
-
-import { likeComment } from "../graphql/mutation";
 import { Box, Button, makeStyles, Theme } from "@material-ui/core";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
-import { useStore } from "../store/store";
 import { useGlobalState, keys } from "../store/useGlobalState";
+import { firestore } from "../config/firebase";
+import firebase from "firebase";
+import useAuth from "../store/useAuth";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -16,24 +13,25 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 export default function ButtonLikeComment(props: {
-  id?: number;
+  id?: string;
   count?: number;
 }) {
   const classes = useStyles();
-  const [{ user_id }] = useStore();
+  const [user] = useAuth();
+  const userId = user?.uid;
   const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const { id, count } = props;
-  const [like, { loading, error }] = useMutation(likeComment, {
-    variables: { comment_id: id },
-  });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-  function pressHandler() {
-    if (user_id) {
-      like();
-    } else {
-      showLogin(true);
-    }
+  async function pressHandler() {
+    const comment = (
+      await firestore
+        .collectionGroup("comments")
+        .where(firebase.firestore.FieldPath.documentId(), "==", id)
+        .get()
+    ).docs?.[0];
+    comment.ref
+      .collection("likes")
+      .doc(userId)
+      .set({ created_at: new Date() }, { merge: true });
   }
 
   return (

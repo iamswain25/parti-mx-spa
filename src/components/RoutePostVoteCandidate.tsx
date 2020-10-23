@@ -19,9 +19,9 @@ export default function RoutePostVoteCandidate({
   isResultHidden: boolean;
 }) {
   const [myVote, percentage, width] = React.useMemo(() => {
-    const count = c?.votes_aggregate?.aggregate?.sum?.count || 0;
+    const count = 0;
     return [
-      !!c?.my_like_count,
+      true,
       Math.round((count * 100) / total) ?? 0,
       Math.round((count * 100) / max) || 0,
     ];

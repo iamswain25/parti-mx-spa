@@ -41,11 +41,11 @@ from mx.boards
 left join mx.posts 
     on mx.boards.id = mx.posts.board_id 
 left join mx.users_post 
-    on mx.users_post.user_id = userid and mx.users_post.post_id = mx.posts.id
+    on mx.users_post.userId = userid and mx.users_post.post_id = mx.posts.id
 where 
     mx.boards.group_id = groupid
     and (
-        mx.users_post.user_id is null
+        mx.users_post.userId is null
         or mx.users_post.updated_at < mx.posts.updated_at
     )
 group by mx.boards.id;
@@ -90,11 +90,11 @@ CREATE FUNCTION mx.user_like_count_in_post(posts_row mx.posts, hasura_session js
     AS $$
     SELECT UP.like_count
     FROM mx.users_post UP
-    WHERE UP.user_id = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND UP.post_id = posts_row.id;
+    WHERE UP.userId = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND UP.post_id = posts_row.id;
 $$;
 CREATE TABLE mx.comments (
     id integer NOT NULL,
-    user_id integer,
+    userId integer,
     body text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -106,14 +106,14 @@ CREATE FUNCTION mx.user_like_in_comment(comments_row mx.comments, hasura_session
     AS $$
     SELECT count(CL.*)::integer
     FROM mx.comments_like CL
-    WHERE CL.user_id = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND CL.comment_id = comments_row.id;
+    WHERE CL.userId = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND CL.comment_id = comments_row.id;
 $$;
 CREATE FUNCTION mx.user_status_in_group(groups_row mx.groups, hasura_session json) RETURNS text
     LANGUAGE sql STABLE
     AS $$
     SELECT UG.status
     FROM mx.users_group UG
-    WHERE UG.user_id = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND UG.group_id = groups_row.id;
+    WHERE UG.userId = (hasura_session ->> 'x-hasura-user-id')::INTEGER AND UG.group_id = groups_row.id;
 $$;
 CREATE TABLE mx.boards (
     id integer NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE mx.candidates (
     body text NOT NULL,
     "order" integer,
     post_id integer NOT NULL,
-    user_id integer NOT NULL,
+    userId integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 CREATE SEQUENCE mx.comments_id_seq
@@ -158,7 +158,7 @@ CREATE SEQUENCE mx.comments_id_seq
     CACHE 1;
 ALTER SEQUENCE mx.comments_id_seq OWNED BY mx.comments.id;
 CREATE TABLE mx.comments_like (
-    user_id integer NOT NULL,
+    userId integer NOT NULL,
     comment_id integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL
 );
@@ -183,7 +183,7 @@ CREATE TABLE mx.reports (
     id integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    user_id integer NOT NULL,
+    userId integer NOT NULL,
     type text DEFAULT 'post'::text NOT NULL,
     type_id integer NOT NULL,
     body text NOT NULL
@@ -211,7 +211,7 @@ CREATE TABLE mx.users (
     deleted_at timestamp with time zone
 );
 CREATE TABLE mx.users_board (
-    user_id integer NOT NULL,
+    userId integer NOT NULL,
     board_id integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -219,13 +219,13 @@ CREATE TABLE mx.users_board (
 );
 COMMENT ON TABLE mx.users_board IS '유저가 게시판 마지막 확인 시간';
 CREATE TABLE mx.users_candidates (
-    user_id integer NOT NULL,
+    userId integer NOT NULL,
     candidate_id integer NOT NULL,
     count integer DEFAULT 1 NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 CREATE TABLE mx.users_group (
-    user_id integer NOT NULL,
+    userId integer NOT NULL,
     group_id integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     status text DEFAULT 'user'::text NOT NULL,
@@ -254,7 +254,7 @@ CREATE SEQUENCE mx.users_id_seq
     CACHE 1;
 ALTER SEQUENCE mx.users_id_seq OWNED BY mx.users.id;
 CREATE TABLE mx.users_post (
-    user_id integer NOT NULL,
+    userId integer NOT NULL,
     post_id integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -282,7 +282,7 @@ ALTER TABLE ONLY mx.users ALTER COLUMN id SET DEFAULT nextval('mx.users_id_seq':
 ALTER TABLE ONLY mx.boards
     ADD CONSTRAINT boards_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY mx.comments_like
-    ADD CONSTRAINT comments_like_pkey PRIMARY KEY (user_id, comment_id);
+    ADD CONSTRAINT comments_like_pkey PRIMARY KEY (userId, comment_id);
 ALTER TABLE ONLY mx.comments
     ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY mx.groups
@@ -292,15 +292,15 @@ ALTER TABLE ONLY mx.posts
 ALTER TABLE ONLY mx.reports
     ADD CONSTRAINT reports_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY mx.users_board
-    ADD CONSTRAINT users_board_pkey PRIMARY KEY (user_id, board_id);
+    ADD CONSTRAINT users_board_pkey PRIMARY KEY (userId, board_id);
 ALTER TABLE ONLY mx.users_candidates
-    ADD CONSTRAINT users_candidates_pkey PRIMARY KEY (user_id, candidate_id);
+    ADD CONSTRAINT users_candidates_pkey PRIMARY KEY (userId, candidate_id);
 ALTER TABLE ONLY mx.users_group
-    ADD CONSTRAINT users_group_pkey PRIMARY KEY (user_id, group_id);
+    ADD CONSTRAINT users_group_pkey PRIMARY KEY (userId, group_id);
 ALTER TABLE ONLY mx.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY mx.users_post
-    ADD CONSTRAINT users_post_pkey PRIMARY KEY (user_id, post_id);
+    ADD CONSTRAINT users_post_pkey PRIMARY KEY (userId, post_id);
 ALTER TABLE ONLY mx.candidates
     ADD CONSTRAINT vote_candidates_pkey PRIMARY KEY (id);
 CREATE TRIGGER set_mx_boards_updated_at BEFORE UPDATE ON mx.boards FOR EACH ROW EXECUTE PROCEDURE mx.set_current_timestamp_updated_at();
@@ -334,16 +334,16 @@ ALTER TABLE ONLY mx.posts
 ALTER TABLE ONLY mx.users_board
     ADD CONSTRAINT users_board_board_id_fkey FOREIGN KEY (board_id) REFERENCES mx.boards(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY mx.users_board
-    ADD CONSTRAINT users_board_user_id_fkey FOREIGN KEY (user_id) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT users_board_user_id_fkey FOREIGN KEY (userId) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY mx.users_candidates
     ADD CONSTRAINT users_candidates_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES mx.candidates(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY mx.users_candidates
-    ADD CONSTRAINT users_candidates_user_id_fkey FOREIGN KEY (user_id) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT users_candidates_user_id_fkey FOREIGN KEY (userId) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY mx.users_group
     ADD CONSTRAINT users_group_group_id_fkey FOREIGN KEY (group_id) REFERENCES mx.groups(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY mx.users_group
-    ADD CONSTRAINT users_group_user_id_fkey FOREIGN KEY (user_id) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT users_group_user_id_fkey FOREIGN KEY (userId) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY mx.users_post
     ADD CONSTRAINT users_post_post_id_fkey FOREIGN KEY (post_id) REFERENCES mx.posts(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY mx.users_post
-    ADD CONSTRAINT users_post_user_id_fkey FOREIGN KEY (user_id) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT users_post_user_id_fkey FOREIGN KEY (userId) REFERENCES mx.users(id) ON UPDATE CASCADE ON DELETE CASCADE;

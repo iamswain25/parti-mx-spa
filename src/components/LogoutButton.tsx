@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { MenuItem } from "@material-ui/core";
-import { wsLink } from "../config/ApolloSetup";
+
 
 export default function LogoutButton() {
   async function logoutHandler() {

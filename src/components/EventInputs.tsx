@@ -16,7 +16,7 @@ export default function EventInputs({ formControl }: any) {
       />
       <CustomTextField
         label="일시"
-        name="eventDate"
+        name="event_date"
         type="datetime-local"
         defaultValue={now}
         autoFocus

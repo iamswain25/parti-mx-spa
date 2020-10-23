@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme) => ({
 type FormEmail = { email: string };
 export default function PasswordForgot() {
   const classes = useStyles();
-  const [, setLoading] = useGlobalState(keys.LOADING);
+
   const [, setError] = useGlobalState(keys.ERROR);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const { handleSubmit, register, errors, reset } = useForm<FormEmail>();
   async function formHandler(form: FormEmail) {
     const { email } = form;
-    setLoading(true);
+
     const actionCodeSettings = {
       url: DOMAIN,
       handleCodeInApp: true,
@@ -70,14 +70,8 @@ export default function PasswordForgot() {
       reset();
     } catch (error) {
       setError(error.message);
-    } finally {
-      setLoading(false);
     }
   }
-
-  React.useEffect(() => {
-    setLoading(false);
-  }, [setLoading]);
 
   return (
     <div className={classes.paper}>

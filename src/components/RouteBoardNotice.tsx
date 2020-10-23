@@ -7,6 +7,7 @@ import { Typography, Grid, Box, Divider, Hidden } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import PostSort from "./PostSort";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
+import usePosts from "../store/usePosts";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => {
 export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
+  const [posts] = usePosts({ board_id: b.id });
   return (
     <>
       <section className={classes.container}>
@@ -47,14 +49,14 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             </Typography>
             <Box mr={1} />
             <Typography variant="h4" color="primary">
-              {b?.posts_aggregate.aggregate.count}
+              0
             </Typography>
           </Box>
           <PostSort />
         </Grid>
         <Box display="flex">
           <Box paddingX={isDesktop ? 0 : 2} flex={1}>
-            {b?.posts.map((p, i) => (
+            {posts.map((p, i) => (
               <BoardPostNotice key={i} post={p} />
             ))}
           </Box>
@@ -78,14 +80,10 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
               </Box>
               <Divider />
               <Box padding={2}>
-                {b?.posts
-                  .filter((p) =>
-                    "announcement" in p.metadata
-                      ? p.metadata.announcement
-                      : false
-                  )
-                  .map((p, i) => (
-                    <RouteBoardAnnounce key={i} post={p} />
+                {posts
+                  .filter((p) => p.is_announced)
+                  .map((p) => (
+                    <RouteBoardAnnounce key={p.id} post={p} />
                   ))}
               </Box>
             </Box>

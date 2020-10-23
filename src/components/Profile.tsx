@@ -7,9 +7,9 @@ import {
   IconButton,
   Avatar,
 } from "@material-ui/core";
-import { useMutation } from "@apollo/client";
-import { useStore } from "../store/store";
-import { updateUserName } from "../graphql/mutation";
+
+import useGroupId from "../store/useGroupId";
+
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -17,10 +17,10 @@ import { uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import HeaderBack from "./HeaderBack";
 import { ValidateResult } from "react-hook-form/dist/types/form";
-import { searchDuplicateNameWithoutMine } from "../graphql/query";
-import { whoami } from "../graphql/query";
+
 import CloseIcon from "@material-ui/icons/Close";
-import { client } from "../config/ApolloSetup";
+import useUser from "../store/useUser";
+
 const useStyles = makeStyles((theme) => ({
   grid: {
     display: "grid",
@@ -49,40 +49,26 @@ interface GroupForm {
 }
 export default function Profile() {
   const classes = useStyles();
-  const [{ user_id }] = useStore();
+  const [user] = useUser();
   const history = useHistory();
-  const [updateName] = useMutation(updateUserName);
+
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
-  const [, setLoading] = useGlobalState(keys.LOADING);
+  
   const { handleSubmit, register, errors, reset, control } = useForm<
     GroupForm
   >();
-  React.useEffect(() => {
-    client
-      .query({
-        query: whoami,
-        variables: { id: user_id },
-        fetchPolicy: "network-only",
-      })
-      .then((res) => {
-        if (res.data?.mx_users_by_pk) {
-          const { photo_url, name, email } = res.data?.mx_users_by_pk;
-          reset({ name, email });
-          setPhoto(photo_url);
-        }
-      });
-  }, [reset, setPhoto, user_id]);
+
   async function handleForm(form: GroupForm) {
     const { bgFiles, name } = form;
-    setLoading(true);
-    const variables = { id: user_id, name, photo_url: undefined };
-    if (bgFiles?.length) {
-      variables.photo_url = await uploadFileByPath(
-        bgFiles[0],
-        `profile/${user_id}`
-      );
-    }
-    await updateName({ variables });
+    
+    // const variables = { id: userId, name, photo_url: undefined };
+    // if (bgFiles?.length) {
+    //   variables.photo_url = await uploadFileByPath(
+    //     bgFiles[0],
+    //     `profile/${user?.id}`
+    //   );
+    // }
+    // await updateName({ variables });
     history.push("/home");
   }
   return (
@@ -124,14 +110,14 @@ export default function Profile() {
           rules={{
             required: "닉네임을 입력해야 합니다.",
             validate: async function (value): Promise<ValidateResult> {
-              const res = await client.query({
-                query: searchDuplicateNameWithoutMine,
-                variables: { name: value, id: user_id },
-                fetchPolicy: "network-only",
-              });
-              if (res.data?.mx_users?.length) {
-                return `이미 사용중인 닉네임 입니다.`;
-              }
+              // const res = await client.query({
+              //   query: searchDuplicateNameWithoutMine,
+              //   variables: { name: value, id: userId },
+              //   fetchPolicy: "network-only",
+              // });
+              // if (res.data?.mx_users?.length) {
+              //   return `이미 사용중인 닉네임 입니다.`;
+              // }
               return undefined;
             },
           }}

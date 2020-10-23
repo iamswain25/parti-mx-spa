@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Button } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
@@ -29,7 +29,7 @@ export default function HeaderBack({
   right?: any;
 }) {
   const classes = useStyles();
-  const [{ group_id }] = useStore();
+  const [groupId] = useGroupId();
   return (
     <Grid
       container
@@ -38,7 +38,7 @@ export default function HeaderBack({
       alignItems="center"
       wrap="nowrap"
     >
-      <Link to={`/home?group_id=${group_id}`}>
+      <Link to={`/${groupId}`}>
         <ChevronLeftIcon />
       </Link>
       <Typography variant="h3" color="textPrimary">

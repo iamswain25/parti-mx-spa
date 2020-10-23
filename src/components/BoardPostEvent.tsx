@@ -59,12 +59,12 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
-  let eventDate = null,
+  let event_date = null,
     place = null,
     deadline = null,
     countPeople = null;
-  if (p?.metadata && "eventDate" in p?.metadata) {
-    eventDate = getEventDate2(p.metadata.eventDate);
+  if (p?.metadata && "event_date" in p?.metadata) {
+    event_date = getEventDate2(p.metadata.event_date);
     countPeople = p.metadata.countPeople;
     place = p.metadata.place;
     deadline = getEventDate3(p.metadata.deadline);
@@ -89,7 +89,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               </Typography>
             </Box>
             <Box color="grey.600">
-              <Typography variant="subtitle2">{eventDate}</Typography>
+              <Typography variant="subtitle2">{event_date}</Typography>
             </Box>
           </Box>
         </Grid>
@@ -101,7 +101,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               <Box display="flex" alignItems="center">
                 <HowToRegIcon />
                 <Box ml={1}>
-                  {p.users_aggregate.aggregate.sum.like_count}명 참석{" / "}
+                  0명 참석{" / "}
                   {countPeople}명 모집
                 </Box>
               </Box>

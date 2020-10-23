@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, TextField, Button, Select } from "@material-ui/core";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import { Redirect } from "react-router-dom";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { functions, auth } from "../config/firebase";
 import { userGroupStatusList } from "../helpers/options";
 import HeaderBack from "./HeaderBack";
-const authInvite = functions.httpsCallable("authInvite", { timeout: 300000 });
+// const authInvite = functions.httpsCallable("authInvite", { timeout: 300000 });
 const useStyles = makeStyles((theme) => ({
   texts: {
     "& textarea": {
@@ -27,7 +27,7 @@ interface AuthResult {
 }
 export default function MemberNew() {
   const classes = useStyles();
-  const [{ group_id }] = useStore();
+  const [groupId] = useGroupId();
   const [status] = useGlobalState(keys.PERMISSION);
   const [, setError] = useGlobalState(keys.ERROR);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
@@ -47,66 +47,66 @@ export default function MemberNew() {
     //   );
     // }
     setError(`${arr.length}명의 유저를 생성 중입니다.`);
-    try {
-      const { data } = await authInvite({
-        emails: arr,
-        groups: [{ group_id, status }],
-      });
-      const successed = data.filter((u: AuthResult) => u.success);
-      const existing = data
-        .filter((u: AuthResult) => !u.success)
-        .map((u: AuthResult) => u.email);
-      const registeredEmails = successed.map(
-        (u: AuthResult) => u.email as string
-      );
-      const actionCodeSettings = {
-        url: "https://youthwagle.kr/home?group_id=" + group_id,
-        handleCodeInApp: true,
-      };
-      setError(
-        `${data.length}명의 유저를 생성했습니다. 초대 이메일을 보냅니다.`
-      );
-      await Promise.all(
-        registeredEmails.map((email: string) =>
-          auth.sendPasswordResetEmail(email, actionCodeSettings)
-        )
-      );
-      if (existing.length) {
-        if (
-          window.confirm(
-            `이미 가입된 유저 ${existing.length}명 에게 로그인 링크 이메일을 전송하시겠습니까?`
-          )
-        ) {
-          setError(
-            `${existing.length}명의 이미 가입된 유저에게 비밀번호 변경 이메일을 보냅니다.`
-          );
-          await Promise.all(
-            existing.map((email: string) =>
-              auth.sendSignInLinkToEmail(email, actionCodeSettings)
-            )
-          );
-        } else {
-          if (
-            window.confirm(
-              `이미 가입된 유저 ${existing.length}명 에게 비밀번호 변경 이메일을 전송하시겠습니까?`
-            )
-          ) {
-            setError(
-              `${existing.length}명의 이미 가입된 유저에게 비밀번호 변경 이메일을 보냅니다.`
-            );
-            await Promise.all(
-              existing.map((email: string) =>
-                auth.sendPasswordResetEmail(email, actionCodeSettings)
-              )
-            );
-          }
-        }
-      }
-      setError(undefined);
-      setSuccess(`이메일 전송을 완료했습니다.`);
-    } catch (error) {
-      setError(error.message);
-    }
+    // try {
+    //   // const { data } = await authInvite({
+    //   //   emails: arr,
+    //   //   groups: [{ group_id: groupId, status }],
+    //   // });
+    //   const successed = data.filter((u: AuthResult) => u.success);
+    //   const existing = data
+    //     .filter((u: AuthResult) => !u.success)
+    //     .map((u: AuthResult) => u.email);
+    //   const registeredEmails = successed.map(
+    //     (u: AuthResult) => u.email as string
+    //   );
+    //   const actionCodeSettings = {
+    //     url: "https://youthwagle.kr/home?group_id=" + groupId,
+    //     handleCodeInApp: true,
+    //   };
+    //   setError(
+    //     `${data.length}명의 유저를 생성했습니다. 초대 이메일을 보냅니다.`
+    //   );
+    //   await Promise.all(
+    //     registeredEmails.map((email: string) =>
+    //       auth.sendPasswordResetEmail(email, actionCodeSettings)
+    //     )
+    //   );
+    //   if (existing.length) {
+    //     if (
+    //       window.confirm(
+    //         `이미 가입된 유저 ${existing.length}명 에게 로그인 링크 이메일을 전송하시겠습니까?`
+    //       )
+    //     ) {
+    //       setError(
+    //         `${existing.length}명의 이미 가입된 유저에게 비밀번호 변경 이메일을 보냅니다.`
+    //       );
+    //       await Promise.all(
+    //         existing.map((email: string) =>
+    //           auth.sendSignInLinkToEmail(email, actionCodeSettings)
+    //         )
+    //       );
+    //     } else {
+    //       if (
+    //         window.confirm(
+    //           `이미 가입된 유저 ${existing.length}명 에게 비밀번호 변경 이메일을 전송하시겠습니까?`
+    //         )
+    //       ) {
+    //         setError(
+    //           `${existing.length}명의 이미 가입된 유저에게 비밀번호 변경 이메일을 보냅니다.`
+    //         );
+    //         await Promise.all(
+    //           existing.map((email: string) =>
+    //             auth.sendPasswordResetEmail(email, actionCodeSettings)
+    //           )
+    //         );
+    //       }
+    //     }
+    //   }
+    //   setError(undefined);
+    //   setSuccess(`이메일 전송을 완료했습니다.`);
+    // } catch (error) {
+    //   setError(error.message);
+    // }
   }
 
   return (

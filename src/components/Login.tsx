@@ -5,11 +5,10 @@ import { auth } from "../config/firebase";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
-import useLoadingEffect from "./useLoadingEffect";
+
 
 export default function Login() {
   const [, setError] = useGlobalState(keys.ERROR);
-  useLoadingEffect(false);
   useRedirectIfLogin();
   const handleForm = async (form: FormData) => {
     const { email, password } = form;

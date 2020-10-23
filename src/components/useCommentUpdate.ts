@@ -1,22 +1,17 @@
-import { useMutation } from "@apollo/client";
-import useLoadingEffect from "./useLoadingEffect";
+import firebase from "firebase";
+import { firestore } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { updateComment } from "../graphql/mutation";
-import useErrorEffect from "./useErrorEffect";
-interface UpdateComment {
-  update_mx_comments_by_pk: { id: number };
-}
-export default function useCommentUpdate(id: number) {
+export default function useCommentUpdate(id: string) {
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [mutate, { loading, error }] = useMutation<UpdateComment>(
-    updateComment
-  );
-  useLoadingEffect(loading);
-  useErrorEffect(error);
   async function handler(body: string) {
-    const res = await mutate({ variables: { id, body } });
-    const comment_id = res.data?.update_mx_comments_by_pk.id;
-    if (comment_id) {
+    const comment = (
+      await firestore
+        .collectionGroup("comments")
+        .where(firebase.firestore.FieldPath.documentId(), "==", id)
+        .get()
+    ).docs?.[0];
+    if (comment) {
+      comment.ref.update({ body });
       setSuccess("댓글을 수정했습니다.");
     }
   }

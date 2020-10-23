@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import RoutePostSuggestion from "./RoutePostSuggestion";
+import usePosts from "../store/usePosts";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -26,9 +27,10 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function RouteBoardSuggestion({ board: b }: { board?: Board }) {
+export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
+  const [posts] = usePosts({ board_id: b.id });
   return (
     <>
       <section className={classes.container}>
@@ -46,7 +48,7 @@ export default function RouteBoardSuggestion({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "textSecondary" : "primary"}
               >
-                {b?.posts_aggregate_open.aggregate.count}
+                0
               </Typography>
             </Box>
           </Button>
@@ -64,15 +66,15 @@ export default function RouteBoardSuggestion({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.posts_aggregate_closed.aggregate.count}
+                0
               </Typography>
             </Box>
           </Button>
         </Grid>
-        {b?.posts
+        {posts
           .filter((a) => (typeof a.closed_at === "string") === isClosed)
           .map((p, i) => (
-            <RoutePostSuggestion key={i} post={p} />
+            <RoutePostSuggestion key={p.id} post={p} />
           ))}
       </section>
     </>

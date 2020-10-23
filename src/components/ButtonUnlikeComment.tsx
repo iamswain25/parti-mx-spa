@@ -1,11 +1,8 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
-
-import { unlikeComment } from "../graphql/mutation";
 import { Box, Button, makeStyles, Theme } from "@material-ui/core";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
-import { useStore } from "../store/store";
+import useAuth from "../store/useAuth";
+import { firestore } from "../config/firebase";
+import firebase from "firebase";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -15,19 +12,22 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 export default function ButtonUnlikeComment(props: {
-  id: number;
+  id: string;
   count: number;
 }) {
   const classes = useStyles();
   const { id, count } = props;
-  const [{ user_id }] = useStore();
-  const [like, { loading, error }] = useMutation(unlikeComment, {
-    variables: { comment_id: id, user_id },
-  });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-  function pressHandler() {
-    like();
+  const [user] = useAuth();
+  const userId = user?.uid;
+
+  async function pressHandler() {
+    const comment = (
+      await firestore
+        .collectionGroup("comments")
+        .where(firebase.firestore.FieldPath.documentId(), "==", id)
+        .get()
+    ).docs?.[0];
+    comment.ref.collection("likes").doc(userId).delete();
   }
 
   return (

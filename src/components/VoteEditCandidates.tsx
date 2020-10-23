@@ -22,7 +22,7 @@ export default function VoteEditCandidates({
   function removeHandler(i: number) {
     if (fields.length > 2) {
       remove(i);
-      if (fields[i].__typename) {
+      if (fields[i].id) {
         deletingIds.push(fields[i].id);
       }
     } else {
@@ -54,7 +54,7 @@ export default function VoteEditCandidates({
   return (
     <>
       {fields.map((field, index) => {
-        const voteCount = field?.votes_aggregate?.aggregate?.sum?.count || 0;
+        const voteCount = 0;
         const hasVote = voteCount > 0;
         return (
           <Box key={field.id}>

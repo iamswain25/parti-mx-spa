@@ -1,9 +1,10 @@
 import React from "react";
 import { TextField, makeStyles, Button, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { User, Comment, CommentInput } from "../types";
+import useAuth from "../store/useAuth";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -41,7 +42,8 @@ export default function CommentTextinput({
     defaultValues: { body: atUser, parent_id, post_id },
   });
   const classes = useStyles();
-  const [{ user_id }] = useStore();
+  const [u] = useAuth();
+  const userId = u?.uid;
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const ref = React.useRef<HTMLInputElement | null>(null);
 
@@ -56,7 +58,7 @@ export default function CommentTextinput({
   }, [reset, atUser, parent_id, post_id, getValues, autoFocus]);
 
   function loginHandler() {
-    if (!user_id) {
+    if (!userId) {
       setVisible(true);
     }
   }
@@ -71,7 +73,7 @@ export default function CommentTextinput({
           multiline
           // rows={4}
           fullWidth
-          disabled={!user_id}
+          disabled={!userId}
           label="댓글 입력"
           name="body"
           classes={{ root: classes.root }}

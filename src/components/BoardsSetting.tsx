@@ -14,19 +14,18 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { HomeGroup, Board } from "../types";
-import { useQuery, useMutation } from "@apollo/client";
-import { queryBoardsByGroupId } from "../graphql/query";
-import { useStore } from "../store/store";
-import useLoadingEffect from "./useLoadingEffect";
+
+
 import useErrorEffect from "./useErrorEffect";
 import Forbidden from "./Forbidden";
-import { updateBoards } from "../graphql/mutation";
+
 import { useHistory } from "react-router-dom";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import HeaderBack from "./HeaderBack";
 import { boardPermissionList } from "../helpers/options";
+import useGroupId from "../store/useGroupId";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const deletingIds: number[] = [];
 interface BoardsForm {
   boards: Array<{
-    id: number;
+    id: string;
     body: string;
     title: string;
     order: number;
@@ -55,12 +54,9 @@ interface BoardsForm {
 }
 export default function BoardsSetting() {
   const classes = useStyles();
-  const [{ group_id }] = useStore();
-  const { data, error, loading } = useQuery<HomeGroup>(queryBoardsByGroupId, {
-    variables: { group_id },
-  });
   const history = useHistory();
-  const [updateBoardsAll] = useMutation(updateBoards);
+  const [groupId] = useGroupId();
+
   const { handleSubmit, register, errors, control, reset } = useForm<
     BoardsForm
   >();
@@ -68,21 +64,6 @@ export default function BoardsSetting() {
     name: "boards",
     control,
   });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-  const group = data?.mx_groups_by_pk;
-  React.useEffect(() => {
-    if (group) {
-      reset({ boards: group.boards });
-      deletingIds.length = 0;
-    }
-  }, [group, reset]);
-  if (loading) {
-    return null;
-  }
-  if (!group || group.status !== "organizer") {
-    return <Forbidden />;
-  }
   function removeHandler(i: number) {
     const id = fields[i].id;
     if (typeof id === "number") {
@@ -101,7 +82,7 @@ export default function BoardsSetting() {
     });
     const variables = { boards, deletingIds };
     // return console.log(variables);
-    await updateBoardsAll({ variables });
+    // await updateBoardsAll({ variables });
     history.push("/home");
   }
 
@@ -161,7 +142,7 @@ export default function BoardsSetting() {
                 <Controller
                   name={`boards[${i}].group_id`}
                   control={control}
-                  defaultValue={group_id}
+                  defaultValue={groupId}
                   as={<input type="hidden" />}
                 />
                 <CustomTextField

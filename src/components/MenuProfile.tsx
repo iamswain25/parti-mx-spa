@@ -2,12 +2,12 @@ import React from "react";
 import { IconButton, Menu, MenuItem, Avatar } from "@material-ui/core";
 import { User } from "../types";
 import { useHistory } from "react-router-dom";
-import { useStore } from "../store/store";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
-// import AccountDelete from "./AccountDelete";
-export default function MenuProfile({ user }: { user: User }) {
-  const [{ user_id }] = useStore();
+import useAuth from "../store/useAuth";
+import useUser from "../store/useUser";
+export default function MenuProfile() {
+  const [user] = useUser();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   function handleOpen(event: React.MouseEvent<HTMLButtonElement>) {
@@ -28,7 +28,7 @@ export default function MenuProfile({ user }: { user: User }) {
         onClick={handleOpen}
         size="small"
       >
-        <Avatar src={user.photo_url} children={user.name.substr(0, 1)} />
+        <Avatar src={user?.photo_url} children={user?.name.substr(0, 1)} />
       </IconButton>
       <Menu
         keepMounted
@@ -37,7 +37,7 @@ export default function MenuProfile({ user }: { user: User }) {
         onClose={handleClose}
       >
         <MenuItem onClick={profileHandler}>프로필</MenuItem>
-        {user_id ? <LogoutButton /> : <LoginButton />}
+        {user ? <LogoutButton /> : <LoginButton />}
         {/* <AccountDelete /> */}
       </Menu>
     </>

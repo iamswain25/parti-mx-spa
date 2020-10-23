@@ -1,50 +1,45 @@
 import React from "react";
-import { useStore } from "../store/store";
-import { useMutation } from "@apollo/client";
-import { insertPost } from "../graphql/mutation";
+import useGroupId from "../store/useGroupId";
+
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { makeNewVariables } from "./makePostVariables";
 import { EventFormdata } from "../types";
 import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 export default function EventNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [, setLoading] = useGlobalState(keys.LOADING);
-  const [insert] = useMutation(insertPost);
-  const [{ group_id }] = useStore();
+
+  const [groupId] = useGroupId();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<EventFormdata>();
   const { handleSubmit } = formControl;
   async function handleForm(form: EventFormdata) {
-    setLoading(true);
-    const { eventDate, deadline, countPeople, place, ...rest } = form;
+    const { event_date, deadline, countPeople, place, ...rest } = form;
     const metadata = {
-      eventDate,
+      event_date,
       deadline,
       countPeople,
       place,
     };
-    const variables = await makeNewVariables(rest, {
-      board_id,
-      group_id,
-      imageArr,
-      fileArr,
-      setSuccess,
-      metadata,
-    });
-    const res = await insert({
-      variables,
-    });
-    const id = res?.data?.insert_mx_posts_one?.id;
-    history.push("/post/" + id);
+    // const variables = await makeNewVariables(rest, {
+    //   board_id,
+    //   group_id,
+    //   imageArr,
+    //   fileArr,
+    //   setSuccess,
+    //   metadata,
+    // });
+    // const res = await insert({
+    //   variables,
+    // });
+    // const id = res?.data?.insert_mx_posts_one?.id;
+    // history.push("/post/" + id);
   }
 
   return (

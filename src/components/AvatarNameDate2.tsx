@@ -26,7 +26,7 @@ export default function AvatarNameDate2({ userPost }: { userPost: UserPost }) {
   const classes = useStyles();
   const {
     user: { name = "로딩중", photo_url = "로딩중" },
-    created_at = "로딩중",
+    created_at,
   } = userPost;
   const alteredName =
     name.indexOf("@") > 0 ? name.substr(0, name.indexOf("@")) : name;

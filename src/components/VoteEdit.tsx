@@ -1,6 +1,5 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
-import { updateVote } from "../graphql/mutation";
+
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -31,9 +30,9 @@ export default function VoteEdit({ post: p }: { post: Post }) {
     isResultHidden,
   } = metadata;
   const history = useHistory();
-  const [, setLoading] = useGlobalState(keys.LOADING);
+
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [update] = useMutation(updateVote);
+
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Image[] | undefined>(images);
@@ -60,49 +59,48 @@ export default function VoteEdit({ post: p }: { post: Post }) {
   }, []);
 
   async function handleForm(form: VoteEditFormdata) {
-    setLoading(true);
-    const {
-      closingMethod,
-      candidates: inputCandidates,
-      isMultiple,
-      isAnonymous,
-      isResultHidden,
-      ...rest
-    } = form;
-    const candidates = inputCandidates
-      ? inputCandidates?.map((c, i) => {
-          const { id, ...rest } = c;
-          const newC: any = { ...rest, post_id: p.id, order: i + 1 };
-          if (typeof id === "number") {
-            newC.id = id;
-          }
-          return newC;
-        })
-      : p.candidates.map((p) => {
-          const { id, body, order } = p;
-          return { id, body, order, post_id: p.id };
-        });
+    // const {
+    //   closingMethod,
+    //   candidates: inputCandidates,
+    //   isMultiple,
+    //   isAnonymous,
+    //   isResultHidden,
+    //   ...rest
+    // } = form;
+    // const candidates = inputCandidates
+    //   ? inputCandidates?.map((c, i) => {
+    //       const { id, ...rest } = c;
+    //       const newC: any = { ...rest, post_id: p.id, order: i + 1 };
+    //       if (typeof id === "number") {
+    //         newC.id = id;
+    //       }
+    //       return newC;
+    //     })
+    //   : p.candidates.map((p) => {
+    //       const { id, body, order } = p;
+    //       return { id, body, order, post_id: p.id };
+    //     });
 
-    const metadata = {
-      isBinary,
-      isMultiple,
-      isAnonymous,
-      isResultHidden,
-      closingMethod,
-    };
-    const variables = await makeUpdateVariables(rest, {
-      imageArr,
-      fileArr,
-      images2,
-      files2,
-      setSuccess,
-      id,
-      metadata,
-      candidates,
-      deletingIds,
-    });
+    // const metadata = {
+    //   isBinary,
+    //   isMultiple,
+    //   isAnonymous,
+    //   isResultHidden,
+    //   closingMethod,
+    // };
+    // const variables = await makeUpdateVariables(rest, {
+    //   imageArr,
+    //   fileArr,
+    //   images2,
+    //   files2,
+    //   setSuccess,
+    //   id,
+    //   metadata,
+    //   candidates,
+    //   deletingIds,
+    // });
 
-    await update({ variables });
+    // await update({ variables });
     history.push("/post/" + id);
   }
 

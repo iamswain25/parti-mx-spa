@@ -6,14 +6,10 @@ import Home from "../components/Home";
 import RouteBoard from "../components/RouteBoard";
 import Signup from "../components/Signup";
 import RoutePost from "../components/RoutePost";
-import useParseGroupId from "../components/useParseGroupId";
 import LoginModal from "../components/LoginModal";
 import SnackbarCustom from "../components/SnackbarCustom";
-import { useStore } from "../store/store";
 import SnackbarSuccess from "../components/SnackbarSuccess";
 import { CssBaseline } from "@material-ui/core";
-import RouteMap from "../components/RouteMap";
-import RoutePhoto from "../components/RoutePhoto";
 import RoutePostEdit from "../components/RoutePostEdit";
 import RoutePostNew from "../components/RoutePostNew";
 import BoardsSetting from "../components/BoardsSetting";
@@ -28,59 +24,45 @@ import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import AdminRoute from "./AdminRoute";
 import Report from "../components/Report";
+import useGroupId from "../store/useGroupId";
 
 export default function Routes() {
-  useParseGroupId();
   useSignInWithEmailLink();
-  const [{ isInit }] = useStore();
+  useGroupId();
   return (
     <>
       <CssBaseline />
-      {isInit && (
-        <HeaderRemain>
-          <Switch>
-            <Route path="/home" exact component={Home} />
-            <Route path="/forgot" exact component={PasswordForgot} />
-            <Route path="/photo/:board_id" exact component={RoutePhoto} />
-            <Route path="/map/:board_id" exact component={RouteMap} />
-            <Route path="/home/:board_id" exact component={RouteBoard} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/signup" exact component={Signup} />
-            <PrivateRoute path="/boards" exact component={BoardsSetting} />
-            <PrivateRoute path="/members" exact component={MemberSetting} />
-            <PrivateRoute path="/members/new" exact component={MemberNew} />
-            <PrivateRoute path="/group/new" exact component={GroupNew} />
-            <PrivateRoute path="/profile" exact component={Profile} />
-            <PrivateRoute path="/group/edit" exact component={GroupEdit} />
-            <AdminRoute path="/report" exact component={Report} />
-            <Route path="/search" exact component={Search} />
-            <Route
-              exact
-              path="/p/:id"
-              render={(props) => (
-                <Redirect to={`/post/${props.match.params.id}`} />
-              )}
-            />
-            <Route path="/post/:post_id" exact component={RoutePost} />
-            <PrivateRoute
-              path="/edit/:post_id"
-              exact
-              component={RoutePostEdit}
-            />
-            <PrivateRoute
-              path="/new/:board_id"
-              exact
-              component={RoutePostNew}
-            />
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route path="*">
-              <Redirect to="/home" />
-            </Route>
-          </Switch>
-        </HeaderRemain>
-      )}
+      <HeaderRemain>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/forgot" exact component={PasswordForgot} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+          <PrivateRoute path="/boards" exact component={BoardsSetting} />
+          <PrivateRoute path="/members" exact component={MemberSetting} />
+          <PrivateRoute path="/members/new" exact component={MemberNew} />
+          <PrivateRoute path="/group/new" exact component={GroupNew} />
+          <PrivateRoute path="/profile" exact component={Profile} />
+          <PrivateRoute path="/group/edit" exact component={GroupEdit} />
+          <AdminRoute path="/report" exact component={Report} />
+          <Route path="/search" exact component={Search} />
+          <Route
+            exact
+            path="/p/:id"
+            render={(props) => (
+              <Redirect to={`/post/${props.match.params.id}`} />
+            )}
+          />
+          <Route path="/post/:post_id" exact component={RoutePost} />
+          <PrivateRoute path="/edit/:post_id" exact component={RoutePostEdit} />
+          <PrivateRoute path="/new/:board_id" exact component={RoutePostNew} />
+          <Route exact path="/:group_id" component={Home} />
+          <Route exact path="/:group_id/:board_id" component={RouteBoard} />
+          <Route path="*">
+            <Redirect to="/home" />
+          </Route>
+        </Switch>
+      </HeaderRemain>
       <LoginModal />
       <SnackbarCustom />
       <SnackbarSuccess />

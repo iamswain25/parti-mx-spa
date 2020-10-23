@@ -1,7 +1,6 @@
 import React from "react";
-import { useStore } from "../store/store";
-import { useMutation } from "@apollo/client";
-import { insertVote } from "../graphql/mutation";
+import useGroupId from "../store/useGroupId";
+
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
@@ -14,12 +13,12 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteNew() {
-  const { board_id } = useParams();
+  // const { board_id } = useParams();
   const history = useHistory();
-  const [, setLoading] = useGlobalState(keys.LOADING);
+  
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [insert] = useMutation(insertVote);
-  const [{ group_id }] = useStore();
+
+  const [groupId] = useGroupId();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [isBinary, setBinary] = React.useState(true);
@@ -28,7 +27,7 @@ export default function VoteNew() {
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {
-    setLoading(true);
+    
     const {
       closingMethod,
       candidates,
@@ -45,8 +44,6 @@ export default function VoteNew() {
       closingMethod,
     };
     const variables = await makeNewVariables(rest, {
-      board_id,
-      group_id,
       imageArr,
       fileArr,
       setSuccess,
@@ -66,9 +63,9 @@ export default function VoteNew() {
         order: i + 1,
       }));
     }
-    const res = await insert({ variables });
-    const id = res?.data?.insert_mx_posts_one?.id;
-    history.push("/post/" + id);
+    // const res = await insert({ variables });
+    // const id = res?.data?.insert_mx_posts_one?.id;
+    // history.push("/post/" + id);
   }
 
   return (

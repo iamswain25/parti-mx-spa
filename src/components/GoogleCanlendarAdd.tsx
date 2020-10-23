@@ -19,7 +19,7 @@ export default function GoogleCanlendarAdd(props: { post: Post }) {
   const metadata = props.post.metadata as EventMetadata;
   const title = encodeURI(props.post.title);
   const place = encodeURI(metadata.place);
-  const eventDate = getGoogleCalendarDate(metadata.eventDate);
+  const event_date = getGoogleCalendarDate(metadata.event_date);
   const body = encodeURI(props.post.body + "\n\n---\n" + window.location.href);
   return (
     <a
@@ -29,7 +29,7 @@ export default function GoogleCanlendarAdd(props: { post: Post }) {
       href={
         `https://calendar.google.com/calendar/r/eventedit?` +
         `text=${title}` +
-        `&dates=${eventDate}` +
+        `&dates=${event_date}` +
         `&details=${body}` +
         `&location=${place}`
       }

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
-  const count = p?.users_aggregate?.aggregate?.sum?.like_count ?? 0;
+  const count = 0;
   return (
     <div className={classes.container}>
       <Box mb={1}>

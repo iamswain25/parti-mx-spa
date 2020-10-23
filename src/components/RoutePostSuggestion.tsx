@@ -55,7 +55,7 @@ export default function RoutePostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
   const daysLeft = daysLeftMeta(p.metadata, p.created_at);
-  const count = p?.users_aggregate?.aggregate?.sum?.like_count ?? 0;
+  const count = 0;
   return (
     <div className={classes.container}>
       <Box mb={1}>

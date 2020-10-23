@@ -9,15 +9,15 @@ export default function UserGroupAdmit({
   userGroup: UserGroup;
   update: any;
 }) {
-  const { group_id, user_id } = userGroup;
+  const { group_id, userId } = userGroup;
   function reject() {
     update({
-      variables: { group_id, user_id, status: "exit" },
+      variables: { group_id, userId, status: "exit" },
     });
   }
   function admit() {
     update({
-      variables: { group_id, user_id, status: "participant" },
+      variables: { group_id, userId, status: "participant" },
     });
   }
   return (

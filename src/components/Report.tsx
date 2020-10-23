@@ -1,16 +1,16 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { csvDownloadAll } from "../helpers/csvDownload";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 
 export default function Report() {
-  const [{ group_id }] = useStore();
+  const [groupId] = useGroupId();
   return (
     <div>
       <Button
         variant="contained"
         color="primary"
-        onClick={() => csvDownloadAll(group_id)}
+        onClick={() => csvDownloadAll(groupId)}
       >
         download csv
       </Button>

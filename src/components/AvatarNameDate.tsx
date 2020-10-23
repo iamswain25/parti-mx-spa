@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
 export default function AvatarNameDate({
   name = "로딩중",
   photo_url = "로딩중",
-  created_at = "로딩중",
+  created_at,
   justify = "space-between",
 }: {
   name?: string;
   photo_url?: string;
-  created_at?: string;
+  created_at?: firebase.firestore.Timestamp;
   justify?: GridJustification;
 }) {
   const classes = useStyles();

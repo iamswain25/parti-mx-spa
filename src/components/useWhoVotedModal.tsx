@@ -11,6 +11,7 @@ import {
 import { Candidate } from "../types";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import AvatarNameVote from "./AvatarNameVote";
+import useVotes from "../store/useVotes";
 const useStyles = makeStyles((theme: Theme) => ({
   top: {
     [theme.breakpoints.up("md")]: {
@@ -31,7 +32,8 @@ export default function useWhoVotedModal(c: Candidate) {
   function handleClose() {
     setVisible(false);
   }
-  const count = c?.votes_aggregate?.aggregate?.sum?.count || 0;
+  const [votes] = useVotes({ candidate_id: c.id, post_id: c.post_id });
+  const count = 0;
   const modal = (
     <Modal open={isVisible} onClose={handleClose}>
       <Paper>
@@ -45,8 +47,8 @@ export default function useWhoVotedModal(c: Candidate) {
           <div />
         </div>
         <Container>
-          {c.votes.map((v,i) => (
-            <AvatarNameVote user={v.user} key={i} />
+          {votes.map((v) => (
+            <AvatarNameVote user={v} key={v.id} />
           ))}
         </Container>
       </Paper>

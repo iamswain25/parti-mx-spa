@@ -1,21 +1,21 @@
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { insertUserGroup } from "../graphql/mutation";
-import { client } from "../config/ApolloSetup";
+
 import useEffectRefetch from "./useEffectRefetch";
+import useUser from "../store/useUser";
 export default function useGroupJoin(userCount = 1) {
-  const [{ user_id, group_id }] = useStore();
   const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  const [user] = useUser();
   const trigger = useEffectRefetch();
   async function handler() {
-    if (user_id) {
-      await client.mutate({
-        mutation: insertUserGroup,
-        variables: {
-          group_id,
-          status: userCount > 0 ? "user" : "organizer",
-        },
-      });
+    if (user) {
+      // await client.mutate({
+      //   mutation: insertUserGroup,
+      //   variables: {
+      //     group_id,
+      //     status: userCount > 0 ? "user" : "organizer",
+      //   },
+      // });
       trigger();
     } else {
       setVisible(true);

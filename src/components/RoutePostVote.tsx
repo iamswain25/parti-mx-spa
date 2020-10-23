@@ -80,17 +80,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
     setVoted(!!p.my_like_count);
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
-    return [
-      p?.candidates?.reduce(
-        (p, c) => p + c?.votes_aggregate?.aggregate?.sum?.count || 0,
-        0
-      ),
-      Math.max(
-        ...(p?.candidates?.map(
-          (c) => c?.votes_aggregate?.aggregate?.sum?.count || 0
-        ) ?? [])
-      ),
-    ];
+    return [0, 0];
   }, [p]);
   return (
     <>
@@ -120,9 +110,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
                 justify="space-between"
               >
                 <Box color="grey.600" fontWeight={400}>
-                  <Typography variant="body2">
-                    참여자 {p.users_aggregate.aggregate.sum.like_count}명
-                  </Typography>
+                  <Typography variant="body2">참여자 0명</Typography>
                 </Box>
                 {isVoted && (
                   <Box

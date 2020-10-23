@@ -1,11 +1,5 @@
 import React from "react";
-import { subsByPostId } from "../graphql/subscription";
-import { getGroupByPostId } from "../graphql/query";
-import { PagePost } from "../types";
-import { useQuery, useSubscription } from "@apollo/client";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SuggestionDetail from "./SuggestionDetail";
 import { Box, Divider, Typography, Hidden } from "@material-ui/core";
 import HeaderPost from "./HeaderPost";
@@ -14,29 +8,14 @@ import BoardTabNavigator from "./BoardTabNavigator";
 import useDesktop from "./useDesktop";
 import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
-import Forbidden from "./Forbidden";
 import EventDetail from "./EventDetail";
-import usePermEffect from "./usePermEffect";
-import useGroupIdEffect from "./useGroupIdEffect";
+import usePost from "../store/usePost";
 
 export default function RoutePost() {
-  const { post_id } = useParams<{ post_id: string }>();
   const [isDesktop] = useDesktop();
-  const { data, error, loading } = useSubscription<PagePost>(subsByPostId, {
-    variables: { post_id },
-  });
-  const groupQuery = useQuery(getGroupByPostId, { variables: { post_id } });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-  const p = data?.mx_posts_by_pk;
-  usePermEffect(groupQuery.data?.group?.[0]?.status);
-  useGroupIdEffect(groupQuery.data?.group?.[0]?.id);
-
-  if (loading) return null;
-  if (!p) return <Forbidden noPost={!groupQuery.data?.group?.[0]?.id} />;
-
+  const [p] = usePost();
   let postByType = null;
-  switch (p?.board?.type) {
+  switch (p?.type) {
     case "notice":
       postByType = <NoticeDetail post={p} />;
       break;

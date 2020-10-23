@@ -1,13 +1,12 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { useMutation } from "@apollo/client";
-import { likePost } from "../graphql/mutation";
-import useLoadingEffect from "./useLoadingEffect";
+
 import useErrorEffect from "./useErrorEffect";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import { Post } from "../types";
+import useAuth from "../store/useAuth";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -42,18 +41,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function BtnLikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const count = p.users_aggregate?.aggregate?.sum?.like_count || 0;
+  const count = 0;
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [{ user_id }] = useStore();
+  const [user] = useAuth();
+  const userId = user?.uid;
   const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
-  const [vote, { loading, error }] = useMutation(likePost, {
-    variables: { id: p.id },
-  });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
   async function handler() {
-    if (user_id) {
-      await vote();
+    if (userId) {
+      // await vote();
       switch (type) {
         case "suggestion":
           return setSuccess("공감 하였습니다.");
@@ -66,7 +61,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
       showLogin(true);
     }
   }
-  const type = p.board?.type;
+  const type = p.type;
   switch (type) {
     case "suggestion":
       return (

@@ -13,9 +13,9 @@ export default function UserGroupStatus({
   const { status } = userGroup;
   async function handleChange(event: React.ChangeEvent<{ value: unknown }>) {
     const { value } = event.target;
-    const { group_id, user_id } = userGroup;
+    const { group_id, userId } = userGroup;
     await update({
-      variables: { group_id, user_id, status: value },
+      variables: { group_id, userId, status: value },
     });
   }
   return (

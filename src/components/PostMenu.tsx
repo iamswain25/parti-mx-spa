@@ -4,20 +4,22 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useParams } from "react-router-dom";
 import usePostDelete from "./usePostDelete";
 import { Post } from "../types";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import usePostAnnounce from "./usePostAnnounce";
 import usePostDenounce from "./usePostDenounce";
 import usePostEdit from "./usePostEdit";
 import usePostResolve from "./usePostResolve";
 import ShareButtons from "./ShareButtons";
 import useDesktop from "./useDesktop";
+import useAuth from "../store/useAuth";
 export default function PostMenu({ post: p }: { post: Post }) {
   const { post_id } = useParams<{ post_id: string }>();
-  const [{ user_id }] = useStore();
+  const [user] = useAuth();
+  const userId = user?.uid;
   const [isDesktop] = useDesktop();
-  const postId = Number(post_id);
+  const postId = post_id;
   const status = p?.board?.group?.status;
-  const isMine = user_id && p?.createdBy?.id === user_id;
+  const isMine = userId && p?.createdBy?.id === userId;
   const isOrganizer = status === "organizer";
   const isClosed = !!p?.closed_at;
   const isAnnounced =

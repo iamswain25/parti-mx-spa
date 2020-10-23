@@ -1,9 +1,4 @@
 import React from "react";
-import { useStore } from "../store/store";
-import { searchPosts } from "../graphql/query";
-import { useQuery } from "@apollo/client";
-import useLoadingEffect from "./useLoadingEffect";
-import useErrorEffect from "./useErrorEffect";
 import { Divider, Hidden, Typography, Container } from "@material-ui/core";
 import SearchInput from "./SearchInput";
 import HeaderBack from "./HeaderBack";
@@ -11,20 +6,18 @@ import { Post } from "../types";
 import SearchSuggestion from "./SearchSuggestion";
 
 export default function Search() {
-  const [{ user_id, group_id }] = useStore();
   const [keyword, setKeyword] = React.useState("");
-  const { loading, data, error } = useQuery(searchPosts, {
-    variables: {
-      searchKeyword: `%${keyword}%`,
-      group_id,
-      tags: keyword.split(/[\s,;#]+/),
-      user_id,
-    },
-    fetchPolicy: "network-only",
-  });
-  useLoadingEffect(loading);
-  useErrorEffect(error);
-  const results = data?.mx_posts as Post[];
+  // const { loading, data, error } = useQuery(searchPosts, {
+  //   variables: {
+  //     searchKeyword: `%${keyword}%`,
+  //     group_id,
+  //     tags: keyword.split(/[\s,;#]+/),
+  //     userId,
+  //   },
+  //   fetchPolicy: "network-only",
+  // });
+  // useErrorEffect(error);
+  const results = [] as Post[];
   return (
     <>
       <Hidden mdUp>

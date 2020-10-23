@@ -1,9 +1,10 @@
 import React from "react";
 import { makeStyles, Typography } from "@material-ui/core";
-import { useStore } from "../store/store";
+import useGroupId from "../store/useGroupId";
 import useGroupJoin from "./useGroupJoin";
 import useLogin from "./useLogin";
 import { Link } from "react-router-dom";
+import useAuth from "../store/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -41,7 +42,8 @@ export default function Forbidden({
   noPost?: boolean;
   notAdmin?: boolean;
 }) {
-  const [{ user_id }] = useStore();
+  const [user] = useAuth();
+  const userId = user?.uid;
   const classes = useStyles();
   const joinHandler = useGroupJoin();
   const [login, signup] = useLogin();
@@ -67,7 +69,7 @@ export default function Forbidden({
   return (
     <Typography variant="h1">
       <div className={classes.div}>
-        {!user_id ? (
+        {!userId ? (
           <>
             <button onClick={login}>로그인</button>또는
             <button onClick={signup}>회원가입</button>을 해주세요

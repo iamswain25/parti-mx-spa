@@ -35,7 +35,7 @@ export default functions
             where: {
               closed_at: { _is_null: true }
               board: { type: { _in: ["event"] } }
-              _and: [{ metadata: { _has_key: "eventDate" } }]
+              _and: [{ metadata: { _has_key: "event_date" } }]
             }
           ) {
             id
@@ -74,9 +74,9 @@ export default functions
       });
     const arrEvent = events
       ?.filter((e: any) => {
-        const eventDate = new Date(e.metadata.eventDate);
+        const event_date = new Date(e.metadata.event_date);
         const now = new Date();
-        const isClosingTime = isAfter(now, eventDate);
+        const isClosingTime = isAfter(now, event_date);
         return isClosingTime;
       })
       ?.map((e: any) => {

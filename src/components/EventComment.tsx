@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function EventComment({ post: p }: { post: Post }) {
-  const count = p.comments_aggregate?.aggregate?.count || 0;
-  const count2 = p.users_aggregate?.aggregate?.sum?.like_count || 0;
+  const count = 0;
+  const count2 = 0;
   const comments = p.comments;
   const comment = { post: { id: p.id } } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);

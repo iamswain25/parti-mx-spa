@@ -1,7 +1,6 @@
 import React from "react";
-import { useStore } from "../store/store";
-import { useMutation } from "@apollo/client";
-import { insertPost } from "../graphql/mutation";
+import useGroupId from "../store/useGroupId";
+
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
@@ -16,30 +15,30 @@ import { SuggestionFormdata } from "../types";
 export default function SuggestionNew() {
   const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
-  const [, setLoading] = useGlobalState(keys.LOADING);
+  
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [insert] = useMutation(insertPost);
+
   const [address, setAddress] = React.useState("");
   const [latLng, setLatLng] = React.useState<undefined | any>(undefined);
-  const [{ group_id }] = useStore();
+  const [groupId] = useGroupId();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<SuggestionFormdata>();
   const { handleSubmit } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
-    setLoading(true);
+    
     const { closingMethod, isHtml, html, ...rest } = form;
     const metadata = { closingMethod, address };
-    const variables = await makeNewVariables(rest, {
-      board_id,
-      group_id,
-      imageArr,
-      fileArr,
-      setSuccess,
-      metadata,
-      // html,
-    });
+    // const variables = await makeNewVariables(rest, {
+    //   board_id,
+    //   group_id,
+    //   imageArr,
+    //   fileArr,
+    //   setSuccess,
+    //   metadata,
+    //   // html,
+    // });
     // if (isHtml) {
     //   variables.body = html.blocks
     //     .map((block) => (!block.text.trim() && "\n") || block.text)
@@ -52,11 +51,11 @@ export default function SuggestionNew() {
         type: "Point",
         coordinates: [lng, lat],
       };
-      variables.location = location;
+      // variables.location = location;
     }
-    const res = await insert({ variables });
-    const id = res?.data?.insert_mx_posts_one?.id;
-    history.push("/post/" + id);
+    // const res = await insert({ variables });
+    // const id = res?.data?.insert_mx_posts_one?.id;
+    // history.push("/post/" + id);
   }
 
   return (

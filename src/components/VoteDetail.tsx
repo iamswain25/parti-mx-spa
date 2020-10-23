@@ -100,11 +100,11 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const { images, comments, createdBy, created_at = "", files, closed_at } = p;
+  const { images, comments, createdBy, created_at, files, closed_at } = p;
   const isClosed = !!closed_at;
   const metadata = p.metadata as VoteMetadata;
-  const commentCount = p.comments_aggregate?.aggregate?.count || 0;
-  const participantCount = p.users_aggregate?.aggregate?.sum?.like_count;
+  const commentCount = 0;
+  const participantCount = 0;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
     metadata,
     created_at,
@@ -116,17 +116,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
     setVoted(!!p.my_like_count);
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
-    return [
-      p.candidates?.reduce(
-        (p, c) => p + c?.votes_aggregate?.aggregate?.sum?.count || 0,
-        0
-      ) || 0,
-      Math.max(
-        ...(p.candidates?.map(
-          (c) => c?.votes_aggregate?.aggregate?.sum?.count || 0
-        ) ?? [])
-      ) || 0,
-    ];
+    return [0, 0];
   }, [p]);
   const [isDesktop] = useDesktop();
 
