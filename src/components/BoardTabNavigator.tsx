@@ -1,7 +1,12 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { NavLink, useHistory, useRouteMatch } from "react-router-dom";
+import {
+  NavLink,
+  useHistory,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
 import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
@@ -93,15 +98,15 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function BoardTabNavigator({ board }: { board?: Board }) {
+export default function BoardTabNavigator() {
+  const { board_id } = useParams<{ board_id: string }>();
   const classes = useStyles();
-  const isHome = useRouteMatch("/home");
   const [boards] = useBoards(true);
   const [isTop, setTop] = React.useState(false);
   const stickyHeader = React.useRef(null);
   const history = useHistory();
   useScrollPosition(
-    ({ prevPos, currPos }) => {
+    ({ currPos }) => {
       const isShow = currPos.y < 1;
       if (isShow !== isTop) setTop(isShow);
     },
@@ -110,7 +115,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     false
   );
   function btnHandler() {
-    history.push(`/home/${board?.id}/new`);
+    history.push(`/home/${board_id}/new`);
   }
   return (
     <Grid
@@ -128,14 +133,14 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
               to={`/home/${b.id}`}
               key={i}
               className={`${classes.tabLink} ${
-                board?.id === b.id ? "active" : ""
+                board_id === b.id ? "active" : ""
               }`}
             >
               {b.title}
             </NavLink>
           ))}
         </Box>
-        {board && !isHome?.isExact && (
+        {board_id && (
           <>
             <div className={classes.btn}>
               <Button variant="contained" color="primary" onClick={btnHandler}>

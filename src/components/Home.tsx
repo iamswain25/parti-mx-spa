@@ -52,9 +52,6 @@ export default function Home() {
   const event = boards.filter((b) => b.type === "event");
   return (
     <>
-      <GroupLogoContainer />
-      {!isDesktop && <GreyDivider />}
-      <BoardTabNavigator />
       {isDesktop ? (
         <section className={classes.grid}>
           <ul className={classes.left}>

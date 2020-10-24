@@ -11,32 +11,22 @@ import RouteBoardEvent from "./RouteBoardEvent";
 import { postSortOptions } from "../helpers/options";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import usePermEffect from "./usePermEffect";
-import Forbidden from "./Forbidden";
+// import Forbidden from "./Forbidden";
 import useBoard from "../store/useBoard";
 
 export default function RouteBoard() {
   const [board] = useBoard();
   const { type } = board;
-  let boardByType = null;
   switch (type) {
     case "notice":
-      boardByType = <RouteBoardNotice board={board} />;
-      break;
+      return <RouteBoardNotice board={board} />;
     case "vote":
-      boardByType = <RouteBoardVote board={board} />;
-      break;
+      return <RouteBoardVote board={board} />;
     case "suggestion":
-      boardByType = <RouteBoardSuggestion board={board} />;
-      break;
+      return <RouteBoardSuggestion board={board} />;
     case "event":
-      boardByType = <RouteBoardEvent board={board} />;
-      break;
+      return <RouteBoardEvent board={board} />;
+    default:
+      return null;
   }
-
-  return (
-    <>
-      <BoardTabNavigator board={board} />
-      {boardByType}
-    </>
-  );
 }

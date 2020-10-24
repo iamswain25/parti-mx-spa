@@ -31,6 +31,6 @@ export default function useBoard(listen: Boolean = false): [Board] {
           setItem(item);
         });
     }
-  }, []);
+  }, [board_id, group_id]);
   return [item];
 }

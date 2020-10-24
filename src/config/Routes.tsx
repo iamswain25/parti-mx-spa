@@ -25,6 +25,9 @@ import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import AdminRoute from "./AdminRoute";
 import Report from "../components/Report";
 import { useGroupId } from "../store/useGlobalState";
+import GroupLogoContainer from "../components/GroupLogoContainer";
+import GreyDivider from "../components/GreyDivider";
+import BoardTabNavigator from "../components/BoardTabNavigator";
 
 export default function Routes() {
   useSignInWithEmailLink();
@@ -32,6 +35,8 @@ export default function Routes() {
   return (
     <>
       <CssBaseline />
+      <GroupLogoContainer />
+      <BoardTabNavigator />
       <Switch>
         <Route path="/forgot" exact component={PasswordForgot} />
         <Route path="/login" exact component={Login} />
