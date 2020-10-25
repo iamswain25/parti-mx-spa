@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button, Typography, Container, Grid } from "@material-ui/core";
 import { useGroupId } from "../store/useGlobalState";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -33,8 +33,6 @@ interface GroupForm {
 export default function GroupNew() {
   const classes = useStyles();
   const [groupId] = useGroupId();
-  const history = useHistory();
-
   const { handleSubmit, register, errors, setError } = useForm<GroupForm>();
   async function handleForm(form: GroupForm) {
     const { bgFiles, mbFiles, title } = form;
@@ -53,7 +51,7 @@ export default function GroupNew() {
     try {
       const bg_img = await uploadFileByPath(bgFiles[0], `${groupId}/bg_img`);
       const mb_img = await uploadFileByPath(mbFiles[0], `${groupId}/mb_img`);
-      console.log(bg_img, mb_img);
+      console.log(bg_img, mb_img, title);
     } catch (error) {}
   }
   return (

@@ -29,7 +29,11 @@ export default function Comment2({
   return (
     <Box position="relative">
       <Box position="absolute" left={-16} top={16}>
-        <img srcSet={`${sub1}, ${sub2} 2x, ${sub3} 3x`} src={sub3} />
+        <img
+          srcSet={`${sub1}, ${sub2} 2x, ${sub3} 3x`}
+          src={sub3}
+          alt="comment"
+        />
       </Box>
       <Box paddingY={2}>
         <Grid container alignItems="center" justify="space-between">

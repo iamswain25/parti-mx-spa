@@ -40,6 +40,6 @@ export default function usePosts({
         setItems(items);
       });
     }
-  }, [board_id]);
+  }, [board_id, listen, isClosed, limit]);
   return [items];
 }

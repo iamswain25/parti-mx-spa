@@ -21,6 +21,7 @@ import PostMenu from "./PostMenu";
 import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import Linkify from "./Linkify";
+import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -111,26 +112,8 @@ const useStyles = makeStyles((theme) => {
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
   const { images = [], created_by, created_at, context, files = [], tags } = p;
+  const [liked] = usePostLiked(p.id);
   const metadata = p.metadata as SuggestionMetadata;
-  const liked = p.my_like_count;
-  const closingAt = React.useMemo(() => {
-    let after = undefined;
-    const closingMethod = metadata?.closingMethod;
-    if (!closingMethod) {
-      return "계속";
-    }
-    if (closingMethod === "manual") {
-      return "토론 정리 시 종료";
-    }
-    try {
-      after = Number(closingMethod?.replace("days", ""));
-      return closingDateFrom(created_at, after);
-    } catch (err) {
-      console.log(metadata);
-      return "버그";
-    }
-  }, [metadata, created_at]);
-
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (

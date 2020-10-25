@@ -1,6 +1,6 @@
 import React from "react";
 import { firestore } from "../config/firebase";
-import { Board, Group } from "../types";
+import { Group } from "../types";
 import { useGroupId } from "./useGlobalState";
 export default function useGroup(listen: boolean = false): [Group] {
   const [groupId] = useGroupId();
@@ -24,6 +24,6 @@ export default function useGroup(listen: boolean = false): [Group] {
           setGroup(item);
         });
     }
-  }, [groupId]);
+  }, [groupId, listen]);
   return [group];
 }

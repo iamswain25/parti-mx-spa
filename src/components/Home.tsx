@@ -1,12 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import GroupLogoContainer from "./GroupLogoContainer";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
 import HomeBoardEvent from "./HomeBoardEvent";
-import BoardTabNavigator from "./BoardTabNavigator";
-import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 import useBoards from "../store/useBoards";
 import { Board } from "../types";

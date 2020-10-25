@@ -1,8 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Container, Typography, Box, Hidden } from "@material-ui/core";
+import { Container, Typography, Box } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
-import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
 import ImageFileDropzone from "./ImageFileDropzone";
 import { makeNewVariables } from "./makePostVariables";

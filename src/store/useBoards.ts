@@ -30,6 +30,6 @@ export default function useBoards(listen: boolean = false): [Board[]] {
           setBoards(boards);
         });
     }
-  }, [groupId]);
+  }, [groupId, listen]);
   return [boards];
 }

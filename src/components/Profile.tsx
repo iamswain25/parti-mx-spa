@@ -53,7 +53,7 @@ export default function Profile() {
   >();
 
   async function handleForm(form: GroupForm) {
-    const { bgFiles, name } = form;
+    // const { bgFiles, name } = form;
 
     // const variables = { id: userId, name, photo_url: undefined };
     // if (bgFiles?.length) {

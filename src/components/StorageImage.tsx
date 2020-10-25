@@ -28,11 +28,15 @@ export default function StorageImage(
   return (
     <LazyImage
       src={src}
-      placeholder={({ imageProps, ref }) => (
+      placeholder={({ ref }) => (
         <div ref={ref} className={`${classes.root} ${className}`} />
       )}
       actual={({ imageProps }) => (
-        <img {...imageProps} className={` ${classes.root} ${className}`} />
+        <img
+          {...imageProps}
+          className={` ${classes.root} ${className}`}
+          alt={path}
+        />
       )}
     />
   );

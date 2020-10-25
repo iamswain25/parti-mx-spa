@@ -33,7 +33,7 @@ export default function VoteCandidate({
       Math.round((count * 100) / max) || 0,
       count,
     ];
-  }, [c, max, total]);
+  }, [max, total]);
   function handler() {
     if (isClosed) return;
     onClick(c?.id, myVote);

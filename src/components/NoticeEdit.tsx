@@ -7,7 +7,6 @@ import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { Post, Img, File as File2, NoticeFormdata } from "../types";
 import SavedImageFile from "./SavedImageFile";
-import { makeUpdateVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
@@ -15,9 +14,6 @@ import NoticeInput from "./NoticeInput";
 export default function NoticeEdit({ post: p }: { post: Post }) {
   const { id, title, body, files, images, html } = p;
   const history = useHistory();
-
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
-
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);

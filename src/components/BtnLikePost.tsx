@@ -48,7 +48,8 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
         .collection("posts")
         .doc(p.id)
         .collection("likes")
-        .add({ created_at: new Date(), created_by: currentUser.uid });
+        .doc(currentUser.uid)
+        .set({ created_at: new Date() }, { merge: true });
       switch (type) {
         case "suggestion":
           return setSuccess("공감 하였습니다.");
@@ -71,7 +72,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          제안 동의
+          제보 공감
         </Button>
       );
     case "event":

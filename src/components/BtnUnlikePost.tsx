@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
 import { Post } from "../types";
+import { firestore } from "../config/firebase";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
     letterSpacing: -0.33,
-    color: theme.palette.primary.dark,
+    color: theme.palette.common.white,
     backgroundColor: theme.palette.primary.light,
     borderColor: "#bbe7d6", // theme.palette.primary.main,
     borderWidth: 1,
@@ -41,10 +42,17 @@ const useStyles = makeStyles((theme) => ({
 export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const count = 0;
+  const [currentUser] = useCurrentUser();
   const type = p.type;
   async function handler() {
-    // await unlike();
+    if (currentUser) {
+      await firestore
+        .collection("posts")
+        .doc(p.id)
+        .collection("likes")
+        .doc(currentUser.uid)
+        .delete();
+    }
     switch (type) {
       case "suggestion":
         return setSuccess("제안 취소 하였습니다.");
@@ -63,7 +71,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          제안 동의 취소
+          제보 공감 취소
         </Button>
       );
     case "event":
@@ -86,7 +94,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           disableElevation
           startIcon={<FavoriteIcon className={classes.icon} />}
         >
-          공감 취소 {count}
+          공감 취소 {p.count_like}
         </Button>
       );
   }
