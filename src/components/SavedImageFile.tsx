@@ -1,11 +1,11 @@
 import React from "react";
-import { File, Image } from "../types";
+import { File, Img } from "../types";
 import SavedFile from "./SavedFile";
 import SavedImage from "./SavedImage";
 export default function SavedImageFile(props: {
   files?: File[];
   setFiles: any;
-  images?: Image[];
+  images?: Img[];
   setImages: any;
 }) {
   const { files, images, setFiles, setImages } = props;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, makeStyles, Paper } from "@material-ui/core";
-import { Image } from "../types";
+import { Img } from "../types";
 import SortableList from "./SortableList";
 import { SortEnd } from "react-sortable-hoc";
 import arrayMove from "array-move";
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => {
     padding: { padding: theme.spacing(1) },
   };
 });
-export default function SavedImage(props: { images: Image[]; setImages: any }) {
+export default function SavedImage(props: { images: Img[]; setImages: any }) {
   const { images, setImages } = props;
   const classes = useStyles();
   function imageRemove(i: number) {

@@ -13,12 +13,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { HomeGroup, Board } from "../types";
-
-
-import useErrorEffect from "./useErrorEffect";
-import Forbidden from "./Forbidden";
-
+import { Board } from "../types";
 import { useHistory } from "react-router-dom";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";

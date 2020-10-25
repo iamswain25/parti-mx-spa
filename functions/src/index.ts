@@ -4,4 +4,19 @@ import authCreate from "./components/authCreate";
 import authDelete from "./components/authDelete";
 import incrementUserCount from "./components/incrementUserCount";
 import postCreate from "./components/postCreate";
-export { authCreate, authDelete, incrementUserCount, postCreate };
+import commentCreate from "./components/commentCreate";
+import commentCreate2 from "./components/commentCreate2";
+import postLikeCreate from "./components/postLikeCreate";
+import commentLikeCreate from "./components/commentLikeCreate";
+import commentLikeCreate2 from "./components/commentLikeCreate2";
+export {
+  authCreate,
+  authDelete,
+  incrementUserCount,
+  postCreate,
+  postLikeCreate,
+  commentCreate,
+  commentLikeCreate,
+  commentCreate2,
+  commentLikeCreate2,
+};

@@ -1,10 +1,10 @@
 import React from "react";
-import { Image } from "../types";
+import { Img } from "../types";
 import { Box, makeStyles } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import Viewer from "react-viewer";
 import "react-multi-carousel/lib/styles.css";
-import { Img } from "react-image";
+import StorageImage from "./StorageImage";
 const useStyles = makeStyles((theme) => ({
   grid: {
     [theme.breakpoints.up("md")]: {
@@ -30,7 +30,7 @@ const responsive = {
     items: 1,
   },
 };
-export default function ImageCarousel({ images = [] }: { images: Image[] }) {
+export default function ImageCarousel({ images = [] }: { images: Img[] }) {
   const classes = useStyles();
   const [activeIndex, setVisible] = React.useState<null | number>(null);
   if (!images?.length) {
@@ -55,10 +55,9 @@ export default function ImageCarousel({ images = [] }: { images: Image[] }) {
       <Carousel responsive={responsive} centerMode={true}>
         {images.map((image, i) => (
           <Box key={i} onClick={() => setVisible(i)} px={1}>
-            <Img
-              src={[image.uri, "/favicon.ico"]}
+            <StorageImage
+              path={image.uri ?? "/favicon.ico"}
               className={classes.img}
-              alt={JSON.stringify(image)}
             />
           </Box>
         ))}

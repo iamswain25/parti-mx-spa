@@ -1,11 +1,12 @@
 import { createGlobalState } from "react-hooks-global-state";
 import { UserStatus } from "../types";
-const initialState = {
+export const initialState = {
   showLoginModal: false,
   error: null,
   success: null,
-  currentUser: null,
+  currentUser: undefined,
   groupId: "home",
+  boardId: null,
   sort: 0,
   permission: undefined,
   refetch: {},
@@ -14,10 +15,11 @@ const initialState = {
 interface GlobalType {
   success: any;
   groupId: string;
+  boardId: string | null;
   error: any;
   permission: UserStatus;
   showLoginModal: boolean;
-  currentUser: firebase.User | null;
+  currentUser: firebase.User | null | undefined;
   sort: number;
   refetch: object;
   // loading: boolean;
@@ -32,6 +34,7 @@ export enum keys {
   PERMISSION = "permission",
   REFETCH = "refetch",
   GROUPID = "groupId",
+  BOARDID = "boardId",
   USER = "currentUser",
 }
 export function useCurrentUser() {
@@ -39,4 +42,7 @@ export function useCurrentUser() {
 }
 export function useGroupId() {
   return useGlobalState("groupId");
+}
+export function useBoardId() {
+  return useGlobalState("boardId");
 }

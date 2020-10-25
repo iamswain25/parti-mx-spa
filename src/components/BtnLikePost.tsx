@@ -3,6 +3,7 @@ import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
 import { Post } from "../types";
+import { firestore } from "../config/firebase";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -43,7 +44,11 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
   const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   async function handler() {
     if (currentUser) {
-      // await vote();
+      await firestore
+        .collection("posts")
+        .doc(p.id)
+        .collection("likes")
+        .add({ created_at: new Date(), created_by: currentUser.uid });
       switch (type) {
         case "suggestion":
           return setSuccess("공감 하였습니다.");

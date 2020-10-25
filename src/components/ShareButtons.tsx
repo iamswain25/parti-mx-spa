@@ -1,6 +1,12 @@
 import React from "react";
 import { Post } from "../types";
-import { IconButton, Dialog, DialogTitle, Grid } from "@material-ui/core";
+import {
+  IconButton,
+  Dialog,
+  DialogTitle,
+  Grid,
+  makeStyles,
+} from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { useGlobalState, keys } from "../store/useGlobalState";
@@ -23,15 +29,20 @@ import {
   KaKaoStoryButton,
   KaKaoTalkButton,
 } from "react-social-kr";
-import { Img } from "react-image";
+
 import kakaotalk from "../assets/images/kakaotalk.png";
 import kakaostory from "../assets/images/kakaostory.png";
 import naverblog from "../assets/images/naverblog.png";
+import StorageImage from "./StorageImage";
+const useStyles = makeStyles((theme) => ({
+  root: { width: 64, height: 64, borderRadius: 32 },
+}));
 export default function ShareButtons({ post: p }: { post: Post }) {
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [open, setOpen] = React.useState(false);
   const url = window.location.href;
   const pathname = window.location.pathname;
+  const classes = useStyles();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -81,10 +92,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
                 message={p.title.replace(/'/g, "\\'")}
                 media={p?.images?.[0]?.uri}
                 children={
-                  <Img
-                    src={[kakaotalk]}
-                    style={{ width: 64, height: 64, borderRadius: 32 }}
-                  />
+                  <StorageImage path={kakaotalk} className={classes.root} />
                 }
               />
             </Grid>
@@ -92,10 +100,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
               <KaKaoStoryButton
                 pathname={pathname}
                 children={
-                  <Img
-                    src={[kakaostory]}
-                    style={{ width: 64, height: 64, borderRadius: 32 }}
-                  />
+                  <StorageImage path={kakaostory} className={classes.root} />
                 }
               />
             </Grid>
@@ -103,10 +108,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
               <NaverBlogButton
                 pathname={pathname}
                 children={
-                  <Img
-                    src={[naverblog]}
-                    style={{ width: 64, height: 64, borderRadius: 32 }}
-                  />
+                  <StorageImage path={naverblog} className={classes.root} />
                 }
               />
             </Grid>

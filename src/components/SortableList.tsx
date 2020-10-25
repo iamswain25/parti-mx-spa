@@ -5,8 +5,9 @@ import {
   SortableElement,
   SortableHandle,
 } from "react-sortable-hoc";
-import { Img } from "react-image";
+
 import CloseIcon from "@material-ui/icons/Close";
+import StorageImage from "./StorageImage";
 const useStyles = makeStyles((theme) => {
   return {
     padding: { padding: theme.spacing(1) },
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => {
 });
 const DragHandle = SortableHandle(({ images, className }: any) => (
   <div className={className}>
-    <Img src={images} className={className} />
+    <StorageImage image={images} className={className} />
   </div>
 ));
 const SortableItem = SortableElement(({ item: f, imageRemove, index }: any) => {

@@ -25,7 +25,7 @@ export default function RoutePostVoteCandidate({
       Math.round((count * 100) / total) ?? 0,
       Math.round((count * 100) / max) || 0,
     ];
-  }, [c, max, total]);
+  }, [max, total]);
   return (
     <Box
       border={1}

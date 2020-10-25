@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -9,11 +8,10 @@ import { deletingIds } from "./VoteEditCandidates";
 import {
   VoteEditFormdata,
   VoteMetadata,
-  Image,
+  Img,
   File as File2,
   Post,
 } from "../types";
-import { makeUpdateVariables } from "./makePostVariables";
 import SavedImageFile from "./SavedImageFile";
 import VoteInputs from "./VoteInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -30,12 +28,9 @@ export default function VoteEdit({ post: p }: { post: Post }) {
     isResultHidden,
   } = metadata;
   const history = useHistory();
-
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
-
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [images2, setImages2] = React.useState<Img[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const [isBinary, setBinary] = React.useState(binary);
   const formControl = useForm<VoteEditFormdata>({

@@ -1,5 +1,5 @@
 import React from "react";
-import { Hidden, Button, makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import useGoBack from "./useGoBack";
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -28,15 +28,13 @@ export default function BtnSubmitDesktop({ text = "저장" }) {
   const classes = useStyles();
   const back = useGoBack();
   return (
-    <Hidden smDown implementation="css">
-      <div className={classes.btn}>
-        <Button variant="outlined" color="secondary" onClick={back}>
-          취소
-        </Button>
-        <Button type="submit" variant="contained" color="primary">
-          {text}
-        </Button>
-      </div>
-    </Hidden>
+    <div className={classes.btn}>
+      <Button variant="outlined" color="secondary" onClick={back}>
+        취소
+      </Button>
+      <Button type="submit" variant="contained" color="primary">
+        {text}
+      </Button>
+    </div>
   );
 }

@@ -24,6 +24,6 @@ export default function usePost(listen: Boolean = false): [Post] {
           setItem(item);
         });
     }
-  }, []);
+  }, [id, listen]);
   return [item];
 }

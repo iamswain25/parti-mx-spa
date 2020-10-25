@@ -19,15 +19,14 @@ import MemberSetting from "../components/MemberSetting";
 import MemberNew from "../components/MemberNew";
 import Profile from "../components/Profile";
 import Search from "../components/Search";
-import HeaderRemain from "../components/HeaderRemain";
 import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import AdminRoute from "./AdminRoute";
 import Report from "../components/Report";
-import { useGroupId } from "../store/useGlobalState";
+import { initialState, useGroupId } from "../store/useGlobalState";
 import GroupLogoContainer from "../components/GroupLogoContainer";
-import GreyDivider from "../components/GreyDivider";
 import BoardTabNavigator from "../components/BoardTabNavigator";
+import Logout from "../components/Logout";
 
 export default function Routes() {
   useSignInWithEmailLink();
@@ -40,6 +39,7 @@ export default function Routes() {
       <Switch>
         <Route path="/forgot" exact component={PasswordForgot} />
         <Route path="/login" exact component={Login} />
+        <Route path="/logout" exact component={Logout} />
         <Route path="/signup" exact component={Signup} />
         <PrivateRoute path="/boards" exact component={BoardsSetting} />
         <PrivateRoute path="/members" exact component={MemberSetting} />
@@ -61,7 +61,7 @@ export default function Routes() {
         <Route exact path="/:group_id/:board_id" component={RouteBoard} />
         <Route exact path="/:group_id/:board_id/new" component={RoutePostNew} />
         <Route path="*">
-          <Redirect to="/home" />
+          <Redirect to={`/${initialState.groupId}`} />
         </Route>
       </Switch>
       <LoginModal />

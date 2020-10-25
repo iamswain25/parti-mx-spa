@@ -6,7 +6,6 @@ import { grey } from "@material-ui/core/colors";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
-import { daysLeftMeta } from "../helpers/datefns";
 const useStyles = makeStyles((theme) => {
   return {
     container: {

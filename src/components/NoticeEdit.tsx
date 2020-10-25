@@ -5,7 +5,7 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import { Post, Image, File as File2, NoticeFormdata } from "../types";
+import { Post, Img, File as File2, NoticeFormdata } from "../types";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -15,12 +15,12 @@ import NoticeInput from "./NoticeInput";
 export default function NoticeEdit({ post: p }: { post: Post }) {
   const { id, title, body, files, images, html } = p;
   const history = useHistory();
-  
+
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
 
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [images2, setImages2] = React.useState<Img[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const formControl = useForm<NoticeFormdata>({
     defaultValues: { title, body, html, isHtml: !!html },
@@ -28,15 +28,14 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
   const { handleSubmit } = formControl;
 
   async function handleForm(form: NoticeFormdata) {
-    
-    const variables = await makeUpdateVariables(form, {
-      imageArr,
-      fileArr,
-      images2,
-      files2,
-      setSuccess,
-      id,
-    });
+    // const variables = await makeUpdateVariables(form, {
+    //   imageArr,
+    //   fileArr,
+    //   images2,
+    //   files2,
+    //   setSuccess,
+    //   id,
+    // });
     // const res = await update({
     //   variables,
     // });

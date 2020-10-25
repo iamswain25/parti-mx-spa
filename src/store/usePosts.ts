@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
 export default function usePosts({

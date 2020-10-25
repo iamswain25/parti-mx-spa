@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import { useDebounce } from "use-debounce";
-import { useApolloClient } from "@apollo/client";
 import { useGroupId } from "../store/useGlobalState";
 import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
@@ -56,7 +55,6 @@ export default function MemberSetting() {
   const [items, setItems] = React.useState<UserGroup[]>([]);
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
   const [status] = useGlobalState(keys.PERMISSION);
-  const client = useApolloClient();
 
   async function fetchData(isSearching = false) {
     // const usergroups = await client.query<UserGroups>({

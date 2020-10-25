@@ -10,6 +10,7 @@ import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 import useBoards from "../store/useBoards";
 import { Board } from "../types";
+import useEffectParams from "../store/useEffectParams";
 const useStyles = makeStyles((theme) => {
   return {
     grid: {
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Home() {
+  useEffectParams();
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const [boards] = useBoards(true);

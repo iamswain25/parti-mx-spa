@@ -4,9 +4,11 @@ import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
 import EventDetail from "./EventDetail";
 import usePost from "../store/usePost";
+import useEffectParams from "../store/useEffectParams";
 
 export default function RoutePost() {
   const [p] = usePost(true);
+  useEffectParams();
   switch (p?.type) {
     case "notice":
       return <NoticeDetail post={p} />;

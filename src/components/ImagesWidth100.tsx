@@ -1,10 +1,10 @@
 import React from "react";
-import { Image } from "../types";
+import { Img } from "../types";
 import { IconButton } from "@material-ui/core";
 import Viewer from "react-viewer";
-import { Img } from "react-image";
+import StorageImage from "./StorageImage";
 
-export default function ImagesWidth100({ images = [] }: { images: Image[] }) {
+export default function ImagesWidth100({ images = [] }: { images: Img[] }) {
   const [activeIndex, setVisible] = React.useState<null | number>(null);
   if (!images?.length) {
     return null;
@@ -33,7 +33,7 @@ export default function ImagesWidth100({ images = [] }: { images: Image[] }) {
             onClick={() => setVisible(i)}
             style={{ padding: 0, borderRadius: 0 }}
           >
-            <Img src={[p.uri]} />
+            <StorageImage path={p.uri} />
           </IconButton>
         );
       })}

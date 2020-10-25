@@ -5,6 +5,20 @@ export default function PrivateRoute(props: RouteProps) {
   const { component, ...rest } = props;
   const Comp = component as React.ElementType;
   const [currentUser] = useCurrentUser();
+  if (currentUser === undefined) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          paddingTop: 20,
+          maxWidth: 900,
+        }}
+      >
+        loading...
+      </div>
+    );
+  }
   return (
     <Route
       {...rest}

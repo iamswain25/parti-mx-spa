@@ -13,9 +13,11 @@ import { useGlobalState, keys } from "../store/useGlobalState";
 import usePermEffect from "./usePermEffect";
 // import Forbidden from "./Forbidden";
 import useBoard from "../store/useBoard";
+import useEffectParams from "../store/useEffectParams";
 
 export default function RouteBoard() {
   const [board] = useBoard();
+  useEffectParams();
   const { type } = board;
   switch (type) {
     case "notice":

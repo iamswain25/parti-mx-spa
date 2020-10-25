@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Grid, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import useGroup from "../store/useGroup";
+import StorageImage from "./StorageImage";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -94,23 +95,16 @@ const useStyles = makeStyles((theme) => {
 export default function GroupLogoContainer() {
   const [group] = useGroup(true);
   const classes = useStyles();
-  const { title, status, created_at, bg_img_url, mb_img_url, user_count } =
-    group || {};
+  const { title, status, created_at, bg_img, mb_img, user_count } = group || {};
   const isOrg = status === "organizer";
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
         <Hidden mdUp implementation="css">
-          <img
-            src={mb_img_url ?? bg_img_url ?? publicsphere}
-            alt="group logo"
-          />
+          <StorageImage image={mb_img ?? bg_img} />
         </Hidden>
         <Hidden smDown implementation="css">
-          <img
-            src={bg_img_url ?? mb_img_url ?? publicsphere}
-            alt="group logo"
-          />
+          <StorageImage image={bg_img ?? mb_img} />
         </Hidden>
         <div className={classes.groupLogoOverlay}>
           <Typography variant="h1" color="inherit">

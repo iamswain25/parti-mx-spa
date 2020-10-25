@@ -57,11 +57,7 @@ export default function MyGroupList(props: {
           selected={groupId === g.id}
         >
           <ListItemIcon>
-            <Avatar
-              variant="square"
-              src={g.bg_img_url}
-              children={g.title.substr(0, 1)}
-            />
+            <Avatar variant="square" children={g.title.substr(0, 1)} />
           </ListItemIcon>
           <ListItemText primary={g.title} />
         </ListItem>
@@ -81,7 +77,7 @@ export default function MyGroupList(props: {
   //       <ListItemIcon>
   //         <Avatar
   //           variant="square"
-  //           src={g.bg_img_url}
+  //           src={g.bg_img}
   //           children={g.title.substr(0, 1)}
   //         />
   //       </ListItemIcon>

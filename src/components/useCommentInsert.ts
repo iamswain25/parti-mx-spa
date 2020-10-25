@@ -1,19 +1,34 @@
+import { firestore } from "../config/firebase";
 import { CommentInput } from "../types";
 export default function useCommentInsert(callback?: any) {
   function formHandler(args: CommentInput, e: any) {
-    // return console.log(args);
-    const post_id = Number(args.post_id);
+    const post_id = args.post_id;
     const body = args.body;
-    const parent_id = args.parent_id ? Number(args.parent_id) : undefined;
-    // return console.log(body, post_id, parent_id);
+    const password = args.password;
     if (post_id) {
-      // insert({
-      //   variables: {
-      //     body,
-      //     post_id,
-      //     parent_id,
-      //   },
-      // });
+      let col = firestore
+        .collection("posts")
+        .doc(post_id)
+        .collection("comments");
+      if (args.parent_id) {
+        col = firestore
+          .collection("posts")
+          .doc(post_id)
+          .collection("comments")
+          .doc(args.parent_id)
+          .collection("comments");
+      }
+      col.add({
+        body,
+        post_id,
+        password,
+        count_like: 0,
+        count_comment: 0,
+        count_view: 0,
+        updated_at: new Date(),
+        created_at: new Date(),
+        name: "익명",
+      });
       e.target.reset();
       callback && callback();
     }

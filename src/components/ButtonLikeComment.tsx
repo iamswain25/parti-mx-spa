@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Button, makeStyles, Theme } from "@material-ui/core";
-import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser } from "../store/useGlobalState";
 import { firestore } from "../config/firebase";
-import firebase from "firebase";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -18,16 +17,10 @@ export default function ButtonLikeComment(props: {
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
-  const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const { id, count } = props;
   async function pressHandler() {
-    const comment = (
-      await firestore
-        .collectionGroup("comments")
-        .where(firebase.firestore.FieldPath.documentId(), "==", id)
-        .get()
-    ).docs?.[0];
-    comment.ref
+    const comment = firestore.collection("comments").doc(id);
+    comment
       .collection("likes")
       .doc(userId)
       .set({ created_at: new Date() }, { merge: true });

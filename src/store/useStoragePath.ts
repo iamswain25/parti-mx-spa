@@ -1,0 +1,16 @@
+import React from "react";
+import { storage } from "../config/firebase";
+
+export default function useStoragePath(path?: string) {
+  const [url, setUrl] = React.useState<string | undefined>();
+  React.useEffect(() => {
+    if (path) {
+      if (path?.startsWith("/")) {
+        setUrl(path);
+      } else {
+        storage.ref(path).getDownloadURL().then(setUrl);
+      }
+    }
+  }, [path, setUrl]);
+  return url;
+}

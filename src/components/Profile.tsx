@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import HeaderBack from "./HeaderBack";
-import { ValidateResult } from "react-hook-form/dist/types/form";
+import { ValidateResult } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
 import useMe from "../store/useMe";
 

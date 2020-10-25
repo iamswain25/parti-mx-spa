@@ -6,7 +6,7 @@ import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import {
   Post,
-  Image,
+  Img,
   File as File2,
   LatLng,
   SuggestionMetadata,
@@ -47,7 +47,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   });
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const [images2, setImages2] = React.useState<Image[] | undefined>(images);
+  const [images2, setImages2] = React.useState<Img[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const formControl = useForm<SuggestionFormdata>({
     defaultValues: {

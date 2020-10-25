@@ -1,16 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Typography, Container, Grid } from "@material-ui/core";
-
 import { useGroupId } from "../store/useGlobalState";
-
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { uploadFileByPath } from "../config/firebase";
-import { useGlobalState, keys } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
   top: {
@@ -38,9 +35,7 @@ export default function GroupNew() {
   const [groupId] = useGroupId();
   const history = useHistory();
 
-  
   const { handleSubmit, register, errors, setError } = useForm<GroupForm>();
-  console.log(errors);
   async function handleForm(form: GroupForm) {
     const { bgFiles, mbFiles, title } = form;
     if (!bgFiles.length) {
@@ -56,18 +51,9 @@ export default function GroupNew() {
       });
     }
     try {
-      
-      const bg_img_url = await uploadFileByPath(
-        bgFiles[0],
-        `${groupId}/bg_img_url`
-      );
-      const mb_img_url = await uploadFileByPath(
-        mbFiles[0],
-        `${groupId}/mb_img_url`
-      );
-      const variables = { bg_img_url, mb_img_url, title };
-      // const res = await create({ variables });
-      // history.replace("/home?group_id=" + res.data.insert_mx_groups_one.id);
+      const bg_img = await uploadFileByPath(bgFiles[0], `${groupId}/bg_img`);
+      const mb_img = await uploadFileByPath(mbFiles[0], `${groupId}/mb_img`);
+      console.log(bg_img, mb_img);
     } catch (error) {}
   }
   return (

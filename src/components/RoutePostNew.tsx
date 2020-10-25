@@ -12,9 +12,11 @@ import EventNew from "./EventNew";
 import usePermEffect from "./usePermEffect";
 import permissionBlocked from "./permissionBlocked";
 import useBoard from "../store/useBoard";
+import useEffectParams from "../store/useEffectParams";
 
 export default function RoutePostNew() {
   const [b] = useBoard();
+  useEffectParams();
   switch (b?.type) {
     case "notice":
       return <NoticeNew />;

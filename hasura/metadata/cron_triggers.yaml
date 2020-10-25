@@ -1,5 +1,0 @@
-- name: closePostAtNight
-  webhook: https://asia-northeast3-parti-2020.cloudfunctions.net/closePostAtNight
-  schedule: 0 0 * * *
-  include_in_metadata: true
-  payload: {}

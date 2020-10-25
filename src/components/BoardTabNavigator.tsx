@@ -1,18 +1,13 @@
 import React from "react";
-import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  NavLink,
-  useHistory,
-  useParams,
-  useRouteMatch,
-} from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { grey } from "@material-ui/core/colors";
 import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
 import useBoards from "../store/useBoards";
+import { useBoardId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -99,11 +94,12 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function BoardTabNavigator() {
-  const { board_id } = useParams<{ board_id: string }>();
+  const [board_id] = useBoardId();
+  const { pathname } = useLocation();
   const classes = useStyles();
   const [boards] = useBoards(true);
   const [isTop, setTop] = React.useState(false);
-  const stickyHeader = React.useRef(null);
+  const stickyHeader = React.useRef<HTMLDivElement | null>(null);
   const history = useHistory();
   useScrollPosition(
     ({ currPos }) => {
@@ -111,7 +107,7 @@ export default function BoardTabNavigator() {
       if (isShow !== isTop) setTop(isShow);
     },
     [isTop],
-    stickyHeader,
+    stickyHeader as React.MutableRefObject<HTMLElement>,
     false
   );
   function btnHandler() {
@@ -130,6 +126,7 @@ export default function BoardTabNavigator() {
           </NavLink>
           {boards.map((b, i) => (
             <NavLink
+              exact
               to={`/home/${b.id}`}
               key={i}
               className={`${classes.tabLink} ${
@@ -140,7 +137,7 @@ export default function BoardTabNavigator() {
             </NavLink>
           ))}
         </Box>
-        {board_id && (
+        {board_id && !pathname.endsWith("/new") && (
           <>
             <div className={classes.btn}>
               <Button variant="contained" color="primary" onClick={btnHandler}>

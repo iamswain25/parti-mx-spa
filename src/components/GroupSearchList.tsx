@@ -21,7 +21,7 @@ export default function GroupSearchList(props: {
           <ListItemIcon>
             <Avatar
               variant="square"
-              src={group.bg_img_url}
+              src={group.bg_img}
               children={group.title.substr(0, 1)}
             />
           </ListItemIcon>

@@ -1,5 +1,5 @@
 import React from "react";
-import { File, Image } from "../types";
+import { File, Img } from "../types";
 import { Grid, makeStyles, IconButton, Typography } from "@material-ui/core";
 import ImagesWidth100 from "./ImagesWidth100";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
@@ -32,10 +32,7 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-export default function FilesImages(props: {
-  files?: File[];
-  images?: Image[];
-}) {
+export default function FilesImages(props: { files?: File[]; images?: Img[] }) {
   const { files, images } = props;
   const classes = useStyles();
   return (

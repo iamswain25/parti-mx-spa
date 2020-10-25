@@ -1,22 +1,27 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Container, IconButton } from "@material-ui/core";
+import {
+  Typography,
+  Container,
+  IconButton,
+  TextField,
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
-import { uploadFileByPath } from "../config/firebase";
+import { firestore, uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import Forbidden from "./Forbidden";
 import CloseIcon from "@material-ui/icons/Close";
-import { Img } from "react-image";
-import HeaderBack from "./HeaderBack";
 import useGroup from "../store/useGroup";
+import StorageImage from "./StorageImage";
+import useEffectParams from "../store/useEffectParams";
 
 const useStyles = makeStyles((theme) => ({
-  grid: {
-    display: "grid",
-    gridGap: theme.spacing(2),
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    paddingTop: 20,
+    maxWidth: 900,
   },
   btn: {
     // position: "absolute",
@@ -41,7 +46,7 @@ interface GroupForm {
 export default function GroupEdit() {
   const classes = useStyles();
   const history = useHistory();
-
+  useEffectParams();
   const [images, setImages] = React.useState<any>({});
   const [, setError] = useGlobalState(keys.ERROR);
   const { handleSubmit, register, errors, reset, control } = useForm<
@@ -50,22 +55,24 @@ export default function GroupEdit() {
   const [group] = useGroup();
   React.useEffect(() => {
     if (group) {
-      const { title, bg_img_url, mb_img_url, id } = group;
-      setImages({ bg_img_url, mb_img_url });
+      const { title, bg_img, mb_img, id } = group;
+      setImages({ bg_img, mb_img });
       reset({ title, id });
     }
   }, [group, reset, setImages]);
   async function handleForm(form: GroupForm) {
     const { bgFiles = [null], mbFiles = [null], title, id } = form;
     try {
-      const bg_img_url = bgFiles[0]
-        ? await uploadFileByPath(bgFiles[0], `${id}/bg_img_url`)
-        : group?.bg_img_url;
-      const mb_img_url = mbFiles[0]
-        ? await uploadFileByPath(mbFiles[0], `${id}/mb_img_url`)
-        : group?.mb_img_url;
-      const variables = { bg_img_url, mb_img_url, title, group_id: id };
-      // await update({ variables });
+      const bg_img = bgFiles[0]
+        ? await uploadFileByPath(bgFiles[0], `groups/${id}/bg_img`)
+        : group?.bg_img;
+      const mb_img = mbFiles[0]
+        ? await uploadFileByPath(mbFiles[0], `groups/${id}/mb_img`)
+        : group?.mb_img;
+      await firestore
+        .collection("groups")
+        .doc(id)
+        .set({ bg_img, mb_img, title }, { merge: true });
       history.replace("/home");
     } catch (error) {
       setError(error);
@@ -73,32 +80,37 @@ export default function GroupEdit() {
   }
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-      <HeaderBack title="그룹 정보 수정" submit="저장" />
-      <Container maxWidth="lg" className={classes.grid}>
-        <CustomTextField
-          label="그룹 명"
-          autoFocus
-          name="title"
-          register={register}
-          errors={errors}
-        />
+      <Container maxWidth="lg" className={classes.root}>
+        <Typography variant="h3" color="textPrimary">
+          그룹 정보 수정
+        </Typography>
         <Controller
-          name="id"
+          name="title"
+          defaultValue=""
           control={control}
-          defaultValue={group.id}
-          as={<input type="hidden" />}
+          rules={{ required: "필수입력" }}
+          as={
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="그룹 명"
+              autoFocus
+            />
+          }
         />
+        <input defaultValue={group.id} name="id" type="hidden" ref={register} />
         <div>
           <div>데스크탑 배너 이미지 (1140 X 260)</div>
-          {images.bg_img_url ? (
+          {images.bg_img ? (
             <div className={classes.flex}>
               <IconButton
                 classes={{ root: classes.btn }}
-                onClick={() => setImages({ ...images, bg_img_url: undefined })}
+                onClick={() => setImages({ ...images, bg_img: undefined })}
               >
                 <CloseIcon />
               </IconButton>
-              <Img src={[images.bg_img_url]} />
+              <StorageImage image={images.bg_img} />
             </div>
           ) : (
             <>
@@ -109,15 +121,15 @@ export default function GroupEdit() {
         </div>
         <div>
           <div>모바일 배너 이미지 (360 X 180)</div>
-          {images.mb_img_url ? (
+          {images.mb_img ? (
             <div className={classes.flex}>
               <IconButton
                 classes={{ root: classes.btn }}
-                onClick={() => setImages({ ...images, mb_img_url: undefined })}
+                onClick={() => setImages({ ...images, mb_img: undefined })}
               >
                 <CloseIcon />
               </IconButton>
-              <Img src={[images.mb_img_url]} />
+              <StorageImage image={images.mb_img} />
             </div>
           ) : (
             <>

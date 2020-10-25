@@ -15,25 +15,24 @@ firebase.analytics();
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const storage = firebase.storage();
 firestore.enablePersistence();
 
-export async function uploadFileGetUriArray(file: File) {
+export async function uploadFileByUUID(file: File) {
   const { name, lastModified, type, size } = file;
-  return new Promise(async function (res) {
-    const path = `posts/${uuid.v4()}`;
-    console.log({ path });
-    const ref = firebase.storage().ref().child(path);
-    const fileSnapshot = await ref.put(file);
-    const uri = await fileSnapshot.ref.getDownloadURL();
-    return res({ uri, name, lastModified, type, size });
-  });
+  const path = `posts/${uuid.v4()}`;
+  console.log({ path });
+  const ref = firebase.storage().ref().child(path);
+  await ref.put(file);
+  return { path, name, lastModified, type, size };
 }
 
-export async function uploadFileByPath(file: File, dir: string) {
-  console.log({ dir });
-  const ref = firebase.storage().ref().child(dir);
-  const fileSnapshot = await ref.put(file);
-  return await fileSnapshot.ref.getDownloadURL();
+export async function uploadFileByPath(file: File, path: string) {
+  const { name, lastModified, type, size } = file;
+  console.log({ path });
+  const ref = firebase.storage().ref().child(path);
+  await ref.put(file);
+  return { name, lastModified, type, size, path };
 }
 const secondApp = firebase.initializeApp(firebaseConfig, "new");
 export const secondAuth = secondApp.auth();

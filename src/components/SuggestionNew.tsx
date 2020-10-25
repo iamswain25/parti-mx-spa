@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
 import ImageFileDropzone from "./ImageFileDropzone";
 import { makeNewVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -16,6 +16,7 @@ export default function SuggestionNew() {
     group_id: string;
   }>();
   const history = useHistory();
+  const [currentUser] = useCurrentUser();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
@@ -29,6 +30,14 @@ export default function SuggestionNew() {
       imageArr,
       fileArr,
       setSuccess,
+      created_by: currentUser?.uid,
+      updated_by: currentUser?.uid,
+      count_like: 0,
+      count_comment: 0,
+      count_view: 0,
+      updated_at: new Date(),
+      created_at: new Date(),
+      type: "suggestion",
     });
     const doc = await firestore.collection("posts").add(variables);
     history.push("/post/" + doc.id);
@@ -37,9 +46,6 @@ export default function SuggestionNew() {
   return (
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-        <Hidden mdUp>
-          <HeaderNew title="제보글 쓰기" />
-        </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
             <Typography variant="h2">제보글 쓰기</Typography>

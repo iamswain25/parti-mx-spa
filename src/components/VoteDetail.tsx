@@ -117,7 +117,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [0, 0];
-  }, [p]);
+  }, []);
   const [isDesktop] = useDesktop();
 
   return (

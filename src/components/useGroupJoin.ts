@@ -1,5 +1,4 @@
 import { useGlobalState, keys } from "../store/useGlobalState";
-import useEffectRefetch from "./useEffectRefetch";
 import useMe from "../store/useMe";
 import { firestore } from "../config/firebase";
 import { useGroupId } from "../store/useGlobalState";

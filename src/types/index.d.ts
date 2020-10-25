@@ -84,11 +84,19 @@ export interface LatLng {
   lat: number;
   lng: number;
 }
+export interface Img {
+  path: string;
+  uri: string;
+  name: string;
+  lastModified: string;
+  type: string;
+  size: string;
+}
 export interface Group {
   id: string;
   title: string;
-  bg_img_url: string;
-  mb_img_url: string;
+  bg_img: Img;
+  mb_img: Img;
   created_at: firebase.firestore.Timestamp;
   created_by: string;
   boards: Board[];
@@ -122,6 +130,7 @@ export interface Whoami {
 }
 export interface CommentInput {
   body: string;
+  password: string;
   post_id: string | null;
   parent_id: string | null;
 }
@@ -140,11 +149,6 @@ export interface Comment {
   re?: Comment[];
   post?: VoteDetailType;
 }
-export type Image = {
-  uri: string;
-  name: string;
-  type?: string;
-};
 export interface File {
   uri: string;
   name: string;
@@ -168,7 +172,7 @@ export type Post = {
   count_view: number;
   html: RawDraftContentState;
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;
-  images: Image[];
+  images: Img[];
   files: File[];
   candidates: Candidate[];
   closed_at: firebase.firestore.Timestamp;

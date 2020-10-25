@@ -5,7 +5,6 @@ import AvatarNameDate from "./AvatarNameDate";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
 import ButtonLikeComment from "./ButtonLikeComment";
 import { useStyles } from "../helpers/styles";
-import { Img } from "react-image";
 import sub1 from "../assets/images/subdirectory24Px.png";
 import sub2 from "../assets/images/subdirectory24Px@2x.png";
 import sub3 from "../assets/images/subdirectory24Px@3x.png";
@@ -30,7 +29,7 @@ export default function Comment2({
   return (
     <Box position="relative">
       <Box position="absolute" left={-16} top={16}>
-        <Img srcSet={`${sub1}, ${sub2} 2x, ${sub3} 3x`} src={sub3} />
+        <img srcSet={`${sub1}, ${sub2} 2x, ${sub3} 3x`} src={sub3} />
       </Box>
       <Box paddingY={2}>
         <Grid container alignItems="center" justify="space-between">
