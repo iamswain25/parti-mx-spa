@@ -13,11 +13,13 @@ import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import { useCurrentUser } from "../store/useGlobalState";
+import useCommentLiked from "../store/useCommentLiked";
 export default function Comment1({ comment: c }: { comment: Comment }) {
+  const [liked] = useCommentLiked({ comment_id: c.id, post_id: c.post_id });
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
   const classes = useStyles();
-  const [isRe, setRe] = React.useState<User | undefined>(undefined);
+  const [isRe, setRe] = React.useState<string | undefined>(undefined);
   const insertHandler = useCommentInsert(() => setRe(undefined));
   const [edit, setEdit] = React.useState<boolean>(false);
   const remove = useCommentDelete(c.id);
@@ -27,14 +29,14 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
       <Box pt={2}>
         <Grid container alignItems="center" justify="space-between">
           <AvatarNameDate
-            name={c?.user?.name}
-            photo_url={c?.user?.photo_url}
+            name={c?.name}
+            photo_url={undefined}
             created_at={c?.updated_at}
             justify="flex-start"
           />
         </Grid>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
-          <Typography color="primary">{getAttitude(c)}</Typography>
+          {/* <Typography color="primary">{getAttitude(c)}</Typography> */}
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
@@ -48,19 +50,13 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
           )}
           <Box color="grey.600" display="flex" mt={1}>
             <div className={classes.buttons}>
-              <Button className={classes.button} onClick={() => setRe(c?.user)}>
+              <Button className={classes.button} onClick={() => setRe(c?.name)}>
                 댓글달기
               </Button>
-              {c?.my_like ? (
-                <ButtonUnlikeComment
-                  id={c?.id}
-                  count={c?.likes_aggregate?.aggregate?.count}
-                />
+              {liked ? (
+                <ButtonUnlikeComment id={c?.id} count={c?.count_like} />
               ) : (
-                <ButtonLikeComment
-                  id={c?.id}
-                  count={c?.likes_aggregate?.aggregate?.count}
-                />
+                <ButtonLikeComment id={c?.id} count={c?.count_like} />
               )}
               {isMine && (
                 <>
@@ -81,14 +77,14 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
               )}
             </div>
           </Box>
-          {(c?.re?.length || 0) > 0 && (
+          {/* {(c?.re?.length || 0) > 0 && (
             <Box mt={1}>
               <Divider light />
             </Box>
-          )}
-          {c?.re?.map((c, i) => {
+          )} */}
+          {/* {c?.re?.map((c, i) => {
             return <Comment2 key={i} comment={c} setRe={setRe} />;
-          })}
+          })} */}
           {isRe && (
             <CommentTextinput
               comment={c}
@@ -99,7 +95,7 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
           )}
         </Box>
       </Box>
-      {c?.re?.length === 0 && (
+      {c?.count_comment === 0 && (
         <Box mt={1}>
           <Divider light />
         </Box>

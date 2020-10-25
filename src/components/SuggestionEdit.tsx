@@ -75,11 +75,11 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Hidden mdUp>
-        <HeaderNew title="제안글 수정" />
+        <HeaderNew title="제보글 수정" />
       </Hidden>
       <Box mt={2}>
         <Container component="main" maxWidth="md">
-          <Typography variant="h2">제안글 수정</Typography>
+          <Typography variant="h2">제보글 수정</Typography>
           <SuggestionInputs
             formControl={formControl}
             // children={<HtmlInput formControl={formControl} />}
@@ -102,7 +102,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
             setFiles={setFiles2}
             setImages={setImages2}
           />
-          <BtnSubmitDesktop text="제안 수정" />
+          <BtnSubmitDesktop text="제보 수정" />
         </Container>
       </Box>
     </form>

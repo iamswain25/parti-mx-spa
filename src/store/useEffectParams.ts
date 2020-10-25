@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useBoardId, useGroupId } from "./useGlobalState";
-let counter = 0;
 export default function useEffectParams() {
   const { group_id, board_id } = useParams<{
     group_id: string;

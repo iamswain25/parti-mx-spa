@@ -13,7 +13,7 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import HeaderBack from "./HeaderBack";
 import { ValidateResult } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
-import useMe from "../store/useMe";
+// import useMe from "../store/useMe";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -43,14 +43,12 @@ interface GroupForm {
 }
 export default function Profile() {
   const classes = useStyles();
-  const [me] = useMe();
+  // const [me] = useMe();
   const history = useHistory();
 
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
 
-  const { handleSubmit, register, errors, reset, control } = useForm<
-    GroupForm
-  >();
+  const { handleSubmit, register, errors, control } = useForm<GroupForm>();
 
   async function handleForm(form: GroupForm) {
     // const { bgFiles, name } = form;

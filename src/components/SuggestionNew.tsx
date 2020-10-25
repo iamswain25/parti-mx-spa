@@ -55,7 +55,7 @@ export default function SuggestionNew() {
               files={fileArr}
               setFiles={setFileArr}
             />
-            <BtnSubmitDesktop text="제안 제출" />
+            <BtnSubmitDesktop text="제보 제출" />
           </Container>
         </Box>
       </form>

@@ -21,6 +21,7 @@ import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
+import useComments from "../store/useComments";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -100,11 +101,20 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const { images, comments, createdBy, created_at, files, closed_at } = p;
+  const {
+    images,
+    count_comment,
+    count_like,
+    created_at,
+    files,
+    closed_at,
+    name,
+  } = p;
+  const [comments] = useComments(p.id);
   const isClosed = !!closed_at;
   const metadata = p.metadata as VoteMetadata;
-  const commentCount = 0;
-  const participantCount = 0;
+  const commentCount = count_comment || 0;
+  const participantCount = count_like || 0;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
     metadata,
     created_at,
@@ -133,11 +143,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
           </Hidden>
         </Box>
         <Box mt={1}>
-          <AvatarNameDate
-            name={createdBy?.name}
-            photo_url={createdBy?.photo_url}
-            created_at={created_at}
-          />
+          <AvatarNameDate name={name} created_at={created_at} />
         </Box>
         <Box my={2}>
           <Divider light />

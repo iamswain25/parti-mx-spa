@@ -5,6 +5,7 @@ import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
+import useComments from "../store/useComments";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -36,21 +37,20 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function SuggestionComment({ post: p }: { post: Post }) {
-  const count = 0;
-  const count2 = 0;
-  const comments = p.comments;
-  const comment = { post: { id: p.id } } as Comment;
+  const count_comment = p.count_comment || 0;
+  const count_like = p.count_like || 0;
+  const [comments] = useComments(p.id);
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   React.useEffect(() => {
-    if (count) {
+    if (count_comment) {
       if (prevCommentCount && shouldScroll) {
         window.scrollTo(0, document.body.scrollHeight);
         shouldScroll = false;
       }
-      prevCommentCount = count;
+      prevCommentCount = count_comment;
     }
-  }, [count]);
+  }, [count_comment]);
   const insertHandler = useCommentInsert(() => (shouldScroll = true));
   return (
     <>
@@ -62,7 +62,7 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
           >
             댓글
             <Box ml={0.5} className="count">
-              {count}
+              {count_comment}
             </Box>
           </Button>
           <Box mx={1} height={14}>
@@ -72,16 +72,19 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "" : "active"}`}
             onClick={() => setCommentVisible(false)}
           >
-            제안 동의 멤버
+            제보 동의 멤버
             <Box ml={0.5} className="count">
-              {count2}
+              {count_like}
             </Box>
           </Button>
         </Grid>
         {isCommentVisible ? (
           <Box>
             <Box pb={1}>
-              <CommentTextinput comment={comment} handler={insertHandler} />
+              <CommentTextinput
+                comment={{ post_id: p.id, body: "" } as Comment}
+                handler={insertHandler}
+              />
             </Box>
             <Divider light />
             {comments?.map((c, i) => {

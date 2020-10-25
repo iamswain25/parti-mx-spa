@@ -33,7 +33,7 @@ export default function CommentContainer({
   post_id: string;
   count: number;
 }) {
-  const comment = { post: { id: post_id } } as Comment;
+  const comment = { post_id, body: "" } as Comment;
   const classes = useStyles();
   React.useEffect(() => {
     if (count) {

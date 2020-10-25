@@ -41,7 +41,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "textSecondary" : "textPrimary"}
               >
-                진행 중인 제안
+                진행 중인 제보
               </Typography>
               <Box mr={1} />
               <Typography
@@ -59,7 +59,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "textPrimary" : "textSecondary"}
               >
-                완료 된 제안
+                완료 된 제보
               </Typography>
               <Box mr={1} />
               <Typography

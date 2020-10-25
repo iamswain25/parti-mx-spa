@@ -22,6 +22,7 @@ import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
+import useComments from "../store/useComments";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,

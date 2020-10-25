@@ -13,15 +13,17 @@ import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import useMe from "../store/useMe";
+import useCommentLiked from "../store/useCommentLiked";
 
 export default function Comment2({
   comment: c,
   setRe,
 }: {
   comment: Comment;
-  setRe: (user?: User) => void;
+  setRe: (user?: string) => void;
 }) {
   const classes = useStyles();
+  const [liked] = useCommentLiked({ comment_id: c.id, post_id: c.post_id });
   const [me] = useMe();
   const [edit, setEdit] = React.useState<boolean>(false);
   const remove = useCommentDelete(c.id);
@@ -38,14 +40,14 @@ export default function Comment2({
       <Box paddingY={2}>
         <Grid container alignItems="center" justify="space-between">
           <AvatarNameDate
-            name={c?.user?.name}
-            photo_url={c?.user?.photo_url}
+            name={c?.name}
+            // photo_url={c?.user?.photo_url}
             created_at={c?.updated_at}
             justify="flex-start"
           />
         </Grid>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
-          <Typography color="primary">{getAttitude(c)}</Typography>
+          {/* <Typography color="primary">{getAttitude(c)}</Typography> */}
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
@@ -59,19 +61,13 @@ export default function Comment2({
           )}
           <Box color="grey.600" display="flex" mt={1}>
             <div className={classes.buttons}>
-              <Button className={classes.button} onClick={() => setRe(c?.user)}>
+              <Button className={classes.button} onClick={() => setRe(c?.name)}>
                 댓글달기
               </Button>
-              {c?.my_like ? (
-                <ButtonUnlikeComment
-                  id={c?.id}
-                  count={c?.likes_aggregate?.aggregate?.count}
-                />
+              {liked ? (
+                <ButtonUnlikeComment id={c?.id} count={c?.count_like} />
               ) : (
-                <ButtonLikeComment
-                  id={c?.id}
-                  count={c?.likes_aggregate?.aggregate?.count}
-                />
+                <ButtonLikeComment id={c?.id} count={c?.count_like} />
               )}
               {isMine && (
                 <>

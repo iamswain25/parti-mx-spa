@@ -42,7 +42,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
   const count = 0;
   const count2 = 0;
   const comments = p.comments;
-  const comment = { post: { id: p.id } } as Comment;
+  const comment = { post_id: p.id, body: "" } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   React.useEffect(() => {

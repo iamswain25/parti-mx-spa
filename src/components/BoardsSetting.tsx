@@ -107,7 +107,7 @@ export default function BoardsSetting() {
                     render={(props) => (
                       <Select {...props} inputProps={{ readOnly }}>
                         <MenuItem value="notice">소식</MenuItem>
-                        <MenuItem value="suggestion">제안</MenuItem>
+                        <MenuItem value="suggestion">제보</MenuItem>
                         <MenuItem value="event">모임</MenuItem>
                         <MenuItem value="vote">투표</MenuItem>
                       </Select>

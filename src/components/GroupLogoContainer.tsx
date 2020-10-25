@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { semanticDate } from "../helpers/datefns";
-import publicsphere from "../assets/images/publicsphere.jpg";
 import { Link } from "react-router-dom";
 import { Grid, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";

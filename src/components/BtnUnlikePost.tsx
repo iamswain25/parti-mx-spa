@@ -55,7 +55,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
     }
     switch (type) {
       case "suggestion":
-        return setSuccess("제안 취소 하였습니다.");
+        return setSuccess("제보 취소 하였습니다.");
       case "event":
         return setSuccess("참석 취소 하였습니다.");
       default:

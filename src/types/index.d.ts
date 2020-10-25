@@ -139,15 +139,12 @@ export interface Comment {
   created_by: string;
   body: string;
   updated_at: firebase.firestore.Timestamp;
-  user: User;
-  my_like: number;
-  likes_aggregate: {
-    aggregate: {
-      count: number;
-    };
-  };
-  re?: Comment[];
-  post?: VoteDetailType;
+  name: string;
+  post_id: string;
+  parent_id: string;
+  count_like: number;
+  count_comment: number;
+  attitude: string;
 }
 export interface File {
   uri: string;

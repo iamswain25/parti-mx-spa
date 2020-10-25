@@ -28,13 +28,13 @@ export default function CommentTextinput({
   handler,
 }: {
   comment?: Comment;
-  user?: User;
+  user?: string;
   autoFocus?: boolean;
   handler: any;
 }) {
-  const atUser = user ? `@${user?.name} ` : "";
+  const atUser = user ? `@${user} ` : "";
   const parent_id = comment?.id || null;
-  const post_id = comment?.post?.id || null;
+  const post_id = comment?.post_id || null;
   const { handleSubmit, register, errors, reset, getValues } = useForm<
     CommentInput
   >({
