@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button, makeStyles, Theme } from "@material-ui/core";
 import { useCurrentUser } from "../store/useGlobalState";
 import { firestore } from "../config/firebase";
+import { Comment } from "../types";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -10,20 +11,32 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: "inherit",
   },
 }));
-export default function ButtonLikeComment(props: {
-  id?: string;
-  count?: number;
+export default function ButtonLikeComment({
+  comment: c,
+}: {
+  comment: Comment;
 }) {
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
-  const { id, count } = props;
   async function pressHandler() {
-    const comment = firestore.collection("comments").doc(id);
-    comment
+    let postDoc = firestore.collection("posts").doc(c.post_id);
+    if (c.parent_id) {
+      postDoc = postDoc.collection("comments").doc(c.parent_id);
+    }
+    postDoc
+      .collection("comments")
+      .doc(c.id)
       .collection("likes")
       .doc(userId)
-      .set({ created_at: new Date() }, { merge: true });
+      .set(
+        {
+          created_at: new Date(),
+          name: currentUser?.displayName,
+          photo_url: currentUser?.photoURL,
+        },
+        { merge: true }
+      );
   }
 
   return (
@@ -32,7 +45,7 @@ export default function ButtonLikeComment(props: {
         공감
       </Button>
       <Box ml={0.5} alignItems="center" display="flex">
-        {count}
+        {c.count_like}
       </Box>
     </Box>
   );

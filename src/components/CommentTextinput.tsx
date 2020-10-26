@@ -68,26 +68,12 @@ export default function CommentTextinput({
         <TextField
           variant="outlined"
           margin="normal"
-          fullWidth
-          label="수정 비밀번호"
-          name="password"
-          inputRef={register({
-            required: "수정 시 본인 확인을 위한 비밀번호를 입력하세요",
-          })}
-          required={errors.password ? true : false}
-          error={errors.password ? true : false}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
           multiline
-          // rows={4}
           fullWidth
           disabled={!userId}
           label="댓글 입력"
           name="body"
           classes={{ root: classes.root }}
-          // autoComplete="off"
           onClick={loginHandler}
           autoFocus={autoFocus}
           inputRef={(r) => {
@@ -99,15 +85,32 @@ export default function CommentTextinput({
           required={errors.body ? true : false}
           error={errors.body ? true : false}
         />
-        <Grid container justify="flex-end">
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disableElevation
-          >
-            등록
-          </Button>
+        <Grid container justify="flex-end" alignItems="center">
+          <TextField
+            variant="outlined"
+            margin="normal"
+            name="password"
+            label="댓글 수정 비밀번호"
+            inputRef={register({
+              required: "필수 입력",
+              pattern: /[0-9]/,
+              maxLength: 4,
+              minLength: 4,
+            })}
+            required={errors.password ? true : false}
+            error={errors.password ? true : false}
+            helperText="숫자 4자리를 입력하세요"
+          />
+          <div style={{ marginLeft: 10 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disableElevation
+            >
+              등록
+            </Button>
+          </div>
         </Grid>
       </form>
     </>

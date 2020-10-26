@@ -11,7 +11,7 @@ export default function CommentEdit({
   c: Comment;
   setEdit: (edit: boolean) => void;
 }) {
-  const update = useCommentUpdate(c.id);
+  const update = useCommentUpdate(c);
   const { handleSubmit, register, errors } = useForm<CommentForm>();
   async function handleForm(form: CommentForm) {
     await update(form.body);

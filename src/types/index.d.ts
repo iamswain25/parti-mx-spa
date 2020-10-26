@@ -145,6 +145,7 @@ export interface Comment {
   count_like: number;
   count_comment: number;
   attitude: string;
+  password: string;
 }
 export interface File {
   uri: string;

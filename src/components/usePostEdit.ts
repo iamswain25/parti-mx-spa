@@ -1,10 +1,11 @@
 import { useHistory } from "react-router-dom";
+import { Post } from "../types";
 
-export default function usePostEdit(post_id?: string) {
+export default function usePostEdit(post: Post) {
   const { push } = useHistory();
 
   function navigateHandler() {
-    push("/edit/" + post_id);
+    push("/edit/" + post.id);
   }
 
   return navigateHandler;

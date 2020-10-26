@@ -4,9 +4,10 @@ import NoticeDetail from "./NoticeDetail";
 import VoteDetail from "./VoteDetail";
 import EventDetail from "./EventDetail";
 import usePost from "../store/usePost";
-import useEffectParams from "../store/useEffectParams";
 import { useBoardId, useGroupId } from "../store/useGlobalState";
 import { useParams } from "react-router-dom";
+import { LinearProgress } from "@material-ui/core";
+import Forbidden from "./Forbidden";
 
 export default function RoutePost() {
   const [p] = usePost(true);
@@ -19,10 +20,15 @@ export default function RoutePost() {
     if (group_id && group_id !== groupId) {
       setGroupId(group_id);
     }
-    if (boardId !== p.board_id) {
-      setBoardId(p.board_id);
+    if (boardId !== p?.board_id) {
+      setBoardId(p?.board_id || null);
     }
-  }, [groupId, group_id, setGroupId, p.board_id, boardId]);
+  }, [groupId, group_id, setGroupId, p, boardId, setBoardId]);
+  if (p === undefined) {
+    return <LinearProgress />;
+  } else if (p === null) {
+    return <Forbidden noPost />;
+  }
   switch (p?.type) {
     case "notice":
       return <NoticeDetail post={p} />;

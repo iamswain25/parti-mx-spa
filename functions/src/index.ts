@@ -11,6 +11,8 @@ import postLikeCreate from "./components/postLikeCreate";
 import postLikeDelete from "./components/postLikeDelete";
 import commentLikeCreate from "./components/commentLikeCreate";
 import commentLikeCreate2 from "./components/commentLikeCreate2";
+import commentLikeDelete from "./components/commentLikeDelete";
+import commentLikeDelete2 from "./components/commentLikeDelete2";
 export {
   authCreate,
   authDelete,
@@ -23,4 +25,6 @@ export {
   commentLikeCreate,
   commentCreate2,
   commentLikeCreate2,
+  commentLikeDelete,
+  commentLikeDelete2,
 };

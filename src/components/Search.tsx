@@ -23,7 +23,7 @@ export default function Search() {
       <Hidden mdUp>
         <HeaderBack
           title="검색"
-          right={<div style={{ width: 24, height: 24 }} />}
+          right={<div style={{ width: 24, height: 24, fontSize: 20 }} />}
         />
       </Hidden>
       <Divider />

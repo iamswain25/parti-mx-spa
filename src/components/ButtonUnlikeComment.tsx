@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, makeStyles, Theme } from "@material-ui/core";
 import { firestore } from "../config/firebase";
-import firebase from "firebase";
 import { useCurrentUser } from "../store/useGlobalState";
+import { Comment } from "../types";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -11,23 +11,37 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: "inherit",
   },
 }));
-export default function ButtonUnlikeComment(props: {
-  id: string;
-  count: number;
+export default function ButtonUnlikeComment({
+  comment: c,
+}: {
+  comment: Comment;
 }) {
   const classes = useStyles();
-  const { id, count } = props;
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
 
   async function pressHandler() {
-    const comment = (
+    if (c.parent_id) {
       await firestore
-        .collectionGroup("comments")
-        .where(firebase.firestore.FieldPath.documentId(), "==", id)
-        .get()
-    ).docs?.[0];
-    comment.ref.collection("likes").doc(userId).delete();
+        .collection("posts")
+        .doc(c.post_id)
+        .collection("comments")
+        .doc(c.parent_id)
+        .collection("comments")
+        .doc(c.id)
+        .collection("likes")
+        .doc(userId)
+        .delete();
+    } else {
+      await firestore
+        .collection("posts")
+        .doc(c.post_id)
+        .collection("comments")
+        .doc(c.id)
+        .collection("likes")
+        .doc(userId)
+        .delete();
+    }
   }
 
   return (
@@ -36,7 +50,7 @@ export default function ButtonUnlikeComment(props: {
         공감취소
       </Button>
       <Box ml={0.5} alignItems="center" display="flex">
-        {count}
+        {c.count_like}
       </Box>
     </Box>
   );

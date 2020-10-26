@@ -11,7 +11,6 @@ import { useStyles } from "../helpers/styles";
 import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
-import { useCurrentUser } from "../store/useGlobalState";
 import useCommentLiked from "../store/useCommentLiked";
 import useComments2 from "../store/useComments2";
 export default function Comment1({
@@ -21,10 +20,8 @@ export default function Comment1({
   comment: Comment;
   post: Post;
 }) {
-  const [liked] = useCommentLiked({ comment_id: c.id, post_id: c.post_id });
-  const [comments2] = useComments2({ comment_id: c.id, post_id: c.post_id });
-  const [currentUser] = useCurrentUser();
-  const userId = currentUser?.uid;
+  const [liked] = useCommentLiked(c);
+  const [comments2] = useComments2(c);
   const classes = useStyles();
   const [isRe, setRe] = React.useState<string | undefined>(undefined);
   const insertHandler = useCommentInsert({
@@ -32,8 +29,15 @@ export default function Comment1({
     callback: () => setRe(undefined),
   });
   const [edit, setEdit] = React.useState<boolean>(false);
-  const remove = useCommentDelete(c.id);
-  const isMine = c.created_by === userId;
+  const remove = useCommentDelete(c);
+  function editHandler() {
+    const input = window.prompt("비밀번호를 입력하세요");
+    if (input === c.password) {
+      setEdit(true);
+    } else {
+      window.alert("비밀번호가 맞지 않습니다.");
+    }
+  }
   return (
     <>
       <Box pt={2}>
@@ -64,27 +68,20 @@ export default function Comment1({
                 댓글달기
               </Button>
               {liked ? (
-                <ButtonUnlikeComment id={c?.id} count={c?.count_like} />
+                <ButtonUnlikeComment comment={c} />
               ) : (
-                <ButtonLikeComment id={c?.id} count={c?.count_like} />
+                <ButtonLikeComment comment={c} />
               )}
-              {isMine && (
-                <>
-                  <Button
-                    className={classes.button}
-                    onClick={() => setEdit(true)}
-                  >
-                    수정
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    onClick={remove}
-                    color="secondary"
-                  >
-                    삭제
-                  </Button>
-                </>
-              )}
+              <Button className={classes.button} onClick={editHandler}>
+                수정
+              </Button>
+              <Button
+                className={classes.button}
+                onClick={remove}
+                color="secondary"
+              >
+                삭제
+              </Button>
             </div>
           </Box>
           {(comments2?.length || 0) > 0 && (

@@ -46,3 +46,9 @@ export function useGroupId() {
 export function useBoardId() {
   return useGlobalState("boardId");
 }
+export function useSuccess() {
+  return useGlobalState("success");
+}
+export function useError() {
+  return useGlobalState("error");
+}

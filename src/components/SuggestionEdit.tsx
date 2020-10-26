@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { Post, Img, File as File2, SuggestionFormdata } from "../types";
-import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";

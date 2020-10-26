@@ -44,10 +44,13 @@ export default function SuggestionInputs(props: {
         fullWidth
         inputRef={register({
           required: "필수 입력",
+          pattern: /[0-9]/,
+          maxLength: 4,
+          minLength: 4,
         })}
         required={errors.password ? true : false}
         error={errors.password ? true : false}
-        helperText="글 수정 시 필요 함"
+        helperText="숫자 4자리를 입력하세요"
       />
     </>
   );
