@@ -179,7 +179,7 @@ export type Post = {
   updated_at: firebase.firestore.Timestamp;
   location: { type: "Point"; coordinates: [number, number] };
   tags: string[];
-  users: UserPost[];
+  users: PostLike[];
   updatedBy: User;
   createdBy: User;
   comments_aggregate: {
@@ -246,13 +246,11 @@ export interface UserGroup {
   group_id: string;
   userId: number;
 }
-export interface UserPost {
-  user: User;
+export interface PostLike {
+  id: string;
+  name: string;
+  photo_url: string;
   created_at: firebase.firestore.Timestamp;
-  updated_at: firebase.firestore.Timestamp;
-  userId: number;
-  like_count: number;
-  post: Post;
 }
 export interface UserBoard {
   userId: number;

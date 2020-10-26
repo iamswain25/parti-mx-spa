@@ -38,6 +38,7 @@ export default function SuggestionNew() {
       created_at: new Date(),
       type: "suggestion",
     });
+    await currentUser?.updateProfile({ displayName: form.name });
     const doc = await firestore.collection("posts").add(variables);
     history.push("/post/" + doc.id);
   }

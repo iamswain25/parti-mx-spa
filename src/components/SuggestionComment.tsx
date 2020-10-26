@@ -6,6 +6,7 @@ import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
 import useComments from "../store/useComments";
+import usePostLikedUsers from "../store/usePostLikedUsers";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -37,9 +38,9 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function SuggestionComment({ post: p }: { post: Post }) {
-  const count_comment = p.count_comment || 0;
-  const count_like = p.count_like || 0;
+  const { count_comment = 0, count_like = 0 } = p;
   const [comments] = useComments(p.id);
+  const [likedUsers] = usePostLikedUsers(p.id);
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   React.useEffect(() => {
@@ -51,7 +52,10 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
       prevCommentCount = count_comment;
     }
   }, [count_comment]);
-  const insertHandler = useCommentInsert(() => (shouldScroll = true));
+  const insertHandler = useCommentInsert({
+    post: p,
+    callback: () => (shouldScroll = true),
+  });
   return (
     <>
       <Box className={classes.text}>
@@ -88,7 +92,7 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
             </Box>
             <Divider light />
             {comments?.map((c, i) => {
-              return <Comment1 key={i} comment={c} />;
+              return <Comment1 key={i} comment={c} post={p} />;
             })}
           </Box>
         ) : (
@@ -97,9 +101,9 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
               <Divider />
             </Box>
             <Grid container wrap="wrap" spacing={2}>
-              {/* {p.likedUsers?.map((u, i) => (
-                <AvatarNameDate2 key={i} userPost={u} />
-              ))} */}
+              {likedUsers?.map((u, i) => (
+                <AvatarNameDate2 key={i} postLike={u} />
+              ))}
             </Grid>
           </Box>
         )}

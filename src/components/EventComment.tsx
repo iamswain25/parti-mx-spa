@@ -51,7 +51,10 @@ export default function EventComment({ post: p }: { post: Post }) {
       prevCommentCount = count;
     }
   }, [count]);
-  const insertHandler = useCommentInsert(() => (shouldScroll = true));
+  const insertHandler = useCommentInsert({
+    post: p,
+    callback: () => (shouldScroll = true),
+  });
   return (
     <>
       <Box className={classes.text}>
@@ -85,7 +88,7 @@ export default function EventComment({ post: p }: { post: Post }) {
             </Box>
             <Divider light />
             {comments?.map((c, i) => {
-              return <Comment1 key={i} comment={c} />;
+              return <Comment1 key={i} comment={c} post={p} />;
             })}
           </Box>
         ) : (

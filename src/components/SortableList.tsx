@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => {
     img: { objectFit: "cover", width: "100%", height: "100%" },
   };
 });
-const DragHandle = SortableHandle(({ images, className }: any) => (
+const DragHandle = SortableHandle(({ image, className }: any) => (
   <div className={className}>
-    <StorageImage image={images} className={className} />
+    <StorageImage path={image} className={className} />
   </div>
 ));
 const SortableItem = SortableElement(({ item: f, imageRemove, index }: any) => {
@@ -37,7 +37,7 @@ const SortableItem = SortableElement(({ item: f, imageRemove, index }: any) => {
   }
   return (
     <Grid item style={{ width: 76, height: 76, position: "relative" }}>
-      <DragHandle images={[f?.preview, f?.uri]} className={classes.img} />
+      <DragHandle image={f.preview ?? f.path} className={classes.img} />
       <IconButton onClick={removeHandler} className={classes.closePic}>
         <CloseIcon color="inherit" />
       </IconButton>

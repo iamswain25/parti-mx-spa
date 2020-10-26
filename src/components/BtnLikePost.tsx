@@ -49,7 +49,14 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
         .doc(p.id)
         .collection("likes")
         .doc(currentUser.uid)
-        .set({ created_at: new Date() }, { merge: true });
+        .set(
+          {
+            created_at: new Date(),
+            name: currentUser.displayName,
+            photo_url: currentUser.photoURL,
+          },
+          { merge: true }
+        );
       switch (type) {
         case "suggestion":
           return setSuccess("공감 하였습니다.");

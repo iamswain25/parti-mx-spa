@@ -2,8 +2,7 @@ import React from "react";
 import { TextField, makeStyles, Button, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
-import { User, Comment, CommentInput } from "../types";
-
+import { Comment, CommentInput } from "../types";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -27,14 +26,14 @@ export default function CommentTextinput({
   autoFocus = false,
   handler,
 }: {
-  comment?: Comment;
+  comment: Comment;
   user?: string;
   autoFocus?: boolean;
   handler: any;
 }) {
   const atUser = user ? `@${user} ` : "";
-  const parent_id = comment?.id || null;
-  const post_id = comment?.post_id || null;
+  const parent_id = comment.id || null;
+  const post_id = comment.post_id || null;
   const { handleSubmit, register, errors, reset, getValues } = useForm<
     CommentInput
   >({
@@ -66,6 +65,18 @@ export default function CommentTextinput({
       <form onSubmit={handleSubmit(handler)} noValidate autoComplete="off">
         <input type="hidden" ref={register} name="post_id" />
         <input type="hidden" ref={register} name="parent_id" />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="수정 비밀번호"
+          name="password"
+          inputRef={register({
+            required: "수정 시 본인 확인을 위한 비밀번호를 입력하세요",
+          })}
+          required={errors.password ? true : false}
+          error={errors.password ? true : false}
+        />
         <TextField
           variant="outlined"
           margin="normal"

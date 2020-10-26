@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, makeStyles, Avatar, Grid } from "@material-ui/core";
 import { semanticDate } from "../helpers/datefns";
-import { UserPost } from "../types";
+import { PostLike } from "../types";
 const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
@@ -22,14 +22,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function AvatarNameDate2({ userPost }: { userPost: UserPost }) {
+export default function AvatarNameDate2({ postLike }: { postLike: PostLike }) {
   const classes = useStyles();
-  const {
-    user: { name = "로딩중", photo_url = "로딩중" },
-    created_at,
-  } = userPost;
+  const { name, photo_url, created_at } = postLike;
   const alteredName =
-    name.indexOf("@") > 0 ? name.substr(0, name.indexOf("@")) : name;
+    name?.indexOf("@") > 0 ? name?.substr(0, name?.indexOf("@")) : name;
   return (
     <Grid item xs={6} sm={4} md={3} className={classes.container}>
       <Box display="flex" alignItems="center" mr={1}>

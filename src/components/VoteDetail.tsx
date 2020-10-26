@@ -200,11 +200,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
       <div className={classes.root}>
-        <CommentContainer
-          comments={comments}
-          post_id={p.id}
-          count={commentCount}
-        />
+        <CommentContainer comments={comments} post={p} count={commentCount} />
       </div>
     </Box>
   );

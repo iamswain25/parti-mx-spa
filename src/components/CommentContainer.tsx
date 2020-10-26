@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment } from "../types";
+import { Comment, Post } from "../types";
 import { Box, Divider, makeStyles } from "@material-ui/core";
 import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
@@ -26,14 +26,14 @@ const useStyles = makeStyles((theme) => {
 
 export default function CommentContainer({
   comments,
-  post_id,
+  post,
   count = 0,
 }: {
   comments: Comment[];
-  post_id: string;
+  post: Post;
   count: number;
 }) {
-  const comment = { post_id, body: "" } as Comment;
+  const comment = { post_id: post.id, body: "" } as Comment;
   const classes = useStyles();
   React.useEffect(() => {
     if (count) {
@@ -44,7 +44,10 @@ export default function CommentContainer({
       prevCommentCount = count;
     }
   }, [count]);
-  const insertHandler = useCommentInsert(() => (shouldScroll = true));
+  const insertHandler = useCommentInsert({
+    post,
+    callback: () => (shouldScroll = true),
+  });
   return (
     <>
       <Box className={classes.text}>
@@ -59,7 +62,7 @@ export default function CommentContainer({
         </Box>
         <Divider light />
         {comments?.map((c, i) => {
-          return <Comment1 key={i} comment={c} />;
+          return <Comment1 key={c.id} comment={c} post={post} />;
         })}
       </Box>
     </>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useBoardId, useGroupId } from "./useGlobalState";
-export default function useEffectParams() {
+export default function useEffectParams(props?: { board_id?: string }) {
   const { group_id, board_id } = useParams<{
     group_id: string;
     board_id: string;

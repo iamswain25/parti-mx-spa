@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment, User } from "../types";
+import { Comment, Post } from "../types";
 import { Box, Divider, Grid, Button, Typography } from "@material-ui/core";
 import AvatarNameDate from "./AvatarNameDate";
 import CommentTextinput from "./CommentTextinput";
@@ -8,19 +8,29 @@ import useCommentInsert from "./useCommentInsert";
 import ButtonLikeComment from "./ButtonLikeComment";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
 import { useStyles } from "../helpers/styles";
-import { getAttitude } from "../helpers/attitude";
 import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import { useCurrentUser } from "../store/useGlobalState";
 import useCommentLiked from "../store/useCommentLiked";
-export default function Comment1({ comment: c }: { comment: Comment }) {
+import useComments2 from "../store/useComments2";
+export default function Comment1({
+  comment: c,
+  post,
+}: {
+  comment: Comment;
+  post: Post;
+}) {
   const [liked] = useCommentLiked({ comment_id: c.id, post_id: c.post_id });
+  const [comments2] = useComments2({ comment_id: c.id, post_id: c.post_id });
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
   const classes = useStyles();
   const [isRe, setRe] = React.useState<string | undefined>(undefined);
-  const insertHandler = useCommentInsert(() => setRe(undefined));
+  const insertHandler = useCommentInsert({
+    post,
+    callback: () => setRe(undefined),
+  });
   const [edit, setEdit] = React.useState<boolean>(false);
   const remove = useCommentDelete(c.id);
   const isMine = c.created_by === userId;
@@ -36,7 +46,7 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
           />
         </Grid>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
-          {/* <Typography color="primary">{getAttitude(c)}</Typography> */}
+          <Typography color="primary">{c.attitude}</Typography>
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
@@ -77,14 +87,14 @@ export default function Comment1({ comment: c }: { comment: Comment }) {
               )}
             </div>
           </Box>
-          {/* {(c?.re?.length || 0) > 0 && (
+          {(comments2?.length || 0) > 0 && (
             <Box mt={1}>
               <Divider light />
             </Box>
-          )} */}
-          {/* {c?.re?.map((c, i) => {
-            return <Comment2 key={i} comment={c} setRe={setRe} />;
-          })} */}
+          )}
+          {comments2.map((c) => {
+            return <Comment2 key={c.id} comment={c} setRe={setRe} />;
+          })}
           {isRe && (
             <CommentTextinput
               comment={c}

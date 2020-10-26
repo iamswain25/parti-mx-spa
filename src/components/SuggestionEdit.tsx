@@ -4,47 +4,18 @@ import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { useGlobalState, keys } from "../store/useGlobalState";
-import {
-  Post,
-  Img,
-  File as File2,
-  LatLng,
-  SuggestionMetadata,
-  SuggestionFormdata,
-} from "../types";
+import { Post, Img, File as File2, SuggestionFormdata } from "../types";
 import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import SavedImageFile from "./SavedImageFile";
 import { makeUpdateVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import SuggestionInputs from "./SuggestionInputs";
 import ImageFileDropzone from "./ImageFileDropzone";
-
+import { firestore } from "../config/firebase";
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const {
-    id,
-    location,
-    title,
-    body,
-    context,
-    files,
-    images,
-    password,
-    name,
-  } = p;
+  const { id, title, body, context, files, images, password, name } = p;
   const history = useHistory();
-  const metadata = p.metadata as SuggestionMetadata;
-
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
-
-  const [address, setAddress] = React.useState<undefined | string>(
-    metadata?.address
-  );
-  const [latLng, setLatLng] = React.useState<undefined | LatLng>(() => {
-    const {
-      coordinates: [lng, lat],
-    } = location || { coordinates: [null, null] };
-    return { lng, lat };
-  });
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);
@@ -69,6 +40,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
     });
+    firestore.collection("posts").doc(id).update(variables);
     history.push("/post/" + id);
   }
 
@@ -80,16 +52,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       <Box mt={2}>
         <Container component="main" maxWidth="md">
           <Typography variant="h2">제보글 수정</Typography>
-          <SuggestionInputs
-            formControl={formControl}
-            // children={<HtmlInput formControl={formControl} />}
-          />
-          <GooglePlaceAutocomplete
-            address={address}
-            setAddress={setAddress}
-            latLng={latLng}
-            setLatLng={setLatLng}
-          />
+          <SuggestionInputs formControl={formControl} />
           <ImageFileDropzone
             images={imageArr}
             setImages={setImageArr}

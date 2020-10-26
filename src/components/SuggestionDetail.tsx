@@ -1,11 +1,10 @@
 import React from "react";
-import { Post, SuggestionMetadata } from "../types";
+import { Post } from "../types";
 import {
   Box,
   Grid,
   Divider,
   makeStyles,
-  Avatar,
   Hidden,
   Paper,
   Chip,
@@ -14,15 +13,13 @@ import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
 import useDesktop from "./useDesktop";
-import { semanticDate, closingDateFrom } from "../helpers/datefns";
+import { semanticDate } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
 import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
-import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
-import useComments from "../store/useComments";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -112,9 +109,8 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { images = [], created_by, created_at, context, files = [], tags } = p;
+  const { images = [], created_at, context, files = [], tags } = p;
   const [liked] = usePostLiked(p.id);
-  const metadata = p.metadata as SuggestionMetadata;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
@@ -122,12 +118,9 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
       <Box paddingX={2} className={classes.root}>
         <Box className={classes.title}>
           <div>{p.title}</div>
-          <Hidden smDown implementation="css">
-            <Box display="flex" alignItems="center">
-              <ShareButtons post={p} />
-              <PostMenu post={p} />
-            </Box>
-          </Hidden>
+          <Box display="flex" alignItems="center">
+            <PostMenu post={p} />
+          </Box>
         </Box>
         <Box my={2}>
           <Divider light />

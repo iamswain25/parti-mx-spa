@@ -4,23 +4,19 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useParams } from "react-router-dom";
 import usePostDelete from "./usePostDelete";
 import { Post } from "../types";
-import { useGroupId } from "../store/useGlobalState";
 import usePostAnnounce from "./usePostAnnounce";
 import usePostDenounce from "./usePostDenounce";
 import usePostEdit from "./usePostEdit";
 import usePostResolve from "./usePostResolve";
 import ShareButtons from "./ShareButtons";
-import useDesktop from "./useDesktop";
-
 import { useCurrentUser } from "../store/useGlobalState";
 export default function PostMenu({ post: p }: { post: Post }) {
   const { post_id } = useParams<{ post_id: string }>();
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
-  const [isDesktop] = useDesktop();
   const postId = post_id;
   const status = p?.board?.group?.status;
-  const isMine = userId && p?.createdBy?.id === userId;
+  const isMine = p?.created_by === userId;
   const isOrganizer = status === "organizer";
   const isClosed = !!p?.closed_at;
   const isAnnounced = p.is_announced;
@@ -54,13 +50,13 @@ export default function PostMenu({ post: p }: { post: Post }) {
       );
     }
   }
-  // if (isManualClosingVote && !isClosed) {
-  //   menuItems.push(
-  //     <MenuItem onClick={resolve} key={5}>
-  //       토론 정리
-  //     </MenuItem>
-  //   );
-  // }
+  if (!isClosed && isOrganizer) {
+    menuItems.push(
+      <MenuItem onClick={resolve} key={5}>
+        토론 정리
+      </MenuItem>
+    );
+  }
   if (isNotice && isOrganizer) {
     if (isAnnounced) {
       menuItems.push(
@@ -76,13 +72,11 @@ export default function PostMenu({ post: p }: { post: Post }) {
       );
     }
   }
-  if (!isDesktop) {
-    menuItems.push(
-      <MenuItem key={6}>
-        <ShareButtons post={p} />
-      </MenuItem>
-    );
-  }
+  menuItems.push(
+    <MenuItem key={6}>
+      <ShareButtons post={p} />
+    </MenuItem>
+  );
   if (!menuItems.length) {
     return <div />;
   }

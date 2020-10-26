@@ -38,23 +38,25 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function NoticeComment({ post: p }: { post: Post }) {
-  const count = 0;
-  const count2 = 0;
-  const comments = p.comments;
-  const comment = { post_id: p.id, body: "" } as Comment;
+export default function NoticeComment({ post }: { post: Post }) {
+  const { count_comment, count_like } = post;
+  const comments = post.comments;
+  const comment = { post_id: post.id, body: "" } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   React.useEffect(() => {
-    if (count) {
+    if (count_comment) {
       if (prevCommentCount && shouldScroll) {
         window.scrollTo(0, document.body.scrollHeight);
         shouldScroll = false;
       }
-      prevCommentCount = count;
+      prevCommentCount = count_comment;
     }
-  }, [count]);
-  const insertHandler = useCommentInsert(() => (shouldScroll = true));
+  }, [count_comment]);
+  const insertHandler = useCommentInsert({
+    post: post,
+    callback: () => (shouldScroll = true),
+  });
   return (
     <>
       <Box className={classes.text}>
@@ -65,7 +67,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
           >
             댓글
             <Box ml={0.5} className="count">
-              {count}
+              {count_comment}
             </Box>
           </Button>
           <Box mx={1} height={14}>
@@ -77,7 +79,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
           >
             공감 멤버
             <Box ml={0.5} className="count">
-              {count2}
+              {count_like}
             </Box>
           </Button>
         </Grid>
@@ -88,7 +90,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
             </Box>
             <Divider light />
             {comments?.map((c, i) => {
-              return <Comment1 key={i} comment={c} />;
+              return <Comment1 key={i} comment={c} post={post} />;
             })}
           </Box>
         ) : (
@@ -97,7 +99,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
               <Divider />
             </Box>
             <Grid container wrap="wrap" spacing={2}>
-              {/* {p.likedUsers?.map((u, i) => (
+              {/* {post.likedUsers?.map((u, i) => (
                 <AvatarNameDate2 key={i} userPost={u} />
               ))} */}
             </Grid>

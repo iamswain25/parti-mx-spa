@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment, User } from "../types";
+import { Comment } from "../types";
 import { Box, Divider, Grid, Button, Typography } from "@material-ui/core";
 import AvatarNameDate from "./AvatarNameDate";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
@@ -8,7 +8,6 @@ import { useStyles } from "../helpers/styles";
 import sub1 from "../assets/images/subdirectory24Px.png";
 import sub2 from "../assets/images/subdirectory24Px@2x.png";
 import sub3 from "../assets/images/subdirectory24Px@3x.png";
-import { getAttitude } from "../helpers/attitude";
 import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
