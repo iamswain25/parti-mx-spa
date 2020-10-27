@@ -20,7 +20,6 @@ export default function useCommentLiked(c: Comment) {
           .doc(currentUser.uid)
           .onSnapshot((doc) => setLiked(doc.exists));
       } else if (c.post_id && c.id) {
-        console.log(c);
         return firestore
           .collection("posts")
           .doc(c.post_id)

@@ -11,6 +11,7 @@ export default function useComments2(c: Comment) {
         .collection("comments")
         .doc(c.id)
         .collection("comments")
+        .orderBy("created_at", "asc")
         .onSnapshot((snapshot) =>
           setItems(
             snapshot.docs.map(

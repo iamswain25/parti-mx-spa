@@ -8,6 +8,7 @@ export default function useComments(id: string): [Comment[]] {
       .collection("posts")
       .doc(id)
       .collection("comments")
+      .orderBy("created_at", "asc")
       .onSnapshot((snapshot) => {
         const items = snapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() } as Comment)
