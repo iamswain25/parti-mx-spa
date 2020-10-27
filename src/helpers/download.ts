@@ -1,11 +1,15 @@
-export function downloadFileDirectly(uri: string, name: string) {
+import { storage } from "../config/firebase";
+import { File } from "../types";
+
+export async function downloadFileDirectly(file: File) {
+  const url = await storage.ref(file.path).getDownloadURL();
   var xhr = new XMLHttpRequest();
   xhr.responseType = "blob";
-  xhr.onload = function (event) {
+  xhr.onload = function () {
     const blob = xhr.response;
-    return saveFile(blob, name);
+    return saveFile(blob, file.name);
   };
-  xhr.open("GET", uri);
+  xhr.open("GET", url);
   xhr.send();
 }
 

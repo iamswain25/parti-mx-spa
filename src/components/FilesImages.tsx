@@ -59,7 +59,7 @@ export default function FilesImages(props: { files?: File[]; images?: Img[] }) {
                   {filesize(f.size)}
                 </Typography>
               </div>
-              <IconButton onClick={() => downloadFileDirectly(f.uri, f.name)}>
+              <IconButton onClick={() => downloadFileDirectly(f)}>
                 <GetAppIcon />
               </IconButton>
             </Grid>

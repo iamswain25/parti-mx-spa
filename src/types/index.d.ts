@@ -148,7 +148,6 @@ export interface Comment {
   password: string;
 }
 export interface File {
-  uri: string;
   name: string;
   size: number;
   path: string;
