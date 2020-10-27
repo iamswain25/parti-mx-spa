@@ -10,6 +10,7 @@ import HowToRegIcon from "@material-ui/icons/HowToReg";
 import PlaceIcon from "@material-ui/icons/Place";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
+import StorageImage from "./StorageImage";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -69,14 +70,14 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     place = p.metadata.place;
     deadline = getEventDate3(p.metadata.deadline);
   }
-  const firstImage = p.images?.[0]?.uri;
+  const firstImage = p.images?.[0];
   const attending = p?.my_like_count;
   return (
     <div className={classes.container}>
       <Box mb={1} color="#a9aaad">
         <Grid container direction="row" alignItems="center">
           <div className={classes.imgContainer} onClick={navigatePost}>
-            {firstImage ? <img src={firstImage} alt="event" /> : <EventIcon />}
+            {firstImage ? <StorageImage image={firstImage} /> : <EventIcon />}
           </div>
           <Box>
             <Box

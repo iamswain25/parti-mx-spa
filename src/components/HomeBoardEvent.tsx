@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => {
     },
     postContainer: {
       overflow: "hidden",
-
       display: "grid",
       gridGap: theme.spacing(1.5),
       [theme.breakpoints.up("md")]: {

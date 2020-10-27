@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => {
     },
     title: {
       height: theme.spacing(3),
+      lineHeight: theme.spacing(3) + "px",
     },
     titleContainer: {
       cursor: "pointer",
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme) => {
     body: {
       whiteSpace: "pre-wrap",
       maxHeight: 60,
+      lineClamp: 3,
+      textOverflow: "ellipsis",
+      display: "-webkit-box",
+      boxOrient: "vertical",
       marginBottom: theme.spacing(1),
       overflow: "hidden",
     },
@@ -56,7 +61,7 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
-  const count = 0;
+  const count = p.count_like || 0;
   return (
     <div className={classes.container}>
       <Box mb={1}>
@@ -65,7 +70,7 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
             <PanToolIcon color="primary" className={classes.icon} />
           </Box>
           <Box color="primary.dark" fontWeight={500}>
-            <Typography variant="h5">{count}명 동의</Typography>
+            <Typography variant="h5">{count}명 공감</Typography>
           </Box>
         </Grid>
       </Box>

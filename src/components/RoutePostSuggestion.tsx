@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => {
     body: {
       whiteSpace: "pre-wrap",
       maxHeight: 60,
+      lineClamp: 3,
+      textOverflow: "ellipsis",
+      display: "-webkit-box",
+      boxOrient: "vertical",
       marginBottom: theme.spacing(1),
       overflow: "hidden",
     },
