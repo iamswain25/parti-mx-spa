@@ -17,12 +17,6 @@ import useEffectParams from "../store/useEffectParams";
 import { useError } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    paddingTop: 20,
-    maxWidth: 900,
-  },
   btn: {
     // position: "absolute",
     // right: 0,
@@ -80,65 +74,63 @@ export default function GroupEdit() {
   }
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-      <Container maxWidth="lg" className={classes.root}>
-        <Typography variant="h3" color="textPrimary">
-          그룹 정보 수정
-        </Typography>
-        <Controller
-          name="title"
-          defaultValue=""
-          control={control}
-          rules={{ required: "필수입력" }}
-          as={
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="그룹 명"
-              autoFocus
-            />
-          }
-        />
-        <input defaultValue={group.id} name="id" type="hidden" ref={register} />
-        <div>
-          <div>데스크탑 배너 이미지 (1140 X 260)</div>
-          {images.bg_img ? (
-            <div className={classes.flex}>
-              <IconButton
-                classes={{ root: classes.btn }}
-                onClick={() => setImages({ ...images, bg_img: undefined })}
-              >
-                <CloseIcon />
-              </IconButton>
-              <StorageImage image={images.bg_img} />
-            </div>
-          ) : (
-            <>
-              <Typography color="error">{errors?.bgFiles?.message}</Typography>
-              <input type="file" name="bgFiles" ref={register} />
-            </>
-          )}
-        </div>
-        <div>
-          <div>모바일 배너 이미지 (360 X 180)</div>
-          {images.mb_img ? (
-            <div className={classes.flex}>
-              <IconButton
-                classes={{ root: classes.btn }}
-                onClick={() => setImages({ ...images, mb_img: undefined })}
-              >
-                <CloseIcon />
-              </IconButton>
-              <StorageImage image={images.mb_img} />
-            </div>
-          ) : (
-            <>
-              <Typography color="error">{errors?.mbFiles?.message}</Typography>
-              <input type="file" name="mbFiles" ref={register} />
-            </>
-          )}
-        </div>
-      </Container>
+      <Typography variant="h3" color="textPrimary">
+        그룹 정보 수정
+      </Typography>
+      <Controller
+        name="title"
+        defaultValue=""
+        control={control}
+        rules={{ required: "필수입력" }}
+        as={
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            label="그룹 명"
+            autoFocus
+          />
+        }
+      />
+      <input defaultValue={group.id} name="id" type="hidden" ref={register} />
+      <div>
+        <div>데스크탑 배너 이미지 (1140 X 260)</div>
+        {images.bg_img ? (
+          <div className={classes.flex}>
+            <IconButton
+              classes={{ root: classes.btn }}
+              onClick={() => setImages({ ...images, bg_img: undefined })}
+            >
+              <CloseIcon />
+            </IconButton>
+            <StorageImage image={images.bg_img} />
+          </div>
+        ) : (
+          <>
+            <Typography color="error">{errors?.bgFiles?.message}</Typography>
+            <input type="file" name="bgFiles" ref={register} />
+          </>
+        )}
+      </div>
+      <div>
+        <div>모바일 배너 이미지 (360 X 180)</div>
+        {images.mb_img ? (
+          <div className={classes.flex}>
+            <IconButton
+              classes={{ root: classes.btn }}
+              onClick={() => setImages({ ...images, mb_img: undefined })}
+            >
+              <CloseIcon />
+            </IconButton>
+            <StorageImage image={images.mb_img} />
+          </div>
+        ) : (
+          <>
+            <Typography color="error">{errors?.mbFiles?.message}</Typography>
+            <input type="file" name="mbFiles" ref={register} />
+          </>
+        )}
+      </div>
       <BtnSubmitDesktop text="저장" />
     </form>
   );

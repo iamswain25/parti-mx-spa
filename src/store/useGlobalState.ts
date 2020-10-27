@@ -8,27 +8,22 @@ export const initialState = {
   groupId: "home",
   boardId: null,
   sort: 0,
-  permission: undefined,
-  refetch: {},
-  // loading: true,
+  role: undefined,
 };
 interface GlobalType {
   success: any;
   groupId: string;
   boardId: string | null;
   error: any;
-  permission: UserStatus;
+  role?: "organizer" | "member" | "user" | null;
   loginModal: boolean;
-  currentUser: firebase.User | null | undefined;
+  currentUser?: firebase.User | null;
   sort: number;
-  refetch: object;
-  // loading: boolean;
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export enum keys {
   SHOW_LOGIN_MODAL = "loginModal",
   ERROR = "error",
-  // LOADING = "loading",
   SORT = "sort",
   SUCCESS = "success",
   PERMISSION = "permission",
@@ -55,8 +50,8 @@ export function useError() {
 export function useLoginModal() {
   return useGlobalState("loginModal");
 }
-export function usePermission() {
-  return useGlobalState("permission");
+export function useRole() {
+  return useGlobalState("role");
 }
 export function useSort() {
   return useGlobalState("sort");

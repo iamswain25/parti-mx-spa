@@ -18,5 +18,5 @@ export default function useEffectParams(props?: { board_id?: string }) {
       boardState[1](board_id);
     }
   }, [board_id, boardState]);
-  return null;
+  return [groupState, boardState];
 }

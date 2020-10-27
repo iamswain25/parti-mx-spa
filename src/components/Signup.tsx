@@ -9,6 +9,7 @@ import useRedirectIfLogin from "./useRedirectIfLogin";
 
 import { Link } from "react-router-dom";
 import { useError } from "../store/useGlobalState";
+import firebase from "firebase";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -58,9 +59,12 @@ export default function Signup() {
   const { handleSubmit, register, errors } = useForm<FormData>();
   async function formHandler(form: FormData) {
     const { email, password } = form;
-
     try {
-      await auth.createUserWithEmailAndPassword(email, password);
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        email,
+        password
+      );
+      await auth.currentUser?.linkWithCredential(credential);
     } catch (error) {
       setError(error.message);
     }

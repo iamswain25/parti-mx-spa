@@ -6,6 +6,7 @@ import { Grid, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import useGroup from "../store/useGroup";
 import StorageImage from "./StorageImage";
+import { useRole } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -94,8 +95,8 @@ const useStyles = makeStyles((theme) => {
 export default function GroupLogoContainer() {
   const [group] = useGroup(true);
   const classes = useStyles();
-  const { title, status, created_at, bg_img, mb_img, user_count } = group || {};
-  const isOrg = status === "organizer";
+  const { title, created_at, bg_img, mb_img, user_count } = group || {};
+  const [role] = useRole();
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
@@ -111,7 +112,9 @@ export default function GroupLogoContainer() {
           </Typography>
           <div className={classes.groupInfo}>
             <span>개설 {semanticDate(created_at)}</span>
-            {isOrg && <Link to="members">멤버 {user_count}</Link>}
+            {role === "organizer" && (
+              <Link to="members">멤버 {user_count}</Link>
+            )}
             <MenuGroup group={group} />
           </div>
         </div>

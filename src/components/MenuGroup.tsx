@@ -5,13 +5,13 @@ import { Group } from "../types";
 import { useHistory } from "react-router-dom";
 import useGroupExit from "./useGroupExit";
 import useGroupDelete from "../store/useGroupDelete";
-import { useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser, useGroupId, useRole } from "../store/useGlobalState";
 export default function MenuGroup({ group }: { group: Group }) {
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
-  const status = group?.status;
-  const isOrg = status === "organizer";
-  const isUser = status === "user";
+  const [groupId] = useGroupId();
+  const [role] = useRole();
+  const isMember = role === "member";
   const isMine = userId === group.created_by;
   const { push } = useHistory();
   const exitGroup = useGroupExit();
@@ -24,12 +24,14 @@ export default function MenuGroup({ group }: { group: Group }) {
     setAnchorEl(null);
   };
   function boardHandler() {
-    push("/boards");
+    push(`${groupId}/boards`);
+    handleClose();
   }
   function groupHandler() {
-    push("/group/edit");
+    push(`/${groupId}/edit`);
+    handleClose();
   }
-  if (!(isOrg || isUser)) {
+  if (!(role === "organizer" || isMember)) {
     return null;
   }
   return (
@@ -48,8 +50,12 @@ export default function MenuGroup({ group }: { group: Group }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {isOrg && <MenuItem onClick={groupHandler}>그룹 정보 수정</MenuItem>}
-        {isOrg && <MenuItem onClick={boardHandler}>게시판 수정</MenuItem>}
+        {role === "organizer" && (
+          <MenuItem onClick={groupHandler}>그룹 정보 수정</MenuItem>
+        )}
+        {role === "organizer" && (
+          <MenuItem onClick={boardHandler}>게시판 수정</MenuItem>
+        )}
         <MenuItem onClick={exitGroup}>그룹 탈퇴</MenuItem>
         {isMine && <MenuItem onClick={deleteGroup}>그룹 삭제</MenuItem>}
       </Menu>

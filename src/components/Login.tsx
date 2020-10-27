@@ -13,8 +13,6 @@ export default function Login() {
     const { email, password } = form;
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      // @ts-ignore
-      wsLink.subscriptionClient.close(false);
     } catch (error) {
       loginError(error, setError);
     }

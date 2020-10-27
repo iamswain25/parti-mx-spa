@@ -1,10 +1,10 @@
 import React from "react";
-import { usePermission } from "../store/useGlobalState";
+import { useRole } from "../store/useGlobalState";
 import { UserStatus } from "../types";
-export default function usePermEffect(perm?: UserStatus) {
-  const [, setPerm] = usePermission();
+export default function usePermEffect(perm?: any) {
+  const [, setRole] = useRole();
   React.useEffect(() => {
-    setPerm(perm);
-  }, [perm, setPerm]);
+    setRole(perm);
+  }, [perm, setRole]);
   return null;
 }

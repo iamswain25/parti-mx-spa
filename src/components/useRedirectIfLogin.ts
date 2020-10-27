@@ -8,7 +8,7 @@ export default function useRedirectIfLogin() {
   const [currentUser] = useCurrentUser();
   React.useEffect(() => {
     if (currentUser?.email) {
-      console.log("leave!!!");
+      alert("이미 로그인 되었습니다.");
       history.replace(from);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

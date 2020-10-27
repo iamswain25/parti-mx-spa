@@ -51,10 +51,7 @@ export default function BoardsSetting() {
   const classes = useStyles();
   const history = useHistory();
   const [groupId] = useGroupId();
-
-  const { handleSubmit, register, errors, control, reset } = useForm<
-    BoardsForm
-  >();
+  const { handleSubmit, register, errors, control } = useForm<BoardsForm>();
   const { fields, append, remove } = useFieldArray<Board>({
     name: "boards",
     control,

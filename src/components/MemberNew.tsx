@@ -4,7 +4,7 @@ import { Container, TextField, Button, Select } from "@material-ui/core";
 import {
   useError,
   useGroupId,
-  usePermission,
+  useRole,
   useSuccess,
 } from "../store/useGlobalState";
 import { Redirect } from "react-router-dom";
@@ -31,7 +31,7 @@ interface AuthResult {
 export default function MemberNew() {
   const classes = useStyles();
   const [groupId] = useGroupId();
-  const [status] = usePermission();
+  const [status] = useRole();
   const [, setError] = useError();
   const [, setSuccess] = useSuccess();
   const { handleSubmit, register, errors } = useForm<FormType>();

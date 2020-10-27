@@ -10,21 +10,6 @@ import { Board } from "../types";
 import useEffectParams from "../store/useEffectParams";
 const useStyles = makeStyles((theme) => {
   return {
-    grid: {
-      display: "flex",
-      [theme.breakpoints.up("md")]: {
-        marginTop: theme.spacing(3),
-        paddingLeft: 30,
-        paddingRight: 30,
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: 1200,
-      },
-      [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
-        marginTop: theme.spacing(1),
-      },
-    },
     left: {
       [theme.breakpoints.up("md")]: {
         marginRight: theme.spacing(3),
@@ -52,7 +37,7 @@ export default function Home() {
   return (
     <>
       {isDesktop ? (
-        <section className={classes.grid}>
+        <>
           <ul className={classes.left}>
             {notice?.map((b: Board) => (
               <HomeBoardNotice key={b.id} board={b} />
@@ -69,10 +54,10 @@ export default function Home() {
               <HomeBoardEvent key={b.id} board={b} />
             ))}
           </ul>
-        </section>
+        </>
       ) : (
         //모바일
-        <section className={classes.grid}>
+        <>
           {notice?.map((b: Board) => (
             <HomeBoardNotice key={b.id} board={b} />
           ))}
@@ -85,7 +70,7 @@ export default function Home() {
           {event?.map((b: Board) => (
             <HomeBoardEvent key={b.id} board={b} />
           ))}
-        </section>
+        </>
       )}
     </>
   );
