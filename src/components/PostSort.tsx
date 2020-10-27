@@ -1,7 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Select, MenuItem } from "@material-ui/core";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useSort } from "../store/useGlobalState";
+
 const useStyles = makeStyles((theme) => {
   return {
     sort: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function PostSort() {
   const classes = useStyles();
-  const [sort, setSort] = useGlobalState(keys.SORT);
+  const [sort, setSort] = useSort();
   function handleChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) {

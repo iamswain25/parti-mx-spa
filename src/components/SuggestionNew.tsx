@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
-import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import ImageFileDropzone from "./ImageFileDropzone";
 import { makeNewVariables } from "./makePostVariables";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -16,7 +16,7 @@ export default function SuggestionNew() {
   }>();
   const history = useHistory();
   const [currentUser] = useCurrentUser();
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setSuccess] = useSuccess();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<SuggestionFormdata>();

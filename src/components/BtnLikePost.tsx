@@ -1,7 +1,11 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
+import {
+  useCurrentUser,
+  useSuccess,
+  useLoginModal,
+} from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
 const useStyles = makeStyles((theme) => ({
@@ -39,9 +43,9 @@ const useStyles = makeStyles((theme) => ({
 export default function BtnLikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
   const count = 0;
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
-  const [, showLogin] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  const [, showLogin] = useLoginModal();
   async function handler() {
     if (currentUser) {
       await firestore

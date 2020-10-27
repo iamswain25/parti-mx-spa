@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
-import { useGlobalState, keys } from "../store/useGlobalState";
+
 import { EventFormdata } from "../types";
 import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";

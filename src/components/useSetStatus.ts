@@ -1,6 +1,7 @@
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useSuccess } from "../store/useGlobalState";
+
 export default function useSetStatus(callback?: (bool: boolean) => void) {
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setSuccess] = useSuccess();
   async function handler(variables: any) {
     // await set(variables);
     callback && callback(true);

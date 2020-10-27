@@ -1,11 +1,11 @@
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { useHistory } from "react-router-dom";
 import { firestore } from "../config/firebase";
+import { useSuccess } from "../store/useGlobalState";
 import { Post } from "../types";
 
 export default function usePostResolve(id: string) {
   const { push } = useHistory();
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setSuccess] = useSuccess();
   async function handler() {
     await firestore
       .collection("posts")

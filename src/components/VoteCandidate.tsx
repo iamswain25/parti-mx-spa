@@ -4,7 +4,8 @@ import { Grid, Box, Typography } from "@material-ui/core";
 import { LinearProgressActive, LinearProgressGrey } from "./LinearProgress";
 import CheckIcon from "@material-ui/icons/Check";
 import useWhoVotedModal from "./useWhoVotedModal";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useError } from "../store/useGlobalState";
+
 export default function VoteCandidate({
   candidate: c,
   total = 0,
@@ -24,7 +25,7 @@ export default function VoteCandidate({
   isClosed: boolean;
   onClick: (candidate_id: string, myVote: boolean) => Promise<any>;
 }) {
-  const [, setError] = useGlobalState(keys.ERROR);
+  const [, setError] = useError();
   const [myVote, percentage, width, count] = React.useMemo(() => {
     const count = 0;
     return [

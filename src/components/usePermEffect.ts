@@ -1,8 +1,8 @@
 import React from "react";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { usePermission } from "../store/useGlobalState";
 import { UserStatus } from "../types";
 export default function usePermEffect(perm?: UserStatus) {
-  const [, setPerm] = useGlobalState(keys.PERMISSION);
+  const [, setPerm] = usePermission();
   React.useEffect(() => {
     setPerm(perm);
   }, [perm, setPerm]);

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
-import { useGlobalState, keys } from "../store/useGlobalState";
+
 import { Post, Img, File as File2, NoticeFormdata } from "../types";
 import SavedImageFile from "./SavedImageFile";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";

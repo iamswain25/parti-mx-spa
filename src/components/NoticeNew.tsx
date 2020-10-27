@@ -1,42 +1,46 @@
 import React from "react";
-import { useGroupId } from "../store/useGlobalState";
-
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { makeNewVariables } from "./makePostVariables";
 import { NoticeFormdata } from "../types";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
+import { firestore } from "../config/firebase";
 
 export default function NoticeNew() {
-  const { board_id } = useParams<{ board_id: string }>();
+  const { board_id, group_id } = useParams<{
+    board_id: string;
+    group_id: string;
+  }>();
   const history = useHistory();
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  
-
-  const [groupId] = useGroupId();
+  const [currentUser] = useCurrentUser();
+  const [, setSuccess] = useSuccess();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<NoticeFormdata>();
   const { handleSubmit } = formControl;
   async function handleForm(form: NoticeFormdata) {
-    
-    // const variables = await makeNewVariables(form, {
-    //   board_id,
-    //   group_id,
-    //   imageArr,
-    //   fileArr,
-    //   setSuccess,
-    // });
-    // const res = await insert({
-    //   variables,
-    // });
-    // const id = res?.data?.insert_mx_posts_one?.id;
-    // history.push("/post/" + id);
+    const variables = await makeNewVariables(form, {
+      board_id,
+      group_id,
+      imageArr,
+      fileArr,
+      setSuccess,
+      created_by: currentUser?.uid,
+      updated_by: currentUser?.uid,
+      count_like: 0,
+      count_comment: 0,
+      count_view: 0,
+      updated_at: new Date(),
+      created_at: new Date(),
+      type: "notice",
+    });
+    const doc = await firestore.collection("posts").add(variables);
+    history.push("/post/" + doc.id);
   }
 
   return (

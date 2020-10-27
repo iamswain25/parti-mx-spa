@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -29,16 +28,16 @@ import {
   KaKaoStoryButton,
   KaKaoTalkButton,
 } from "react-social-kr";
-
 import kakaotalk from "../assets/images/kakaotalk.png";
 import kakaostory from "../assets/images/kakaostory.png";
 import naverblog from "../assets/images/naverblog.png";
 import StorageImage from "./StorageImage";
+import { useSuccess } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => ({
   root: { width: 64, height: 64, borderRadius: 32 },
 }));
 export default function ShareButtons({ post: p }: { post: Post }) {
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setSuccess] = useSuccess();
   const [open, setOpen] = React.useState(false);
   const url = window.location.href;
   const pathname = window.location.pathname;

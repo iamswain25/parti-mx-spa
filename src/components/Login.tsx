@@ -3,12 +3,11 @@ import { FormData } from "../types";
 import LoginForm from "./LoginForm";
 import { auth } from "../config/firebase";
 import useRedirectIfLogin from "./useRedirectIfLogin";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
-
+import { useError } from "../store/useGlobalState";
 
 export default function Login() {
-  const [, setError] = useGlobalState(keys.ERROR);
+  const [, setError] = useError();
   useRedirectIfLogin();
   const handleForm = async (form: FormData) => {
     const { email, password } = form;

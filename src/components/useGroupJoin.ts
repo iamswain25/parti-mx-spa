@@ -1,9 +1,8 @@
-import { useGlobalState, keys } from "../store/useGlobalState";
 import useMe from "../store/useMe";
 import { firestore } from "../config/firebase";
-import { useGroupId } from "../store/useGlobalState";
+import { useGroupId, useLoginModal } from "../store/useGlobalState";
 export default function useGroupJoin() {
-  const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  const [, setVisible] = useLoginModal();
   const [groupId] = useGroupId();
   const [me] = useMe();
   async function handler() {

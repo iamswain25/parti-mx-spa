@@ -1,11 +1,10 @@
 import React from "react";
-import { useGroupId } from "../store/useGlobalState";
+import { useGroupId, useSuccess } from "../store/useGlobalState";
 
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { VoteFormdata } from "../types";
 import { makeNewVariables } from "./makePostVariables";
 import VoteInputs from "./VoteInputs";
@@ -13,11 +12,8 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteNew() {
-  // const { board_id } = useParams();
   const history = useHistory();
-  
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
-
+  const [, setSuccess] = useSuccess();
   const [groupId] = useGroupId();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
@@ -27,7 +23,6 @@ export default function VoteNew() {
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {
-    
     const {
       closingMethod,
       candidates,

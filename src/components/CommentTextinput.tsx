@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, makeStyles, Button, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { useGlobalState, keys, useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser, useLoginModal } from "../store/useGlobalState";
 import { Comment, CommentInput } from "../types";
 const useStyles = makeStyles((theme) => {
   return {
@@ -42,7 +42,7 @@ export default function CommentTextinput({
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
   const userId = currentUser?.uid;
-  const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  const [, setVisible] = useLoginModal();
   const ref = React.useRef<HTMLInputElement | null>(null);
 
   React.useEffect(() => {

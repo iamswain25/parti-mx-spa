@@ -1,12 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, TextField, Button, Select } from "@material-ui/core";
-import { useGroupId } from "../store/useGlobalState";
+import {
+  useError,
+  useGroupId,
+  usePermission,
+  useSuccess,
+} from "../store/useGlobalState";
 import { Redirect } from "react-router-dom";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
-import { functions, auth } from "../config/firebase";
 import { userGroupStatusList } from "../helpers/options";
 import HeaderBack from "./HeaderBack";
 // const authInvite = functions.httpsCallable("authInvite", { timeout: 300000 });
@@ -28,9 +31,9 @@ interface AuthResult {
 export default function MemberNew() {
   const classes = useStyles();
   const [groupId] = useGroupId();
-  const [status] = useGlobalState(keys.PERMISSION);
-  const [, setError] = useGlobalState(keys.ERROR);
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [status] = usePermission();
+  const [, setError] = useError();
+  const [, setSuccess] = useSuccess();
   const { handleSubmit, register, errors } = useForm<FormType>();
   if (status !== "organizer") {
     return <Redirect to="/" />;

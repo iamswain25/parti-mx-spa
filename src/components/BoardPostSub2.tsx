@@ -8,7 +8,7 @@ export default function BoardPostSub2({ post: p }: { post: Post }) {
   const commentCount = p.count_comment || 0;
   const name = p?.name;
   const alteredName =
-    name.indexOf("@") > 0 ? name.substr(0, name.indexOf("@")) : name;
+    name?.indexOf("@") > 0 ? name?.substr(0, name?.indexOf("@")) : name;
   return (
     <Box color="grey.600">
       <Typography variant="body2">

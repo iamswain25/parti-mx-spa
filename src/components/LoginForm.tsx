@@ -6,9 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import { FormData } from "../types";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { useLoginModal } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -54,7 +54,7 @@ type LoginFormProps = {
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
   const classes = useStyles();
-  const [, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
+  const [, setVisible] = useLoginModal();
   const { handleSubmit, register, errors } = useForm<FormData>();
   function closeLoginModal() {
     setVisible(false);

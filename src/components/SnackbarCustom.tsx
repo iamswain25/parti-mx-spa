@@ -1,9 +1,10 @@
 import React from "react";
 import { Snackbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useError } from "../store/useGlobalState";
+
 export default function SnackbarCustom() {
-  const [error, setError] = useGlobalState(keys.ERROR);
+  const [error, setError] = useError();
 
   function handleClose(
     event: React.SyntheticEvent | React.MouseEvent,

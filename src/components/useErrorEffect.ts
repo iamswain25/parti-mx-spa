@@ -1,7 +1,7 @@
 import React from "react";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useError } from "../store/useGlobalState";
 export default function useErrorEffect(error: any) {
-  const [, setError] = useGlobalState(keys.ERROR);
+  const [, setError] = useError();
   React.useEffect(() => {
     if (error) {
       setError(error);

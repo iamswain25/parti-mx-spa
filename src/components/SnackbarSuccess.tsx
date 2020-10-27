@@ -2,9 +2,10 @@ import React from "react";
 import { Snackbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import MuiAlert from "@material-ui/lab/Alert";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useSuccess } from "../store/useGlobalState";
+
 export default function SnackbarSuccess() {
-  const [success, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [success, setSuccess] = useSuccess();
   function handleClose(
     event: React.SyntheticEvent | React.MouseEvent,
     reason?: string

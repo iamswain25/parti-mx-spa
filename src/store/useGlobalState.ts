@@ -1,7 +1,7 @@
 import { createGlobalState } from "react-hooks-global-state";
 import { UserStatus } from "../types";
 export const initialState = {
-  showLoginModal: false,
+  loginModal: false,
   error: null,
   success: null,
   currentUser: undefined,
@@ -18,7 +18,7 @@ interface GlobalType {
   boardId: string | null;
   error: any;
   permission: UserStatus;
-  showLoginModal: boolean;
+  loginModal: boolean;
   currentUser: firebase.User | null | undefined;
   sort: number;
   refetch: object;
@@ -26,7 +26,7 @@ interface GlobalType {
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export enum keys {
-  SHOW_LOGIN_MODAL = "showLoginModal",
+  SHOW_LOGIN_MODAL = "loginModal",
   ERROR = "error",
   // LOADING = "loading",
   SORT = "sort",
@@ -51,4 +51,13 @@ export function useSuccess() {
 }
 export function useError() {
   return useGlobalState("error");
+}
+export function useLoginModal() {
+  return useGlobalState("loginModal");
+}
+export function usePermission() {
+  return useGlobalState("permission");
+}
+export function useSort() {
+  return useGlobalState("sort");
 }

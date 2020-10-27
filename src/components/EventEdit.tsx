@@ -1,10 +1,8 @@
 import React from "react";
-
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import {
   Post,
   Img,
@@ -17,11 +15,12 @@ import { makeUpdateVariables } from "./makePostVariables";
 import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
+import { useSuccess } from "../store/useGlobalState";
 
 export default function EventEdit({ post: p }: { post: Post }) {
   const { id, title, body, files, images, html } = p;
   const history = useHistory();
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setSuccess] = useSuccess();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);

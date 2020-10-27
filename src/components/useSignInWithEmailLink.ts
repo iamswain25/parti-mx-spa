@@ -1,9 +1,10 @@
 import React from "react";
 import { auth } from "../config/firebase";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useError, useSuccess } from "../store/useGlobalState";
+
 export default function useSignInWithEmailLink() {
-  const [, setError] = useGlobalState(keys.ERROR);
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
+  const [, setError] = useError();
+  const [, setSuccess] = useSuccess();
   React.useEffect(() => {
     if (auth.isSignInWithEmailLink(window.location.href)) {
       let email = window.localStorage.getItem("emailForSignIn");

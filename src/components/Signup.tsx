@@ -6,8 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Button, Typography, Container, Box } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
-import { useGlobalState, keys } from "../store/useGlobalState";
+
 import { Link } from "react-router-dom";
+import { useError } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -53,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Signup() {
   useRedirectIfLogin();
   const classes = useStyles();
-
-  const [, setError] = useGlobalState(keys.ERROR);
+  const [, setError] = useError();
   const { handleSubmit, register, errors } = useForm<FormData>();
   async function formHandler(form: FormData) {
     const { email, password } = form;

@@ -10,11 +10,11 @@ import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { firestore, uploadFileByPath } from "../config/firebase";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import CloseIcon from "@material-ui/icons/Close";
 import useGroup from "../store/useGroup";
 import StorageImage from "./StorageImage";
 import useEffectParams from "../store/useEffectParams";
+import { useError } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +48,7 @@ export default function GroupEdit() {
   const history = useHistory();
   useEffectParams();
   const [images, setImages] = React.useState<any>({});
-  const [, setError] = useGlobalState(keys.ERROR);
+  const [, setError] = useError();
   const { handleSubmit, register, errors, reset, control } = useForm<
     GroupForm
   >();

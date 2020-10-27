@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import { useDebounce } from "use-debounce";
-import { useGroupId } from "../store/useGlobalState";
+import { useGroupId, usePermission } from "../store/useGlobalState";
 import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
@@ -19,7 +19,7 @@ import AvatarNameEmail from "./AvatarNameEmail";
 import UserGroupStatus from "./UserGroupStatus";
 import useSetStatus from "./useSetStatus";
 import { UserGroup } from "../types";
-import { useGlobalState, keys } from "../store/useGlobalState";
+
 import UserGroupAdmit from "./UserGroupAdmit";
 import HeaderBack from "./HeaderBack";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -54,7 +54,7 @@ export default function MemberSetting() {
   const [keyword, setKeyword] = React.useState("");
   const [items, setItems] = React.useState<UserGroup[]>([]);
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
-  const [status] = useGlobalState(keys.PERMISSION);
+  const [status] = usePermission();
 
   async function fetchData(isSearching = false) {
     // const usergroups = await client.query<UserGroups>({

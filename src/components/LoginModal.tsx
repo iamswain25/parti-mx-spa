@@ -4,8 +4,8 @@ import { auth } from "../config/firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import LoginForm from "./LoginForm";
-import { useGlobalState, keys } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
+import { useError, useLoginModal } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LoginModal() {
-  const [isVisible, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
-  const [, setError] = useGlobalState(keys.ERROR);
+  const [isVisible, setVisible] = useLoginModal();
+  const [, setError] = useError();
   const classes = useStyles();
   function handleClose() {
     setVisible(false);

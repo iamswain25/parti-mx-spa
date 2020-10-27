@@ -1,6 +1,6 @@
 import React from "react";
 import { Select, FormControl, InputLabel } from "@material-ui/core";
-import { useGlobalState, keys } from "../store/useGlobalState";
+import { useSuccess, useError } from "../store/useGlobalState";
 
 export default function SelectBoardPermission({
   board,
@@ -10,8 +10,8 @@ export default function SelectBoardPermission({
   update: any;
 }) {
   const { permission } = board;
-  const [, setSuccess] = useGlobalState(keys.SUCCESS);
-  const [, setError] = useGlobalState(keys.ERROR);
+  const [, setSuccess] = useSuccess();
+  const [, setError] = useError();
   async function handleChange(event: React.ChangeEvent<{ value: unknown }>) {
     const { value } = event.target;
     try {
