@@ -13,7 +13,7 @@ export default function BoardPostSub2({ post: p }: { post: Post }) {
     <Box color="grey.600">
       <Typography variant="body2">
         <Box component="span" mr={1}>
-          {alteredName}
+          {alteredName || "익명"}
         </Box>
         <Box component="span" mr={1}>
           {semanticDate(p.created_at)}

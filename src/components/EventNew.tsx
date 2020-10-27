@@ -1,20 +1,22 @@
 import React from "react";
-import { useGroupId } from "../store/useGlobalState";
-
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
-
 import { EventFormdata } from "../types";
 import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
+import { makeNewVariables } from "./makePostVariables";
+import { firestore } from "../config/firebase";
 export default function EventNew() {
-  const { board_id } = useParams<{ board_id: string }>();
+  const { board_id, group_id } = useParams<{
+    board_id: string;
+    group_id: string;
+  }>();
   const history = useHistory();
-
-  const [groupId] = useGroupId();
+  const [, setSuccess] = useSuccess();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<EventFormdata>();
@@ -22,46 +24,39 @@ export default function EventNew() {
   async function handleForm(form: EventFormdata) {
     const { event_date, deadline, countPeople, place, ...rest } = form;
     const metadata = {
-      event_date,
-      deadline,
+      event_date: new Date(event_date),
+      deadline: new Date(deadline),
       countPeople,
       place,
     };
-    // const variables = await makeNewVariables(rest, {
-    //   board_id,
-    //   group_id,
-    //   imageArr,
-    //   fileArr,
-    //   setSuccess,
-    //   metadata,
-    // });
-    // const res = await insert({
-    //   variables,
-    // });
-    // const id = res?.data?.insert_mx_posts_one?.id;
-    // history.push("/post/" + id);
+    const variables = await makeNewVariables(rest, {
+      board_id,
+      group_id,
+      imageArr,
+      fileArr,
+      setSuccess,
+      metadata,
+      type: "event",
+    });
+    const doc = await firestore.collection("posts").add(variables);
+    history.push("/post/" + doc.id);
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
-        <Hidden mdUp>
-          <HeaderNew title="모임" />
-        </Hidden>
-        <Box mt={2}>
-          <Container component="main" maxWidth="md">
-            <Typography variant="h2">모임</Typography>
-            <EventInputs formControl={formControl} />
-            <ImageFileDropzone
-              images={imageArr}
-              setImages={setImageArr}
-              files={fileArr}
-              setFiles={setFileArr}
-            />
-            <BtnSubmitDesktop text="모임 생성" />
-          </Container>
-        </Box>
-      </form>
-    </>
+    <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
+      <Box mt={2}>
+        <Container>
+          <Typography variant="h2">모임</Typography>
+          <EventInputs formControl={formControl} />
+          <ImageFileDropzone
+            images={imageArr}
+            setImages={setImageArr}
+            files={fileArr}
+            setFiles={setFileArr}
+          />
+          <BtnSubmitDesktop text="모임 생성" />
+        </Container>
+      </Box>
+    </form>
   );
 }

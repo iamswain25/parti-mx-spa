@@ -7,6 +7,7 @@ import BoardPostEvent from "./BoardPostEvent";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
+import usePosts from "../store/usePosts";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => {
 export default function HomeBoardEvent({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
+  const [posts] = usePosts({ board_id: b.id });
   return (
     <>
       <section className={classes.container}>
@@ -65,7 +67,7 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
         </Grid>
         {isDesktop && <Divider light />}
         <div className={classes.postContainer}>
-          {b.posts.map((p, i) => (
+          {posts.map((p, i) => (
             <BoardPostEvent key={i} post={p} />
           ))}
         </div>

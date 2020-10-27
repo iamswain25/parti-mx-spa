@@ -19,6 +19,7 @@ export default function GoogleCanlendarAdd(props: { post: Post }) {
   const metadata = props.post.metadata as EventMetadata;
   const title = encodeURI(props.post.title);
   const place = encodeURI(metadata.place);
+  console.log(metadata);
   const event_date = getGoogleCalendarDate(metadata.event_date);
   const body = encodeURI(props.post.body + "\n\n---\n" + window.location.href);
   return (

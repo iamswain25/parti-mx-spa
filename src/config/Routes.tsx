@@ -31,6 +31,7 @@ import useEffectRole from "../store/useEffectRole";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    justifyContent: "center",
     [theme.breakpoints.up("md")]: {
       marginTop: theme.spacing(3),
       paddingLeft: 30,

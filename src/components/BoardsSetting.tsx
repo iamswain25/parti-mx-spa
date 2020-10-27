@@ -21,6 +21,7 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import HeaderBack from "./HeaderBack";
 import { boardPermissionList } from "../helpers/options";
 import { useGroupId } from "../store/useGlobalState";
+import useBoards from "../store/useBoards";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -51,6 +52,7 @@ export default function BoardsSetting() {
   const classes = useStyles();
   const history = useHistory();
   const [groupId] = useGroupId();
+  const [boards] = useBoards();
   const { handleSubmit, register, errors, control } = useForm<BoardsForm>();
   const { fields, append, remove } = useFieldArray<Board>({
     name: "boards",
