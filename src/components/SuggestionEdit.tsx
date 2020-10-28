@@ -39,7 +39,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
     });
-    firestore.collection("posts").doc(id).update(variables);
+    await firestore.collection("posts").doc(id).update(variables);
     history.push("/post/" + id);
   }
 
