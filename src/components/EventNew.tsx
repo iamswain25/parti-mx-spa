@@ -1,5 +1,5 @@
 import React from "react";
-import { useSuccess } from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
@@ -18,6 +18,7 @@ export default function EventNew() {
   const [, setSuccess] = useSuccess();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
+  const [currentUser] = useCurrentUser();
   const formControl = useForm<EventFormdata>();
   const { handleSubmit } = formControl;
   async function handleForm(form: EventFormdata) {
@@ -35,6 +36,14 @@ export default function EventNew() {
       fileArr,
       setSuccess,
       metadata,
+      created_by: currentUser?.uid,
+      updated_by: currentUser?.uid,
+      name: currentUser?.displayName ?? currentUser?.email,
+      count_like: 0,
+      count_comment: 0,
+      count_view: 0,
+      updated_at: new Date(),
+      created_at: new Date(),
       type: "event",
     });
     const doc = await firestore.collection("posts").add(variables);

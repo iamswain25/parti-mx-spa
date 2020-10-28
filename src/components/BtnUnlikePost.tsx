@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
     // backgroundColor: theme.palette.primary.dark,
-    // color: theme.palette.common.white,
-    color: theme.palette.primary.dark,
+    color: theme.palette.common.white,
+    // color: theme.palette.primary.dark,
     backgroundColor: theme.palette.primary.light,
   },
 }));

@@ -1,6 +1,6 @@
 import React from "react";
 import { Post } from "../types";
-import { Box, Grid, Divider, makeStyles, Hidden } from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
@@ -9,8 +9,8 @@ import useDesktop from "./useDesktop";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 import NoticeComment from "./NoticeComment";
-import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
+import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -72,8 +72,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function NoticeDetail({ post: p }: { post: Post }) {
-  const { images, createdBy, created_at, files } = p;
-  const liked = p.my_like_count;
+  const { images, created_at, files, name } = p;
+  const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
@@ -81,19 +81,12 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
       <Box paddingX={2}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Hidden smDown implementation="css">
-            <Box display="flex" alignItems="center">
-              <ShareButtons post={p} />
-              <PostMenu post={p} />
-            </Box>
-          </Hidden>
+          <Box display="flex" alignItems="center">
+            <PostMenu post={p} />
+          </Box>
         </Box>
         <Box mt={1}>
-          <AvatarNameDate
-            name={createdBy?.name}
-            photo_url={createdBy?.photo_url}
-            created_at={created_at}
-          />
+          <AvatarNameDate name={name} created_at={created_at} />
         </Box>
         <Box my={2}>
           <Divider light />

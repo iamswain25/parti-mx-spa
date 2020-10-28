@@ -6,6 +6,7 @@ import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
 import usePostLikedUsers from "../store/usePostLikedUsers";
+import useComments from "../store/useComments";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function EventComment({ post: p }: { post: Post }) {
   const { count_like, count_comment } = p;
-  const comments = p.comments;
+  const [comments] = useComments(p.id);
   const [likedUsers] = usePostLikedUsers(p.id);
   const comment = { post_id: p.id, body: "" } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);

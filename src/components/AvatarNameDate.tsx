@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function AvatarNameDate({
   name = "로딩중",
-  photo_url = "로딩중",
+  photo_url,
   created_at,
   justify = "space-between",
 }: {
@@ -39,7 +39,7 @@ export default function AvatarNameDate({
 }) {
   const classes = useStyles();
   const alteredName =
-    name.indexOf("@") > 0 ? name.substr(0, name.indexOf("@")) : name;
+    name?.indexOf("@") > 0 ? name?.substr(0, name?.indexOf("@")) : name;
   return (
     <Grid
       container

@@ -21,6 +21,7 @@ import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
 import EventComment from "./EventComment";
 import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
+import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -58,8 +59,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function EventDetail({ post: p }: { post: Post }) {
-  const { images, createdBy, created_at, files, metadata } = p as Event;
-  const liked = p.my_like_count;
+  const { images, name, created_at, files, metadata } = p as Event;
+  const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
@@ -67,19 +68,12 @@ export default function EventDetail({ post: p }: { post: Post }) {
       <Box paddingX={2}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Hidden smDown implementation="css">
-            <Box display="flex" alignItems="center">
-              <ShareButtons post={p} />
-              <PostMenu post={p} />
-            </Box>
-          </Hidden>
+          <Box display="flex" alignItems="center">
+            <PostMenu post={p} />
+          </Box>
         </Box>
         <Box mb={2} mt={1}>
-          <AvatarNameDate
-            name={createdBy?.name}
-            photo_url={createdBy?.photo_url}
-            created_at={created_at}
-          />
+          <AvatarNameDate name={name} created_at={created_at} />
         </Box>
         <Divider light />
         <Box my={2}>

@@ -10,7 +10,6 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
 import { firestore } from "../config/firebase";
-
 export default function NoticeNew() {
   const { board_id, group_id } = useParams<{
     board_id: string;
@@ -32,6 +31,7 @@ export default function NoticeNew() {
       setSuccess,
       created_by: currentUser?.uid,
       updated_by: currentUser?.uid,
+      name: currentUser?.displayName ?? currentUser?.email,
       count_like: 0,
       count_comment: 0,
       count_view: 0,

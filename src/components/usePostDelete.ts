@@ -1,4 +1,4 @@
-import { useError, useSuccess } from "../store/useGlobalState";
+import { useError, useRole, useSuccess } from "../store/useGlobalState";
 import { useHistory } from "react-router-dom";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
@@ -7,7 +7,7 @@ export default function usePostDelete(post: Post) {
   const { replace } = useHistory();
   const [, setSuccess] = useSuccess();
   const [, setError] = useError();
-
+  const [role] = useRole();
   async function handler() {
     try {
       const doc = await firestore.collection("posts").doc(post.id).get();
@@ -23,11 +23,15 @@ export default function usePostDelete(post: Post) {
   }
 
   return function () {
-    const input = window.prompt("비밀번호 4자리를 입력해 주세요");
-    if (input === post.password) {
-      handler();
+    if (role === "organizer") {
+      return handler();
     } else {
-      alert("비밀번호가 맞지 않습니다.");
+      const input = window.prompt("비밀번호 4자리를 입력해 주세요");
+      if (input === post.password) {
+        return handler();
+      } else {
+        alert("비밀번호가 맞지 않습니다.");
+      }
     }
   };
 }
