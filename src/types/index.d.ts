@@ -177,6 +177,8 @@ export type Post = {
   is_announced: boolean;
   created_at: firebase.firestore.Timestamp;
   updated_at: firebase.firestore.Timestamp;
+  announced_at: firebase.firestore.Timestamp;
+  denounced_at: firebase.firestore.Timestamp;
   location: { type: "Point"; coordinates: [number, number] };
   tags: string[];
   users: PostLike[];

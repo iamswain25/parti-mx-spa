@@ -1,7 +1,6 @@
 import React from "react";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { useParams } from "react-router-dom";
 import usePostDelete from "./usePostDelete";
 import { Post } from "../types";
 import usePostAnnounce from "./usePostAnnounce";
@@ -9,19 +8,21 @@ import usePostDenounce from "./usePostDenounce";
 import usePostEdit from "./usePostEdit";
 import usePostResolve from "./usePostResolve";
 import ShareButtons from "./ShareButtons";
+import { useCurrentUser, useRole } from "../store/useGlobalState";
 export default function PostMenu({ post: p }: { post: Post }) {
-  const { post_id } = useParams<{ post_id: string }>();
-  const postId = post_id;
-  const status = p?.board?.group?.status;
-  const isOrganizer = status === "organizer";
-  const isClosed = !!p?.closed_at;
+  const [currentUser] = useCurrentUser();
+  const [role] = useRole();
+  const isOrganizer = role === "organizer";
+  const isClosed = !!p.closed_at;
+  const isMine = p.created_by === currentUser?.uid;
   const isAnnounced = p.is_announced;
-  const isNotice = p?.type === "notice";
+  const isNotice = p.type === "notice";
+  const isSuggestion = p.type === "suggestion";
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const remove = usePostDelete(p);
-  const announce = usePostAnnounce(postId);
-  const denounce = usePostDenounce(postId);
-  const resolve = usePostResolve(postId);
+  const announce = usePostAnnounce(p);
+  const denounce = usePostDenounce(p);
+  const resolve = usePostResolve(p);
   const edit = usePostEdit(p);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,16 +31,18 @@ export default function PostMenu({ post: p }: { post: Post }) {
     setAnchorEl(null);
   };
   const menuItems = [];
-  menuItems.push(
-    <MenuItem onClick={edit} key={1}>
-      수정하기
-    </MenuItem>
-  );
-  menuItems.push(
-    <MenuItem onClick={remove} key={2}>
-      삭제하기
-    </MenuItem>
-  );
+  if (isSuggestion || isOrganizer || isMine) {
+    menuItems.push(
+      <MenuItem onClick={edit} key={1}>
+        수정하기
+      </MenuItem>
+    );
+    menuItems.push(
+      <MenuItem onClick={remove} key={2}>
+        삭제하기
+      </MenuItem>
+    );
+  }
   if (!isClosed && isOrganizer) {
     menuItems.push(
       <MenuItem onClick={resolve} key={5}>

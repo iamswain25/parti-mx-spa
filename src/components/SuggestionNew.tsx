@@ -35,6 +35,7 @@ export default function SuggestionNew() {
         count_like: 0,
         count_comment: 0,
         count_view: 0,
+        is_closed: false,
         updated_at: new Date(),
         created_at: new Date(),
         type: "suggestion",

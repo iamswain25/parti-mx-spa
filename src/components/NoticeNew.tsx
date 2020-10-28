@@ -35,6 +35,8 @@ export default function NoticeNew() {
       count_like: 0,
       count_comment: 0,
       count_view: 0,
+      is_closed: false,
+      is_announced: false,
       updated_at: new Date(),
       created_at: new Date(),
       type: "notice",
