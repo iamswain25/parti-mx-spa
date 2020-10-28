@@ -114,7 +114,7 @@ export default function GroupLogoContainer() {
               <div>loading...</div>
             ) : role ? (
               <Link to={`/${group.id}/profile`}>
-                {role}:{currentUser?.displayName}
+                {currentUser?.displayName}({role})
               </Link>
             ) : currentUser?.email ? (
               <button className={classes.groupJoin} onClick={joinHandler}>

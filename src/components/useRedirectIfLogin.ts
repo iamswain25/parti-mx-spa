@@ -12,5 +12,5 @@ export default function useRedirectIfLogin() {
       history.replace(from);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
+  }, [currentUser?.email]);
 }

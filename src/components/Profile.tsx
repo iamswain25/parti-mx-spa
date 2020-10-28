@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import CloseIcon from "@material-ui/icons/Close";
 import { useCurrentUser } from "../store/useGlobalState";
-import { storage, uploadFileByPath } from "../config/firebase";
+import { auth, storage, uploadFileByPath } from "../config/firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +40,7 @@ interface GroupForm {
 export default function Profile() {
   const classes = useStyles();
   const history = useHistory();
-  const [currentUser] = useCurrentUser();
+  const [currentUser, setCurrentUser] = useCurrentUser();
   const [photo, setPhoto] = React.useState<null | string>(null);
   const { handleSubmit, register, errors, control, reset } = useForm<
     GroupForm
@@ -63,7 +63,8 @@ export default function Profile() {
       await uploadFileByPath(bgFiles[0], path);
       variables.photoURL = await storage.ref(path).getDownloadURL();
     }
-    await currentUser?.updateProfile(variables);
+    await auth.currentUser?.updateProfile(variables);
+    setCurrentUser({ ...currentUser, ...variables } as firebase.User);
     history.push("/home");
   }
   return (

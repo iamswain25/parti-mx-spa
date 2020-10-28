@@ -23,24 +23,28 @@ export default function SuggestionNew() {
   const { handleSubmit } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
-    const variables = await makeNewVariables(form, {
-      board_id,
-      group_id,
-      imageArr,
-      fileArr,
-      setSuccess,
-      created_by: currentUser?.uid,
-      updated_by: currentUser?.uid,
-      count_like: 0,
-      count_comment: 0,
-      count_view: 0,
-      updated_at: new Date(),
-      created_at: new Date(),
-      type: "suggestion",
-    });
-    await currentUser?.updateProfile({ displayName: form.name });
-    const doc = await firestore.collection("posts").add(variables);
-    history.push("/post/" + doc.id);
+    if (currentUser) {
+      const variables = await makeNewVariables(form, {
+        board_id,
+        group_id,
+        imageArr,
+        fileArr,
+        setSuccess,
+        created_by: currentUser.uid,
+        updated_by: currentUser.uid,
+        count_like: 0,
+        count_comment: 0,
+        count_view: 0,
+        updated_at: new Date(),
+        created_at: new Date(),
+        type: "suggestion",
+      });
+      if (!currentUser.displayName) {
+        await currentUser.updateProfile({ displayName: form.name });
+      }
+      const doc = await firestore.collection("posts").add(variables);
+      history.push("/post/" + doc.id);
+    }
   }
 
   return (

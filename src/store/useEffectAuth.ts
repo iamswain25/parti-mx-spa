@@ -6,7 +6,7 @@ export default function useEffectAuth(): [firebase.User | null | undefined] {
   React.useEffect(() => {
     return auth.onAuthStateChanged(function (user) {
       if (user) {
-        setUser(user);
+        setUser({ ...user });
       } else {
         auth.signInAnonymously();
       }
