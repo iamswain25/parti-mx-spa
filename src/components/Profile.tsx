@@ -4,7 +4,6 @@ import { Typography, TextField, IconButton, Avatar } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
-import { ValidateResult } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
 import { useCurrentUser } from "../store/useGlobalState";
 import { storage, uploadFileByPath } from "../config/firebase";

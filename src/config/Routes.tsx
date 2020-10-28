@@ -28,6 +28,7 @@ import GroupLogoContainer from "../components/GroupLogoContainer";
 import BoardTabNavigator from "../components/BoardTabNavigator";
 import Logout from "../components/Logout";
 import useEffectRole from "../store/useEffectRole";
+import Footer from "../components/Footer";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -99,6 +100,7 @@ export default function Routes() {
           </Route>
         </Switch>
       </div>
+      <Footer />
       <LoginModal />
       <SnackbarCustom />
       <SnackbarSuccess />
