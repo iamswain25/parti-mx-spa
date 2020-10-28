@@ -56,6 +56,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
       id,
       metadata,
     });
+    console.log(variables);
     // const res = await update({
     //   variables,
     // });

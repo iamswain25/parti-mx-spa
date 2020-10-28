@@ -81,7 +81,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [0, 0];
-  }, [p]);
+  }, []);
   return (
     <>
       <div className={classes.container}>

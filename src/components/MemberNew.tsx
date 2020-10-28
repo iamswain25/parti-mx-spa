@@ -1,12 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, TextField, Button, Select } from "@material-ui/core";
-import {
-  useError,
-  useGroupId,
-  useRole,
-  useSuccess,
-} from "../store/useGlobalState";
+import { useError, useRole } from "../store/useGlobalState";
 import { Redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
@@ -24,16 +19,16 @@ interface FormType {
   emails: string;
   status: string;
 }
-interface AuthResult {
-  email: string;
-  success: boolean;
-}
+// interface AuthResult {
+//   email: string;
+//   success: boolean;
+// }
 export default function MemberNew() {
   const classes = useStyles();
-  const [groupId] = useGroupId();
+  // const [groupId] = useGroupId();
   const [status] = useRole();
   const [, setError] = useError();
-  const [, setSuccess] = useSuccess();
+  // const [, setSuccess] = useSuccess();
   const { handleSubmit, register, errors } = useForm<FormType>();
   if (status !== "organizer") {
     return <Redirect to="/" />;

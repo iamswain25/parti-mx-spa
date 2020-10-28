@@ -9,6 +9,13 @@ import GreyDivider from "./GreyDivider";
 import usePosts from "../store/usePosts";
 const useStyles = makeStyles((theme) => {
   return {
+    container: {
+      flex: 1,
+      [theme.breakpoints.up("md")]: {
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4),
+      },
+    },
     titleContainer: {
       borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
@@ -27,7 +34,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const [isClosed, setClosed] = React.useState(false);
   const [posts] = usePosts({ board_id: b.id });
   return (
-    <>
+    <section className={classes.container}>
       <Grid container alignItems="center" className={classes.titleContainer}>
         <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
           <Box display="flex" alignItems="center">
@@ -73,6 +80,6 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
             {!isDesktop && <GreyDivider />}
           </Box>
         ))}
-    </>
+    </section>
   );
 }

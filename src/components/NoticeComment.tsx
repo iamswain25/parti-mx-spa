@@ -5,6 +5,7 @@ import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
+import usePostLikedUsers from "../store/usePostLikedUsers";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -38,10 +39,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function NoticeComment({ post }: { post: Post }) {
-  const { count_comment, count_like } = post;
-  const comments = post.comments;
-  const comment = { post_id: post.id, body: "" } as Comment;
+export default function NoticeComment({ post: p }: { post: Post }) {
+  const { count_comment, count_like } = p;
+  const comments = p.comments;
+  const [likedUsers] = usePostLikedUsers(p.id);
+  const comment = { post_id: p.id, body: "" } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   React.useEffect(() => {
@@ -54,7 +56,7 @@ export default function NoticeComment({ post }: { post: Post }) {
     }
   }, [count_comment]);
   const insertHandler = useCommentInsert({
-    post: post,
+    post: p,
     callback: () => (shouldScroll = true),
   });
   return (
@@ -90,7 +92,7 @@ export default function NoticeComment({ post }: { post: Post }) {
             </Box>
             <Divider light />
             {comments?.map((c, i) => {
-              return <Comment1 key={i} comment={c} post={post} />;
+              return <Comment1 key={i} comment={c} post={p} />;
             })}
           </Box>
         ) : (
@@ -99,9 +101,9 @@ export default function NoticeComment({ post }: { post: Post }) {
               <Divider />
             </Box>
             <Grid container wrap="wrap" spacing={2}>
-              {/* {post.likedUsers?.map((u, i) => (
-                <AvatarNameDate2 key={i} userPost={u} />
-              ))} */}
+              {likedUsers?.map((u) => (
+                <AvatarNameDate2 key={u.id} postLike={u} />
+              ))}
             </Grid>
           </Box>
         )}

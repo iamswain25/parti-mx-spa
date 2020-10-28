@@ -14,6 +14,8 @@ import HtmlOrBody from "./HtmlOrBody";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
+      paddingTop: theme.spacing(2),
+      flex: 1,
       [theme.breakpoints.up("md")]: {
         maxWidth: 900,
         paddingLeft: 60,
@@ -75,8 +77,8 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
-    <Box pt={2}>
-      <Box paddingX={2} className={classes.root}>
+    <section className={classes.root}>
+      <Box paddingX={2}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
           <Hidden smDown implementation="css">
@@ -105,9 +107,9 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
         </Box>
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
-      <div className={classes.root}>
+      <div>
         <NoticeComment post={p} />
       </div>
-    </Box>
+    </section>
   );
 }

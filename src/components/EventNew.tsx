@@ -1,9 +1,8 @@
 import React from "react";
-import { useCurrentUser, useSuccess } from "../store/useGlobalState";
+import { useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
-import { Container, Typography, Box, Hidden } from "@material-ui/core";
+import { Container, Typography, Box } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
-import HeaderNew from "./HeaderNew";
 import { EventFormdata } from "../types";
 import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";

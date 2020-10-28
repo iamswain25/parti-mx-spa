@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
 import { useDebounce } from "use-debounce";
-import { useGroupId, useRole } from "../store/useGlobalState";
+import { useRole } from "../store/useGlobalState";
 import { Link, Redirect } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
@@ -43,15 +43,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-interface UserGroups {
-  mx_users_group: UserGroup[];
-}
-const LIMIT = 20;
+// interface UserGroups {
+//   mx_users_group: UserGroup[];
+// }
+// const LIMIT = 20;
 export default function Members() {
   const classes = useStyles();
-  const [groupId] = useGroupId();
+  // const [groupId] = useGroupId();
   const [keyword, setKeyword] = React.useState("");
-  const [items, setItems] = React.useState<UserGroup[]>([]);
+  const [items] = React.useState<UserGroup[]>([]);
   const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
   const [status] = useRole();
 

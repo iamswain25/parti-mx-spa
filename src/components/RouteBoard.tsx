@@ -8,7 +8,6 @@ import useEffectParams from "../store/useEffectParams";
 
 export default function RouteBoard() {
   const [board] = useBoard();
-  console.log(board);
   useEffectParams();
   const { type } = board;
   switch (type) {

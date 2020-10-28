@@ -1,5 +1,4 @@
 import { createGlobalState } from "react-hooks-global-state";
-import { UserStatus } from "../types";
 export const initialState = {
   loginModal: false,
   error: null,

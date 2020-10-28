@@ -1,9 +1,7 @@
 import React from "react";
-import { useGroupId, useSuccess } from "../store/useGlobalState";
-
+import { useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import HeaderNew from "./HeaderNew";
 import { VoteFormdata } from "../types";
 import { makeNewVariables } from "./makePostVariables";
@@ -12,9 +10,9 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteNew() {
-  const history = useHistory();
+  // const history = useHistory();
   const [, setSuccess] = useSuccess();
-  const [groupId] = useGroupId();
+  // const [groupId] = useGroupId();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [isBinary, setBinary] = React.useState(true);

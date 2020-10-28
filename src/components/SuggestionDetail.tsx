@@ -28,7 +28,9 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {
       color: colors.grey900,
+      paddingTop: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
+        flex: 1,
         maxWidth: 900,
         paddingLeft: 60,
         paddingRight: 60,
@@ -114,8 +116,8 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
-    <Box pt={2}>
-      <Box paddingX={2} className={classes.root}>
+    <section className={classes.root}>
+      <Box paddingX={2}>
         <Box className={classes.title}>
           <div>{p.title}</div>
           <Box display="flex" alignItems="center">
@@ -171,9 +173,9 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
       <Hidden mdUp implementation="css">
         <GreyDivider height={0.5} />
       </Hidden>
-      <div className={classes.root}>
+      <div>
         <SuggestionComment post={p} />
       </div>
-    </Box>
+    </section>
   );
 }

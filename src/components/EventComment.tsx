@@ -5,6 +5,7 @@ import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
+import usePostLikedUsers from "../store/usePostLikedUsers";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -36,21 +37,21 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function EventComment({ post: p }: { post: Post }) {
-  const count = 0;
-  const count2 = 0;
+  const { count_like, count_comment } = p;
   const comments = p.comments;
+  const [likedUsers] = usePostLikedUsers(p.id);
   const comment = { post_id: p.id, body: "" } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   React.useEffect(() => {
-    if (count) {
+    if (count_like) {
       if (prevCommentCount && shouldScroll) {
         window.scrollTo(0, document.body.scrollHeight);
         shouldScroll = false;
       }
-      prevCommentCount = count;
+      prevCommentCount = count_like;
     }
-  }, [count]);
+  }, [count_like]);
   const insertHandler = useCommentInsert({
     post: p,
     callback: () => (shouldScroll = true),
@@ -65,7 +66,7 @@ export default function EventComment({ post: p }: { post: Post }) {
           >
             댓글
             <Box ml={0.5} className="count">
-              {count}
+              {count_comment | 0}
             </Box>
           </Button>
           <Box mx={1} height={14}>
@@ -77,7 +78,7 @@ export default function EventComment({ post: p }: { post: Post }) {
           >
             참석자
             <Box ml={0.5} className="count">
-              {count2}
+              {count_like || 0}
             </Box>
           </Button>
         </Grid>
@@ -97,9 +98,9 @@ export default function EventComment({ post: p }: { post: Post }) {
               <Divider />
             </Box>
             <Grid container wrap="wrap" spacing={2}>
-              {/* {p.likedUsers?.map((u, i) => (
-                <AvatarNameDate2 key={i} userPost={u} />
-              ))} */}
+              {likedUsers?.map((u) => (
+                <AvatarNameDate2 key={u.id} postLike={u} />
+              ))}
             </Grid>
           </Box>
         )}
