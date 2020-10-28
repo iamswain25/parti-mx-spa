@@ -1,13 +1,6 @@
 import React from "react";
 import { Post, Event } from "../types";
-import {
-  Box,
-  Grid,
-  Divider,
-  makeStyles,
-  Typography,
-  Hidden,
-} from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles, Typography } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
@@ -19,7 +12,6 @@ import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import EventMetadataInfo from "./EventMetadataInfo";
 import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
 import EventComment from "./EventComment";
-import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
