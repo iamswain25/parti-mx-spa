@@ -1,5 +1,5 @@
 import React from "react";
-import { useSuccess } from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import HeaderNew from "./HeaderNew";
@@ -8,39 +8,62 @@ import { makeNewVariables } from "./makePostVariables";
 import VoteInputs from "./VoteInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
+import { firestore } from "../config/firebase";
+import { useHistory, useParams } from "react-router-dom";
 
 export default function VoteNew() {
-  // const history = useHistory();
+  const { board_id, group_id } = useParams<{
+    board_id: string;
+    group_id: string;
+  }>();
+  const [currentUser] = useCurrentUser();
+  const history = useHistory();
   const [, setSuccess] = useSuccess();
   // const [groupId] = useGroupId();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [isBinary, setBinary] = React.useState(true);
+  // const [isMultiple, setMultiple] = React.useState(false);
+  // const [isAnonymous, setAnonymous] = React.useState(true);
+  // const [isResultHidden, setResultHidden] = React.useState(false);
+  // const [closingMethod, setClosingMethod] = React.useState(true);
   const formControl = useForm<VoteFormdata>({
     defaultValues: { candidates: ["", ""] },
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {
-    const {
-      closingMethod,
-      candidates,
-      isMultiple,
-      isAnonymous,
-      isResultHidden,
-      ...rest
-    } = form;
-    const metadata = {
-      isBinary,
-      isMultiple,
-      isAnonymous,
-      isResultHidden,
-      closingMethod,
-    };
-    const variables = await makeNewVariables(rest, {
+    const candidates = [""];
+    // const {
+    //   closingMethod,
+    //   candidates,
+    //   isMultiple,
+    //   isAnonymous,
+    //   isResultHidden,
+    //   ...rest
+    // } = form;
+    // const metadata = {
+    //   isBinary,
+    //   isMultiple,
+    //   isAnonymous,
+    //   isResultHidden,
+    //   closingMethod,
+    // };
+    const variables = await makeNewVariables(form, {
+      board_id,
+      group_id,
       imageArr,
       fileArr,
       setSuccess,
-      metadata,
+      candidates: [],
+      metadata: {
+
+      },
+      created_by: currentUser?.uid,
+      updated_by: currentUser?.uid,
+      updated_at: new Date(),
+      created_at: new Date(),
+      type: "vote",
+
     });
 
     if (isBinary) {
@@ -56,9 +79,11 @@ export default function VoteNew() {
         order: i + 1,
       }));
     }
+
     // const res = await insert({ variables });
     // const id = res?.data?.insert_mx_posts_one?.id;
-    // history.push("/post/" + id);
+    const doc = await firestore.collection("posts").add(variables);
+    history.push("/post/" + doc.id);
   }
 
   return (

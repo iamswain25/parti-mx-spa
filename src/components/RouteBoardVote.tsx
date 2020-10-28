@@ -48,7 +48,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.posts_aggregate_open.aggregate.count}
+                {/* {b?.posts_aggregate_open.aggregate.count} */}
               </Typography>
             </Box>
           </Button>
@@ -67,16 +67,16 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.posts_aggregate_closed.aggregate.count}
+                {/* {b?.posts_aggregate_closed.aggregate.count} */}
               </Typography>
             </Box>
           </Button>
         </Grid>
-        {b?.posts
+        {/* {b?.posts
           .filter((a) => (typeof a.closed_at === "string") === isClosed)
           .map((p, i) => (
             <RoutePostVote key={i} post={p} />
-          ))}
+          ))} */}
       </section>
     </>
   );

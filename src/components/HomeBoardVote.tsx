@@ -140,20 +140,22 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
           )}
         </Grid>
         <div className={classes.postContainer}>
+          {b.posts? 
           <Carousel
-            responsive={responsive}
-            showDots={isDesktop}
-            arrows={isDesktop}
-            customRightArrow={<CustomRightArrow />}
-            customLeftArrow={<CustomLeftArrow />}
-            dotListClass="custom-dot-list-style"
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            partialVisible={true}
+          responsive={responsive}
+          showDots={isDesktop}
+          arrows={isDesktop}
+          customRightArrow={<CustomRightArrow />}
+          customLeftArrow={<CustomLeftArrow />}
+          dotListClass="custom-dot-list-style"
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          partialVisible={true}
           >
             {b.posts.map((p, i) => (
               <BoardPostVote key={i} post={p} />
-            ))}
+              ))}
           </Carousel>
+              : null}
         </div>
         {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
       </section>
