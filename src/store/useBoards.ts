@@ -11,6 +11,7 @@ export default function useBoards(listen: boolean = false): [Board[]] {
         .collection("groups")
         .doc(groupId)
         .collection("boards")
+        .orderBy("order", "asc")
         .onSnapshot((snapshot) => {
           const boards = snapshot.docs.map(
             (doc) => ({ id: doc.id, ...(doc.data() as any) } as Board)
@@ -22,6 +23,7 @@ export default function useBoards(listen: boolean = false): [Board[]] {
         .collection("groups")
         .doc(groupId)
         .collection("boards")
+        .orderBy("order", "asc")
         .get()
         .then((snapshot) => {
           const boards = snapshot.docs.map(
