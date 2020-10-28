@@ -1,19 +1,29 @@
-import useMe from "../store/useMe";
 import { firestore } from "../config/firebase";
-import { useGroupId, useLoginModal } from "../store/useGlobalState";
+import {
+  useCurrentUser,
+  useGroupId,
+  useLoginModal,
+} from "../store/useGlobalState";
 export default function useGroupJoin() {
   const [, setVisible] = useLoginModal();
   const [groupId] = useGroupId();
-  const [me] = useMe();
+  const [currentUser] = useCurrentUser();
   async function handler() {
-    if (me) {
-      firestore
+    if (currentUser) {
+      return firestore
         .collection("groups")
         .doc(groupId)
         .collection("users")
-        .doc(me.id)
+        .doc(currentUser.uid)
         .set(
-          { ...me, created_at: new Date(), checked_at: new Date() },
+          {
+            role: "user",
+            photo_url: currentUser.photoURL,
+            name: currentUser.displayName ?? currentUser.email,
+            email: currentUser.email,
+            created_at: new Date(),
+            checked_at: new Date(),
+          },
           { merge: true }
         );
     } else {

@@ -6,13 +6,11 @@ import { Grid, Typography, Hidden } from "@material-ui/core";
 import MenuGroup from "./MenuGroup";
 import useGroup from "../store/useGroup";
 import StorageImage from "./StorageImage";
-import { useRole } from "../store/useGlobalState";
+import { useCurrentUser, useRole } from "../store/useGlobalState";
+import useGroupJoin from "./useGroupJoin";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      [theme.breakpoints.down("sm")]: {
-        // marginTop: -(theme.mixins.toolbar.minHeight || 0),
-      },
       [theme.breakpoints.up("md")]: {
         padding: "0 30px",
         position: "relative",
@@ -32,10 +30,8 @@ const useStyles = makeStyles((theme) => {
         },
       },
       [theme.breakpoints.down("sm")]: {
-        // height: 180,
         display: "block",
         "& img": {
-          // height: "100%",
           width: "100%",
           objectFit: "cover",
         },
@@ -95,8 +91,10 @@ const useStyles = makeStyles((theme) => {
 export default function GroupLogoContainer() {
   const [group] = useGroup(true);
   const classes = useStyles();
-  const { title, created_at, bg_img, mb_img, user_count } = group || {};
+  const { title, created_at, bg_img, mb_img } = group || {};
   const [role] = useRole();
+  const [currentUser] = useCurrentUser();
+  const joinHandler = useGroupJoin();
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
@@ -112,8 +110,20 @@ export default function GroupLogoContainer() {
           </Typography>
           <div className={classes.groupInfo}>
             <span>개설 {semanticDate(created_at)}</span>
-            {role === "organizer" && (
-              <Link to="members">멤버 {user_count}</Link>
+            {role === undefined ? (
+              <div>loading...</div>
+            ) : role ? (
+              <Link to={`/${group.id}/profile`}>
+                {role}:{currentUser?.displayName}
+              </Link>
+            ) : currentUser?.email ? (
+              <button className={classes.groupJoin} onClick={joinHandler}>
+                그룹 가입
+              </button>
+            ) : (
+              <Link to={`/${group.id}/profile`}>
+                {currentUser?.displayName ?? "익명"}
+              </Link>
             )}
             <MenuGroup group={group} />
           </div>

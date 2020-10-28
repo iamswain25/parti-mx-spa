@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {
       paddingTop: theme.spacing(2),
+      flex: 1,
       [theme.breakpoints.up("md")]: {
-        flex: 1,
         maxWidth: 900,
         paddingLeft: 60,
         paddingRight: 60,

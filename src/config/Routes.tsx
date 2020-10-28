@@ -61,8 +61,20 @@ export default function Routes() {
           <Route path="/login" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
           <Route path="/signup" exact component={Signup} />
-          <PrivateRoute path="/profile" exact component={Profile} />
-          <PrivateRoute
+          <Route path="/post/:post_id" exact component={RoutePost} />
+          <Route path="/edit/:post_id" exact component={RoutePostEdit} />
+          <Route
+            exact
+            path="/p/:id"
+            render={(props) => (
+              <Redirect to={`/post/${props.match.params.id}`} />
+            )}
+          />
+          <PrivateRoute path="/group/new" exact component={GroupNew} />
+          <Route path="/search" exact component={Search} />
+
+          <Route path="/:group_id/profile" exact component={Profile} />
+          <AdminRoute
             path="/:group_id/boards"
             exact
             component={BoardsSetting}
@@ -73,17 +85,6 @@ export default function Routes() {
             exact
             component={MemberNew}
           />
-          <PrivateRoute path="/group/new" exact component={GroupNew} />
-          <Route path="/search" exact component={Search} />
-          <Route
-            exact
-            path="/p/:id"
-            render={(props) => (
-              <Redirect to={`/post/${props.match.params.id}`} />
-            )}
-          />
-          <Route path="/post/:post_id" exact component={RoutePost} />
-          <Route path="/edit/:post_id" exact component={RoutePostEdit} />
           <Route exact path="/:group_id" component={Home} />
           <AdminRoute path="/:group_id/report" exact component={Report} />
           <AdminRoute path="/:group_id/edit" exact component={GroupEdit} />

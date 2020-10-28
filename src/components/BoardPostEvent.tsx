@@ -70,7 +70,6 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     place = p.metadata.place;
     deadline = getEventDate3(p.metadata.deadline);
   }
-  console.log(p);
   const firstImage = p.images?.[0];
   const attending = p?.my_like_count;
   return (

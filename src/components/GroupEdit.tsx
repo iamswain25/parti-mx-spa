@@ -12,18 +12,13 @@ import useEffectParams from "../store/useEffectParams";
 import { useError } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
-  btn: {
-    // position: "absolute",
-    // right: 0,
-    // top: -theme.spacing(3),
-  },
+  root: { flex: 1 },
   flex: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     position: "relative",
     alignItems: "flex-start",
-    // marginTop: theme.spacing(4),
   },
 }));
 interface GroupForm {
@@ -68,7 +63,12 @@ export default function GroupEdit() {
     }
   }
   return (
-    <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
+    <form
+      onSubmit={handleSubmit(handleForm)}
+      noValidate
+      autoComplete="off"
+      className={classes.root}
+    >
       <Typography variant="h3" color="textPrimary">
         그룹 정보 수정
       </Typography>
@@ -93,7 +93,6 @@ export default function GroupEdit() {
         {images.bg_img ? (
           <div className={classes.flex}>
             <IconButton
-              classes={{ root: classes.btn }}
               onClick={() => setImages({ ...images, bg_img: undefined })}
             >
               <CloseIcon />
@@ -112,7 +111,6 @@ export default function GroupEdit() {
         {images.mb_img ? (
           <div className={classes.flex}>
             <IconButton
-              classes={{ root: classes.btn }}
               onClick={() => setImages({ ...images, mb_img: undefined })}
             >
               <CloseIcon />

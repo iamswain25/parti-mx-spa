@@ -10,12 +10,13 @@ import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
 import { makeUpdateVariables } from "./makePostVariables";
 import { firestore } from "../config/firebase";
-import { useSuccess } from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 
 export default function NoticeEdit({ post: p }: { post: Post }) {
   const { id, title, body, files, images, html } = p;
   const history = useHistory();
   const [, setSuccess] = useSuccess();
+  const [currentUser] = useCurrentUser();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);
@@ -31,6 +32,8 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
       images2,
       files2,
       setSuccess,
+      updated_at: new Date(),
+      updated_by: currentUser?.uid,
     });
     await firestore.collection("posts").doc(id).update(variables);
     history.push("/post/" + id);

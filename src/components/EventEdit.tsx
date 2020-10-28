@@ -14,7 +14,7 @@ import { makeUpdateVariables } from "./makePostVariables";
 import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
-import { useSuccess } from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { getDatetimeFormat } from "../helpers/datefns";
 import { firestore } from "../config/firebase";
 
@@ -22,6 +22,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
   const { id, title, body, files, images, html } = p;
   const history = useHistory();
   const [, setSuccess] = useSuccess();
+  const [currentUser] = useCurrentUser();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);
@@ -56,6 +57,8 @@ export default function EventEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
       metadata,
+      updated_at: new Date(),
+      updated_by: currentUser?.uid,
     });
     await firestore.collection("posts").doc(id).update(variables);
     history.push("/post/" + id);

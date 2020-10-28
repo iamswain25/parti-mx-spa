@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { auth } from "../config/firebase";
 
 export default function Logout() {
@@ -7,5 +8,5 @@ export default function Logout() {
       auth.signOut();
     }
   }, []);
-  return null;
+  return <Redirect to="/" />;
 }
