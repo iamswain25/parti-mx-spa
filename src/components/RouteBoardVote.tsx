@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
+import usePosts from "../store/usePosts";
+
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -27,10 +29,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function RouteBoardVote({ board: b }: { board?: Board }) {
+export default function RouteBoardVote({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  return (
+  const [posts] = usePosts({ board_id: b.id });
+    return (
     <>
       <section className={classes.container}>
         <Grid container alignItems="center" className={classes.titleContainer}>
@@ -72,11 +75,12 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
             </Box>
           </Button>
         </Grid>
-        {/* {b?.posts
+        {console.log(posts)}
+        {posts
           .filter((a) => (typeof a.closed_at === "string") === isClosed)
           .map((p, i) => (
             <RoutePostVote key={i} post={p} />
-          ))} */}
+          ))}
       </section>
     </>
   );
