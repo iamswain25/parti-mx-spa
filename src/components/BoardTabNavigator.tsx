@@ -140,11 +140,7 @@ export default function BoardTabNavigator() {
     return null;
   }
   const theBoard = boards?.find((b) => b.id === board_id);
-  // console.log(theBoard, userStatus, board_id);
   let notOrganizerNotice = true;
-  if (theBoard?.type === "notice" && userStatus !== "organizer") {
-    notOrganizerNotice = false;
-  }
   if (
     theBoard?.permission &&
     permissionBlocked(theBoard?.permission, userStatus)

@@ -4,7 +4,6 @@ export default function permissionBlocked(
   permission: BoardPermission,
   status: UserStatus
 ) {
-  // console.log(permission, status);
   if (!status) {
     return true;
   }
