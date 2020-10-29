@@ -75,7 +75,8 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
             </Box>
           </Button>
         </Grid>
-        {console.log(posts)}
+        {console.log('RouteBoardVote b.id: ', b.id)}
+        {console.log('RouteBoardVote posts: ', posts)}
         {posts
           .filter((a) => (typeof a.closed_at === "string") === isClosed)
           .map((p, i) => (

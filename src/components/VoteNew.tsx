@@ -32,32 +32,37 @@ export default function VoteNew() {
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {
-    const candidates = [""];
-    // const {
-    //   closingMethod,
-    //   candidates,
-    //   isMultiple,
-    //   isAnonymous,
-    //   isResultHidden,
-    //   ...rest
-    // } = form;
-    // const metadata = {
-    //   isBinary,
-    //   isMultiple,
-    //   isAnonymous,
-    //   isResultHidden,
-    //   closingMethod,
-    // };
-    const variables = await makeNewVariables(form, {
+    // const candidates = [""];
+    const {
+      closingMethod,
+      candidates,
+      isMultiple,
+      isAnonymous,
+      isResultHidden,
+      ...rest
+    } = form;
+    const metadata = {
+      isBinary,
+      isMultiple,
+      isAnonymous,
+      isResultHidden,
+      closingMethod,
+    };
+    const variables = await makeNewVariables(metadata, {
       board_id,
       group_id,
       imageArr,
       fileArr,
       setSuccess,
-      candidates: [],
-      metadata: {
-
-      },
+      // metadata,
+      // candidates: [],
+      // metadata: {
+      //   isBinary,
+      //   isMultiple,
+      //   isAnonymous,
+      //   isResultHidden,
+      //   closingMethod,
+      // },
       created_by: currentUser?.uid,
       updated_by: currentUser?.uid,
       updated_at: new Date(),

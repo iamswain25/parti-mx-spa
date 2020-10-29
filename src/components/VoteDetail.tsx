@@ -171,6 +171,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
           </Grid>
         </Box>
         <Box>
+          {console.log('VoteDetail post: ', p)}
           {p.candidates?.map((c, i) => (
             <VoteCandidate
               candidate={c}

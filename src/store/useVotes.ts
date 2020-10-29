@@ -13,8 +13,8 @@ export default function useVotes({
     return firestore
       .collection("posts")
       .doc(post_id)
-      // .collection("candidates")
-      // .doc(candidate_id)
+      .collection("candidates")
+      .doc(candidate_id)
       .collection("votes")
       .onSnapshot((snapshot) => {
         const items = snapshot.docs.map(
