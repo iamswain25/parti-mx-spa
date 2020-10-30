@@ -3,11 +3,11 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
-    "serve": "npm run build && firebase serve --only functions",
+    "serve": "npm run build && firebase serve --only functions --project sharenting-mix",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions --project sharenting-mix",
-    "deployshare": "tsc && firebase deploy --only functions:post",
+    "deployshare": "tsc && firebase deploy --only functions:post --project sharenting-mix",
     "logs": "firebase functions:log"
   },
   "engines": {
@@ -16,16 +16,9 @@
   "main": "lib/index.js",
   "dependencies": {
     "@types/firebase": "^3.2.1",
-    "@types/jquery": "^3.5.3",
-    "@types/jsdom": "^16.2.4",
-    "@types/node": "^13.13.28",
-    "amo-html-to-mrkdwn": "^3.4.1",
-    "apollo-boost": "^0.4.9",
-    "cross-fetch": "^3.0.6",
-    "date-fns": "^2.16.1",
+    "@types/node": "^13.13.30",
     "firebase-admin": "^9.3.0",
     "firebase-functions": "^3.11.0",
-    "graphql": "^15.3.0",
     "isbot": "^3.0.14"
   },
   "devDependencies": {
