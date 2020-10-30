@@ -1,18 +1,6 @@
-import {
-  differenceInDays,
-  addDays,
-  format,
-  isAfter,
-  formatDistanceToNow,
-  addHours,
-} from "date-fns";
+import { differenceInDays, addDays, format, isAfter, addHours } from "date-fns";
 import { ko } from "date-fns/locale";
 export function calculateDays(date: string, days = 30) {
-  // const time = (_ => _.setDate(_.getDate() + 30))(new Date(date));
-  // const timeDiff = new Date().getTime() - time;
-  // const daysDiff = timeDiff / 1000 / 60 / 60 / 24;
-  // const daysDiffCeil = Math.ceil(daysDiff);
-  // return daysDiffCeil;
   return differenceInDays(new Date(), addDays(new Date(date), days));
 }
 export function minutesDiff(date: string) {
@@ -68,11 +56,7 @@ export function isAfterString(date1: string, date2: string) {
 export function semanticDate(date = "") {
   try {
     const newDate = new Date(date);
-    const now = new Date();
     return format(newDate, "yyyy-MM-dd HH:mm");
-    if (isAfter(now, addDays(newDate, 1))) {
-    }
-    return formatDistanceToNow(newDate, { locale: ko }) + " 전";
   } catch (error) {
     return error.message;
   }
