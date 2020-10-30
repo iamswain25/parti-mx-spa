@@ -6,7 +6,11 @@ export const initialState = {
   group_id: null,
   user_id: null,
 };
-export type State = typeof initialState;
+export interface State {
+  isInit: boolean;
+  group_id: number | null;
+  user_id: number | null;
+}
 export type Action =
   | { type: "CHANGE_ALL"; isInit: boolean }
   | { type: "SET_GROUP"; group_id: number }

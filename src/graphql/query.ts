@@ -465,3 +465,49 @@ export const queryGroupsByUserId = gql`
   }
   ${usersgroup}
 `;
+export const getGroupByPostId = gql`
+  query($post_id: Int!) {
+    group: mx_get_group_by_post_id(args: { post_id: $post_id }) {
+      id
+      status
+    }
+  }
+`;
+export const queryReportAll = gql`
+  query($group_id: Int!) {
+    mx_posts(
+      where: { board: { group_id: { _eq: $group_id } } }
+      order_by: { id: asc_nulls_last }
+    ) {
+      board {
+        title
+      }
+      id
+      title
+      created_at
+      comments(
+        order_by: { created_at: asc }
+        where: { parent_id: { _is_null: true } }
+      ) {
+        user {
+          name
+          email
+          groups(where: { group_id: { _eq: $group_id } }) {
+            status
+          }
+        }
+        body
+        re(order_by: { created_at: asc }) {
+          user {
+            name
+            email
+            groups(where: { group_id: { _eq: $group_id } }) {
+              status
+            }
+          }
+          body
+        }
+      }
+    }
+  }
+`;
