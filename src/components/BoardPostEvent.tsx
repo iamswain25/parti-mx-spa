@@ -11,6 +11,7 @@ import PlaceIcon from "@material-ui/icons/Place";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import StorageImage from "./StorageImage";
+import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -71,7 +72,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     deadline = getEventDate3(p.metadata.deadline);
   }
   const firstImage = p.images?.[0];
-  const attending = p?.my_like_count;
+  const [liked] = usePostLiked(p.id);
   return (
     <div className={classes.container}>
       <Box mb={1} color="#a9aaad">
@@ -102,7 +103,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               <Box display="flex" alignItems="center">
                 <HowToRegIcon />
                 <Box ml={1}>
-                  0명 참석{" / "}
+                  {p?.count_like}명 공감{" / "}
                   {countPeople}명 모집
                 </Box>
               </Box>
@@ -116,9 +117,9 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               </Box>
             </Box>
             <Box color="primary.dark" display="flex" alignItems="flex-end">
-              {attending ? (
+              {liked ? (
                 <Box display="flex" alignItems="center">
-                  참석함
+                  공감함
                   <CheckCircleIcon color="primary" />
                 </Box>
               ) : (

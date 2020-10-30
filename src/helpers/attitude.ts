@@ -7,7 +7,7 @@ export function getAttitude(post: Post) {
   // }
   switch (post.type) {
     case "event":
-      return "참석";
+      return "공감";
     case "suggestion":
       return "동의";
     case "notice":

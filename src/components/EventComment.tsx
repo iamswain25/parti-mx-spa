@@ -77,7 +77,7 @@ export default function EventComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "" : "active"}`}
             onClick={() => setCommentVisible(false)}
           >
-            참석자
+            공감자
             <Box ml={0.5} className="count">
               {count_like || 0}
             </Box>

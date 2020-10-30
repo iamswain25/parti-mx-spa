@@ -61,14 +61,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           },
           { merge: true }
         );
-      switch (type) {
-        case "suggestion":
-          return setSuccess("공감 하였습니다.");
-        case "event":
-          return setSuccess("참석 신청 하였습니다.");
-        default:
-          return setSuccess("공감 하였습니다.");
-      }
+      setSuccess("공감 하였습니다.");
     } else {
       showLogin(true);
     }
@@ -94,7 +87,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           className={classes.event}
           disableElevation
         >
-          참석신청
+          공감신청
         </Button>
       );
     default:

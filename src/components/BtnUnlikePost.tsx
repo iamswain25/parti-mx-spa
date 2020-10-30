@@ -57,7 +57,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
       case "suggestion":
         return setSuccess("제보 취소 하였습니다.");
       case "event":
-        return setSuccess("참석 취소 하였습니다.");
+        return setSuccess("공감 취소 하였습니다.");
       default:
         return setSuccess("공감 취소 하였습니다.");
     }
@@ -82,7 +82,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.event}
           disableElevation
         >
-          참석 취소
+          공감 취소
         </Button>
       );
     default:
