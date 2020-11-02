@@ -10,7 +10,6 @@ import DrawerGroup from "./DrawerGroup";
 import LoginButton from "./LoginButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { Grid, Hidden } from "@material-ui/core";
-import { version } from "../../package.json";
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -68,7 +67,7 @@ export default function HeaderRemain(props: { children?: any }) {
               <DrawerGroup />
             </Grid>
             <Grid item xs={8} className={classes.logoFont}>
-              <Link to="/home">빠띠 믹스 (v{version})</Link>
+              <Link to="/home">한국 YWCA 연합회</Link>
             </Grid>
             <Grid item xs={2} className={classes.flexend}>
               <Typography variant="h3" noWrap>
