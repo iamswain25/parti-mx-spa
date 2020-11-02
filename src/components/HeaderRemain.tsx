@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { useStore } from "../store/store";
 import LogoutButton from "./LogoutButton";
-import DrawerGroup from "./DrawerGroup";
 import LoginButton from "./LoginButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { Grid, Hidden } from "@material-ui/core";
@@ -63,9 +62,7 @@ export default function HeaderRemain(props: { children?: any }) {
       <AppBar position="sticky" className={classes.appBar}>
         <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
           <Grid container>
-            <Grid container item xs={2} alignItems="center">
-              <DrawerGroup />
-            </Grid>
+            <Grid container item xs={2} alignItems="center" />
             <Grid item xs={8} className={classes.logoFont}>
               <Link to="/home">한국 YWCA 연합회</Link>
             </Grid>
