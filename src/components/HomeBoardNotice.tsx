@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => {
     },
     photoGrid: {
       [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(2),
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
       },
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(3),

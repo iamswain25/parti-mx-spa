@@ -23,15 +23,6 @@ const useStyles = makeStyles((theme) => {
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
     },
-    postContainer: {
-      [theme.breakpoints.up("md")]: {
-        display: "grid",
-        gridTemplateColumns: "calc(50% - 12px) calc(50% - 12px)",
-        gridTemplateRows: "1fr 1fr",
-        paddingTop: theme.spacing(3),
-      },
-      gridGap: theme.spacing(3),
-    },
     photoGrid: {
       [theme.breakpoints.down("sm")]: {
         padding: theme.spacing(2),
