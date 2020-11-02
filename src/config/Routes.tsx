@@ -28,6 +28,7 @@ import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import AdminRoute from "./AdminRoute";
 import Report from "../components/Report";
+import Footer from "../components/Footer";
 
 export default function Routes() {
   useParseGroupId();
@@ -81,6 +82,7 @@ export default function Routes() {
           </Switch>
         </HeaderRemain>
       )}
+      <Footer />
       <LoginModal />
       <SnackbarCustom />
       <SnackbarSuccess />
