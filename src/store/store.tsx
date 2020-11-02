@@ -48,6 +48,7 @@ export const StoreProvider = (props: ComponentProps<any>) => {
           ...initialState,
           ...JSON.parse(storeJSON),
           user_id,
+          group_id: 1,
           isInit: true,
           loading: false,
         });
