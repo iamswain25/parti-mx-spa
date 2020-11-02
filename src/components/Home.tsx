@@ -8,8 +8,6 @@ import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
-import HomeBoardVote from "./HomeBoardVote";
-import HomeBoardEvent from "./HomeBoardEvent";
 import useHashtags from "./useHashtags";
 import Chips from "./Chips";
 const useStyles = makeStyles((theme) => {
@@ -57,11 +55,11 @@ export default function Home() {
           case "suggestion":
             return <HomeBoardSuggestion key={i} board={b} />;
           case "notice":
-            return <HomeBoardNotice key={i} board={b} />;
           case "vote":
-            return <HomeBoardVote key={i} board={b} />;
           case "event":
-            return <HomeBoardEvent key={i} board={b} />;
+            return <HomeBoardNotice key={i} board={b} />;
+          // return <HomeBoardVote key={i} board={b} />;
+          // return <HomeBoardEvent key={i} board={b} />;
           default:
             return null;
         }
