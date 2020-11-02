@@ -110,7 +110,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
-    <Box bgcolor="grey.100" pt={2} pb={4}>
+    <Box pt={2}>
       <Box paddingX={2} className={classes.root}>
         <Box className={classes.title}>
           <div>{p.title}</div>

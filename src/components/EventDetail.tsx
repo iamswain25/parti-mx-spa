@@ -1,13 +1,6 @@
 import React from "react";
 import { Post, Event } from "../types";
-import {
-  Box,
-  Grid,
-  Divider,
-  makeStyles,
-  Hidden,
-  Typography,
-} from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles, Typography } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
@@ -20,6 +13,7 @@ import EventMetadataInfo from "./EventMetadataInfo";
 import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
 import EventComment from "./EventComment";
 import HtmlOrBody from "./HtmlOrBody";
+import ShareButtons from "./ShareButtons";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -36,16 +30,17 @@ const useStyles = makeStyles((theme) => {
       },
     },
     title: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
       [theme.breakpoints.up("md")]: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
         paddingTop: 60,
         fontSize: 24,
         letterSpacing: -0.6,
         paddingBottom: theme.spacing(2),
       },
       [theme.breakpoints.down("sm")]: {
+        paddingBottom: theme.spacing(1),
         fontSize: 16,
         fontWeight: 500,
       },
@@ -59,13 +54,14 @@ export default function EventDetail({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
-    <Box bgcolor="grey.100" pt={2}>
+    <Box pt={2}>
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Hidden smDown>
+          <Box display="flex" alignItems="center">
+            <ShareButtons post={p} />
             <PostMenu post={p} />
-          </Hidden>
+          </Box>
         </Box>
         <Box mb={2} mt={1}>
           <AvatarNameDate
