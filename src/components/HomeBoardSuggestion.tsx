@@ -2,7 +2,6 @@ import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-// import BoardPostSuggestion from "./BoardPostSuggestion";
 import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
@@ -14,14 +13,14 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up("md")]: {
         marginBottom: theme.spacing(5),
       },
-      [theme.breakpoints.down("sm")]: {
-        marginLeft: theme.spacing(2),
-      },
     },
     titleContainer: {
       borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: theme.spacing(2),
+      },
     },
     postContainer: {
       [theme.breakpoints.up("md")]: {
@@ -65,11 +64,6 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
             <HomeBoardPhoto key={i} p={p} />
           ))}
         </Grid>
-        {/* <div className={classes.postContainer}>
-          {b.posts.map((p, i) => (
-            <BoardPostSuggestion key={i} post={p} />
-          ))}
-        </div> */}
         {!isDesktop && <BoardMoreTag to={`/photo/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
