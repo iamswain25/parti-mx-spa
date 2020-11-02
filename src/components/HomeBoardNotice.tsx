@@ -7,6 +7,7 @@ import useDesktop from "./useDesktop";
 import { Link } from "react-router-dom";
 import HomeBoardPhoto from "./HomeBoardPhoto";
 import { LazyImage } from "react-lazy-images";
+import YoutubePreview from "./YoutubePreview";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -112,20 +113,24 @@ export default function HomeBoardNotice({ board: b }: { board?: Board }) {
                 <div>{p.body}</div>
               </div>
               <div className={classes.imgContainer}>
-                <LazyImage
-                  alt={p.title}
-                  placeholder={({ imageProps, ref }) => (
-                    <div ref={ref} className={classes.img} />
-                  )}
-                  src={p?.images?.[0]?.uri || "/ogp.png"}
-                  actual={({ imageProps }) => (
-                    <img
-                      {...imageProps}
-                      alt={imageProps.alt}
-                      className={classes.img}
-                    />
-                  )}
-                />
+                {p?.images?.[0]?.uri ? (
+                  <LazyImage
+                    alt={p.title}
+                    placeholder={({ imageProps, ref }) => (
+                      <div ref={ref} className={classes.img} />
+                    )}
+                    src={p?.images?.[0]?.uri}
+                    actual={({ imageProps }) => (
+                      <img
+                        {...imageProps}
+                        alt={imageProps.alt}
+                        className={classes.img}
+                      />
+                    )}
+                  />
+                ) : (
+                  <YoutubePreview text={p.body} />
+                )}
               </div>
             </Link>
           ))}
