@@ -11,10 +11,21 @@ export const insertUser = gql`
 `;
 
 export const updateUserName = gql`
-  mutation($id: Int!, $name: String!, $photo_url: String) {
+  mutation($id: Int!, $name: String!, $photo_url: String, $metadata: jsonb) {
     update_mx_users_by_pk(
       pk_columns: { id: $id }
-      _set: { name: $name, photo_url: $photo_url }
+      _set: { name: $name, photo_url: $photo_url, metadata: $metadata }
+    ) {
+      id
+    }
+  }
+`;
+
+export const updateUserInfo = gql`
+  mutation($user_id: Int!, $name: String!, $metadata: jsonb) {
+    update_mx_users_by_pk(
+      pk_columns: { id: $user_id }
+      _set: { name: $name, metadata: $metadata }
     ) {
       id
     }
@@ -27,7 +38,7 @@ export const insertPost = gql`
     $group_id: Int!
     $title: String!
     $context: String
-    $body: String
+    $body: String!
     $html: jsonb
     $metadata: jsonb = {}
     $images: jsonb
@@ -71,7 +82,7 @@ export const updatePost = gql`
     $id: Int!
     $title: String!
     $context: String
-    $body: String
+    $body: String!
     $html: jsonb
     $metadata: jsonb = {}
     $images: jsonb
@@ -102,6 +113,9 @@ export const deletePost = gql`
   mutation($id: Int!) {
     delete_mx_posts_by_pk(id: $id) {
       board_id
+      board {
+        type
+      }
     }
   }
 `;
@@ -194,7 +208,7 @@ export const unlikeComment = gql`
 `;
 
 export const insertUserGroup = gql`
-  mutation($group_id: Int!, $status: String = "requested") {
+  mutation($group_id: Int!, $status: String = "user") {
     insert_mx_users_group_one(
       object: { group_id: $group_id, status: $status }
       on_conflict: { update_columns: [status], constraint: users_group_pkey }
