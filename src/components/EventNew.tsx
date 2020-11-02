@@ -22,7 +22,7 @@ export default function EventNew() {
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<EventFormdata>();
-  const { handleSubmit } = formControl;
+  const { handleSubmit, formState } = formControl;
   async function handleForm(form: EventFormdata) {
     setLoading(true);
     const { eventDate, deadline, countPeople, place, ...rest } = form;
@@ -63,7 +63,10 @@ export default function EventNew() {
               files={fileArr}
               setFiles={setFileArr}
             />
-            <BtnSubmitDesktop text="모임 생성" />
+            <BtnSubmitDesktop
+              text="모임 생성"
+              isSubmitting={formState.isSubmitting}
+            />
           </Container>
         </Box>
       </form>

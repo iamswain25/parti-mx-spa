@@ -14,7 +14,7 @@ import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
 
 export default function NoticeNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [, setLoading] = useGlobalState(keys.LOADING);
@@ -23,7 +23,7 @@ export default function NoticeNew() {
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<NoticeFormdata>();
-  const { handleSubmit } = formControl;
+  const { handleSubmit, formState } = formControl;
   async function handleForm(form: NoticeFormdata) {
     setLoading(true);
     const variables = await makeNewVariables(form, {
@@ -56,7 +56,10 @@ export default function NoticeNew() {
               files={fileArr}
               setFiles={setFileArr}
             />
-            <BtnSubmitDesktop text="소식 제출" />
+            <BtnSubmitDesktop
+              text="소식 제출"
+              isSubmitting={formState.isSubmitting}
+            />
           </Container>
         </Box>
       </form>

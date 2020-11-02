@@ -25,7 +25,7 @@ export default function SuggestionNew() {
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<SuggestionFormdata>();
-  const { handleSubmit } = formControl;
+  const { handleSubmit, formState } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
@@ -81,7 +81,10 @@ export default function SuggestionNew() {
               files={fileArr}
               setFiles={setFileArr}
             />
-            <BtnSubmitDesktop text="제안 제출" />
+            <BtnSubmitDesktop
+              text="제안 제출"
+              isSubmitting={formState.isSubmitting}
+            />
           </Container>
         </Box>
       </form>

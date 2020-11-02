@@ -26,7 +26,7 @@ export default function VoteNew() {
   const formControl = useForm<VoteFormdata>({
     defaultValues: { candidates: ["", ""] },
   });
-  const { handleSubmit } = formControl;
+  const { handleSubmit, formState } = formControl;
   async function handleForm(form: VoteFormdata) {
     setLoading(true);
     const {
@@ -91,7 +91,10 @@ export default function VoteNew() {
               files={fileArr}
               setFiles={setFileArr}
             />
-            <BtnSubmitDesktop text="투표 제출" />
+            <BtnSubmitDesktop
+              text="투표 제출"
+              isSubmitting={formState.isSubmitting}
+            />
           </Container>
         </Box>
       </form>
