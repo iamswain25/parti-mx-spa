@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 interface GroupForm {
   name: string;
   email: string;
+  org: string;
   bgFiles: any;
 }
 export default function Profile() {
@@ -66,16 +67,22 @@ export default function Profile() {
       })
       .then((res) => {
         if (res.data?.mx_users_by_pk) {
-          const { photo_url, name, email } = res.data?.mx_users_by_pk;
-          reset({ name, email });
+          const { photo_url, name, email, metadata } = res.data?.mx_users_by_pk;
+          reset({ name, email, org: metadata?.org || "" });
           setPhoto(photo_url);
+          setLoading(false);
         }
       });
-  }, [reset, setPhoto, user_id]);
+  }, [reset, setPhoto, user_id, setLoading]);
   async function handleForm(form: GroupForm) {
-    const { bgFiles, name } = form;
+    const { bgFiles, name, org } = form;
     setLoading(true);
-    const variables = { id: user_id, name, photo_url: undefined };
+    const variables = {
+      id: user_id,
+      name,
+      photo_url: undefined,
+      metadata: { org },
+    };
     if (bgFiles?.length) {
       variables.photo_url = await uploadFileByPath(
         bgFiles[0],
@@ -111,14 +118,14 @@ export default function Profile() {
           defaultValue=""
           as={
             <TextField
-              label="닉네임"
+              label="활동명"
               variant="outlined"
               margin="normal"
               fullWidth
               autoFocus
               required
-              error={errors.name ? true : false}
-              helperText={errors.name && errors.name.message}
+              error={!!errors.name}
+              helperText={errors?.name?.message}
             />
           }
           rules={{
@@ -138,6 +145,23 @@ export default function Profile() {
         />
         <Controller
           control={control}
+          name="org"
+          defaultValue=""
+          rules={{ required: true }}
+          as={
+            <TextField
+              label="소속"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              error={!!errors.org}
+              helperText="YWCA 회원이시면 소속을 표기해주세요. (예. OOYWCA)"
+            />
+          }
+        />
+        <Controller
+          control={control}
           name="email"
           defaultValue=""
           as={
@@ -147,10 +171,7 @@ export default function Profile() {
               variant="outlined"
               margin="normal"
               fullWidth
-              autoFocus
-              required
-              error={errors.email ? true : false}
-              helperText={errors.email && errors.email.message}
+              error={!!errors.email}
             />
           }
         />

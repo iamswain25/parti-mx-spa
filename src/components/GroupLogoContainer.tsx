@@ -119,7 +119,7 @@ export default function GroupLogoContainer() {
   const toJoinTag = ["organizer", "user", "participant", "requested"].includes(
     status as string
   ) ? (
-    <span>{showStatusLabelByValue(status)}</span>
+    <Link to="/profile">{showStatusLabelByValue(status)}</Link>
   ) : (
     <Button className={classes.groupJoin} onClick={joinHandler}>
       그룹가입

@@ -13,7 +13,7 @@ export default function MenuGroup({ group }: { group: Group }) {
   const isUser = status === "user";
   const isMine = user_id === group.createdBy?.id;
   const { push } = useHistory();
-  const exitGroup = useGroupExit();
+  const exitGroup = useGroupExit(() => setAnchorEl(null));
   const deleteGroup = useGroupDelete();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -23,9 +23,11 @@ export default function MenuGroup({ group }: { group: Group }) {
     setAnchorEl(null);
   };
   function boardHandler() {
+    setAnchorEl(null);
     push("/boards");
   }
   function groupHandler() {
+    setAnchorEl(null);
     push("/group/edit");
   }
   if (!(isOrg || isUser)) {
