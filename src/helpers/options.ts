@@ -43,6 +43,11 @@ export function showStatusLabelByValue(value: UserStatus) {
 export const MINIMUM_TAG_COUNT = 3;
 
 export const defaultHashtags = [
+  "PRAUD",
+  "UrbanFlow",
+  "D.FLUENCE",
+  "공원문답",
+  "M&K",
   "global",
   "local",
   "border",
