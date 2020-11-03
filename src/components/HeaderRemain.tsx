@@ -51,6 +51,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "flex-end",
   },
+  logo: {
+    // width: 184px;
+    height: 36,
+    overflow: "hidden",
+    "& img": {
+      objectFit: "contain",
+      height: "100%",
+    },
+  },
 }));
 
 export default function HeaderRemain(props: { children?: any }) {
@@ -64,7 +73,9 @@ export default function HeaderRemain(props: { children?: any }) {
           <Grid container>
             <Grid container item xs={2} alignItems="center" />
             <Grid item xs={8} className={classes.logoFont}>
-              <Link to="/home">한국YWCA연합회</Link>
+              <Link to="/home" className={classes.logo}>
+                <img src="/logo_top.png" alt="logo_top" />
+              </Link>
             </Grid>
             <Grid item xs={2} className={classes.flexend}>
               <Typography variant="h3" noWrap>
