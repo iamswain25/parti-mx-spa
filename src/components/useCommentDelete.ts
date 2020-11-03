@@ -14,7 +14,7 @@ export default function useCommentDelete(c: Comment) {
   }
   async function handler() {
     if (role === "organizer") {
-      return remove();
+      if (window.confirm("삭제하시겠습니까?")) return remove();
     } else {
       const input = window.prompt("비밀번호를 입력하세요");
       if (input === c.password) {

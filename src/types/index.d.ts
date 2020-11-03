@@ -46,7 +46,15 @@ export interface VoteFormdata {
 export interface VoteEditFormdata extends VoteFormdata {
   candidates: Candidate[];
 }
-export type BoardPermission = "member" | "all" | "observer";
+export type Role = "organizer" | "member" | "user" | "anonymous";
+export type BoardPermission = {
+  create: Role[];
+  read: Role[];
+  update: Role[];
+  delete: Role[];
+  comment: Role[];
+  like: Role[];
+};
 export type Board = {
   id: string;
   title: string;

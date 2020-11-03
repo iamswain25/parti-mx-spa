@@ -8,21 +8,16 @@ export const initialState = {
   boardId: null,
   sort: 0,
   role: undefined,
-  board: undefined,
 };
 interface GlobalType {
   success: any;
   groupId: string;
   boardId: string | null;
   error: any;
-  role?: "organizer" | "member" | "user" | null;
+  role?: "organizer" | "member" | "user" | "anonymous";
   loginModal: boolean;
   currentUser?: firebase.User | null;
   sort: number;
-  board?: {
-    id: string;
-    type: "suggestion" | "notice" | "event" | "vote";
-  };
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export enum keys {
@@ -59,7 +54,4 @@ export function useRole() {
 }
 export function useSort() {
   return useGlobalState("sort");
-}
-export function useBoard() {
-  return useGlobalState("board");
 }

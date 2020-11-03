@@ -24,7 +24,7 @@ export default function MenuGroup({ group }: { group: Group }) {
     setAnchorEl(null);
   };
   function boardHandler() {
-    push(`${groupId}/boards`);
+    push(`/${groupId}/boards`);
     handleClose();
   }
   function groupHandler() {

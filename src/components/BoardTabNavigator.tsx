@@ -7,7 +7,7 @@ import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
 import useBoards from "../store/useBoards";
-import { useBoardId, useGroupId } from "../store/useGlobalState";
+import { useBoardId, useGroupId, useRole } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -100,6 +100,7 @@ export default function BoardTabNavigator() {
   const classes = useStyles();
   const [boards] = useBoards(true);
   const [isTop, setTop] = React.useState(false);
+  const [role] = useRole();
   const stickyHeader = React.useRef<HTMLDivElement | null>(null);
   const history = useHistory();
   useScrollPosition(
@@ -113,6 +114,14 @@ export default function BoardTabNavigator() {
   );
   function btnHandler() {
     history.push(`/${group_id}/${board_id}/new`);
+  }
+  function permissionWrite() {
+    if (!board_id) return false;
+    const board = boards.find((b) => b.id === board_id);
+    if (board && role) {
+      return board.permission?.create?.includes(role);
+    }
+    return false;
   }
   return (
     <Grid
@@ -138,7 +147,7 @@ export default function BoardTabNavigator() {
             </NavLink>
           ))}
         </Box>
-        {board_id && !pathname.endsWith("/new") && (
+        {permissionWrite() && !pathname.endsWith("/new") && (
           <>
             <div className={classes.btn}>
               <Button variant="contained" color="primary" onClick={btnHandler}>

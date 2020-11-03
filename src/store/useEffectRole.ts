@@ -13,10 +13,10 @@ export default function useEffectRole() {
         .collection("users")
         .doc(currentUser.uid)
         .onSnapshot((doc) => {
-          setRole(doc.get("role") ?? null);
+          setRole(doc.get("role") ?? "anonymous");
         });
     } else if (currentUser !== undefined) {
-      setRole(null);
+      setRole("anonymous");
     }
   }, [setRole, currentUser, groupId]);
   return [role];

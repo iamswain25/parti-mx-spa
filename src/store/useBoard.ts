@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { firestore } from "../config/firebase";
 import { Board } from "../types";
-export default function useBoard(listen: Boolean = false): [Board] {
+export default function useBoard(listen: Boolean = true): [Board] {
   const { board_id, group_id } = useParams<{
     board_id: string;
     group_id: string;
