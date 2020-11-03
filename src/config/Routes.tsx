@@ -71,7 +71,7 @@ export default function Routes() {
               exact
               component={RoutePostNew}
             />
-            <AdminRoute path="/:group_id/report" exact component={Report} />
+            <AdminRoute path="/report" exact component={Report} />
             <Route exact path="/">
               <Redirect to="/home" />
             </Route>
