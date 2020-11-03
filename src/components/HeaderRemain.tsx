@@ -64,7 +64,7 @@ export default function HeaderRemain(props: { children?: any }) {
           <Grid container>
             <Grid container item xs={2} alignItems="center" />
             <Grid item xs={8} className={classes.logoFont}>
-              <Link to="/home">한국 YWCA 연합회</Link>
+              <Link to="/home">한국YWCA연합회</Link>
             </Grid>
             <Grid item xs={2} className={classes.flexend}>
               <Typography variant="h3" noWrap>
