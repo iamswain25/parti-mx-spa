@@ -17,7 +17,7 @@ export default function VoteNew() {
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [isBinary, setBinary] = React.useState(true);
   const formControl = useForm<VoteFormdata>({
-    defaultValues: { candidates: ["", ""] },
+    defaultValues: { candidates: ["", ""] } as VoteFormdata,
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {

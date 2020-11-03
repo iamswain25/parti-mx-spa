@@ -14,9 +14,9 @@ export interface NoticeFormdata {
   html: RawDraftContentState;
 }
 export interface EventFormdata {
-  event_date: Date;
+  event_date: string;
   place: string;
-  deadline: Date;
+  deadline: string;
   countPeople: number;
   title: string;
   body: string;

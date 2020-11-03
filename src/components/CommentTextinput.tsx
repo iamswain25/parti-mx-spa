@@ -32,12 +32,13 @@ export default function CommentTextinput({
   handler: any;
 }) {
   const atUser = user ? `@${user} ` : "";
+  const { password } = comment;
   const parent_id = comment.id || null;
   const post_id = comment.post_id || null;
   const { handleSubmit, register, errors, reset, getValues } = useForm<
     CommentInput
   >({
-    defaultValues: { body: atUser, parent_id, post_id },
+    defaultValues: { body: atUser, parent_id, post_id, password },
   });
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
@@ -48,7 +49,7 @@ export default function CommentTextinput({
   React.useEffect(() => {
     const { body } = getValues();
     if (body.indexOf(atUser) < 0) {
-      reset({ body: atUser + body, parent_id, post_id });
+      reset({ body: atUser + body, parent_id, post_id, password });
     }
     if (autoFocus) {
       ref.current?.focus();

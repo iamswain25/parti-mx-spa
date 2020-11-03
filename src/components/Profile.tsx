@@ -51,7 +51,7 @@ export default function Profile() {
       reset({
         name: currentUser.displayName || "익명",
         email: currentUser.email || "익명",
-      });
+      } as GroupForm);
     }
   }, [currentUser, reset, setPhoto]);
 

@@ -41,7 +41,7 @@ export default function GroupEdit() {
     if (group) {
       const { title, bg_img, mb_img, id } = group;
       setImages({ bg_img, mb_img });
-      reset({ title, id });
+      reset({ title, id } as GroupForm);
     }
   }, [group, reset, setImages]);
   async function handleForm(form: GroupForm) {

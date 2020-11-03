@@ -19,14 +19,12 @@ export default function EventInputs({ formControl }: any) {
         name="event_date"
         type="datetime-local"
         defaultValue={now}
-        autoFocus
         register={register}
         errors={errors}
       />
       <CustomTextField
         label="장소"
         name="place"
-        autoFocus
         register={register}
         errors={errors}
       />
@@ -35,7 +33,6 @@ export default function EventInputs({ formControl }: any) {
         name="countPeople"
         type="number"
         defaultValue={10}
-        autoFocus
         InputProps={{
           endAdornment: <span>명</span>,
         }}
@@ -53,7 +50,6 @@ export default function EventInputs({ formControl }: any) {
         name="deadline"
         type="datetime-local"
         defaultValue={now}
-        autoFocus
         register={register}
         errors={errors}
       />

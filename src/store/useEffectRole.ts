@@ -7,7 +7,6 @@ export default function useEffectRole() {
   const [groupId] = useGroupId();
   React.useEffect(() => {
     if (currentUser) {
-      setRole(undefined);
       return firestore
         .collection("groups")
         .doc(groupId)

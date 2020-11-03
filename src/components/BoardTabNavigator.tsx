@@ -7,7 +7,7 @@ import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
 import useBoards from "../store/useBoards";
-import { useBoardId } from "../store/useGlobalState";
+import { useBoardId, useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {
@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardTabNavigator() {
   const [board_id] = useBoardId();
+  const [group_id] = useGroupId();
   const { pathname } = useLocation();
   const classes = useStyles();
   const [boards] = useBoards(true);
@@ -111,7 +112,7 @@ export default function BoardTabNavigator() {
     false
   );
   function btnHandler() {
-    history.push(`/home/${board_id}/new`);
+    history.push(`/${group_id}/${board_id}/new`);
   }
   return (
     <Grid
@@ -121,13 +122,13 @@ export default function BoardTabNavigator() {
     >
       <div className={classes.tab}>
         <Box display="flex" flexWrap="nowrap">
-          <NavLink exact to={`/home`} className={classes.tabLink}>
+          <NavLink exact to={`/${group_id}`} className={classes.tabLink}>
             홈
           </NavLink>
           {boards.map((b, i) => (
             <NavLink
               exact
-              to={`/home/${b.id}`}
+              to={`/${group_id}/${b.id}`}
               key={i}
               className={`${classes.tabLink} ${
                 board_id === b.id ? "active" : ""

@@ -15,7 +15,7 @@ export default function RoutePostEdit() {
   const [role] = useRole();
   const [groupId, setGroupId] = useGroupId();
   React.useEffect(() => {
-    console.log(role);
+    console.log(p, role);
     if (role === "organizer") return;
     else if (p) {
       const input = window.prompt("비밀번호 4자리를 입력해 주세요.");
