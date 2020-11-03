@@ -20,6 +20,8 @@ export default function AdminRoute(props: RouteProps) {
       render={({ location }) =>
         data?.mx_groups_by_pk?.status === "organizer" ? (
           <Comp />
+        ) : data?.mx_groups_by_pk === null ? (
+          <Forbidden noGroup />
         ) : (
           <Forbidden notAdmin />
         )

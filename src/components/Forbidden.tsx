@@ -30,15 +30,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     fontSize: 40,
     color: theme.palette.primary.main,
-    textDecoration: "underline",
-    cursor: "pointer",
+    "& a": {
+      textDecoration: "underline",
+      cursor: "pointer",
+    },
   },
 }));
 export default function Forbidden({
   noPost = false,
+  noGroup = false,
   notAdmin = false,
 }: {
   noPost?: boolean;
+  noGroup?: boolean;
   notAdmin?: boolean;
 }) {
   const [{ user_id }] = useStore();
@@ -50,7 +54,7 @@ export default function Forbidden({
       <div className={classes.link}>
         운영자 권한이 없습니다. <br />
         운영자에게 운영자 권한을 요청하세요. <br />
-        <Link to="/">이전 그룹의 메인화면으로 돌아갑니다.</Link>
+        <Link to="/">그룹의 메인화면으로 돌아갑니다.</Link>
       </div>
     );
   }
@@ -60,6 +64,16 @@ export default function Forbidden({
         <Link to="/">
           삭제된 게시물입니다. <br />
           이전 그룹의 메인화면으로 돌아갑니다.
+        </Link>
+      </div>
+    );
+  }
+  if (noGroup) {
+    return (
+      <div className={classes.link}>
+        <Link to="/?group_id=1">
+          삭제된 그룹입니다. <br />
+          열린공론장으로 돌아갑니다.
         </Link>
       </div>
     );
