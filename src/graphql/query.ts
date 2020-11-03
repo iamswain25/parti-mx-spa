@@ -497,6 +497,7 @@ export const queryReportAll = gql`
       }
       id
       title
+      body
       created_at
       user: createdBy {
         name

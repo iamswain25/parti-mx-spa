@@ -8,6 +8,7 @@ export function csvDownloadAll(group_id: number) {
       const fields = [
         "id",
         "title",
+        "body",
         "board.title",
         "created_at",
         "user.email",

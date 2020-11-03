@@ -1,16 +1,16 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { csvDownloadAll } from "../helpers/csvDownload";
-import { useStore } from "../store/store";
+import { useParams } from "react-router-dom";
 
 export default function Report() {
-  const [{ group_id }] = useStore();
+  const { group_id } = useParams<{ group_id: string }>();
   return (
     <div>
       <Button
         variant="contained"
         color="primary"
-        onClick={() => csvDownloadAll(group_id)}
+        onClick={() => csvDownloadAll(Number(group_id))}
       >
         download csv
       </Button>

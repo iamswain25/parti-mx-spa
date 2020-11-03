@@ -52,7 +52,6 @@ export default function Routes() {
             <PrivateRoute path="/group/new" exact component={GroupNew} />
             <PrivateRoute path="/profile" exact component={Profile} />
             <PrivateRoute path="/group/edit" exact component={GroupEdit} />
-            <AdminRoute path="/report" exact component={Report} />
             <Route path="/search" exact component={Search} />
             <Route
               exact
@@ -72,6 +71,7 @@ export default function Routes() {
               exact
               component={RoutePostNew}
             />
+            <AdminRoute path="/:group_id/report" exact component={Report} />
             <Route exact path="/">
               <Redirect to="/home" />
             </Route>
