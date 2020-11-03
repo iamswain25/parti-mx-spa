@@ -8,6 +8,7 @@ import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
+import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => {
 export default function HomeBoardEvent({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
+  const [group_id] = useGroupId();
   const [posts] = usePosts({ board_id: b.id });
   return (
     <>
@@ -60,7 +62,7 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
           </Typography>
           {isDesktop && (
             <Box mr={1}>
-              <BoardMoreTag to={`/home/${b.id}`} />
+              <BoardMoreTag to={`/${group_id}/${b.id}`} />
             </Box>
           )}
         </Grid>
@@ -70,7 +72,7 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
             <BoardPostEvent key={i} post={p} />
           ))}
         </div>
-        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

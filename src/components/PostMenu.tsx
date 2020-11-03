@@ -43,7 +43,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
       </MenuItem>
     );
   }
-  if (!isClosed && isOrganizer) {
+  if (!isClosed && isOrganizer && p.type !== "event") {
     menuItems.push(
       <MenuItem onClick={resolve} key={5}>
         토론 정리

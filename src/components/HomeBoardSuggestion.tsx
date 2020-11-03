@@ -8,6 +8,7 @@ import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
+import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -39,6 +40,7 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const [posts] = usePosts({ board_id: b.id });
+  const [group_id] = useGroupId();
   return (
     <>
       <section className={classes.container}>
@@ -51,14 +53,14 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
-          {isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+          {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
         </Grid>
         <div className={classes.postContainer}>
           {posts.map((p, i) => (
             <BoardPostSuggestion key={i} post={p} />
           ))}
         </div>
-        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

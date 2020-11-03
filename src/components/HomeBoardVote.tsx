@@ -12,6 +12,7 @@ import "react-multi-carousel/lib/styles.css";
 import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 import BoardMoreTag from "./BoardMoreTag";
+import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -96,6 +97,7 @@ function CustomRightArrow(props: any) {
 export default function HomeBoardVote({ board: b }: { board: Board }) {
   const [isDesktop, theme] = useDesktop();
   const classes = useStyles();
+  const [group_id] = useGroupId();
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: theme.breakpoints.values.md },
@@ -135,7 +137,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
           </Typography>
           {isDesktop && (
             <Box mr={1}>
-              <BoardMoreTag to={`/home/${b.id}`} />
+              <BoardMoreTag to={`/${group_id}/${b.id}`} />
             </Box>
           )}
         </Grid>
@@ -155,7 +157,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
             ))}
           </Carousel>
         </div>
-        {!isDesktop && <BoardMoreTag to={`/home/${b.id}`} />}
+        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

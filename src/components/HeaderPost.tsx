@@ -39,7 +39,7 @@ export default function HeaderPost({ post: p }: { post: Post }) {
         <ChevronLeftIcon />
       </IconButton>
       <Box flexShrink={1}>
-        <Link to={`/home?group_id=${groupId}`}>
+        <Link to={`/${groupId}`}>
           <Typography variant="h2" color="textPrimary">
             {title}
           </Typography>

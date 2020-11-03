@@ -7,7 +7,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { Grid } from "@material-ui/core";
 import { version } from "../../package.json";
-import { useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser, useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function HeaderRemain(props: { children?: any }) {
   const { children } = props;
   const classes = useStyles();
-  const [currentUser] = useCurrentUser();
+  const [group_id] = useGroupId();
   return (
     <>
       <AppBar position="sticky" className={classes.appBar}>
@@ -62,7 +62,7 @@ export default function HeaderRemain(props: { children?: any }) {
           <Grid container>
             <Grid container item xs={2} alignItems="center" />
             <Grid item xs={8} className={classes.logoFont}>
-              <Link to="/home">빠띠 믹스 (v{version})</Link>
+              <Link to={`/${group_id}`}>빠띠 믹스 (v{version})</Link>
             </Grid>
             <Grid item xs={2} className={classes.flexend}>
               <Typography variant="h3" noWrap>

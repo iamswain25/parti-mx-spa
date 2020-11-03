@@ -9,6 +9,7 @@ import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import ReactPlayer from "react-player";
+import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => {
 export default function HomeBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
+  const [group_id] = useGroupId();
   const [posts] = usePosts({ board_id: b.id });
   return (
     <>
@@ -45,7 +47,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
-          {isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}
+          {isDesktop && <BoardMoreTag to={`/${group_id}/${b?.id}`} />}
         </Grid>
         <div className="player-wrapper">
           <ReactPlayer
@@ -61,7 +63,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
             <BoardPostNotice key={p.id} post={p} />
           ))}
         </div>
-        {!isDesktop && <BoardMoreTag to={`/home/${b?.id}`} />}
+        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b?.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

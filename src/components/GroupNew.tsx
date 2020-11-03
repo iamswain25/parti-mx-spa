@@ -63,7 +63,7 @@ export default function GroupNew() {
         wrap="nowrap"
         className={classes.top}
       >
-        <Link to={`/home`}>
+        <Link to={`/${groupId}`}>
           <ChevronLeftIcon />
         </Link>
         <Typography variant="h3" color="textPrimary">

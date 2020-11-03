@@ -51,7 +51,7 @@ interface BoardsForm {
 export default function BoardsSetting() {
   const classes = useStyles();
   const history = useHistory();
-  const [groupId] = useGroupId();
+  const [group_id] = useGroupId();
   // const [boards] = useBoards();
   const { handleSubmit, register, errors, control } = useForm<BoardsForm>();
   const { fields, append, remove } = useFieldArray<Board>({
@@ -78,7 +78,7 @@ export default function BoardsSetting() {
     console.log(variables);
     // return console.log(variables);
     // await updateBoardsAll({ variables });
-    history.push("/home");
+    history.push(`/${group_id}`);
   }
 
   return (
@@ -137,7 +137,7 @@ export default function BoardsSetting() {
                 <Controller
                   name={`boards[${i}].group_id`}
                   control={control}
-                  defaultValue={groupId}
+                  defaultValue={group_id}
                   as={<input type="hidden" />}
                 />
                 <CustomTextField

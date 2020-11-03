@@ -1,4 +1,9 @@
-import { useError, useRole, useSuccess } from "../store/useGlobalState";
+import {
+  useError,
+  useGroupId,
+  useRole,
+  useSuccess,
+} from "../store/useGlobalState";
 import { useHistory } from "react-router-dom";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
@@ -7,6 +12,7 @@ export default function usePostDelete(post: Post) {
   const { replace } = useHistory();
   const [, setSuccess] = useSuccess();
   const [, setError] = useError();
+  const [group_id] = useGroupId();
   const [role] = useRole();
   async function handler() {
     try {
@@ -15,7 +21,7 @@ export default function usePostDelete(post: Post) {
       doc.ref.delete();
       if (board_id) {
         setSuccess("삭제 되었습니다");
-        replace("/home/" + board_id);
+        replace(`/${group_id}/` + board_id);
       }
     } catch (error) {
       setError(error?.message);
@@ -24,7 +30,7 @@ export default function usePostDelete(post: Post) {
 
   return function () {
     if (role === "organizer") {
-      return handler();
+      if (window.confirm("삭제하시겠습니까?")) return handler();
     } else {
       const input = window.prompt("비밀번호 4자리를 입력해 주세요");
       if (input === post.password) {

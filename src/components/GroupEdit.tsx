@@ -57,7 +57,7 @@ export default function GroupEdit() {
         .collection("groups")
         .doc(id)
         .set({ bg_img, mb_img, title }, { merge: true });
-      history.replace("/home");
+      history.replace(`/${id}`);
     } catch (error) {
       setError(error);
     }
