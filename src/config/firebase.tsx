@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { sharentingFirebaseConfig as firebaseConfig } from "./firebaseConfig";
+import { playgroundJennaFirebaseConfig as firebaseConfig } from "./firebaseConfig";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/functions";
