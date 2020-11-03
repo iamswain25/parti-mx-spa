@@ -98,7 +98,7 @@ export default function BoardTabNavigator() {
   const [group_id] = useGroupId();
   const { pathname } = useLocation();
   const classes = useStyles();
-  const [boards] = useBoards(true);
+  const [boards] = useBoards();
   const [isTop, setTop] = React.useState(false);
   const [role] = useRole();
   const stickyHeader = React.useRef<HTMLDivElement | null>(null);

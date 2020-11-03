@@ -29,7 +29,7 @@ export default function Home() {
   useEffectParams();
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  const [boards] = useBoards(true);
+  const [boards] = useBoards();
   const notice = boards.filter((b) => b.type === "notice");
   const suggestion = boards.filter((b) => b.type === "suggestion");
   const vote = boards.filter((b) => b.type === "vote");

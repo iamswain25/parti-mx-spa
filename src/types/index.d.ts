@@ -70,22 +70,7 @@ export type Board = {
   users: UserBoard[];
   newPostCount?: number;
   posts: Post[];
-  group: Group;
-  posts_aggregate: {
-    aggregate: {
-      count: number;
-    };
-  };
-  posts_aggregate_open: {
-    aggregate: {
-      count: number;
-    };
-  };
-  posts_aggregate_closed: {
-    aggregate: {
-      count: number;
-    };
-  };
+  group_id: string;
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
 export interface LatLng {

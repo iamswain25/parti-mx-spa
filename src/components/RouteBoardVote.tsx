@@ -48,7 +48,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.posts_aggregate_open.aggregate.count}
+                {b?.count_open || 0}
               </Typography>
             </Box>
           </Button>
@@ -67,7 +67,7 @@ export default function RouteBoardVote({ board: b }: { board?: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.posts_aggregate_closed.aggregate.count}
+                {b?.count_closed || 0}
               </Typography>
             </Box>
           </Button>

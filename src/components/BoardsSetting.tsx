@@ -13,7 +13,6 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Board } from "../types";
 import { useHistory } from "react-router-dom";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
@@ -21,7 +20,10 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import HeaderBack from "./HeaderBack";
 import { boardPermissionList } from "../helpers/options";
 import { useGroupId } from "../store/useGlobalState";
-// import useBoards from "../store/useBoards";
+import useBoards from "../store/useBoards";
+import useEffectParams from "../store/useEffectParams";
+import { Board } from "../types";
+import { firestore } from "../config/firebase";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -38,46 +40,73 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
 }));
-const deletingIds: number[] = [];
+const deletingIds: string[] = [];
+// interface Board {
+//   id: string;
+//   body: string;
+//   title: string;
+//   order: number;
+//   type: string;
+// }
 interface BoardsForm {
-  boards: Array<{
-    id: string;
-    body: string;
-    title: string;
-    order: number;
-    type: string;
-  }>;
+  boards: Array<Board>;
 }
 export default function BoardsSetting() {
+  useEffectParams();
   const classes = useStyles();
   const history = useHistory();
   const [group_id] = useGroupId();
-  // const [boards] = useBoards();
-  const { handleSubmit, register, errors, control } = useForm<BoardsForm>();
-  const { fields, append, remove } = useFieldArray<Board>({
+  const [boards] = useBoards();
+  const { handleSubmit, register, errors, control, reset, formState } = useForm<
+    BoardsForm
+  >();
+  const { fields, append, remove } = useFieldArray<Board, "uid">({
     name: "boards",
     control,
+    keyName: "uid",
   });
+  React.useEffect(() => {
+    if (boards) {
+      reset({ boards });
+    }
+  }, [boards, reset]);
   function removeHandler(i: number) {
+    if (fields.length <= 1)
+      return alert("게시판이 적어도 하나는 있어야 합니다.");
     const id = fields[i].id;
-    if (typeof id === "number") {
+    if (id) {
       deletingIds.push(id);
     }
     remove(i);
   }
 
   async function handleForm(form: BoardsForm) {
-    const boards = form.boards.map((b) => {
-      const { id, ...rest } = b;
-      if (typeof id === "string") {
-        return rest;
-      }
-      return b;
+    console.log({ group_id });
+    const updates = form.boards.map(async ({ id, ...b }) => {
+      b.order = Number(b.order);
+      return id
+        ? firestore
+            .collection("groups")
+            .doc(group_id)
+            .collection("boards")
+            .doc(id)
+            .set(b, { merge: true })
+        : firestore
+            .collection("groups")
+            .doc(group_id)
+            .collection("boards")
+            .add(b);
     });
-    const variables = { boards, deletingIds };
-    console.log(variables);
-    // return console.log(variables);
-    // await updateBoardsAll({ variables });
+    await Promise.all(updates);
+    const deletes = deletingIds.map(async (id: string) =>
+      firestore
+        .collection("groups")
+        .doc(group_id)
+        .collection("boards")
+        .doc(id)
+        .delete()
+    );
+    await Promise.all(deletes);
     history.push(`/${group_id}`);
   }
 
@@ -86,15 +115,15 @@ export default function BoardsSetting() {
       <Container component="main" className={classes.root}>
         <HeaderBack title="게시판 관리" submit="저장" />
         <Typography>
-          {fields.map((field, i) => {
-            const postCount = field?.posts_aggregate?.aggregate?.count || 0;
+          {fields.map((field, i: number) => {
+            const postCount = field.count_open || 0;
             const readOnly = postCount > 0;
             return (
               <Grid
                 container
                 alignItems="center"
                 justify="space-between"
-                key={field.id}
+                key={field.uid}
                 className={classes.bb}
               >
                 <FormControl variant="filled">
@@ -132,12 +161,6 @@ export default function BoardsSetting() {
                   name={`boards[${i}].id`}
                   control={control}
                   defaultValue={field.id}
-                  as={<input type="hidden" />}
-                />
-                <Controller
-                  name={`boards[${i}].group_id`}
-                  control={control}
-                  defaultValue={group_id}
                   as={<input type="hidden" />}
                 />
                 <CustomTextField
@@ -191,7 +214,12 @@ export default function BoardsSetting() {
             );
           })}
         </Typography>
-        <Button onClick={() => append({ title: "", body: "", type: "notice" })}>
+        <Button
+          disabled={formState.isSubmitting}
+          onClick={() =>
+            append({ title: "", body: "", type: "notice", id: undefined })
+          }
+        >
           <AddIcon />
           게시판 추가
         </Button>
