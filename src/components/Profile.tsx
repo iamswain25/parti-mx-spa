@@ -6,6 +6,7 @@ import {
   TextField,
   IconButton,
   Avatar,
+  Button,
 } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import { useStore } from "../store/store";
@@ -13,7 +14,7 @@ import { updateUserName } from "../graphql/mutation";
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
-import { uploadFileByPath } from "../config/firebase";
+import { auth, uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import HeaderBack from "./HeaderBack";
 import { ValidateResult } from "react-hook-form/dist/types/form";
@@ -21,6 +22,7 @@ import { searchDuplicateNameWithoutMine } from "../graphql/query";
 import { whoami } from "../graphql/query";
 import CloseIcon from "@material-ui/icons/Close";
 import { client } from "../config/ApolloSetup";
+import firebase from "firebase";
 const useStyles = makeStyles((theme) => ({
   grid: {
     display: "grid",
@@ -55,6 +57,7 @@ export default function Profile() {
   const [updateName] = useMutation(updateUserName);
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
   const [, setLoading] = useGlobalState(keys.LOADING);
+  const [, setError] = useGlobalState(keys.ERROR);
   const { handleSubmit, register, errors, reset, control } = useForm<
     GroupForm
   >();
@@ -91,6 +94,21 @@ export default function Profile() {
     }
     await updateName({ variables });
     history.push("/home");
+  }
+  async function signoutHandler() {
+    const password = window.prompt("비밀번호를 입력하세요");
+    try {
+      if (!auth?.currentUser) throw new Error("유저를 찾지 못했습니다.");
+      if (!password) return;
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        auth.currentUser.email!,
+        password
+      );
+      await auth.currentUser.reauthenticateWithCredential(credential);
+      await auth.currentUser.delete();
+    } catch (error) {
+      setError(error);
+    }
   }
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
@@ -175,6 +193,11 @@ export default function Profile() {
             />
           }
         />
+        <div>
+          <Button variant="contained" color="primary" onClick={signoutHandler}>
+            회원탈퇴
+          </Button>
+        </div>
       </Container>
       <BtnSubmitDesktop text="수정" />
     </form>
