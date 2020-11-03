@@ -18,6 +18,7 @@ export default function useCommentDelete(c: Comment) {
     } else {
       const input = window.prompt("비밀번호를 입력하세요");
       if (input === c.password) {
+        return remove();
       } else {
         window.alert("비밀번호가 맞지 않습니다.");
       }

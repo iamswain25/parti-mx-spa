@@ -49,7 +49,7 @@ export default function CommentTextinput({
   React.useEffect(() => {
     const { body } = getValues();
     if (body.indexOf(atUser) < 0) {
-      reset({ body: atUser + body, parent_id, post_id, password });
+      reset({ body: atUser + body, parent_id, post_id } as CommentInput);
     }
     if (autoFocus) {
       ref.current?.focus();
