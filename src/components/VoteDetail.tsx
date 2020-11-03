@@ -138,7 +138,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
           <Hidden smDown implementation="css">
             <Box display="flex" alignItems="center">
               <ShareButtons post={p} />
-              <PostMenu post={p} />
+              {/* <PostMenu post={p} /> */}
             </Box>
           </Hidden>
         </Box>

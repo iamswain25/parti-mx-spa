@@ -39,12 +39,12 @@ export default function VoteCandidate({
     if (isClosed) return;
     onClick(c?.id, myVote);
   }
-  const { modal, setVisible } = useWhoVotedModal(c);
+  // const { modal, setVisible } = useWhoVotedModal(c);
   function resultHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (isAnonymous) {
       return setError("익명투표 입니다.");
     }
-    setVisible(true);
+    // setVisible(true);
   }
   return (
     <Box display="flex" alignItems="stretch" mb={1}>
@@ -100,7 +100,7 @@ export default function VoteCandidate({
       >
         <CheckIcon />
       </Box>
-      {modal}
+      {/* {modal} */}
     </Box>
   );
 }

@@ -82,7 +82,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
         <Box color="grey.900" className={classes.title}>
           {p.title}
           <Box display="flex" alignItems="center">
-            <PostMenu post={p} />
+            {/* <PostMenu post={p} /> */}
           </Box>
         </Box>
         <Box mt={1}>
