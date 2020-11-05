@@ -36,9 +36,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Forbidden({
   noPost = false,
+  noBoard = false,
   notAdmin = false,
 }: {
   noPost?: boolean;
+  noBoard?: boolean;
   notAdmin?: boolean;
 }) {
   const [currentUser] = useCurrentUser();
@@ -64,10 +66,20 @@ export default function Forbidden({
       </div>
     );
   }
+  if (noBoard) {
+    return (
+      <div className={classes.link}>
+        <Link to="/">
+          삭제된 게시판입니다. <br />
+          이전 그룹의 메인화면으로 돌아갑니다.
+        </Link>
+      </div>
+    );
+  }
   return (
     <Typography variant="h1">
       <div className={classes.div}>
-        {!currentUser ? (
+        {!currentUser?.email ? (
           <>
             <button onClick={login}>로그인</button>또는
             <button onClick={signup}>회원가입</button>을 해주세요
