@@ -1,4 +1,4 @@
-import { UserStatus } from "../types";
+import { Role, UserStatus } from "../types";
 export const DOMAIN = "https://parti.mx";
 export const postSortOptions = [
   { created_at: "desc" },
@@ -26,11 +26,19 @@ export const userGroupStatusList = [
 ];
 
 export const boardPermissionList = [
-  { label: "전체공개", value: "all" },
-  { label: "멤버공개", value: "member" },
-  { label: "전체공개 & 오거나이저 글 작성", value: "observer" },
+  { label: "오거나이저", value: "organizer" },
+  { label: "멤버", value: "member" },
+  { label: "유저", value: "user" },
+  { label: "익명", value: "anonymous" },
 ];
 
+export function permissionLabelByValue(value: Role) {
+  const item = boardPermissionList.find((p) => p.value === value);
+  if (item) {
+    return item.label;
+  }
+  return null;
+}
 export function showStatusLabelByValue(value: UserStatus) {
   const userStatus = userGroupStatusList.find((ug) => ug.value === value);
   if (userStatus) {

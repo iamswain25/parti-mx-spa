@@ -1,6 +1,5 @@
 import React from "react";
 import AddIcon from "@material-ui/icons/Add";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Typography,
@@ -11,19 +10,19 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  makeStyles,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useHistory } from "react-router-dom";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
-import HeaderBack from "./HeaderBack";
-import { boardPermissionList } from "../helpers/options";
 import { useGroupId } from "../store/useGlobalState";
 import useBoards from "../store/useBoards";
 import useEffectParams from "../store/useEffectParams";
 import { Board } from "../types";
 import { firestore } from "../config/firebase";
+import SelectBoardPermission from "./SelectBoardPermission";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -41,13 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const deletingIds: string[] = [];
-// interface Board {
-//   id: string;
-//   body: string;
-//   title: string;
-//   order: number;
-//   type: string;
-// }
 interface BoardsForm {
   boards: Array<Board>;
 }
@@ -113,7 +105,7 @@ export default function BoardsSetting() {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Container component="main" className={classes.root}>
-        <HeaderBack title="게시판 관리" submit="저장" />
+        <h2>게시판 관리</h2>
         <Typography>
           {fields.map((field, i: number) => {
             const postCount = field.count_open || 0;
@@ -181,34 +173,50 @@ export default function BoardsSetting() {
                   required={!!errors?.boards?.[i]?.body}
                   helperText={errors?.boards?.[i]?.body?.message}
                 />
-                <div>
-                  <FormControl variant="filled">
-                    <InputLabel>게시판 권한</InputLabel>
-                    <Select
-                      native
-                      label="게시판 권한"
-                      defaultValue={field.permission}
-                      name={`boards[${i}].permission`}
-                      inputRef={register({
-                        required: "필수 입력",
-                      })}
-                    >
-                      {boardPermissionList.map(({ label, value }) => (
-                        <option value={value} key={value}>
-                          {label}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <div className={classes.ml}>
-                    {postCount > 0 ? (
-                      <div>{postCount}개의 포스트</div>
-                    ) : (
-                      <IconButton onClick={() => removeHandler(i)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    )}
-                  </div>
+                <SelectBoardPermission
+                  label="글 작성 권한"
+                  name={`boards[${i}].permission.create`}
+                  defaultValue={field?.permission?.create || []}
+                  control={control}
+                />
+                <SelectBoardPermission
+                  label="글 조희 권한"
+                  name={`boards[${i}].permission.read`}
+                  defaultValue={field?.permission?.read || []}
+                  control={control}
+                />
+                <SelectBoardPermission
+                  label="글 수정 권한"
+                  name={`boards[${i}].permission.update`}
+                  defaultValue={field?.permission?.update || []}
+                  control={control}
+                />
+                <SelectBoardPermission
+                  label="글 삭제 권한"
+                  name={`boards[${i}].permission.delete`}
+                  defaultValue={field?.permission?.delete || []}
+                  control={control}
+                />
+                <SelectBoardPermission
+                  label="공감 권한"
+                  name={`boards[${i}].permission.like`}
+                  defaultValue={field?.permission?.like || []}
+                  control={control}
+                />
+                <SelectBoardPermission
+                  label="댓글 권한"
+                  name={`boards[${i}].permission.comment`}
+                  defaultValue={field?.permission?.comment || []}
+                  control={control}
+                />
+                <div className={classes.ml}>
+                  {postCount > 0 ? (
+                    <div>{postCount}개의 포스트</div>
+                  ) : (
+                    <IconButton onClick={() => removeHandler(i)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
                 </div>
               </Grid>
             );

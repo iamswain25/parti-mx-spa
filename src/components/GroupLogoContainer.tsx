@@ -8,6 +8,7 @@ import useGroup from "../store/useGroup";
 import StorageImage from "./StorageImage";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
 import useGroupJoin from "./useGroupJoin";
+import { permissionLabelByValue } from "../helpers/options";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -112,18 +113,15 @@ export default function GroupLogoContainer() {
             <span>개설 {semanticDate(created_at)}</span>
             {role === undefined ? (
               <div>loading...</div>
-            ) : role ? (
+            ) : (
               <Link to={`/${group.id}/profile`}>
-                {currentUser?.displayName}({role})
+                {currentUser?.displayName}({permissionLabelByValue(role)})
               </Link>
-            ) : currentUser?.email ? (
+            )}
+            {role === "anonymous" && false && (
               <button className={classes.groupJoin} onClick={joinHandler}>
                 그룹 가입
               </button>
-            ) : (
-              <Link to={`/${group.id}/profile`}>
-                {currentUser?.displayName ?? "익명"}
-              </Link>
             )}
             <MenuGroup group={group} />
           </div>
