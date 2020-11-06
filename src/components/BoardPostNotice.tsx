@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Box, Hidden } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
+import { LazyImage } from "react-lazy-images";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -26,12 +27,18 @@ const useStyles = makeStyles((theme) => {
       marginBottom: theme.spacing(1),
       overflow: "hidden",
     },
-    img: {
+    imgContainer: {
       width: 176,
       height: 120,
-      objectFit: "cover",
-      backgroundColor: grey[200],
+      minWidth: 176,
       marginRight: 18,
+      backgroundColor: grey[200],
+      overflow: "hidden",
+    },
+    img: {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
       cursor: "pointer",
     },
   };
@@ -44,11 +51,21 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
   return (
     <div className={classes.container}>
       {firstImage && (
-        <img
+        <LazyImage
+          alt={p.title}
+          placeholder={({ imageProps, ref }) => (
+            <div ref={ref} className={classes.imgContainer} />
+          )}
           src={firstImage}
-          alt="post"
-          className={classes.img}
-          onClick={navigatePost}
+          actual={({ imageProps }) => (
+            <div className={classes.imgContainer}>
+              <img
+                {...imageProps}
+                alt={imageProps.alt}
+                className={classes.img}
+              />
+            </div>
+          )}
         />
       )}
       <div>
