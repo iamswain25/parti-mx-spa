@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import HomeBoardPhoto from "./HomeBoardPhoto";
 import { LazyImage } from "react-lazy-images";
 import YoutubePreview from "./YoutubePreview";
+import BoardMoreTag from "./BoardMoreTag";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -140,6 +141,7 @@ export default function HomeBoardNotice({ board: b }: { board?: Board }) {
             <HomeBoardPhoto key={p.id} p={p} />
           ))}
         </Grid>
+        <BoardMoreTag to={`/home/${b?.id}`} />
       </section>
       {!isDesktop && <GreyDivider />}
     </>

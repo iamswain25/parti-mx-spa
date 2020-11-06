@@ -7,10 +7,8 @@ const useStyles = makeStyles((theme) => {
   return {
     link: {
       display: "flex",
-      [theme.breakpoints.down("sm")]: {
-        justifyContent: "center",
-        padding: theme.spacing(2),
-      },
+      padding: theme.spacing(2),
+      justifyContent: "center",
     },
   };
 });
