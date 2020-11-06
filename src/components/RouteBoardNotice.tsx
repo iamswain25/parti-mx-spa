@@ -33,65 +33,61 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   return (
-    <>
-      <section className={classes.container}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          className={classes.titleContainer}
-        >
-          <Box display="flex">
-            <Typography variant="h4" color="textPrimary">
-              {b.title}
-            </Typography>
-            <Box mr={1} />
-            <Typography variant="h4" color="primary">
-              {b?.posts_aggregate.aggregate.count}
-            </Typography>
-          </Box>
-          <PostSort />
-        </Grid>
+    <section className={classes.container}>
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
+        className={classes.titleContainer}
+      >
         <Box display="flex">
-          <Box paddingX={isDesktop ? 0 : 2} flex={1}>
-            {b?.posts.map((p, i) => (
-              <BoardPostNotice key={i} post={p} />
-            ))}
-          </Box>
-          <Hidden implementation="css" smDown>
-            <Box
-              width={364}
-              border={1}
-              borderColor="grey.300"
-              mt={2}
-              ml={3}
-              height="fit-content"
-            >
-              <Box
-                padding={2}
-                fontSize={16}
-                fontWeight={500}
-                letterSpacing={0.23}
-                color="grey.900"
-              >
-                공지
-              </Box>
-              <Divider />
-              <Box padding={2}>
-                {b?.posts
-                  .filter((p) =>
-                    "announcement" in p.metadata
-                      ? p.metadata.announcement
-                      : false
-                  )
-                  .map((p, i) => (
-                    <RouteBoardAnnounce key={i} post={p} />
-                  ))}
-              </Box>
-            </Box>
-          </Hidden>
+          <Typography variant="h4" color="textPrimary">
+            {b.title}
+          </Typography>
+          <Box mr={1} />
+          <Typography variant="h4" color="primary">
+            {b?.posts_aggregate.aggregate.count}
+          </Typography>
         </Box>
-      </section>
-    </>
+        <PostSort />
+      </Grid>
+      <Box display="flex">
+        <Box paddingX={isDesktop ? 0 : 2} flex={1}>
+          {b?.posts.map((p, i) => (
+            <BoardPostNotice key={i} post={p} />
+          ))}
+        </Box>
+        <Hidden implementation="css" smDown>
+          <Box
+            width={364}
+            border={1}
+            borderColor="grey.300"
+            mt={2}
+            ml={3}
+            height="fit-content"
+          >
+            <Box
+              padding={2}
+              fontSize={16}
+              fontWeight={500}
+              letterSpacing={0.23}
+              color="grey.900"
+            >
+              공지
+            </Box>
+            <Divider />
+            <Box padding={2}>
+              {b?.posts
+                .filter((p) =>
+                  "announcement" in p.metadata ? p.metadata.announcement : false
+                )
+                .map((p, i) => (
+                  <RouteBoardAnnounce key={i} post={p} />
+                ))}
+            </Box>
+          </Box>
+        </Hidden>
+      </Box>
+    </section>
   );
 }

@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => {
     },
     imgContainer: {
       width: "53%",
-      height: "306px",
       [theme.breakpoints.down("sm")]: {
         width: "100%",
         height: "auto",

@@ -8,7 +8,7 @@ export default function YoutubePreview({ text = "" }: { text?: string }) {
     [text]
   );
   return (
-    <Box>
+    <Box height="100%">
       {videoLinks.map((url, i) => (
         <Box className="player-wrapper" key={i}>
           <ReactPlayer
