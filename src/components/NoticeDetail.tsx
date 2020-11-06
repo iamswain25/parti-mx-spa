@@ -66,11 +66,15 @@ const useStyles = makeStyles((theme) => {
         marginTop: theme.spacing(1.5),
       },
     },
+    tag: {
+      margin: theme.spacing(0.5),
+      color: theme.palette.primary.main,
+    },
   };
 });
 
 export default function NoticeDetail({ post: p }: { post: Post }) {
-  const { images, createdBy, created_at, files } = p;
+  const { images, createdBy, created_at, files, tags } = p;
   const liked = p.meLiked?.[0]?.like_count ?? 0;
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -96,6 +100,15 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
         </Box>
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
+        <Grid container>
+          {tags?.map((chip) => {
+            return (
+              <span key={chip} className={classes.tag}>
+                #{chip}
+              </span>
+            );
+          })}
+        </Grid>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

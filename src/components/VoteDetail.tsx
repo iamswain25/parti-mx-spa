@@ -95,11 +95,23 @@ const useStyles = makeStyles((theme) => {
       color: theme.palette.primary.dark,
       borderColor: "#bbe7d6",
     },
+    tag: {
+      margin: theme.spacing(0.5),
+      color: theme.palette.primary.main,
+    },
   };
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const { images, comments, createdBy, created_at = "", files, closed_at } = p;
+  const {
+    images,
+    comments,
+    createdBy,
+    created_at = "",
+    files,
+    closed_at,
+    tags,
+  } = p;
   const isClosed = !!closed_at;
   const metadata = p.metadata as VoteMetadata;
   const commentCount = p.comments_aggregate?.aggregate?.count || 0;
@@ -159,6 +171,15 @@ export default function VoteDetail({ post: p }: { post: Post }) {
         )}
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
+        <Grid container>
+          {tags?.map((chip) => {
+            return (
+              <span key={chip} className={classes.tag}>
+                #{chip}
+              </span>
+            );
+          })}
+        </Grid>
         <Box className={classes.sub} mt={2} mb={1}>
           <Grid container alignItems="center" justify="space-between">
             <Box display="flex" alignItems="center">
@@ -185,6 +206,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
             />
           ))}
         </Box>
+
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           {!isClosed && isVoted && (
             <Button

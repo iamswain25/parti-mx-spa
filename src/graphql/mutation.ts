@@ -432,6 +432,7 @@ export const insertVote = gql`
     $images: jsonb
     $files: jsonb
     $candidates: [mx_candidates_insert_input!]!
+    $tags: jsonb
   ) {
     insert_mx_posts_one(
       object: {
@@ -444,6 +445,7 @@ export const insertVote = gql`
         images: $images
         files: $files
         candidates: { data: $candidates }
+        tags: $tags
       }
     ) {
       id
@@ -549,6 +551,7 @@ export const updateVote = gql`
     $files: jsonb
     $deletingIds: [Int!]
     $candidates: [mx_candidates_insert_input!]!
+    $tags: jsonb
   ) {
     update_mx_posts(
       where: { id: { _eq: $id } }
@@ -558,6 +561,7 @@ export const updateVote = gql`
         title: $title
         images: $images
         files: $files
+        tags: $tags
       }
       _append: { metadata: $metadata }
     ) {

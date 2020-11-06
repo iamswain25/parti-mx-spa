@@ -30,6 +30,8 @@ export default function VoteNew() {
   async function handleForm(form: VoteFormdata) {
     setLoading(true);
     const {
+      customTags,
+      tags,
       closingMethod,
       candidates,
       isMultiple,
@@ -44,7 +46,10 @@ export default function VoteNew() {
       isResultHidden,
       closingMethod,
     };
+    const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
     const variables = await makeNewVariables(rest, {
+      tags: tagArr,
       board_id,
       group_id,
       imageArr,

@@ -62,6 +62,8 @@ export interface VoteFormdata {
   isResultHidden;
   isHtml: boolean;
   html: RawDraftContentState;
+  tags: string[];
+  customTags: string[];
 }
 export interface VoteEditFormdata extends VoteFormdata {
   candidates: Candidate[];

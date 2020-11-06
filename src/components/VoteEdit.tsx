@@ -21,7 +21,7 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteEdit({ post: p }: { post: Post }) {
-  const { id, title, body, context, files, images, candidates, html } = p;
+  const { id, title, body, context, files, images, candidates, html, tags } = p;
   const metadata = p.metadata as VoteMetadata;
   const {
     closingMethod,
@@ -51,7 +51,8 @@ export default function VoteEdit({ post: p }: { post: Post }) {
       isAnonymous,
       isResultHidden,
       candidates,
-    },
+      customTags: tags,
+    } as VoteEditFormdata,
   });
   const { handleSubmit } = formControl;
 
@@ -62,6 +63,8 @@ export default function VoteEdit({ post: p }: { post: Post }) {
   async function handleForm(form: VoteEditFormdata) {
     setLoading(true);
     const {
+      customTags,
+      tags,
       closingMethod,
       candidates: inputCandidates,
       isMultiple,
@@ -90,7 +93,10 @@ export default function VoteEdit({ post: p }: { post: Post }) {
       isResultHidden,
       closingMethod,
     };
+    const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
     const variables = await makeUpdateVariables(rest, {
+      tags: tagArr,
       imageArr,
       fileArr,
       images2,

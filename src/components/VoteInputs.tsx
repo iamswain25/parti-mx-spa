@@ -6,12 +6,12 @@ import { voteOptions } from "../helpers/options";
 import VoteEditCandidates from "./VoteEditCandidates";
 import VoteNewCandidates from "./VoteNewCandidates";
 import HtmlInput from "./HtmlInput";
+import Tags from "./Tags";
 
 export default function VoteInputs({
   formControl,
   isBinary = false,
   setBinary,
-  children,
   isEdit = false,
 }: any) {
   function binaryHandler() {
@@ -27,6 +27,7 @@ export default function VoteInputs({
         register={register}
         errors={errors}
       />
+      <Tags formControl={formControl} />
       <HtmlInput formControl={formControl} />
       <CustomTextField
         register={register}
