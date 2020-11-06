@@ -4,6 +4,6 @@
 
 # Typescript v1 declaration files
 typings/
-
+local/
 node_modules/
 .runtimeconfig.json

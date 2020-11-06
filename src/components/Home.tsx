@@ -53,11 +53,11 @@ export default function Home() {
       .map((b: Board, i: number) => {
         switch (b.type) {
           case "suggestion":
-            return <HomeBoardSuggestion key={i} board={b} />;
+            return <HomeBoardSuggestion key={b.id} board={b} />;
           case "notice":
           case "vote":
           case "event":
-            return <HomeBoardNotice key={i} board={b} />;
+            return <HomeBoardNotice key={b.id} board={b} />;
           // return <HomeBoardVote key={i} board={b} />;
           // return <HomeBoardEvent key={i} board={b} />;
           default:

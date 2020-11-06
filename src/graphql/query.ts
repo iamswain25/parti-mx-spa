@@ -34,6 +34,7 @@ export const queryByGroupId = gql`
         body
         permission
         type
+        order
         updated_at
         last_posted_at
         posts(

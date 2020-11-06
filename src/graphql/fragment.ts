@@ -87,6 +87,7 @@ export const boards = gql`
     id
     title
     body
+    order
     permission
     type
     updated_at
