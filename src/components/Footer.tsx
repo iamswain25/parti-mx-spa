@@ -26,33 +26,40 @@ const useStyles = makeStyles((theme) => ({
 export default function Footer() {
   const classes = useStyles();
   return (
-    <footer className={classes.root}>
-      <div>
-        <a href="/" target="_blank" rel="noopener noreferrer">
-          이용약관
-        </a>
-        <a href="/" target="_blank" rel="noopener noreferrer">
-          개인정보취급방침
-        </a>
-      </div>
-      <div>서울특별시 중구 퇴계로 18길 77(남산동 2가 45-6)</div>
-      <div>TEL 02-774-9702-7 | FAX 02-774-9724</div>
-      <div>
-        <a
-          href="mailto:peacenow@ywca.or.kr"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          이메일 peacenow@ywca.or.kr
-        </a>
-      </div>
-      <div className="bold">
-        Copyright 2020
-        <a href="https://ywca.or.kr/" target="_blank" rel="noopener noreferrer">
-          한국YWCA연합회
-        </a>
-        All Rights Reserved.
-      </div>
-    </footer>
+    <>
+      <hr />
+      <footer className={classes.root}>
+        <div>
+          <a href="/" target="_blank" rel="noopener noreferrer">
+            이용약관
+          </a>
+          <a href="/" target="_blank" rel="noopener noreferrer">
+            개인정보취급방침
+          </a>
+        </div>
+        <div>서울특별시 중구 퇴계로 18길 77(남산동 2가 45-6)</div>
+        <div>TEL 02-774-9702-7 | FAX 02-774-9724</div>
+        <div>
+          <a
+            href="mailto:peacenow@ywca.or.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            이메일 peacenow@ywca.or.kr
+          </a>
+        </div>
+        <div className="bold">
+          Copyright 2020
+          <a
+            href="https://ywca.or.kr/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            한국YWCA연합회
+          </a>
+          All Rights Reserved.
+        </div>
+      </footer>
+    </>
   );
 }
