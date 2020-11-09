@@ -41,11 +41,11 @@ export default function Footer() {
         <div>TEL 02-774-9702-7 | FAX 02-774-9724</div>
         <div>
           <a
-            href="mailto:peacenow@ywca.or.kr"
+            href="mailto:koreaywca@ywca.or.kr"
             target="_blank"
             rel="noopener noreferrer"
           >
-            이메일 peacenow@ywca.or.kr
+            이메일 koreaywca@ywca.or.kr
           </a>
         </div>
         <div className="bold">
