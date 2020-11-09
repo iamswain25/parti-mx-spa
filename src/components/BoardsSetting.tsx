@@ -40,8 +40,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const deletingIds: string[] = [];
+type FormBoard = Omit<Board, "updated_at" | "created_at">;
 interface BoardsForm {
-  boards: Array<Board>;
+  boards: FormBoard[];
 }
 export default function BoardsSetting() {
   useEffectParams();
@@ -52,7 +53,7 @@ export default function BoardsSetting() {
   const { handleSubmit, register, errors, control, reset, formState } = useForm<
     BoardsForm
   >();
-  const { fields, append, remove } = useFieldArray<Board, "uid">({
+  const { fields, append, remove } = useFieldArray<FormBoard, "uid">({
     name: "boards",
     control,
     keyName: "uid",

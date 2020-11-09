@@ -67,9 +67,6 @@ export type Board = {
   type: BoardTypes;
   updated_at: firebase.firestore.Timestamp;
   last_posted_at: string;
-  users: UserBoard[];
-  newPostCount?: number;
-  posts: Post[];
   group_id: string;
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";

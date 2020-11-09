@@ -13,6 +13,7 @@ import GreyDivider from "./GreyDivider";
 import useDesktop from "./useDesktop";
 import BoardMoreTag from "./BoardMoreTag";
 import { useGroupId } from "../store/useGlobalState";
+import usePosts from "../store/usePosts";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -98,6 +99,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
   const [isDesktop, theme] = useDesktop();
   const classes = useStyles();
   const [group_id] = useGroupId();
+  const [posts] = usePosts({ board_id: b.id });
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: theme.breakpoints.values.md },
@@ -152,7 +154,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
             removeArrowOnDeviceType={["tablet", "mobile"]}
             partialVisible={true}
           >
-            {b.posts.map((p, i) => (
+            {posts.map((p, i) => (
               <BoardPostVote key={i} post={p} />
             ))}
           </Carousel>
