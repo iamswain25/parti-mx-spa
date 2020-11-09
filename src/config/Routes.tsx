@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "../components/Login";
-import PrivateRoute from "./PrivateRoute";
 import Home from "../components/Home";
 import RouteBoard from "../components/RouteBoard";
 import Signup from "../components/Signup";
@@ -71,7 +70,7 @@ export default function Routes() {
               <Redirect to={`/post/${props.match.params.id}`} />
             )}
           />
-          <PrivateRoute path="/group/new" exact component={GroupNew} />
+          <Route path="/group/new" exact component={GroupNew} />
           <Route path="/search" exact component={Search} />
 
           <Route path="/:group_id/profile" exact component={Profile} />
@@ -80,8 +79,8 @@ export default function Routes() {
             exact
             component={BoardsSetting}
           />
-          <PrivateRoute path="/:group_id/members" exact component={Members} />
-          <PrivateRoute
+          <AdminRoute path="/:group_id/members" exact component={Members} />
+          <AdminRoute
             path="/:group_id/members/new"
             exact
             component={MemberNew}

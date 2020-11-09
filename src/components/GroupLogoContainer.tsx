@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function GroupLogoContainer() {
-  const [group] = useGroup(true);
+  const [group] = useGroup();
   const classes = useStyles();
   const { title, created_at, bg_img, mb_img } = group || {};
   const [role] = useRole();
@@ -99,12 +99,20 @@ export default function GroupLogoContainer() {
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
-        <Hidden mdUp implementation="css">
-          <StorageImage image={mb_img ?? bg_img} />
-        </Hidden>
-        <Hidden smDown implementation="css">
-          <StorageImage image={bg_img ?? mb_img} />
-        </Hidden>
+        {mb_img && bg_img ? (
+          <>
+            <Hidden mdUp implementation="css">
+              <StorageImage image={mb_img ?? bg_img} />
+            </Hidden>
+            <Hidden smDown implementation="css">
+              <StorageImage image={bg_img ?? mb_img} />
+            </Hidden>
+          </>
+        ) : (
+          <div>
+            <img src="/publicsphere.jpg" alt="public sphere" />
+          </div>
+        )}
         <div className={classes.groupLogoOverlay}>
           <Typography variant="h1" color="inherit">
             {title}
