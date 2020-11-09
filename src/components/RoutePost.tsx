@@ -21,7 +21,7 @@ export default function RoutePost() {
       setGroupId(group_id);
     }
     if (boardId !== p?.board_id) {
-      setBoardId(p?.board_id || null);
+      setBoardId(p?.board_id);
     }
   }, [groupId, group_id, setGroupId, p, boardId, setBoardId]);
   if (p === undefined) {

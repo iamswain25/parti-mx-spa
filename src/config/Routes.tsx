@@ -1,8 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "../components/Login";
-import Home from "../components/Home";
-import RouteBoard from "../components/RouteBoard";
 import Signup from "../components/Signup";
 import RoutePost from "../components/RoutePost";
 import LoginModal from "../components/LoginModal";
@@ -10,24 +8,18 @@ import SnackbarCustom from "../components/SnackbarCustom";
 import SnackbarSuccess from "../components/SnackbarSuccess";
 import { CssBaseline, makeStyles } from "@material-ui/core";
 import RoutePostEdit from "../components/RoutePostEdit";
-import RoutePostNew from "../components/RoutePostNew";
-import BoardsSetting from "../components/BoardsSetting";
 import GroupNew from "../components/GroupNew";
-import GroupEdit from "../components/GroupEdit";
-import Members from "../components/Members";
-import MemberNew from "../components/MemberNew";
 import Profile from "../components/Profile";
 import Search from "../components/Search";
 import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
-import AdminRoute from "./AdminRoute";
-import Report from "../components/Report";
 import { initialState } from "../store/useGlobalState";
 import GroupLogoContainer from "../components/GroupLogoContainer";
 import BoardTabNavigator from "../components/BoardTabNavigator";
 import Logout from "../components/Logout";
 import useEffectRole from "../store/useEffectRole";
 import Footer from "../components/Footer";
+import RoutesGroup from "./RoutesGroup";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -71,29 +63,9 @@ export default function Routes() {
             )}
           />
           <Route path="/group/new" exact component={GroupNew} />
+          <Route path="/profile" exact component={Profile} />
           <Route path="/search" exact component={Search} />
-
-          <Route path="/:group_id/profile" exact component={Profile} />
-          <AdminRoute
-            path="/:group_id/boards"
-            exact
-            component={BoardsSetting}
-          />
-          <AdminRoute path="/:group_id/members" exact component={Members} />
-          <AdminRoute
-            path="/:group_id/members/new"
-            exact
-            component={MemberNew}
-          />
-          <Route exact path="/:group_id" component={Home} />
-          <AdminRoute path="/:group_id/report" exact component={Report} />
-          <AdminRoute path="/:group_id/edit" exact component={GroupEdit} />
-          <Route exact path="/:group_id/:board_id" component={RouteBoard} />
-          <Route
-            exact
-            path="/:group_id/:board_id/new"
-            component={RoutePostNew}
-          />
+          <Route path="/:group_id" component={RoutesGroup} />
           <Route path="*">
             <Redirect to={`/${initialState.groupId}`} />
           </Route>

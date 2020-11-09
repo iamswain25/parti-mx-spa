@@ -7,7 +7,8 @@ import HomeBoardEvent from "./HomeBoardEvent";
 import useDesktop from "./useDesktop";
 import useBoards from "../store/useBoards";
 import { Board } from "../types";
-import useEffectParams from "../store/useEffectParams";
+import useEffectBoardId from "../store/useEffectBoardId";
+
 const useStyles = makeStyles((theme) => {
   return {
     left: {
@@ -26,10 +27,10 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Home() {
-  useEffectParams();
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const [boards] = useBoards();
+  useEffectBoardId();
   const notice = boards.filter((b) => b.type === "notice");
   const suggestion = boards.filter((b) => b.type === "suggestion");
   const vote = boards.filter((b) => b.type === "vote");

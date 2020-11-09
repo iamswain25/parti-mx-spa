@@ -8,7 +8,7 @@ import { firestore, uploadFileByPath } from "../config/firebase";
 import CloseIcon from "@material-ui/icons/Close";
 import useGroup from "../store/useGroup";
 import StorageImage from "./StorageImage";
-import useEffectParams from "../store/useEffectParams";
+
 import { useError } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,6 @@ interface GroupForm {
 export default function GroupEdit() {
   const classes = useStyles();
   const history = useHistory();
-  useEffectParams();
   const [images, setImages] = React.useState<any>({});
   const [, setError] = useError();
   const { handleSubmit, register, errors, reset, control } = useForm<

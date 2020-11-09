@@ -5,14 +5,14 @@ export const initialState = {
   success: null,
   currentUser: undefined,
   groupId: "home",
-  boardId: null,
+  boardId: undefined,
   sort: 0,
   role: undefined,
 };
 interface GlobalType {
   success: any;
   groupId: string;
-  boardId: string | null;
+  boardId?: string;
   error: any;
   role?: "organizer" | "member" | "user" | "anonymous";
   loginModal: boolean;

@@ -19,7 +19,7 @@ import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { useGroupId } from "../store/useGlobalState";
 import useBoards from "../store/useBoards";
-import useEffectParams from "../store/useEffectParams";
+
 import { Board } from "../types";
 import { firestore } from "../config/firebase";
 import SelectBoardPermission from "./SelectBoardPermission";
@@ -45,7 +45,6 @@ interface BoardsForm {
   boards: FormBoard[];
 }
 export default function BoardsSetting() {
-  useEffectParams();
   const classes = useStyles();
   const history = useHistory();
   const [group_id] = useGroupId();

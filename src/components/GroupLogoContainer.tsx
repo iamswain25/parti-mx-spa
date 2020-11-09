@@ -122,7 +122,7 @@ export default function GroupLogoContainer() {
             {role === undefined ? (
               <div>loading...</div>
             ) : (
-              <Link to={`/${group.id}/profile`}>
+              <Link to="/profile">
                 {currentUser?.displayName}({permissionLabelByValue(role)})
               </Link>
             )}

@@ -4,11 +4,9 @@ import RouteBoardVote from "./RouteBoardVote";
 import RouteBoardSuggestion from "./RouteBoardSuggestion";
 import RouteBoardEvent from "./RouteBoardEvent";
 import useBoard from "../store/useBoard";
-import useEffectParams from "../store/useEffectParams";
 
 export default function RouteBoard() {
   const [board] = useBoard();
-  useEffectParams();
   const { type } = board;
   switch (type) {
     case "notice":
