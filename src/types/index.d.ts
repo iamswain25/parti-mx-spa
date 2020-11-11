@@ -201,23 +201,18 @@ export type EventMetadata = {
   deadline: firebase.firestore.Timestamp;
   countPeople: number;
 };
-export interface Vote {
-  created_at: firebase.firestore.Timestamp;
-  id: string;
-  photo_url: string;
-  name: string;
-}
+export type Vote = Partial<User>;
 export interface Event extends Post {
   metadata: EventMetadata;
 }
 
 export type User = {
+  created_at: firebase.firestore.Timestamp;
   id: string;
   name: string;
   photo_url: string;
-  email?: string;
-  checkedPosts?: [{ like_count: number }];
-  votes?: UserCandidate[];
+  email: string;
+  role: Role;
 };
 export type UserStatus =
   | "requested"

@@ -1,27 +1,13 @@
 import React from "react";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Container,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-  List,
-} from "@material-ui/core";
+import { Typography, Container, List } from "@material-ui/core";
 import ListItem from "@material-ui/core/ListItem";
-import { useDebounce } from "use-debounce";
-import { useRole } from "../store/useGlobalState";
-import { Link, Redirect } from "react-router-dom";
-import CloseIcon from "@material-ui/icons/Close";
-import SearchIcon from "@material-ui/icons/Search";
+import { useGroupId } from "../store/useGlobalState";
 import AvatarNameEmail from "./AvatarNameEmail";
 import UserGroupStatus from "./UserGroupStatus";
-import useSetStatus from "./useSetStatus";
-import { UserGroup } from "../types";
-import UserGroupAdmit from "./UserGroupAdmit";
-import HeaderBack from "./HeaderBack";
+import { User } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { firestore } from "../config/firebase";
 const useStyles = makeStyles((theme) => ({
   top: {
     height: theme.mixins.toolbar.minHeight,
@@ -43,79 +29,43 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-// interface UserGroups {
-//   mx_users_group: UserGroup[];
-// }
-// const LIMIT = 20;
+let lastVisible: firebase.firestore.DocumentData | null = null;
+const LIMIT = 20;
 export default function Members() {
   const classes = useStyles();
-  // const [groupId] = useGroupId();
-  const [keyword, setKeyword] = React.useState("");
-  const [items] = React.useState<UserGroup[]>([]);
-  const [debouncedKeyword] = useDebounce(`%${keyword}%`, 200);
-  const [status] = useRole();
-
+  const [groupId] = useGroupId();
+  const [items, setItems] = React.useState<User[]>([]);
   async function fetchData(isSearching = false) {
-    // const usergroups = await client.query<UserGroups>({
-    //   query: searchMembers,
-    //   variables: {
-    //     keyword: debouncedKeyword,
-    //     group_id,
-    //     limit: LIMIT,
-    //     offset: isSearching ? 0 : items.length,
-    //   },
-    //   fetchPolicy: "network-only",
-    // });
-    // if (isSearching) {
-    //   setItems(usergroups.data?.mx_users_group || []);
-    // } else {
-    //   setItems([...items, ...(usergroups.data?.mx_users_group || [])]);
-    // }
+    let ref = firestore
+      .collection("groups")
+      .doc(groupId)
+      .collection("users")
+      .orderBy("created_at")
+      .limit(LIMIT);
+    if (lastVisible && !isSearching) {
+      ref = ref.startAfter(lastVisible);
+    }
+    const snapshot = await ref.get();
+    lastVisible = snapshot.docs[snapshot.docs.length - 1];
+    const users = snapshot.docs.map(
+      (u) => ({ id: u.id, ...(u.data() as any) } as User)
+    );
+    if (isSearching) {
+      setItems(users);
+    } else {
+      setItems([...items, ...users]);
+    }
   }
-
-  const setStatus = useSetStatus(fetchData);
 
   React.useEffect(() => {
     fetchData(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedKeyword]);
-  if (status !== "organizer") {
-    return <Redirect to="/" />;
-  }
-  function changeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    setKeyword(e.target.value);
-  }
+  }, []);
 
   return (
     <Container component="main">
-      <HeaderBack
-        title="회원 관리"
-        right={
-          <Link to="/members/new">
-            <PersonAddIcon />
-          </Link>
-        }
-      />
+      <h2>회원 관리</h2>
       <Typography>
-        <OutlinedInput
-          fullWidth
-          value={keyword}
-          onChange={changeHandler}
-          startAdornment={
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          }
-          endAdornment={
-            keyword ? (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setKeyword("")}>
-                  <CloseIcon />
-                </IconButton>
-              </InputAdornment>
-            ) : undefined
-          }
-        />
         <List className={classes.list}>
           <InfiniteScroll
             dataLength={items.length} //This is important field to render the next data
@@ -129,15 +79,11 @@ export default function Members() {
             }
           >
             {items?.length
-              ? items?.map((l, i) => {
+              ? items?.map((item, i) => {
                   return (
-                    <ListItem key={l.userId}>
-                      <AvatarNameEmail user={l.user} />
-                      {l.status === "requested" ? (
-                        <UserGroupAdmit userGroup={l} update={setStatus} />
-                      ) : (
-                        <UserGroupStatus userGroup={l} update={setStatus} />
-                      )}
+                    <ListItem key={item.id}>
+                      <AvatarNameEmail user={item} />
+                      <UserGroupStatus user={item} />
                     </ListItem>
                   );
                 })

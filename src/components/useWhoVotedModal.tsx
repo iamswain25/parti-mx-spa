@@ -8,7 +8,7 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import { Candidate } from "../types";
+import { Candidate, User } from "../types";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import AvatarNameVote from "./AvatarNameVote";
 import useVotes from "../store/useVotes";
@@ -48,7 +48,7 @@ export default function useWhoVotedModal(c: Candidate) {
         </div>
         <Container>
           {votes.map((v) => (
-            <AvatarNameVote user={v} key={v.id} />
+            <AvatarNameVote user={v as User} key={v.id} />
           ))}
         </Container>
       </Paper>
