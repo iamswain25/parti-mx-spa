@@ -6,30 +6,31 @@ service cloud.firestore {
       let group_id = resource.data.group_id;
       let board_id = resource.data.board_id;
       let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
-      let role = exists(user) ? user.data.role : "anonymous";
-      let permission = get(/databases/$(database)/documents/groups/$(group_id)/boards/$(board_id)).data.permission;
-      return permission[type].includes(role);
+      let role = user.data.role;
+      let board = get(/databases/$(database)/documents/groups/$(group_id)/boards/$(board_id));
+      let permission = board.data.permission;
+      return role in permission[type];
     }
 
-    function isOrganizer() {
-      let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
-      let role = exists(user) ? user.data.role : "anonymous";
-      return role == "organizer";
-    }
-    
     match /posts/{post_id} {
       allow read: if checkPostReadPermission("read");
       allow update: if checkPostReadPermission("update");
       allow delete: if checkPostReadPermission("delete");
       allow create: if checkPostReadPermission("create");
       
-      match /{document=**} {
+      match /{subcollection}/{document=**} {
         allow read: if true;
         allow write: if true;
       }
     }
 
     match /groups/{group_id} {
+    
+      function isOrganizer() {
+        let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
+        return  user.data.role == "organizer";
+      }
+    
       allow read: if true;
       allow write: if isOrganizer();
       
