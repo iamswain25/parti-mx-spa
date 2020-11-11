@@ -7,15 +7,27 @@ import usePost from "../store/usePost";
 import useGoBack from "./useGoBack";
 import { LinearProgress } from "@material-ui/core";
 import Forbidden from "./Forbidden";
-import { useGroupId, useRole } from "../store/useGlobalState";
+import { useBoardId, useGroupId, useRole } from "../store/useGlobalState";
 
 export default function RoutePostEdit() {
-  const [p] = usePost();
+  const boardState = useBoardId();
+  const groupState = useGroupId();
+  const [p] = usePost(true);
   const goBack = useGoBack();
   const [role] = useRole();
-  const [groupId, setGroupId] = useGroupId();
   React.useEffect(() => {
-    console.log(p, role);
+    const [id, set] = boardState;
+    if (p && p.board_id !== id) {
+      set(p.board_id);
+    }
+  }, [p, boardState]);
+  React.useEffect(() => {
+    const [id, set] = groupState;
+    if (p && p.group_id !== id) {
+      set(p.group_id);
+    }
+  }, [p, groupState]);
+  React.useEffect(() => {
     if (role === "organizer") return;
     else if (p) {
       const input = window.prompt("비밀번호 4자리를 입력해 주세요.");
@@ -25,11 +37,6 @@ export default function RoutePostEdit() {
       }
     }
   }, [role, p, goBack]);
-  React.useEffect(() => {
-    if (p && groupId !== p?.group_id) {
-      setGroupId(p.group_id);
-    }
-  }, [p, groupId, setGroupId]);
   if (p === undefined) {
     return <LinearProgress />;
   } else if (p === null) {
