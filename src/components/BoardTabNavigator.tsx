@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => {
         "&.active": {
           color: "black",
           borderBottomWidth: 2,
-          borderBottomColor: "#007e55",
+          borderBottomColor: theme.palette.primary.main,
           borderBottomStyle: "solid",
         },
       },
