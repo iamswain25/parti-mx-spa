@@ -13,12 +13,12 @@ export default function RoutesGroup() {
   useEffectGroupId();
   return (
     <Switch>
-      <AdminRoute path="/:group_id/boards" exact component={BoardsSetting} />
-      <AdminRoute path="/:group_id/members" exact component={Members} />
-      <AdminRoute path="/:group_id/members/new" exact component={MemberNew} />
       <Route exact path="/:group_id" component={Home} />
-      <AdminRoute path="/:group_id/report" exact component={Report} />
-      <AdminRoute path="/:group_id/edit" exact component={GroupEdit} />
+      <AdminRoute exact path="/:group_id/boards" component={BoardsSetting} />
+      <AdminRoute exact path="/:group_id/members" component={Members} />
+      <AdminRoute exact path="/:group_id/members/new" component={MemberNew} />
+      <AdminRoute exact path="/:group_id/report" component={Report} />
+      <AdminRoute exact path="/:group_id/edit" component={GroupEdit} />
       <Route path="/:group_id/:board_id" component={RoutesBoard} />
     </Switch>
   );

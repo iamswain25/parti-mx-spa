@@ -6,12 +6,23 @@ import EventDetail from "./EventDetail";
 import usePost from "../store/usePost";
 import { LinearProgress } from "@material-ui/core";
 import Forbidden from "./Forbidden";
-import useEffectGroupId from "../store/useEffectGroupId";
-import useEffectBoardId from "../store/useEffectBoardId";
+import { useBoardId, useGroupId } from "../store/useGlobalState";
 export default function RoutePost() {
-  useEffectGroupId();
-  useEffectBoardId();
+  const boardState = useBoardId();
+  const groupState = useGroupId();
   const [p] = usePost(true);
+  React.useEffect(() => {
+    const [id, set] = boardState;
+    if (p && p.board_id !== id) {
+      set(p.board_id);
+    }
+  }, [p, boardState]);
+  React.useEffect(() => {
+    const [id, set] = groupState;
+    if (p && p.group_id !== id) {
+      set(p.group_id);
+    }
+  }, [p, groupState]);
   if (p === undefined) {
     return <LinearProgress />;
   } else if (p === null) {
