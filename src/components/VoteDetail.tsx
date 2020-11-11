@@ -22,6 +22,7 @@ import FilesImages from "./FilesImages";
 import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
+import useCandidates from "../store/useCandidates";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -111,6 +112,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
     name,
   } = p;
   const [comments] = useComments(p.id);
+  const [candidates] = useCandidates({ post_id: p.id });
   const isClosed = !!closed_at;
   const metadata = p.metadata as VoteMetadata;
   const commentCount = count_comment || 0;
@@ -171,14 +173,14 @@ export default function VoteDetail({ post: p }: { post: Post }) {
           </Grid>
         </Box>
         <Box>
-          {p.candidates?.map((c, i) => (
+          {candidates?.map((c) => (
             <VoteCandidate
               candidate={c}
               voted={isVoted}
               max={maxVoteCount}
               total={totalVoteCount}
               onClick={voteHandler}
-              key={i}
+              key={c.id}
               isClosed={isClosed}
               isAnonymous={metadata?.isAnonymous}
               isResultHidden={metadata?.isResultHidden}

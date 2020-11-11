@@ -2,9 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
-import HomeBoardVote from "./HomeBoardVote";
-import HomeBoardEvent from "./HomeBoardEvent";
-import useDesktop from "./useDesktop";
 import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
@@ -28,51 +25,21 @@ const useStyles = makeStyles((theme) => {
 
 export default function Home() {
   const classes = useStyles();
-  const [isDesktop] = useDesktop();
   const [boards] = useBoards();
   useEffectBoardId();
-  const notice = boards.filter((b) => b.type === "notice");
-  const suggestion = boards.filter((b) => b.type === "suggestion");
-  const vote = boards.filter((b) => b.type === "vote");
-  const event = boards.filter((b) => b.type === "event");
-  return (
-    <>
-      {isDesktop ? (
-        <>
-          <ul className={classes.left}>
-            {notice?.map((b: Board) => (
-              <HomeBoardNotice key={b.id} board={b} />
-            ))}
-            {suggestion?.map((b: Board) => (
-              <HomeBoardSuggestion key={b.id} board={b} />
-            ))}
-          </ul>
-          <ul className={classes.right}>
-            {vote?.map((b: Board) => (
-              <HomeBoardVote key={b.id} board={b} />
-            ))}
-            {event?.map((b: Board) => (
-              <HomeBoardEvent key={b.id} board={b} />
-            ))}
-          </ul>
-        </>
-      ) : (
-        //모바일
-        <>
-          {notice?.map((b: Board) => (
-            <HomeBoardNotice key={b.id} board={b} />
-          ))}
-          {vote?.map((b: Board) => (
-            <HomeBoardVote key={b.id} board={b} />
-          ))}
-          {suggestion?.map((b: Board) => (
-            <HomeBoardSuggestion key={b.id} board={b} />
-          ))}
-          {event?.map((b: Board) => (
-            <HomeBoardEvent key={b.id} board={b} />
-          ))}
-        </>
-      )}
-    </>
-  );
+  const boardArr = boards.map((b: Board) => {
+    switch (b.type) {
+      case "suggestion":
+        return <HomeBoardSuggestion key={b.id} board={b} />;
+      case "notice":
+      case "vote":
+      case "event":
+        return <HomeBoardNotice key={b.id} board={b} />;
+      // return <HomeBoardVote key={i} board={b} />;
+      // return <HomeBoardEvent key={i} board={b} />;
+      default:
+        return null;
+    }
+  });
+  return <>{boardArr}</>;
 }

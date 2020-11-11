@@ -2,7 +2,6 @@ import React from "react";
 import CustomTextField from "./CustomTextField";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
-import { TextField } from "@material-ui/core";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
 }) {
@@ -17,40 +16,24 @@ export default function SuggestionInputs(props: {
         errors={errors}
       />
       <CustomTextField
-        label="제보자"
+        label="전시자"
         name="name"
         register={register}
         errors={errors}
       />
       <CustomTextField
-        label="제보 내용"
+        label="전시 내용"
         multiline
         name="body"
         register={register}
         errors={errors}
       />
       <CustomTextField
-        label="제보 사유"
+        label="전시 사유"
         multiline
         name="context"
         register={register}
         errors={errors}
-      />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        name="password"
-        label="글 수정 비밀번호"
-        fullWidth
-        inputRef={register({
-          required: "필수 입력",
-          pattern: /[0-9]/,
-          maxLength: 4,
-          minLength: 4,
-        })}
-        required={errors.password ? true : false}
-        error={errors.password ? true : false}
-        helperText="숫자 4자리를 입력하세요"
       />
     </>
   );

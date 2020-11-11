@@ -9,7 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import useGroup from "../store/useGroup";
 import StorageImage from "./StorageImage";
 
-import { useError } from "../store/useGlobalState";
+import { useError, useGroupId } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
   root: { flex: 1 },
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 interface GroupForm {
-  id: string;
   title: string;
   bgFiles: any;
   mbFiles: any;
@@ -30,6 +29,7 @@ interface GroupForm {
 export default function GroupEdit() {
   const classes = useStyles();
   const history = useHistory();
+  const [groupId] = useGroupId();
   const [images, setImages] = React.useState<any>({});
   const [, setError] = useError();
   const { handleSubmit, register, errors, reset, control } = useForm<
@@ -38,25 +38,29 @@ export default function GroupEdit() {
   const [group] = useGroup();
   React.useEffect(() => {
     if (group) {
-      const { title, bg_img, mb_img, id } = group;
+      const { title, bg_img, mb_img } = group;
       setImages({ bg_img, mb_img });
-      reset({ title, id } as GroupForm);
+      reset({ title } as GroupForm);
     }
   }, [group, reset, setImages]);
   async function handleForm(form: GroupForm) {
-    const { bgFiles = [null], mbFiles = [null], title, id } = form;
+    const { bgFiles = [null], mbFiles = [null], title } = form;
     try {
       const bg_img = bgFiles[0]
-        ? await uploadFileByPath(bgFiles[0], `groups/${id}/bg_img`)
+        ? await uploadFileByPath(bgFiles[0], `groups/${groupId}/bg_img`)
         : group?.bg_img;
       const mb_img = mbFiles[0]
-        ? await uploadFileByPath(mbFiles[0], `groups/${id}/mb_img`)
+        ? await uploadFileByPath(mbFiles[0], `groups/${groupId}/mb_img`)
         : group?.mb_img;
+      const data = { title } as any;
+      if (bg_img) data.bg_img = bg_img;
+      if (bg_img) data.mb_img = mb_img;
+      console.log(data);
       await firestore
         .collection("groups")
-        .doc(id)
-        .set({ bg_img, mb_img, title }, { merge: true });
-      history.replace(`/${id}`);
+        .doc(groupId)
+        .set(data, { merge: true });
+      history.replace(`/${groupId}`);
     } catch (error) {
       setError(error);
     }
@@ -86,7 +90,6 @@ export default function GroupEdit() {
           />
         }
       />
-      <input defaultValue={group.id} name="id" type="hidden" ref={register} />
       <div>
         <div>데스크탑 배너 이미지 (1140 X 260)</div>
         {images.bg_img ? (

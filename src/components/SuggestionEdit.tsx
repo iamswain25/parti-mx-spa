@@ -12,7 +12,7 @@ import ImageFileDropzone from "./ImageFileDropzone";
 import { firestore } from "../config/firebase";
 import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const { id, title, body, context, files, images, password, name } = p;
+  const { id, title, body, context, files, images, name } = p;
   const history = useHistory();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
@@ -25,7 +25,6 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       title,
       body,
       context,
-      password,
       name,
     },
   });
@@ -49,11 +48,11 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Hidden mdUp>
-        <HeaderNew title="제보글 수정" />
+        <HeaderNew title="전시글 수정" />
       </Hidden>
       <Box mt={2}>
         <Container component="main" maxWidth="md">
-          <Typography variant="h2">제보글 수정</Typography>
+          <Typography variant="h2">전시글 수정</Typography>
           <SuggestionInputs formControl={formControl} />
           <ImageFileDropzone
             images={imageArr}
@@ -67,7 +66,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
             setFiles={setFiles2}
             setImages={setImages2}
           />
-          <BtnSubmitDesktop text="제보 수정" />
+          <BtnSubmitDesktop text="전시 수정" />
         </Container>
       </Box>
     </form>

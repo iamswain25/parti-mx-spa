@@ -129,7 +129,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </Box>
         <Box mb={2}>
           <Grid container alignItems="center">
-            <Box className={classes.label}>제보자</Box>
+            <Box className={classes.label}>전시자</Box>
             <Box ml={1} fontWeight={500}>
               {p?.name}
             </Box>
@@ -138,7 +138,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         <Box mb={2}>
           <Grid container alignItems="center" justify="space-between">
             <Box display="flex" alignItems="center">
-              <Box className={classes.label}>제보일</Box>
+              <Box className={classes.label}>전시일</Box>
               <Box>{semanticDate(created_at)}</Box>
             </Box>
           </Grid>
@@ -161,7 +161,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
         <Box className={classes.body}>
-          <Box className={classes.label}>제보사유</Box>
+          <Box className={classes.label}>전시사유</Box>
           <Linkify body={context} />
         </Box>
         <Box mt={4} mb={isDesktop ? 5 : 2}>

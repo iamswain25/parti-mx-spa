@@ -27,7 +27,6 @@ export interface SuggestionFormdata {
   title: string;
   context: string;
   body: string;
-  password: string;
   name: string;
   tags?: string[];
 }
@@ -120,7 +119,6 @@ export interface Whoami {
 }
 export interface CommentInput {
   body: string;
-  password: string;
   post_id: string | null;
   parent_id: string | null;
 }
@@ -135,7 +133,6 @@ export interface Comment {
   count_like: number;
   count_comment: number;
   attitude: string;
-  password: string;
 }
 export interface File {
   name: string;
@@ -150,7 +147,6 @@ export type Post = {
   group_id: string;
   type: string;
   context: string;
-  password: string;
   name: string;
   body: string;
   created_by: string;
@@ -161,7 +157,6 @@ export type Post = {
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;
   images: Img[];
   files: File[];
-  candidates: Candidate[];
   closed_at: firebase.firestore.Timestamp;
   is_closed: boolean;
   is_announced: boolean;
@@ -171,17 +166,9 @@ export type Post = {
   denounced_at: firebase.firestore.Timestamp;
   location: { type: "Point"; coordinates: [number, number] };
   tags: string[];
-  users: PostLike[];
   updatedBy: User;
   createdBy: User;
-  comments_aggregate: {
-    aggregate: {
-      count: number;
-    };
-  };
-  comments: Comment[];
   my_like_count: number | null;
-  board: Board;
 };
 export interface Suggestion {
   mx_posts_by_pk: Post;
@@ -314,4 +301,13 @@ export interface GroupBoardNewPostCount {
     board_id: string;
     new_count: number;
   }[];
+}
+
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toDeny(): R;
+      toAllow(): R;
+    }
+  }
 }

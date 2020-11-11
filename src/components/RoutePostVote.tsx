@@ -11,6 +11,7 @@ import { daysLeftMeta } from "../helpers/datefns";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoutePostVoteCandidate from "./RoutePostVoteCandidate";
 import GreyDivider from "./GreyDivider";
+import useCandidates from "../store/useCandidates";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -76,6 +77,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   const [isVoted, setVoted] = React.useState(false);
   const isClosed = !!p?.closed_at;
   const isResultHidden = metadata.isResultHidden;
+  const [candidates] = useCandidates({ post_id: p.id });
   React.useEffect(() => {
     setVoted(!!p.my_like_count);
   }, [p]);
@@ -129,7 +131,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
               </Grid>
             </Box>
             <Box mt={1}>
-              {p.candidates.map((c, i) => (
+              {candidates.map((c, i) => (
                 <RoutePostVoteCandidate
                   candidate={c}
                   voted={isVoted}

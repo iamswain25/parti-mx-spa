@@ -32,13 +32,12 @@ export default function CommentTextinput({
   handler: any;
 }) {
   const atUser = user ? `@${user} ` : "";
-  const { password } = comment;
   const parent_id = comment.id || null;
   const post_id = comment.post_id || null;
   const { handleSubmit, register, errors, reset, getValues } = useForm<
     CommentInput
   >({
-    defaultValues: { body: atUser, parent_id, post_id, password },
+    defaultValues: { body: atUser, parent_id, post_id },
   });
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
@@ -87,31 +86,14 @@ export default function CommentTextinput({
           error={errors.body ? true : false}
         />
         <Grid container justify="flex-end" alignItems="center">
-          <TextField
-            variant="outlined"
-            margin="normal"
-            name="password"
-            label="댓글 수정 비밀번호"
-            inputRef={register({
-              required: "필수 입력",
-              pattern: /[0-9]/,
-              maxLength: 4,
-              minLength: 4,
-            })}
-            required={errors.password ? true : false}
-            error={errors.password ? true : false}
-            helperText="숫자 4자리를 입력하세요"
-          />
-          <div style={{ marginLeft: 10 }}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disableElevation
-            >
-              등록
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disableElevation
+          >
+            등록
+          </Button>
         </Grid>
       </form>
     </>

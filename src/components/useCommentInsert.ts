@@ -13,7 +13,7 @@ export default function useCommentInsert({
   const [liked] = usePostLiked(post.id);
   const [currentUser] = useCurrentUser();
   function formHandler(args: CommentInput, e: any) {
-    const { post_id, body, password, parent_id } = args;
+    const { post_id, body, parent_id } = args;
     if (post_id) {
       let col = parent_id
         ? firestore
@@ -27,7 +27,6 @@ export default function useCommentInsert({
         body,
         post_id,
         parent_id,
-        password,
         count_like: 0,
         count_comment: 0,
         count_view: 0,

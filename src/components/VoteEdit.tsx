@@ -16,9 +16,10 @@ import SavedImageFile from "./SavedImageFile";
 import VoteInputs from "./VoteInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
+import useCandidates from "../store/useCandidates";
 
 export default function VoteEdit({ post: p }: { post: Post }) {
-  const { id, title, body, context, files, images, candidates, html } = p;
+  const { id, title, body, context, files, images, html } = p;
   const metadata = p.metadata as VoteMetadata;
   const {
     closingMethod,
@@ -33,6 +34,7 @@ export default function VoteEdit({ post: p }: { post: Post }) {
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const [isBinary, setBinary] = React.useState(binary);
+  const [candidates] = useCandidates({ post_id: p.id });
   const formControl = useForm<VoteEditFormdata>({
     defaultValues: {
       title,
@@ -44,14 +46,17 @@ export default function VoteEdit({ post: p }: { post: Post }) {
       isMultiple,
       isAnonymous,
       isResultHidden,
-      candidates,
     },
   });
-  const { handleSubmit } = formControl;
+  const { handleSubmit, reset } = formControl;
 
   React.useEffect(() => {
     deletingIds.length = 0;
   }, []);
+
+  React.useEffect(() => {
+    reset({ candidates });
+  }, [reset, candidates]);
 
   async function handleForm(form: VoteEditFormdata) {
     // const {

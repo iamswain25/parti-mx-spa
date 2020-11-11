@@ -2,13 +2,13 @@ import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import BoardPostSuggestion from "./BoardPostSuggestion";
 import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
+import HomeBoardPhoto from "./HomeBoardPhoto";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -33,6 +33,14 @@ const useStyles = makeStyles((theme) => {
       },
       gridGap: theme.spacing(3),
     },
+    photoGrid: {
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(2),
+      },
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(3),
+      },
+    },
   };
 });
 
@@ -55,11 +63,11 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           </Typography>
           {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
         </Grid>
-        <div className={classes.postContainer}>
-          {posts.map((p, i) => (
-            <BoardPostSuggestion key={i} post={p} />
+        <Grid container spacing={1} className={classes.photoGrid}>
+          {posts?.map((p) => (
+            <HomeBoardPhoto key={p.id} p={p} />
           ))}
-        </div>
+        </Grid>
         {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}

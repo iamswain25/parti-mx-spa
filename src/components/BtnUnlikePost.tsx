@@ -55,7 +55,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
     }
     switch (type) {
       case "suggestion":
-        return setSuccess("제보 취소 하였습니다.");
+        return setSuccess("전시 취소 하였습니다.");
       case "event":
         return setSuccess("공감 취소 하였습니다.");
       default:
@@ -71,7 +71,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          제보 공감 취소
+          전시 공감 취소
         </Button>
       );
     case "event":
