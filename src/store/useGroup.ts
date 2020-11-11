@@ -9,10 +9,15 @@ export default function useGroup(): [Group] {
     return firestore
       .collection("groups")
       .doc(groupId)
-      .onSnapshot((doc) => {
-        const item = { id: doc.id, ...(doc.data() as any) };
-        setGroup(item);
-      });
+      .onSnapshot(
+        (doc) => {
+          const item = { id: doc.id, ...(doc.data() as any) };
+          setGroup(item);
+        },
+        (error) => {
+          console.warn("useGroup", error);
+        }
+      );
   }, [groupId]);
   return [group];
 }

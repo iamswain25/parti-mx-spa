@@ -6,16 +6,23 @@ export default function useEffectBoards(): void {
   const [groupId] = useGroupId();
   const [, setBoards] = useBoards();
   React.useEffect(() => {
-    return firestore
-      .collection("groups")
-      .doc(groupId)
-      .collection("boards")
-      .orderBy("order", "asc")
-      .onSnapshot((snapshot) => {
-        const boards = snapshot.docs.map(
-          (doc) => ({ id: doc.id, ...(doc.data() as any) } as Board)
+    if (groupId) {
+      return firestore
+        .collection("groups")
+        .doc(groupId)
+        .collection("boards")
+        .orderBy("order", "asc")
+        .onSnapshot(
+          (snapshot) => {
+            const boards = snapshot.docs.map(
+              (doc) => ({ id: doc.id, ...(doc.data() as any) } as Board)
+            );
+            setBoards(boards);
+          },
+          (error) => {
+            console.warn("useEffectBoards", error);
+          }
         );
-        setBoards(boards);
-      });
+    }
   }, [groupId, setBoards]);
 }

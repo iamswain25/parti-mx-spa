@@ -1,48 +1,61 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
 import { Grid } from "@material-ui/core";
-import { version } from "../../package.json";
-import { useCurrentUser, useGroupId } from "../store/useGlobalState";
+import { useBoards, useCurrentUser, useGroupId } from "../store/useGlobalState";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
-    color: theme.palette.primary.main,
-    maxWidth: 1200,
-    margin: "0 auto",
+    // color: theme.palette.primary.main,
+    color: "rgba(18, 18, 18, 0.74)",
     boxShadow: "none",
-    paddingLeft: 30,
-    paddingRight: 30,
     [theme.breakpoints.down("sm")]: {
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
     },
   },
   toolbar: {
+    maxWidth: 1200,
+    margin: "0 auto",
+    paddingLeft: 30,
+    paddingRight: 30,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      minHeight: 48,
-      height: 48,
+      minHeight: 56,
+      height: 56,
     },
   },
   logoFont: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    fontFamily: "Lato",
-    fontSize: 20,
-    fontWeight: "bold",
-    fontStyle: "normal",
-    letterSpacing: 0,
+    fontSize: 18,
+    fontWeight: 500,
+    letterSpacing: "-0.56px",
     textAlign: "center",
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[900],
+    // color: theme.palette.primary.main,
+  },
+  flexcenter: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    "& .boards": {
+      paddingLeft: 30,
+      paddingRight: 30,
+      fontSize: 14,
+      fontWeight: 500,
+      color: theme.palette.grey[500],
+      "&.active": {
+        color: theme.palette.primary.main,
+      },
+    },
   },
   flexend: {
     display: "flex",
@@ -51,39 +64,36 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function HeaderRemain(props: { children?: any }) {
-  const { children } = props;
+export default function HeaderRemain() {
   const classes = useStyles();
   const [group_id] = useGroupId();
+  const [boards] = useBoards();
+  const [currentUser] = useCurrentUser();
   return (
-    <>
-      <AppBar position="sticky" className={classes.appBar}>
-        <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
-          <Grid container>
-            <Grid container item xs={2} alignItems="center" />
-            <Grid item xs={8} className={classes.logoFont}>
-              <Link to={`/${group_id}`}>빠띠 믹스 (v{version})</Link>
-            </Grid>
-            <Grid item xs={2} className={classes.flexend}>
-              <Typography variant="h3" noWrap>
-                <Grid container alignItems="center">
-                  <Link
-                    to="/search"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: 10,
-                    }}
-                  >
-                    <SearchIcon />
-                  </Link>
-                </Grid>
-              </Typography>
-            </Grid>
+    <AppBar position="sticky" className={classes.appBar}>
+      <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
+        <Grid container>
+          <Grid item xs={3} className={classes.logoFont}>
+            <Link to={`/${group_id}`}>2020민주자치박람회</Link>
           </Grid>
-        </Toolbar>
-      </AppBar>
-      {children}
-    </>
+          <Grid item xs={6} className={classes.flexcenter}>
+            {boards.map((b, i) => (
+              <NavLink
+                exact
+                to={`/${group_id}/${b.id}`}
+                key={i}
+                className="boards"
+                activeClassName="active"
+              >
+                {b.title}
+              </NavLink>
+            ))}
+          </Grid>
+          <Grid item xs={3} className={classes.flexend}>
+            {currentUser?.email ? <LogoutButton /> : <LoginButton />}
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 }

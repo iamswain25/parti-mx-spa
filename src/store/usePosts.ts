@@ -4,7 +4,7 @@ import { Post } from "../types";
 export default function usePosts({
   board_id,
   limit,
-  listen = false,
+  listen = true,
   isClosed,
 }: {
   board_id: string;
@@ -26,12 +26,17 @@ export default function usePosts({
       query.limit(limit);
     }
     if (listen) {
-      return query.onSnapshot((snapshot) => {
-        const items = snapshot.docs.map(
-          (doc) => ({ id: doc.id, ...(doc.data() as any) } as Post)
-        );
-        setItems(items);
-      });
+      return query.onSnapshot(
+        (snapshot) => {
+          const items = snapshot.docs.map(
+            (doc) => ({ id: doc.id, ...(doc.data() as any) } as Post)
+          );
+          setItems(items);
+        },
+        (error) => {
+          console.warn("usePosts", error);
+        }
+      );
     } else {
       query.get().then((snapshot) => {
         const items = snapshot.docs.map(

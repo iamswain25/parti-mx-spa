@@ -20,14 +20,14 @@ export default function MenuGroup({ group }: { group: Group }) {
   const [groupId] = useGroupId();
   const [role] = useRole();
   const isMine = userId === group.created_by;
-  const exitGroup = useGroupExit();
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const exitGroup = useGroupExit(handleClose);
   const deleteGroup = useGroupDelete();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
   };
   const menus = [];
   switch (role) {

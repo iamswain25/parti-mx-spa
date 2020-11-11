@@ -50,8 +50,8 @@ export default function Profile() {
     if (currentUser) {
       setPhoto(currentUser.photoURL);
       reset({
-        name: currentUser.displayName || "익명",
-        email: currentUser.email || "익명",
+        name: currentUser.displayName || "",
+        email: currentUser.email || "",
       } as GroupForm);
     }
   }, [currentUser, reset, setPhoto]);

@@ -1,7 +1,7 @@
 import { useGroupId } from "../store/useGlobalState";
 import { firestore } from "../config/firebase";
 import { useCurrentUser } from "../store/useGlobalState";
-export default function useGroupExit(refetch?: any) {
+export default function useGroupExit(cb?: Function) {
   const [groupId] = useGroupId();
   const [currentUser] = useCurrentUser();
   async function handler() {
@@ -12,6 +12,7 @@ export default function useGroupExit(refetch?: any) {
         .collection("users")
         .doc(currentUser?.uid)
         .delete();
+      cb && cb();
     }
   }
   return handler;

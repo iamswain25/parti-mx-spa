@@ -15,12 +15,12 @@ import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import { initialState } from "../store/useGlobalState";
 import GroupLogoContainer from "../components/GroupLogoContainer";
-import BoardTabNavigator from "../components/BoardTabNavigator";
 import Logout from "../components/Logout";
 import useEffectRole from "../store/useEffectRole";
 import Footer from "../components/Footer";
 import RoutesGroup from "./RoutesGroup";
 import useEffectBoards from "../store/useEffectBoards";
+import HeaderRemain from "../components/HeaderRemain";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,8 +48,8 @@ export default function Routes() {
   return (
     <>
       <CssBaseline />
+      <HeaderRemain />
       <GroupLogoContainer />
-      <BoardTabNavigator />
       <div className={classes.root}>
         <Switch>
           <Route path="/forgot" exact component={PasswordForgot} />

@@ -1,34 +1,23 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { semanticDate } from "../helpers/datefns";
-import { Link } from "react-router-dom";
-import { Grid, Typography, Hidden } from "@material-ui/core";
-import MenuGroup from "./MenuGroup";
+import { Grid } from "@material-ui/core";
 import useGroup from "../store/useGroup";
-import StorageImage from "./StorageImage";
-import { useCurrentUser, useRole } from "../store/useGlobalState";
-import useGroupJoin from "./useGroupJoin";
-import { permissionLabelByValue } from "../helpers/options";
+import { useRole } from "../store/useGlobalState";
+import InfoGroup from "./InfoGroup";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       [theme.breakpoints.up("md")]: {
         padding: "0 30px",
         position: "relative",
+        backgroundImage: `linear-gradient(to left, rgba(143, 138, 191, 1) 74%, ${theme.palette.primary.main} 44%)`,
       },
     },
     groupLogoContainer: {
       [theme.breakpoints.up("md")]: {
-        height: 260,
+        height: 424,
         maxWidth: 1140,
-        "& > div": {
-          height: "100%",
-          "& > img": {
-            height: "100%",
-            width: "100%",
-            objectFit: "cover",
-          },
-        },
       },
       [theme.breakpoints.down("sm")]: {
         display: "block",
@@ -41,98 +30,101 @@ const useStyles = makeStyles((theme) => {
       position: "relative",
     },
     groupLogoOverlay: {
-      [theme.breakpoints.up("md")]: {
-        position: "absolute",
-        height: "100%",
-        width: "100%",
-        top: 0,
-        backgroundImage:
-          "linear-gradient(rgba(0, 0 ,0, 0) 50%, rgba(0, 0, 0, 0.64))",
-        color: theme.palette.common.white,
-        padding: 19,
-      },
-      color: theme.palette.text.primary,
-      padding: theme.spacing(2),
+      color: theme.palette.common.white,
       display: "flex",
       flexDirection: "column",
-      justifyContent: "flex-end",
+      "&> .title": {
+        marginTop: 71,
+        fontSize: 18,
+        fontWeight: "bold",
+        letterSpacing: "-0.5px",
+      },
+      "&> .subtitle": {
+        marginTop: 19,
+        fontSize: "34px",
+        fontWeight: "bold",
+        letterSpacing: "-1.8px",
+      },
+      "&> .date": {
+        marginTop: 40,
+        fontSize: 18,
+        letterSpacing: "-0.5px",
+      },
+      "&> .caption": {
+        marginTop: 8,
+        fontSize: 12,
+        letterSpacing: "-0.6px",
+      },
+      "&> .boxes": {
+        marginTop: 40,
+      },
     },
-    groupInfo: {
+    gridbox: {
+      backgroundColor: theme.palette.background.paper,
+      width: 267,
+      height: 84,
+      padding: theme.spacing(2),
       display: "flex",
-      gap: "10px",
-      fontSize: 12,
-      fontWeight: 500,
-      letterSpacing: 0,
-      alignItems: "center",
-      [theme.breakpoints.up("md")]: {
-        height: theme.spacing(6),
+      "&> .title": {
+        flex: 1,
+        height: 52,
+        marginRight: 6,
+        fontSize: 18,
+        fontWeight: "bold",
+        letterSpacing: "-0.5px",
+        color: "#544f85",
       },
-      [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing(1),
+      "&> .link": {
+        display: "flex",
+        width: 70,
+        alignSelf: "flex-end",
+        alignItems: "center",
+        fontSize: 11,
+        color: theme.palette.primary.main,
+        "&> .svg": {
+          width: 16,
+          height: 16,
+        },
       },
-      "& a": {
-        color: "inherit",
-      },
-    },
-    groupJoin: {
-      width: 69,
-      height: theme.spacing(3),
-      borderRadius: 2,
-      color: theme.palette.common.white,
-      backgroundColor: theme.palette.grey[900],
-      padding: 0,
-      marginLeft: theme.spacing(1),
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
     },
   };
 });
 export default function GroupLogoContainer() {
   const [group] = useGroup();
   const classes = useStyles();
-  const { title, created_at, bg_img, mb_img } = group || {};
   const [role] = useRole();
-  const [currentUser] = useCurrentUser();
-  const joinHandler = useGroupJoin();
   return (
     <Grid container className={classes.container} justify="center">
       <div className={classes.groupLogoContainer}>
-        {mb_img && bg_img ? (
-          <>
-            <Hidden mdUp implementation="css">
-              <StorageImage image={mb_img ?? bg_img} />
-            </Hidden>
-            <Hidden smDown implementation="css">
-              <StorageImage image={bg_img ?? mb_img} />
-            </Hidden>
-          </>
-        ) : (
-          <div>
-            <img src="/publicsphere.jpg" alt="public sphere" />
-          </div>
-        )}
+        {role === "organizer" && <InfoGroup group={group} />}
         <div className={classes.groupLogoOverlay}>
-          <Typography variant="h1" color="inherit">
-            {title}
-          </Typography>
-          <div className={classes.groupInfo}>
-            <span>개설 {semanticDate(created_at)}</span>
-            {role === undefined ? (
-              <div>loading...</div>
-            ) : (
-              <Link to="/profile">
-                {currentUser?.displayName}({permissionLabelByValue(role)})
-              </Link>
-            )}
-            {role === "anonymous" && false && (
-              <button className={classes.groupJoin} onClick={joinHandler}>
-                그룹 가입
-              </button>
-            )}
-            <MenuGroup group={group} />
+          <div className="title">제19회 전국주민자치박람회</div>
+          <div className="subtitle">새로운 연결, 세대가 함께 여는 주민자치</div>
+          <div className="date">2020. 12. 7. ~ 12. 11.</div>
+          <div className="caption">
+            주최·주관 행정안전부, 대통령소속 자치분권위원회,
+            (사)열린사회시민연합
           </div>
+          <section className="boxes">
+            <Grid container spacing={3}>
+              {[
+                ["공지사항"],
+                ["전국주민자치박람회 주요 일정"],
+                ["우수사례 전시"],
+                ["학술행사 안내"],
+              ].map((item: string[]) => (
+                <Grid item xs={3} key={item[0]}>
+                  <div className={classes.gridbox}>
+                    <div className="title">{item[0]}</div>
+                    <div className="link">
+                      자세히보기
+                      <NavigateNextIcon className="svg" />
+                    </div>
+                  </div>
+                </Grid>
+              ))}
+            </Grid>
+          </section>
         </div>
       </div>
     </Grid>
