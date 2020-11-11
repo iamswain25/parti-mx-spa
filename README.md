@@ -24,5 +24,5 @@
 initial setting
 
 ```
-gsutil cors set cors.json gs://sharenting-mix.appspot.com
+gsutil cors set cors.json gs://policy-fair-mix.appspot.com
 ```

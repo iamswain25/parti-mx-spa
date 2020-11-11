@@ -3,11 +3,11 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
-    "serve": "npm run build && firebase serve --only functions --project sharenting-mix",
-    "shell": "npm run build && firebase functions:shell --project sharenting-mix",
+    "serve": "npm run build && firebase serve --only functions --project policy-fair-mix",
+    "shell": "npm run build && firebase functions:shell --project policy-fair-mix",
     "start": "npm run shell",
-    "deploy": "tsc && firebase deploy --only functions --project sharenting-mix",
-    "deploy1": "tsc && firebase deploy --only functions:postCreate --project sharenting-mix",
+    "deploy": "tsc && firebase deploy --only functions --project policy-fair-mix",
+    "deploy1": "tsc && firebase deploy --only functions:postCreate --project policy-fair-mix",
     "logs": "firebase functions:log"
   },
   "engines": {
