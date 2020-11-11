@@ -5,7 +5,7 @@ import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
 import HomeBoardEvent from "./HomeBoardEvent";
 import useDesktop from "./useDesktop";
-import useBoards from "../store/useBoards";
+import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 

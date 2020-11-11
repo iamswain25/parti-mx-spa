@@ -1,10 +1,10 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Board } from "../types";
-import { useGroupId } from "./useGlobalState";
-export default function useBoards(): [Board[]] {
+import { useBoards, useGroupId } from "./useGlobalState";
+export default function useEffectBoards(): void {
   const [groupId] = useGroupId();
-  const [boards, setBoards] = React.useState<Board[]>([]);
+  const [, setBoards] = useBoards();
   React.useEffect(() => {
     return firestore
       .collection("groups")
@@ -17,6 +17,5 @@ export default function useBoards(): [Board[]] {
         );
         setBoards(boards);
       });
-  }, [groupId]);
-  return [boards];
+  }, [groupId, setBoards]);
 }

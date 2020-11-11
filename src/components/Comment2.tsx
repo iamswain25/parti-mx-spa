@@ -24,12 +24,7 @@ export default function Comment2({
   const [edit, setEdit] = React.useState<boolean>(false);
   const remove = useCommentDelete(c);
   function editHandler() {
-    const input = window.prompt("비밀번호를 입력하세요");
-    if (input === c.password) {
-      setEdit(true);
-    } else {
-      window.alert("비밀번호가 맞지 않습니다.");
-    }
+    setEdit(true);
   }
   return (
     <Box position="relative">

@@ -18,8 +18,7 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { useGroupId } from "../store/useGlobalState";
-import useBoards from "../store/useBoards";
-
+import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import { firestore } from "../config/firebase";
 import SelectBoardPermission from "./SelectBoardPermission";

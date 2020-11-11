@@ -6,8 +6,12 @@ import { Grid, Box, Button, Hidden } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import CreateIcon from "@material-ui/icons/Create";
 import Fab from "@material-ui/core/Fab";
-import useBoards from "../store/useBoards";
-import { useBoardId, useGroupId, useRole } from "../store/useGlobalState";
+import {
+  useBoardId,
+  useBoards,
+  useGroupId,
+  useRole,
+} from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     gridTab: {

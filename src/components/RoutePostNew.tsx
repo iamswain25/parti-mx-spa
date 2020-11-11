@@ -4,7 +4,6 @@ import NoticeNew from "./NoticeNew";
 import VoteNew from "./VoteNew";
 import EventNew from "./EventNew";
 import useBoard from "../store/useBoard";
-
 import { LinearProgress } from "@material-ui/core";
 import Forbidden from "./Forbidden";
 import { useRole } from "../store/useGlobalState";
