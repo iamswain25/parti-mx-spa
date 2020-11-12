@@ -15,10 +15,6 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "/post/**",
-        "function": "post"
-      },
-      {
         "source": "**",
         "destination": "/index.html"
       }
