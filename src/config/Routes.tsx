@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "center",
+    flexDirection: "column",
     [theme.breakpoints.up("md")]: {
       marginTop: theme.spacing(3),
       paddingLeft: 30,
@@ -35,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: 1200,
     },
     [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
       marginTop: theme.spacing(1),
     },
   },

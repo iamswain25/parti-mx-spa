@@ -6,8 +6,6 @@ import "firebase/functions";
 import "firebase/firestore";
 import "firebase/storage";
 import * as uuid from "uuid";
-// 패키징 할 때만 넣는다.
-type Modify<T, R> = Omit<T, keyof R> & R;
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

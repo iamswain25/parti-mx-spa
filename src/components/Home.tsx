@@ -8,18 +8,7 @@ import useEffectBoardId from "../store/useEffectBoardId";
 
 const useStyles = makeStyles((theme) => {
   return {
-    left: {
-      [theme.breakpoints.up("md")]: {
-        marginRight: theme.spacing(3),
-        width: `calc(66% - ${theme.spacing(3)}px)`,
-      },
-    },
-    right: {
-      [theme.breakpoints.up("md")]: {
-        marginLeft: theme.spacing(3),
-        width: `calc(34% - ${theme.spacing(3)}px)`,
-      },
-    },
+    root: {},
   };
 });
 

@@ -12,14 +12,19 @@ export default function usePost(
       return firestore
         .collection("posts")
         .doc(id)
-        .onSnapshot((doc) => {
-          if (doc.exists) {
-            const item = { id: doc.id, ...doc.data() } as Post;
-            setItem(item);
-          } else {
-            setItem(null);
+        .onSnapshot(
+          (doc) => {
+            if (doc.exists) {
+              const item = { id: doc.id, ...doc.data() } as Post;
+              setItem(item);
+            } else {
+              setItem(null);
+            }
+          },
+          (error) => {
+            console.warn("usePost", error);
           }
-        });
+        );
     } else {
       firestore
         .collection("posts")

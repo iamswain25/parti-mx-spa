@@ -17,7 +17,9 @@ export default function useEffectBoards(): void {
             const boards = snapshot.docs.map(
               (doc) => ({ id: doc.id, ...(doc.data() as any) } as Board)
             );
-            setBoards(boards);
+            if (boards) {
+              setBoards(boards);
+            }
           },
           (error) => {
             console.warn("useEffectBoards", error);

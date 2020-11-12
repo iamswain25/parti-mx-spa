@@ -1,12 +1,27 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { Typography, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     link: {
       display: "flex",
+      height: 28,
+      padding: "6px 12px",
+      borderRadius: 2,
+      border: "solid 1px rgba(143, 138, 191, 0.6)",
+      backgroundColor: "#ffffff",
+      alignItems: "center",
+      justifyContent: "center",
+      "&>.title": {
+        fontSize: 11,
+        color: "#544f85",
+      },
+      "&>.svg": {
+        width: theme.spacing(2),
+        height: theme.spacing(2),
+        color: theme.palette.primary.main,
+      },
       [theme.breakpoints.down("sm")]: {
         justifyContent: "center",
         padding: theme.spacing(2),
@@ -14,16 +29,18 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-export default function BoardMoreTag({ to = "/" }: { to: string }) {
+export default function BoardMoreTag({
+  to = "/",
+  label,
+}: {
+  to: string;
+  label?: string;
+}) {
   const classes = useStyles();
   return (
     <Link to={to} className={classes.link}>
-      <Box color="grey.600" display="flex" alignItems="center">
-        <Typography variant={"body2"}>더 보기</Typography>
-        <Box fontSize={16} display="flex" alignItems="center">
-          <ChevronRightIcon />
-        </Box>
-      </Box>
+      <div className="title">{label} 모두 보기</div>
+      <ChevronRightIcon className="svg" />
     </Link>
   );
 }

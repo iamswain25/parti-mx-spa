@@ -1,7 +1,6 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
@@ -12,6 +11,7 @@ import HomeBoardPhoto from "./HomeBoardPhoto";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
+      flex: 1,
       [theme.breakpoints.up("md")]: {
         marginBottom: theme.spacing(5),
       },
@@ -20,9 +20,14 @@ const useStyles = makeStyles((theme) => {
       },
     },
     titleContainer: {
-      borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
+      "&>.space-between": {
+        marginTop: theme.spacing(1),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      },
     },
     postContainer: {
       [theme.breakpoints.up("md")]: {
@@ -52,23 +57,25 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   return (
     <>
       <section className={classes.container}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          className={classes.titleContainer}
-        >
+        <div className={classes.titleContainer}>
           <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
-          {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
-        </Grid>
+          <div className="space-between">
+            <div>{b?.body}</div>
+            {isDesktop && (
+              <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
+            )}
+          </div>
+        </div>
         <Grid container spacing={1} className={classes.photoGrid}>
           {posts?.map((p) => (
             <HomeBoardPhoto key={p.id} p={p} />
           ))}
         </Grid>
-        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
+        {!isDesktop && (
+          <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
+        )}
       </section>
       {!isDesktop && <GreyDivider />}
     </>
