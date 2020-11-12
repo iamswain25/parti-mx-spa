@@ -1,13 +1,12 @@
 module.exports = {
-  "typescript": {
-    check: false,
-    checkOptions: {},
-    // reactDocgen: false,
+  typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
-    },
+      compilerOptions: {
+        allowSyntheticDefaultImports: false,
+        esModuleInterop: false,
+      },
+    }
   },
   "stories": [
     "../src/**/*.stories.mdx",
@@ -16,6 +15,7 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/preset-create-react-app"
+    "@storybook/preset-create-react-app",
+    '@storybook/preset-typescript'
   ]
 }
