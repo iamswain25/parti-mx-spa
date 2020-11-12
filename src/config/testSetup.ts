@@ -1,8 +1,8 @@
 import * as firebase from "@firebase/testing";
 import fs from "fs";
-import { policyFair } from "./firebaseConfig";
+import { playgroundJennaFirebaseConfig } from "./firebaseConfig";
 export const setup = async (auth: any, data: any) => {
-  const { projectId } = policyFair;
+  const { projectId } = playgroundJennaFirebaseConfig;
   // console.log(projectId, __dirname);
   const app = firebase.initializeTestApp({
     projectId,
