@@ -3,10 +3,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import { useBoards, useCurrentUser, useGroupId } from "../store/useGlobalState";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
+import DrawerGroup from "./DrawerGroup";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -21,13 +22,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbar: {
     maxWidth: 1200,
     margin: "0 auto",
-    paddingLeft: 30,
-    paddingRight: 30,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
     [theme.breakpoints.up("md")]: {
+      paddingLeft: 30,
+      paddingRight: 30,
       minHeight: 56,
       height: 56,
     },
@@ -40,12 +41,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     letterSpacing: "-0.56px",
     textAlign: "center",
     color: theme.palette.grey[900],
+    [theme.breakpoints.down("sm")]: {
+      flex: 1,
+      maxWidth: "100%",
+      position: "absolute",
+      left: "50%",
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+    },
     // color: theme.palette.primary.main,
   },
   flexcenter: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
     "& .boards": {
       paddingLeft: 30,
       paddingRight: 30,
@@ -58,6 +70,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   flexend: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -73,8 +88,11 @@ export default function HeaderRemain() {
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
         <Grid container>
+          <Hidden mdUp implementation="css">
+            <DrawerGroup />
+          </Hidden>
           <Grid item xs={3} className={classes.logoFont}>
-            <Link to={`/${group_id}`}>2020민주자치박람회</Link>
+            <Link to={`/${group_id}`}>2020주민자치박람회</Link>
           </Grid>
           <Grid item xs={6} className={classes.flexcenter}>
             {boards.map((b, i) => (

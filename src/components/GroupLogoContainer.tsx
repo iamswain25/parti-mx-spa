@@ -5,13 +5,29 @@ import useGroup from "../store/useGroup";
 import { useRole } from "../store/useGlobalState";
 import InfoGroup from "./InfoGroup";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import bg1 from "../assets/images/bg1.png";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       [theme.breakpoints.up("md")]: {
         padding: "0 30px",
         position: "relative",
-        backgroundImage: `linear-gradient(to left, rgba(143, 138, 191, 1) 74%, ${theme.palette.primary.main} 44%)`,
+      },
+      backgroundColor: theme.palette.primary.main,
+    },
+    backgroundImg: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      background: `url(${bg1}) no-repeat right`,
+      // backgroundImage: `linear-gradient(to left, rgba(143, 138, 191, 0) 74%, ${theme.palette.primary.main} 44%)`,
+    },
+    gradient: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      [theme.breakpoints.up("md")]: {
+        backgroundImage: `linear-gradient(to left,  rgba(143, 138, 191, 0) 20%, ${theme.palette.primary.main} 70%)`,
       },
     },
     groupLogoContainer: {
@@ -57,11 +73,14 @@ const useStyles = makeStyles((theme) => {
       },
       "&> .boxes": {
         marginTop: 40,
+        "& > div": {
+          overflow: "hidden",
+        },
       },
     },
     gridbox: {
       backgroundColor: theme.palette.background.paper,
-      width: 267,
+      // width: 267,
       height: 84,
       padding: theme.spacing(2),
       display: "flex",
@@ -95,6 +114,8 @@ export default function GroupLogoContainer() {
   const [role] = useRole();
   return (
     <Grid container className={classes.container} justify="center">
+      <div className={classes.backgroundImg} />
+      <div className={classes.gradient} />
       <div className={classes.groupLogoContainer}>
         {role === "organizer" && <InfoGroup group={group} />}
         <div className={classes.groupLogoOverlay}>
