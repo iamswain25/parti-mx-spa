@@ -6,8 +6,9 @@ import GreyDivider from "../components/GreyDivider";
 import AvatarNameDate from "../components/AvatarNameDate";
 import BtnUnlikePost from "../components/BtnUnlikePost";
 import useDesktop from "../components/useDesktop";
+import PostMenu from "./PostMenu";
 import FilesImages from "../components/FilesImages";
-// import NoticeComment from "../components/NoticeComment";
+import NoticeComment from "../components/NoticeComment";
 import HtmlOrBody from "../components/HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
 import PostText from "./PostText";
@@ -82,7 +83,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
         <Box color="grey.900" className={classes.title}>
           {p.title}
           <Box display="flex" alignItems="center">
-            {/* <PostMenu post={p} /> */}
+            <PostMenu post={p} />
           </Box>
         </Box>
         <Box mt={1}>
@@ -92,7 +93,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
           <Divider light />
         </Box>
         <FilesImages images={images} files={files} />
-        {/* <HtmlOrBody post={p} /> */}
+        <HtmlOrBody post={p} />
         <PostText content={p.body}></PostText>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
@@ -102,7 +103,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
       <div>
-        {/* <NoticeComment post={p} /> */}
+        <NoticeComment post={p} />
       </div>
     </section>
   );
