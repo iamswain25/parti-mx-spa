@@ -30,10 +30,18 @@ export default function Footer() {
       <hr />
       <footer className={classes.root}>
         <div>
-          <a href="https://drive.google.com/file/d/186Z20DrfN0ZpqPpqRSFCmZThoZtSchLI/view" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://drive.google.com/file/d/186Z20DrfN0ZpqPpqRSFCmZThoZtSchLI/view"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             이용약관
           </a>
-          <a href="https://drive.google.com/file/d/1usKlFDL3dW6U6h0o5Xc_WrYfIWXqYcOp/view" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://drive.google.com/file/d/1usKlFDL3dW6U6h0o5Xc_WrYfIWXqYcOp/view"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             개인정보취급방침
           </a>
         </div>
@@ -41,11 +49,11 @@ export default function Footer() {
         <div>TEL 02-774-9702-7 | FAX 02-774-9724</div>
         <div>
           <a
-            href="mailto:koreaywca@ywca.or.kr"
+            href="mailto:peacenow@ywca.or.kr"
             target="_blank"
             rel="noopener noreferrer"
           >
-            이메일 koreaywca@ywca.or.kr
+            이메일 peacenow@ywca.or.kr
           </a>
         </div>
         <div className="bold">
