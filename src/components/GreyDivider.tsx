@@ -4,6 +4,9 @@ import { grey } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) => {
   return {
     greyBg: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
       backgroundColor: grey[300],
       paddingTop: (height: number) => theme.spacing(height),
     },

@@ -12,16 +12,13 @@ const useStyles = makeStyles((theme) => {
   return {
     container: {
       flex: 1,
-      [theme.breakpoints.up("md")]: {
-        marginBottom: theme.spacing(5),
-      },
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(5),
+    },
+    titleContainer: {
       [theme.breakpoints.down("sm")]: {
         marginLeft: theme.spacing(2),
       },
-    },
-    titleContainer: {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
       "&>.space-between": {
         marginTop: theme.spacing(1),
         display: "flex",
@@ -45,6 +42,14 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(3),
       },
+    },
+    mobileMore: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     },
   };
 });
@@ -73,11 +78,11 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
             <HomeBoardPhoto key={p.id} p={p} />
           ))}
         </Grid>
-        {!isDesktop && (
+        <div className={classes.mobileMore}>
           <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
-        )}
+        </div>
       </section>
-      {!isDesktop && <GreyDivider />}
+      <GreyDivider />
     </>
   );
 }

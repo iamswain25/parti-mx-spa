@@ -17,7 +17,7 @@ import { initialState } from "../store/useGlobalState";
 import GroupLogoContainer from "../components/GroupLogoContainer";
 import Logout from "../components/Logout";
 import useEffectRole from "../store/useEffectRole";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
 import RoutesGroup from "./RoutesGroup";
 import useEffectBoards from "../store/useEffectBoards";
 import HeaderRemain from "../components/HeaderRemain";
@@ -74,7 +74,7 @@ export default function Routes() {
           </Route>
         </Switch>
       </div>
-      <Footer />
+      {/* <Footer /> */}
       <LoginModal />
       <SnackbarCustom />
       <SnackbarSuccess />
