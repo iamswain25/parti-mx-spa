@@ -136,7 +136,7 @@ export default function Profile() {
           defaultValue=""
           as={
             <TextField
-              label="활동명"
+              label="닉네임"
               variant="outlined"
               margin="normal"
               fullWidth
@@ -165,14 +165,12 @@ export default function Profile() {
           control={control}
           name="org"
           defaultValue=""
-          rules={{ required: true }}
           as={
             <TextField
               label="소속"
               variant="outlined"
               margin="normal"
               fullWidth
-              required
               error={!!errors.org}
               helperText="YWCA 회원이시면 소속을 표기해주세요. (예. OOYWCA)"
             />

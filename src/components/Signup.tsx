@@ -126,13 +126,13 @@ export default function Signup() {
             margin="normal"
             fullWidth
             name="name"
-            label="활동명"
+            label="닉네임"
             inputRef={register({
               required: "Required",
             })}
             required
             error={!!errors.name}
-            helperText="활동명을 입력해주세요"
+            helperText="닉네임을 입력해주세요"
           />
           <TextField
             variant="outlined"
@@ -140,10 +140,7 @@ export default function Signup() {
             fullWidth
             name="org"
             label="소속"
-            inputRef={register({
-              required: "Required",
-            })}
-            required
+            inputRef={register({})}
             error={!!errors.org}
             helperText="YWCA 회원이시면 소속을 표기해주세요. (예. OOYWCA)"
           />
