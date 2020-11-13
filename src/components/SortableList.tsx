@@ -30,34 +30,40 @@ const DragHandle = SortableHandle(({ image, className }: any) => (
     <StorageImage path={image} className={className} />
   </div>
 ));
-const SortableItem = SortableElement(({ item: f, imageRemove, index }: any) => {
-  const classes = useStyles();
-  function removeHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    imageRemove(index);
+const SortableItem = SortableElement(
+  (props: { item: any; imageRemove: any; order: number }) => {
+    const { item: f, imageRemove, order } = props;
+    const classes = useStyles();
+    function removeHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+      imageRemove(order);
+    }
+    return (
+      <Grid item style={{ width: 76, height: 76, position: "relative" }}>
+        <DragHandle images={[f?.preview, f?.uri]} className={classes.img} />
+        <IconButton onClick={removeHandler} className={classes.closePic}>
+          <CloseIcon color="inherit" />
+        </IconButton>
+      </Grid>
+    );
   }
-  return (
-    <Grid item style={{ width: 76, height: 76, position: "relative" }}>
-      <DragHandle image={f.preview ?? f.path} className={classes.img} />
-      <IconButton onClick={removeHandler} className={classes.closePic}>
-        <CloseIcon color="inherit" />
-      </IconButton>
-    </Grid>
-  );
-});
+);
 
 const SortableList = SortableContainer(
   ({ items, imageRemove }: { items: any[]; imageRemove: any }) => {
     const classes = useStyles();
     return (
       <Grid container spacing={1} className={classes.padding}>
-        {items.map((item: any, index: number) => (
-          <SortableItem
-            key={index}
-            index={index}
-            item={item}
-            imageRemove={imageRemove}
-          />
-        ))}
+        {items.map((item: any, index: number) => {
+          return (
+            <SortableItem
+              key={index}
+              order={index}
+              index={index}
+              item={item}
+              imageRemove={imageRemove}
+            />
+          );
+        })}
       </Grid>
     );
   }
