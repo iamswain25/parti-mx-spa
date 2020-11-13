@@ -7,7 +7,7 @@ import LoginModal from "../components/LoginModal";
 import SnackbarCustom from "../components/SnackbarCustom";
 import SnackbarSuccess from "../components/SnackbarSuccess";
 import { CssBaseline, makeStyles } from "@material-ui/core";
-import RoutePostEdit from "../components/RoutePostEdit";
+// import RoutePostEdit from "../components/RoutePostEdit";
 import GroupNew from "../components/GroupNew";
 import Profile from "../components/Profile";
 import Search from "../components/Search";
@@ -57,7 +57,7 @@ export default function Routes() {
           <Route path="/logout" exact component={Logout} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/post/:post_id" exact component={RoutePost} />
-          <Route path="/edit/:post_id" exact component={RoutePostEdit} />
+          {/* <Route path="/edit/:post_id" exact component={RoutePostEdit} /> */}
           <Route
             exact
             path="/p/:id"
