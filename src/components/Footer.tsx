@@ -45,7 +45,7 @@ export default function Footer() {
             개인정보취급방침
           </a>
         </div>
-        <div>서울특별시 중구 퇴계로 18길 77(남산동 2가 45-6)</div>
+        <div>서울특별시 중구 명동길 73(명동 1가)</div>
         <div>TEL 02-774-9702-7 | FAX 02-774-9724</div>
         <div>
           <a
