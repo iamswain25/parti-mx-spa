@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     textContainer: {
+      whiteSpace: "break-spaces",
       flex: 1,
       display: "flex",
       flexDirection: "column",
