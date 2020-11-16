@@ -8,12 +8,15 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { MenuItem } from "@material-ui/core";
 import { wsLink } from "../config/ApolloSetup";
+import useEffectRefetch from "./useEffectRefetch";
 
 export default function LogoutButton() {
+  const trigger = useEffectRefetch();
   async function logoutHandler() {
     await auth.signOut();
     // @ts-ignore
     wsLink.subscriptionClient.close(false);
+    trigger();
     // history.replace("/");
   }
   const [open, setOpen] = React.useState(false);

@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import useGroupExit from "./useGroupExit";
 import { useStore } from "../store/store";
 import useGroupDelete from "./useGroupDelete";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
 export default function MenuGroup({ group }: { group: Group }) {
   const [{ user_id }] = useStore();
   const status = group?.status;
@@ -52,6 +54,7 @@ export default function MenuGroup({ group }: { group: Group }) {
         {isOrg && <MenuItem onClick={groupHandler}>그룹 정보 수정</MenuItem>}
         {isOrg && <MenuItem onClick={boardHandler}>게시판 수정</MenuItem>}
         <MenuItem onClick={exitGroup}>그룹 탈퇴</MenuItem>
+        {user_id ? <LogoutButton /> : <LoginButton />}
         {isMine && <MenuItem onClick={deleteGroup}>그룹 삭제</MenuItem>}
       </Menu>
     </>
