@@ -14,7 +14,7 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 
 export default function VoteNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
   const [, setLoading] = useGlobalState(keys.LOADING);
   const [, setSuccess] = useGlobalState(keys.SUCCESS);

@@ -13,7 +13,7 @@ import EventInputs from "./EventInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
 export default function EventNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [, setLoading] = useGlobalState(keys.LOADING);
