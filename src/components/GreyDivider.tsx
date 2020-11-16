@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => {
         display: "none",
       },
       backgroundColor: grey[300],
-      paddingTop: (height: number) => theme.spacing(height),
+      paddingTop: (height: number) => height,
     },
   };
 });

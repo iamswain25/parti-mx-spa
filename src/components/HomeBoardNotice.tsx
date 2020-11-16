@@ -2,29 +2,39 @@ import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import BoardPostNotice from "./BoardPostNotice";
 import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
+import HomeBoardPhoto from "./HomeBoardPhoto";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      [theme.breakpoints.up("md")]: {
-        marginBottom: theme.spacing(5),
-      },
+      flex: 1,
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(5),
+    },
+    titleContainer: {
       [theme.breakpoints.down("sm")]: {
         marginLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
       },
+      "&>.space-between": {
+        marginTop: theme.spacing(1),
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      },
     },
-    titleContainer: {
-      borderBottom: `1px solid ${grey[400]}`,
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
-      [theme.breakpoints.down("sm")]: {},
+    photoGrid: {
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(2),
+      },
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(3),
+      },
     },
   };
 });
@@ -37,23 +47,26 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
   return (
     <>
       <section className={classes.container}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          className={classes.titleContainer}
-        >
+        <div className={classes.titleContainer}>
           <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
-          {isDesktop && <BoardMoreTag to={`/${group_id}/${b?.id}`} />}
-        </Grid>
-        <div>
-          {posts.map((p) => (
-            <BoardPostNotice key={p.id} post={p} />
-          ))}
+          <div className="space-between">
+            <div>{b?.body}</div>
+            {isDesktop && (
+              <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
+            )}
+          </div>
         </div>
-        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b?.id}`} />}
+        <Grid
+          container
+          spacing={isDesktop ? 3 : 2}
+          className={classes.photoGrid}
+        >
+          {posts?.map((p) => (
+            <HomeBoardPhoto key={p.id} p={p} />
+          ))}
+        </Grid>
       </section>
       {!isDesktop && <GreyDivider />}
     </>

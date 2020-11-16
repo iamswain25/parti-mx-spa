@@ -2,12 +2,20 @@ import React from "react";
 import { Post } from "../types";
 import { useStyles } from "../helpers/styles";
 import { LazyImage } from "react-lazy-images";
-import { Grid, Hidden, Typography } from "@material-ui/core";
+import { Grid, GridSize, Hidden, Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
-export default function HomeBoardPhoto({ p }: { p: Post }) {
+export default function HomeBoardPhoto({
+  p,
+  xs = 6,
+  md = 3,
+}: {
+  p: Post;
+  xs?: GridSize;
+  md?: GridSize;
+}) {
   const classes = useStyles();
   return (
-    <Grid item xs={6} md={3}>
+    <Grid item xs={xs} md={md}>
       <NavLink className={classes.aspectRatio} exact to={`/post/${p.id}`}>
         <LazyImage
           alt={p.title}

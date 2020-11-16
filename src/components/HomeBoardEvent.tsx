@@ -12,6 +12,9 @@ import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
+      flex: 1,
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(5),
       [theme.breakpoints.up("md")]: {
         border: `1px solid ${grey[300]}`,
         maxWidth: 364,

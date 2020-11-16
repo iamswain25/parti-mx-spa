@@ -4,6 +4,7 @@ import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
+import ScheduleImgs from "./ScheduleImgs";
 
 export default function Home() {
   const [boards] = useBoards();
@@ -22,5 +23,10 @@ export default function Home() {
         return null;
     }
   });
-  return <>{boardArr}</>;
+  return (
+    <>
+      {boardArr}
+      <ScheduleImgs />
+    </>
+  );
 }
