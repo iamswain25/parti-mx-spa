@@ -8,6 +8,7 @@ import { useBoards, useCurrentUser, useGroupId } from "../store/useGlobalState";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
+import { TITLE } from "../helpers/options";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -92,7 +93,7 @@ export default function HeaderRemain() {
             <DrawerGroup />
           </Hidden>
           <Grid item xs={3} className={classes.logoFont}>
-            <Link to={`/${group_id}`}>2020주민자치박람회</Link>
+            <Link to={`/${group_id}`}>{TITLE}</Link>
           </Grid>
           <Grid item xs={6} className={classes.flexcenter}>
             {boards.map((b, i) => (

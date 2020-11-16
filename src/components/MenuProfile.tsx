@@ -3,9 +3,9 @@ import { IconButton, Menu, MenuItem, Avatar } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
-import useMe from "../store/useMe";
+import { useCurrentUser } from "../store/useGlobalState";
 export default function MenuProfile() {
-  const [me] = useMe();
+  const [currentUser] = useCurrentUser();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   function handleOpen(event: React.MouseEvent<HTMLButtonElement>) {
@@ -26,7 +26,10 @@ export default function MenuProfile() {
         onClick={handleOpen}
         size="small"
       >
-        <Avatar src={me?.photo_url} children={me?.name.substr(0, 1)} />
+        <Avatar
+          src={currentUser?.photoURL || ""}
+          children={currentUser?.displayName?.substr(0, 1)}
+        />
       </IconButton>
       <Menu
         keepMounted
@@ -35,7 +38,7 @@ export default function MenuProfile() {
         onClose={handleClose}
       >
         <MenuItem onClick={profileHandler}>프로필</MenuItem>
-        {me ? <LogoutButton /> : <LoginButton />}
+        {currentUser ? <LogoutButton /> : <LoginButton />}
         {/* <AccountDelete /> */}
       </Menu>
     </>

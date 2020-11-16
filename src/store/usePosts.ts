@@ -38,12 +38,17 @@ export default function usePosts({
         }
       );
     } else {
-      query.get().then((snapshot) => {
-        const items = snapshot.docs.map(
-          (doc) => ({ id: doc.id, ...(doc.data() as any) } as Post)
-        );
-        setItems(items);
-      });
+      query
+        .get()
+        .then((snapshot) => {
+          const items = snapshot.docs.map(
+            (doc) => ({ id: doc.id, ...(doc.data() as any) } as Post)
+          );
+          setItems(items);
+        })
+        .catch((error) => {
+          console.warn("usePosts", error);
+        });
     }
   }, [board_id, listen, isClosed, limit]);
   return [items];

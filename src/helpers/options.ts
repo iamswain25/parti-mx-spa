@@ -1,5 +1,6 @@
 import { Role, UserStatus } from "../types";
 export const DOMAIN = "https://parti.mx";
+export const TITLE = "2020주민자치박람회";
 export const postSortOptions = [
   { created_at: "desc" },
   { updated_at: "desc" },

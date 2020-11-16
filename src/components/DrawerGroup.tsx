@@ -6,7 +6,7 @@ import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import MyGroupList from "./MyGroupList";
 import { useHistory } from "react-router-dom";
 import { useCurrentUser, useGroupId } from "../store/useGlobalState";
-const DRAWER_WIDTH = 304;
+import DrawerBoards from "./DrawerBoards";
 const useStyles = makeStyles((theme: Theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 24,
   },
   drawer: {
-    width: DRAWER_WIDTH,
+    width: "100%",
     [theme.breakpoints.up("md")]: {
       flexShrink: 0,
     },
@@ -36,13 +36,6 @@ export default function DrawerGroup() {
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
-  function navigateGroupHandler(group_id?: string) {
-    setMobileOpen(false);
-    if (group_id) {
-      setGroupId(group_id);
-      history.push("/");
-    }
-  }
 
   return (
     <>
@@ -65,7 +58,7 @@ export default function DrawerGroup() {
           keepMounted: true,
         }}
       >
-        <MyGroupList clickHandler={navigateGroupHandler} />
+        <DrawerBoards close={handleDrawerClose} />
       </Drawer>
     </>
   );
