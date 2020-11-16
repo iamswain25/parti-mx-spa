@@ -79,7 +79,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: "relative",
     "&::before": {
       content: "''",
-      paddingBottom: "100%",
+      paddingBottom: "65.85%",
       display: "inline-block",
       verticalAlign: "top",
     },

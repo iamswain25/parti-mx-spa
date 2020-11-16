@@ -73,9 +73,13 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
             )}
           </div>
         </div>
-        <Grid container spacing={1} className={classes.photoGrid}>
+        <Grid
+          container
+          spacing={isDesktop ? 3 : 0}
+          className={classes.photoGrid}
+        >
           {posts?.map((p) => (
-            <HomeBoardPhoto key={p.id} p={p} />
+            <HomeBoardPhoto key={p.id} p={p} xs={12} md={4} />
           ))}
         </Grid>
         <div className={classes.mobileMore}>

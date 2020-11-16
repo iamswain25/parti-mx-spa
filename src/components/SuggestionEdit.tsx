@@ -12,7 +12,7 @@ import ImageFileDropzone from "./ImageFileDropzone";
 import { firestore } from "../config/firebase";
 import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 export default function SuggestionEdit({ post: p }: { post: Post }) {
-  const { id, title, body, context, files, images, name } = p;
+  const { id, files, images } = p;
   const history = useHistory();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
@@ -21,12 +21,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const formControl = useForm<SuggestionFormdata>({
-    defaultValues: {
-      title,
-      body,
-      context,
-      name,
-    },
+    defaultValues: p as SuggestionFormdata,
   });
   const { handleSubmit } = formControl;
 

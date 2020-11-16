@@ -1,14 +1,6 @@
 import React from "react";
 import { Post } from "../types";
-import {
-  Box,
-  Grid,
-  Divider,
-  makeStyles,
-  Hidden,
-  Paper,
-  Chip,
-} from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles, Hidden } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
@@ -103,10 +95,9 @@ const useStyles = makeStyles((theme) => {
       margin: 0,
       fontFamily: "Roboto",
     },
-    chip: {
+    tag: {
       margin: theme.spacing(0.5),
-      color: theme.palette.text.primary,
-      borderColor: theme.palette.divider,
+      color: theme.palette.primary.main,
     },
   };
 });
@@ -128,14 +119,6 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           <Divider light />
         </Box>
         <Box mb={2}>
-          <Grid container alignItems="center">
-            <Box className={classes.label}>전시자</Box>
-            <Box ml={1} fontWeight={500}>
-              {p?.name}
-            </Box>
-          </Grid>
-        </Box>
-        <Box mb={2}>
           <Grid container alignItems="center" justify="space-between">
             <Box display="flex" alignItems="center">
               <Box className={classes.label}>전시일</Box>
@@ -143,27 +126,21 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             </Box>
           </Grid>
         </Box>
-        {tags && (
-          <Paper component="ul" className={classes.chips} elevation={0}>
-            {tags.map((chip) => {
-              return (
-                <li key={chip}>
-                  <Chip
-                    variant="outlined"
-                    label={chip}
-                    className={classes.chip}
-                  />
-                </li>
-              );
-            })}
-          </Paper>
-        )}
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
         <Box className={classes.body}>
           <Box className={classes.label}>전시사유</Box>
           <Linkify body={context} />
         </Box>
+        <Grid container>
+          {tags?.map((chip) => {
+            return (
+              <span key={chip} className={classes.tag}>
+                #{chip}
+              </span>
+            );
+          })}
+        </Grid>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

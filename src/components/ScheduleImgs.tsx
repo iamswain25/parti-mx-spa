@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       flex: 1,
-      paddingTop: theme.spacing(2),
+      padding: theme.spacing(2),
       paddingBottom: theme.spacing(5),
       "&>.title": {
         [theme.breakpoints.down("sm")]: {

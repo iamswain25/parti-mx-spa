@@ -64,7 +64,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           className={classes.photoGrid}
         >
           {posts?.map((p) => (
-            <HomeBoardPhoto key={p.id} p={p} />
+            <HomeBoardPhoto key={p.id} p={p} md={3} xs={6} />
           ))}
         </Grid>
       </section>

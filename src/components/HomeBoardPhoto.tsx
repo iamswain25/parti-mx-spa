@@ -1,9 +1,39 @@
 import React from "react";
 import { Post } from "../types";
-import { useStyles } from "../helpers/styles";
-import { LazyImage } from "react-lazy-images";
-import { Grid, GridSize, Hidden, Typography } from "@material-ui/core";
+import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+import StorageImage from "./StorageImage";
+export const useStyles = makeStyles((theme) => ({
+  img: {
+    objectFit: "cover",
+    maxHeight: "100%",
+    width: "100%",
+    position: "absolute",
+    height: "100%",
+  },
+  aspectRatio: {
+    display: "flex",
+    position: "relative",
+    "&::before": {
+      content: "''",
+      paddingBottom: "65.85%",
+      display: "inline-block",
+      verticalAlign: "top",
+    },
+  },
+  hover: {
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+      position: "relative",
+      padding: theme.spacing(2),
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(1),
+    },
+    "&>.title": { marginBottom: theme.spacing(0.5) },
+  },
+}));
+
 export default function HomeBoardPhoto({
   p,
   xs = 6,
@@ -16,19 +46,12 @@ export default function HomeBoardPhoto({
   const classes = useStyles();
   return (
     <Grid item xs={xs} md={md}>
-      <NavLink className={classes.aspectRatio} exact to={`/post/${p.id}`}>
-        <LazyImage
-          alt={p.title}
-          placeholder={({ imageProps, ref }) => (
-            <div ref={ref} className={classes.img} />
-          )}
-          src={p?.images?.[0]?.uri || "/ogp.png"}
-          actual={({ imageProps }) => (
-            <img {...imageProps} alt={imageProps.alt} className={classes.img} />
-          )}
-        />
+      <NavLink exact to={`/post/${p.id}`}>
+        <div className={classes.aspectRatio}>
+          <StorageImage image={p?.images?.[0]} />
+        </div>
         <div className={classes.hover}>
-          <div>
+          <div className="title">
             <Typography variant="h3">{p.title}</Typography>
           </div>
           <Typography variant="h6" color="primary">
@@ -40,20 +63,6 @@ export default function HomeBoardPhoto({
           </Typography>
         </div>
       </NavLink>
-      <Hidden mdUp implementation="css">
-        <NavLink exact to={`/post/${p.id}`}>
-          <div style={{ paddingTop: 4 }}>
-            <Typography variant="h4">{p.title}</Typography>
-          </div>
-          <Typography variant="h5" color="primary">
-            <Grid container style={{ paddingTop: 4 }}>
-              {p?.tags?.map((chip) => {
-                return <span key={chip}>#{chip}&nbsp;</span>;
-              })}
-            </Grid>
-          </Typography>
-        </NavLink>
-      </Hidden>
     </Grid>
   );
 }

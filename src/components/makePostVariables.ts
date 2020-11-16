@@ -19,6 +19,11 @@ export async function makeNewVariables(form: any, other: any) {
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
   }
+  if ("tags" in form && "customTags" in form) {
+    const tagSet = new Set([...form.tags, ...form.customTags]);
+    form.tags = Array.from(tagSet);
+    delete form.customTags;
+  }
   delete form.isHtml;
   return {
     images,
@@ -52,6 +57,12 @@ export async function makeUpdateVariables(form: any, other: any) {
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
+  }
+  console.log(form);
+  if ("tags" in form && "customTags" in form) {
+    const tagSet = new Set([...form.tags, ...form.customTags]);
+    form.tags = Array.from(tagSet);
+    delete form.customTags;
   }
   delete form.isHtml;
   if (files2) {

@@ -22,6 +22,13 @@ export default function StorageImage(
   const className = props.className;
   const classes = useStyles();
   const src = useStoragePath(path);
+  if ("image" in props && !props.image) {
+    return (
+      <div className={`${classes.root} ${className}`}>
+        <img src="/ogp.png" alt="ogp" />
+      </div>
+    );
+  }
   if (!src) {
     return <div className={`${classes.root} ${className}`} />;
   }
