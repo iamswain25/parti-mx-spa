@@ -32,17 +32,11 @@ export default function SuggestionNew() {
         setSuccess,
         created_by: currentUser.uid,
         updated_by: currentUser.uid,
-        count_like: 0,
-        count_comment: 0,
-        count_view: 0,
         is_closed: false,
         updated_at: new Date(),
         created_at: new Date(),
         type: "suggestion",
       });
-      if (!currentUser.displayName) {
-        await currentUser.updateProfile({ displayName: form.name });
-      }
       const doc = await firestore.collection("posts").add(variables);
       history.push("/post/" + doc.id);
     }
@@ -54,10 +48,6 @@ export default function SuggestionNew() {
         <Box mt={2}>
           <Container component="main" maxWidth="md">
             <Typography variant="h2">전시글 쓰기</Typography>
-            <Typography variant="h3" color="primary">
-              전시해주신 내용은 아동의 개인정보 노출을 방지하기 위해 일부 수정될
-              수 있습니다. 상세한 내용은 소식 게시판의 공지 글을 확인해주세요.
-            </Typography>
             <SuggestionInputs formControl={formControl} />
             <ImageFileDropzone
               images={imageArr}

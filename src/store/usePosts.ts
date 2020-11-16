@@ -4,7 +4,7 @@ import { Post } from "../types";
 export default function usePosts({
   board_id,
   limit,
-  listen = true,
+  listen = false,
   isClosed,
 }: {
   board_id: string;

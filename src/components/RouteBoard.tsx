@@ -7,8 +7,7 @@ import useBoard from "../store/useBoard";
 
 export default function RouteBoard() {
   const [board] = useBoard();
-  const { type } = board;
-  switch (type) {
+  switch (board?.type) {
     case "notice":
       return <RouteBoardNotice board={board} />;
     case "vote":

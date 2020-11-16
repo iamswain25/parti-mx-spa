@@ -16,8 +16,9 @@ export default function SuggestionInputs(props: {
         errors={errors}
       />
       <CustomTextField
-        label="전시자"
-        name="name"
+        label="전시 맥락"
+        multiline
+        name="context"
         register={register}
         errors={errors}
       />
@@ -25,13 +26,6 @@ export default function SuggestionInputs(props: {
         label="전시 내용"
         multiline
         name="body"
-        register={register}
-        errors={errors}
-      />
-      <CustomTextField
-        label="전시 사유"
-        multiline
-        name="context"
         register={register}
         errors={errors}
       />

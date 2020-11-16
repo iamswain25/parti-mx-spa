@@ -22,6 +22,6 @@ export default function useGroups(listen: boolean = false): [Group[]] {
           setItems(items);
         });
     }
-  }, []);
+  }, [listen, setItems]);
   return [items];
 }
