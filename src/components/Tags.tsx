@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { UseFormMethods } from "react-hook-form";
-import { defaultHashtags } from "../helpers/options";
+import { DEFAULT_HASHTAGS } from "../helpers/options";
 import Hashtags from "./Hashtags";
 const useStyles = makeStyles((theme) => {
   return {
@@ -48,7 +48,7 @@ export default function Tags(props: { formControl: UseFormMethods<any> }) {
           </Tooltip>
         </Typography>
         <FormGroup row>
-          {defaultHashtags.map((tag, i) => (
+          {DEFAULT_HASHTAGS.map((tag, i) => (
             <FormControlLabel
               key={i}
               control={

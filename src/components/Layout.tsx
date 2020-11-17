@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import BoardTabNavigator from "./BoardTabNavigator";
+import { useRouteMatch } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.up("md")]: {
@@ -18,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Layout({ children }: React.PropsWithChildren<{}>) {
   const classes = useStyles();
+  const match = useRouteMatch("/home/:board_id");
   return (
-    <div className={classes.root}>
+    <div className={!match ? classes.root : undefined}>
       {children}
       <BoardTabNavigator />
     </div>

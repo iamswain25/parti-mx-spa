@@ -53,7 +53,7 @@ export function showStatusLabelByValue(value: UserStatus) {
   }
 }
 
-export const defaultHashtags = [
+export const DEFAULT_HASHTAGS = [
   "publicspace",
   "공공공간",
   "community",
