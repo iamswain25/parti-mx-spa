@@ -4,7 +4,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Hidden } from "@material-ui/core";
-import { useBoards, useCurrentUser, useGroupId } from "../store/useGlobalState";
+import {
+  useBoardId,
+  useBoards,
+  useCurrentUser,
+  useGroupId,
+} from "../store/useGlobalState";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
@@ -83,6 +88,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function HeaderRemain() {
   const classes = useStyles();
   const [group_id] = useGroupId();
+  const [board_id] = useBoardId();
   const [boards] = useBoards();
   const [currentUser] = useCurrentUser();
   return (
@@ -102,6 +108,7 @@ export default function HeaderRemain() {
                 to={`/${group_id}/${b.id}`}
                 key={i}
                 className="boards"
+                isActive={(match) => !!match || b.id === board_id}
                 activeClassName="active"
               >
                 {b.title}

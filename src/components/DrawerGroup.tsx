@@ -3,9 +3,7 @@ import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
-import MyGroupList from "./MyGroupList";
-import { useHistory } from "react-router-dom";
-import { useCurrentUser, useGroupId } from "../store/useGlobalState";
+import { useCurrentUser } from "../store/useGlobalState";
 import DrawerBoards from "./DrawerBoards";
 const useStyles = makeStyles((theme: Theme) => ({
   menuButton: {
@@ -22,11 +20,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 export default function DrawerGroup() {
   const [currentUser] = useCurrentUser();
-  const [, setGroupId] = useGroupId();
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const theme = useTheme();
-  const history = useHistory();
   if (!currentUser) {
     return <div className={classes.menuButton} />;
   }
