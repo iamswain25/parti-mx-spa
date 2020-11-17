@@ -22,6 +22,20 @@ import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import { firestore } from "../config/firebase";
 import SelectBoardPermission from "./SelectBoardPermission";
+const newBoard: Partial<Board> = {
+  title: "",
+  body: "",
+  type: "notice",
+  id: "",
+  permission: {
+    read: ["organizer", "member", "user", "anonymous"],
+    create: ["organizer", "member", "user"],
+    update: ["organizer"],
+    delete: ["organizer"],
+    comment: ["organizer", "member", "user"],
+    like: ["organizer", "member", "user"],
+  },
+};
 const useStyles = makeStyles((theme) => ({
   root: {
     "& div": {
@@ -223,9 +237,7 @@ export default function BoardsSetting() {
         </Typography>
         <Button
           disabled={formState.isSubmitting}
-          onClick={() =>
-            append({ title: "", body: "", type: "notice", id: undefined })
-          }
+          onClick={() => append(newBoard)}
         >
           <AddIcon />
           게시판 추가
