@@ -1,22 +1,29 @@
 import React from "react";
 import { Board, ChipData } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import RoutePostSuggestion from "./RoutePostSuggestion";
 import usePosts from "../store/usePosts";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SettingsBackupRestoreIcon from "@material-ui/icons/SettingsBackupRestore";
 import Chips from "./Chips";
 import { DEFAULT_HASHTAGS } from "../helpers/options";
+import HomeBoardPhoto from "./HomeBoardPhoto";
+import { Grid } from "@material-ui/core";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
       backgroundColor: theme.palette.grey[50],
       position: "absolute",
       width: "100%",
+      zIndex: 2,
       "&>.title": {
         borderTop: "1px solid " + theme.palette.grey[300],
         "&>div": {
+          [theme.breakpoints.down("sm")]: {
+            padding: theme.spacing(2),
+            fontSize: 18,
+          },
           paddingLeft: 30,
           paddingRight: 30,
           marginLeft: "auto",
@@ -35,6 +42,10 @@ const useStyles = makeStyles((theme) => {
         borderBottom: "1px solid " + theme.palette.grey[300],
         "&>div": {
           display: "flex",
+          [theme.breakpoints.down("sm")]: {
+            paddingLeft: theme.spacing(0),
+            paddingRight: theme.spacing(0),
+          },
           paddingLeft: 30,
           paddingRight: 30,
           marginLeft: "auto",
@@ -44,6 +55,9 @@ const useStyles = makeStyles((theme) => {
             width: 16,
             height: 16,
             color: "#8f8abf",
+            [theme.breakpoints.down("sm")]: {
+              borderLeft: "none",
+            },
             padding: 20,
             borderLeft: "1px solid " + theme.palette.grey[300],
             display: "flex",
@@ -56,9 +70,14 @@ const useStyles = makeStyles((theme) => {
             borderLeft: "1px solid " + theme.palette.grey[300],
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
+            [theme.breakpoints.down("sm")]: {
+              paddingLeft: theme.spacing(1),
+              paddingRight: theme.spacing(1),
+            },
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            flexWrap: "wrap",
             color: theme.palette.grey[900],
             backgroundColor: "transparent",
             "&:last-child": {
@@ -84,13 +103,17 @@ const useStyles = makeStyles((theme) => {
         "&>div": {
           display: "flex",
           alignItems: "center",
-          // justifyContent: "center",
+          // justifyContent: "center",/ n,
           "&.hide": {
             display: "none",
           },
           height: 111,
           paddingLeft: 30,
           paddingRight: 30,
+          [theme.breakpoints.down("sm")]: {
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+          },
           marginLeft: "auto",
           marginRight: "auto",
           maxWidth: 1200,
@@ -103,12 +126,13 @@ const useStyles = makeStyles((theme) => {
       marginLeft: "auto",
       marginRight: "auto",
       maxWidth: 1200,
-      paddingTop: 150,
-      // paddingTop: theme.spacing(2),
+      paddingTop: 190,
       paddingBottom: theme.spacing(2),
+      display: "flex",
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
+        paddingTop: 116,
       },
     },
   };
@@ -121,8 +145,13 @@ const defaultTags: ChipData[] = DEFAULT_HASHTAGS.map((tag) => ({
 const CUTTING_INDEX = 4;
 export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
+  const [isDesktop] = useDesktop();
   const [filter, setFilter] = React.useState<Filter>("hide");
   const [chips, setChips] = React.useState<ChipData[]>(defaultTags);
+  const selectedTags = React.useMemo(
+    () => chips.filter((c) => c.selected).map((c) => c.label),
+    [chips]
+  );
   const [posts] = usePosts({ board_id: b.id });
   const filterHandler = React.useCallback(
     (type: Filter) => () => {
@@ -160,7 +189,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               <ExpandMoreIcon />
             </button>
             <button onClick={filterHandler("cancel")}>
-              <SettingsBackupRestoreIcon /> 필터 해제하기
+              <SettingsBackupRestoreIcon /> 필터 해제
             </button>
           </div>
         </div>
@@ -178,9 +207,18 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
         </div>
       </section>
       <div className={classes.container}>
-        {posts.map((p) => (
-          <RoutePostSuggestion key={p.id} post={p} />
-        ))}
+        <Grid container spacing={isDesktop ? 3 : 0}>
+          {posts
+            .filter((p) =>
+              selectedTags.length
+                ? selectedTags.every((tag) => p.tags.includes(tag)) // and 연산
+                : // ? p.tags.every((tag) => selectedTags.includes(tag)) // or 연산
+                  true
+            )
+            .map((p) => (
+              <HomeBoardPhoto key={p.id} p={p} xs={12} md={4} />
+            ))}
+        </Grid>
       </div>
     </>
   );

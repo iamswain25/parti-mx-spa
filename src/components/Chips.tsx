@@ -59,7 +59,7 @@ export default function Chips({
             <Chip
               avatar={chip.selected ? <DoneIcon /> : undefined}
               variant="outlined"
-              label={chip.label}
+              label={"#" + chip.label}
               onClick={handleSelect(chip)}
               className={chip.selected ? classes.selected : classes.chip}
             />
