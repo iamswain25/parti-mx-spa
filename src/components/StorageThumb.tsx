@@ -32,7 +32,6 @@ export default function StorageThumb(props: {
     arr.push("thumbs", img + "_364x240");
     thumbPath = arr.join("/");
   }
-  console.log(thumbPath, props.image);
   const src = useStoragePath(thumbPath);
   if (!props.image) {
     return (

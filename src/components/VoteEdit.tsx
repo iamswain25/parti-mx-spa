@@ -46,6 +46,7 @@ export default function VoteEdit({ post: p }: { post: Post }) {
       isMultiple,
       isAnonymous,
       isResultHidden,
+      tags: p.tags,
     },
   });
   const { handleSubmit, reset } = formControl;

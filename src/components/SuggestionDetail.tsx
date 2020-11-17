@@ -12,6 +12,7 @@ import PostMenu from "./PostMenu";
 import HtmlOrBody from "./HtmlOrBody";
 import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
+import HashtagsDetail from "./HashtagsDetail";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -95,10 +96,6 @@ const useStyles = makeStyles((theme) => {
       margin: 0,
       fontFamily: "Roboto",
     },
-    tag: {
-      margin: theme.spacing(0.5),
-      color: theme.palette.primary.main,
-    },
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
@@ -132,15 +129,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           <Box className={classes.label}>전시사유</Box>
           <Linkify body={context} />
         </Box>
-        <Grid container>
-          {tags?.map((chip) => {
-            return (
-              <span key={chip} className={classes.tag}>
-                #{chip}
-              </span>
-            );
-          })}
-        </Grid>
+        <HashtagsDetail tags={p.tags} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

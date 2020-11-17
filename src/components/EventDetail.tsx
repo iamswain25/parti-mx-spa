@@ -14,6 +14,7 @@ import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
 import EventComment from "./EventComment";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
+import HashtagsDetail from "./HashtagsDetail";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -75,6 +76,7 @@ export default function EventDetail({ post: p }: { post: Post }) {
         </Box>
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
+        <HashtagsDetail tags={p.tags} />
         <Box my={2}>
           <Divider />
         </Box>

@@ -22,7 +22,7 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const formControl = useForm<NoticeFormdata>({
-    defaultValues: { title, body, html, isHtml: !!html },
+    defaultValues: { title, body, html, isHtml: !!html, tags: p.tags },
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: NoticeFormdata) {

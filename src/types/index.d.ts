@@ -12,6 +12,7 @@ export interface NoticeFormdata {
   body: string;
   isHtml: boolean;
   html: RawDraftContentState;
+  tags: string[];
 }
 export interface EventFormdata {
   event_date: string;
@@ -22,13 +23,14 @@ export interface EventFormdata {
   body: string;
   isHtml: boolean;
   html: RawDraftContentState;
+  tags: string[];
 }
 export interface SuggestionFormdata {
   title: string;
   context: string;
   body: string;
   name: string;
-  tags?: string[];
+  tags: string[];
 }
 export interface VoteFormdata {
   title: string;
@@ -41,6 +43,7 @@ export interface VoteFormdata {
   isResultHidden: boolean;
   isHtml: boolean;
   html: RawDraftContentState;
+  tags: string[];
 }
 export interface VoteEditFormdata extends VoteFormdata {
   candidates: Candidate[];

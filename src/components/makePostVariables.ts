@@ -58,7 +58,6 @@ export async function makeUpdateVariables(form: any, other: any) {
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
   }
-  console.log(form);
   if ("tags" in form && "customTags" in form) {
     const tagSet = new Set([...form.tags, ...form.customTags]);
     form.tags = Array.from(tagSet);

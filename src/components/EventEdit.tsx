@@ -37,6 +37,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
       ...metadata,
       deadline: getDatetimeFormat(metadata.deadline.toDate(), 0),
       event_date: getDatetimeFormat(metadata.event_date.toDate(), 0),
+      tags: p.tags,
     },
   });
   const { handleSubmit } = formControl;

@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormMethods } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
+import Hashtags from "./Hashtags";
 import HtmlInput from "./HtmlInput";
 
 export default function NoticeInput(props: {
@@ -17,6 +18,7 @@ export default function NoticeInput(props: {
         register={register}
         errors={errors}
       />
+      <Hashtags formControl={props.formControl} />
       <HtmlInput formControl={props.formControl} />
     </>
   );

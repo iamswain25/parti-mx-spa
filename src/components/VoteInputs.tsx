@@ -6,6 +6,7 @@ import { voteOptions } from "../helpers/options";
 import VoteEditCandidates from "./VoteEditCandidates";
 import VoteNewCandidates from "./VoteNewCandidates";
 import HtmlInput from "./HtmlInput";
+import Hashtags from "./Hashtags";
 
 export default function VoteInputs({
   formControl,
@@ -27,6 +28,7 @@ export default function VoteInputs({
         register={register}
         errors={errors}
       />
+      <Hashtags formControl={formControl} />
       <HtmlInput formControl={formControl} />
       <CustomTextField
         register={register}

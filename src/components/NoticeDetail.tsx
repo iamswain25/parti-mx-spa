@@ -11,6 +11,7 @@ import FilesImages from "./FilesImages";
 import NoticeComment from "./NoticeComment";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
+import HashtagsDetail from "./HashtagsDetail";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -93,6 +94,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
         </Box>
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
+        <HashtagsDetail tags={p.tags} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

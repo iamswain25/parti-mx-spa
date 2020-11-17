@@ -2,6 +2,7 @@ import React from "react";
 import CustomTextField from "./CustomTextField";
 import { getDatetimeFormat } from "../helpers/datefns";
 import HtmlInput from "./HtmlInput";
+import Hashtags from "./Hashtags";
 const now = getDatetimeFormat(new Date());
 export default function EventInputs({ formControl }: any) {
   const { register, errors } = formControl;
@@ -53,6 +54,7 @@ export default function EventInputs({ formControl }: any) {
         register={register}
         errors={errors}
       />
+      <Hashtags formControl={formControl} />
       <HtmlInput formControl={formControl} />
     </>
   );

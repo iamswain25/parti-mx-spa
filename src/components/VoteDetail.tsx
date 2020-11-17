@@ -23,6 +23,7 @@ import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
 import useCandidates from "../store/useCandidates";
+import HashtagsDetail from "./HashtagsDetail";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -160,6 +161,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
         )}
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
+        <HashtagsDetail tags={p.tags} />
         <Box className={classes.sub} mt={2} mb={1}>
           <Grid container alignItems="center" justify="space-between">
             <Box display="flex" alignItems="center">
