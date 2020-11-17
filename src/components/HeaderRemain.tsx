@@ -98,10 +98,10 @@ export default function HeaderRemain() {
           <Hidden mdUp implementation="css">
             <DrawerGroup />
           </Hidden>
-          <Grid item xs={3} className={classes.logoFont}>
+          <Grid item xs={2} className={classes.logoFont}>
             <Link to={`/${group_id}`}>{TITLE}</Link>
           </Grid>
-          <Grid item xs={6} className={classes.flexcenter}>
+          <Grid item xs={8} className={classes.flexcenter}>
             {boards.map((b, i) => (
               <NavLink
                 exact
@@ -115,7 +115,7 @@ export default function HeaderRemain() {
               </NavLink>
             ))}
           </Grid>
-          <Grid item xs={3} className={classes.flexend}>
+          <Grid item xs={2} className={classes.flexend}>
             {currentUser?.email ? <LogoutButton /> : <LoginButton />}
           </Grid>
         </Grid>
