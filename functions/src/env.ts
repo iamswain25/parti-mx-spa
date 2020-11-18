@@ -18,3 +18,5 @@ interface Config extends functions.config.Config {
 const config = functions.config() as Config;
 export const HASURA = config.hasura;
 export const GMAIL = config.gmail;
+export const PARAM_COLLECTION = "$PARAMS$";
+export const COUNTER_DOC = "counters";
