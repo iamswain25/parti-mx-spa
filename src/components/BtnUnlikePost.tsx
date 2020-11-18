@@ -1,10 +1,15 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { useCurrentUser, useSuccess } from "../store/useGlobalState";
+import {
+  useCurrentUser,
+  useLoginModal,
+  useSuccess,
+} from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
 import usePostCounter from "../store/usePostCounter";
+import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -42,13 +47,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
+  const [, showLogin] = useLoginModal();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
   const [counter] = usePostCounter(p.id);
   const { count_like = 0 } = counter || {};
+  const [hasPermission, showAlert] = usePermission("like");
   const type = p.type;
   async function handler() {
-    if (currentUser) {
+    if (!currentUser?.email) {
+      showLogin(true);
+    } else if (!hasPermission) {
+      showAlert();
+    } else {
       await firestore
         .collection("posts")
         .doc(p.id)

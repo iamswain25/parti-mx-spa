@@ -8,6 +8,7 @@ import {
 } from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
+import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -46,8 +47,13 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
   const [, showLogin] = useLoginModal();
+  const [hasPermission, showAlert] = usePermission("like");
   async function handler() {
-    if (currentUser) {
+    if (!currentUser?.email) {
+      showLogin(true);
+    } else if (!hasPermission) {
+      showAlert();
+    } else {
       await firestore
         .collection("posts")
         .doc(p.id)
@@ -62,8 +68,6 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           { merge: true }
         );
       setSuccess("공감 하였습니다.");
-    } else {
-      showLogin(true);
     }
   }
   const type = p.type;
@@ -75,6 +79,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           variant="contained"
           className={classes.like}
           disableElevation
+          // disabled={!hasPermission}
         >
           전시 공감
         </Button>
@@ -86,6 +91,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           variant="contained"
           className={classes.event}
           disableElevation
+          // disabled={!hasPermission}
         >
           공감신청
         </Button>
@@ -95,6 +101,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
         <Button
           onClick={handler}
           variant="contained"
+          // disabled={!hasPermission}
           className={classes.like}
           startIcon={<FavoriteIcon className={classes.icon} />}
           disableElevation

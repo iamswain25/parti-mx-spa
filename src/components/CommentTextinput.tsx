@@ -3,6 +3,7 @@ import { TextField, makeStyles, Button, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useCurrentUser, useLoginModal } from "../store/useGlobalState";
 import { Comment, CommentInput } from "../types";
+import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -34,6 +35,7 @@ export default function CommentTextinput({
   const atUser = user ? `@${user} ` : "";
   const parent_id = comment.id || null;
   const post_id = comment.post_id || null;
+  const [hasPermission, showAlert] = usePermission("comment");
   const { handleSubmit, register, errors, reset, getValues } = useForm<
     CommentInput
   >({
@@ -54,10 +56,13 @@ export default function CommentTextinput({
       ref.current?.focus();
     }
   }, [reset, atUser, parent_id, post_id, getValues, autoFocus]);
-
   function loginHandler() {
     if (!isRegisteredUser) {
       setVisible(true);
+    } else {
+      if (!hasPermission) {
+        showAlert();
+      }
     }
   }
   return (
@@ -70,7 +75,7 @@ export default function CommentTextinput({
           margin="normal"
           multiline
           fullWidth
-          disabled={!isRegisteredUser}
+          disabled={!hasPermission}
           label="댓글 입력"
           name="body"
           classes={{ root: classes.root }}
