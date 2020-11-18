@@ -1,17 +1,16 @@
 import React from "react";
 import { Typography, Switch, Grid } from "@material-ui/core";
-import CustomTextField from "./CustomTextField";
-import ControlledSwitch from "./ControlledSwitch";
+import CustomTextField from "../components/CustomTextField";
+import ControlledSwitch from "../components/ControlledSwitch";
 import { voteOptions } from "../helpers/options";
-import VoteEditCandidates from "./VoteEditCandidates";
-import VoteNewCandidates from "./VoteNewCandidates";
+import VoteEditCandidates from "../components/VoteEditCandidates";
+import VoteNewCandidates from "../components/VoteNewCandidates";
 import HtmlInput from "./HtmlInput";
 
 export default function VoteInputs({
   formControl,
   isBinary = false,
   setBinary,
-  children,
   isEdit = false,
 }: any) {
   function binaryHandler() {
