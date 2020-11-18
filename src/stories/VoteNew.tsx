@@ -2,7 +2,7 @@ import React from "react";
 import { useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
-import HeaderNew from "./HeaderNew";
+import HeaderNew from "../components/HeaderNew";
 import { VoteFormdata } from "../types";
 import { makeNewVariables } from "../components/makePostVariables";
 import VoteInputs from "../components/VoteInputs";

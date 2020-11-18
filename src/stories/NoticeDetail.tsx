@@ -93,7 +93,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
           <Divider light />
         </Box>
         <FilesImages images={images} files={files} />
-        <HtmlOrBody post={p} />
+        {/* <HtmlOrBody post={p} /> */}
         <PostText content={p.body}></PostText>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
