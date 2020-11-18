@@ -3,16 +3,27 @@ import { firestore } from "../config/firebase";
 import { COUNTER_DOC, PARAM_COLLECTION } from "../helpers/options";
 import { Counter } from "../types";
 
-export default function useCounter(
-  post_id?: string,
-  listen: Boolean = false
-): [Counter | null | undefined] {
+export default function useCommentCounter({
+  post_id,
+  comment_id,
+  parent_id,
+  listen,
+}: {
+  comment_id: string;
+  post_id: string;
+  parent_id?: string;
+  listen?: Boolean;
+}): [Counter | null | undefined] {
   const [item, setItem] = React.useState<Counter | null | undefined>(undefined);
   React.useEffect(() => {
+    let docRef = firestore.collection("posts").doc(post_id);
+    if (parent_id) {
+      docRef = docRef.collection("comments").doc(parent_id);
+    }
     if (listen) {
-      return firestore
-        .collection("posts")
-        .doc(post_id)
+      return docRef
+        .collection("comments")
+        .doc(comment_id)
         .collection(PARAM_COLLECTION)
         .doc(COUNTER_DOC)
         .onSnapshot(
@@ -29,9 +40,9 @@ export default function useCounter(
           }
         );
     } else {
-      firestore
-        .collection("posts")
-        .doc(post_id)
+      docRef
+        .collection("comments")
+        .doc(comment_id)
         .collection(PARAM_COLLECTION)
         .doc(COUNTER_DOC)
         .get()
@@ -44,6 +55,6 @@ export default function useCounter(
           }
         });
     }
-  }, [post_id, listen]);
+  }, [post_id, listen, parent_id, comment_id]);
   return [item];
 }

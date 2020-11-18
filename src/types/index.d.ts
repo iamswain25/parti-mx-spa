@@ -133,8 +133,6 @@ export interface Comment {
   name: string;
   post_id: string;
   parent_id: string;
-  count_like: number;
-  count_comment: number;
   attitude: string;
 }
 export interface File {

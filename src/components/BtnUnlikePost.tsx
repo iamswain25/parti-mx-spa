@@ -4,7 +4,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
-import useCounter from "../store/useCounter";
+import usePostCounter from "../store/usePostCounter";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -44,7 +44,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
-  const [counter] = useCounter(p.id);
+  const [counter] = usePostCounter(p.id);
   const { count_like = 0 } = counter || {};
   const type = p.type;
   async function handler() {

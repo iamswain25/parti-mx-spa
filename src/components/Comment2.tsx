@@ -12,6 +12,7 @@ import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import useCommentLiked from "../store/useCommentLiked";
+// import useCommentCounter from "../store/useCommentCounter";
 export default function Comment2({
   comment: c,
   setRe,
@@ -21,6 +22,12 @@ export default function Comment2({
 }) {
   const classes = useStyles();
   const [liked] = useCommentLiked(c);
+  // const [counter] = useCommentCounter({
+  //   post_id: c.post_id,
+  //   comment_id: c.id,
+  //   parent_id: c.parent_id,
+  // });
+  // const { count_comment = 0 } = counter || {};
   const [edit, setEdit] = React.useState<boolean>(false);
   const remove = useCommentDelete(c);
   function editHandler() {

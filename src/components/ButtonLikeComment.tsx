@@ -3,6 +3,7 @@ import { Box, Button, makeStyles, Theme } from "@material-ui/core";
 import { useCurrentUser } from "../store/useGlobalState";
 import { firestore } from "../config/firebase";
 import { Comment } from "../types";
+import useCommentCounter from "../store/useCommentCounter";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -18,6 +19,13 @@ export default function ButtonLikeComment({
 }) {
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
+  const [counter] = useCommentCounter({
+    post_id: c.post_id,
+    comment_id: c.id,
+    parent_id: c.parent_id,
+    listen: true,
+  });
+  const { count_like = 0 } = counter || {};
   const userId = currentUser?.uid;
   async function pressHandler() {
     let postDoc = firestore.collection("posts").doc(c.post_id);
@@ -45,7 +53,7 @@ export default function ButtonLikeComment({
         공감
       </Button>
       <Box ml={0.5} alignItems="center" display="flex">
-        {c.count_like}
+        {count_like}
       </Box>
     </Box>
   );

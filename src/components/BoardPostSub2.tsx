@@ -2,9 +2,9 @@ import React from "react";
 import { Post } from "../types";
 import { semanticDate } from "../helpers/datefns";
 import { Typography, Box } from "@material-ui/core";
-import useCounter from "../store/useCounter";
+import usePostCounter from "../store/usePostCounter";
 export default function BoardPostSub2({ post: p }: { post: Post }) {
-  const [counter] = useCounter(p.id);
+  const [counter] = usePostCounter(p.id);
   const { count_comment = 0, count_like = 0 } = counter || {};
   const isVote = p.type === "vote";
   const name = p?.name;

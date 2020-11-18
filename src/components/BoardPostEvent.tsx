@@ -12,7 +12,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import StorageImage from "./StorageImage";
 import usePostLiked from "../store/usePostLiked";
-import useCounter from "../store/useCounter";
+import usePostCounter from "../store/usePostCounter";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => {
 });
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const [counter] = useCounter(p.id);
+  const [counter] = usePostCounter(p.id);
   const { count_like = 0 } = counter || {};
   const navigatePost = useNavigateToPost(p.id);
   let event_date = null,

@@ -7,7 +7,7 @@ import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
 import useComments from "../store/useComments";
 import usePostLikedUsers from "../store/usePostLikedUsers";
-import useCounter from "../store/useCounter";
+import usePostCounter from "../store/usePostCounter";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function SuggestionComment({ post: p }: { post: Post }) {
-  const [counter] = useCounter(p.id, true);
+  const [counter] = usePostCounter(p.id, true);
   const { count_comment = 0, count_like = 0 } = counter || {};
   const [comments] = useComments(p.id);
   const [likedUsers] = usePostLikedUsers(p.id);

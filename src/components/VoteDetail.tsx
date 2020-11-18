@@ -24,7 +24,7 @@ import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
 import useCandidates from "../store/useCandidates";
 import HashtagsDetail from "./HashtagsDetail";
-import useCounter from "../store/useCounter";
+import usePostCounter from "../store/usePostCounter";
 import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function VoteDetail({ post: p }: { post: Post }) {
   const { images, created_at, files, closed_at, name } = p;
-  const [counter] = useCounter(p.id);
+  const [counter] = usePostCounter(p.id);
   const { count_like = 0, count_comment = 0 } = counter || {};
   const [comments] = useComments(p.id);
   const [liked] = usePostLiked(p.id);

@@ -13,6 +13,7 @@ import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import useCommentLiked from "../store/useCommentLiked";
 import useComments2 from "../store/useComments2";
+import useCommentCounter from "../store/useCommentCounter";
 export default function Comment1({
   comment: c,
   post,
@@ -21,6 +22,8 @@ export default function Comment1({
   post: Post;
 }) {
   const [liked] = useCommentLiked(c);
+  const [counter] = useCommentCounter({ post_id: c.post_id, comment_id: c.id });
+  const { count_comment = 0 } = counter || {};
   const [comments2] = useComments2(c);
   const classes = useStyles();
   const [isRe, setRe] = React.useState<string | undefined>(undefined);
@@ -97,7 +100,7 @@ export default function Comment1({
           )}
         </Box>
       </Box>
-      {c?.count_comment === 0 && (
+      {count_comment === 0 && (
         <Box mt={1}>
           <Divider light />
         </Box>
