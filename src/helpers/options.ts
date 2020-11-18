@@ -1,6 +1,6 @@
 import { Role, UserStatus } from "../types";
 export const DOMAIN = "https://policy-fair-mix.web.app";
-export const TITLE = "2020주민자치박람회";
+export const TITLE = "제19회 전국주민자치박람회";
 export const postSortOptions = [
   { created_at: "desc" },
   { updated_at: "desc" },

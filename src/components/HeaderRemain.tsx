@@ -65,8 +65,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       display: "none",
     },
     "& .boards": {
-      paddingLeft: 30,
-      paddingRight: 30,
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
       fontSize: 14,
       fontWeight: 500,
       color: theme.palette.grey[500],
@@ -98,10 +98,10 @@ export default function HeaderRemain() {
           <Hidden mdUp implementation="css">
             <DrawerGroup />
           </Hidden>
-          <Grid item xs={2} className={classes.logoFont}>
+          <Grid item xs={3} className={classes.logoFont}>
             <Link to={`/${group_id}`}>{TITLE}</Link>
           </Grid>
-          <Grid item xs={8} className={classes.flexcenter}>
+          <Grid item xs={7} className={classes.flexcenter}>
             {boards.map((b, i) => (
               <NavLink
                 exact
