@@ -1,7 +1,6 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";

@@ -7,6 +7,7 @@ import useDesktop from "./useDesktop";
 import BoardPostEvent from "./BoardPostEvent";
 import GreyDivider from "./GreyDivider";
 import usePosts from "../store/usePosts";
+import EventPhotoGridItem from "./EventPhotoGridItem";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => {
       borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
+      marginBottom: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
@@ -32,7 +34,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, isClosed });
   return (
     <section className={classes.container}>
       <Grid container alignItems="center" className={classes.titleContainer}>
@@ -42,7 +44,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "textSecondary" : "textPrimary"}
             >
-              진행 중인 모임
+              진행 예정 모임
             </Typography>
             <Box mr={1} />
             <Typography
@@ -76,7 +78,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
         .filter((a) => (typeof a.closed_at === "string") === isClosed)
         .map((p, i) => (
           <Box key={i}>
-            <BoardPostEvent post={p} />
+            <EventPhotoGridItem p={p} md={3} xs={6} />
             {!isDesktop && <GreyDivider />}
           </Box>
         ))}

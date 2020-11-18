@@ -5,6 +5,7 @@ import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 import ScheduleImgs from "./ScheduleImgs";
+import HomeBoardEvent from "./HomeBoardEvent";
 
 export default function Home() {
   const [boards] = useBoards();
@@ -15,10 +16,10 @@ export default function Home() {
         return <HomeBoardSuggestion key={b.id} board={b} />;
       case "notice":
       case "vote":
-      case "event":
         return <HomeBoardNotice key={b.id} board={b} />;
+      case "event":
+        return <HomeBoardEvent key={b.id} board={b} />;
       // return <HomeBoardVote key={i} board={b} />;
-      // return <HomeBoardEvent key={i} board={b} />;
       default:
         return null;
     }
