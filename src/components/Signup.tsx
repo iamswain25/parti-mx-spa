@@ -4,18 +4,20 @@ import { auth } from "../config/firebase";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { Button, Typography, Container, Box } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  Container,
+  Box,
+  LinearProgress,
+} from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
-
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useError } from "../store/useGlobalState";
 import firebase from "firebase";
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    paddingTop: theme.spacing(8),
   },
   avatar: {
     margin: theme.spacing(1),
@@ -56,85 +58,94 @@ export default function Signup() {
   useRedirectIfLogin();
   const classes = useStyles();
   const [, setError] = useError();
-  const { handleSubmit, register, errors } = useForm<FormData>();
+  const history = useHistory<{ from: { pathname: string } }>();
+  const { from } = history.location.state ?? { from: "/" };
+  const { handleSubmit, register, errors, formState } = useForm<FormData>();
   async function formHandler(form: FormData) {
     const { email, password } = form;
+
     try {
       const credential = firebase.auth.EmailAuthProvider.credential(
         email,
         password
       );
       await auth.currentUser?.linkWithCredential(credential);
+      alert("회원가입 되었습니다.");
+      history.replace(from);
     } catch (error) {
       setError(error.message);
     }
   }
   return (
-    <div className={classes.paper}>
-      <Container component="main" maxWidth="xs">
-        <Typography variant="h2">회원가입</Typography>
-        <form
-          onSubmit={handleSubmit(formHandler)}
-          noValidate
-          autoComplete="off"
-          className={classes.form}
-        >
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            type="email"
-            id="email"
-            label="이메일 주소"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            inputRef={register({
-              required: "Required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "맞지 않는 이메일 형식 입니다.",
-              },
-            })}
-            required={errors.email ? true : false}
-            error={errors.email ? true : false}
-            helperText={errors.email && errors.email.message}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            name="password"
-            label="비밀번호"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            inputRef={register({
-              required: "Required",
-            })}
-            required={errors.password ? true : false}
-            error={errors.password ? true : false}
-            helperText={errors.password && errors.password.message}
-          />
-          <div className={classes.wrapper}>
-            <Button
-              type="submit"
+    <>
+      {formState.isSubmitting && <LinearProgress />}
+      <div className={classes.paper}>
+        <Container component="main" maxWidth="xs">
+          <Typography variant="h2">회원가입</Typography>
+          <form
+            onSubmit={handleSubmit(formHandler)}
+            noValidate
+            autoComplete="off"
+            className={classes.form}
+          >
+            <TextField
+              variant="outlined"
+              margin="normal"
               fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              가입
-            </Button>
-          </div>
-        </form>
-        <Box className={classes.label}>
-          이미 회원이신가요?
-          <Link to={`/login`} className={classes.link}>
-            로그인
-          </Link>
-        </Box>
-      </Container>
-    </div>
+              type="email"
+              id="email"
+              label="이메일 주소"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              inputRef={register({
+                required: "Required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: "맞지 않는 이메일 형식 입니다.",
+                },
+              })}
+              required={errors.email ? true : false}
+              error={errors.email ? true : false}
+              helperText={errors.email && errors.email.message}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              name="password"
+              label="비밀번호"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              inputRef={register({
+                required: "Required",
+              })}
+              required={errors.password ? true : false}
+              error={errors.password ? true : false}
+              helperText={errors.password && errors.password.message}
+            />
+            <div className={classes.wrapper}>
+              <Button
+                disabled={formState.isSubmitting}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                가입
+              </Button>
+            </div>
+          </form>
+          <Box className={classes.label}>
+            이미 회원이신가요?
+            <Link to={`/login`} className={classes.link}>
+              로그인
+            </Link>
+          </Box>
+        </Container>
+      </div>
+    </>
   );
 }

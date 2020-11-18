@@ -1,10 +1,9 @@
 import React from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useCurrentUser } from "../store/useGlobalState";
 export default function useRedirectIfLogin() {
-  const location = useLocation<{ from: { pathname: string } }>();
-  const { from } = location.state ?? { from: "/" };
-  const history = useHistory();
+  const history = useHistory<{ from: { pathname: string } }>();
+  const { from } = history.location.state ?? { from: "/" };
   const [currentUser] = useCurrentUser();
   React.useEffect(() => {
     if (currentUser?.email) {
