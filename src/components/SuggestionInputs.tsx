@@ -2,7 +2,6 @@ import React from "react";
 import CustomTextField from "./CustomTextField";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
-import Tags from "./Tags";
 import Hashtags from "./Hashtags";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;

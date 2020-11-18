@@ -41,7 +41,7 @@ export default function CommentTextinput({
   });
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
-  const userId = currentUser?.uid;
+  const isRegisteredUser = currentUser?.email;
   const [, setVisible] = useLoginModal();
   const ref = React.useRef<HTMLInputElement | null>(null);
 
@@ -56,7 +56,7 @@ export default function CommentTextinput({
   }, [reset, atUser, parent_id, post_id, getValues, autoFocus]);
 
   function loginHandler() {
-    if (!userId) {
+    if (!isRegisteredUser) {
       setVisible(true);
     }
   }
@@ -70,7 +70,7 @@ export default function CommentTextinput({
           margin="normal"
           multiline
           fullWidth
-          disabled={!userId}
+          disabled={!isRegisteredUser}
           label="댓글 입력"
           name="body"
           classes={{ root: classes.root }}

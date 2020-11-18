@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { images = [], created_at, context, files = [], tags } = p;
+  const { images = [], created_at, context, files = [] } = p;
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();

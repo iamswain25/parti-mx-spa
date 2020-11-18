@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import useDesktop from "./useDesktop";
-import BoardPostEvent from "./BoardPostEvent";
 import GreyDivider from "./GreyDivider";
 import usePosts from "../store/usePosts";
 import EventPhotoGridItem from "./EventPhotoGridItem";

@@ -7,6 +7,7 @@ import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
 import usePostLikedUsers from "../store/usePostLikedUsers";
 import useComments from "../store/useComments";
+import useCounter from "../store/useCounter";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function EventComment({ post: p }: { post: Post }) {
-  const { count_like, count_comment } = p;
+  const [counter] = useCounter(p.id, true);
+  const { count_like = 0, count_comment = 0 } = counter || {};
   const [comments] = useComments(p.id);
   const [likedUsers] = usePostLikedUsers(p.id);
   const comment = { post_id: p.id, body: "" } as Comment;
@@ -67,7 +69,7 @@ export default function EventComment({ post: p }: { post: Post }) {
           >
             댓글
             <Box ml={0.5} className="count">
-              {count_comment | 0}
+              {count_comment}
             </Box>
           </Button>
           <Box mx={1} height={14}>
@@ -79,7 +81,7 @@ export default function EventComment({ post: p }: { post: Post }) {
           >
             공감자
             <Box ml={0.5} className="count">
-              {count_like || 0}
+              {count_like}
             </Box>
           </Button>
         </Grid>

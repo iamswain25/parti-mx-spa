@@ -6,6 +6,7 @@ import { grey } from "@material-ui/core/colors";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
+import useCounter from "../store/useCounter";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -61,7 +62,8 @@ const useStyles = makeStyles((theme) => {
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
   const navigatePost = useNavigateToPost(p.id);
-  const count = p.count_like || 0;
+  const [counter] = useCounter(p.id);
+  const { count_like = 0 } = counter || {};
   return (
     <div className={classes.container}>
       <Box mb={1}>
@@ -70,7 +72,7 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
             <PanToolIcon color="primary" className={classes.icon} />
           </Box>
           <Box color="primary.dark" fontWeight={500}>
-            <Typography variant="h5">{count}명 공감</Typography>
+            <Typography variant="h5">{count_like}명 공감</Typography>
           </Box>
         </Grid>
       </Box>

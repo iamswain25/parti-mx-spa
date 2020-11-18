@@ -12,6 +12,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoutePostVoteCandidate from "./RoutePostVoteCandidate";
 import GreyDivider from "./GreyDivider";
 import useCandidates from "../store/useCandidates";
+import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => {
 export default function RoutePostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
+  const [liked] = usePostLiked(p.id);
   const navigatePost = useNavigateToPost(p.id);
   const created_at = p.created_at;
   const metadata = p.metadata as VoteMetadata;
@@ -79,7 +81,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   const isResultHidden = metadata.isResultHidden;
   const [candidates] = useCandidates({ post_id: p.id });
   React.useEffect(() => {
-    setVoted(!!p.my_like_count);
+    setVoted(liked);
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [0, 0];

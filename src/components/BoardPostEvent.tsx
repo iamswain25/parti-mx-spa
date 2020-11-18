@@ -12,6 +12,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import StorageImage from "./StorageImage";
 import usePostLiked from "../store/usePostLiked";
+import useCounter from "../store/useCounter";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -60,6 +61,8 @@ const useStyles = makeStyles((theme) => {
 });
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
+  const [counter] = useCounter(p.id);
+  const { count_like = 0 } = counter || {};
   const navigatePost = useNavigateToPost(p.id);
   let event_date = null,
     place = null,
@@ -103,7 +106,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               <Box display="flex" alignItems="center">
                 <HowToRegIcon />
                 <Box ml={1}>
-                  {p?.count_like}명 공감{" / "}
+                  {count_like}명 공감{" / "}
                   {countPeople}명 모집
                 </Box>
               </Box>

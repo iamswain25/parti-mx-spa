@@ -32,8 +32,6 @@ export default function LoginModal() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       handleClose();
-      // @ts-ignore
-      wsLink.subscriptionClient.close(false);
       // window.location.reload();
     } catch (error) {
       loginError(error, setError);

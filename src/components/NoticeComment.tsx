@@ -7,6 +7,7 @@ import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
 import usePostLikedUsers from "../store/usePostLikedUsers";
 import useComments from "../store/useComments";
+import useCounter from "../store/useCounter";
 let prevCommentCount: number | null = null;
 let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
@@ -41,7 +42,8 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function NoticeComment({ post: p }: { post: Post }) {
-  const { count_comment, count_like } = p;
+  const [counter] = useCounter(p.id);
+  const { count_like = 0, count_comment = 0 } = counter || {};
   const [comments] = useComments(p.id);
   const [likedUsers] = usePostLikedUsers(p.id);
   const comment = { post_id: p.id, body: "" } as Comment;

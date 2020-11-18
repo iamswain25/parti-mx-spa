@@ -142,7 +142,11 @@ export interface File {
   size: number;
   path: string;
 }
-
+export type Counter = {
+  count_like: number;
+  count_comment: number;
+  count_view: number;
+};
 export type Post = {
   id: string;
   title: string;
@@ -153,9 +157,6 @@ export type Post = {
   name: string;
   body: string;
   created_by: string;
-  count_like: number;
-  count_comment: number;
-  count_view: number;
   html: RawDraftContentState;
   metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;
   images: Img[];
@@ -169,9 +170,6 @@ export type Post = {
   denounced_at: firebase.firestore.Timestamp;
   location: { type: "Point"; coordinates: [number, number] };
   tags: string[];
-  updatedBy: User;
-  createdBy: User;
-  my_like_count: number | null;
 };
 export interface Suggestion {
   mx_posts_by_pk: Post;

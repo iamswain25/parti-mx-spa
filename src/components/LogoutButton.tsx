@@ -8,12 +8,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { MenuItem } from "@material-ui/core";
 
-
 export default function LogoutButton() {
   async function logoutHandler() {
     await auth.signOut();
-    // @ts-ignore
-    wsLink.subscriptionClient.close(false);
     // history.replace("/");
   }
   const [open, setOpen] = React.useState(false);

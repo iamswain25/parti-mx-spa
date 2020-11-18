@@ -63,3 +63,5 @@ export const DEFAULT_HASHTAGS = [
   "density",
   "밀도",
 ];
+export const PARAM_COLLECTION = "$PARAMS$";
+export const COUNTER_DOC = "counters";

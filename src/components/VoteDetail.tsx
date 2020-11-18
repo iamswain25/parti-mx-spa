@@ -24,6 +24,8 @@ import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
 import useCandidates from "../store/useCandidates";
 import HashtagsDetail from "./HashtagsDetail";
+import useCounter from "../store/useCounter";
+import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -103,16 +105,11 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const {
-    images,
-    count_comment,
-    count_like,
-    created_at,
-    files,
-    closed_at,
-    name,
-  } = p;
+  const { images, created_at, files, closed_at, name } = p;
+  const [counter] = useCounter(p.id);
+  const { count_like = 0, count_comment = 0 } = counter || {};
   const [comments] = useComments(p.id);
+  const [liked] = usePostLiked(p.id);
   const [candidates] = useCandidates({ post_id: p.id });
   const isClosed = !!closed_at;
   const metadata = p.metadata as VoteMetadata;
@@ -126,8 +123,8 @@ export default function VoteDetail({ post: p }: { post: Post }) {
   const voteHandler = useVoteCandidate(p);
   const [isVoted, setVoted] = React.useState(false);
   React.useEffect(() => {
-    setVoted(!!p.my_like_count);
-  }, [p]);
+    setVoted(liked);
+  }, [liked]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [0, 0];
   }, []);
