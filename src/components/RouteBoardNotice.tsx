@@ -8,13 +8,17 @@ import useDesktop from "./useDesktop";
 import PostSort from "./PostSort";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
 import usePosts from "../store/usePosts";
+import useBoardCounter from "../store/useBoardCounter";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       flex: 1,
       [theme.breakpoints.up("md")]: {
-        paddingLeft: theme.spacing(4),
-        paddingRight: theme.spacing(4),
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: 1200,
       },
     },
     titleContainer: {
@@ -33,6 +37,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [posts] = usePosts({ board_id: b.id });
+  const [counter] = useBoardCounter({ board_id: b.id });
   return (
     <section className={classes.container}>
       <Grid
@@ -47,7 +52,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
           </Typography>
           <Box mr={1} />
           <Typography variant="h4" color="primary">
-            {b.count_open}
+            {counter?.count_open || 0}
           </Typography>
         </Box>
         <PostSort />

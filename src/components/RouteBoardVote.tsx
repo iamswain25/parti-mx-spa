@@ -5,6 +5,7 @@ import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
 import usePosts from "../store/usePosts";
+import useBoardCounter from "../store/useBoardCounter";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -32,6 +33,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
   const [posts] = usePosts({ board_id: b.id });
+  const [counter] = useBoardCounter({ board_id: b.id });
   return (
     <>
       <section className={classes.container}>
@@ -42,7 +44,6 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "textSecondary" : "textPrimary"}
               >
-                {/* {b?.title} */}
                 진행 중인 투표
               </Typography>
               <Box mr={1} />
@@ -50,7 +51,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.count_open || 0}
+                {counter?.count_open || 0}
               </Typography>
             </Box>
           </Button>
@@ -61,7 +62,6 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "textPrimary" : "textSecondary"}
               >
-                {/* {b?.title} */}
                 완료 된 투표
               </Typography>
               <Box mr={1} />
@@ -69,7 +69,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "primary" : "textSecondary"}
               >
-                {b?.count_closed || 0}
+                {counter?.count_closed || 0}
               </Typography>
             </Box>
           </Button>

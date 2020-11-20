@@ -40,11 +40,11 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: "underline",
       },
     },
-    "&>.powered>a": {
+    "&>.powered": {
       display: "flex",
       justifyContent: "flex-end",
       alignItems: "center",
-      "&>strong": {
+      "&>a>strong": {
         fontSize: 12,
         color: theme.palette.grey[500],
       },

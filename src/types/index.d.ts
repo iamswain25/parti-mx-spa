@@ -61,8 +61,6 @@ export type Board = {
   id: string;
   title: string;
   order: number;
-  count_open: number;
-  count_closed: number;
   body: string;
   slug: string;
   permission: BoardPermission;
@@ -140,6 +138,11 @@ export interface File {
   size: number;
   path: string;
 }
+export type BoardCounter = {
+  count_open: number;
+  count_post: number;
+  count_closed: number;
+};
 export type Counter = {
   count_like: number;
   count_comment: number;

@@ -121,8 +121,6 @@ export default function BoardsSetting() {
         <h2>게시판 관리</h2>
         <Typography>
           {fields.map((field, i: number) => {
-            const postCount = field.count_open || 0;
-            const readOnly = postCount > 0;
             return (
               <Grid
                 container
@@ -139,7 +137,7 @@ export default function BoardsSetting() {
                     defaultValue={field.type}
                     name={`boards[${i}].type`}
                     render={(props) => (
-                      <Select {...props} inputProps={{ readOnly }}>
+                      <Select {...props} inputProps={{ readOnly: !!field.id }}>
                         <MenuItem value="notice">소식</MenuItem>
                         <MenuItem value="suggestion">전시</MenuItem>
                         <MenuItem value="event">모임</MenuItem>
@@ -223,13 +221,9 @@ export default function BoardsSetting() {
                   control={control}
                 />
                 <div className={classes.ml}>
-                  {postCount > 0 ? (
-                    <div>{postCount}개의 포스트</div>
-                  ) : (
-                    <IconButton onClick={() => removeHandler(i)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
+                  <IconButton onClick={() => removeHandler(i)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </div>
               </Grid>
             );
