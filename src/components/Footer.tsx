@@ -17,7 +17,11 @@ const useStyles = makeStyles((theme) => ({
           marginLeft: theme.spacing(4),
         },
       },
-      "&>div>div": { margin: `${theme.spacing(1)}px 0` },
+      "&>div>div": {
+        margin: `${theme.spacing(1)}px 0`,
+        display: "flex",
+        flexWrap: "wrap",
+      },
       "& strong": {
         fontSize: 14,
         fontWeight: 500,
