@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Container, Typography, Box } from "@material-ui/core";
+import { Container, Typography, Box, LinearProgress } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import ImageFileDropzone from "./ImageFileDropzone";
@@ -20,7 +20,7 @@ export default function SuggestionNew() {
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const formControl = useForm<SuggestionFormdata>();
-  const { handleSubmit } = formControl;
+  const { handleSubmit, formState } = formControl;
 
   async function handleForm(form: SuggestionFormdata) {
     if (currentUser) {
@@ -46,6 +46,7 @@ export default function SuggestionNew() {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Box mt={2}>
+          {formState.isSubmitting && <LinearProgress />}
           <Container component="main" maxWidth="md">
             <Typography variant="h2">전시글 쓰기</Typography>
             <SuggestionInputs formControl={formControl} />
@@ -55,7 +56,10 @@ export default function SuggestionNew() {
               files={fileArr}
               setFiles={setFileArr}
             />
-            <BtnSubmitDesktop text="전시 제출" />
+            <BtnSubmitDesktop
+              text="전시 제출"
+              isSubmitting={formState.isSubmitting}
+            />
           </Container>
         </Box>
       </form>
