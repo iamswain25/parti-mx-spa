@@ -6,7 +6,11 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SettingsBackupRestoreIcon from "@material-ui/icons/SettingsBackupRestore";
 import Chips from "./Chips";
-import { DEFAULT_HASHTAGS } from "../helpers/options";
+import {
+  CUTTING_INDEX,
+  DEFAULT_HASHTAGS,
+  KEYWORD_INDEX,
+} from "../helpers/options";
 import HomeBoardPhoto from "./HomeBoardPhoto";
 import { Grid } from "@material-ui/core";
 import useDesktop from "./useDesktop";
@@ -137,12 +141,12 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-type Filter = "type" | "area" | "cancel" | "hide";
+type Filter = "type" | "area" | "keyword" | "cancel" | "hide";
 const defaultTags: ChipData[] = DEFAULT_HASHTAGS.map((tag) => ({
   selected: false,
   label: tag,
 }));
-const CUTTING_INDEX = 4;
+
 export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -188,6 +192,13 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               지역
               <ExpandMoreIcon />
             </button>
+            <button
+              onClick={filterHandler("keyword")}
+              className={filter === "keyword" ? "active" : undefined}
+            >
+              키워드
+              <ExpandMoreIcon />
+            </button>
             <button onClick={filterHandler("cancel")}>
               <SettingsBackupRestoreIcon /> 필터 해제
             </button>
@@ -199,7 +210,9 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               chips={
                 filter === "type"
                   ? chips.slice(0, CUTTING_INDEX)
-                  : chips.slice(CUTTING_INDEX)
+                  : filter === "area"
+                  ? chips.slice(CUTTING_INDEX, KEYWORD_INDEX)
+                  : chips.slice(KEYWORD_INDEX)
               }
               setChips={setChips}
             />

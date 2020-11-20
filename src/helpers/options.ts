@@ -52,16 +52,22 @@ export function showStatusLabelByValue(value: UserStatus) {
       return null;
   }
 }
-
+export const CUTTING_INDEX = 5;
+export const KEYWORD_INDEX = 12;
 export const DEFAULT_HASHTAGS = [
-  "publicspace",
-  "공공공간",
-  "community",
-  "커뮤니티",
-  "history",
-  "역사",
-  "density",
-  "밀도",
+  "주민자치",
+  "지역 활성화",
+  "학습 공동체",
+  "주민조직 네트워크",
+  "제도 정책",
+  "서울",
+  "인천",
+  "경기",
+  "경상",
+  "전라",
+  "충청",
+  "제주도",
+  "키워드",
 ];
 export const PARAM_COLLECTION = "$PARAMS$";
 export const COUNTER_DOC = "counters";
