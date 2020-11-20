@@ -7,6 +7,12 @@ export default function CustomTextField({
   name,
   ...rest
 }: any) {
+  let error;
+  try {
+    error = eval("errors?." + name);
+  } catch (error) {
+    error = false;
+  }
   return (
     <TextField
       variant="outlined"
@@ -20,9 +26,9 @@ export default function CustomTextField({
             })
           : undefined
       }
-      required={errors[name] ? true : false}
-      error={errors[name] ? true : false}
-      helperText={errors[name] && errors[name].message}
+      required={!!register}
+      error={!!error}
+      helperText={error?.message}
       {...rest}
     />
   );
