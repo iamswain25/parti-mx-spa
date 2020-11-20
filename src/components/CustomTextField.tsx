@@ -1,18 +1,17 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-
+import TextField, { TextFieldProps } from "@material-ui/core/TextField";
+type CustomTextFieldProps = Partial<TextFieldProps> & {
+  register?: any;
+  errors?: any;
+  name?: string;
+};
 export default function CustomTextField({
   register,
   errors = {},
   name,
   ...rest
-}: any) {
-  let error;
-  try {
-    error = eval("errors?." + name);
-  } catch (error) {
-    error = false;
-  }
+}: CustomTextFieldProps) {
+  const error = name?.split(".")?.reduce((o: any, i) => o?.[i], errors);
   return (
     <TextField
       variant="outlined"

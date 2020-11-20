@@ -3,10 +3,15 @@ import CustomTextField from "./CustomTextField";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
 import Hashtags from "./Hashtags";
+import ReactPlayer from "react-player";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
 }) {
   const { register, errors } = props.formControl;
+  function playable(value: string) {
+    if (!ReactPlayer.canPlay(value))
+      return "재생 가능한 유튜브 링크가 아닙니다.";
+  }
   return (
     <>
       <CustomTextField
@@ -19,9 +24,18 @@ export default function SuggestionInputs(props: {
       <CustomTextField
         label="소개영상"
         name="metadata.youtube"
-        register={register}
+        inputRef={register({
+          required:
+            "필수 입력입니다. 유튜브 링크 주소를 넣어주세요. 예: https://youtu.be/GaWVFHEvpNI",
+          validate: {
+            playable,
+          },
+        })}
         errors={errors}
-        helperText="유튜브 링크 주소를 넣어주세요. 예: https://youtu.be/GaWVFHEvpNI"
+        helperText={
+          errors?.metadata?.youtube?.message ??
+          "유튜브 링크 주소를 넣어주세요. 예: https://youtu.be/GaWVFHEvpNI"
+        }
       />
       <CustomTextField
         label="단체명 * 단체소개"
