@@ -21,6 +21,7 @@ import useEffectBoards from "../store/useEffectBoards";
 import HeaderRemain from "../components/HeaderRemain";
 import GroupLogoContainer from "../components/GroupLogoContainer";
 import Layout from "../components/Layout";
+import Footer from "../components/Footer";
 
 export default function Routes() {
   useSignInWithEmailLink();
@@ -55,6 +56,7 @@ export default function Routes() {
           </Route>
         </Switch>
       </Layout>
+      <Footer />
       <LoginModal />
       <SnackbarCustom />
       <SnackbarSuccess />
