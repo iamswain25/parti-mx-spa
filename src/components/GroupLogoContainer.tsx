@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => {
       color: theme.palette.common.white,
       display: "flex",
       flexDirection: "column",
-      wordBreak: "keep-all",
       "&> .title": {
         marginTop: 71,
         fontSize: 18,

@@ -123,7 +123,6 @@ export const theme: Theme = createMuiTheme({
       fontWeight: "inherit",
       lineHeight: "normal",
       display: "flex",
-      wordBreak: "break-all",
     },
     body2: {
       fontSize: 14,
@@ -133,7 +132,6 @@ export const theme: Theme = createMuiTheme({
       fontWeight: "inherit",
       display: "flex",
       lineHeight: "normal",
-      wordBreak: "break-all",
     },
     subtitle1: {
       fontSize: 14,
@@ -143,7 +141,6 @@ export const theme: Theme = createMuiTheme({
       letterSpacing: -0.38,
       display: "flex",
       lineHeight: "normal",
-      wordBreak: "break-all",
       fontWeight: "inherit",
     },
     subtitle2: {
@@ -153,7 +150,6 @@ export const theme: Theme = createMuiTheme({
       },
       display: "flex",
       lineHeight: "normal",
-      wordBreak: "break-all",
       fontWeight: "inherit",
     },
     button: {
@@ -161,7 +157,6 @@ export const theme: Theme = createMuiTheme({
       letterSpacing: 0.2,
       display: "flex",
       lineHeight: "normal",
-      wordBreak: "break-all",
       fontWeight: "inherit",
     },
   },
