@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "../types";
+import { Post, SuggestionMetadata } from "../types";
 import { Box, Grid, Divider, makeStyles, Hidden } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
@@ -13,6 +13,7 @@ import HtmlOrBody from "./HtmlOrBody";
 import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
 import HashtagsDetail from "./HashtagsDetail";
+import ReactPlayer from "react-player";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -100,6 +101,7 @@ const useStyles = makeStyles((theme) => {
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
   const { images = [], created_at, context, files = [] } = p;
+  const metadata = p.metadata as SuggestionMetadata;
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -123,11 +125,34 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             </Box>
           </Grid>
         </Box>
+        {ReactPlayer.canPlay(metadata?.youtube) && (
+          <div className="player-wrapper">
+            <ReactPlayer
+              url={metadata?.youtube}
+              width="100%"
+              height="100%"
+              className="react-player"
+              controls={true}
+            />
+          </div>
+        )}
         <FilesImages images={images} files={files} />
+        <Box className={classes.body}>
+          <Box className={classes.label}>단체명 * 단체소개</Box>
+          <Linkify body={context} />
+        </Box>
         <HtmlOrBody post={p} />
         <Box className={classes.body}>
-          <Box className={classes.label}>전시사유</Box>
-          <Linkify body={context} />
+          <Box className={classes.label}>심사평</Box>
+          <Linkify body={metadata?.detail1} />
+        </Box>
+        <Box className={classes.body}>
+          <Box className={classes.label}>일반현황</Box>
+          <Linkify body={metadata?.detail2} />
+        </Box>
+        <Box className={classes.body}>
+          <Box className={classes.label}>대표사례</Box>
+          <Linkify body={metadata?.detail3} />
         </Box>
         <HashtagsDetail tags={p.tags} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>

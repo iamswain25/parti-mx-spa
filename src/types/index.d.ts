@@ -31,6 +31,12 @@ export interface SuggestionFormdata {
   body: string;
   name: string;
   tags: string[];
+  metadata: {
+    youtube: string;
+    detail1: string;
+    detail2: string;
+    detail3: string;
+  };
 }
 export interface VoteFormdata {
   title: string;
@@ -176,7 +182,14 @@ export interface Suggestion {
   mx_posts_by_pk: Post;
 }
 export type NoticeMetadata = { announcement: boolean };
-export type SuggestionMetadata = { closingMethod: string; address?: string };
+export type SuggestionMetadata = {
+  closingMethod: string;
+  address?: string;
+  youtube: string;
+  detail1: string;
+  detail2: string;
+  detail3: string;
+};
 export type VoteMetadata = {
   closingMethod: string;
   isBinary: boolean;

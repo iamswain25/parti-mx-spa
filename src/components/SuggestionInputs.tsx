@@ -17,16 +17,44 @@ export default function SuggestionInputs(props: {
         errors={errors}
       />
       <CustomTextField
-        label="전시 맥락"
+        label="소개영상"
+        name="metadata.youtube"
+        register={register}
+        errors={errors}
+        helperText="유튜브 링크 주소를 넣어주세요. 예: https://youtu.be/GaWVFHEvpNI"
+      />
+      <CustomTextField
+        label="단체명 * 단체소개"
         multiline
         name="context"
         register={register}
         errors={errors}
       />
       <CustomTextField
-        label="전시 내용"
+        label="요약"
         multiline
         name="body"
+        register={register}
+        errors={errors}
+      />
+      <CustomTextField
+        label="심사평"
+        multiline
+        name="metadata.detail1"
+        register={register}
+        errors={errors}
+      />
+      <CustomTextField
+        label="일반현황"
+        multiline
+        name="metadata.detail2"
+        register={register}
+        errors={errors}
+      />
+      <CustomTextField
+        label="대표사례"
+        multiline
+        name="metadata.detail3"
         register={register}
         errors={errors}
       />

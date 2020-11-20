@@ -45,7 +45,7 @@ export default function HtmlOrBody({ post: p }: { post: Post }) {
   return (
     <>
       <div className={classes.body}>
-        {type === "suggestion" && <div className={classes.label}>전시내용</div>}
+        {type === "suggestion" && <div className={classes.label}>요약</div>}
         {html ? (
           <div
             className="draftjs"
