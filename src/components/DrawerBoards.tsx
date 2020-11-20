@@ -71,14 +71,12 @@ export default function DrawerBoards({ close }: { close: () => void }) {
         </IconButton>
       </div>
       <div className={classes.container}>
-        <NavLink exact to="/" className="boards" activeClassName="active">
-          박람회소개
-        </NavLink>
         {boards.map((b) => (
           <NavLink
             exact
             to={`/${group_id}/${b.id}`}
             key={b.id}
+            onClick={close}
             className="boards"
             activeClassName="active"
           >
