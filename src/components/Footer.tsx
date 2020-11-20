@@ -12,28 +12,41 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       alignItems: "center",
       flexWrap: "wrap",
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: theme.spacing(1),
+      },
       "&>div": {
         [theme.breakpoints.up("md")]: {
           marginLeft: theme.spacing(4),
         },
-      },
-      "&>div>div": {
-        margin: `${theme.spacing(1)}px 0`,
-        display: "flex",
-        flexWrap: "wrap",
+        "&>div": {
+          margin: `${theme.spacing(1)}px 0`,
+          display: "flex",
+          flexWrap: "wrap",
+          [theme.breakpoints.down("sm")]: {
+            flexDirection: "column",
+            alignItems: "center",
+          },
+        },
       },
       "& strong": {
         fontSize: 14,
         fontWeight: 500,
         letterSpacing: -0.7,
         color: "#a6a6a6",
+        [theme.breakpoints.down("sm")]: {
+          flexDirection: "column",
+          alignItems: "center",
+        },
       },
       "& span": {
         fontSize: 14,
         fontWeight: 500,
         letterSpacing: -0.7,
         color: theme.palette.grey[900],
-        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
       },
       "& a": {
         fontSize: 14,
@@ -48,9 +61,18 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "flex-end",
       alignItems: "center",
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+        alignItems: "center",
+      },
       "&>a>strong": {
         fontSize: 12,
         color: theme.palette.grey[500],
+      },
+    },
+    "& .margintop": {
+      [theme.breakpoints.down("sm")]: {
+        marginTop: theme.spacing(1),
       },
     },
   },
@@ -63,15 +85,33 @@ export default function Footer() {
         <img src={juminLogo} alt="brand logo" />
         <div>
           <div>
-            <strong>주최/주관</strong>
-            <span>행정안전부</span>
-            <span>자치분권위원회</span>
-            <span>자치분권위원회</span>
-            <span>(사)열린사회시민연합</span>
-            <span></span>
-            <span></span>
-            <strong>문의</strong>
-            <span></span>
+            <span>
+              <strong>주최/주관</strong>
+            </span>
+            <a
+              href="https://www.mois.go.kr/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              행정안전부
+            </a>
+            <a
+              href="https://www.pcad.go.kr/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              대통령소속 자치분권위원회
+            </a>
+            <a
+              href="http://www.openc.or.kr/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              (사)열린사회시민연합
+            </a>
+            <span className="margintop">
+              <strong>문의</strong>
+            </span>
             <a href="tel:02-3676-6503">02-3676-6503</a>
             <a href="mailto:pvnet2011@gmail.com">pvnet2011@gmail.com</a>
           </div>
