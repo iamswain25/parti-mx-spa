@@ -38,7 +38,7 @@ export default function SuggestionInputs(props: {
         }
       />
       <CustomTextField
-        label="단체명 * 단체소개"
+        label="단체명·단체소개"
         multiline
         name="context"
         register={register}

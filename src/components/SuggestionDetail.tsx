@@ -14,6 +14,8 @@ import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
 import HashtagsDetail from "./HashtagsDetail";
 import ReactPlayer from "react-player";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 const useStyles = makeStyles((theme) => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -97,6 +99,32 @@ const useStyles = makeStyles((theme) => {
       margin: 0,
       fontFamily: "Roboto",
     },
+    more: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      "&>button": {
+        cursor: "pointer",
+        border: "none",
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        [theme.breakpoints.down("sm")]: {
+          paddingLeft: theme.spacing(1),
+          paddingRight: theme.spacing(1),
+        },
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
+        color: theme.palette.primary.main,
+        backgroundColor: "transparent",
+        "&>svg": {
+          width: 20,
+          height: 20,
+          color: theme.palette.grey[600],
+        },
+      },
+    },
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
@@ -105,6 +133,10 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
+  const [more, setMore] = React.useState(false);
+  function toggleMore() {
+    setMore((m) => !m);
+  }
   return (
     <section className={classes.root}>
       <Box paddingX={2}>
@@ -138,22 +170,39 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         )}
         <FilesImages images={images} files={files} />
         <Box className={classes.body}>
-          <Box className={classes.label}>단체명 * 단체소개</Box>
+          <Box className={classes.label}>단체명·단체소개</Box>
           <Linkify body={context} />
         </Box>
         <HtmlOrBody post={p} />
-        <Box className={classes.body}>
-          <Box className={classes.label}>심사평</Box>
-          <Linkify body={metadata?.detail1} />
-        </Box>
-        <Box className={classes.body}>
-          <Box className={classes.label}>일반현황</Box>
-          <Linkify body={metadata?.detail2} />
-        </Box>
-        <Box className={classes.body}>
-          <Box className={classes.label}>대표사례</Box>
-          <Linkify body={metadata?.detail3} />
-        </Box>
+        <div className={classes.more}>
+          {more ? (
+            <button onClick={toggleMore}>
+              줄여서 보기
+              <ExpandLessIcon />
+            </button>
+          ) : (
+            <button onClick={toggleMore}>
+              자세히 보기
+              <ExpandMoreIcon />
+            </button>
+          )}
+        </div>
+        {more && (
+          <>
+            <Box className={classes.body}>
+              <Box className={classes.label}>심사평</Box>
+              <Linkify body={metadata?.detail1} />
+            </Box>
+            <Box className={classes.body}>
+              <Box className={classes.label}>일반현황</Box>
+              <Linkify body={metadata?.detail2} />
+            </Box>
+            <Box className={classes.body}>
+              <Box className={classes.label}>대표사례</Box>
+              <Linkify body={metadata?.detail3} />
+            </Box>
+          </>
+        )}
         <HashtagsDetail tags={p.tags} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
