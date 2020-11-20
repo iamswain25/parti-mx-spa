@@ -30,8 +30,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     fontSize: 40,
     color: theme.palette.primary.main,
-    textDecoration: "underline",
     cursor: "pointer",
+    "&>a": {
+      textDecoration: "underline",
+    },
   },
 }));
 export default function Forbidden({
@@ -59,20 +61,16 @@ export default function Forbidden({
   if (noPost) {
     return (
       <div className={classes.link}>
-        <Link to="/">
-          삭제된 게시물입니다. <br />
-          이전 그룹의 메인화면으로 돌아갑니다.
-        </Link>
+        삭제된 게시물입니다. <br />
+        <Link to="/">이전 그룹의 메인화면으로 돌아갑니다.</Link>
       </div>
     );
   }
   if (noBoard) {
     return (
       <div className={classes.link}>
-        <Link to="/">
-          삭제된 게시판입니다. <br />
-          이전 그룹의 메인화면으로 돌아갑니다.
-        </Link>
+        삭제된 게시판입니다. <br />
+        <Link to="/">이전 그룹의 메인화면으로 돌아갑니다.</Link>
       </div>
     );
   }

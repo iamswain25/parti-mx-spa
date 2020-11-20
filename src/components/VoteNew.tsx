@@ -1,5 +1,5 @@
 import React from "react";
-import { useSuccess } from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { useForm } from "react-hook-form";
 import { Container, Typography, Box, Hidden } from "@material-ui/core";
 import HeaderNew from "./HeaderNew";
@@ -8,11 +8,17 @@ import { makeNewVariables } from "./makePostVariables";
 import VoteInputs from "./VoteInputs";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import ImageFileDropzone from "./ImageFileDropzone";
+import { useHistory, useParams } from "react-router-dom";
+import { firestore } from "../config/firebase";
 
 export default function VoteNew() {
-  // const history = useHistory();
+  const { board_id, group_id } = useParams<{
+    board_id: string;
+    group_id: string;
+  }>();
+  const history = useHistory();
   const [, setSuccess] = useSuccess();
-  // const [groupId] = useGroupId();
+  const [currentUser] = useCurrentUser();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
   const [isBinary, setBinary] = React.useState(true);
@@ -37,28 +43,39 @@ export default function VoteNew() {
       closingMethod,
     };
     const variables = await makeNewVariables(rest, {
+      group_id,
+      board_id,
       imageArr,
       fileArr,
       setSuccess,
       metadata,
+      is_closed: false,
+      updated_at: new Date(),
+      created_at: new Date(),
+      type: "vote",
+      created_by: currentUser?.uid,
+      updated_by: currentUser?.uid,
     });
-
+    let newCandidate;
     if (isBinary) {
-      variables.candidates = [
+      newCandidate = [
         { body: "찬성", order: 1 },
         { body: "중립", order: 2 },
         { body: "반대", order: 3 },
         { body: "잘 모르겠습니다", order: 4 },
       ];
     } else {
-      variables.candidates = candidates.map((c, i) => ({
+      newCandidate = candidates.map((c, i) => ({
         body: c,
         order: i + 1,
       }));
     }
-    // const res = await insert({ variables });
-    // const id = res?.data?.insert_mx_posts_one?.id;
-    // history.push("/post/" + id);
+    const doc = await firestore.collection("posts").add(variables);
+    await Promise.all(
+      newCandidate.map((c) => doc.collection("candidates").add(c))
+    );
+
+    history.push("/post/" + doc.id);
   }
 
   return (

@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import CloseIcon from "@material-ui/icons/Close";
 import { useCurrentUser, useGroupId } from "../store/useGlobalState";
-import { auth, storage, uploadFileByPath } from "../config/firebase";
+import { auth, firestore, storage, uploadFileByPath } from "../config/firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +65,9 @@ export default function Profile() {
       variables.photoURL = await storage.ref(path).getDownloadURL();
     }
     await auth.currentUser?.updateProfile(variables);
+    await firestore
+      .doc(`groups/home/users/${currentUser?.uid}`)
+      .update({ name, photo_url: photo, updated_at: new Date() });
     setCurrentUser({ ...currentUser, ...variables } as firebase.User);
     history.push(`/${group_id}`);
   }

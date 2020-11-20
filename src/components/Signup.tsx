@@ -1,6 +1,6 @@
 import React from "react";
 import { FormData } from "../types";
-import { auth } from "../config/firebase";
+import { auth, firestore } from "../config/firebase";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { Link, useHistory } from "react-router-dom";
-import { useError } from "../store/useGlobalState";
+import { useCurrentUser, useError } from "../store/useGlobalState";
 import firebase from "firebase";
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,6 +58,7 @@ export default function Signup() {
   useRedirectIfLogin();
   const classes = useStyles();
   const [, setError] = useError();
+  const [, setUser] = useCurrentUser();
   const history = useHistory<{ from: { pathname: string } }>();
   const { from } = history.location.state ?? { from: "/" };
   const { handleSubmit, register, errors, formState } = useForm<FormData>();
@@ -69,9 +70,23 @@ export default function Signup() {
         email,
         password
       );
-      await auth.currentUser?.linkWithCredential(credential);
-      alert("회원가입 되었습니다.");
-      history.replace(from);
+      const userCred = await auth.currentUser?.linkWithCredential(credential);
+      if (userCred && userCred.user) {
+        await firestore.doc(`groups/home/users/${userCred.user.uid}`).set(
+          {
+            created_at: new Date(),
+            email,
+            name: userCred.user.displayName,
+            photo_url: userCred.user.photoURL,
+            deleted_at: null,
+            role: "user",
+          },
+          { merge: true }
+        );
+        alert("회원가입 되었습니다.");
+        setUser({ ...userCred.user } as firebase.User);
+        history.replace(from);
+      }
     } catch (error) {
       setError(error.message);
     }
