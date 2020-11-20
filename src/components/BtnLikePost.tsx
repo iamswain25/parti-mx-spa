@@ -81,7 +81,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           disableElevation
           // disabled={!hasPermission}
         >
-          전시 공감
+          응원해요
         </Button>
       );
     case "event":

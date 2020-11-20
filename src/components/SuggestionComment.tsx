@@ -78,7 +78,7 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "" : "active"}`}
             onClick={() => setCommentVisible(false)}
           >
-            전시 동의 멤버
+            응원 인원
             <Box ml={0.5} className="count">
               {count_like}
             </Box>

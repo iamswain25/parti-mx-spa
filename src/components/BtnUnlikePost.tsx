@@ -85,7 +85,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          전시 공감 취소
+          응원해요 취소
         </Button>
       );
     case "event":

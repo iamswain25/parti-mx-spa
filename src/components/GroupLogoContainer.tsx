@@ -170,7 +170,7 @@ export default function GroupLogoContainer() {
               {[
                 ["공지사항"],
                 [isDesktop ? "전국주민자치박람회 주요일정" : "주요일정"],
-                [isDesktop ? "우수사례 전시" : "우수사례"],
+                ["우수사례 전시"],
                 [isDesktop ? "학술행사 안내" : "학술행사"],
               ].map((item: string[]) => (
                 <Grid item xs={isDesktop ? 3 : 6} key={item[0]}>
