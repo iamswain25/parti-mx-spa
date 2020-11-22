@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function EventDetail({ post: p }: { post: Post }) {
-  const { images, name, created_at, files, metadata } = p as Event;
+  const { images, created_at, files, metadata } = p as Event;
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -66,7 +66,7 @@ export default function EventDetail({ post: p }: { post: Post }) {
           </Box>
         </Box>
         <Box mb={2} mt={1}>
-          <AvatarNameDate name={name} created_at={created_at} />
+          <AvatarNameDate user_id={p.created_by} created_at={created_at} />
         </Box>
         <Divider light />
         <Box my={2}>

@@ -8,6 +8,8 @@ import {
   Divider,
 } from "@material-ui/core";
 import { User } from "../types";
+import useUser from "../store/useUser";
+import useStoragePath from "../store/useStoragePath";
 const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(4),
@@ -19,8 +21,11 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(1),
   },
 }));
-export default function AvatarNameEmail(props: { user: User }) {
-  const { name = "로딩중", photo_url = "로딩중", email } = props.user;
+export default function AvatarNameEmail(props: { user_id: string }) {
+  const [u] = useUser({
+    id: props.user_id,
+  });
+  let { name = "로딩중", photo_url = "로딩중", email } = u || {};
   const classes = useStyles();
   return (
     <Typography variant="h4">

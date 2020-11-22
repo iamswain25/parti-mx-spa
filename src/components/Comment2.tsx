@@ -45,7 +45,7 @@ export default function Comment2({
       <Box paddingY={2}>
         <Grid container alignItems="center" justify="space-between">
           <AvatarNameDate
-            name={c?.name}
+            user_id={c.created_by}
             created_at={c?.updated_at}
             justify="flex-start"
           />

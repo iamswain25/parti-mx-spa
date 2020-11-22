@@ -1,11 +1,11 @@
 import React from "react";
 import { Select, FormControl } from "@material-ui/core";
-import { User } from "../types";
+import { GroupUser } from "../types";
 import { boardPermissionList } from "../helpers/options";
 import { useGroupId } from "../store/useGlobalState";
 import { firestore } from "../config/firebase";
 
-export default function UserGroupStatus({ user }: { user: User }) {
+export default function UserGroupStatus({ user }: { user: GroupUser }) {
   const { id, role } = user;
   const [groupId] = useGroupId();
   async function handleChange(event: React.ChangeEvent<{ value: unknown }>) {

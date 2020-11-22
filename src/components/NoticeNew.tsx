@@ -31,10 +31,7 @@ export default function NoticeNew() {
       setSuccess,
       created_by: currentUser?.uid,
       updated_by: currentUser?.uid,
-      name: currentUser?.displayName ?? currentUser?.email,
-      count_like: 0,
-      count_comment: 0,
-      count_view: 0,
+      name: currentUser?.displayName ?? currentUser?.email, // deprecated
       is_closed: false,
       is_announced: false,
       updated_at: new Date(),

@@ -31,7 +31,7 @@ export default function Routes() {
     <>
       <CssBaseline />
       <HeaderRemain />
-      <Route path="/home" exact component={GroupLogoContainer} />
+      <Route path={["/home", "/test"]} exact component={GroupLogoContainer} />
       <Layout>
         <Switch>
           <Route path="/forgot" exact component={PasswordForgot} />

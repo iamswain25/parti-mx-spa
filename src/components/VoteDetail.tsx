@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post }) {
-  const { images, created_at, files, closed_at, name } = p;
+  const { images, created_at, files, closed_at } = p;
   const [counter] = usePostCounter(p.id);
   const { count_like = 0, count_comment = 0 } = counter || {};
   const [comments] = useComments(p.id);
@@ -143,7 +143,7 @@ export default function VoteDetail({ post: p }: { post: Post }) {
           </Hidden>
         </Box>
         <Box mt={1}>
-          <AvatarNameDate name={name} created_at={created_at} />
+          <AvatarNameDate user_id={p.created_by} created_at={created_at} />
         </Box>
         <Box my={2}>
           <Divider light />

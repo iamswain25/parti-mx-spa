@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import { useGroupId } from "../store/useGlobalState";
 import AvatarNameEmail from "./AvatarNameEmail";
 import UserGroupStatus from "./UserGroupStatus";
-import { User } from "../types";
+import { GroupUser } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { firestore } from "../config/firebase";
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +34,7 @@ const LIMIT = 20;
 export default function Members() {
   const classes = useStyles();
   const [groupId] = useGroupId();
-  const [items, setItems] = React.useState<User[]>([]);
+  const [items, setItems] = React.useState<GroupUser[]>([]);
   async function fetchData(isSearching = false) {
     let ref = firestore
       .collection("groups")
@@ -48,7 +48,7 @@ export default function Members() {
     const snapshot = await ref.get();
     lastVisible = snapshot.docs[snapshot.docs.length - 1];
     const users = snapshot.docs.map(
-      (u) => ({ id: u.id, ...(u.data() as any) } as User)
+      (u) => ({ id: u.id, ...(u.data() as any) } as GroupUser)
     );
     if (isSearching) {
       setItems(users);
@@ -82,7 +82,7 @@ export default function Members() {
               ? items?.map((item, i) => {
                   return (
                     <ListItem key={item.id}>
-                      <AvatarNameEmail user={item} />
+                      <AvatarNameEmail user_id={item.id} />
                       <UserGroupStatus user={item} />
                     </ListItem>
                   );

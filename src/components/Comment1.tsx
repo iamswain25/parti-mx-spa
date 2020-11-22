@@ -41,8 +41,7 @@ export default function Comment1({
       <Box pt={2}>
         <Grid container alignItems="center" justify="space-between">
           <AvatarNameDate
-            name={c?.name}
-            photo_url={undefined}
+            user_id={c.created_by}
             created_at={c?.updated_at}
             justify="flex-start"
           />

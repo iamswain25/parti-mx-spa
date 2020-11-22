@@ -7,6 +7,7 @@ import {
   GridJustification,
 } from "@material-ui/core";
 import { semanticDate } from "../helpers/datefns";
+import useUser from "../store/useUser";
 const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
@@ -27,19 +28,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function AvatarNameDate({
-  name = "로딩중",
-  photo_url,
+  user_id,
   created_at,
   justify = "space-between",
 }: {
-  name?: string;
-  photo_url?: string;
+  user_id: string;
   created_at?: firebase.firestore.Timestamp;
   justify?: GridJustification;
 }) {
   const classes = useStyles();
-  const alteredName =
-    name?.indexOf("@") > 0 ? name?.substr(0, name?.indexOf("@")) : name;
+  const [user] = useUser({ id: user_id });
   return (
     <Grid
       container
@@ -48,9 +46,13 @@ export default function AvatarNameDate({
       className={classes.font}
     >
       <Box display="flex" alignItems="center">
-        <Avatar alt={alteredName} src={photo_url} className={classes.small} />
+        <Avatar
+          alt={user?.name}
+          src={user?.photo_url}
+          className={classes.small}
+        />
         <Box ml={1} fontWeight={500} color="grey.900">
-          {alteredName}
+          {user?.name}
         </Box>
       </Box>
       <Box color="grey.600" ml={1}>

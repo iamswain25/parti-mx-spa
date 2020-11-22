@@ -62,8 +62,6 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
         .set(
           {
             created_at: new Date(),
-            name: currentUser.displayName ?? currentUser.email,
-            photo_url: currentUser.photoURL,
           },
           { merge: true }
         );

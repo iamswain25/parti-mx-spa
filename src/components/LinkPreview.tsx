@@ -5,10 +5,10 @@ import ReactPlayer from "react-player";
 export default function LinkPreview({ text = "" }: { text?: string }) {
   const urls = React.useMemo(() => Array.from(getUrls(text)), [text]);
   return (
-    <Box pt={2}>
+    <>
       {urls.map((url, i) =>
         ReactPlayer.canPlay(url) ? (
-          <Box className="player-wrapper" key={i}>
+          <Box className="player-wrapper" key={i} pt={2}>
             <ReactPlayer
               url={url}
               width="100%"
@@ -19,6 +19,6 @@ export default function LinkPreview({ text = "" }: { text?: string }) {
           </Box>
         ) : null
       )}
-    </Box>
+    </>
   );
 }

@@ -43,9 +43,13 @@ export default function Profile() {
   const [currentUser, setCurrentUser] = useCurrentUser();
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [group_id] = useGroupId();
-  const { handleSubmit, register, errors, control, reset } = useForm<
-    GroupForm
-  >();
+  const {
+    handleSubmit,
+    register,
+    errors,
+    control,
+    reset,
+  } = useForm<GroupForm>();
   React.useEffect(() => {
     if (currentUser) {
       setPhoto(currentUser.photoURL);
@@ -59,15 +63,18 @@ export default function Profile() {
   async function handleForm(form: GroupForm) {
     const { bgFiles, name } = form;
     const variables = { displayName: name, photoURL: photo };
+    const variables2 = { name, photo_url: photo };
     if (bgFiles?.length) {
-      const path = `profile/${currentUser?.uid}`;
+      const path = `users/${currentUser?.uid}`;
       await uploadFileByPath(bgFiles[0], path);
       variables.photoURL = await storage.ref(path).getDownloadURL();
+      variables2.photo_url = variables.photoURL;
     }
-    await auth.currentUser?.updateProfile(variables);
-    await firestore
-      .doc(`groups/home/users/${currentUser?.uid}`)
-      .update({ name, photo_url: photo, updated_at: new Date() });
+    const p1 = auth.currentUser?.updateProfile(variables);
+    const p2 = firestore
+      .doc(`users/${currentUser?.uid}`)
+      .set({ ...variables2, updated_at: new Date() }, { merge: true });
+    await Promise.all([p1, p2]);
     setCurrentUser({ ...currentUser, ...variables } as firebase.User);
     history.push(`/${group_id}`);
   }
