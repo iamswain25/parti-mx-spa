@@ -9,11 +9,11 @@ export const setup = async (auth: any, data: any) => {
     auth,
   });
   // Apply rules
-  await firebase.loadFirestoreRules({
+  const res1 = await firebase.loadFirestoreRules({
     projectId,
     rules: fs.readFileSync(__dirname + "/../../firestore.test.rules", "utf8"),
   });
-
+  // console.log(res1);
   const db = app.firestore();
   // Write mock documents before rules
 
@@ -25,11 +25,11 @@ export const setup = async (auth: any, data: any) => {
   }
 
   // Apply rules
-  await firebase.loadFirestoreRules({
+  const res2 = await firebase.loadFirestoreRules({
     projectId,
     rules: fs.readFileSync(__dirname + "/../../firestore.rules", "utf8"),
   });
-
+  // console.log(res2);
   return db;
 };
 

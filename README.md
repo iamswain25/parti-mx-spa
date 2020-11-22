@@ -26,3 +26,11 @@ initial setting
 ```
 gsutil cors set cors.json gs://policy-fair-mix.appspot.com
 ```
+
+### rules
+
+#### test
+
+firebase emulators:start --only firestore
+
+#### deploy

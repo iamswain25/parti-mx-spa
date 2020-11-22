@@ -19,18 +19,18 @@ const mockData = {
   "groups/home/boards/board2": {
     title: "hello",
     permission: {
-      create: ["organizer"],
-      update: ["anonymous", "member"],
-      read: ["anonymous", "member", "organizer"],
-      delete: ["anonymous", "member"],
+      create: ["user"],
+      update: ["user"],
+      read: ["user"],
+      delete: ["user"],
     },
   },
   "groups/home/users/auth-uid-swain": {
-    role: "anonymous",
+    role: "organizer",
   },
 };
 
-describe("anonymous user", () => {
+describe("organizer user", () => {
   let db: firebase.firestore.Firestore;
   beforeAll(async () => {
     db = await setup(mockUser, mockData);
@@ -38,16 +38,15 @@ describe("anonymous user", () => {
 
   afterAll(teardown);
 
-  test("success on edit", async () => {
+  test("group edit", async () => {
     expect(
       db.doc("groups/home").set({ title: "haha" }, { merge: true })
-    ).toDeny();
+    ).toAllow();
   });
-  test("fail on post", async () => {
-    const docRef = db
-      .collection("posts")
-      .add({ group_id: "home", board_id: "board1" });
-    expect(docRef).toAllow();
+  test("board 1", async () => {
+    expect(
+      db.collection("posts").add({ group_id: "home", board_id: "board1" })
+    ).toAllow();
     expect(
       db
         .doc("posts/uid-1")
@@ -59,11 +58,18 @@ describe("anonymous user", () => {
     expect(db.doc("posts/uid-1").delete()).toAllow();
     // expect(docRef).toDeny();
   });
-  test("success on post", async () => {
-    const docRef = db
-      .collection("posts")
-      .add({ group_id: "home", board_id: "board2" });
-    expect(docRef).toDeny();
-    // expect(docRef).toAllow();
+  test("board 2", async () => {
+    expect(
+      db.collection("posts").add({ group_id: "home", board_id: "board2" })
+    ).toDeny();
+    expect(
+      db
+        .doc("posts/uid-2")
+        .set({ group_id: "home", board_id: "board2" }, { merge: true })
+    ).toDeny();
+    expect(
+      db.doc("posts/uid-2").set({ title: "ok" }, { merge: true })
+    ).toDeny();
+    expect(db.doc("posts/uid-2").delete()).toDeny();
   });
 });
