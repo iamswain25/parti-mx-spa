@@ -3,11 +3,11 @@ import { firestore } from "../config/firebase";
 import { COUNTER_DOC, PARAM_COLLECTION } from "../helpers/options";
 import { Counter } from "../types";
 
-export default function usePostCounter(
+export default function usePostCounter<T extends Counter>(
   post_id?: string,
   listen: Boolean = false
-): [Counter | null | undefined] {
-  const [item, setItem] = React.useState<Counter | null | undefined>(undefined);
+): [T | null | undefined] {
+  const [item, setItem] = React.useState<T | null | undefined>(undefined);
   React.useEffect(() => {
     if (listen) {
       return firestore
@@ -18,7 +18,7 @@ export default function usePostCounter(
         .onSnapshot(
           (doc) => {
             if (doc.exists) {
-              const item = { ...doc.data() } as Counter;
+              const item = { ...doc.data() } as T;
               setItem(item);
             } else {
               setItem(null);
@@ -37,7 +37,7 @@ export default function usePostCounter(
         .get()
         .then((doc) => {
           if (doc.exists) {
-            const item = { ...doc.data() } as Counter;
+            const item = { ...doc.data() } as T;
             setItem(item);
           } else {
             setItem(null);

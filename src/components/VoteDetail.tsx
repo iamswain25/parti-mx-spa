@@ -1,12 +1,11 @@
 import React from "react";
-import { Post, VoteMetadata } from "../types";
+import { Post, VoteCounter, VoteMetadata } from "../types";
 import {
   Box,
   Grid,
   Divider,
   makeStyles,
   Typography,
-  Button,
   Hidden,
 } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
@@ -15,17 +14,14 @@ import AvatarNameDate from "./AvatarNameDate";
 import useDesktop from "./useDesktop";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { daysLeftMeta } from "../helpers/datefns";
-import VoteCandidate from "./VoteCandidate";
-import useVoteCandidate from "./useVoteCandidate";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
-import useCandidates from "../store/useCandidates";
 import HashtagsDetail from "./HashtagsDetail";
 import usePostCounter from "../store/usePostCounter";
-import usePostLiked from "../store/usePostLiked";
+import CandidatesDetail from "./CandidatesDetail";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -96,38 +92,20 @@ const useStyles = makeStyles((theme) => {
         fontSize: 11,
       },
     },
-    btn: {
-      backgroundColor: theme.palette.primary.light,
-      color: theme.palette.primary.dark,
-      borderColor: "#bbe7d6",
-    },
   };
 });
 
-export default function VoteDetail({ post: p }: { post: Post }) {
-  const { images, created_at, files, closed_at } = p;
-  const [counter] = usePostCounter(p.id);
+export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
+  const { images, created_at, files, closed_at, metadata } = p;
+  const [counter] = usePostCounter<VoteCounter>(p.id, true);
   const { count_like = 0, count_comment = 0 } = counter || {};
   const [comments] = useComments(p.id);
-  const [liked] = usePostLiked(p.id);
-  const [candidates] = useCandidates({ post_id: p.id });
   const isClosed = !!closed_at;
-  const metadata = p.metadata as VoteMetadata;
-  const commentCount = count_comment || 0;
-  const participantCount = count_like || 0;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
     metadata,
     created_at,
   ]);
   const classes = useStyles();
-  const voteHandler = useVoteCandidate(p);
-  const [isVoted, setVoted] = React.useState(false);
-  React.useEffect(() => {
-    setVoted(liked);
-  }, [liked]);
-  const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
-    return [0, 0];
-  }, []);
   const [isDesktop] = useDesktop();
 
   return (
@@ -168,40 +146,14 @@ export default function VoteDetail({ post: p }: { post: Post }) {
                 <Box mr={1}>중간 투표 집계를 숨김</Box>
               )}
             </Box>
-            <Box color="grey.900">참여자 {participantCount}명</Box>
+            <Box color="grey.900">참여자 {count_like}명</Box>
           </Grid>
         </Box>
-        <Box>
-          {candidates?.map((c) => (
-            <VoteCandidate
-              candidate={c}
-              voted={isVoted}
-              max={maxVoteCount}
-              total={totalVoteCount}
-              onClick={voteHandler}
-              key={c.id}
-              isClosed={isClosed}
-              isAnonymous={metadata?.isAnonymous}
-              isResultHidden={metadata?.isResultHidden}
-            />
-          ))}
-        </Box>
-        <Box mt={4} mb={isDesktop ? 5 : 2}>
-          {!isClosed && isVoted && (
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={() => setVoted(false)}
-              className={classes.btn}
-            >
-              다시 투표하기
-            </Button>
-          )}
-        </Box>
+        <CandidatesDetail post={p} counter={counter} />
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
       <div className={classes.root}>
-        <CommentContainer comments={comments} post={p} count={commentCount} />
+        <CommentContainer comments={comments} post={p} count={count_comment} />
       </div>
     </Box>
   );

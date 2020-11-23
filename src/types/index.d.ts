@@ -157,7 +157,13 @@ export type Counter = {
   count_comment: number;
   count_view: number;
 };
-export type Post = {
+export interface VoteCounter extends Counter {
+  count_total_vote: number;
+  count_max_vote: number;
+}
+export type Post<
+  T = VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata
+> = {
   id: string;
   title: string;
   board_id: string;
@@ -168,7 +174,7 @@ export type Post = {
   body: string;
   created_by: string;
   html: RawDraftContentState;
-  metadata: VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata;
+  metadata: T;
   images: Img[];
   files: File[];
   closed_at: firebase.firestore.Timestamp;
@@ -247,6 +253,7 @@ export interface PostLike {
   name: string;
   photo_url: string;
   created_at: firebase.firestore.Timestamp;
+  updated_at: firebase.firestore.Timestamp;
 }
 export interface UserBoard {
   userId: number;

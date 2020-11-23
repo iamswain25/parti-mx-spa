@@ -7,6 +7,7 @@ import usePost from "../store/usePost";
 import { LinearProgress } from "@material-ui/core";
 import Forbidden from "./Forbidden";
 import { useBoardId, useGroupId } from "../store/useGlobalState";
+import { Post, VoteMetadata } from "../types";
 export default function RoutePost() {
   const boardState = useBoardId();
   const groupState = useGroupId();
@@ -32,7 +33,7 @@ export default function RoutePost() {
     case "notice":
       return <NoticeDetail post={p} />;
     case "vote":
-      return <VoteDetail post={p} />;
+      return <VoteDetail post={p as Post<VoteMetadata>} />;
     case "suggestion":
       return <SuggestionDetail post={p} />;
     case "event":

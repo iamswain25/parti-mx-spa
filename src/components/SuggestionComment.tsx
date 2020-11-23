@@ -103,7 +103,7 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
               <Divider />
             </Box>
             <Grid container wrap="wrap" spacing={2}>
-              {likedUsers?.map((u, i) => (
+              {likedUsers?.map((u) => (
                 <AvatarNameDate2 key={u.id} postLike={u} />
               ))}
             </Grid>

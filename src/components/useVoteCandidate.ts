@@ -1,49 +1,21 @@
 import { Post, VoteMetadata } from "../types";
 import { useCurrentUser, useLoginModal } from "../store/useGlobalState";
+import { firestore } from "../config/firebase";
 
-export default function useVoteCandidate(p?: Post) {
+export default function useVoteCandidate(p: Post<VoteMetadata>) {
   const [currentUser] = useCurrentUser();
-  const metadata = p?.metadata as VoteMetadata;
-  const isMultiple = metadata.isMultiple;
   const [, setVisible] = useLoginModal();
   return async function handler(candidate_id: string, hasVoted = false) {
     if (!currentUser) {
       return setVisible(true);
     }
+    const user_id = currentUser?.uid;
+    const docPath = `/posts/${p.id}/candidates/${candidate_id}/users/${user_id}`;
+    const docRef = firestore.doc(docPath);
     if (hasVoted) {
-      if (isMultiple) {
-        // return multipleUnvote({
-        //   variables: {
-        //     candidate_id: candidate_id,
-        //     userId,
-        //   },
-        // });
-      } else {
-        // return unvote({
-        //   variables: {
-        //     candidate_id,
-        //     userId,
-        //     post_id,
-        //   },
-        // });
-      }
+      await docRef.delete();
     } else {
-      if (isMultiple) {
-        // return multipleInsert({
-        //   variables: {
-        //     candidate_id,
-        //     post_id,
-        //   },
-        // });
-      } else {
-        // return insert({
-        //   variables: {
-        //     candidate_id,
-        //     userId,
-        //     post_id,
-        //   },
-        // });
-      }
+      await docRef.set({ created_at: new Date() });
     }
   };
 }

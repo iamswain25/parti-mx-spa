@@ -1,42 +1,49 @@
 import React from "react";
-import { Candidate } from "../types";
-import { Grid, Box, Typography } from "@material-ui/core";
+import { Candidate, Post, VoteCounter, VoteMetadata } from "../types";
+import { Grid, Box, Typography, LinearProgress } from "@material-ui/core";
 import { LinearProgressActive, LinearProgressGrey } from "./LinearProgress";
 import CheckIcon from "@material-ui/icons/Check";
 import useWhoVotedModal from "./useWhoVotedModal";
 import { useError } from "../store/useGlobalState";
+import useVotedCandidate from "../store/useVotedCandidate";
+import useCandidateCounter from "../store/useCandidateCounter";
 
 export default function VoteCandidate({
   candidate: c,
-  total = 0,
+  counter,
   voted = false,
-  isResultHidden = false,
-  isAnonymous = false,
-  max = 1,
+  post,
   onClick,
-  isClosed,
 }: {
   candidate: Candidate;
-  total: number;
-  max: number;
+  counter?: VoteCounter | null;
   voted: boolean;
-  isResultHidden: boolean;
-  isAnonymous: boolean;
-  isClosed: boolean;
+  post: Post<VoteMetadata>;
   onClick: (candidate_id: string, myVote: boolean) => Promise<any>;
 }) {
+  const [myVote] = useVotedCandidate({ post_id: post.id, candidate_id: c.id });
+  const [votes] = useCandidateCounter({
+    post_id: post.id,
+    candidate_id: c.id,
+  });
+  const {
+    metadata: { isResultHidden = false, isAnonymous = false },
+    is_closed = false,
+  } = post;
   const [, setError] = useError();
-  const [myVote, percentage, width, count] = React.useMemo(() => {
-    const count = 0;
+  const { count_total_vote: total = 0, count_max_vote: max = 1 } =
+    counter || {};
+  const [percentage, width, count] = React.useMemo(() => {
+    const count = votes?.count_vote || 0;
     return [
-      true,
       Math.round((count * 100) / total) ?? 0,
       Math.round((count * 100) / max) || 0,
       count,
     ];
-  }, [max, total]);
+  }, [max, total, votes]);
   function handler() {
-    if (isClosed) return;
+    if (is_closed) return;
+    if (myVote === undefined) return;
     onClick(c?.id, myVote);
   }
   const { modal, setVisible } = useWhoVotedModal(c);
@@ -46,11 +53,14 @@ export default function VoteCandidate({
     }
     setVisible(true);
   }
+  if (myVote === undefined) {
+    return <LinearProgress />;
+  }
   return (
     <Box display="flex" alignItems="stretch" mb={1}>
       <Box
         border={1}
-        borderColor={myVote && voted ? "primary.dark" : "grey.200"}
+        borderColor={myVote ? "primary.dark" : "grey.200"}
         borderRadius={2}
         p={2}
         flex={1}
@@ -78,7 +88,7 @@ export default function VoteCandidate({
             </Box>
           )}
         </Grid>
-        {((!isResultHidden && voted) || isClosed) && (
+        {((!isResultHidden && voted) || is_closed) && (
           <Box mt={1}>
             {myVote ? (
               <LinearProgressActive variant="determinate" value={width} />
@@ -92,11 +102,11 @@ export default function VoteCandidate({
         width={50}
         display="flex"
         alignItems="center"
-        style={{ cursor: isClosed ? "default" : "pointer" }}
+        style={{ cursor: is_closed ? "default" : "pointer" }}
         justifyContent="center"
         onClick={handler}
-        bgcolor={myVote && voted ? "primary.dark" : "grey.200"}
-        color={myVote && voted ? "primary.light" : "grey.400"}
+        bgcolor={myVote ? "primary.dark" : "grey.200"}
+        color={myVote ? "common.white" : "grey.400"}
       >
         <CheckIcon />
       </Box>

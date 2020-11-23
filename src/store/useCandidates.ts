@@ -12,9 +12,11 @@ export default function useCandidates({
       .collection("posts")
       .doc(post_id)
       .collection("candidates")
+      .orderBy("order", "asc")
       .onSnapshot((snapshot) => {
         const items = snapshot.docs.map(
-          (doc) => ({ id: doc.id, ...(doc.data() as any) } as Candidate)
+          (doc) =>
+            ({ id: doc.id, post_id, ...(doc.data() as any) } as Candidate)
         );
         setItems(items);
       });
