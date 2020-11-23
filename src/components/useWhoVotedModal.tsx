@@ -7,8 +7,9 @@ import {
   Theme,
   IconButton,
   Typography,
+  LinearProgress,
 } from "@material-ui/core";
-import { Candidate, User } from "../types";
+import { Candidate } from "../types";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import AvatarNameVote from "./AvatarNameVote";
 import useVotes from "../store/useVotes";
@@ -32,8 +33,7 @@ export default function useWhoVotedModal(c: Candidate) {
   function handleClose() {
     setVisible(false);
   }
-  const [votes] = useVotes({ candidate_id: c.id, post_id: c.post_id });
-  const count = 0;
+  const [votes] = useVotes(c);
   const modal = (
     <Modal open={isVisible} onClose={handleClose}>
       <Paper>
@@ -42,14 +42,14 @@ export default function useWhoVotedModal(c: Candidate) {
             <ChevronLeftIcon />
           </IconButton>
           <Typography variant="h2">
-            {c.body}({count})
+            {c.body}({votes.length})
           </Typography>
           <div />
         </div>
         <Container>
-          {votes.map((v) => (
-            <AvatarNameVote user={v as User} key={v.id} />
-          ))}
+          {votes?.map((v) => <AvatarNameVote user_id={v.id} key={v.id} />) ?? (
+            <LinearProgress />
+          )}
         </Container>
       </Paper>
     </Modal>

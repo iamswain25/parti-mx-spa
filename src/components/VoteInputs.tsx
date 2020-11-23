@@ -12,7 +12,6 @@ export default function VoteInputs({
   formControl,
   isBinary = false,
   setBinary,
-  children,
   isEdit = false,
 }: any) {
   function binaryHandler() {
@@ -36,7 +35,7 @@ export default function VoteInputs({
         select
         label="투표 종료 방법"
         variant="filled"
-        name="closingMethod"
+        name="metadata.closingMethod"
         SelectProps={{
           native: true,
         }}
@@ -65,7 +64,7 @@ export default function VoteInputs({
         <Typography>익명투표</Typography>
         <ControlledSwitch
           control={control}
-          name="isAnonymous"
+          name="metadata.isAnonymous"
           disabled={isEdit}
         />
       </Grid>
@@ -74,7 +73,7 @@ export default function VoteInputs({
           <Typography>중복투표</Typography>
           <ControlledSwitch
             control={control}
-            name="isMultiple"
+            name="metadata.isMultiple"
             disabled={isEdit}
           />
         </Grid>
@@ -83,7 +82,7 @@ export default function VoteInputs({
         <Typography>종료 될 때까지 중간 투표 집계를 숨깁니다.</Typography>
         <ControlledSwitch
           control={control}
-          name="isResultHidden"
+          name="metadata.isResultHidden"
           disabled={isEdit}
         />
       </Grid>

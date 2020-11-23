@@ -45,11 +45,14 @@ export interface VoteFormdata {
   title: string;
   context: string;
   body: string;
-  closingMethod: string;
+  metadata: {
+    closingMethod: string;
+    isMultiple: boolean;
+    isAnonymous: boolean;
+    isResultHidden: boolean;
+    isBinary: boolean;
+  };
   candidates: string[];
-  isMultiple: boolean;
-  isAnonymous: boolean;
-  isResultHidden: boolean;
   isHtml: boolean;
   html: RawDraftContentState;
   tags: string[];
@@ -212,7 +215,7 @@ export type EventMetadata = {
   deadline: firebase.firestore.Timestamp;
   countPeople: number;
 };
-export type Vote = Partial<User>;
+export type Vote = { id: string; created_at: firebase.firestore.Timestamp };
 export interface Event extends Post {
   metadata: EventMetadata;
 }

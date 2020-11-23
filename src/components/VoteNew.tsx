@@ -27,21 +27,9 @@ export default function VoteNew() {
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {
-    const {
-      closingMethod,
-      candidates,
-      isMultiple = false,
-      isAnonymous,
-      isResultHidden,
-      ...rest
-    } = form;
-    const metadata = {
-      isBinary,
-      isMultiple,
-      isAnonymous,
-      isResultHidden,
-      closingMethod,
-    };
+    const { candidates, metadata, ...rest } = form;
+    metadata.isBinary = isBinary;
+    metadata.isMultiple = !!metadata.isMultiple;
     const variables = await makeNewVariables(rest, {
       group_id,
       board_id,
