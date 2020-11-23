@@ -12,7 +12,11 @@
         ]
       }
     ],
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
@@ -32,9 +36,9 @@
       "port": "8080"
     },
     "ui": {
-      "enabled": true, // Default is `true`
+      "enabled": true,
       "host": "localhost",
-      "port": 4000 // If unspecified, see CLI log for selected port
+      "port": 4000
     },
     "auth": {
       "port": "9099"
