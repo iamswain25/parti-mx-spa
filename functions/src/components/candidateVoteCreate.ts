@@ -1,6 +1,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { COUNTER_DOC, PARAM_COLLECTION } from "../env";
+async function delay(t: number) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, t);
+  });
+}
 export type Counter = {
   count_like: number;
   count_comment: number;
@@ -24,14 +29,23 @@ export default functions
     const candidateCounterRef = candidateRef
       ?.collection(PARAM_COLLECTION)
       .doc(COUNTER_DOC);
-    const count_max_vote = (await postCounterRef?.get())?.get("count_max_vote");
-    const count_vote = (await candidateCounterRef?.get())?.get("count_vote");
-    await candidateCounterRef?.set(
+    await delay(500); //0.5초 뒤에 카운트
+    /**
+     * isMultiple === false 일 시 deletion과 충돌하여 count_max_vote 계산이 어글어지는 것을 방지  */
+    const [res1, res2] = await Promise.all([
+      postCounterRef?.get(),
+      candidateCounterRef?.get(),
+    ]);
+    const count_max_vote = res1?.get("count_max_vote");
+    const count_vote = res2?.get("count_vote");
+
+    const req1 = candidateCounterRef?.set(
       { count_vote: admin.firestore.FieldValue.increment(1) },
       { merge: true }
     );
+    let req2;
     if (count_max_vote === count_vote) {
-      postCounterRef?.set(
+      req2 = postCounterRef?.set(
         {
           count_max_vote: admin.firestore.FieldValue.increment(1),
           count_total_vote: admin.firestore.FieldValue.increment(1),
@@ -39,11 +53,12 @@ export default functions
         { merge: true }
       );
     } else {
-      postCounterRef?.set(
+      req2 = postCounterRef?.set(
         { count_total_vote: admin.firestore.FieldValue.increment(1) },
         { merge: true }
       );
     }
+    return Promise.all([req1, req2]);
   });
 
 //  const { post_id, candidate_id, user_id } = context.params;

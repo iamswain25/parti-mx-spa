@@ -82,23 +82,13 @@ const useStyles = makeStyles((theme) => {
       height: 17,
       marginRight: theme.spacing(0.5),
     },
-    sub: {
-      letterSpacing: -0.3,
-      color: theme.palette.grey[700],
-      [theme.breakpoints.up("md")]: {
-        fontSize: 13,
-      },
-      [theme.breakpoints.down("sm")]: {
-        fontSize: 11,
-      },
-    },
   };
 });
 
 export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
   const { images, created_at, files, closed_at, metadata } = p;
   const [counter] = usePostCounter<VoteCounter>(p.id, true);
-  const { count_like = 0, count_comment = 0 } = counter || {};
+  const { count_comment = 0 } = counter || {};
   const [comments] = useComments(p.id);
   const isClosed = !!closed_at;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
@@ -136,18 +126,6 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
         <HashtagsDetail tags={p.tags} />
-        <Box className={classes.sub} mt={2} mb={1}>
-          <Grid container alignItems="center" justify="space-between">
-            <Box display="flex" alignItems="center">
-              {metadata?.isAnonymous && <Box mr={1}>익명투표</Box>}
-              {metadata?.isMultiple && <Box mr={1}>복수응답가능</Box>}
-              {metadata?.isResultHidden && (
-                <Box mr={1}>중간 투표 집계를 숨김</Box>
-              )}
-            </Box>
-            <Box color="grey.900">참여자 {count_like}명</Box>
-          </Grid>
-        </Box>
         <CandidatesDetail post={p} counter={counter} />
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}

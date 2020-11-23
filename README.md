@@ -10,7 +10,7 @@
 - React Router
 - Material UI
 
-## System
+## Firebase
 
 - firebase
   - firestore
@@ -19,7 +19,9 @@
   - analytics
   - functions
 
-### [file download](https://firebase.google.com/docs/storage/web/download-files#cors_configuration)
+### storage
+
+#### [file download](https://firebase.google.com/docs/storage/web/download-files#cors_configuration)
 
 initial setting
 
@@ -27,10 +29,20 @@ initial setting
 gsutil cors set cors.json gs://policy-fair-mix.appspot.com
 ```
 
-### rules
+### firestore
 
-#### test
+#### rules
+
+##### test
 
 firebase emulators:start --only firestore
 
+##### deploy
+
+firebase deploy --only firestore:rules
+
+### functions
+
 #### deploy
+
+firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project policy-fair-mix

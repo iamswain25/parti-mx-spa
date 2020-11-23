@@ -7,11 +7,10 @@ export default function useCandidates({
   post_id,
 }: {
   post_id: string;
-}): [Candidate[]] {
+}): [Candidate[], React.Dispatch<React.SetStateAction<Candidate[]>>] {
   const [currentUser] = useCurrentUser();
   const [candidates, setCandidates] = React.useState<Candidate[]>([]);
   const [items, setItems] = React.useState<Candidate[]>([]);
-  console.log(items);
   React.useEffect(() => {
     const candidateCollectionRef = firestore
       .collection("posts")
@@ -48,5 +47,5 @@ export default function useCandidates({
       };
     }
   }, [candidates, currentUser, post_id]);
-  return [items];
+  return [items, setItems];
 }

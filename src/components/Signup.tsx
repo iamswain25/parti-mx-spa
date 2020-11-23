@@ -180,7 +180,6 @@ export default function Signup() {
                     .collection("users")
                     .where("name", "==", value)
                     .get();
-                  console.log(res);
                   if (!res.empty) {
                     return "이미 사용 중인 닉네임입니다.";
                   }

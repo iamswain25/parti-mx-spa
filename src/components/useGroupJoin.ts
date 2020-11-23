@@ -18,11 +18,7 @@ export default function useGroupJoin() {
         .set(
           {
             role: "user",
-            photo_url: currentUser.photoURL,
-            name: currentUser.displayName ?? currentUser.email,
-            email: currentUser.email,
             created_at: new Date(),
-            checked_at: new Date(),
           },
           { merge: true }
         );

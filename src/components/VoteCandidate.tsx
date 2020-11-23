@@ -1,11 +1,10 @@
 import React from "react";
 import { Candidate, Post, VoteCounter, VoteMetadata } from "../types";
-import { Grid, Box, Typography, LinearProgress } from "@material-ui/core";
+import { Grid, Box, Typography } from "@material-ui/core";
 import { LinearProgressActive, LinearProgressGrey } from "./LinearProgress";
 import CheckIcon from "@material-ui/icons/Check";
 import useWhoVotedModal from "./useWhoVotedModal";
 import { useError } from "../store/useGlobalState";
-import useVotedCandidate from "../store/useVotedCandidate";
 import useCandidateCounter from "../store/useCandidateCounter";
 
 export default function VoteCandidate({
@@ -19,7 +18,7 @@ export default function VoteCandidate({
   counter?: VoteCounter | null;
   voted: boolean;
   post: Post<VoteMetadata>;
-  onClick: (c: Candidate) => Promise<any>;
+  onClick: () => any;
 }) {
   const [votes] = useCandidateCounter({
     post_id: post.id,
@@ -40,10 +39,6 @@ export default function VoteCandidate({
       count,
     ];
   }, [max, total, votes]);
-  function handler() {
-    if (is_closed) return;
-    onClick(c);
-  }
   const { modal, setVisible } = useWhoVotedModal(c);
   function resultHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (isAnonymous) {
@@ -55,7 +50,7 @@ export default function VoteCandidate({
     <Box display="flex" alignItems="stretch" mb={1}>
       <Box
         border={1}
-        borderColor={c.voted ? "primary.dark" : "grey.200"}
+        borderColor={voted && c.voted ? "primary.dark" : "grey.200"}
         borderRadius={2}
         p={2}
         flex={1}
@@ -99,9 +94,9 @@ export default function VoteCandidate({
         alignItems="center"
         style={{ cursor: is_closed ? "default" : "pointer" }}
         justifyContent="center"
-        onClick={handler}
-        bgcolor={c.voted ? "primary.dark" : "grey.200"}
-        color={c.voted ? "common.white" : "grey.400"}
+        onClick={onClick}
+        bgcolor={voted && c.voted ? "primary.dark" : "grey.200"}
+        color={voted && c.voted ? "common.white" : "grey.400"}
       >
         <CheckIcon />
       </Box>

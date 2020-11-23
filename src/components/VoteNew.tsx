@@ -30,7 +30,7 @@ export default function VoteNew() {
     const {
       closingMethod,
       candidates,
-      isMultiple,
+      isMultiple = false,
       isAnonymous,
       isResultHidden,
       ...rest
