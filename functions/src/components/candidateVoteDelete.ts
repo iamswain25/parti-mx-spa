@@ -16,27 +16,20 @@ export default functions
     "posts/{post_id}/candidates/{candidate_id}/users/{user_id}"
   )
   .onDelete(async (snapshot, context) => {
-    const { user_id } = context.params;
     const candidateRef = snapshot.ref.parent.parent;
     const postRef = candidateRef?.parent.parent;
-    const postLikeRef = postRef?.collection("likes").doc(user_id);
     const postCounterRef = postRef
       ?.collection(PARAM_COLLECTION)
       .doc(COUNTER_DOC);
     const candidateCounterRef = candidateRef
       ?.collection(PARAM_COLLECTION)
       .doc(COUNTER_DOC);
-    const post = await postRef?.get();
-    const { isMultiple = true } = post?.get("metadata") || {};
     const count_max_vote = (await postCounterRef?.get())?.get("count_max_vote");
     const count_vote = (await candidateCounterRef?.get())?.get("count_vote");
-    if (!isMultiple) {
-      await postLikeRef?.delete();
-      await candidateCounterRef?.set(
-        { count_vote: admin.firestore.FieldValue.increment(-1) },
-        { merge: true }
-      );
-    }
+    await candidateCounterRef?.set(
+      { count_vote: admin.firestore.FieldValue.increment(-1) },
+      { merge: true }
+    );
     if (count_max_vote === count_vote) {
       postCounterRef?.set(
         {
@@ -59,3 +52,41 @@ export default functions
 //  const candidateCounterRef  = candidateRef
 //    .collection(PARAM_COLLECTION)
 //    .doc(COUNTER_DOC) ;
+
+// .onDelete(async (snapshot, context) => {
+//   const { user_id } = context.params;
+//   const candidateRef = snapshot.ref.parent.parent;
+//   const postRef = candidateRef?.parent.parent;
+//   const postLikeRef = postRef?.collection("likes").doc(user_id);
+//   const postCounterRef = postRef
+//     ?.collection(PARAM_COLLECTION)
+//     .doc(COUNTER_DOC);
+//   const candidateCounterRef = candidateRef
+//     ?.collection(PARAM_COLLECTION)
+//     .doc(COUNTER_DOC);
+//   const post = await postRef?.get();
+//   const { isMultiple = true } = post?.get("metadata") || {};
+//   const count_max_vote = (await postCounterRef?.get())?.get("count_max_vote");
+//   const count_vote = (await candidateCounterRef?.get())?.get("count_vote");
+//   if (!isMultiple) {
+//     await postLikeRef?.delete();
+//     await candidateCounterRef?.set(
+//       { count_vote: admin.firestore.FieldValue.increment(-1) },
+//       { merge: true }
+//     );
+//   }
+//   if (count_max_vote === count_vote) {
+//     postCounterRef?.set(
+//       {
+//         count_max_vote: admin.firestore.FieldValue.increment(-1),
+//         count_total_vote: admin.firestore.FieldValue.increment(-1),
+//       },
+//       { merge: true }
+//     );
+//   } else {
+//     postCounterRef?.set(
+//       { count_total_vote: admin.firestore.FieldValue.increment(-1) },
+//       { merge: true }
+//     );
+//   }
+// });

@@ -107,7 +107,6 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
   ]);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-
   return (
     <Box pt={2}>
       <Box paddingX={2} className={classes.root}>

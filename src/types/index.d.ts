@@ -285,6 +285,7 @@ export type Candidate = {
   post_id: string;
   order: number;
   body: string;
+  voted: boolean; // 해당 유저(currentUser)의 투표 여부
 };
 export interface VoteDetailType extends Post {
   users_aggregate: {

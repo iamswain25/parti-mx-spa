@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => {
 export default function RoutePostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  const [liked] = usePostLiked(p.id);
+  // const [liked] = usePostLiked(p.id);
   const navigatePost = useNavigateToPost(p.id);
   const created_at = p.created_at;
   const metadata = p.metadata as VoteMetadata;
@@ -81,7 +81,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   const isResultHidden = metadata.isResultHidden;
   const [candidates] = useCandidates({ post_id: p.id });
   React.useEffect(() => {
-    setVoted(liked);
+    setVoted(false);
   }, [p]);
   const [totalVoteCount, maxVoteCount] = React.useMemo(() => {
     return [0, 0];

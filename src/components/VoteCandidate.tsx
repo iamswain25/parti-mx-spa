@@ -19,9 +19,8 @@ export default function VoteCandidate({
   counter?: VoteCounter | null;
   voted: boolean;
   post: Post<VoteMetadata>;
-  onClick: (candidate_id: string, myVote: boolean) => Promise<any>;
+  onClick: (c: Candidate) => Promise<any>;
 }) {
-  const [myVote] = useVotedCandidate({ post_id: post.id, candidate_id: c.id });
   const [votes] = useCandidateCounter({
     post_id: post.id,
     candidate_id: c.id,
@@ -43,8 +42,7 @@ export default function VoteCandidate({
   }, [max, total, votes]);
   function handler() {
     if (is_closed) return;
-    if (myVote === undefined) return;
-    onClick(c?.id, myVote);
+    onClick(c);
   }
   const { modal, setVisible } = useWhoVotedModal(c);
   function resultHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
@@ -53,14 +51,11 @@ export default function VoteCandidate({
     }
     setVisible(true);
   }
-  if (myVote === undefined) {
-    return <LinearProgress />;
-  }
   return (
     <Box display="flex" alignItems="stretch" mb={1}>
       <Box
         border={1}
-        borderColor={myVote ? "primary.dark" : "grey.200"}
+        borderColor={c.voted ? "primary.dark" : "grey.200"}
         borderRadius={2}
         p={2}
         flex={1}
@@ -90,7 +85,7 @@ export default function VoteCandidate({
         </Grid>
         {((!isResultHidden && voted) || is_closed) && (
           <Box mt={1}>
-            {myVote ? (
+            {c.voted ? (
               <LinearProgressActive variant="determinate" value={width} />
             ) : (
               <LinearProgressGrey variant="determinate" value={width} />
@@ -105,8 +100,8 @@ export default function VoteCandidate({
         style={{ cursor: is_closed ? "default" : "pointer" }}
         justifyContent="center"
         onClick={handler}
-        bgcolor={myVote ? "primary.dark" : "grey.200"}
-        color={myVote ? "common.white" : "grey.400"}
+        bgcolor={c.voted ? "primary.dark" : "grey.200"}
+        color={c.voted ? "common.white" : "grey.400"}
       >
         <CheckIcon />
       </Box>

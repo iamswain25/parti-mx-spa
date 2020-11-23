@@ -5,7 +5,6 @@ import useDesktop from "./useDesktop";
 import VoteCandidate from "./VoteCandidate";
 import useVoteCandidate from "./useVoteCandidate";
 import useCandidates from "../store/useCandidates";
-import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
     btn: {
@@ -23,11 +22,16 @@ export default function CandidatesDetail({
   post: Post<VoteMetadata>;
   counter?: VoteCounter | null;
 }) {
-  const [liked] = usePostLiked(p.id);
   const [candidates] = useCandidates({ post_id: p.id });
+  const liked = React.useMemo(() => {
+    if (candidates) {
+      return candidates.some((c) => c.voted);
+    }
+    return false;
+  }, [candidates]);
   const isClosed = !!p.is_closed;
   const classes = useStyles();
-  const voteHandler = useVoteCandidate(p);
+  const voteHandler = useVoteCandidate(p, candidates);
   const [isVoted, setVoted] = React.useState(false);
   React.useEffect(() => {
     setVoted(liked);
