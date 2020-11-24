@@ -1,16 +1,16 @@
 import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Chip, TextField, FormControl } from "@material-ui/core";
-import { UseFormMethods, Controller } from "react-hook-form";
-import { DEFAULT_HASHTAGS } from "../helpers/options";
-import { Metadata } from "../types";
+import { Controller } from "react-hook-form";
+import { DEFAULT_HASHTAGS, HASHTAG_SPLIT_REGEX } from "../helpers/options";
+
 export default function Hashtags(props: { formControl: any }) {
   const { control } = props.formControl;
   const changeHandler = (onChange: any) => (e: any, data: any) => {
     return onChange(
       data
         .join(",")
-        .split(/[\s,;#]+/)
+        .split(HASHTAG_SPLIT_REGEX)
         .filter((e: any) => e)
     );
   };

@@ -56,10 +56,10 @@ export const CUTTING_INDEX = 5;
 export const KEYWORD_INDEX = 12;
 export const DEFAULT_HASHTAGS = [
   "주민자치",
-  "지역 활성화",
-  "학습 공동체",
-  "주민조직 네트워크",
-  "제도 정책",
+  "지역_활성화",
+  "학습_공동체",
+  "주민조직_네트워크",
+  "제도_정책",
   "서울",
   "인천",
   "경기",
@@ -71,3 +71,4 @@ export const DEFAULT_HASHTAGS = [
 ];
 export const PARAM_COLLECTION = "$PARAMS$";
 export const COUNTER_DOC = "counters";
+export const HASHTAG_SPLIT_REGEX = /[\s,;#]+/;
