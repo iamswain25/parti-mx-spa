@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Switch, Grid } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import ControlledSwitch from "./ControlledSwitch";
 import { voteOptions } from "../helpers/options";
@@ -7,17 +7,18 @@ import VoteEditCandidates from "./VoteEditCandidates";
 import VoteNewCandidates from "./VoteNewCandidates";
 import HtmlInput from "./HtmlInput";
 import Hashtags from "./Hashtags";
+import { UseFormMethods } from "react-hook-form";
+import { VoteFormdata } from "../types";
 
 export default function VoteInputs({
   formControl,
-  isBinary = false,
-  setBinary,
   isEdit = false,
-}: any) {
-  function binaryHandler() {
-    setBinary(!isBinary);
-  }
-  const { register, errors, control } = formControl;
+}: {
+  formControl: UseFormMethods<VoteFormdata>;
+  isEdit?: boolean;
+}) {
+  const { register, errors, control, watch } = formControl;
+  const isBinary = watch("metadata.isBinary");
   return (
     <>
       <CustomTextField
@@ -48,17 +49,16 @@ export default function VoteInputs({
       />
       <Grid container justify="space-between" alignItems="center">
         찬반투표
-        <Switch
-          color="primary"
+        <ControlledSwitch
+          control={control}
+          name="metadata.isBinary"
           disabled={isEdit}
-          checked={isBinary}
-          onChange={binaryHandler}
         />
       </Grid>
       {isEdit ? (
-        <VoteEditCandidates formControl={formControl} isBinary={isBinary} />
+        <VoteEditCandidates formControl={formControl} />
       ) : (
-        <VoteNewCandidates formControl={formControl} isBinary={isBinary} />
+        <VoteNewCandidates formControl={formControl} />
       )}
       <Grid container justify="space-between" alignItems="center">
         <Typography>익명투표</Typography>

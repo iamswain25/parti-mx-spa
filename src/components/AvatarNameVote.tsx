@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 export default function AvatarNameVote({ user_id }: { user_id: string }) {
   const [user] = useUser({ id: user_id });
   const { name = "로딩중", photo_url = "로딩중" } = user || {};
-  console.log(name);
   const classes = useStyles();
   return (
     <Typography variant="h4">

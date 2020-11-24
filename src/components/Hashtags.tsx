@@ -2,11 +2,9 @@ import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Chip, TextField, FormControl } from "@material-ui/core";
 import { UseFormMethods, Controller } from "react-hook-form";
-import { SuggestionFormdata } from "../types";
 import { DEFAULT_HASHTAGS } from "../helpers/options";
-export default function Hashtags(props: {
-  formControl: UseFormMethods<SuggestionFormdata>;
-}) {
+import { Metadata } from "../types";
+export default function Hashtags(props: { formControl: any }) {
   const { control } = props.formControl;
   const changeHandler = (onChange: any) => (e: any, data: any) => {
     return onChange(

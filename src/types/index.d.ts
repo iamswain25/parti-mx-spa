@@ -52,13 +52,10 @@ export interface VoteFormdata {
     isResultHidden: boolean;
     isBinary: boolean;
   };
-  candidates: string[];
+  candidates: Candidate[];
   isHtml: boolean;
   html: RawDraftContentState;
   tags: string[];
-}
-export interface VoteEditFormdata extends VoteFormdata {
-  candidates: Candidate[];
 }
 export type Role = "organizer" | "member" | "user" | "anonymous";
 export type BoardPermission = {
@@ -164,6 +161,11 @@ export interface VoteCounter extends Counter {
   count_total_vote: number;
   count_max_vote: number;
 }
+export type Metadata =
+  | VoteMetadata
+  | EventMetadata
+  | SuggestionMetadata
+  | NoticeMetadata;
 export type Post<
   T = VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata
 > = {
