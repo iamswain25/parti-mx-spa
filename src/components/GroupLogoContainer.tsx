@@ -147,9 +147,7 @@ export default function GroupLogoContainer() {
       <div className={classes.backgroundImg} />
       <div className={classes.gradient} />
       <div className={classes.groupLogoContainer}>
-        {role !== "anonymous" && role !== undefined && (
-          <InfoGroup group={group} />
-        )}
+        <InfoGroup group={group} role={role} />
         <div className={classes.groupLogoOverlay}>
           <div className="title">제19회 전국주민자치박람회</div>
           <div className="subtitle">

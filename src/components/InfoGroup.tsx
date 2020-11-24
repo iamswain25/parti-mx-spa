@@ -6,7 +6,8 @@ import MenuGroup from "./MenuGroup";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
 import useGroupJoin from "./useGroupJoin";
 import { permissionLabelByValue } from "../helpers/options";
-import { Group } from "../types";
+import { Group, Role } from "../types";
+import { LinearProgress } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return {
     groupInfo: {
@@ -44,9 +45,14 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-export default function InfoGroup({ group }: { group: Group }) {
+export default function InfoGroup({
+  group,
+  role,
+}: {
+  group: Group;
+  role?: Role;
+}) {
   const classes = useStyles();
-  const [role] = useRole();
   const [currentUser] = useCurrentUser();
   const joinHandler = useGroupJoin();
   const { created_at } = group;
@@ -54,7 +60,7 @@ export default function InfoGroup({ group }: { group: Group }) {
     <div className={classes.groupInfo}>
       <span>개설 {semanticDate(created_at)}</span>
       {role === undefined ? (
-        <div>loading...</div>
+        <LinearProgress />
       ) : (
         <Link to="/profile">
           {currentUser?.displayName}({permissionLabelByValue(role)})

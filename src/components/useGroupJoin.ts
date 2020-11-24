@@ -9,7 +9,7 @@ export default function useGroupJoin() {
   const [groupId] = useGroupId();
   const [currentUser] = useCurrentUser();
   async function handler() {
-    if (currentUser) {
+    if (currentUser?.email) {
       return firestore
         .collection("groups")
         .doc(groupId)
