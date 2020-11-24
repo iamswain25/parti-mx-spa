@@ -9,15 +9,17 @@ import usePostEdit from "./usePostEdit";
 import usePostResolve from "./usePostResolve";
 import ShareButtons from "./ShareButtons";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
+import usePermission from "../store/usePermission";
 export default function PostMenu({ post: p }: { post: Post }) {
   const [currentUser] = useCurrentUser();
   const [role] = useRole();
   const isOrganizer = role === "organizer";
   const isClosed = !!p.closed_at;
+  const [hasDeletePermission] = usePermission("delete");
+  const [hasUpdatePermission] = usePermission("update");
   const isMine = p.created_by === currentUser?.uid;
   const isAnnounced = p.is_announced;
   const isNotice = p.type === "notice";
-  const isSuggestion = p.type === "suggestion";
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const remove = usePostDelete(p);
   const announce = usePostAnnounce(p);
@@ -31,12 +33,14 @@ export default function PostMenu({ post: p }: { post: Post }) {
     setAnchorEl(null);
   };
   const menuItems = [];
-  if (isSuggestion || isOrganizer || isMine) {
+  if (hasUpdatePermission || isMine) {
     menuItems.push(
       <MenuItem onClick={edit} key={1}>
         수정하기
       </MenuItem>
     );
+  }
+  if (hasDeletePermission || isMine) {
     menuItems.push(
       <MenuItem onClick={remove} key={2}>
         삭제하기
