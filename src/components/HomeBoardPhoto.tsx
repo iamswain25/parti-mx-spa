@@ -2,7 +2,7 @@ import React from "react";
 import { Post } from "../types";
 import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
-import StorageThumb from "./StorageThumb";
+import StorageImage from "./StorageImage";
 export const useStyles = makeStyles((theme) => ({
   img: {
     objectFit: "cover",
@@ -50,7 +50,7 @@ export default function HomeBoardPhoto({
     <Grid item xs={xs} md={md}>
       <NavLink exact to={`/post/${p.id}`}>
         <div className={classes.aspectRatio}>
-          <StorageThumb image={p?.images?.[0]} />
+          <StorageImage image={p?.images?.[0]} />
         </div>
         <div className={classes.hover}>
           <div className="title">

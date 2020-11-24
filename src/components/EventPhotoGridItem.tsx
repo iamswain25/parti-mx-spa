@@ -2,7 +2,7 @@ import React from "react";
 import { EventMetadata, Post } from "../types";
 import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
-import StorageThumb from "./StorageThumb";
+import StorageImage from "./StorageImage";
 export const useStyles = makeStyles((theme) => ({
   img: {
     objectFit: "cover",
@@ -88,7 +88,7 @@ export default function EventPhotoGridItem({
     <Grid item xs={xs} md={md}>
       <NavLink exact to={`/post/${p.id}`}>
         <div className={classes.aspectRatio}>
-          <StorageThumb image={p?.images?.[0]} />
+          <StorageImage image={p?.images?.[0]} />
           <div className={p.is_closed ? "floating closed" : "floating"}>
             <div>{p.is_closed ? "행사종료" : "모집 중"}</div>
           </div>

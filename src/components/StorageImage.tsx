@@ -15,35 +15,38 @@ const useStyles = makeStyles((theme) => {
 });
 export default function StorageImage(
   props:
-    | { className?: string; image: Img }
+    | { className?: string; image: Img; thumb?: boolean }
     | { className?: string; path: string }
 ) {
-  const path = "path" in props ? props.path : props.image?.path;
-  const className = props.className;
+  let path = "path" in props ? props.path : props.image?.path;
   const classes = useStyles();
+  const className = props.className
+    ? `${classes.root} ${props.className}`
+    : classes.root;
+  if ("thumb" in props && props?.thumb) {
+    const arr = path?.split("/");
+    const img = arr.pop();
+    arr.push("thumbs", img + "_364x240");
+    path = arr.join("/");
+  }
+
   const src = useStoragePath(path);
   if ("image" in props && !props.image) {
     return (
-      <div className={`${classes.root} ${className}`}>
+      <div className={className}>
         <img src="/ogp.png" alt="ogp" />
       </div>
     );
   }
   if (!src) {
-    return <div className={`${classes.root} ${className}`} />;
+    return <div className={className} />;
   }
   return (
     <LazyImage
       src={src}
-      placeholder={({ ref }) => (
-        <div ref={ref} className={`${classes.root} ${className}`} />
-      )}
+      placeholder={({ ref }) => <div ref={ref} className={className} />}
       actual={({ imageProps }) => (
-        <img
-          {...imageProps}
-          className={` ${classes.root} ${className}`}
-          alt={path}
-        />
+        <img {...imageProps} className={className} alt={path} />
       )}
     />
   );
