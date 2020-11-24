@@ -46,27 +46,18 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
   const count = 0;
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
-  const [, showLogin] = useLoginModal();
   const [hasPermission, showAlert] = usePermission("like");
   async function handler() {
-    if (!currentUser?.email) {
-      showLogin(true);
-    } else if (!hasPermission) {
-      showAlert();
-    } else {
-      await firestore
-        .collection("posts")
-        .doc(p.id)
-        .collection("likes")
-        .doc(currentUser.uid)
-        .set(
-          {
-            created_at: new Date(),
-          },
-          { merge: true }
-        );
-      setSuccess("공감 하였습니다.");
+    if (!hasPermission) {
+      return showAlert();
     }
+    await firestore
+      .collection("posts")
+      .doc(p.id)
+      .collection("likes")
+      .doc(currentUser?.uid)
+      .set({ created_at: new Date() }, { merge: true });
+    setSuccess("공감 하였습니다.");
   }
   const type = p.type;
   switch (type) {

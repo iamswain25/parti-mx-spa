@@ -55,18 +55,15 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const [hasPermission, showAlert] = usePermission("like");
   const type = p.type;
   async function handler() {
-    if (!currentUser?.email) {
-      showLogin(true);
-    } else if (!hasPermission) {
-      showAlert();
-    } else {
-      await firestore
-        .collection("posts")
-        .doc(p.id)
-        .collection("likes")
-        .doc(currentUser.uid)
-        .delete();
+    if (!hasPermission) {
+      return showAlert();
     }
+    await firestore
+      .collection("posts")
+      .doc(p.id)
+      .collection("likes")
+      .doc(currentUser?.uid)
+      .delete();
     switch (type) {
       case "suggestion":
         return setSuccess("전시 취소 하였습니다.");

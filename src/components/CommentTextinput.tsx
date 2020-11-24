@@ -1,7 +1,6 @@
 import React from "react";
 import { TextField, makeStyles, Button, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { useCurrentUser, useLoginModal } from "../store/useGlobalState";
 import { Comment, CommentInput } from "../types";
 import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme) => {
@@ -36,15 +35,16 @@ export default function CommentTextinput({
   const parent_id = comment.id || null;
   const post_id = comment.post_id || null;
   const [hasPermission, showAlert] = usePermission("comment");
-  const { handleSubmit, register, errors, reset, getValues } = useForm<
-    CommentInput
-  >({
+  const {
+    handleSubmit,
+    register,
+    errors,
+    reset,
+    getValues,
+  } = useForm<CommentInput>({
     defaultValues: { body: atUser, parent_id, post_id },
   });
   const classes = useStyles();
-  const [currentUser] = useCurrentUser();
-  const isRegisteredUser = currentUser?.email;
-  const [, setVisible] = useLoginModal();
   const ref = React.useRef<HTMLInputElement | null>(null);
 
   React.useEffect(() => {
@@ -57,12 +57,8 @@ export default function CommentTextinput({
     }
   }, [reset, atUser, parent_id, post_id, getValues, autoFocus]);
   function loginHandler() {
-    if (!isRegisteredUser) {
-      setVisible(true);
-    } else {
-      if (!hasPermission) {
-        showAlert();
-      }
+    if (!hasPermission) {
+      return showAlert();
     }
   }
   return (
