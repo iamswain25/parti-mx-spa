@@ -9,7 +9,7 @@ export default function SuggestionInputs(props: {
 }) {
   const { register, errors } = props.formControl;
   function playable(value: string) {
-    if (!ReactPlayer.canPlay(value))
+    if (value && !ReactPlayer.canPlay(value))
       return "재생 가능한 유튜브 링크가 아닙니다.";
   }
   return (
@@ -25,8 +25,6 @@ export default function SuggestionInputs(props: {
         label="소개영상"
         name="metadata.youtube"
         inputRef={register({
-          required:
-            "필수 입력입니다. 유튜브 링크 주소를 넣어주세요. 예: https://youtu.be/GaWVFHEvpNI",
           validate: {
             playable,
           },
