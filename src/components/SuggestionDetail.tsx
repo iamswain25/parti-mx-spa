@@ -174,10 +174,12 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           <Linkify body={context} />
         </Box>
         <HtmlOrBody post={p} />
-        <Box className={classes.body}>
-          <Box className={classes.label}>심사평</Box>
-          <Linkify body={metadata?.detail1} />
-        </Box>
+        {metadata?.detail1 && (
+          <Box className={classes.body}>
+            <Box className={classes.label}>심사평</Box>
+            <Linkify body={metadata?.detail1} />
+          </Box>
+        )}
         <div className={classes.more}>
           {more ? (
             <button onClick={toggleMore}>
