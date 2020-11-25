@@ -86,7 +86,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
             <Grid item>
               <KaKaoTalkButton
                 id="kakaotalk"
-                jsKey="21cd8a6129205163194430f64b6ce4ef"
+                jsKey="3add14597333a220aa329681eabbc2f9"
                 pathname={pathname}
                 message={p.title.replace(/'/g, "\\'")}
                 media={p?.images?.[0]?.uri}
