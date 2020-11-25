@@ -168,7 +168,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             />
           </div>
         )}
-        <FilesImages images={images} files={files} />
+
         <Box className={classes.body}>
           <Box className={classes.label}>단체명·단체소개</Box>
           <Linkify body={context} />
@@ -193,14 +193,17 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </div>
         {more && (
           <>
-            <Box className={classes.body}>
+            <div className={classes.body}>
               <Box className={classes.label}>일반현황</Box>
               <Linkify body={metadata?.detail2} />
-            </Box>
-            <Box className={classes.body}>
+            </div>
+            <div className={classes.body}>
               <Box className={classes.label}>대표사례</Box>
               <Linkify body={metadata?.detail3} />
-            </Box>
+            </div>
+            <div className={classes.body}>
+              <FilesImages images={images} files={files} />
+            </div>
           </>
         )}
         <HashtagsDetail tags={p.tags} />
