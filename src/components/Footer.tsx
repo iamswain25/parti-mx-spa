@@ -55,7 +55,9 @@ const useStyles = makeStyles((theme) => ({
         letterSpacing: -0.7,
         color: theme.palette.grey[900],
         marginRight: theme.spacing(2),
-        textDecoration: "underline",
+        "&.underline": {
+          textDecoration: "underline",
+        },
       },
     },
     "&>.powered": {
@@ -121,6 +123,7 @@ export default function Footer() {
               href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
+              className="underline"
             >
               이용약관
             </a>
@@ -128,6 +131,7 @@ export default function Footer() {
               href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
+              className="underline"
             >
               개인정보 처리방침
             </a>
