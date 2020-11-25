@@ -11,7 +11,6 @@ import {
   Box,
   LinearProgress,
   FormControl,
-  FormLabel,
   FormGroup,
   FormControlLabel,
   Checkbox,
@@ -195,9 +194,6 @@ export default function Signup() {
               component="fieldset"
               className={classes.formControl}
             >
-              <FormLabel component="legend">
-                아래 링크에 동의해주세요.
-              </FormLabel>
               <FormGroup>
                 <Controller
                   name="term_service"
@@ -254,7 +250,12 @@ export default function Signup() {
                   )}
                 />
               </FormGroup>
-              <FormHelperText>모두 체크하셔야 가입 가능합니다.</FormHelperText>
+              {(errors?.term_privacy?.message ||
+                errors?.term_service?.message) && (
+                <FormHelperText>
+                  모두 체크하셔야 가입 가능합니다.
+                </FormHelperText>
+              )}
             </FormControl>
             <div className={classes.wrapper}>
               <Button
