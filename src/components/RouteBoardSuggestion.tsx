@@ -84,6 +84,10 @@ const useStyles = makeStyles((theme) => {
             flexWrap: "wrap",
             color: theme.palette.grey[900],
             backgroundColor: "transparent",
+            "&.selected": {
+              fontWeight: "bold",
+              color: theme.palette.primary.main,
+            },
             "&:last-child": {
               flex: 1,
               borderRight: "none",
@@ -201,7 +205,10 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               키워드
               <ExpandMoreIcon />
             </button>
-            <button onClick={filterHandler("cancel")} className="flex-center">
+            <button
+              onClick={filterHandler("cancel")}
+              className={selectedTags.length ? "selected" : undefined}
+            >
               <SettingsBackupRestoreIcon />
               {isDesktop ? "필터 해제" : "해제"}
             </button>
