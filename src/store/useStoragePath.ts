@@ -4,9 +4,7 @@ import { storage } from "../config/firebase";
 export default function useStoragePath(path?: string) {
   const [url, setUrl] = React.useState<string | undefined>();
   React.useEffect(() => {
-    // console.log(path);
     if (path) {
-      console.log(path);
       if (
         path?.startsWith("/") ||
         path?.startsWith("blob:") ||

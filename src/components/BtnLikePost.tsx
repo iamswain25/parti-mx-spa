@@ -1,11 +1,7 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import {
-  useCurrentUser,
-  useSuccess,
-  useLoginModal,
-} from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
 import usePermission from "../store/usePermission";
@@ -28,17 +24,6 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.grey[300],
     borderWidth: 1,
     borderStyle: "solid",
-  },
-  event: {
-    [theme.breakpoints.up("md")]: {
-      fontSize: 16,
-    },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: 14,
-      width: "100%",
-    },
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.common.white,
   },
 }));
 export default function BtnLikePost({ post: p }: { post: Post }) {
@@ -68,21 +53,8 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           variant="contained"
           className={classes.like}
           disableElevation
-          // disabled={!hasPermission}
         >
           응원해요
-        </Button>
-      );
-    case "event":
-      return (
-        <Button
-          onClick={handler}
-          variant="contained"
-          className={classes.event}
-          disableElevation
-          // disabled={!hasPermission}
-        >
-          공감신청
         </Button>
       );
     default:
@@ -90,7 +62,6 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
         <Button
           onClick={handler}
           variant="contained"
-          // disabled={!hasPermission}
           className={classes.like}
           startIcon={<FavoriteIcon className={classes.icon} />}
           disableElevation
