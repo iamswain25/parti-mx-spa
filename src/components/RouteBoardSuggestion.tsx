@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: theme.palette.grey[50],
       position: "absolute",
       width: "100%",
+      left: 0,
       zIndex: 2,
       "&>.title": {
         borderTop: "1px solid " + theme.palette.grey[300],
@@ -131,11 +132,6 @@ const useStyles = makeStyles((theme) => {
       },
     },
     container: {
-      paddingLeft: 30,
-      paddingRight: 30,
-      marginLeft: "auto",
-      marginRight: "auto",
-      maxWidth: 1200,
       paddingTop: 190,
       paddingBottom: theme.spacing(2),
       display: "flex",

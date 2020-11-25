@@ -13,13 +13,6 @@ const useStyles = makeStyles((theme) => {
   return {
     container: {
       flex: 1,
-      [theme.breakpoints.up("md")]: {
-        paddingLeft: 30,
-        paddingRight: 30,
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: 1200,
-      },
     },
     titleContainer: {
       borderBottom: `1px solid ${grey[400]}`,

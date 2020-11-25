@@ -19,9 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Layout({ children }: React.PropsWithChildren<{}>) {
   const classes = useStyles();
-  const match = useRouteMatch("/home/:board_id");
   return (
-    <div className={!match ? classes.root : undefined}>
+    <div className={classes.root}>
       {children}
       <BoardTabNavigator />
     </div>

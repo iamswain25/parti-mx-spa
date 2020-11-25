@@ -53,7 +53,7 @@ export default function SuggestionInputs(props: {
         label="심사평"
         multiline
         name="metadata.detail1"
-        register={register}
+        inputRef={register()}
         errors={errors}
       />
       <CustomTextField
