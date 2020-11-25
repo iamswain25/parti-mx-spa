@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import React from "react";
 import partiLogo from "../assets/images/logo-parti.png";
 import juminLogo from "../assets/images/logo-jeongukminju-color.png";
+import { EMAIL, TELEPHONE } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: `${theme.spacing(5)}px auto`,
@@ -112,8 +113,8 @@ export default function Footer() {
             <span className="margintop">
               <strong>문의</strong>
             </span>
-            <a href="tel:02-3676-6503">02-3676-6503</a>
-            <a href="mailto:pvnet2011@gmail.com">pvnet2011@gmail.com</a>
+            <a href={`tel:${TELEPHONE}`}>{TELEPHONE}</a>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
           </div>
           <div>
             <a
