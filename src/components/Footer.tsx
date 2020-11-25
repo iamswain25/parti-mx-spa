@@ -4,8 +4,13 @@ import partiLogo from "../assets/images/logo-parti.png";
 import juminLogo from "../assets/images/logo-jeongukminju-color.png";
 import { EMAIL, TELEPHONE } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
+  bgGrey: {
+    backgroundColor: theme.palette.grey[100],
+  },
   root: {
-    margin: `${theme.spacing(5)}px auto`,
+    margin: `0 auto`,
+    paddingTop: theme.spacing(5),
+    paddingBottom: theme.spacing(5),
     maxWidth: 1200,
     paddingLeft: 30,
     paddingRight: 30,
@@ -83,66 +88,72 @@ const useStyles = makeStyles((theme) => ({
 export default function Footer() {
   const classes = useStyles();
   return (
-    <footer className={classes.root}>
-      <div>
-        <img src={juminLogo} alt="brand logo" />
+    <footer className={classes.bgGrey}>
+      <section className={classes.root}>
         <div>
+          <img src={juminLogo} alt="brand logo" />
           <div>
-            <span>
-              <strong>주최/주관</strong>
-            </span>
-            <a
-              href="https://www.mois.go.kr/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              행정안전부
-            </a>
-            <a
-              href="https://www.pcad.go.kr/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              대통령소속 자치분권위원회
-            </a>
-            <a
-              href="http://www.openc.or.kr/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              (사)열린사회시민연합
-            </a>
-            <span className="margintop">
-              <strong>문의</strong>
-            </span>
-            <a href={`tel:${TELEPHONE}`}>{TELEPHONE}</a>
-            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-          </div>
-          <div>
-            <a
-              href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              이용약관
-            </a>
-            <a
-              href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              개인정보 처리방침
-            </a>
+            <div>
+              <span>
+                <strong>주최/주관</strong>
+              </span>
+              <a
+                href="https://www.mois.go.kr/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                행정안전부
+              </a>
+              <a
+                href="https://www.pcad.go.kr/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                대통령소속 자치분권위원회
+              </a>
+              <a
+                href="http://www.openc.or.kr/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                (사)열린사회시민연합
+              </a>
+              <span className="margintop">
+                <strong>문의</strong>
+              </span>
+              <a href={`tel:${TELEPHONE}`}>{TELEPHONE}</a>
+              <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            </div>
+            <div>
+              <a
+                href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                이용약관
+              </a>
+              <a
+                href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                개인정보 처리방침
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <section className="powered">
-        <a href="https://parti.coop" target="_blank" rel="noopener noreferrer">
-          <strong>powered by</strong>
-          <img src={partiLogo} alt="parti logo" />
-        </a>
+        <section className="powered">
+          <a
+            href="https://parti.coop"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <strong>powered by</strong>
+            <img src={partiLogo} alt="parti logo" />
+          </a>
+        </section>
       </section>
     </footer>
   );
