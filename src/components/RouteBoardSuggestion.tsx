@@ -85,9 +85,11 @@ const useStyles = makeStyles((theme) => {
             color: theme.palette.grey[900],
             backgroundColor: "transparent",
             "&:last-child": {
-              justifyContent: "flex-start",
               flex: 1,
               borderRight: "none",
+              [theme.breakpoints.up("md")]: {
+                justifyContent: "flex-start",
+              },
             },
             "&>svg": {
               width: 20,
@@ -111,7 +113,7 @@ const useStyles = makeStyles((theme) => {
           "&.hide": {
             display: "none",
           },
-          height: 111,
+          minHeight: 111,
           paddingLeft: 30,
           paddingRight: 30,
           [theme.breakpoints.down("sm")]: {
@@ -182,7 +184,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               onClick={filterHandler("type")}
               className={filter === "type" ? "active" : undefined}
             >
-              공모분야
+              {isDesktop ? "공모분야" : "분야"}
               <ExpandMoreIcon />
             </button>
             <button
@@ -199,8 +201,9 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               키워드
               <ExpandMoreIcon />
             </button>
-            <button onClick={filterHandler("cancel")}>
-              <SettingsBackupRestoreIcon /> 필터 해제
+            <button onClick={filterHandler("cancel")} className="flex-center">
+              <SettingsBackupRestoreIcon />
+              {isDesktop ? "필터 해제" : "해제"}
             </button>
           </div>
         </div>
