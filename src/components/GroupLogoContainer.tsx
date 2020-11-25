@@ -7,6 +7,7 @@ import InfoGroup from "./InfoGroup";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import bg1 from "../assets/images/bg1.png";
 import useDesktop from "./useDesktop";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -91,6 +92,7 @@ const useStyles = makeStyles((theme) => {
         marginTop: 8,
         fontSize: 12,
         letterSpacing: "-0.6px",
+        whiteSpace: "break-spaces",
       },
       "&> .boxes": {
         marginTop: 40,
@@ -159,19 +161,28 @@ export default function GroupLogoContainer() {
           </div>
           <div className="date">2020. 12. 7. ~ 12. 11.</div>
           <div className="caption">
-            주최·주관 행정안전부, 대통령소속 자치분권위원회,
+            주최·주관{"   "}행정안전부, 대통령소속 자치분권위원회,
             (사)열린사회시민연합
           </div>
           <section className="boxes">
             <Grid container spacing={isDesktop ? 3 : 2}>
               {[
-                ["공지사항"],
-                [isDesktop ? "전국주민자치박람회 주요일정" : "주요일정"],
-                ["우수사례 전시"],
-                [isDesktop ? "학술행사 안내" : "학술행사"],
+                ["공지사항", "/home/sPnn8zdVEYxNrQS5MbtF"],
+                [
+                  isDesktop ? "전국주민자치박람회 주요일정" : "주요일정",
+                  "/post/Vu39IzrVODw6IGHBjlyD",
+                ],
+                [
+                  isDesktop ? "우수사례 전시" : "우수사례",
+                  "/home/aA7LUOKOSJ0fo6cHzy56",
+                ],
+                [
+                  isDesktop ? "학술행사 안내" : "학술행사",
+                  "/home/vSX96T1oejM7icgzFpxv",
+                ],
               ].map((item: string[]) => (
                 <Grid item xs={isDesktop ? 3 : 6} key={item[0]}>
-                  <div className={classes.gridbox}>
+                  <Link to={item[1]} className={classes.gridbox}>
                     <div className="title">{item[0]}</div>
                     <div className="detail">
                       <Hidden smDown implementation="css">
@@ -179,7 +190,7 @@ export default function GroupLogoContainer() {
                       </Hidden>
                       <NavigateNextIcon className="svg" />
                     </div>
-                  </div>
+                  </Link>
                 </Grid>
               ))}
             </Grid>
