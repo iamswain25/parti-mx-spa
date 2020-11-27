@@ -7,9 +7,7 @@ import {
   Typography,
   Divider,
 } from "@material-ui/core";
-import { User } from "../types";
 import useUser from "../store/useUser";
-import useStoragePath from "../store/useStoragePath";
 const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(4),

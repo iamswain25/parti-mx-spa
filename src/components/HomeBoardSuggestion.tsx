@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => {
 export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, limit: 3 });
   const [group_id] = useGroupId();
   return (
     <>
