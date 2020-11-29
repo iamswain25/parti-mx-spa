@@ -71,7 +71,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontWeight: 500,
       color: theme.palette.grey[900],
       "&.active": {
-        color: theme.palette.primary.main,
+        color: "#544F85",
+        // color: theme.palette.primary.main,
       },
     },
   },
