@@ -42,7 +42,7 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [group_id] = useGroupId();
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, limit: 4 });
   return (
     <>
       <section className={classes.container}>
