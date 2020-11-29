@@ -99,7 +99,9 @@ export default function HeaderRemain() {
             <DrawerGroup />
           </Hidden>
           <Grid item xs={3} className={classes.logoFont}>
-            <Link to={`/${group_id}`}>{TITLE}</Link>
+            <Link to={`/${group_id}`}>
+              <img src={`/bi.png`} alt="bi" />
+            </Link>
           </Grid>
           <Grid item xs={7} className={classes.flexcenter}>
             {boards.map((b, i) => (
