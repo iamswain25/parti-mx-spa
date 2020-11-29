@@ -66,6 +66,7 @@ const LoginForm: FunctionComponent = () => {
     const { email, password } = form;
     try {
       await auth.signInWithEmailAndPassword(email, password);
+      closeLoginModal();
     } catch (error) {
       loginError(error, setError);
     }
