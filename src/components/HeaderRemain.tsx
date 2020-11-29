@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     "& .boards": {
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: 500,
-      color: theme.palette.grey[500],
+      color: theme.palette.grey[900],
       "&.active": {
         color: theme.palette.primary.main,
       },
