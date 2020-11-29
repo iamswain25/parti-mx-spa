@@ -3,13 +3,18 @@ import React from "react";
 import { LazyImage } from "react-lazy-images";
 import useStoragePath from "../store/useStoragePath";
 import { Img } from "../types";
+import defaultPng from "../assets/images/logo-jeongukminju.png";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-      backgroundColor: theme.palette.grey[100],
-      objectFit: "contain",
-      [theme.breakpoints.down("sm")]: {},
-      [theme.breakpoints.up("md")]: {},
+      backgroundColor: theme.palette.grey[200],
+      border: `solid 1px ${theme.palette.grey[300]}`,
+      width: "100%",
+      height: "100%",
+      position: "absolute",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     },
   };
 });
@@ -34,7 +39,7 @@ export default function StorageImage(
   if ("image" in props && !props.image) {
     return (
       <div className={className}>
-        <img src="/ogp.png" alt="ogp" />
+        <img src={defaultPng} alt="defaultPng" />
       </div>
     );
   }
