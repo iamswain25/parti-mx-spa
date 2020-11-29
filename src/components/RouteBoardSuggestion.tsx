@@ -17,6 +17,12 @@ import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
+      [theme.breakpoints.up("md")]: {
+        marginTop: -theme.spacing(3),
+      },
+      [theme.breakpoints.down("sm")]: {
+        marginTop: -theme.spacing(1),
+      },
       backgroundColor: theme.palette.grey[50],
       position: "absolute",
       width: "100%",

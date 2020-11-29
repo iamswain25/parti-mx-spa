@@ -17,6 +17,7 @@ import { TITLE } from "../helpers/options";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
+    borderBottom: "1px solid #E0E0E0",
     // color: theme.palette.primary.main,
     color: "rgba(18, 18, 18, 0.74)",
     boxShadow: "none",
