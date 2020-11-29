@@ -126,7 +126,7 @@ export default function Footer() {
             </div>
             <div>
               <a
-                href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
+                href="/post/m5AGcFMUhFLADV1rg9WX"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
@@ -134,7 +134,7 @@ export default function Footer() {
                 이용약관
               </a>
               <a
-                href="https://drive.google.com/file/d/1p9laSCxw_hmoMo-Iw_3P6YfvH_eF2Zhl/view?usp=sharing"
+                href="/post/69bCfUCukUvs89Jfurj5"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
