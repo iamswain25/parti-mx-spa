@@ -1,7 +1,7 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Box } from "@material-ui/core";
+import { Typography, Grid, Box, LinearProgress } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
@@ -43,6 +43,9 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [group_id] = useGroupId();
   const [posts] = usePosts({ board_id: b.id, limit: 4 });
+  if (posts === undefined) {
+    return <LinearProgress />;
+  }
   return (
     <>
       <section className={classes.container}>

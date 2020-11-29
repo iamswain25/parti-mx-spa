@@ -6,7 +6,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import IconButton from "@material-ui/core/IconButton";
 import { grey } from "@material-ui/core/colors";
 import BoardPostVote from "./BoardPostVote";
-import { Typography, Grid, Box } from "@material-ui/core";
+import { Typography, Grid, Box, LinearProgress } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import GreyDivider from "./GreyDivider";
@@ -122,6 +122,9 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
       partialVisibilityGutter: 100,
     },
   };
+  if (posts === undefined) {
+    return <LinearProgress />;
+  }
   return (
     <>
       <section className={classes.container}>

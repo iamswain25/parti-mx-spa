@@ -12,7 +12,7 @@ import {
   KEYWORD_INDEX,
 } from "../helpers/options";
 import HomeBoardPhoto from "./HomeBoardPhoto";
-import { Grid } from "@material-ui/core";
+import { Grid, LinearProgress } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
   return {
@@ -169,6 +169,9 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
     },
     [setFilter, setChips]
   );
+  if (posts === undefined) {
+    return <LinearProgress />;
+  }
   return (
     <>
       <section className={classes.root}>

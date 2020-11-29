@@ -2,7 +2,13 @@ import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import { Typography, Grid, Box, Button } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  Box,
+  Button,
+  LinearProgress,
+} from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
 import usePosts from "../store/usePosts";
 import useBoardCounter from "../store/useBoardCounter";
@@ -26,6 +32,9 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
   const [isClosed, setClosed] = React.useState(false);
   const [posts] = usePosts({ board_id: b.id });
   const [counter] = useBoardCounter({ board_id: b.id });
+  if (posts === undefined) {
+    return <LinearProgress />;
+  }
   return (
     <section className={classes.root}>
       <Grid container alignItems="center" className={classes.titleContainer}>

@@ -13,8 +13,8 @@ export default function usePosts({
   tags?: string[];
   isClosed?: boolean;
   limit?: number;
-}): [Post[]] {
-  const [items, setItems] = React.useState<Post[]>([]);
+}): [Post[] | undefined] {
+  const [items, setItems] = React.useState<Post[] | undefined>(undefined);
   React.useEffect(() => {
     let query = firestore
       .collection("posts")

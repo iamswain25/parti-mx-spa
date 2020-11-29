@@ -6,6 +6,7 @@ import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 import ScheduleImgs from "./ScheduleImgs";
 import HomeBoardEvent from "./HomeBoardEvent";
+import { LinearProgress } from "@material-ui/core";
 
 export default function Home() {
   const [boards] = useBoards();
@@ -26,7 +27,7 @@ export default function Home() {
   });
   return (
     <>
-      {boardArr}
+      {boardArr.length > 0 ? boardArr : <LinearProgress />}
       <ScheduleImgs />
     </>
   );

@@ -3,7 +3,14 @@ import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
-import { Typography, Grid, Box, Divider, Hidden } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  Box,
+  Divider,
+  Hidden,
+  LinearProgress,
+} from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import PostSort from "./PostSort";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
@@ -31,6 +38,9 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [posts] = usePosts({ board_id: b.id });
   const [counter] = useBoardCounter({ board_id: b.id });
+  if (posts === undefined) {
+    return <LinearProgress />;
+  }
   return (
     <section className={classes.container}>
       <Grid
