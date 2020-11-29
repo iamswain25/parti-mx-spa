@@ -45,10 +45,12 @@ export default function GooglePlaceAutocomplete(props: {
                 fullWidth
                 label="주소를 입력하세요"
                 helperText="예) 대한민국 서울특별시 서대문구 남가좌1동 서대문구사회적경제마을센터"
-                {...getInputProps({
-                  placeholder: "주소를 검색하세요 ...",
-                  className: "location-search-input",
-                })}
+                inputProps={
+                  getInputProps({
+                    placeholder: "주소를 검색하세요 ...",
+                    className: "location-search-input",
+                  }) as any
+                }
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}

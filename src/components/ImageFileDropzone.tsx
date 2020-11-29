@@ -63,7 +63,7 @@ export default function ImageFileDropzone(props: {
     setImages([...images]);
   }
   const filesDrop = useDropzone({ onDrop: onFileDrop });
-  const imagesDrop = useDropzone({ onDrop: onImageDrop });
+  const imagesDrop = useDropzone({ onDrop: onImageDrop, accept: "image/*" });
   function onSortEnd({ oldIndex, newIndex }: SortEnd) {
     setImages(arrayMove(images, oldIndex, newIndex));
   }
