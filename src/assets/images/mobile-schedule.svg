@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="560" viewBox="0 0 320 560">
+    <defs>
+        <filter id="7lhmvjzhja" width="144.4%" height="144.4%" x="-11.1%" y="-11.1%" filterUnits="objectBoundingBox">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.268247378 0"/>
+        </filter>
+        <filter id="4vzzbxq8nc" width="144.4%" height="144.4%" x="-11.1%" y="-11.1%" filterUnits="objectBoundingBox">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.268247378 0"/>
+        </filter>
+        <filter id="p1p7iv6j9e" width="144.4%" height="144.4%" x="-11.1%" y="-11.1%" filterUnits="objectBoundingBox">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.268247378 0"/>
+        </filter>
+        <filter id="l7x32669cg" width="144.4%" height="144.4%" x="-11.1%" y="-11.1%" filterUnits="objectBoundingBox">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.268247378 0"/>
+        </filter>
+        <filter id="1ic6alokbi" width="144.4%" height="144.4%" x="-11.1%" y="-11.1%" filterUnits="objectBoundingBox">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.268247378 0"/>
+        </filter>
+        <circle id="9jyf50f79b" cx="42.5" cy="4.5" r="4.5"/>
+        <circle id="z8tme93n7d" cx="42.5" cy="4.5" r="4.5"/>
+        <circle id="79y4lcf0sf" cx="42.5" cy="4.5" r="4.5"/>
+        <circle id="sds9ggcwdh" cx="42.5" cy="4.5" r="4.5"/>
+        <circle id="4xocw1uehj" cx="42.5" cy="4.5" r="4.5"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g transform="translate(-970 -666) translate(970 666)">
+                    <g fill="#544F85" font-family="Roboto-Regular, Roboto" font-size="14">
+                        <text transform="translate(27.778 58.173)">
+                            <tspan x="72.825" y="15">2020. 12. 2. - 12. 7.</tspan>
+                        </text>
+                    </g>
+                    <rect width="319" height="53.42" x=".5" y=".5" fill="#F5F5F5" stroke="#8F8ABF" rx="4"/>
+                    <g fill="#544F85" font-family="NotoSansCJKkr-Bold, Noto Sans CJK KR" font-size="16" font-weight="bold">
+                        <text transform="translate(4.444 14.074)">
+                            <tspan x="85.684" y="19">우수사례 전시관 심사</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g transform="translate(-970 -666) translate(970 666) translate(0 288)">
+                    <g fill="#544F85" font-family="Roboto-Regular, Roboto" font-size="14">
+                        <text transform="translate(16.667 58.173)">
+                            <tspan x="79.316" y="15">2020. 12. 9. </tspan> <tspan x="159.659" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">오후</tspan> <tspan x="183.879" y="15"> 7</tspan> <tspan x="195.24" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">시</tspan>
+                        </text>
+                    </g>
+                    <rect width="319" height="53.42" x=".5" y=".5" fill="#F5F5F5" stroke="#8F8ABF" rx="4"/>
+                    <g fill="#544F85" font-family="NotoSansCJKkr-Bold, Noto Sans CJK KR" font-size="16" font-weight="bold">
+                        <text transform="translate(24.444 14.074)">
+                            <tspan x="74.86" y="19">주민자치 리더교육</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g transform="translate(-970 -666) translate(970 666) translate(0 191)">
+                    <g fill="#544F85" font-family="Roboto-Regular, Roboto" font-size="14">
+                        <text transform="translate(16.667 58.173)">
+                            <tspan x="79.316" y="15">2020. 12. 8. </tspan> <tspan x="159.659" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">오후</tspan> <tspan x="183.879" y="15"> 2</tspan> <tspan x="195.24" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">시</tspan>
+                        </text>
+                    </g>
+                    <rect width="319" height="53.42" x=".5" y=".5" fill="#F5F5F5" stroke="#8F8ABF" rx="4"/>
+                    <g fill="#544F85" font-family="NotoSansCJKkr-Bold, Noto Sans CJK KR" font-size="16" font-weight="bold">
+                        <text transform="translate(73.333 14.074)">
+                            <tspan x="48.051" y="19">정책 토론회</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g transform="translate(-970 -666) translate(970 666) translate(0 96)">
+                    <g fill="#544F85" font-family="Roboto-Regular, Roboto" font-size="14">
+                        <text transform="translate(16.667 58.173)">
+                            <tspan x="79.316" y="15">2020. 12. 7. </tspan> <tspan x="159.659" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">오후</tspan> <tspan x="183.879" y="15"> 2</tspan> <tspan x="195.24" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">시</tspan>
+                        </text>
+                    </g>
+                    <rect width="319" height="53.42" x=".5" y=".5" fill="#F5F5F5" stroke="#8F8ABF" rx="4"/>
+                    <g fill="#544F85" font-family="NotoSansCJKkr-Bold, Noto Sans CJK KR" font-size="16" font-weight="bold">
+                        <text transform="translate(36.667 14.074)">
+                            <tspan x="68.181" y="19">박람회 개막 포럼</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g transform="translate(-970 -666) translate(970 666) translate(0 384)">
+                    <g fill="#544F85" font-family="Roboto-Regular, Roboto" font-size="14">
+                        <text transform="translate(0 58.173)">
+                            <tspan x="88.098" y="15">2020. 12. 11. </tspan> <tspan x="176.322" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">오전</tspan> <tspan x="200.542" y="15"> 10</tspan> <tspan x="219.792" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">시</tspan>
+                        </text>
+                    </g>
+                    <rect width="319" height="53.42" x=".5" y=".5" fill="#F5F5F5" stroke="#8F8ABF" rx="4"/>
+                    <g fill="#544F85" font-family="NotoSansCJKkr-Bold, Noto Sans CJK KR" font-size="16" font-weight="bold">
+                        <text transform="translate(57.778 14.074)">
+                            <tspan x="56.246" y="19">우수사례 발표</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g transform="translate(-970 -666) translate(970 666) translate(0 482)">
+                    <g fill="#544F85" font-family="Roboto-Regular, Roboto" font-size="14">
+                        <text transform="translate(8.889 58.173)">
+                            <tspan x="83.153" y="15">2020. 12. 11. </tspan> <tspan x="171.378" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">오후</tspan> <tspan x="195.598" y="15"> 3</tspan> <tspan x="206.959" y="15" font-family="AppleSDGothicNeo-Regular, Apple SD Gothic Neo">시</tspan>
+                        </text>
+                    </g>
+                    <rect width="319" height="53.42" x=".5" y=".5" fill="#F5F5F5" stroke="#8F8ABF" rx="4"/>
+                    <g fill="#544F85" font-family="NotoSansCJKkr-Bold, Noto Sans CJK KR" font-size="16" font-weight="bold">
+                        <text transform="translate(20 14.074)">
+                            <tspan x="77.488" y="19">시상식 박람회 폐막</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g>
+                    <path stroke="#8F8ABF" stroke-linecap="square" d="M0 4.5L42 4.5" opacity=".4" transform="translate(-970 -666) translate(970 666) rotate(90 -50.5 99.5)"/>
+                    <g transform="translate(-970 -666) translate(970 666) rotate(90 -50.5 99.5)">
+                        <use fill="#000" filter="url(#7lhmvjzhja)" xlink:href="#9jyf50f79b"/>
+                        <use fill="#8F8ABF" xlink:href="#9jyf50f79b"/>
+                    </g>
+                </g>
+                <g>
+                    <path stroke="#8F8ABF" stroke-linecap="square" d="M0 4.5L42 4.5" opacity=".4" transform="translate(-970 -666) translate(970 666) rotate(90 -146.5 195.5)"/>
+                    <g transform="translate(-970 -666) translate(970 666) rotate(90 -146.5 195.5)">
+                        <use fill="#000" filter="url(#4vzzbxq8nc)" xlink:href="#z8tme93n7d"/>
+                        <use fill="#8F8ABF" xlink:href="#z8tme93n7d"/>
+                    </g>
+                </g>
+                <g>
+                    <path stroke="#8F8ABF" stroke-linecap="square" d="M0 4.5L42 4.5" opacity=".4" transform="translate(-970 -666) translate(970 666) rotate(90 113 167)"/>
+                    <g transform="translate(-970 -666) translate(970 666) rotate(90 113 167)">
+                        <use fill="#000" filter="url(#p1p7iv6j9e)" xlink:href="#79y4lcf0sf"/>
+                        <use fill="#8F8ABF" xlink:href="#79y4lcf0sf"/>
+                    </g>
+                </g>
+                <g>
+                    <path stroke="#8F8ABF" stroke-linecap="square" d="M0 4.5L42 4.5" opacity=".4" transform="translate(-970 -666) translate(970 666) rotate(90 17 263)"/>
+                    <g transform="translate(-970 -666) translate(970 666) rotate(90 17 263)">
+                        <use fill="#000" filter="url(#l7x32669cg)" xlink:href="#sds9ggcwdh"/>
+                        <use fill="#8F8ABF" xlink:href="#sds9ggcwdh"/>
+                    </g>
+                </g>
+                <g>
+                    <path stroke="#8F8ABF" stroke-linecap="square" d="M0 4.5L42 4.5" opacity=".4" transform="translate(-970 -666) translate(970 666) rotate(90 -80 360)"/>
+                    <g transform="translate(-970 -666) translate(970 666) rotate(90 -80 360)">
+                        <use fill="#000" filter="url(#1ic6alokbi)" xlink:href="#4xocw1uehj"/>
+                        <use fill="#8F8ABF" xlink:href="#4xocw1uehj"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
