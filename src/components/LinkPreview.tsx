@@ -1,6 +1,5 @@
 import React from "react";
 import getUrls from "get-urls";
-import { Box } from "@material-ui/core";
 import ReactPlayer from "react-player";
 export default function LinkPreview({ text = "" }: { text?: string }) {
   const urls = React.useMemo(() => Array.from(getUrls(text)), [text]);
@@ -8,7 +7,7 @@ export default function LinkPreview({ text = "" }: { text?: string }) {
     <>
       {urls.map((url, i) =>
         ReactPlayer.canPlay(url) ? (
-          <Box className="player-wrapper" key={i} pt={2}>
+          <div className="player-wrapper" key={i}>
             <ReactPlayer
               url={url}
               width="100%"
@@ -16,7 +15,7 @@ export default function LinkPreview({ text = "" }: { text?: string }) {
               className="react-player"
               controls={true}
             />
-          </Box>
+          </div>
         ) : null
       )}
     </>
