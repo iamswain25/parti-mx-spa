@@ -53,7 +53,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
     <>
       <CopyToClipboard
         text={url}
-        onCopy={() => setSuccess("Copied to clipboard!")}
+        onCopy={() => setSuccess("링크를 복사했습니다.")}
       >
         <IconButton>
           <svg
