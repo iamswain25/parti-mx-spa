@@ -9,6 +9,8 @@ import { FormData } from "../types";
 import { Box, LinearProgress } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useLoginModal } from "../store/useGlobalState";
+import { auth } from "../config/firebase";
+import { loginError } from "../helpers/firebaseErrorCode";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -46,19 +48,28 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
+  error: {
+    color: theme.palette.error.main,
+    whiteSpace: "break-spaces",
+  },
 }));
 
-type LoginFormProps = {
-  handleForm: (form: FormData) => void;
-};
-
-const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
+const LoginForm: FunctionComponent = () => {
   const classes = useStyles();
+  const [error, setError] = React.useState(undefined);
   const [, setVisible] = useLoginModal();
   const { handleSubmit, register, errors, formState } = useForm<FormData>();
   function closeLoginModal() {
     setVisible(false);
   }
+  const handleForm = async (form: FormData) => {
+    const { email, password } = form;
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      loginError(error, setError);
+    }
+  };
   return (
     <>
       {formState.isSubmitting && <LinearProgress />}
@@ -81,10 +92,10 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
               autoComplete="email"
               autoFocus
               inputRef={register({
-                required: "Required",
+                required: "필수 입력 항목입니다.",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "invalid email address",
+                  message: "올바른 이메일 주소를 입력하세요.",
                 },
               })}
               required={errors.email ? true : false}
@@ -101,12 +112,13 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleForm }) => {
               id="password"
               autoComplete="current-password"
               inputRef={register({
-                required: "Required",
+                required: "필수 입력 항목입니다.",
               })}
               required={errors.password ? true : false}
               error={errors.password ? true : false}
               helperText={errors.password && errors.password.message}
             />
+            {error && <div className={classes.error}>{error}</div>}
             <Button
               type="submit"
               fullWidth

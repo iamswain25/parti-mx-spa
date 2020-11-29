@@ -1,11 +1,8 @@
 import React from "react";
-import { FormData } from "../types";
-import { auth } from "../config/firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import LoginForm from "./LoginForm";
-import { loginError } from "../helpers/firebaseErrorCode";
-import { useError, useLoginModal } from "../store/useGlobalState";
+import { useLoginModal } from "../store/useGlobalState";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -22,19 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginModal() {
   const [isVisible, setVisible] = useLoginModal();
-  const [, setError] = useError();
   const classes = useStyles();
   function handleClose() {
     setVisible(false);
-  }
-  async function handleForm(form: FormData) {
-    const { email, password } = form;
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      handleClose();
-    } catch (error) {
-      loginError(error, setError);
-    }
   }
   if (!isVisible) {
     return null;
@@ -49,7 +36,7 @@ export default function LoginModal() {
       aria-describedby="simple-modal-description"
     >
       <div className={classes.paper}>
-        <LoginForm handleForm={handleForm} />
+        <LoginForm />
       </div>
     </Modal>
   );
