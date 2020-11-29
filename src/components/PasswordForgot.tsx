@@ -5,7 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import { Button, Typography, Container } from "@material-ui/core";
 import { DOMAIN } from "../helpers/options";
-import { useError, useSuccess } from "../store/useGlobalState";
+import { useSuccess } from "../store/useGlobalState";
+import { loginError } from "../helpers/firebaseErrorCode";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -48,11 +49,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
+  error: {
+    color: theme.palette.error.main,
+    whiteSpace: "break-spaces",
+  },
 }));
 type FormEmail = { email: string };
 export default function PasswordForgot() {
   const classes = useStyles();
-  const [, setError] = useError();
+  const [error, setError] = React.useState(undefined);
   const [, setSuccess] = useSuccess();
   const { handleSubmit, register, errors, reset } = useForm<FormEmail>();
   async function formHandler(form: FormEmail) {
@@ -67,7 +72,7 @@ export default function PasswordForgot() {
       setSuccess(email + "로 이메일을 보냈습니다. 1시간 이내에 확인 바랍니다.");
       reset();
     } catch (error) {
-      setError(error.message);
+      loginError(error, setError);
     }
   }
 
@@ -92,7 +97,7 @@ export default function PasswordForgot() {
             autoComplete="email"
             autoFocus
             inputRef={register({
-              required: "Required",
+              required: "필수 입력 항목입니다.",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                 message: "올바른 이메일 주소를 입력하세요.",
@@ -102,6 +107,7 @@ export default function PasswordForgot() {
             error={errors.email ? true : false}
             helperText={errors.email && errors.email.message}
           />
+          {error && <div className={classes.error}>{error}</div>}
           <div className={classes.wrapper}>
             <Button
               type="submit"
