@@ -5,7 +5,6 @@ import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
 import useDesktop from "./useDesktop";
-import { semanticDate } from "../helpers/datefns";
 import SuggestionComment from "./SuggestionComment";
 import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
@@ -128,7 +127,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { images = [], created_at, context, files = [] } = p;
+  const { images = [], context, files = [] } = p;
   const metadata = p.metadata as SuggestionMetadata;
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
@@ -148,14 +147,6 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </Box>
         <Box my={2}>
           <Divider light />
-        </Box>
-        <Box mb={2}>
-          <Grid container alignItems="center" justify="space-between">
-            <Box display="flex" alignItems="center">
-              <Box className={classes.label}>전시일</Box>
-              <Box>{semanticDate(created_at)}</Box>
-            </Box>
-          </Grid>
         </Box>
         {ReactPlayer.canPlay(metadata?.youtube) && (
           <div className="player-wrapper">
