@@ -9,12 +9,9 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: theme.palette.grey[200],
       border: `solid 1px ${theme.palette.grey[300]}`,
-      width: "100%",
-      height: "100%",
-      position: "absolute",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      objectFit: "contain",
+      [theme.breakpoints.down("sm")]: {},
+      [theme.breakpoints.up("md")]: {},
     },
   };
 });

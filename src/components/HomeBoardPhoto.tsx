@@ -35,6 +35,16 @@ export const useStyles = makeStyles((theme) => ({
     },
     "&>.title": { marginBottom: theme.spacing(0.5) },
   },
+  full: {
+    backgroundColor: theme.palette.grey[200],
+    border: `solid 1px ${theme.palette.grey[300]}`,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 export default function HomeBoardPhoto({
@@ -51,7 +61,7 @@ export default function HomeBoardPhoto({
     <Grid item xs={xs} md={md}>
       <NavLink exact to={`/post/${p.id}`}>
         <div className={classes.aspectRatio}>
-          <StorageImage image={p?.images?.[0]} />
+          <StorageImage image={p?.images?.[0]} className={classes.full} />
         </div>
         <div className={classes.hover}>
           <div className="title">
