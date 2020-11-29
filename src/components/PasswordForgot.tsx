@@ -95,7 +95,7 @@ export default function PasswordForgot() {
               required: "Required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "맞지 않는 이메일 형식 입니다.",
+                message: "올바른 이메일 주소를 입력하세요.",
               },
             })}
             required={errors.email ? true : false}

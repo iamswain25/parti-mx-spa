@@ -18,8 +18,9 @@ import {
 } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { Link, useHistory } from "react-router-dom";
-import { useCurrentUser, useError } from "../store/useGlobalState";
+import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
+import { loginError } from "../helpers/firebaseErrorCode";
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingTop: theme.spacing(8),
@@ -65,11 +66,15 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "underline",
     },
   },
+  error: {
+    color: theme.palette.error.main,
+    whiteSpace: "break-spaces",
+  },
 }));
 export default function Signup() {
   useRedirectIfLogin();
   const classes = useStyles();
-  const [, setError] = useError();
+  const [error, setError] = React.useState(undefined);
   const [, setCurrentUser] = useCurrentUser();
   const history = useHistory<{ from: { pathname: string } }>();
   const { from } = history.location.state ?? { from: "/" };
@@ -114,7 +119,7 @@ export default function Signup() {
         history.replace(from);
       }
     } catch (error) {
-      setError(error.message);
+      loginError(error, setError);
     }
   }
   return (
@@ -140,10 +145,10 @@ export default function Signup() {
               autoComplete="email"
               autoFocus
               inputRef={register({
-                required: "Required",
+                required: "필수 입력 항목입니다.",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "맞지 않는 이메일 형식 입니다.",
+                  message: "올바른 이메일 주소를 입력하세요.",
                 },
               })}
               required={!!errors.email}
@@ -160,7 +165,7 @@ export default function Signup() {
               id="password"
               autoComplete="current-password"
               inputRef={register({
-                required: "Required",
+                required: "필수 입력 항목입니다.",
               })}
               required={!!errors.password}
               error={!!errors.password}
@@ -173,7 +178,7 @@ export default function Signup() {
               name="name"
               label="닉네임"
               inputRef={register({
-                required: "Required",
+                required: "필수 입력 항목입니다.",
                 validate: async (value: string) => {
                   const res = await firestore
                     .collection("users")
@@ -197,7 +202,7 @@ export default function Signup() {
               <FormGroup>
                 <Controller
                   name="term_service"
-                  rules={{ required: "필수" }}
+                  rules={{ required: "필수 입력 항목입니다." }}
                   control={control}
                   defaultValue={false}
                   render={({ onChange, value, ...rest }) => (
@@ -224,7 +229,7 @@ export default function Signup() {
                 />
                 <Controller
                   name="term_privacy"
-                  rules={{ required: "필수" }}
+                  rules={{ required: "필수 입력 항목입니다." }}
                   control={control}
                   defaultValue={false}
                   render={({ onChange, value, ...rest }) => (
@@ -252,11 +257,10 @@ export default function Signup() {
               </FormGroup>
               {(errors?.term_privacy?.message ||
                 errors?.term_service?.message) && (
-                <FormHelperText>
-                  모두 체크하셔야 가입 가능합니다.
-                </FormHelperText>
+                <FormHelperText>약관에 모두 동의하셔야 합니다.</FormHelperText>
               )}
             </FormControl>
+            {error && <div className={classes.error}>{error}</div>}
             <div className={classes.wrapper}>
               <Button
                 disabled={formState.isSubmitting}
