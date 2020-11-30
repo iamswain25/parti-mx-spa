@@ -1,6 +1,5 @@
 import { uploadFileByUUID } from "../config/firebase";
 import { RawDraftContentState } from "react-draft-wysiwyg";
-
 export async function makeNewVariables(form: any, other: any) {
   const { imageArr, fileArr, setSuccess, ...rest } = other;
   let images = null;
@@ -15,6 +14,8 @@ export async function makeNewVariables(form: any, other: any) {
   }
   if (form.isHtml) {
     const html = form.html as RawDraftContentState;
+    /* entityMap -> data -> _map이 Map 데이터타입(keyed collection) 안데 이걸 일반 object로 변환 처리 */
+    form.html = JSON.parse(JSON.stringify(html));
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
@@ -60,6 +61,7 @@ export async function makeUpdateVariables(form: any, other: any) {
   }
   if (form.isHtml) {
     const html = form.html as RawDraftContentState;
+    form.html = JSON.parse(JSON.stringify(html));
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");

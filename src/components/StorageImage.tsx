@@ -25,7 +25,7 @@ export default function StorageImage(
   const className = props.className
     ? `${classes.root} ${props.className}`
     : classes.root;
-  if ("thumb" in props && props?.thumb) {
+  if ("thumb" in props && props?.thumb && path) {
     const arr = path?.split("/");
     const img = arr.pop();
     arr.push("thumbs", img + "_364x240");
