@@ -4,13 +4,6 @@ import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import StorageImage from "./StorageImage";
 export const useStyles = makeStyles((theme) => ({
-  img: {
-    objectFit: "cover",
-    maxHeight: "100%",
-    width: "100%",
-    position: "absolute",
-    height: "100%",
-  },
   aspectRatio: {
     display: "flex",
     position: "relative",
@@ -20,6 +13,13 @@ export const useStyles = makeStyles((theme) => ({
       paddingBottom: "65.85%",
       display: "inline-block",
       verticalAlign: "top",
+    },
+    "&>img": {
+      objectFit: "cover",
+      maxHeight: "100%",
+      width: "100%",
+      position: "absolute",
+      height: "100%",
     },
     "&>.floating": {
       position: "absolute",

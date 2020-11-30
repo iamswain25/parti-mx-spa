@@ -1,8 +1,7 @@
 import { makeStyles } from "@material-ui/core";
-import React from "react";
 import partiLogo from "../assets/images/logo-parti.png";
 import juminLogo from "../assets/images/logo-jeongukminju-color.png";
-import { EMAIL, TELEPHONE } from "../helpers/options";
+import { EMAIL } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
   bgGrey: {
     backgroundColor: theme.palette.grey[100],
