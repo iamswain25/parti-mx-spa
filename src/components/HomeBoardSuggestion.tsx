@@ -61,7 +61,12 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   const [group_id] = useGroupId();
   const randomPosts = React.useMemo(() => {
     if (posts) {
-      return posts?.sort(() => Math.random() - Math.random())?.slice(0, 3);
+      const set = new Set<number>();
+      while (set.size < 3) {
+        set.add(Math.floor(Math.random() * posts.length));
+      }
+      return Array.from(set).map((index) => posts[index]);
+      // return posts?.sort(() => Math.random() - Math.random())?.slice(0, 3);
     }
     return [];
   }, [posts]);
