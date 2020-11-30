@@ -11,7 +11,7 @@ import {
   DEFAULT_HASHTAGS,
   KEYWORD_INDEX,
 } from "../helpers/options";
-import HomeBoardPhoto from "./HomeBoardPhoto";
+import SquarePhoto from "./SquarePhoto";
 import { Grid, LinearProgress } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => {
@@ -244,7 +244,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
                   true
             )
             .map((p) => (
-              <HomeBoardPhoto key={p.id} p={p} xs={12} md={4} />
+              <SquarePhoto key={p.id} p={p} xs={12} md={4} />
             ))}
         </Grid>
       </div>

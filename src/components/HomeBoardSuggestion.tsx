@@ -7,7 +7,7 @@ import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
-import HomeBoardPhoto from "./HomeBoardPhoto";
+import SquarePhoto from "./SquarePhoto";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -79,7 +79,7 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           className={classes.photoGrid}
         >
           {posts?.map((p) => (
-            <HomeBoardPhoto key={p.id} p={p} xs={12} md={4} />
+            <SquarePhoto key={p.id} p={p} xs={12} md={4} />
           ))}
         </Grid>
         <div className={classes.mobileMore}>
