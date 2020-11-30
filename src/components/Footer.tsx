@@ -121,7 +121,13 @@ export default function Footer() {
               <span className="margintop">
                 <strong>문의</strong>
               </span>
-              <a href={`tel:${TELEPHONE}`}>{TELEPHONE}</a>
+              <a
+                href="https://open.kakao.com/o/grvMsgJc"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                카카오톡 오픈채팅
+              </a>
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </div>
             <div>
