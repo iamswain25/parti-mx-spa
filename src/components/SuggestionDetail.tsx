@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => {
     more: {
       display: "flex",
       alignItems: "center",
-      justifyContent: "flex-end",
+      justifyContent: "flex-start",
       "&>button": {
         cursor: "pointer",
         border: "none",
@@ -115,12 +115,12 @@ const useStyles = makeStyles((theme) => {
         alignItems: "center",
         justifyContent: "center",
         flexWrap: "wrap",
-        color: theme.palette.primary.main,
-        backgroundColor: "transparent",
+        color: theme.palette.common.white,
+        backgroundColor: theme.palette.primary.main,
         "&>svg": {
           width: 20,
           height: 20,
-          color: theme.palette.grey[600],
+          color: theme.palette.common.white,
         },
       },
     },

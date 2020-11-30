@@ -32,7 +32,7 @@ export default function FilesImages(props: { files?: File[]; images: Img[] }) {
       <Grid container spacing={2}>
         {files?.map((f, i) => {
           return (
-            <Grid container item xs={12} key={f.uri}>
+            <Grid container item xs={12} key={f.path}>
               <div className={classes.hover}>
                 <div className={classes.flex}>
                   <AttachFileIcon />
