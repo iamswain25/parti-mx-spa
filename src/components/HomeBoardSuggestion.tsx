@@ -57,8 +57,14 @@ const useStyles = makeStyles((theme) => {
 export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  const [posts] = usePosts({ board_id: b.id, limit: 3 });
+  const [posts] = usePosts({ board_id: b.id });
   const [group_id] = useGroupId();
+  const randomPosts = React.useMemo(() => {
+    if (posts) {
+      return posts?.sort(() => Math.random() - Math.random())?.slice(0, 3);
+    }
+    return [];
+  }, [posts]);
   return (
     <>
       <section className={classes.container}>
@@ -78,7 +84,7 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           spacing={isDesktop ? 3 : 0}
           className={classes.photoGrid}
         >
-          {posts?.map((p) => (
+          {randomPosts.map((p) => (
             <SquarePhoto key={p.id} p={p} xs={12} md={4} />
           ))}
         </Grid>

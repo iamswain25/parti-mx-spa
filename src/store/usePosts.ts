@@ -8,7 +8,6 @@ export default function usePosts({
   listen = false,
   isClosed,
   where,
-  orderBy = ["created_at", "desc"],
 }: {
   board_id: string;
   listen?: boolean;
@@ -18,13 +17,15 @@ export default function usePosts({
     opStr: firebase.firestore.WhereFilterOp,
     value: any
   ];
-  orderBy?: [string, "desc" | "asc"];
   isClosed?: boolean;
   limit?: number;
 }): [Post[] | undefined] {
   const [items, setItems] = React.useState<Post[] | undefined>(undefined);
   React.useEffect(() => {
-    let query = firestore.collection("posts").where("board_id", "==", board_id);
+    let query = firestore
+      .collection("posts")
+      .where("board_id", "==", board_id)
+      .orderBy("created_at", "desc");
 
     // if (tags && tags.length) {
     //   query = query.where("tag", "array-contains-any", tags);
@@ -40,9 +41,6 @@ export default function usePosts({
     }
     if (isClosed !== undefined) {
       query = query.where("is_closed", "==", isClosed);
-    }
-    if (orderBy) {
-      query = query.orderBy(...orderBy);
     }
     if (limit !== undefined) {
       query = query.limit(limit);
@@ -72,6 +70,6 @@ export default function usePosts({
           console.warn("usePosts", error);
         });
     }
-  }, [board_id, listen, isClosed, limit, tags, orderBy, where]);
+  }, [board_id, listen, isClosed, limit, tags, where]);
   return [items];
 }
