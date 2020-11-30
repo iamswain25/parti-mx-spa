@@ -13,7 +13,6 @@ import {
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
-import { TITLE } from "../helpers/options";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -36,8 +35,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.up("md")]: {
       paddingLeft: 30,
       paddingRight: 30,
-      minHeight: 56,
-      height: 56,
+      minHeight: 100,
+      height: 100,
     },
   },
   logoFont: {
@@ -66,10 +65,11 @@ const useStyles = makeStyles((theme: Theme) => ({
       display: "none",
     },
     "& .boards": {
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
-      fontSize: 16,
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      fontSize: 20,
       fontWeight: 500,
+      textAlign: "center",
       color: theme.palette.grey[900],
       "&.active": {
         color: "#544F85",
