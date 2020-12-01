@@ -12,7 +12,8 @@ import {
   KEYWORD_INDEX,
 } from "../helpers/options";
 import SquarePhoto from "./SquarePhoto";
-import { Grid, LinearProgress } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import { Grid, IconButton, LinearProgress } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import useOutsideClicker from "./useOutsideClicker";
 const useStyles = makeStyles((theme) => {
@@ -120,6 +121,7 @@ const useStyles = makeStyles((theme) => {
           boxShadow:
             "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.14)",
           "&>div": {
+            position: "relative",
             display: "flex",
             alignItems: "center",
             // justifyContent: "center",/ n,
@@ -128,7 +130,7 @@ const useStyles = makeStyles((theme) => {
             },
             minHeight: 111,
             paddingLeft: 30,
-            paddingRight: 30,
+            paddingRight: 60,
             [theme.breakpoints.down("sm")]: {
               paddingLeft: theme.spacing(2),
               paddingRight: theme.spacing(2),
@@ -136,6 +138,11 @@ const useStyles = makeStyles((theme) => {
             marginLeft: "auto",
             marginRight: "auto",
             maxWidth: 1200,
+            "&>.close": {
+              position: "absolute",
+              top: 30,
+              right: 30,
+            },
           },
         },
       },
@@ -269,6 +276,9 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
                 }
                 setChips={setChips}
               />
+              <IconButton onClick={filterHandler("hide")} className="close">
+                <CloseIcon />
+              </IconButton>
             </div>
           </div>
         </div>
