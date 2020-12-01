@@ -1,11 +1,7 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import {
-  useCurrentUser,
-  useLoginModal,
-  useSuccess,
-} from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
 import usePostCounter from "../store/usePostCounter";
@@ -47,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const [, showLogin] = useLoginModal();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
   const [counter] = usePostCounter(p.id);
