@@ -140,6 +140,9 @@ const useStyles = makeStyles((theme) => {
             maxWidth: 1200,
             "&>.close": {
               position: "absolute",
+              [theme.breakpoints.down("sm")]: {
+                right: theme.spacing(1),
+              },
               top: 30,
               right: 30,
             },
@@ -148,7 +151,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     container: {
-      paddingTop: 190,
+      paddingTop: 150,
       paddingBottom: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
@@ -157,7 +160,7 @@ const useStyles = makeStyles((theme) => {
       },
       "&>.selected-tags": {
         fontSize: 16,
-        padding: `${theme.spacing(1)}px 0`,
+        padding: `0 0 ${theme.spacing(6)}px`,
         color: theme.palette.primary.main,
       },
     },
@@ -188,10 +191,9 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const wrapperRef = React.useRef(null);
 
   const [chips, setChips] = React.useState<ChipData[]>(defaultTags);
-  const selectedTags = React.useMemo(
-    () => chips.filter((c) => c.selected).map((c) => c.label),
-    [chips]
-  );
+  const selectedTags = React.useMemo(() => chips.filter((c) => c.selected), [
+    chips,
+  ]);
   const [posts] = usePosts({ board_id: b.id });
   const randomPosts = React.useMemo(() => {
     if (posts) {
@@ -199,7 +201,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
         ?.sort(() => Math.random() - Math.random())
         ?.filter((p) =>
           selectedTags.length
-            ? selectedTags.every((tag) => p.tags.includes(tag)) // and 연산
+            ? selectedTags.every((tag) => p.tags.includes(tag?.label)) // and 연산
             : // ? p.tags.every((tag) => selectedTags.includes(tag)) // or 연산
               true
         );
@@ -285,10 +287,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
       </section>
       <div className={classes.container}>
         <div className="selected-tags">
-          {chips
-            .filter((c) => c.selected)
-            .map((c) => `#${c.label}`)
-            .join(" ")}
+          <Chips chips={selectedTags} setChips={setChips} />
         </div>
         <Grid container spacing={isDesktop ? 3 : 0}>
           {randomPosts.length > 0 ? (
