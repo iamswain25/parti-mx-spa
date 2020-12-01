@@ -123,7 +123,7 @@ export default function HeaderRemain() {
             ))}
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
-            <MenuProfile />
+            {currentUser?.email && <MenuProfile />}
             <Hidden smDown>
               {currentUser?.email ? <LogoutButton /> : <LoginButton />}
             </Hidden>
