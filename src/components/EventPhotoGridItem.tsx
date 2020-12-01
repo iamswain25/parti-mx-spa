@@ -1,8 +1,8 @@
 import React from "react";
 import { EventMetadata, Post } from "../types";
 import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
 import StorageImage from "./StorageImage";
+import useNavigateToPost from "./useNavigateToPost";
 export const useStyles = makeStyles((theme) => ({
   aspectRatio: {
     display: "flex",
@@ -81,6 +81,9 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  div: {
+    cursor: "pointer",
+  },
 }));
 
 export default function EventPhotoGridItem({
@@ -94,9 +97,10 @@ export default function EventPhotoGridItem({
 }) {
   const classes = useStyles();
   const metadata = p.metadata as EventMetadata;
+  const navigatePost = useNavigateToPost(p.id);
   return (
     <Grid item xs={xs} md={md}>
-      <NavLink exact to={`/post/${p.id}`}>
+      <div onClick={navigatePost} className={classes.div}>
         <div className={classes.aspectRatio}>
           <StorageImage image={p?.images?.[0]} thumb className={classes.full} />
           <div className={p.is_closed ? "floating closed" : "floating"}>
@@ -119,7 +123,7 @@ export default function EventPhotoGridItem({
             </Grid>
           </Typography>
         </div>
-      </NavLink>
+      </div>
     </Grid>
   );
 }

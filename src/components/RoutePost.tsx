@@ -11,7 +11,7 @@ import { Post, VoteMetadata } from "../types";
 export default function RoutePost() {
   const boardState = useBoardId();
   const groupState = useGroupId();
-  const [p] = usePost(true);
+  const [p] = usePost();
   React.useEffect(() => {
     const [id, set] = boardState;
     if (p && p.board_id !== id) {
