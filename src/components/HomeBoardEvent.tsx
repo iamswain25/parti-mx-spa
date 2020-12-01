@@ -12,11 +12,20 @@ const useStyles = makeStyles((theme) => {
   return {
     container: {
       flex: 1,
-      paddingTop: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(2),
+      },
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(3),
+      },
       paddingBottom: theme.spacing(5),
     },
     titleContainer: {
+      [theme.breakpoints.up("md")]: {
+        marginBottom: theme.spacing(3),
+      },
       [theme.breakpoints.down("sm")]: {
+        marginBottom: theme.spacing(2),
         marginLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
       },
@@ -25,14 +34,6 @@ const useStyles = makeStyles((theme) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-      },
-    },
-    photoGrid: {
-      [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(2),
-      },
-      [theme.breakpoints.up("md")]: {
-        paddingTop: theme.spacing(3),
       },
     },
   };
@@ -60,11 +61,7 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
             )}
           </div>
         </div>
-        <Grid
-          container
-          spacing={isDesktop ? 3 : 2}
-          className={classes.photoGrid}
-        >
+        <Grid container spacing={isDesktop ? 3 : 2}>
           {posts?.map((p) => (
             <EventPhotoGridItem key={p.id} p={p} md={3} xs={6} />
           ))}
