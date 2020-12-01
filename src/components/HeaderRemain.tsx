@@ -13,6 +13,7 @@ import {
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
+import MenuProfile from "./MenuProfile";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -79,7 +80,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   flexend: {
     [theme.breakpoints.down("sm")]: {
-      display: "none",
+      // display: "none",
+      maxWidth: "100%",
+      flex: 1,
     },
     display: "flex",
     alignItems: "center",
@@ -120,7 +123,10 @@ export default function HeaderRemain() {
             ))}
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
-            {currentUser?.email ? <LogoutButton /> : <LoginButton />}
+            {currentUser?.email && <MenuProfile />}
+            <Hidden smDown>
+              {currentUser?.email ? <LogoutButton /> : <LoginButton />}
+            </Hidden>
           </Grid>
         </Grid>
       </Toolbar>

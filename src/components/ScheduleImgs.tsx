@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import mobile from "../assets/images/mobile-schedule.svg";
-import desktop from "../assets/images/desktop-schedule.svg";
-import tablet from "../assets/images/tablet-schedule.svg";
+import mobile from "../assets/images/mobile-schedule.png";
+import desktop from "../assets/images/desktop-schedule.png";
+import tablet from "../assets/images/tablet-schedule.png";
 const useStyles = makeStyles((theme) => {
   return {
     root: {

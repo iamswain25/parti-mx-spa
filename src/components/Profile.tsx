@@ -1,15 +1,25 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, TextField, IconButton, Avatar } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import {
+  Typography,
+  TextField,
+  IconButton,
+  Avatar,
+  Button,
+} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import CloseIcon from "@material-ui/icons/Close";
 import { useCurrentUser, useGroupId } from "../store/useGlobalState";
 import { auth, firestore, storage, uploadFileByPath } from "../config/firebase";
+import useAccountDelete from "../store/useAccountDelete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2),
+    },
     flex: 1,
   },
   large: {
@@ -27,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     marginTop: theme.spacing(4),
   },
-  logout: {
-    textDecoration: "underline",
-    color: theme.palette.primary.main,
+  exit: {
+    // color: theme.palette.primary.main,
+    justifyContent: "flex-end",
+    display: "flex",
   },
 }));
 interface GroupForm {
@@ -43,6 +54,7 @@ export default function Profile() {
   const [currentUser, setCurrentUser] = useCurrentUser();
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [group_id] = useGroupId();
+  const deleteAccount = useAccountDelete();
   const {
     handleSubmit,
     register,
@@ -85,11 +97,6 @@ export default function Profile() {
       autoComplete="off"
       className={classes.root}
     >
-      {currentUser?.email && (
-        <Link to="/logout" className={classes.logout}>
-          Logout
-        </Link>
-      )}
       <h1>프로필 수정</h1>
       {photo ? (
         <div className={classes.flex}>
@@ -146,6 +153,13 @@ export default function Profile() {
         }
       />
       <BtnSubmitDesktop text="수정" />
+      {currentUser?.email && (
+        <div className={classes.exit}>
+          <Button variant="outlined" color="primary" onClick={deleteAccount}>
+            멤버탈퇴
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

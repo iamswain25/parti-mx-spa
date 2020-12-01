@@ -71,6 +71,16 @@ export const useStyles = makeStyles((theme) => ({
       paddingTop: theme.spacing(1),
     },
   },
+  full: {
+    backgroundColor: theme.palette.grey[200],
+    border: `solid 1px ${theme.palette.grey[300]}`,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 export default function EventPhotoGridItem({
@@ -88,7 +98,7 @@ export default function EventPhotoGridItem({
     <Grid item xs={xs} md={md}>
       <NavLink exact to={`/post/${p.id}`}>
         <div className={classes.aspectRatio}>
-          <StorageImage image={p?.images?.[0]} thumb />
+          <StorageImage image={p?.images?.[0]} thumb className={classes.full} />
           <div className={p.is_closed ? "floating closed" : "floating"}>
             <div>{p.is_closed ? "행사종료" : "모집 중"}</div>
           </div>

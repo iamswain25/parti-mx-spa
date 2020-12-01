@@ -65,7 +65,9 @@ export default function DrawerBoards({ close }: { close: () => void }) {
   return (
     <section className={classes.root}>
       <div className="title">
-        <Link to={`/${group_id}`}>{TITLE}</Link>
+        <Link to={`/${group_id}`} onClick={close}>
+          <img src={`/bi.png`} alt="bi" />
+        </Link>
         <IconButton onClick={close}>
           <CloseIcon />
         </IconButton>

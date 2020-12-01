@@ -47,7 +47,7 @@ export default function Chips({
   const handleSelect = React.useCallback(
     (chipClicked: ChipData) => () => {
       chipClicked.selected = !chipClicked.selected;
-      setChips((chips) => Array.from(new Set([...chips, chipClicked])));
+      setChips((chips) => [...chips]);
     },
     [setChips]
   );

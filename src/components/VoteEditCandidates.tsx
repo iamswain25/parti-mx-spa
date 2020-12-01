@@ -31,7 +31,7 @@ export default function VoteEditCandidates({
     }
   }
   function addHandler() {
-    append({ body: "" });
+    append({ body: "", id: "" });
   }
   function duplicate(value: string) {
     const { candidates } = getValues();
@@ -55,12 +55,7 @@ export default function VoteEditCandidates({
               control={control}
               defaultValue={field.id}
               as={<input type="hidden" />}
-            />
-            <Controller
-              name={`candidates[${index}].order`}
-              control={control}
-              defaultValue={index + 1}
-              as={<input type="hidden" />}
+              rules={{ required: false }}
             />
             <Controller
               as={
