@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
     height: theme.spacing(1.5),
-    color: theme.palette.primary.main,
+    color: theme.palette.common.white,
   },
   like: {
     [theme.breakpoints.up("md")]: {
