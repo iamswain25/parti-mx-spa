@@ -8,12 +8,10 @@ import BoardPostSub2 from "./BoardPostSub2";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
-      borderBottom: `1px solid ${grey[200]}`,
       display: "flex",
       flexWrap: "wrap",
     },
     titleContainer: {
-      marginTop: theme.spacing(1),
       overflow: "hidden",
       cursor: "pointer",
     },

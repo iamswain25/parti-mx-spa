@@ -1,7 +1,6 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { grey } from "@material-ui/core/colors";
 import BoardPostNotice from "./BoardPostNotice";
 import {
   Typography,
@@ -22,12 +21,20 @@ const useStyles = makeStyles((theme) => {
       flex: 1,
     },
     titleContainer: {
-      borderBottom: `1px solid ${grey[400]}`,
+      borderBottom: `1px solid ${theme.palette.grey[400]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
+      },
+    },
+    announcement: {
+      padding: theme.spacing(2),
+      "&>hr": {
+        margin: `${theme.spacing(2)}px 0`,
+        border: "none",
+        borderTop: `1px solid ${theme.palette.grey[200]}`,
       },
     },
   };
@@ -38,6 +45,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [posts] = usePosts({ board_id: b.id });
   const [counter] = useBoardCounter({ board_id: b.id });
+  const announcedPosts = posts?.filter((p) => p.is_announced);
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -85,13 +93,17 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
               공지
             </Box>
             <Divider />
-            <Box padding={2}>
-              {posts
-                .filter((p) => p.is_announced)
-                .map((p) => (
-                  <RouteBoardAnnounce key={p.id} post={p} />
-                ))}
-            </Box>
+            <div className={classes.announcement}>
+              {announcedPosts
+                ?.map((p) => <RouteBoardAnnounce key={p.id} post={p} />)
+                ?.reduce((prev: any[], curr: any, index: number) => {
+                  prev.push(curr);
+                  if (index < announcedPosts?.length - 1) {
+                    prev.push(<hr />);
+                  }
+                  return prev;
+                }, [])}
+            </div>
           </Box>
         </Hidden>
       </Box>
