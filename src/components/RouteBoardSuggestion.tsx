@@ -174,7 +174,8 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const filterHandler = React.useCallback(
     (type: Filter) => () => {
       if (type === "cancel") {
-        setChips((chips) => chips.map((g) => ({ ...g, selected: false })));
+        defaultTags.map((g) => (g.selected = false));
+        setChips(defaultTags);
       } else {
         setFilter((originalType) => (originalType === type ? "hide" : type));
       }
