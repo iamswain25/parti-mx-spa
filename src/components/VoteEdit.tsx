@@ -54,19 +54,21 @@ export default function VoteEdit({ post: p }: { post: Post<VoteMetadata> }) {
       docRef.collection("candidates").doc(candidate_id).delete()
     );
     promises.push(...deleteCandidate);
-    const upsertCandidates = candidates.map(({ id, voted, post_id, ...c }) => {
-      if (id) {
-        return docRef
-          .collection("candidates")
-          .doc(id)
-          .update({ ...c, updated_at: new Date() });
-      } else {
-        return docRef
-          .collection("candidates")
-          .add({ ...c, created_at: new Date() })
-          .catch(console.warn);
+    const upsertCandidates = candidates.map(
+      ({ id, voted, post_id, ...c }, i) => {
+        if (id) {
+          return docRef
+            .collection("candidates")
+            .doc(id)
+            .update({ ...c, order: i + 1, updated_at: new Date() });
+        } else {
+          return docRef
+            .collection("candidates")
+            .add({ ...c, order: i + 1, created_at: new Date() })
+            .catch(console.warn);
+        }
       }
-    });
+    );
     promises.push(...upsertCandidates);
     await Promise.all(promises);
     history.push("/post/" + post_id);

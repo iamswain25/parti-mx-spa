@@ -57,12 +57,6 @@ export default function VoteEditCandidates({
               as={<input type="hidden" />}
             />
             <Controller
-              name={`candidates[${index}].order`}
-              control={control}
-              defaultValue={index + 1}
-              as={<input type="hidden" />}
-            />
-            <Controller
               as={
                 <TextField
                   variant="outlined"

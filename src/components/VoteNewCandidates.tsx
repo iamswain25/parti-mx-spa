@@ -58,12 +58,12 @@ export default function VoteNewCandidates({ formControl }: any) {
       {fields.map((field, index) => {
         return (
           <div key={field.uid}>
-            <Controller
+            {/* <Controller
               name={`candidates[${index}].order`}
               control={control}
               defaultValue={index + 1}
               as={<input type="hidden" />}
-            />
+            /> */}
             <CustomTextField
               defaultValue={field.body}
               label={`${index + 1}. 투표항목`}

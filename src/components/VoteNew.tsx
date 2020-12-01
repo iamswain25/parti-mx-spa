@@ -61,8 +61,10 @@ export default function VoteNew() {
     }
     const doc = await firestore.collection("posts").add(variables);
     await Promise.all(
-      candidates.map((c) =>
-        doc.collection("candidates").add({ ...c, created_at: new Date() })
+      candidates.map((c, i) =>
+        doc
+          .collection("candidates")
+          .add({ ...c, order: i + 1, created_at: new Date() })
       )
     );
 
