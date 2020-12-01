@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { policyFair as firebaseConfig } from "./firebaseConfig";
+import { gyeonggiVillage as firebaseConfig } from "./firebaseConfig";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/functions";

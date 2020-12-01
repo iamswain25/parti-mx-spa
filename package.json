@@ -64,8 +64,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "firebase deploy --only hosting --project policy-fair-mix",
-    "rules": "firebase deploy --only firestore --project policy-fair-mix",
+    "deploy": "firebase deploy --only hosting --project gyeonggi-village-mix",
+    "rules": "firebase deploy --only firestore --project gyeonggi-village-mix",
     "bd": "yarn build && yarn deploy",
     "firelogin": "firebase login --reauth",
     "test": "react-scripts test",
