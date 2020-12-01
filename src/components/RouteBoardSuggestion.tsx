@@ -165,6 +165,12 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
     [chips]
   );
   const [posts] = usePosts({ board_id: b.id });
+  const randomPosts = React.useMemo(() => {
+    if (posts) {
+      return posts?.sort(() => Math.random() - Math.random());
+    }
+    return [];
+  }, [posts]);
   const filterHandler = React.useCallback(
     (type: Filter) => () => {
       if (type === "cancel") {
@@ -236,7 +242,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
       </section>
       <div className={classes.container}>
         <Grid container spacing={isDesktop ? 3 : 0}>
-          {posts
+          {randomPosts
             .filter((p) =>
               selectedTags.length
                 ? selectedTags.every((tag) => p.tags.includes(tag)) // and 연산
