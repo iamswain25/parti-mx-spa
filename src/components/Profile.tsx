@@ -10,6 +10,9 @@ import { auth, firestore, storage, uploadFileByPath } from "../config/firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(2),
+    },
     flex: 1,
   },
   large: {

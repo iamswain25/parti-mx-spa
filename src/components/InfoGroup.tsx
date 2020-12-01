@@ -56,6 +56,9 @@ export default function InfoGroup({
   const [currentUser] = useCurrentUser();
   const joinHandler = useGroupJoin();
   const { created_at } = group;
+  if (group.id === "home" && role !== "organizer") {
+    return null;
+  }
   return (
     <div className={classes.groupInfo}>
       <span>개설 {semanticDate(created_at)}</span>
