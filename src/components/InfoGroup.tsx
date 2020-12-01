@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { semanticDate } from "../helpers/datefns";
 import { Link } from "react-router-dom";
 import MenuGroup from "./MenuGroup";
-import { useCurrentUser, useRole } from "../store/useGlobalState";
+import { useCurrentUser } from "../store/useGlobalState";
 import useGroupJoin from "./useGroupJoin";
 import { permissionLabelByValue } from "../helpers/options";
 import { Group, Role } from "../types";
@@ -49,13 +49,16 @@ export default function InfoGroup({
   group,
   role,
 }: {
-  group: Group;
+  group?: Group | null;
   role?: Role;
 }) {
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
   const joinHandler = useGroupJoin();
-  const { created_at } = group;
+  const { created_at } = group || {};
+  if (!group) {
+    return null;
+  }
   if (group.id === "home" && role !== "organizer") {
     return null;
   }
