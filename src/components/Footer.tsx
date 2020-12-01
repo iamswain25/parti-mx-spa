@@ -121,11 +121,11 @@ export default function Footer() {
                 <strong>문의</strong>
               </span>
               <a
-                href="https://open.kakao.com/o/grvMsgJc"
+                href="https://pf.kakao.com/_DslxnK/chat"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                카카오톡 오픈채팅
+                카카오톡 채널문의
               </a>
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </div>
