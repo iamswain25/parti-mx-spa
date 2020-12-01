@@ -140,12 +140,28 @@ const useStyles = makeStyles((theme) => {
     container: {
       paddingTop: 190,
       paddingBottom: theme.spacing(2),
-      display: "flex",
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
         paddingTop: 140,
       },
+      "&>.selected-tags": {
+        fontSize: 16,
+        padding: `${theme.spacing(1)}px 0`,
+        color: theme.palette.primary.main,
+      },
+    },
+    reset: {
+      cursor: "pointer",
+      border: "none",
+      padding: theme.spacing(5),
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      fontWeight: "bold",
+      color: theme.palette.primary.main,
+      backgroundColor: "transparent",
     },
   };
 });
@@ -167,10 +183,17 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const [posts] = usePosts({ board_id: b.id });
   const randomPosts = React.useMemo(() => {
     if (posts) {
-      return posts?.sort(() => Math.random() - Math.random());
+      return posts
+        ?.sort(() => Math.random() - Math.random())
+        ?.filter((p) =>
+          selectedTags.length
+            ? selectedTags.every((tag) => p.tags.includes(tag)) // and 연산
+            : // ? p.tags.every((tag) => selectedTags.includes(tag)) // or 연산
+              true
+        );
     }
     return [];
-  }, [posts]);
+  }, [posts, selectedTags]);
   const filterHandler = React.useCallback(
     (type: Filter) => () => {
       if (type === "cancel") {
@@ -182,6 +205,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
     },
     [setFilter, setChips]
   );
+
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -242,17 +266,33 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
         </div>
       </section>
       <div className={classes.container}>
+        <div className="selected-tags">
+          {chips
+            .filter((c) => c.selected)
+            .map((c) => `#${c.label}`)
+            .join(" ")}
+        </div>
         <Grid container spacing={isDesktop ? 3 : 0}>
-          {randomPosts
-            .filter((p) =>
-              selectedTags.length
-                ? selectedTags.every((tag) => p.tags.includes(tag)) // and 연산
-                : // ? p.tags.every((tag) => selectedTags.includes(tag)) // or 연산
-                  true
-            )
-            .map((p) => (
+          {randomPosts.length > 0 ? (
+            randomPosts.map((p) => (
               <SquarePhoto key={p.id} p={p} xs={12} md={4} />
-            ))}
+            ))
+          ) : (
+            <Grid container justify="center">
+              <Grid container justify="center">
+                태그된 게시글이 없습니다.
+              </Grid>
+              <Grid container justify="center">
+                <button
+                  onClick={filterHandler("cancel")}
+                  className={classes.reset}
+                >
+                  <SettingsBackupRestoreIcon />
+                  필터를 해제합니다
+                </button>
+              </Grid>
+            </Grid>
+          )}
         </Grid>
       </div>
     </>
