@@ -4,7 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
 import { useBoards, useCurrentUser, useGroupId } from "../store/useGlobalState";
-import { TITLE } from "../helpers/options";
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -86,11 +85,11 @@ export default function DrawerBoards({ close }: { close: () => void }) {
           </NavLink>
         ))}
         {currentUser?.email ? (
-          <Link to="/logout" className="button">
+          <Link to="/logout" className="button" onClick={close}>
             로그아웃
           </Link>
         ) : (
-          <Link to="/login" className="button">
+          <Link to="/login" className="button" onClick={close}>
             로그인
           </Link>
         )}
