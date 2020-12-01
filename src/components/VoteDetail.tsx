@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme) => {
       height: 17,
       marginRight: theme.spacing(0.5),
     },
+    vote: {
+      marginBottom: theme.spacing(2),
+    },
   };
 });
 
@@ -116,7 +119,7 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
           <Divider light />
         </Box>
         {!isClosed && (
-          <Grid container alignItems="center">
+          <Grid container alignItems="center" className={classes.vote}>
             <HowToVoteIcon color="primary" className={classes.icon} />
             <Box color="primary.dark" fontWeight={500}>
               <Typography variant="body1">{daysLeft}</Typography>

@@ -8,6 +8,9 @@ import filesize from "filesize";
 import { downloadFileDirectly } from "../helpers/download";
 const useStyles = makeStyles((theme) => {
   return {
+    root: {
+      padding: theme.spacing(1),
+    },
     flex: {
       display: "flex",
       alignItems: "center",
@@ -28,7 +31,7 @@ export default function FilesImages(props: { files?: File[]; images: Img[] }) {
   const { files, images } = props;
   const classes = useStyles();
   return (
-    <>
+    <section className={classes.root}>
       <Grid container spacing={2}>
         {files?.map((f, i) => {
           return (
@@ -54,6 +57,6 @@ export default function FilesImages(props: { files?: File[]; images: Img[] }) {
         })}
         {Boolean(images?.length) && <ImagesWidth100 images={images} />}
       </Grid>
-    </>
+    </section>
   );
 }
