@@ -29,9 +29,6 @@ export async function makeNewVariables(form: any, other: any) {
 }
 
 export async function makeUpdateVariables(form: any, other: any) {
-  if ("isHtml" in form) {
-    delete form.isHtml;
-  }
   const { imageArr, fileArr, images2, files2, setSuccess, ...rest } = other;
   let images = null;
 
@@ -49,6 +46,7 @@ export async function makeUpdateVariables(form: any, other: any) {
   }
   if (form.isHtml) {
     const html = form.html as RawDraftContentState;
+    debugger;
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");

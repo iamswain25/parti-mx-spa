@@ -56,7 +56,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
-    const { closingMethod, isHtml, html, ...rest } = form;
+    const { closingMethod, ...rest } = form;
     const metadata = { closingMethod, address };
     const variables = await makeUpdateVariables(rest, {
       imageArr,
@@ -66,13 +66,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       setSuccess,
       id,
       metadata,
-      // html,
     });
-    // if (isHtml) {
-    //   variables.body = html.blocks
-    //     .map((block) => (!block.text.trim() && "\n") || block.text)
-    //     .join("\n");
-    // }
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {

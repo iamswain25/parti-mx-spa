@@ -29,7 +29,7 @@ export default function SuggestionNew() {
 
   async function handleForm(form: SuggestionFormdata) {
     setLoading(true);
-    const { closingMethod, isHtml, html, ...rest } = form;
+    const { closingMethod, ...rest } = form;
     const metadata = { closingMethod, address };
     const variables = await makeNewVariables(rest, {
       board_id,
@@ -38,14 +38,7 @@ export default function SuggestionNew() {
       fileArr,
       setSuccess,
       metadata,
-      // html,
     });
-    // if (isHtml) {
-    //   variables.body = html.blocks
-    //     .map((block) => (!block.text.trim() && "\n") || block.text)
-    //     .join("\n");
-    // }
-    // return console.log(variables);
     if (latLng) {
       const { lat, lng } = latLng;
       const location = {
