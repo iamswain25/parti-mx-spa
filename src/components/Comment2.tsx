@@ -12,7 +12,7 @@ import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import useCommentLiked from "../store/useCommentLiked";
-// import useCommentCounter from "../store/useCommentCounter";
+import { useCurrentUser } from "../store/useGlobalState";
 export default function Comment2({
   comment: c,
   setRe,
@@ -22,12 +22,7 @@ export default function Comment2({
 }) {
   const classes = useStyles();
   const [liked] = useCommentLiked(c);
-  // const [counter] = useCommentCounter({
-  //   post_id: c.post_id,
-  //   comment_id: c.id,
-  //   parent_id: c.parent_id,
-  // });
-  // const { count_comment = 0 } = counter || {};
+  const [currentUser] = useCurrentUser();
   const [edit, setEdit] = React.useState<boolean>(false);
   const remove = useCommentDelete(c);
   function editHandler() {
@@ -73,16 +68,20 @@ export default function Comment2({
               ) : (
                 <ButtonLikeComment comment={c} />
               )}
-              <Button className={classes.button} onClick={editHandler}>
-                수정
-              </Button>
-              <Button
-                className={classes.button}
-                onClick={remove}
-                color="secondary"
-              >
-                삭제
-              </Button>
+              {c.created_by === currentUser?.uid && (
+                <>
+                  <Button className={classes.button} onClick={editHandler}>
+                    수정
+                  </Button>
+                  <Button
+                    className={classes.button}
+                    onClick={remove}
+                    color="secondary"
+                  >
+                    삭제
+                  </Button>
+                </>
+              )}
             </div>
           </Box>
         </Box>

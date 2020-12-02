@@ -14,6 +14,7 @@ import Linkify from "./Linkify";
 import useCommentLiked from "../store/useCommentLiked";
 import useComments2 from "../store/useComments2";
 import useCommentCounter from "../store/useCommentCounter";
+import { useCurrentUser } from "../store/useGlobalState";
 export default function Comment1({
   comment: c,
   post,
@@ -22,6 +23,7 @@ export default function Comment1({
   post: Post;
 }) {
   const [liked] = useCommentLiked(c);
+  const [currentUser] = useCurrentUser();
   const [counter] = useCommentCounter({ post_id: c.post_id, comment_id: c.id });
   const { count_comment = 0 } = counter || {};
   const [comments2] = useComments2(c);
@@ -69,16 +71,20 @@ export default function Comment1({
               ) : (
                 <ButtonLikeComment comment={c} />
               )}
-              <Button className={classes.button} onClick={editHandler}>
-                수정
-              </Button>
-              <Button
-                className={classes.button}
-                onClick={remove}
-                color="secondary"
-              >
-                삭제
-              </Button>
+              {c.created_by === currentUser?.uid && (
+                <>
+                  <Button className={classes.button} onClick={editHandler}>
+                    수정
+                  </Button>
+                  <Button
+                    className={classes.button}
+                    onClick={remove}
+                    color="secondary"
+                  >
+                    삭제
+                  </Button>
+                </>
+              )}
             </div>
           </Box>
           {(comments2?.length || 0) > 0 && (
