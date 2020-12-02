@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Switch, Grid } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import ControlledSwitch from "./ControlledSwitch";
-import { voteOptions } from "../helpers/options";
+import { closingOptions } from "../helpers/options";
 import VoteEditCandidates from "./VoteEditCandidates";
 import VoteNewCandidates from "./VoteNewCandidates";
 import HtmlInput from "./HtmlInput";
@@ -38,8 +38,8 @@ export default function VoteInputs({
         SelectProps={{
           native: true,
         }}
-        defaultValue="7days"
-        children={voteOptions.map((option) => (
+        defaultValue="manual"
+        children={closingOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

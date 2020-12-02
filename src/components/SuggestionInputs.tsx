@@ -1,6 +1,6 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
-import { suggestionOptions } from "../helpers/options";
+import { closingOptions } from "../helpers/options";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
 import Hashtags from "./Hashtags";
@@ -31,10 +31,10 @@ export default function SuggestionInputs(props: {
         variant="filled"
         name="closingMethod"
         SelectProps={{ native: true }}
-        defaultValue="30days"
+        defaultValue="manual"
         register={register}
         errors={errors}
-        children={suggestionOptions.map((option) => (
+        children={closingOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
