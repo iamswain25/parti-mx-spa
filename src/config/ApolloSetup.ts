@@ -81,11 +81,6 @@ export const client = new ApolloClient({
           return { ...existing, ...incoming };
         },
       },
-      mx_groups_by_pk: {
-        merge(existing, incoming) {
-          return { ...existing, ...incoming };
-        },
-      },
     },
   }),
   link: authLink.concat(splitLink),

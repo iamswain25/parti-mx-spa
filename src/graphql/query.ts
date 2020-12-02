@@ -25,6 +25,7 @@ export const logoGroup = gql`
 export const homeGroup = gql`
   query($group_id: Int!) {
     mx_groups_by_pk(id: $group_id) {
+      id
       notice: boards(
         where: { type: { _eq: "notice" } }
         order_by: { order: asc_nulls_last }
@@ -57,6 +58,7 @@ export const homeGroup = gql`
 export const queryBoardsByGroupId = gql`
   query($group_id: Int!) {
     mx_groups_by_pk(id: $group_id) {
+      id
       status
       boards(order_by: { order: asc_nulls_last }) {
         id
@@ -78,6 +80,7 @@ export const queryBoardsByGroupId = gql`
 export const queryBoardsOnly = gql`
   query($group_id: Int!, $user_id: Int) {
     mx_groups_by_pk(id: $group_id) {
+      id
       status
       boards(order_by: { order: asc_nulls_last }) {
         id
