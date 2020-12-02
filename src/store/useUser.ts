@@ -1,5 +1,5 @@
 import React from "react";
-import { firestore, auth } from "../config/firebase";
+import { firestore } from "../config/firebase";
 import { User } from "../types";
 export default function useUser({
   id,

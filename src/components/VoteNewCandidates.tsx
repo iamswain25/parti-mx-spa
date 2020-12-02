@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { Controller, useFieldArray } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";

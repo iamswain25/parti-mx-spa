@@ -13,15 +13,16 @@ export default function useStoragePath(path?: string, thumb: boolean = false) {
       ) {
         setUrl(path);
       } else {
+        let _path = path;
         if (thumb) {
           const arr = path?.split("/");
           const img = arr.pop();
           arr.push("thumbs", img + "_364x240");
-          path = arr.join("/");
+          _path = arr.join("/");
         }
-        storage.ref(path).getDownloadURL().then(setUrl);
+        storage.ref(_path).getDownloadURL().then(setUrl);
       }
     }
-  }, [path, setUrl]);
+  }, [path, setUrl, thumb]);
   return url;
 }
