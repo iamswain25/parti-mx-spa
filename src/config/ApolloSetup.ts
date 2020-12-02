@@ -74,6 +74,19 @@ async function getFirebaseAuthHeader(_previousHeader?: Object) {
 const authLink = setContext((_, { headers }) => getFirebaseAuthHeader(headers));
 
 export const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      mx_groups: {
+        merge(existing, incoming) {
+          return { ...existing, ...incoming };
+        },
+      },
+      mx_groups_by_pk: {
+        merge(existing, incoming) {
+          return { ...existing, ...incoming };
+        },
+      },
+    },
+  }),
   link: authLink.concat(splitLink),
 });

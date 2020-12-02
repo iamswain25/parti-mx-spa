@@ -101,10 +101,9 @@ const useStyles = makeStyles((theme) => {
 });
 export default function GroupLogoContainer() {
   const [{ group_id }] = useStore();
-  const { data, loading, refetch } = useQuery<HomeGroup>(logoGroup, {
+  const { loading, refetch, data } = useQuery<HomeGroup>(logoGroup, {
     variables: { group_id },
   });
-
   const group = data?.mx_groups_by_pk;
   const classes = useStyles();
   const { title, status, created_at, bg_img_url, mb_img_url, users_aggregate } =
