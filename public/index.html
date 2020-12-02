@@ -30,7 +30,96 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <section id="ie11" style="display: none">
+        <div style="margin: 80px auto; text-align: center">
+          <div
+            style="
+              margin: 0 10px 24px 0;
+              font-size: 28px;
+              font-weight: 500;
+              letter-spacing: -2px;
+              color: rgba(0, 0, 0, 0.87);
+            "
+          >
+            지원하지 않는 브라우저입니다
+          </div>
+          <div
+            style="
+              margin: 30px 40px;
+              font-size: 12px;
+              letter-spacing: -0.43px;
+              color: rgba(0, 0, 0, 0.87);
+            "
+          >
+            이용해주셔서 감사합니다!<br /><br />Chrome 또는 Microsoft Edge
+            이용을 부탁드립니다.
+          </div>
+          <div style="display: flex; justify-content: center">
+            <a
+              href="https://www.google.com/intl/ko/chrome/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="square"
+            >
+              <img
+                src="/logo-chrom.png"
+                alt="chrome"
+                style="width: 60px; height: 60px; object-fit: contain"
+              />
+              <div style="display: flex">
+                <div
+                  style="
+                    font-size: 15px;
+                    font-weight: bold;
+                    letter-spacing: 0.21px;
+                    color: rgba(0, 0, 0, 0.87);
+                  "
+                >
+                  Chrome
+                </div>
+                <div>설치하기</div>
+              </div>
+            </a>
+            <a
+              href="https://www.microsoft.com/ko-kr/edge"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="square"
+            >
+              <img
+                src="/logo-edge.png"
+                alt="edge"
+                style="width: 60px; height: 60px; object-fit: contain"
+              />
+              <div style="display: flex">
+                <div
+                  style="
+                    font-family: SegoeUI;
+                    font-size: 16px;
+                    font-weight: bold;
+                    letter-spacing: 0.23px;
+                    color: rgba(0, 0, 0, 0.87);
+                  "
+                >
+                  Edge
+                </div>
+                <div>설치하기</div>
+              </div>
+            </a>
+          </div>
+          <div style="text-align: center">
+            <a
+              href="https://pf.kakao.com/_DslxnK"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="font-size: 14px; letter-spacing: -0.35px; color: #646464"
+              >문의하기
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -42,4 +131,39 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <style>
+    #ie11 .square {
+      display: flex;
+      flex-direction: column;
+      width: 180px;
+      height: 125px;
+      margin: 20px;
+      border-radius: 4px;
+      border: solid 1px #dadada;
+      background-color: #fdfdfd;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+    }
+    #ie11 .square:hover {
+      background-color: #f2f2f2;
+    }
+  </style>
+  <script defer type="text/javascript">
+    function msieversion() {
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE ");
+      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        // If Internet Explorer, return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf(".", msie)));
+      } // If another browser, return 0
+      return false;
+    }
+    (function () {
+      const ie11 = document.querySelector("#ie11");
+      if (msieversion()) {
+        ie11.setAttribute("style", "display: block;");
+      }
+    })();
+  </script>
 </html>
