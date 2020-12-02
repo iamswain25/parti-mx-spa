@@ -119,7 +119,7 @@ export default function MyGroupList(props: {
     <>
       <Typography variant="h2">
         <div className={classes.title}>
-          <span>믹스 그룹</span>
+          <span>빠띠 믹스</span>
           <MenuProfile user={me} />
         </div>
       </Typography>
