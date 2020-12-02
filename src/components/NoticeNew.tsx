@@ -14,7 +14,7 @@ import ImageFileDropzone from "./ImageFileDropzone";
 import NoticeInput from "./NoticeInput";
 
 export default function NoticeNew() {
-  const { board_id } = useParams();
+  const { board_id } = useParams<{ board_id: string }>();
   const history = useHistory();
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [, setLoading] = useGlobalState(keys.LOADING);

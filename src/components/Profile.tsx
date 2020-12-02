@@ -16,7 +16,7 @@ import BtnSubmitDesktop from "./BtnSubmitDesktop";
 import { uploadFileByPath } from "../config/firebase";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import HeaderBack from "./HeaderBack";
-import { ValidateResult } from "react-hook-form/dist/types/form";
+import { ValidateResult } from "react-hook-form";
 import { searchDuplicateNameWithoutMine } from "../graphql/query";
 import { whoami } from "../graphql/query";
 import CloseIcon from "@material-ui/icons/Close";
@@ -54,9 +54,13 @@ export default function Profile() {
   const [updateName] = useMutation(updateUserName);
   const [photo, setPhoto] = React.useState<undefined | string>(undefined);
   const [, setLoading] = useGlobalState(keys.LOADING);
-  const { handleSubmit, register, errors, reset, control } = useForm<
-    GroupForm
-  >();
+  const {
+    handleSubmit,
+    register,
+    errors,
+    reset,
+    control,
+  } = useForm<GroupForm>();
   React.useEffect(() => {
     client
       .query({

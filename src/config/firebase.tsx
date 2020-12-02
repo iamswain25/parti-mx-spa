@@ -1,4 +1,4 @@
-import firebase, { User } from "firebase/app";
+import firebase from "firebase/app";
 import { mxConfig as firebaseConfig } from "./firebaseConfig";
 import "firebase/analytics";
 import "firebase/auth";

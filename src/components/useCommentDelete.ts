@@ -3,7 +3,7 @@ import { deleteComment, updateComment } from "../graphql/mutation";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import useLoadingEffect from "./useLoadingEffect";
 import useErrorEffect from "./useErrorEffect";
-export default (id: number) => {
+export default function useCommentDelete(id: number) {
   const [, setSuccess] = useGlobalState(keys.SUCCESS);
   const [remove, { loading }] = useMutation(deleteComment, {
     variables: { comment_id: id },
@@ -37,4 +37,4 @@ export default (id: number) => {
   }
 
   return handler;
-};
+}
