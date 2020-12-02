@@ -4,6 +4,7 @@ import { firestore } from "../config/firebase";
 import { useCurrentUser } from "../store/useGlobalState";
 import { Comment } from "../types";
 import useCommentCounter from "../store/useCommentCounter";
+import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(0),
@@ -25,10 +26,14 @@ export default function ButtonUnlikeComment({
     parent_id: c.parent_id,
     listen: true,
   });
+  const [hasPermission, showAlert] = usePermission("like");
   const { count_like = 0 } = counter || {};
   const userId = currentUser?.uid;
 
   async function pressHandler() {
+    if (!hasPermission) {
+      return showAlert();
+    }
     if (c.parent_id) {
       await firestore
         .collection("posts")
