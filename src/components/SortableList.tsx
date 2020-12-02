@@ -29,20 +29,23 @@ const DragHandle = SortableHandle(({ images, className }: any) => (
     <Img src={images} className={className} />
   </div>
 ));
-const SortableItem = SortableElement(({ item: f, imageRemove, index }: any) => {
-  const classes = useStyles();
-  function removeHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    imageRemove(index);
+const SortableItem = SortableElement(
+  (props: { item: any; imageRemove: any; order: number }) => {
+    const { item: f, imageRemove, order } = props;
+    const classes = useStyles();
+    function removeHandler(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+      imageRemove(order);
+    }
+    return (
+      <Grid item style={{ width: 76, height: 76, position: "relative" }}>
+        <DragHandle images={[f?.preview, f?.uri]} className={classes.img} />
+        <IconButton onClick={removeHandler} className={classes.closePic}>
+          <CloseIcon color="inherit" />
+        </IconButton>
+      </Grid>
+    );
   }
-  return (
-    <Grid item style={{ width: 76, height: 76, position: "relative" }}>
-      <DragHandle images={[f?.preview, f?.uri]} className={classes.img} />
-      <IconButton onClick={removeHandler} className={classes.closePic}>
-        <CloseIcon color="inherit" />
-      </IconButton>
-    </Grid>
-  );
-});
+);
 
 const SortableList = SortableContainer(
   ({ items, imageRemove }: { items: any[]; imageRemove: any }) => {
@@ -51,7 +54,8 @@ const SortableList = SortableContainer(
       <Grid container spacing={1} className={classes.padding}>
         {items.map((item: any, index: number) => (
           <SortableItem
-            key={index}
+            key={item.uri ?? item.name ?? index}
+            order={index}
             index={index}
             item={item}
             imageRemove={imageRemove}

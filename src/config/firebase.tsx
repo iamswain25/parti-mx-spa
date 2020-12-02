@@ -13,6 +13,7 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 export const auth = firebase.auth();
+export const storage = firebase.storage();
 export const Firebase = firebase;
 export type IdTokenResult = Modify<
   firebase.auth.IdTokenResult,
@@ -69,7 +70,7 @@ export async function uploadFileGetUriArray(file: File) {
   return new Promise(async function (res) {
     const path = `posts/${uuid.v4()}`;
     console.log({ path });
-    const ref = firebase.storage().ref().child(path);
+    const ref = storage.ref().child(path);
     const fileSnapshot = await ref.put(file);
     const uri = await fileSnapshot.ref.getDownloadURL();
     return res({ uri, name, lastModified, type, size });
@@ -78,7 +79,7 @@ export async function uploadFileGetUriArray(file: File) {
 
 export async function uploadFileByPath(file: File, dir: string) {
   console.log({ dir });
-  const ref = firebase.storage().ref().child(dir);
+  const ref = storage.ref().child(dir);
   const fileSnapshot = await ref.put(file);
   return await fileSnapshot.ref.getDownloadURL();
 }
