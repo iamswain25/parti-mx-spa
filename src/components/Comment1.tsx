@@ -80,15 +80,21 @@ export default function Comment1({
   const [comments2] = useComments2(c);
   const classes = useStyles();
   const [isRe, setRe] = React.useState<string | undefined>(undefined);
+  const [isDeleted, setDeleted] = React.useState<boolean>(false);
   const insertHandler = useCommentInsert({
     post,
     callback: () => setRe(undefined),
   });
   const [edit, setEdit] = React.useState<boolean>(false);
   const [role] = useRole();
-  const remove = useCommentDelete(c);
+  const remove = useCommentDelete(c, () => {
+    setDeleted(true);
+  });
   function editHandler() {
     setEdit(true);
+  }
+  if (isDeleted) {
+    return null;
   }
   return (
     <>

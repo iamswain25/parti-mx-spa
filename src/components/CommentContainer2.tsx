@@ -1,15 +1,21 @@
 import React from "react";
 import { Comment, Post } from "../types";
-import { Box, Divider, makeStyles, Grid, Button } from "@material-ui/core";
+import {
+  Box,
+  Divider,
+  makeStyles,
+  Grid,
+  Button,
+  LinearProgress,
+} from "@material-ui/core";
 import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
 import AvatarNameDate2 from "./AvatarNameDate2";
-import usePostLikedUsers from "../store/usePostLikedUsers";
 import useComments from "../store/useComments";
+import usePostLikedUsers from "../store/usePostLikedUsers";
 import usePostCounter from "../store/usePostCounter";
-let prevCommentCount: number | null = null;
-let shouldScroll = false;
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 const useStyles = makeStyles((theme) => {
   return {
     text: {
@@ -35,32 +41,34 @@ const useStyles = makeStyles((theme) => {
         },
       },
     },
-    grid: {
+    flexcenter: {
       display: "flex",
+      justifyContent: "center",
+      margin: theme.spacing(1),
     },
   };
 });
 
-export default function NoticeComment({ post: p }: { post: Post }) {
-  const [counter] = usePostCounter(p.id);
-  const { count_like = 0, count_comment = 0 } = counter || {};
-  const [comments] = useComments(p.id);
+export default function CommentContainer2({
+  post: p,
+  commentLabel = "댓글",
+  likeLabel = "응원 인원",
+}: {
+  post: Post;
+  commentLabel?: string;
+  likeLabel?: string;
+}) {
+  const [counter] = usePostCounter(p.id, true);
+  const { count_comment = 0, count_like = 0 } = counter || {};
+  const [comments, loadmore, loading, hasMore] = useComments({ post_id: p.id });
   const [likedUsers] = usePostLikedUsers(p.id);
-  const comment = { post_id: p.id, body: "" } as Comment;
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
-  React.useEffect(() => {
-    if (count_comment) {
-      if (prevCommentCount && shouldScroll) {
-        window.scrollTo(0, document.body.scrollHeight);
-        shouldScroll = false;
-      }
-      prevCommentCount = count_comment;
-    }
-  }, [count_comment]);
   const insertHandler = useCommentInsert({
     post: p,
-    callback: () => (shouldScroll = true),
+    callback: () => {
+      window.scrollTo(0, document.body.scrollHeight - 300);
+    },
   });
   return (
     <>
@@ -70,7 +78,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "active" : ""}`}
             onClick={() => setCommentVisible(true)}
           >
-            댓글
+            {commentLabel}
             <Box ml={0.5} className="count">
               {count_comment}
             </Box>
@@ -82,7 +90,7 @@ export default function NoticeComment({ post: p }: { post: Post }) {
             className={`${classes.btn} ${isCommentVisible ? "" : "active"}`}
             onClick={() => setCommentVisible(false)}
           >
-            공감 멤버
+            {likeLabel}
             <Box ml={0.5} className="count">
               {count_like}
             </Box>
@@ -91,11 +99,23 @@ export default function NoticeComment({ post: p }: { post: Post }) {
         {isCommentVisible ? (
           <Box>
             <Box pb={1}>
-              <CommentTextinput comment={comment} handler={insertHandler} />
+              <CommentTextinput
+                comment={{ post_id: p.id, body: "" } as Comment}
+                handler={insertHandler}
+              />
             </Box>
             <Divider light />
-            {comments?.map((c, i) => {
-              return <Comment1 key={i} comment={c} post={p} />;
+            {hasMore && (
+              <div className={classes.flexcenter}>
+                <Button variant="outlined" onClick={loadmore}>
+                  더보기
+                  <ExpandLessIcon />
+                </Button>
+              </div>
+            )}
+            {loading && <LinearProgress />}
+            {comments?.map((c) => {
+              return <Comment1 key={c.id} comment={c} post={p} />;
             })}
           </Box>
         ) : (

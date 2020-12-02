@@ -92,7 +92,7 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
   const { images, created_at, files, closed_at, metadata } = p;
   const [counter] = usePostCounter<VoteCounter>(p.id, true);
   const { count_comment = 0 } = counter || {};
-  const [comments] = useComments(p.id);
+  const [comments] = useComments({ post_id: p.id });
   const isClosed = !!closed_at;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
     metadata,

@@ -5,7 +5,7 @@ import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import BtnUnlikePost from "./BtnUnlikePost";
 import useDesktop from "./useDesktop";
-import SuggestionComment from "./SuggestionComment";
+import CommentContainer2 from "./CommentContainer2";
 import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
 import HtmlOrBody from "./HtmlOrBody";
@@ -210,7 +210,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         <GreyDivider height={0.5} />
       </Hidden>
       <div>
-        <SuggestionComment post={p} />
+        <CommentContainer2 post={p} />
       </div>
     </section>
   );

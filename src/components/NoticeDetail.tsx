@@ -8,7 +8,7 @@ import BtnUnlikePost from "./BtnUnlikePost";
 import useDesktop from "./useDesktop";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
-import NoticeComment from "./NoticeComment";
+import CommentContainer2 from "./CommentContainer2";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
 import HashtagsDetail from "./HashtagsDetail";
@@ -103,7 +103,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
       <div>
-        <NoticeComment post={p} />
+        <CommentContainer2 post={p} likeLabel="공감 인원" />
       </div>
     </section>
   );
