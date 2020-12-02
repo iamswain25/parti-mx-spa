@@ -67,12 +67,12 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const navigatePost = useNavigateToPost(p.id);
-  const created_at = p.created_at;
+  const { created_at, closed_at } = p;
   const metadata = p.metadata as VoteMetadata;
-  const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
-    metadata,
-    created_at,
-  ]);
+  const daysLeft = React.useMemo(
+    () => (closed_at ? "완료" : daysLeftMeta(metadata, created_at)),
+    [metadata, created_at, closed_at]
+  );
   const [isVoted, setVoted] = React.useState(false);
   const isClosed = !!p?.closed_at;
   const isResultHidden = metadata.isResultHidden;
