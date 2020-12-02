@@ -1,10 +1,16 @@
 import React from "react";
-import { Comment } from "../types";
-import { Box, Divider, Grid, Button, Typography } from "@material-ui/core";
+import { Comment, Post } from "../types";
+import {
+  Box,
+  Divider,
+  Grid,
+  Button,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
 import AvatarNameDate from "./AvatarNameDate";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
 import ButtonLikeComment from "./ButtonLikeComment";
-import { useStyles } from "../helpers/styles";
 import sub1 from "../assets/images/subdirectory24Px.png";
 import sub2 from "../assets/images/subdirectory24Px@2x.png";
 import sub3 from "../assets/images/subdirectory24Px@3x.png";
@@ -13,15 +19,63 @@ import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import useCommentLiked from "../store/useCommentLiked";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
+import { getAttitude } from "../helpers/attitude";
+import useCommentAttitude from "../store/useCommentAttitude";
+const useStyles = makeStyles((theme) => ({
+  attitude: {
+    fontSize: 13,
+    fontWeight: "bold",
+    marginLeft: theme.spacing(1),
+    color: theme.palette.primary.main,
+    display: "flex",
+    alignItems: "center",
+  },
+  buttons: {
+    display: "grid",
+    gridAutoFlow: "column",
+    gridGap: theme.spacing(1) + "px",
+    [theme.breakpoints.up("md")]: {
+      fontSize: 12,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 11,
+    },
+  },
+  button: {
+    padding: theme.spacing(0),
+    minWidth: "auto",
+    fontSize: "inherit",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 12,
+    },
+  },
+  text: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: 14,
+      letterSpacing: -0.3,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 12,
+      letterSpacing: -0.26,
+    },
+  },
+  flexmiddle: {
+    display: "flex",
+    alignItems: "center",
+  },
+}));
 export default function Comment2({
   comment: c,
+  post,
   setRe,
 }: {
   comment: Comment;
   setRe: (user?: string) => void;
+  post: Post;
 }) {
   const classes = useStyles();
   const [liked] = useCommentLiked(c);
+  const [authorLiked] = useCommentAttitude(c);
   const [currentUser] = useCurrentUser();
   const [edit, setEdit] = React.useState<boolean>(false);
   const [role] = useRole();
@@ -39,15 +93,19 @@ export default function Comment2({
         />
       </Box>
       <Box paddingY={2}>
-        <Grid container alignItems="center" justify="space-between">
-          <AvatarNameDate
-            user_id={c.created_by}
-            created_at={c?.updated_at}
-            justify="flex-start"
-          />
-        </Grid>
+        <div className={classes.flexmiddle}>
+          <div>
+            <AvatarNameDate
+              user_id={c.created_by}
+              created_at={c?.updated_at}
+              justify="flex-start"
+            />
+          </div>
+          <div className={classes.attitude}>
+            {authorLiked && getAttitude(post)}
+          </div>
+        </div>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
-          <Typography color="primary">{c.attitude}</Typography>
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (

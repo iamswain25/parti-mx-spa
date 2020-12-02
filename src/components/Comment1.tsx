@@ -1,13 +1,18 @@
 import React from "react";
 import { Comment, Post } from "../types";
-import { Box, Divider, Grid, Button, Typography } from "@material-ui/core";
+import {
+  Box,
+  Divider,
+  Button,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
 import AvatarNameDate from "./AvatarNameDate";
 import CommentTextinput from "./CommentTextinput";
 import Comment2 from "./Comment2";
 import useCommentInsert from "./useCommentInsert";
 import ButtonLikeComment from "./ButtonLikeComment";
 import ButtonUnlikeComment from "./ButtonUnlikeComment";
-import { useStyles } from "../helpers/styles";
 import CommentEdit from "./CommentEdit";
 import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
@@ -15,6 +20,51 @@ import useCommentLiked from "../store/useCommentLiked";
 import useComments2 from "../store/useComments2";
 import useCommentCounter from "../store/useCommentCounter";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
+import useCommentAttitude from "../store/useCommentAttitude";
+import { getAttitude } from "../helpers/attitude";
+const useStyles = makeStyles((theme) => ({
+  attitude: {
+    fontSize: 13,
+    fontWeight: "bold",
+    marginLeft: theme.spacing(1),
+    color: theme.palette.primary.main,
+    display: "flex",
+    alignItems: "center",
+  },
+  buttons: {
+    display: "grid",
+    gridAutoFlow: "column",
+    gridGap: theme.spacing(1) + "px",
+    [theme.breakpoints.up("md")]: {
+      fontSize: 12,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 11,
+    },
+  },
+  button: {
+    padding: theme.spacing(0),
+    minWidth: "auto",
+    fontSize: "inherit",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 12,
+    },
+  },
+  text: {
+    [theme.breakpoints.up("md")]: {
+      fontSize: 14,
+      letterSpacing: -0.3,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 12,
+      letterSpacing: -0.26,
+    },
+  },
+  flexmiddle: {
+    display: "flex",
+    alignItems: "center",
+  },
+}));
 export default function Comment1({
   comment: c,
   post,
@@ -25,6 +75,7 @@ export default function Comment1({
   const [liked] = useCommentLiked(c);
   const [currentUser] = useCurrentUser();
   const [counter] = useCommentCounter({ post_id: c.post_id, comment_id: c.id });
+  const [authorLiked] = useCommentAttitude(c);
   const { count_comment = 0 } = counter || {};
   const [comments2] = useComments2(c);
   const classes = useStyles();
@@ -42,15 +93,19 @@ export default function Comment1({
   return (
     <>
       <Box pt={2}>
-        <Grid container alignItems="center" justify="space-between">
-          <AvatarNameDate
-            user_id={c.created_by}
-            created_at={c?.updated_at}
-            justify="flex-start"
-          />
-        </Grid>
+        <div className={classes.flexmiddle}>
+          <div>
+            <AvatarNameDate
+              user_id={c.created_by}
+              created_at={c?.updated_at}
+              justify="flex-start"
+            />
+          </div>
+          <div className={classes.attitude}>
+            {authorLiked && getAttitude(post)}
+          </div>
+        </div>
         <Box ml={4} pt={1} className={classes.text} color="grey.900">
-          <Typography color="primary">{c.attitude}</Typography>
           {edit ? (
             <CommentEdit c={c} setEdit={setEdit} />
           ) : (
@@ -94,7 +149,9 @@ export default function Comment1({
             </Box>
           )}
           {comments2.map((c) => {
-            return <Comment2 key={c.id} comment={c} setRe={setRe} />;
+            return (
+              <Comment2 key={c.id} comment={c} setRe={setRe} post={post} />
+            );
           })}
           {isRe && (
             <CommentTextinput

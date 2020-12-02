@@ -8,8 +8,6 @@ import AvatarNameDate2 from "./AvatarNameDate2";
 import useComments from "../store/useComments";
 import usePostLikedUsers from "../store/usePostLikedUsers";
 import usePostCounter from "../store/usePostCounter";
-let prevCommentCount: number | null = null;
-let shouldScroll = false;
 const useStyles = makeStyles((theme) => {
   return {
     text: {
@@ -45,18 +43,11 @@ export default function SuggestionComment({ post: p }: { post: Post }) {
   const [likedUsers] = usePostLikedUsers(p.id);
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
-  React.useEffect(() => {
-    if (count_comment) {
-      if (prevCommentCount && shouldScroll) {
-        window.scrollTo(0, document.body.scrollHeight);
-        shouldScroll = false;
-      }
-      prevCommentCount = count_comment;
-    }
-  }, [count_comment]);
   const insertHandler = useCommentInsert({
     post: p,
-    callback: () => (shouldScroll = true),
+    callback: () => {
+      window.scrollTo(0, document.body.scrollHeight - 300);
+    },
   });
   return (
     <>
