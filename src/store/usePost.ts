@@ -2,6 +2,7 @@ import firebase from "firebase";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { firestore } from "../config/firebase";
+import { PARAM_COLLECTION, COUNTER_VIEW_POST } from "../helpers/options";
 import { Post } from "../types";
 import { useCurrentUser } from "./useGlobalState";
 export default function usePost(
@@ -13,12 +14,12 @@ export default function usePost(
   React.useEffect(() => {
     if (currentUser) {
       firestore
-        .collection("posts")
-        .doc(id)
         .collection("users")
         .doc(currentUser.uid)
+        .collection(PARAM_COLLECTION)
+        .doc(COUNTER_VIEW_POST)
         .set(
-          { count_view: firebase.firestore.FieldValue.increment(1) },
+          { [id]: firebase.firestore.FieldValue.increment(1) },
           { merge: true }
         );
     }
