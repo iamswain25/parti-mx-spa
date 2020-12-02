@@ -96,40 +96,37 @@ export default function CommentContainer2({
             </Box>
           </Button>
         </Grid>
-        {isCommentVisible ? (
-          <Box>
-            <Box pb={1}>
-              <CommentTextinput
-                comment={{ post_id: p.id, body: "" } as Comment}
-                handler={insertHandler}
-              />
-            </Box>
-            <Divider light />
-            {hasMore && (
-              <div className={classes.flexcenter}>
-                <Button variant="outlined" onClick={loadmore}>
-                  더보기
-                  <ExpandLessIcon />
-                </Button>
-              </div>
-            )}
-            {loading && <LinearProgress />}
-            {comments?.map((c) => {
-              return <Comment1 key={c.id} comment={c} post={p} />;
-            })}
+        <Box display={isCommentVisible ? undefined : "none"}>
+          <Box pb={1}>
+            <CommentTextinput
+              comment={{ post_id: p.id, body: "" } as Comment}
+              handler={insertHandler}
+            />
           </Box>
-        ) : (
-          <Box>
-            <Box my={2}>
-              <Divider />
-            </Box>
-            <Grid container wrap="wrap" spacing={2}>
-              {likedUsers?.map((u) => (
-                <AvatarNameDate2 key={u.id} postLike={u} />
-              ))}
-            </Grid>
+          <Divider light />
+          {hasMore && (
+            <div className={classes.flexcenter}>
+              <Button variant="outlined" onClick={loadmore}>
+                더보기
+                <ExpandLessIcon />
+              </Button>
+            </div>
+          )}
+          {loading && <LinearProgress />}
+          {comments?.map((c) => {
+            return <Comment1 key={c.id} comment={c} post={p} />;
+          })}
+        </Box>
+        <Box display={isCommentVisible ? "none" : undefined}>
+          <Box my={2}>
+            <Divider />
           </Box>
-        )}
+          <Grid container wrap="wrap" spacing={2}>
+            {likedUsers?.map((u) => (
+              <AvatarNameDate2 key={u.id} postLike={u} />
+            ))}
+          </Grid>
+        </Box>
       </Box>
     </>
   );

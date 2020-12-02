@@ -12,6 +12,7 @@ export default function usePostLikedUsers(id: string) {
         .collection("posts")
         .doc(id)
         .collection("likes")
+        .orderBy("created_at", "asc")
         .onSnapshot((snapshot) =>
           setItems(
             snapshot.docs.map(
