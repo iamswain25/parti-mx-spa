@@ -14,7 +14,7 @@ import Linkify from "./Linkify";
 import useCommentLiked from "../store/useCommentLiked";
 import useComments2 from "../store/useComments2";
 import useCommentCounter from "../store/useCommentCounter";
-import { useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser, useRole } from "../store/useGlobalState";
 export default function Comment1({
   comment: c,
   post,
@@ -34,6 +34,7 @@ export default function Comment1({
     callback: () => setRe(undefined),
   });
   const [edit, setEdit] = React.useState<boolean>(false);
+  const [role] = useRole();
   const remove = useCommentDelete(c);
   function editHandler() {
     setEdit(true);
@@ -72,18 +73,18 @@ export default function Comment1({
                 <ButtonLikeComment comment={c} />
               )}
               {c.created_by === currentUser?.uid && (
-                <>
-                  <Button className={classes.button} onClick={editHandler}>
-                    수정
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    onClick={remove}
-                    color="secondary"
-                  >
-                    삭제
-                  </Button>
-                </>
+                <Button className={classes.button} onClick={editHandler}>
+                  수정
+                </Button>
+              )}
+              {(c.created_by === currentUser?.uid || role === "organizer") && (
+                <Button
+                  className={classes.button}
+                  onClick={remove}
+                  color="secondary"
+                >
+                  삭제
+                </Button>
               )}
             </div>
           </Box>
