@@ -92,7 +92,7 @@ export default function EventComment({ post: p }: { post: Post }) {
             </Box>
             <Divider light />
             {comments?.map((c, i) => {
-              return <Comment1 key={i} comment={c} post={p} />;
+              return <Comment1 key={c.id} comment={c} post={p} />;
             })}
           </Box>
         ) : (

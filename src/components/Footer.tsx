@@ -121,7 +121,7 @@ export default function Footer() {
                 <strong>문의</strong>
               </span>
               <a
-                href="https://pf.kakao.com/_DslxnK/chat"
+                href="https://pf.kakao.com/_DslxnK"
                 target="_blank"
                 rel="noopener noreferrer"
               >

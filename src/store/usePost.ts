@@ -1,13 +1,27 @@
+import firebase from "firebase";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
+import { useCurrentUser } from "./useGlobalState";
 export default function usePost(
   listen: Boolean = false
 ): [Post | null | undefined] {
   const { post_id: id } = useParams<{ post_id: string }>();
   const [item, setItem] = React.useState<Post | null | undefined>(undefined);
+  const [currentUser] = useCurrentUser();
   React.useEffect(() => {
+    if (currentUser) {
+      firestore
+        .collection("posts")
+        .doc(id)
+        .collection("users")
+        .doc(currentUser.uid)
+        .set(
+          { count_view: firebase.firestore.FieldValue.increment(1) },
+          { merge: true }
+        );
+    }
     if (listen) {
       return firestore
         .collection("posts")
@@ -39,6 +53,6 @@ export default function usePost(
           }
         });
     }
-  }, [id, listen]);
+  }, [id, listen, currentUser]);
   return [item];
 }

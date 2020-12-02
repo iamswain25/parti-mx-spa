@@ -16,7 +16,7 @@ export default function useNavigateToPost(post_id?: string) {
         .collection("users")
         .doc(userId)
         .set(
-          { view_count: firebase.firestore.FieldValue.increment(1) },
+          { count_click: firebase.firestore.FieldValue.increment(1) },
           { merge: true }
         );
     }

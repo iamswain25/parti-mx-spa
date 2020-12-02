@@ -14,9 +14,8 @@ export default function SavedImage(props: { images: Img[]; setImages: any }) {
   const { images, setImages } = props;
   const classes = useStyles();
   function imageRemove(i: number) {
-    const newImages = [...images];
-    newImages.splice(i, 1);
-    setImages([...newImages]);
+    images.splice(i, 1);
+    setImages([...images]);
   }
   function onSortEnd({ oldIndex, newIndex }: SortEnd) {
     setImages(arrayMove(images, oldIndex, newIndex));
