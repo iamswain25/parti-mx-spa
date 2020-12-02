@@ -6,17 +6,20 @@ import useRedirectIfLogin from "./useRedirectIfLogin";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
 import useLoadingEffect from "./useLoadingEffect";
+import useEffectRefetch from "./useEffectRefetch";
 
 export default function Login() {
   const [, setError] = useGlobalState(keys.ERROR);
   useLoadingEffect(false);
   useRedirectIfLogin();
+  const refresh = useEffectRefetch();
   const handleForm = async (form: FormData) => {
     const { email, password } = form;
     try {
       await auth.signInWithEmailAndPassword(email, password);
       // @ts-ignore
       wsLink.subscriptionClient.close(false);
+      refresh();
     } catch (error) {
       loginError(error, setError);
     }

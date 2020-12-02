@@ -7,6 +7,7 @@ import LoginForm from "./LoginForm";
 import { useGlobalState, keys } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
 import { wsLink } from "../config/ApolloSetup";
+import useEffectRefetch from "./useEffectRefetch";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginModal() {
   const [isVisible, setVisible] = useGlobalState(keys.SHOW_LOGIN_MODAL);
   const [, setError] = useGlobalState(keys.ERROR);
+  const refresh = useEffectRefetch();
   const classes = useStyles();
   function handleClose() {
     setVisible(false);
@@ -34,7 +36,7 @@ export default function LoginModal() {
       handleClose();
       // @ts-ignore
       wsLink.subscriptionClient.close(false);
-      // window.location.reload();
+      refresh();
     } catch (error) {
       loginError(error, setError);
     }
