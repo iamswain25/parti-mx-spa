@@ -8,9 +8,13 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   div: {
     marginTop: theme.spacing(10),
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+    },
     "& button": {
       margin: 10,
       padding: 0,
