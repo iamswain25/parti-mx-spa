@@ -10,7 +10,9 @@ export default function useEffectAuth(): [firebase.User | null | undefined] {
           "잠시 후 제19회 전국주민자치박람회 공식 웹사이트로 이동합니다."
         )
       ) {
-        window.location.replace("https://juminexpo.kr");
+        window.location.replace(
+          "https://juminexpo.kr" + window.location.pathname
+        );
       }
     }
     return auth.onAuthStateChanged(function (user) {
