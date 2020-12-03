@@ -14,7 +14,7 @@ firebase.analytics();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
-firestore.enablePersistence({ synchronizeTabs: true });
+// firestore.enablePersistence({ synchronizeTabs: true });
 
 export async function uploadFileByUUID(file: File) {
   const { name, lastModified, type, size } = file;

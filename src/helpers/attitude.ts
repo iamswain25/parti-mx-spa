@@ -6,15 +6,13 @@ export function getAttitude(post: Post) {
   //   }
   // }
   switch (post.type) {
-    case "event":
-      return "공감";
     case "suggestion":
-      return "동의";
-    case "notice":
-      return "공감";
+      return "응원해요";
     case "vote":
       return "투표완료";
+    case "event":
+    case "notice":
     default:
-      return "동의";
+      return "공감";
   }
 }

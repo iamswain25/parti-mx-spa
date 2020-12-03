@@ -11,7 +11,7 @@ import FilesImages from "./FilesImages";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import EventMetadataInfo from "./EventMetadataInfo";
 import GoogleCanlendarAdd from "./GoogleCanlendarAdd";
-import EventComment from "./EventComment";
+import CommentContainer2 from "./CommentContainer2";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
 import HashtagsDetail from "./HashtagsDetail";
@@ -90,7 +90,7 @@ export default function EventDetail({ post: p }: { post: Post }) {
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
       <div>
-        <EventComment post={p} />
+        <CommentContainer2 post={p} likeLabel="공감 인원" />
       </div>
     </section>
   );

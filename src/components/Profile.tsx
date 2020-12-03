@@ -132,6 +132,19 @@ export default function Profile() {
         }
         rules={{
           required: "닉네임을 입력해야 합니다.",
+          validate: async (value: string) => {
+            const res = await firestore
+              .collection("users")
+              .where("name", "==", value)
+              .get();
+            if (res.docs.length > 1) {
+              return "이미 사용 중인 닉네임입니다.";
+            } else if (res.docs.length === 1) {
+              if (res.docs[0].id !== currentUser?.uid) {
+                return "이미 사용 중인 닉네임입니다.";
+              }
+            }
+          },
         }}
       />
       <Controller

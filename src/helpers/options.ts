@@ -115,6 +115,7 @@ export const DEFAULT_HASHTAGS = [
 ];
 export const PARAM_COLLECTION = "$PARAMS$";
 export const COUNTER_DOC = "counters";
+export const COUNTER_VIEW_POST = "COUNTER_VIEW_POST";
 export const HASHTAG_SPLIT_REGEX = /[\s,;#]+/;
 export const TELEPHONE = "070-8064-3035";
 export const EMAIL = "contact@juminexpo.kr";

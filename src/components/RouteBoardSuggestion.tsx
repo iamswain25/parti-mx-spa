@@ -212,7 +212,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
     (type: Filter) => () => {
       if (type === "cancel") {
         defaultTags.map((g) => (g.selected = false));
-        setChips(defaultTags);
+        setChips([...defaultTags]);
         setFilter("hide");
       } else {
         setFilter((originalType) => (originalType === type ? "hide" : type));

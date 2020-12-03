@@ -31,7 +31,8 @@ export default function useCommentInsert({
         created_at: new Date(),
         created_by: currentUser?.uid,
         updated_by: currentUser?.uid,
-        name: currentUser?.displayName ?? "익명", // deprecated
+        name: currentUser?.displayName || "익명",
+        photo_url: currentUser?.photoURL || null,
       } as any;
       if (liked) {
         variables.attitude = getAttitude(post);

@@ -12,7 +12,6 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoutePostVoteCandidate from "./RoutePostVoteCandidate";
 import GreyDivider from "./GreyDivider";
 import useCandidates from "../store/useCandidates";
-import usePostLiked from "../store/usePostLiked";
 const useStyles = makeStyles((theme) => {
   return {
     container: {

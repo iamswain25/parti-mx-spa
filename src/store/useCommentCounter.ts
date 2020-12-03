@@ -7,7 +7,7 @@ export default function useCommentCounter({
   post_id,
   comment_id,
   parent_id,
-  listen,
+  listen = true,
 }: {
   comment_id: string;
   post_id: string;

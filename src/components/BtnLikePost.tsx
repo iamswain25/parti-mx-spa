@@ -36,13 +36,22 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
     if (!hasPermission) {
       return showAlert();
     }
-    await firestore
-      .collection("posts")
-      .doc(p.id)
-      .collection("likes")
-      .doc(currentUser?.uid)
-      .set({ created_at: new Date() }, { merge: true });
-    setSuccess("공감 하였습니다.");
+    if (currentUser) {
+      await firestore
+        .collection("posts")
+        .doc(p.id)
+        .collection("likes")
+        .doc(currentUser.uid)
+        .set(
+          {
+            created_at: new Date(),
+            name: currentUser.displayName || "익명",
+            photo_url: currentUser.photoURL,
+          },
+          { merge: true }
+        );
+      setSuccess("공감 하였습니다.");
+    }
   }
   const type = p.type;
   switch (type) {
