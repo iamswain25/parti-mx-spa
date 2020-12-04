@@ -94,6 +94,7 @@ const useStyles = makeStyles((theme) => {
               flexWrap: "wrap",
               color: theme.palette.grey[900],
               backgroundColor: "transparent",
+              outline: "none",
               "&.selected": {
                 fontWeight: "bold",
                 color: theme.palette.primary.main,
@@ -127,6 +128,10 @@ const useStyles = makeStyles((theme) => {
             // justifyContent: "center",/ n,
             "&.hide": {
               display: "none",
+            },
+            "&.keyword": {
+              paddingTop: 40,
+              paddingBottom: 40
             },
             minHeight: 111,
             paddingLeft: 30,
