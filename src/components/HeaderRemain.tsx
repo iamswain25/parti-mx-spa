@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontSize: 20,
       fontWeight: 500,
       textAlign: "center",
-      color: theme.palette.grey[900],
+      color: "#99e9e9e",
       "&.active": {
         color: "#544F85",
         // color: theme.palette.primary.main,

@@ -7,6 +7,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { MenuItem } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles(() => ({
+  root: {
+    fontSize: 16,
+    fontWeight: 500
+  },
+}));
 
 export default function LogoutButton() {
   async function logoutHandler() {
@@ -14,6 +21,7 @@ export default function LogoutButton() {
     // history.replace("/");
   }
   const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,7 +33,7 @@ export default function LogoutButton() {
 
   return (
     <div>
-      <MenuItem onClick={handleClickOpen} color="inherit">
+      <MenuItem onClick={handleClickOpen} color="inherit" className={classes.root}>
         로그아웃
       </MenuItem>
       <Dialog
