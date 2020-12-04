@@ -103,8 +103,8 @@ export default function BoardsSetting() {
             .add(b);
     });
     await Promise.all(updates);
-    const deletes = deletingIds.map(async (id: string) =>
-      firestore
+    const deletes = deletingIds.map(async (id: string) =>       
+       firestore
         .collection("groups")
         .doc(group_id)
         .collection("boards")
@@ -165,6 +165,7 @@ export default function BoardsSetting() {
                   control={control}
                   defaultValue={field.id}
                   as={<input type="hidden" />}
+                  rules={{ required: false }}
                 />
                 <CustomTextField
                   label="게시판 제목"
