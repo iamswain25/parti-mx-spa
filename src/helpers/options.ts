@@ -53,7 +53,7 @@ export function showStatusLabelByValue(value: UserStatus) {
   }
 }
 export const CUTTING_INDEX = 5;
-export const KEYWORD_INDEX = 12;
+export const KEYWORD_INDEX = 19;
 export const DEFAULT_HASHTAGS = [
   "주민자치",
   "지역_활성화",
@@ -61,11 +61,18 @@ export const DEFAULT_HASHTAGS = [
   "주민조직_네트워크",
   "제도_정책",
   "서울",
+  "부산",
+  "대구",
   "인천",
-  "경기",
-  "경상",
-  "전라",
-  "충청",
+  "광주",
+  "대전",
+  "울산",
+  "세종",
+  "경기도",
+  "충청남도",
+  "전라북도",
+  "전라남도",
+  "경상남도",
   "제주",
   "주민자치회",
   "마을관리소",
