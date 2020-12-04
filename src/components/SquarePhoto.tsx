@@ -2,7 +2,7 @@ import React from "react";
 import { Post } from "../types";
 import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
 import StorageImage from "./StorageImage";
-import useNavigateToPost from "./useNavigateToPost";
+import { Link } from "react-router-dom";
 export const useStyles = makeStyles((theme) => ({
   aspectRatio: {
     display: "flex",
@@ -60,10 +60,9 @@ export default function SquarePhoto({
   md?: GridSize;
 }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost(p.id);
   return (
     <Grid item xs={xs} md={md}>
-      <div onClick={navigatePost} className={classes.div}>
+      <Link to={`/post/${p.id}`} className={classes.div}>
         <div className={classes.aspectRatio}>
           <StorageImage image={p?.images?.[0]} className={classes.full} />
         </div>
@@ -79,7 +78,7 @@ export default function SquarePhoto({
             </Grid>
           </Typography>
         </div>
-      </div>
+      </Link>
     </Grid>
   );
 }

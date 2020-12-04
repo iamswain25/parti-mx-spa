@@ -1,11 +1,11 @@
 import React from "react";
-import useNavigateToPost from "./useNavigateToPost";
 import { Post, VoteMetadata } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Button, Box } from "@material-ui/core";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { daysLeftMeta } from "../helpers/datefns";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -60,7 +60,6 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost(p.id);
   const created_at = p.created_at;
   const metadata = p.metadata as VoteMetadata;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
@@ -75,21 +74,24 @@ export default function BoardPostVote({ post: p }: { post: Post }) {
           <Typography variant="h5">{daysLeft}</Typography>
         </Box>
       </Grid>
-      <Box
-        className={classes.titleContainer}
-        fontWeight={500}
-        onClick={navigatePost}
-      >
-        <Typography variant="h2" color="textPrimary">
-          {p.title}
-        </Typography>
+      <Box className={classes.titleContainer} fontWeight={500}>
+        <Link to={`/post/${p.id}`}>
+          <Typography variant="h2" color="textPrimary">
+            {p.title}
+          </Typography>
+        </Link>
       </Box>
       <Box color="grey.600">
         <Typography variant="subtitle1" className={classes.body}>
           참여자 0명
         </Typography>
       </Box>
-      <Button variant="contained" color="primary" onClick={navigatePost}>
+      <Button
+        variant="contained"
+        color="primary"
+        component={Link}
+        to={`/post/${p.id}`}
+      >
         <Box fontWeight={500}>투표하러 가기</Box>
       </Button>
     </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import useNavigateToPost from "./useNavigateToPost";
 import { Post, VoteMetadata } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
@@ -12,6 +11,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import RoutePostVoteCandidate from "./RoutePostVoteCandidate";
 import GreyDivider from "./GreyDivider";
 import useCandidates from "../store/useCandidates";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -67,8 +67,6 @@ const useStyles = makeStyles((theme) => {
 export default function RoutePostVote({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  // const [liked] = usePostLiked(p.id);
-  const navigatePost = useNavigateToPost(p.id);
   const created_at = p.created_at;
   const metadata = p.metadata as VoteMetadata;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
@@ -94,14 +92,16 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
             <Typography variant="body1">{daysLeft}</Typography>
           </Box>
         </Grid>
-        <Box className={classes.titleContainer} mt={1} onClick={navigatePost}>
-          <Typography
-            variant="h3"
-            color="textPrimary"
-            className={classes.title}
-          >
-            {p.title}
-          </Typography>
+        <Box className={classes.titleContainer} mt={1}>
+          <Link to={`/post/${p.id}`}>
+            <Typography
+              variant="h3"
+              color="textPrimary"
+              className={classes.title}
+            >
+              {p.title}
+            </Typography>
+          </Link>
         </Box>
         {!isDesktop && (
           <>
@@ -150,7 +150,8 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
                   variant="contained"
                   fullWidth
                   className={classes.btnLight}
-                  onClick={navigatePost}
+                  component={Link}
+                  to={`/post/${p.id}`}
                 >
                   다시 투표하기
                 </Button>
@@ -159,7 +160,8 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
                   variant="contained"
                   fullWidth
                   className={classes.btnDark}
-                  onClick={navigatePost}
+                  component={Link}
+                  to={`/post/${p.id}`}
                 >
                   투표하기
                 </Button>

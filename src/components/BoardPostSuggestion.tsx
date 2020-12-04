@@ -1,5 +1,4 @@
 import React from "react";
-import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
@@ -7,6 +6,7 @@ import PanToolIcon from "@material-ui/icons/PanTool";
 import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 import usePostCounter from "../store/usePostCounter";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost(p.id);
   const [counter] = usePostCounter(p.id);
   const { count_like = 0 } = counter || {};
   return (
@@ -76,10 +75,16 @@ export default function BoardPostSuggestion({ post: p }: { post: Post }) {
           </Box>
         </Grid>
       </Box>
-      <div className={classes.titleContainer} onClick={navigatePost}>
-        <Typography variant="h3" className={classes.title} color="textPrimary">
-          {p.title}
-        </Typography>
+      <div className={classes.titleContainer}>
+        <Link to={`/post/${p.id}`}>
+          <Typography
+            variant="h3"
+            className={classes.title}
+            color="textPrimary"
+          >
+            {p.title}
+          </Typography>
+        </Link>
       </div>
       <Box color="grey.600">
         <Typography variant="body1" className={classes.body}>

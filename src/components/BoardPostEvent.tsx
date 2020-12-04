@@ -1,5 +1,4 @@
 import React from "react";
-import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
@@ -13,6 +12,7 @@ import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import StorageImage from "./StorageImage";
 import usePostLiked from "../store/usePostLiked";
 import usePostCounter from "../store/usePostCounter";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -63,7 +63,6 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [counter] = usePostCounter(p.id);
   const { count_like = 0 } = counter || {};
-  const navigatePost = useNavigateToPost(p.id);
   let event_date = null,
     place = null,
     deadline = null,
@@ -80,19 +79,17 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
     <div className={classes.container}>
       <Box mb={1} color="#a9aaad">
         <Grid container direction="row" alignItems="center">
-          <div className={classes.imgContainer} onClick={navigatePost}>
+          <Link className={classes.imgContainer} to={`/post/${p.id}`}>
             {firstImage ? <StorageImage image={firstImage} /> : <EventIcon />}
-          </div>
+          </Link>
           <Box>
-            <Box
-              mb={1}
-              className={classes.titleContainer}
-              onClick={navigatePost}
-            >
-              <Typography variant={"h4"} color="textPrimary">
-                {p.title}
-              </Typography>
-            </Box>
+            <Link to={`/post/${p.id}`}>
+              <Box mb={1} className={classes.titleContainer}>
+                <Typography variant={"h4"} color="textPrimary">
+                  {p.title}
+                </Typography>
+              </Box>
+            </Link>
             <Box color="grey.600">
               <Typography variant="subtitle2">{event_date}</Typography>
             </Box>

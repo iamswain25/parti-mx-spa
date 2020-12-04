@@ -1,10 +1,10 @@
 import React from "react";
-import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -45,13 +45,14 @@ const useStyles = makeStyles((theme) => {
 
 export default function SearchSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost(p.id);
   return (
     <div className={classes.container}>
-      <div className={classes.titleContainer} onClick={navigatePost}>
-        <Typography variant="h3" color="textPrimary">
-          {p.title}
-        </Typography>
+      <div className={classes.titleContainer}>
+        <Link to={`/post/${p.id}`}>
+          <Typography variant="h3" color="textPrimary">
+            {p.title}
+          </Typography>
+        </Link>
       </div>
       <Box color="grey.600">
         <Typography variant="body1" className={classes.body}>

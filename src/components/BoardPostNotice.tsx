@@ -1,10 +1,10 @@
 import React from "react";
-import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Box, Hidden } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -39,29 +39,22 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostNotice({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost(p.id);
   const firstImage = p.images?.[0]?.uri;
   return (
     <div className={classes.container}>
       {firstImage && (
-        <img
-          src={firstImage}
-          alt="post"
-          className={classes.img}
-          onClick={navigatePost}
-        />
+        <Link to={`/post/${p.id}`}>
+          <img src={firstImage} alt="post" className={classes.img} />
+        </Link>
       )}
       <div>
-        <Box
-          className={classes.titleContainer}
-          mb={1}
-          display="flex"
-          onClick={navigatePost}
-        >
-          <Typography variant="h3" color="textPrimary">
-            {p.title}
-          </Typography>
-        </Box>
+        <Link to={`/post/${p.id}`}>
+          <Box className={classes.titleContainer} mb={1} display="flex">
+            <Typography variant="h3" color="textPrimary">
+              {p.title}
+            </Typography>
+          </Box>
+        </Link>
         <Hidden implementation="css" smDown>
           <Box color="grey.600">
             <Typography variant="body1" className={classes.body}>

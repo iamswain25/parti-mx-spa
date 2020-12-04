@@ -2,7 +2,7 @@ import React from "react";
 import { EventMetadata, Post } from "../types";
 import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
 import StorageImage from "./StorageImage";
-import useNavigateToPost from "./useNavigateToPost";
+import { Link } from "react-router-dom";
 export const useStyles = makeStyles((theme) => ({
   aspectRatio: {
     display: "flex",
@@ -97,10 +97,9 @@ export default function EventPhotoGridItem({
 }) {
   const classes = useStyles();
   const metadata = p.metadata as EventMetadata;
-  const navigatePost = useNavigateToPost(p.id);
   return (
     <Grid item xs={xs} md={md}>
-      <div onClick={navigatePost} className={classes.div}>
+      <Link to={`/post/${p.id}`} className={classes.div}>
         <div className={classes.aspectRatio}>
           <StorageImage image={p?.images?.[0]} thumb className={classes.full} />
           <div className={p.is_closed ? "floating closed" : "floating"}>
@@ -123,7 +122,7 @@ export default function EventPhotoGridItem({
             </Grid>
           </Typography>
         </div>
-      </div>
+      </Link>
     </Grid>
   );
 }
