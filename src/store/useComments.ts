@@ -10,11 +10,13 @@ export default function useComments({
   const [items, setItems] = React.useState<Comment[]>([] as Comment[]);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [hasMore, setHasMore] = React.useState<boolean>(true);
-  const [
-    startAfter,
-    setStartAfter,
-  ] = React.useState<null | firebase.firestore.DocumentSnapshot>(null);
+  const [startAfter, setStartAfter] = React.useState<
+    null | firebase.firestore.DocumentSnapshot | undefined
+  >(undefined);
   React.useEffect(() => {
+    if (startAfter === undefined) {
+      return;
+    }
     let query = firestore
       .collection("posts")
       .doc(post_id)
@@ -50,7 +52,9 @@ export default function useComments({
       .limitToLast(3)
       .get()
       .then((snapshot) => {
-        if (!snapshot.empty) {
+        if (snapshot.empty) {
+          setStartAfter(null);
+        } else {
           lastSnapshot = snapshot.docs[0];
           const getLast = snapshot.docs[snapshot.docs.length - 1];
           setStartAfter(getLast);

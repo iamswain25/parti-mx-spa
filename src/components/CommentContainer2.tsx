@@ -11,11 +11,10 @@ import {
 import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
-import AvatarNameDate2 from "./AvatarNameDate2";
 import useComments from "../store/useComments";
-import usePostLikedUsers from "../store/usePostLikedUsers";
 import usePostCounter from "../store/usePostCounter";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import LikedUsers from "./LikedUsers";
 const useStyles = makeStyles((theme) => {
   return {
     text: {
@@ -61,7 +60,6 @@ export default function CommentContainer2({
   const [counter] = usePostCounter(p.id, true);
   const { count_comment = 0, count_like = 0 } = counter || {};
   const [comments, loadmore, loading, hasMore] = useComments({ post_id: p.id });
-  const [likedUsers] = usePostLikedUsers(p.id);
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();
   const insertHandler = useCommentInsert({
@@ -117,16 +115,7 @@ export default function CommentContainer2({
             return <Comment1 key={c.id} comment={c} post={p} />;
           })}
         </Box>
-        <Box display={isCommentVisible ? "none" : undefined}>
-          <Box my={2}>
-            <Divider />
-          </Box>
-          <Grid container wrap="wrap" spacing={2}>
-            {likedUsers?.map((u) => (
-              <AvatarNameDate2 key={u.id} postLike={u} />
-            ))}
-          </Grid>
-        </Box>
+        {!isCommentVisible && <LikedUsers post={p} />}
       </Box>
     </>
   );
