@@ -3,7 +3,6 @@ import { Comment, Post } from "../types";
 import {
   Box,
   Divider,
-  Grid,
   Button,
   Typography,
   makeStyles,
