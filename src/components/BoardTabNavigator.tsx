@@ -42,7 +42,7 @@ export default function BoardTabNavigator() {
   }
   function permissionWrite() {
     if (!board_id) return false;
-    const board = boards.find((b) => b.id === board_id);
+    const board = boards?.find((b) => b.id === board_id);
     if (board && role) {
       return board.permission?.create?.includes(role);
     }

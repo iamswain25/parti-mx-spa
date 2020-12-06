@@ -3,7 +3,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
-import { useBoards, useCurrentUser, useGroupId } from "../store/useGlobalState";
+import { useBoards, useCurrentUser } from "../store/useGlobalState";
+import useGroup from "../store/useGroup";
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -11,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      fontSize: 18,
+      fontSize: 24,
       fontWeight: 500,
       letterSpacing: "-0.56px",
       textAlign: "center",
@@ -58,24 +59,24 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function DrawerBoards({ close }: { close: () => void }) {
   const classes = useStyles();
-  const [group_id] = useGroupId();
+  const [group] = useGroup();
   const [boards] = useBoards();
   const [currentUser] = useCurrentUser();
   return (
     <section className={classes.root}>
       <div className="title">
-        <Link to={`/${group_id}`} onClick={close}>
-          <img src={`/bi.png`} alt="bi" />
+        <Link to={`/${group?.id}`} onClick={close}>
+          {group?.title}
         </Link>
         <IconButton onClick={close}>
           <CloseIcon />
         </IconButton>
       </div>
       <div className={classes.container}>
-        {boards.map((b) => (
+        {boards?.map((b) => (
           <NavLink
             exact
-            to={`/${group_id}/${b.id}`}
+            to={`/${group?.id}/${b.id}`}
             key={b.id}
             onClick={close}
             className="boards"

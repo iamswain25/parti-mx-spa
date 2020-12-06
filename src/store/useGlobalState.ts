@@ -9,7 +9,7 @@ export const initialState = {
   boardId: undefined,
   sort: 0,
   role: undefined,
-  boards: [],
+  boards: undefined,
 };
 interface GlobalType {
   success: any;
@@ -20,7 +20,7 @@ interface GlobalType {
   loginModal: boolean;
   currentUser?: firebase.User | null;
   sort: number;
-  boards: Board[];
+  boards?: Board[];
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export enum keys {

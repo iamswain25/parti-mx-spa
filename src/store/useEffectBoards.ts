@@ -19,6 +19,8 @@ export default function useEffectBoards(): void {
             );
             if (boards) {
               setBoards(boards);
+            } else {
+              setBoards([]);
             }
           },
           (error) => {

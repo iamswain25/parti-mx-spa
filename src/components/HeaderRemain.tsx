@@ -4,16 +4,12 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Hidden } from "@material-ui/core";
-import {
-  useBoardId,
-  useBoards,
-  useCurrentUser,
-  useGroupId,
-} from "../store/useGlobalState";
+import { useBoardId, useBoards, useCurrentUser } from "../store/useGlobalState";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
 import MenuProfile from "./MenuProfile";
+import useGroup from "../store/useGroup";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -41,15 +37,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   logoFont: {
+    lineHeight: 1.2,
     display: "flex",
     alignItems: "center",
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: 500,
     letterSpacing: "-0.56px",
     textAlign: "center",
     color: theme.palette.grey[900],
     [theme.breakpoints.down("sm")]: {
-      width: 200,
+      fontSize: 24,
       maxWidth: "100%",
       position: "absolute",
       left: "50%",
@@ -59,7 +56,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     // color: theme.palette.primary.main,
   },
   flexcenter: {
-    paddingTop: 13,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -93,7 +89,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function HeaderRemain() {
   const classes = useStyles();
-  const [group_id] = useGroupId();
+  const [group] = useGroup();
   const [board_id] = useBoardId();
   const [boards] = useBoards();
   const [currentUser] = useCurrentUser();
@@ -105,15 +101,13 @@ export default function HeaderRemain() {
             <DrawerGroup />
           </Hidden>
           <Grid item xs={3} className={classes.logoFont}>
-            <Link to={`/${group_id}`}>
-              <img src={`/bi.png`} alt="bi" />
-            </Link>
+            <Link to={`/${group?.id}`}>{group?.title}</Link>
           </Grid>
           <Grid item xs={7} className={classes.flexcenter}>
-            {boards.map((b, i) => (
+            {boards?.map((b, i) => (
               <NavLink
                 exact
-                to={`/${group_id}/${b.id}`}
+                to={`/${group?.id}/${b.id}`}
                 key={i}
                 className="boards"
                 isActive={(match) => !!match || b.id === board_id}
