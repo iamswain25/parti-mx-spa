@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     // color: theme.palette.primary.main,
   },
   flexcenter: {
+    paddingTop: 13,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -71,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontSize: 20,
       fontWeight: 500,
       textAlign: "center",
-      color: "#99e9e9e",
+      color: theme.palette.grey[800],
       "&.active": {
         color: "#544F85",
         // color: theme.palette.primary.main,
