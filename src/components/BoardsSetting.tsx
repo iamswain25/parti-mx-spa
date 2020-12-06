@@ -156,7 +156,6 @@ export default function BoardsSetting() {
                     render={(props) => (
                       <Select {...props}>
                         {arr.map((e, i) => {
-                          // e.order = Number(e.order);
                           return (
                             <MenuItem 
                             value={e.order}
