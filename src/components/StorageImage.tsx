@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => {
 });
 export default function StorageImage(
   props:
-    | { className?: string; image: Img; thumb?: boolean }
+    | { className?: string; image?: Img; thumb?: boolean }
     | { className?: string; path: string }
 ) {
   let path = "path" in props ? props.path : props.image?.path;
