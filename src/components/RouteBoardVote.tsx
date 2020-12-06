@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
 import usePosts from "../store/usePosts";
-import useBoardCounter from "../store/useBoardCounter";
 const useStyles = makeStyles((theme) => {
   return {
     root: { paddingBottom: theme.spacing(5) },
@@ -31,7 +30,6 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
   const [posts] = usePosts({ board_id: b.id });
-  const [counter] = useBoardCounter({ board_id: b.id });
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -51,7 +49,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "primary" : "textSecondary"}
             >
-              {counter?.count_open || 0}
+              {b?.count_open || 0}
             </Typography>
           </Box>
         </Button>
@@ -69,7 +67,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "primary" : "textSecondary"}
             >
-              {counter?.count_closed || 0}
+              {b?.count_closed || 0}
             </Typography>
           </Box>
         </Button>

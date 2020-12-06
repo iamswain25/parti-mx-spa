@@ -6,7 +6,7 @@ import { PARAM_COLLECTION, COUNTER_VIEW_POST } from "../helpers/options";
 import { Post } from "../types";
 import { useCurrentUser } from "./useGlobalState";
 export default function usePost(
-  listen: Boolean = false
+  listen: Boolean = true
 ): [Post | null | undefined] {
   const { post_id: id } = useParams<{ post_id: string }>();
   const [item, setItem] = React.useState<Post | null | undefined>(undefined);
@@ -21,38 +21,46 @@ export default function usePost(
         .set(
           { [id]: firebase.firestore.FieldValue.increment(1) },
           { merge: true }
-        );
-    }
-    if (listen) {
-      return firestore
-        .collection("posts")
-        .doc(id)
-        .onSnapshot(
-          (doc) => {
+        )
+        .catch((error) => {
+          console.warn("view count", error);
+        });
+      if (listen) {
+        return firestore
+          .collection("posts")
+          .doc(id)
+          .onSnapshot(
+            (doc) => {
+              if (doc.exists) {
+                const item = { id: doc.id, ...doc.data() } as Post;
+                setItem(item);
+              } else {
+                setItem(null);
+              }
+            },
+            (error) => {
+              console.warn("listen Post", error);
+              setItem(null);
+            }
+          );
+      } else {
+        firestore
+          .collection("posts")
+          .doc(id)
+          .get()
+          .then((doc) => {
             if (doc.exists) {
               const item = { id: doc.id, ...doc.data() } as Post;
               setItem(item);
             } else {
               setItem(null);
             }
-          },
-          (error) => {
-            console.warn("usePost", error);
-          }
-        );
-    } else {
-      firestore
-        .collection("posts")
-        .doc(id)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            const item = { id: doc.id, ...doc.data() } as Post;
-            setItem(item);
-          } else {
+          })
+          .catch((error) => {
+            console.warn("get Post", error);
             setItem(null);
-          }
-        });
+          });
+      }
     }
   }, [id, listen, currentUser]);
   return [item];

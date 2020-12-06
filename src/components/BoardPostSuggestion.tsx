@@ -5,7 +5,6 @@ import { grey } from "@material-ui/core/colors";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
-import usePostCounter from "../store/usePostCounter";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
@@ -61,8 +60,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function BoardPostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const [counter] = usePostCounter(p.id);
-  const { count_like = 0 } = counter || {};
+  const { count_like = 0 } = p;
   return (
     <div className={classes.container}>
       <Box mb={1}>

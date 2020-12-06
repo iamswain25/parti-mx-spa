@@ -1,5 +1,5 @@
 import React from "react";
-import { Post, VoteCounter, VoteMetadata } from "../types";
+import { Post, VoteMetadata } from "../types";
 import {
   Box,
   Grid,
@@ -20,7 +20,6 @@ import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
 import HashtagsDetail from "./HashtagsDetail";
-import usePostCounter from "../store/usePostCounter";
 import CandidatesDetail from "./CandidatesDetail";
 const useStyles = makeStyles((theme) => {
   return {
@@ -89,9 +88,14 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
-  const { images, created_at, files, closed_at, metadata } = p;
-  const [counter] = usePostCounter<VoteCounter>(p.id, true);
-  const { count_comment = 0 } = counter || {};
+  const {
+    images,
+    created_at,
+    files,
+    closed_at,
+    metadata,
+    count_comment = 0,
+  } = p;
   const [comments] = useComments({ post_id: p.id });
   const isClosed = !!closed_at;
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
@@ -129,7 +133,7 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
         <HashtagsDetail tags={p.tags} />
-        <CandidatesDetail post={p} counter={counter} />
+        <CandidatesDetail post={p} />
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}
       <div className={classes.root}>

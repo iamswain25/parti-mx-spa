@@ -11,7 +11,6 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import StorageImage from "./StorageImage";
 import usePostLiked from "../store/usePostLiked";
-import usePostCounter from "../store/usePostCounter";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   return {
@@ -61,8 +60,7 @@ const useStyles = makeStyles((theme) => {
 });
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const [counter] = usePostCounter(p.id);
-  const { count_like = 0 } = counter || {};
+  const { count_like = 0 } = p;
   let event_date = null,
     place = null,
     deadline = null,

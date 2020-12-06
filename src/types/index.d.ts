@@ -77,6 +77,9 @@ export type Board = {
   updated_at: firebase.firestore.Timestamp;
   last_posted_at: string;
   group_id: string;
+  count_post: number;
+  count_open: number;
+  count_closed: number;
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
 export interface LatLng {
@@ -104,7 +107,7 @@ export interface Group {
   event: Board[];
   vote: Board[];
   status: UserStatus;
-  user_count: number;
+  count_user: number;
 }
 export interface HomeGroup {
   mx_groups_by_pk: Group;
@@ -141,25 +144,12 @@ export interface Comment {
   post_id: string;
   parent_id: string;
   attitude: string;
+  count_like: number;
 }
 export interface File {
   name: string;
   size: number;
   path: string;
-}
-export type BoardCounter = {
-  count_open: number;
-  count_post: number;
-  count_closed: number;
-};
-export type Counter = {
-  count_like: number;
-  count_comment: number;
-  count_view: number;
-};
-export interface VoteCounter extends Counter {
-  count_total_vote: number;
-  count_max_vote: number;
 }
 export type Metadata =
   | VoteMetadata
@@ -189,6 +179,11 @@ export type Post<
   updated_at: firebase.firestore.Timestamp;
   announced_at: firebase.firestore.Timestamp;
   denounced_at: firebase.firestore.Timestamp;
+  count_like: number;
+  count_comment: number;
+  count_view: number;
+  count_total_vote: number;
+  count_max_vote: number;
   location: { type: "Point"; coordinates: [number, number] };
   tags: string[];
 };

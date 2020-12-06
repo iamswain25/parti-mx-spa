@@ -1,5 +1,5 @@
 import React from "react";
-import { Candidate, Post, VoteCounter, VoteMetadata } from "../types";
+import { Candidate, Post, VoteMetadata } from "../types";
 import { Grid, Box, Typography } from "@material-ui/core";
 import { LinearProgressActive, LinearProgressGrey } from "./LinearProgress";
 import CheckIcon from "@material-ui/icons/Check";
@@ -9,13 +9,11 @@ import useCandidateCounter from "../store/useCandidateCounter";
 
 export default function VoteCandidate({
   candidate: c,
-  counter,
   voted = false,
   post,
   onClick,
 }: {
   candidate: Candidate;
-  counter?: VoteCounter | null;
   voted: boolean;
   post: Post<VoteMetadata>;
   onClick: () => any;
@@ -27,10 +25,10 @@ export default function VoteCandidate({
   const {
     metadata: { isResultHidden = false, isAnonymous = false },
     is_closed = false,
+    count_total_vote: total = 0,
+    count_max_vote: max = 1,
   } = post;
   const [, setError] = useError();
-  const { count_total_vote: total = 0, count_max_vote: max = 1 } =
-    counter || {};
   const [percentage, width, count] = React.useMemo(() => {
     const count = votes?.count_vote || 0;
     return [

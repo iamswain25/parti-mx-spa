@@ -6,19 +6,20 @@ service cloud.firestore {
         let group_id = resource.data.group_id;
         let board_id = resource.data.board_id;
         let board = get(/databases/$(database)/documents/groups/$(group_id)/boards/$(board_id));
-        let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
-        let role = user != null ? user.data.role : "anonymous";
+        let path = /databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid);
+        let existsUser = exists(path);
+        let role = existsUser ? get(path).data.role : "anonymous";
         let permission = board.data.permission;
         return role in permission[type];
       }
-     
+      allow list: if true;
       allow read: if checkPostReadPermission("read");
       allow update: if checkPostReadPermission("update");
       allow delete: if checkPostReadPermission("delete");
       allow create: if checkPostReadPermission("create");
       
-      match /comments/{comment_id} {
-        function checkSubPermission() {
+      match /comments/{comment_id}/{document=**} {
+        function checkSubPermission(type) {
           let post = get(/databases/$(database)/documents/posts/$(post_id));
           let group_id = post.data.group_id;
           let board_id = post.data.board_id;
@@ -40,8 +41,8 @@ service cloud.firestore {
         allow create: if checkSubPermission("comment");
         allow update: if resource.data.created_by == request.auth.uid;
       }
-      match /likes/{user_id} {
-         function checkSubPermission() {
+      match /likes/{user_id}/{document=**} {
+         function checkSubPermission(type) {
           let post = get(/databases/$(database)/documents/posts/$(post_id));
           let group_id = post.data.group_id;
           let board_id = post.data.board_id;
@@ -57,12 +58,12 @@ service cloud.firestore {
         allow create: if checkSubPermission("like") && user_id == request.auth.uid;
       }
 
-      match /candidates/{candidate_id} {
+      match /candidates/{candidate_id}/{document=**} {
         allow read: if true;
         allow write: if true;
       }
     }
-    match /users/{user_id} {
+    match /users/{user_id}/{document=**} {
       allow read: if true;
       allow write: if user_id == request.auth.uid;
     }
@@ -75,7 +76,7 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isOrganizer();
       
-      match /users/{user_id} {
+      match /users/{user_id}/{document=**} {
         allow read: if true;
         allow write: if user_id == request.auth.uid || isOrganizer();
       }

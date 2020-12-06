@@ -12,7 +12,6 @@ import {
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import EventPhotoGridItem from "./EventPhotoGridItem";
-import useBoardCounter from "../store/useBoardCounter";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -45,7 +44,6 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
   const [posts] = usePosts({ board_id: b.id, isClosed });
-  const [counter] = useBoardCounter({ board_id: b.id });
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -65,7 +63,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "textSecondary" : "primary"}
             >
-              {counter?.count_open || 0}
+              {b?.count_open || 0}
             </Typography>
           </Box>
         </Button>
@@ -83,7 +81,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "primary" : "textSecondary"}
             >
-              {counter?.count_closed || 0}
+              {b?.count_closed || 0}
             </Typography>
           </Box>
         </Button>

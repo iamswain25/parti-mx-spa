@@ -18,7 +18,6 @@ import useCommentDelete from "./useCommentDelete";
 import Linkify from "./Linkify";
 import useCommentLiked from "../store/useCommentLiked";
 import useComments2 from "../store/useComments2";
-import useCommentCounter from "../store/useCommentCounter";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
 import useCommentAttitude from "../store/useCommentAttitude";
 import { getAttitude } from "../helpers/attitude";
@@ -74,10 +73,9 @@ export default function Comment1({
 }) {
   const [liked] = useCommentLiked(c);
   const [currentUser] = useCurrentUser();
-  const [counter] = useCommentCounter({ post_id: c.post_id, comment_id: c.id });
   const [authorLiked] = useCommentAttitude(c);
-  const { count_comment = 0 } = counter || {};
   const [comments2] = useComments2(c);
+  const count_comment = comments2?.length || 0;
   const classes = useStyles();
   const [isRe, setRe] = React.useState<string | undefined>(undefined);
   const [isDeleted, setDeleted] = React.useState<boolean>(false);
@@ -149,7 +147,7 @@ export default function Comment1({
               )}
             </div>
           </Box>
-          {(comments2?.length || 0) > 0 && (
+          {count_comment > 0 && (
             <Box mt={1}>
               <Divider light />
             </Box>

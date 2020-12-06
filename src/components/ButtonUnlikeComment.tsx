@@ -3,7 +3,6 @@ import { Box, Button, makeStyles, Theme } from "@material-ui/core";
 import { firestore } from "../config/firebase";
 import { useCurrentUser } from "../store/useGlobalState";
 import { Comment } from "../types";
-import useCommentCounter from "../store/useCommentCounter";
 import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -20,14 +19,8 @@ export default function ButtonUnlikeComment({
 }) {
   const classes = useStyles();
   const [currentUser] = useCurrentUser();
-  const [counter] = useCommentCounter({
-    post_id: c.post_id,
-    comment_id: c.id,
-    parent_id: c.parent_id,
-    listen: true,
-  });
   const [hasPermission, showAlert] = usePermission("like");
-  const { count_like = 0 } = counter || {};
+  const { count_like = 0 } = c;
   const userId = currentUser?.uid;
 
   async function pressHandler() {

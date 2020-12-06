@@ -16,15 +16,16 @@ export default function useCandidates({
       .collection("posts")
       .doc(post_id)
       .collection("candidates");
-    return candidateCollectionRef
-      .orderBy("order", "asc")
-      .onSnapshot((snapshot) => {
+    return candidateCollectionRef.orderBy("order", "asc").onSnapshot(
+      (snapshot) => {
         const candidates = snapshot.docs.map(
           (doc) =>
             ({ id: doc.id, post_id, ...(doc.data() as any) } as Candidate)
         );
         setCandidates(candidates);
-      });
+      },
+      (err) => console.warn("candidates", err)
+    );
   }, [post_id]);
   React.useEffect(() => {
     if (candidates && currentUser) {
@@ -37,10 +38,13 @@ export default function useCandidates({
           .doc(c.id)
           .collection("users")
           .doc(currentUser.uid)
-          .onSnapshot((snapshot) => {
-            c.voted = snapshot.exists;
-            setItems([...candidates]);
-          })
+          .onSnapshot(
+            (snapshot) => {
+              c.voted = snapshot.exists;
+              setItems([...candidates]);
+            },
+            (err) => console.warn("candidates voted", err)
+          )
       );
       return () => {
         unsubscribeArr.map((unsubscribe) => unsubscribe());

@@ -1,99 +1,26 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { COUNTER_DOC, PARAM_COLLECTION } from "../env";
-export type Counter = {
-  count_like: number;
-  count_comment: number;
-  count_view: number;
-};
-export interface VoteCounter extends Counter {
-  count_total_vote: number;
-  count_max_vote: number;
-}
 export default functions
   .region("asia-northeast3")
   .firestore.document(
     "posts/{post_id}/candidates/{candidate_id}/users/{user_id}"
   )
   .onDelete(async (snapshot) => {
-    const candidateRef = snapshot.ref.parent.parent;
-    const postRef = candidateRef?.parent.parent;
-    const postCounterRef = postRef
-      ?.collection(PARAM_COLLECTION)
-      .doc(COUNTER_DOC);
-    const candidateCounterRef = candidateRef
-      ?.collection(PARAM_COLLECTION)
-      .doc(COUNTER_DOC);
-    const [res1, res2] = await Promise.all([
-      postCounterRef?.get(),
-      candidateCounterRef?.get(),
-    ]);
+    const candidate = snapshot.ref.parent.parent;
+    const post = candidate?.parent.parent;
+    const [res1, res2] = await Promise.all([post?.get(), candidate?.get()]);
     const count_max_vote = res1?.get("count_max_vote");
     const count_vote = res2?.get("count_vote");
-
-    const req1 = candidateCounterRef?.set(
+    const req1 = candidate?.set(
       { count_vote: admin.firestore.FieldValue.increment(-1) },
       { merge: true }
     );
-    let req2;
+    const set: any = {
+      count_total_vote: admin.firestore.FieldValue.increment(-1),
+    };
     if (count_max_vote === count_vote) {
-      req2 = postCounterRef?.set(
-        {
-          count_max_vote: admin.firestore.FieldValue.increment(-1),
-          count_total_vote: admin.firestore.FieldValue.increment(-1),
-        },
-        { merge: true }
-      );
-    } else {
-      req2 = postCounterRef?.set(
-        { count_total_vote: admin.firestore.FieldValue.increment(-1) },
-        { merge: true }
-      );
+      set.count_max_vote = admin.firestore.FieldValue.increment(-1);
     }
+    const req2 = post?.set(set, { merge: true });
     return Promise.all([req1, req2]);
   });
-
-//  const { post_id, candidate_id, user_id } = context.params;
-//  const postRef = firestore.doc(`posts/${post_id}`);
-//  const candidateRef = postRef.collection("candidates").doc(candidate_id);
-//  const candidateCounterRef  = candidateRef
-//    .collection(PARAM_COLLECTION)
-//    .doc(COUNTER_DOC) ;
-
-// .onDelete(async (snapshot, context) => {
-//   const { user_id } = context.params;
-//   const candidateRef = snapshot.ref.parent.parent;
-//   const postRef = candidateRef?.parent.parent;
-//   const postLikeRef = postRef?.collection("likes").doc(user_id);
-//   const postCounterRef = postRef
-//     ?.collection(PARAM_COLLECTION)
-//     .doc(COUNTER_DOC);
-//   const candidateCounterRef = candidateRef
-//     ?.collection(PARAM_COLLECTION)
-//     .doc(COUNTER_DOC);
-//   const post = await postRef?.get();
-//   const { isMultiple = true } = post?.get("metadata") || {};
-//   const count_max_vote = (await postCounterRef?.get())?.get("count_max_vote");
-//   const count_vote = (await candidateCounterRef?.get())?.get("count_vote");
-//   if (!isMultiple) {
-//     await postLikeRef?.delete();
-//     await candidateCounterRef?.set(
-//       { count_vote: admin.firestore.FieldValue.increment(-1) },
-//       { merge: true }
-//     );
-//   }
-//   if (count_max_vote === count_vote) {
-//     postCounterRef?.set(
-//       {
-//         count_max_vote: admin.firestore.FieldValue.increment(-1),
-//         count_total_vote: admin.firestore.FieldValue.increment(-1),
-//       },
-//       { merge: true }
-//     );
-//   } else {
-//     postCounterRef?.set(
-//       { count_total_vote: admin.firestore.FieldValue.increment(-1) },
-//       { merge: true }
-//     );
-//   }
-// });

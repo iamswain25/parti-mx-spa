@@ -1,5 +1,5 @@
 import React from "react";
-import { Post, VoteCounter, VoteMetadata } from "../types";
+import { Post, VoteMetadata } from "../types";
 import { Box, makeStyles, Button, Grid } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import VoteCandidate from "./VoteCandidate";
@@ -26,11 +26,9 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function CandidatesDetail({
-  counter,
   post: p,
 }: {
   post: Post<VoteMetadata>;
-  counter?: VoteCounter | null;
 }) {
   const [candidates] = useCandidates({ post_id: p.id });
   const [liked, setLiked] = React.useState(false);
@@ -55,7 +53,7 @@ export default function CandidatesDetail({
               <Box mr={1}>중간 투표 집계를 숨김</Box>
             )}
           </Box>
-          <Box color="grey.900">참여자 {counter?.count_like || 0}명</Box>
+          <Box color="grey.900">참여자 {p?.count_like || 0}명</Box>
         </Grid>
       </Box>
       <Box>
@@ -63,7 +61,6 @@ export default function CandidatesDetail({
           <VoteCandidate
             candidate={c}
             voted={liked}
-            counter={counter}
             onClick={voteHandler(c, liked)}
             key={c.id}
             post={p}

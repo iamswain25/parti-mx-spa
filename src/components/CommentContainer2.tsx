@@ -12,7 +12,6 @@ import Comment1 from "./Comment1";
 import CommentTextinput from "./CommentTextinput";
 import useCommentInsert from "./useCommentInsert";
 import useComments from "../store/useComments";
-import usePostCounter from "../store/usePostCounter";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import LikedUsers from "./LikedUsers";
 const useStyles = makeStyles((theme) => {
@@ -57,8 +56,7 @@ export default function CommentContainer2({
   commentLabel?: string;
   likeLabel?: string;
 }) {
-  const [counter] = usePostCounter(p.id, true);
-  const { count_comment = 0, count_like = 0 } = counter || {};
+  const { count_comment = 0, count_like = 0 } = p;
   const [comments, loadmore, loading, hasMore] = useComments({ post_id: p.id });
   const [isCommentVisible, setCommentVisible] = React.useState(true);
   const classes = useStyles();

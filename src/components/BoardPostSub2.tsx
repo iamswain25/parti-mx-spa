@@ -2,12 +2,10 @@ import React from "react";
 import { Post } from "../types";
 import { semanticDate } from "../helpers/datefns";
 import { Typography, Box } from "@material-ui/core";
-import usePostCounter from "../store/usePostCounter";
 import useUser from "../store/useUser";
 export default function BoardPostSub2({ post: p }: { post: Post }) {
-  const [counter] = usePostCounter(p.id);
   const [user] = useUser({ id: p.created_by });
-  const { count_comment = 0, count_like = 0 } = counter || {};
+  const { count_comment = 0, count_like = 0 } = p;
   const isVote = p.type === "vote";
   return (
     <Box color="grey.600">
