@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => {
             },
             "&.keyword": {
               paddingTop: 40,
-              paddingBottom: 40
+              paddingBottom: 40,
             },
             minHeight: 111,
             paddingLeft: 30,
@@ -167,6 +167,28 @@ const useStyles = makeStyles((theme) => {
         fontSize: 16,
         padding: `0 0 ${theme.spacing(6)}px`,
         color: theme.palette.primary.main,
+      },
+      "&>.limited-time": {
+        "&>.label": {
+          paddingBottom: theme.spacing(1),
+        },
+        "&>div": {
+          display: "flex",
+          "&>.button": {
+            marginBottom: theme.spacing(2),
+            padding: "2px 8px 3px",
+            backgroundColor: "#8f8abf",
+            fontSize: 14,
+            fontWeight: "bold",
+            lineHeight: 1.71,
+            letterSpacing: -0.39,
+            color: "#ffffff",
+          },
+        },
+        fontSize: 14,
+        lineHeight: 1.71,
+        letterSpacing: -0.39,
+        color: theme.palette.grey[700],
       },
     },
     reset: {
@@ -291,6 +313,18 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
         </div>
       </section>
       <div className={classes.container}>
+        <div className="limited-time">
+          <div className="label">
+            전국 주민자치 우수사례를 소개합니다. <br />
+            우수사례를 응원하고 궁금한 점이 있다면 댓글로 질문해보세요. 여러분의
+            응원이 전시관 심사를 통해 가산점으로 부여됩니다.
+          </div>
+          <div>
+            <div className="button">
+              전시관 심사 기간: 12월 7일 월요일 낮 12시(정오)까지
+            </div>
+          </div>
+        </div>
         <div className="selected-tags">
           <Chips chips={selectedTags} setChips={setChips} />
         </div>
