@@ -55,7 +55,7 @@ const SortableList = SortableContainer(
       <Grid container spacing={1} className={classes.padding}>
         {items.map((item: any, index: number) => (
           <SortableItem
-            key={item.path ?? item.name ?? index}
+            key={index+item.path ?? index+item.name ?? index}
             order={index}
             index={index}
             item={item}
