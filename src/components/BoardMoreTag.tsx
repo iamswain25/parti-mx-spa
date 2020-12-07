@@ -9,13 +9,13 @@ const useStyles = makeStyles((theme) => {
       height: 28,
       padding: "6px 12px",
       borderRadius: 2,
-      border: "solid 1px rgba(143, 138, 191, 0.6)",
+      border: `solid 1px ${theme.palette.primary.main}`,
       backgroundColor: "#ffffff",
       alignItems: "center",
       justifyContent: "center",
       "&>.title": {
         fontSize: 11,
-        color: "#544f85",
+        color: theme.palette.primary.dark,
       },
       "&>.svg": {
         width: theme.spacing(2),

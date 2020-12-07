@@ -6,14 +6,23 @@ import PlacesAutocomplete, {
 import GoogleMapReact from "google-map-react";
 import MapPlace from "./MapPlace";
 import { TextField, Box, FormControl } from "@material-ui/core";
-import { LatLng } from "../types";
+import { LatLng, Location } from "../types";
+const defaultLatLng = {
+  lat: 37.5696629,
+  lng: 126.9134388,
+};
 export default function GooglePlaceAutocomplete(props: {
-  address?: string;
-  setAddress: (arg: string) => void;
-  latLng?: LatLng;
-  setLatLng: (arg: LatLng) => void;
+  state: Location;
+  setState: React.Dispatch<React.SetStateAction<Location>>;
 }) {
-  const { address, setAddress, setLatLng, latLng } = props;
+  const { setState, state } = props;
+  const { address = "", latLng } = state || {};
+  function setAddress(address: string) {
+    setState({ latLng, address });
+  }
+  function setLatLng(latLng: LatLng) {
+    setState({ latLng, address });
+  }
   async function handleSelect(address: string) {
     setAddress(address);
     return geocodeByAddress(address)
@@ -85,12 +94,8 @@ export default function GooglePlaceAutocomplete(props: {
             key: "AIzaSyACd_eKd6RV29bhAu3N3pFwHOuMS-LJmjY",
           }}
           center={latLng}
-          defaultCenter={{
-            lat: 37.5696629,
-            lng: 126.9134388,
-          }}
+          defaultCenter={defaultLatLng}
           defaultZoom={11}
-          // onChildClick={childClickHandler}
         >
           {latLng && <MapPlace {...latLng} selected={true} />}
         </GoogleMapReact>

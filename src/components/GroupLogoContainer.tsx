@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => {
       // [theme.breakpoints.up("md")]: {
       //   padding: `0 30px ${theme.spacing(5)}px`,
       // },
-      [theme.breakpoints.down("sm")]: {
-        padding: `0 ${theme.spacing(2)}px ${theme.spacing(5)}px`,
-      },
+      // [theme.breakpoints.down("sm")]: {
+      //   padding: `0 ${theme.spacing(2)}px ${theme.spacing(5)}px`,
+      // },
     },
     backgroundImg: {
       // position: "absolute",
@@ -31,13 +31,6 @@ const useStyles = makeStyles((theme) => {
         height: 260,
       },
       [theme.breakpoints.down("sm")]: {},
-    },
-    groupLogoContainer: {
-      [theme.breakpoints.up("md")]: {
-        maxWidth: 1140,
-      },
-      width: "100%",
-      position: "relative",
     },
   };
 });
@@ -63,9 +56,7 @@ export default function GroupLogoContainer() {
         }
         className={classes.backgroundImg}
       />
-      <div className={classes.groupLogoContainer}>
-        <InfoGroup group={group} role={role} />
-      </div>
+      <InfoGroup group={group} role={role} />
     </Grid>
   );
 }

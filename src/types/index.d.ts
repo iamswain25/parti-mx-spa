@@ -16,6 +16,9 @@ export interface NoticeFormdata {
   isHtml: boolean;
   html: RawDraftContentState;
   tags: string[];
+  metadata: {
+    location: Location;
+  };
 }
 export interface EventFormdata {
   event_date: string;
@@ -184,16 +187,15 @@ export type Post<
   count_view: number;
   count_total_vote: number;
   count_max_vote: number;
-  location: { type: "Point"; coordinates: [number, number] };
   tags: string[];
 };
 export interface Suggestion {
   mx_posts_by_pk: Post;
 }
-export type NoticeMetadata = { announcement: boolean };
+export type Location = { address: string; latLng?: LatLng };
+export type NoticeMetadata = { announcement: boolean; location: Location };
 export type SuggestionMetadata = {
   closingMethod: string;
-  address?: string;
   youtube: string;
   detail1: string;
   detail2: string;

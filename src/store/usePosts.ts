@@ -1,7 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
-export default function usePosts({
+export default function usePosts<T extends Post>({
   board_id,
   limit,
   tags,
@@ -19,8 +19,8 @@ export default function usePosts({
   ];
   isClosed?: boolean;
   limit?: number;
-}): [Post[] | undefined] {
-  const [items, setItems] = React.useState<Post[] | undefined>(undefined);
+}): [T[] | undefined] {
+  const [items, setItems] = React.useState<T[] | undefined>(undefined);
   React.useEffect(() => {
     let query = firestore
       .collection("posts")
@@ -49,7 +49,7 @@ export default function usePosts({
       return query.onSnapshot(
         (snapshot) => {
           const items = snapshot.docs.map(
-            (doc) => ({ id: doc.id, ...(doc.data() as any) } as Post)
+            (doc) => ({ id: doc.id, ...(doc.data() as any) } as T)
           );
           setItems(items);
         },
@@ -62,7 +62,7 @@ export default function usePosts({
         .get()
         .then((snapshot) => {
           const items = snapshot.docs.map(
-            (doc) => ({ id: doc.id, ...(doc.data() as any) } as Post)
+            (doc) => ({ id: doc.id, ...(doc.data() as any) } as T)
           );
           setItems(items);
         })

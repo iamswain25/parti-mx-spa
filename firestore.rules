@@ -3,13 +3,12 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /posts/{post_id} {
       function checkPostReadPermission(type) {
-        let group_id = resource.data.group_id;
-        let board_id = resource.data.board_id;
-        let board = get(/databases/$(database)/documents/groups/$(group_id)/boards/$(board_id));
-        let path = /databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid);
-        let existsUser = exists(path);
-        let role = existsUser ? get(path).data.role : "anonymous";
-        let permission = board.data.permission;
+        let group_id = resource != null ? resource.data.group_id : request.resource.data.group_id;
+        let board_id = resource != null ? resource.data.board_id : request.resource.data.board_id;
+        let boardPath = /databases/$(database)/documents/groups/$(group_id)/boards/$(board_id);
+        let userPath = /databases/$(database)/documents/groups/$(group_id)/users/$(request.auth != null ? request.auth.uid : "no" );
+        let role = exists(userPath) ? get(userPath).data.role : "anonymous";
+        let permission = exists(boardPath) ? get(boardPath).data.permission : [];
         return role in permission[type];
       }
       allow list: if true;

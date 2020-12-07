@@ -28,11 +28,8 @@ describe("Database rules", () => {
   });
 
   test("fail when reading/writing an unauthorized collection", async () => {
-    const failedRead = assertFails(ref.get());
-    expect(failedRead);
-
     // One-line await
-    expect(await assertFails(ref.add({})));
+    expect(ref.add({})).toDeny();
     expect(ref.get()).toDeny();
   });
 

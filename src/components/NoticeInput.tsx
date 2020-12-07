@@ -1,13 +1,15 @@
 import React from "react";
-import { UseFormMethods } from "react-hook-form";
+import { Controller, UseFormMethods } from "react-hook-form";
+import { NoticeFormdata } from "../types";
 import CustomTextField from "./CustomTextField";
+import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import Hashtags from "./Hashtags";
 import HtmlInput from "./HtmlInput";
 
 export default function NoticeInput(props: {
-  formControl: UseFormMethods<any>;
+  formControl: UseFormMethods<NoticeFormdata>;
 }) {
-  const { register, errors } = props.formControl;
+  const { register, errors, control } = props.formControl;
 
   return (
     <>
@@ -20,6 +22,14 @@ export default function NoticeInput(props: {
       />
       <Hashtags formControl={props.formControl} />
       <HtmlInput formControl={props.formControl} />
+      <Controller
+        control={control}
+        name="metadata.location"
+        defaultValue={{ address: "" }}
+        render={({ value, onChange }) => (
+          <GooglePlaceAutocomplete state={value} setState={onChange} />
+        )}
+      />
     </>
   );
 }

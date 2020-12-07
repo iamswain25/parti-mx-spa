@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "../types";
+import { NoticeMetadata, Post } from "../types";
 import { Box, Grid, Divider, makeStyles } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
@@ -72,8 +72,12 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function NoticeDetail({ post: p }: { post: Post }) {
-  const { images, created_at, files } = p;
+export default function NoticeDetail({
+  post: p,
+}: {
+  post: Post<NoticeMetadata>;
+}) {
+  const { images, created_at, files, metadata } = p;
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -94,6 +98,7 @@ export default function NoticeDetail({ post: p }: { post: Post }) {
         </Box>
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
+        <div>주소: {metadata.location.address}</div>
         <HashtagsDetail tags={p.tags} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">

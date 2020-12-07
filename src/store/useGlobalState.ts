@@ -23,17 +23,6 @@ interface GlobalType {
   boards?: Board[];
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
-export enum keys {
-  SHOW_LOGIN_MODAL = "loginModal",
-  ERROR = "error",
-  SORT = "sort",
-  SUCCESS = "success",
-  PERMISSION = "permission",
-  REFETCH = "refetch",
-  GROUPID = "groupId",
-  BOARDID = "boardId",
-  USER = "currentUser",
-}
 export function useCurrentUser() {
   return useGlobalState("currentUser");
 }

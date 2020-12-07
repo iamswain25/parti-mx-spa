@@ -37,9 +37,14 @@ export default function NoticeNew() {
       created_at: new Date(),
       type: "notice",
     });
-    // return console.log(form, variables);
-    const doc = await firestore.collection("posts").add(variables);
-    history.push("/post/" + doc.id);
+    try {
+      const doc = await firestore.collection("posts").add(variables);
+
+      history.push("/post/" + doc.id);
+    } catch (error) {
+      console.log(variables);
+      console.warn("new post", error);
+    }
   }
 
   return (

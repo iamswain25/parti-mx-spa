@@ -1,13 +1,13 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Box, LinearProgress } from "@material-ui/core";
+import { Typography, Box, LinearProgress } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
-import HomeBoardPhoto from "./HomeBoardPhoto";
+import BoardPostNotice from "./BoardPostNotice";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -21,13 +21,13 @@ const useStyles = makeStyles((theme) => {
       paddingBottom: theme.spacing(5),
     },
     titleContainer: {
+      borderBottom: "1px solid " + theme.palette.grey[400],
+      paddingBottom: theme.spacing(1),
       [theme.breakpoints.up("md")]: {
         marginBottom: theme.spacing(3),
       },
       [theme.breakpoints.down("sm")]: {
         marginBottom: theme.spacing(2),
-        marginLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
       },
       "&>.space-between": {
         marginTop: theme.spacing(1),
@@ -61,11 +61,11 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
             )}
           </div>
         </div>
-        <Grid container spacing={isDesktop ? 3 : 2}>
+        <div>
           {posts?.map((p) => (
-            <HomeBoardPhoto key={p.id} p={p} md={3} xs={6} />
+            <BoardPostNotice key={p.id} post={p} />
           ))}
-        </Grid>
+        </div>
       </section>
       {!isDesktop && <GreyDivider />}
     </>

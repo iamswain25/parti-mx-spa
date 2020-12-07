@@ -15,11 +15,12 @@ const useStyles = makeStyles((theme) => {
       top: 0,
       right: 0,
       display: "flex",
-      gap: "10px",
       fontSize: 12,
       fontWeight: 500,
       letterSpacing: 0,
       alignItems: "center",
+      backgroundColor: "rgba(255,255,255,0.3)",
+      paddingLeft: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
         height: theme.spacing(6),
       },

@@ -5,10 +5,13 @@ import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 import HomeBoardEvent from "./HomeBoardEvent";
-import { LinearProgress } from "@material-ui/core";
+import { Grid, LinearProgress } from "@material-ui/core";
+import useDesktop from "./useDesktop";
+import RouteMapPosts from "./RouteMapPosts";
 
 export default function Home() {
   const [boards] = useBoards();
+  const [isDesktop] = useDesktop();
   useEffectBoardId();
   const boardArr = boards?.map((b: Board) => {
     switch (b.type) {
@@ -24,5 +27,18 @@ export default function Home() {
         return null;
     }
   });
-  return boardArr === undefined ? <LinearProgress /> : <>{boardArr}</>;
+  const mapBoard = boards?.find((b) => b.type === "notice");
+  if (boardArr === undefined) {
+    return <LinearProgress />;
+  }
+  return (
+    <Grid container spacing={isDesktop ? 3 : 0} direction="row-reverse">
+      <Grid item xs={isDesktop ? 4 : 12}>
+        {mapBoard && <RouteMapPosts board={mapBoard} />}
+      </Grid>
+      <Grid item xs={isDesktop ? 8 : 12}>
+        {boardArr}
+      </Grid>
+    </Grid>
+  );
 }

@@ -13,7 +13,7 @@ import { firestore } from "../config/firebase";
 import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 
 export default function NoticeEdit({ post: p }: { post: Post }) {
-  const { id, title, body, files, images, html } = p;
+  const { id, files, images, html } = p;
   const history = useHistory();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
@@ -22,7 +22,7 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
   const [images2, setImages2] = React.useState<Img[] | undefined>(images);
   const [files2, setFiles2] = React.useState<File2[] | undefined>(files);
   const formControl = useForm<NoticeFormdata>({
-    defaultValues: { title, body, html, isHtml: !!html, tags: p.tags },
+    defaultValues: { ...p, isHtml: !!html } as NoticeFormdata,
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: NoticeFormdata) {
