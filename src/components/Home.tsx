@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <Grid container spacing={isDesktop ? 3 : 0} direction="row-reverse">
       <Grid item xs={isDesktop ? 4 : 12}>
-        <Box height={isDesktop ? "100%" : "50vh"}>
+        <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
           {mapBoard && <RouteMapPosts board={mapBoard} />}
         </Box>
       </Grid>
