@@ -2,10 +2,11 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
 const firestore = admin.firestore();
+firestore.settings({ ignoreUndefinedProperties: true });
 export default functions
   .region("asia-northeast3")
   .firestore.document("posts/{post_id}")
-  .onCreate(async (snapshot, context) => {
+  .onCreate(async (snapshot) => {
     const { group_id, board_id } = snapshot.data();
     const board = firestore
       .collection("groups")
@@ -29,8 +30,12 @@ export default functions
           deleted_at: null,
           last_commented_at: null,
           last_liked_at: null,
-          created_by: context.auth?.uid,
-          updated_by: context.auth?.uid,
+          /**
+           * This field is only populated for Realtime Database triggers and Callable functions.
+           * https://firebase.google.com/docs/reference/functions/cloud_functions_.eventcontext?hl=ko#optional-auth
+           * created_by: context.auth?.uid,
+           * updated_by: context.auth?.uid,
+           */
           is_closed: false,
         },
         { merge: true }
