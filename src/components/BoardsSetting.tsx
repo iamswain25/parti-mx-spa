@@ -120,7 +120,7 @@ export default function BoardsSetting() {
       <Container component="main" className={classes.root}>
         <h2>게시판 관리</h2>
         <Typography>
-          {fields.map((field, i: number) => {
+          {fields.map((field, i: number, arr) => {
             return (
               <Grid
                 container
@@ -146,20 +146,26 @@ export default function BoardsSetting() {
                     )}
                   />
                 </FormControl>
-                <CustomTextField
-                  type="number"
-                  label="게시판 순서"
-                  fullWidth={false}
-                  name={`boards[${i}].order`}
-                  defaultValue={field.order}
-                  inputRef={register({
-                    required: "필수 입력",
-                    min: 0,
-                  })}
-                  error={!!errors?.boards?.[i]?.order}
-                  required={true}
-                  helperText={errors?.boards?.[i]?.order?.message}
-                />
+                <FormControl variant="filled">
+                  <InputLabel>순서</InputLabel>
+                  <Controller
+                    control={control}
+                    label="게시판 순서"
+                    defaultValue={field.order}
+                    name={`boards[${i}].order`}
+                    render={(props) => (
+                      <Select {...props}>
+                        {arr.map((e, i) => {
+                          return (
+                            <MenuItem 
+                            value={e.order}
+                            key={i}>{e.order}</MenuItem>
+                          )
+                        })}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
                 <Controller
                   name={`boards[${i}].id`}
                   control={control}
@@ -232,7 +238,7 @@ export default function BoardsSetting() {
         </Typography>
         <Button
           disabled={formState.isSubmitting}
-          onClick={() => append(newBoard)}
+          onClick={() => append({order: fields.length+1, ...newBoard})}
         >
           <AddIcon />
           게시판 추가
