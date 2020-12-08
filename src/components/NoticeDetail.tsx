@@ -98,7 +98,9 @@ export default function NoticeDetail({
         </Box>
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
-        <div>주소: {metadata.location.address}</div>
+        {metadata.location.address && (
+          <div>주소: {metadata.location.address}</div>
+        )}
         <HashtagsDetail tags={p.tags} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
