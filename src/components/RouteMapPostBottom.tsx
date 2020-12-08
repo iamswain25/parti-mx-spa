@@ -2,10 +2,10 @@ import React from "react";
 import { Post } from "../types";
 import { Box, IconButton, Grid } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core";
-import { Img } from "react-image";
 import BoardPostSub2 from "./BoardPostSub2";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Link } from "react-router-dom";
+import StorageImage from "./StorageImage";
 export const useStyles = makeStyles((theme: Theme) => ({
   container: {
     // height: 159,
@@ -53,10 +53,7 @@ export default function RouteMapPostBottom({
       </Box>
       <Box p={2} pt={1} display="flex">
         <Link to={`/post/${p.id}`}>
-          <Img
-            src={[...(p?.images?.map((i) => i.uri) || []), "/favicon.ico"]}
-            className={classes.img}
-          />
+          <StorageImage image={p?.images?.[0]} className={classes.img} />
         </Link>
         <Box ml={1}>
           <Link to={`/post/${p.id}`}>
