@@ -36,6 +36,15 @@ const useStyles = makeStyles((theme) => {
         justifyContent: "space-between",
       },
     },
+    mobileMore: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: theme.spacing(2),
+    },
   };
 });
 
@@ -65,6 +74,9 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           {posts?.map((p) => (
             <BoardPostNotice key={p.id} post={p} />
           ))}
+        </div>
+        <div className={classes.mobileMore}>
+          <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
         </div>
       </section>
       {!isDesktop && <GreyDivider />}

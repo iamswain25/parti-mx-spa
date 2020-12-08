@@ -29,9 +29,6 @@ export default function usePermission(
         );
         if (wannaJoin && join) return join();
       } else {
-        if (board && board.type === "suggestion") {
-          return alert(`우수사례 전시관 심사가 종료되어 집계 중입니다.`);
-        }
         return alert(
           `권한이 없습니다. 현재 당신의 권한은 ${role}이고, ${type}은 ${allowedRoles.join(
             ", "

@@ -7,6 +7,7 @@ import icon1 from "../assets/images/icon1.png";
 import icon2 from "../assets/images/icon2.png";
 import icon3 from "../assets/images/icon3.png";
 import React from "react";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => ({
   bgColor: {
     backgroundColor: theme.palette.primary.dark,
@@ -20,20 +21,21 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 1200,
     paddingLeft: 30,
     paddingRight: 30,
-    "&>div": {
-      display: "flex",
-      alignItems: "center",
-      flexWrap: "wrap",
-      fontSize: 14,
-      color: theme.palette.common.white,
-      lineHeight: 2,
-      letterSpacing: 0.58,
-      [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: theme.spacing(1),
-      },
-    },
+    flexWrap: "wrap",
+    fontSize: 14,
+    color: theme.palette.common.white,
+    lineHeight: 2,
+    letterSpacing: 0.58,
+    // "&>div": {
+    //   display: "flex",
+    //   alignItems: "center",
+
+    //   [theme.breakpoints.down("sm")]: {
+    //     flexDirection: "column",
+    //     alignItems: "center",
+    //     marginTop: theme.spacing(1),
+    //   },
+    // },
     "&>.powered": {
       display: "flex",
       justifyContent: "flex-end",
@@ -65,14 +67,18 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: -5,
     bottom: 30,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));
 export default function Footer() {
   const classes = useStyles();
+  const [isDesktop] = useDesktop();
   return (
     <footer className={classes.bgColor}>
       <section className={classes.root}>
-        <Grid spacing={3} container>
+        <Grid spacing={isDesktop ? 3 : 0} container>
           <Grid item>
             <img src={footer1} alt="footer1" />
           </Grid>
@@ -106,7 +112,7 @@ export default function Footer() {
           주 소 (11775)경기도 의정부시 청사로 5번길 8-7, 2층 (신곡동,
           씨티메디타운)
         </Grid>
-        <Grid container spacing={3}>
+        <Grid container spacing={isDesktop ? 3 : 0}>
           <Grid item>대표전화 031-852-2299</Grid>
           <Grid item>팩스 031-853-7673</Grid>
           <Grid item>이메일 center@ggmaeul.or.kr</Grid>

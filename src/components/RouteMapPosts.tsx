@@ -2,20 +2,8 @@ import React from "react";
 import { Board, ChipData, NoticeMetadata, Post } from "../types";
 import { LinearProgress } from "@material-ui/core";
 import GoogleMapReact from "google-map-react";
-import { makeStyles, Theme } from "@material-ui/core";
 import MapPlace from "./MapPlace";
 import usePosts from "../store/usePosts";
-export const useStyles = makeStyles((theme: Theme) => ({
-  map: {
-    [theme.breakpoints.up("md")]: {
-      width: "100%",
-      height: `100%`,
-    },
-    [theme.breakpoints.down("sm")]: {
-      flex: 1,
-    },
-  },
-}));
 
 export default function RouteMapPosts({
   board,
@@ -25,7 +13,6 @@ export default function RouteMapPosts({
   chipData?: ChipData[];
 }) {
   const [posts] = usePosts<Post<NoticeMetadata>>({ board_id: board.id });
-  const classes = useStyles();
   const [selectedPlace, setSelectedPlace] = React.useState<
     Post<NoticeMetadata> | undefined
   >(undefined);
@@ -48,14 +35,17 @@ export default function RouteMapPosts({
     if (posts) {
       const accu = posts.reduce(
         (prev, curr) => {
-          const lat = prev.lat + (curr?.metadata?.location?.latLng?.lat || 0);
-          const lng = prev.lng + (curr?.metadata?.location?.latLng?.lng || 0);
-          return { lat, lng };
+          const latLng = curr?.metadata?.location?.latLng;
+          if (latLng) {
+            prev.lat = prev.lat + latLng?.lat;
+            prev.lng = prev.lng + latLng?.lng;
+            prev.length++;
+          }
+          return prev;
         },
-        { lat: 0, lng: 0 }
+        { lat: 0, lng: 0, length: 0 }
       );
-      console.log(accu);
-      return { lat: accu.lat / posts.length, lng: accu.lng / posts.length };
+      return { lat: accu.lat / accu.length, lng: accu.lng / accu.length };
     }
     return undefined;
   }, [posts]);
@@ -70,30 +60,28 @@ export default function RouteMapPosts({
     return null;
   }
   return (
-    <div className={classes.map}>
-      <GoogleMapReact
-        bootstrapURLKeys={{
-          key: "AIzaSyBmxQGhxC-UzPzxIMlE9Sy09Dv9zUtiiW4",
-        }}
-        defaultCenter={defaultCenter}
-        defaultZoom={10}
-        onChildClick={childClickHandler}
-      >
-        {posts?.map((p, i) => {
-          const { lat, lng } = p?.metadata?.location?.latLng || {};
-          if (lat && lng) {
-            return (
-              <MapPlace
-                lat={lat}
-                lng={lng}
-                key={i}
-                selected={selectedPlace === p}
-              />
-            );
-          }
-          return null;
-        })}
-      </GoogleMapReact>
-    </div>
+    <GoogleMapReact
+      bootstrapURLKeys={{
+        key: "AIzaSyBmxQGhxC-UzPzxIMlE9Sy09Dv9zUtiiW4",
+      }}
+      defaultCenter={defaultCenter}
+      defaultZoom={10}
+      onChildClick={childClickHandler}
+    >
+      {posts?.map((p, i) => {
+        const { lat, lng } = p?.metadata?.location?.latLng || {};
+        if (lat && lng) {
+          return (
+            <MapPlace
+              lat={lat}
+              lng={lng}
+              key={i}
+              selected={selectedPlace === p}
+            />
+          );
+        }
+        return null;
+      })}
+    </GoogleMapReact>
   );
 }

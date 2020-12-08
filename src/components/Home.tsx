@@ -5,7 +5,7 @@ import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 import HomeBoardEvent from "./HomeBoardEvent";
-import { Grid, LinearProgress } from "@material-ui/core";
+import { Box, Grid, LinearProgress } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import RouteMapPosts from "./RouteMapPosts";
 
@@ -34,7 +34,9 @@ export default function Home() {
   return (
     <Grid container spacing={isDesktop ? 3 : 0} direction="row-reverse">
       <Grid item xs={isDesktop ? 4 : 12}>
-        {mapBoard && <RouteMapPosts board={mapBoard} />}
+        <Box height={isDesktop ? "100%" : "50vh"}>
+          {mapBoard && <RouteMapPosts board={mapBoard} />}
+        </Box>
       </Grid>
       <Grid item xs={isDesktop ? 8 : 12}>
         {boardArr}

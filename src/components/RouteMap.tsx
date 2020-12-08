@@ -49,9 +49,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
       display: "flex",
       flexDirection: "column",
       flex: 1,
+      width: "100%",
+      height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     },
     [theme.breakpoints.up("md")]: {
       display: "flex",
+      flex: 1,
     },
   },
 }));
