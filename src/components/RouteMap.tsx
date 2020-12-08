@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
-import PostSort from "./PostSort";
 import { makeStyles, Theme } from "@material-ui/core";
 import { DEFAULT_HASHTAGS } from "../helpers/options";
 import { ChipData } from "../types";
@@ -8,26 +7,6 @@ import Chips from "./Chips";
 import useBoard from "../store/useBoard";
 import RouteMapPosts from "./RouteMapPosts";
 export const useStyles = makeStyles((theme: Theme) => ({
-  smallIcon: {
-    padding: theme.spacing(0.5),
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-    fontSize: "inherit",
-    color: theme.palette.grey[300],
-    "&.active": {
-      color: theme.palette.primary.dark,
-      borderColor: theme.palette.primary.dark,
-    },
-    "& svg": {
-      width: 13,
-      height: 13,
-    },
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: theme.palette.grey[300],
-    [theme.breakpoints.down("sm")]: {},
-    [theme.breakpoints.up("md")]: {},
-  },
   container: {
     marginTop: theme.spacing(2),
     [theme.breakpoints.down("sm")]: {
@@ -45,24 +24,18 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   mapContainer: {
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-      flexDirection: "column",
-      flex: 1,
-      width: "100%",
-      height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
-    },
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-      flex: 1,
-    },
+    height: `calc(100vh - ${Number(theme.mixins.toolbar.minHeight) * 2}px)`,
+    width: "100%",
+    display: "flex",
+    flex: 1,
+    [theme.breakpoints.down("sm")]: {},
+    [theme.breakpoints.up("md")]: {},
   },
 }));
 
 export default function RouteMap() {
   const [board] = useBoard();
   const classes = useStyles();
-  //   const [sort] = useGlobalState(keys.SORT);
   const [chipData, setChipData] = React.useState<ChipData[]>(
     DEFAULT_HASHTAGS.map((c) => ({ label: c, selected: false }))
   );
@@ -83,9 +56,6 @@ export default function RouteMap() {
           <Typography variant="h4" color="primary">
             {board?.count_post ?? 0}
           </Typography>
-        </Box>
-        <Box display="flex">
-          <PostSort />
         </Box>
       </Grid>
       <div className={classes.mapContainer}>

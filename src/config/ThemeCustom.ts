@@ -41,11 +41,8 @@ export const theme: Theme = createMuiTheme({
   },
   mixins: {
     toolbar: {
-      minHeight: DRAWER_MIN_HEIGHT,
-      "@media (min-width: 600px)": {
-        minHeight: DRAWER_MIN_HEIGHT,
-      },
-      "@media (min-width:0px) and (orientation: landscape)": {
+      minHeight: 100,
+      "@media screen and (max-width: 960px)": {
         minHeight: DRAWER_MIN_HEIGHT,
       },
     },

@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.up("md")]: {
       paddingLeft: 30,
       paddingRight: 30,
-      minHeight: 100,
-      height: 100,
+      minHeight: theme.mixins.toolbar.minHeight,
+      height: theme.mixins.toolbar.minHeight,
     },
   },
   logoFont: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     letterSpacing: "-0.56px",
     color: theme.palette.grey[900],
     [theme.breakpoints.down("sm")]: {
-      fontSize: 24,
+      fontSize: "4vw",
       maxWidth: "100%",
       textAlign: "center",
       position: "absolute",

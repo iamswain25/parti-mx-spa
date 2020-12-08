@@ -1,13 +1,14 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Box, LinearProgress } from "@material-ui/core";
+import { Typography, Box, LinearProgress, Grid } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
-import BoardPostNotice from "./BoardPostNotice";
+// import BoardPostNotice from "./BoardPostNotice";
+import SquarePhoto from "./SquarePhoto";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -70,11 +71,12 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
             )}
           </div>
         </div>
-        <div>
+        <Grid container spacing={isDesktop ? 3 : 0}>
           {posts?.map((p) => (
-            <BoardPostNotice key={p.id} post={p} />
+            <SquarePhoto key={p.id} p={p} xs={12} md={4} />
+            // <BoardPostNotice key={p.id} post={p} />
           ))}
-        </div>
+        </Grid>
         <div className={classes.mobileMore}>
           <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
         </div>
