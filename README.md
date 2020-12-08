@@ -19,6 +19,11 @@
   - analytics
   - functions
 
+#### firebase tools
+```
+curl -sL https://firebase.tools | bash
+```
+
 ### storage
 
 #### [file download](https://firebase.google.com/docs/storage/web/download-files#cors_configuration)
