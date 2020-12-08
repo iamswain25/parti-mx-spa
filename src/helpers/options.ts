@@ -126,3 +126,7 @@ export const COUNTER_VIEW_POST = "COUNTER_VIEW_POST";
 export const HASHTAG_SPLIT_REGEX = /[\s,;#]+/;
 export const TELEPHONE = "070-8064-3035";
 export const EMAIL = "contact@juminexpo.kr";
+export const DEFAULT_LAT_LNG = {
+  lat: 37.5696629,
+  lng: 126.9,
+};

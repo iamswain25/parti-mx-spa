@@ -7,10 +7,8 @@ import GoogleMapReact from "google-map-react";
 import MapPlace from "./MapPlace";
 import { TextField, Box, FormControl } from "@material-ui/core";
 import { LatLng, Location } from "../types";
-const defaultLatLng = {
-  lat: 37.5696629,
-  lng: 126.9134388,
-};
+import { DEFAULT_LAT_LNG } from "../helpers/options";
+
 export default function GooglePlaceAutocomplete(props: {
   state: Location;
   setState: React.Dispatch<React.SetStateAction<Location>>;
@@ -94,7 +92,7 @@ export default function GooglePlaceAutocomplete(props: {
             key: "AIzaSyACd_eKd6RV29bhAu3N3pFwHOuMS-LJmjY",
           }}
           center={latLng}
-          defaultCenter={defaultLatLng}
+          defaultCenter={DEFAULT_LAT_LNG}
           defaultZoom={11}
         >
           {latLng && <MapPlace {...latLng} selected={true} />}
