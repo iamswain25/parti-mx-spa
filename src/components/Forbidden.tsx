@@ -1,9 +1,10 @@
 import React from "react";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 import useGroupJoin from "./useGroupJoin";
 import useLogin from "./useLogin";
 import { Link } from "react-router-dom";
-import { useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser, useGroupId } from "../store/useGlobalState";
+import createGroup from "../helpers/createGroup";
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -39,12 +40,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Forbidden({
   noPost = false,
   noBoard = false,
+  noGroup = false,
   notAdmin = false,
 }: {
   noPost?: boolean;
   noBoard?: boolean;
+  noGroup?: boolean;
   notAdmin?: boolean;
 }) {
+  const [group_id] = useGroupId();
   const [currentUser] = useCurrentUser();
   const classes = useStyles();
   const joinHandler = useGroupJoin();
@@ -71,6 +75,25 @@ export default function Forbidden({
       <div className={classes.link}>
         삭제된 게시판입니다. <br />
         <Link to="/">이전 그룹의 메인화면으로 돌아갑니다.</Link>
+      </div>
+    );
+  }
+  if (noGroup) {
+    return (
+      <div className={classes.link}>
+        삭제 되었거나 없는 그룹입니다. <br />
+        <Link to="/home">홈 그룹으로 돌아갑니다.</Link>
+        <Box mt={2}>
+          {currentUser?.email && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => createGroup(group_id)}
+            >
+              그룹을 생성합니다.
+            </Button>
+          )}
+        </Box>
       </div>
     );
   }

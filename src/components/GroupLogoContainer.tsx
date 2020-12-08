@@ -7,6 +7,7 @@ import InfoGroup from "./InfoGroup";
 import useDesktop from "./useDesktop";
 import StorageImage from "./StorageImage";
 import { Img } from "../types";
+import Forbidden from "./Forbidden";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -41,6 +42,8 @@ export default function GroupLogoContainer() {
   const [isDesktop] = useDesktop();
   if (group === undefined) {
     return <LinearProgress />;
+  } else if (group === null) {
+    return <Forbidden noGroup />;
   }
   return (
     <Grid container className={classes.container} justify="center">
