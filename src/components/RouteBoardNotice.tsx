@@ -11,9 +11,9 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import useDesktop from "./useDesktop";
-import PostSort from "./PostSort";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
 import usePosts from "../store/usePosts";
+import ButtonBoardType from "./ButtonBoardType";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -64,12 +64,12 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             {b?.count_open || 0}
           </Typography>
         </Box>
-        <PostSort />
+        <ButtonBoardType />
       </Grid>
       <Box display="flex">
         <Box paddingX={isDesktop ? 0 : 2} flex={1}>
           {posts.map((p, i) => (
-            <BoardPostNotice key={i} post={p} />
+            <BoardPostNotice key={p.id} post={p} />
           ))}
         </Box>
         <Hidden implementation="css" smDown>

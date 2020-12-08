@@ -17,21 +17,26 @@ export default function RouteMapPosts({
   const [selectedPlace, setSelectedPlace] = React.useState<
     Post<NoticeMetadata> | undefined
   >(undefined);
+  const selectedTags = React.useMemo(
+    () => chipData?.filter((c) => c.selected).map((c) => c.label),
+    [chipData]
+  );
+  const selectedPosts = React.useMemo(
+    () =>
+      selectedTags?.length
+        ? posts?.filter((p) =>
+            selectedTags?.every((t: string) => p.tags?.includes(t))
+          )
+        : posts,
+    [selectedTags, posts]
+  );
   React.useEffect(() => {
-    if (posts && chipData) {
-      const selectedTags = chipData
-        .filter((c) => c.selected)
-        .map((c) => c.label);
-      const selectedPosts = posts.filter((p) =>
-        selectedTags.every((t) => p.tags?.includes(t))
-      );
-      if (selectedPlace) {
-        if (!selectedPosts.includes(selectedPlace)) {
-          setSelectedPlace(undefined);
-        }
+    if (selectedPlace && selectedPosts) {
+      if (!selectedPosts.includes(selectedPlace)) {
+        setSelectedPlace(undefined);
       }
     }
-  }, [posts, chipData, selectedPlace]);
+  }, [selectedPosts, selectedPlace]);
   const defaultCenter = React.useMemo(() => {
     if (posts) {
       const accu = posts.reduce(
@@ -73,14 +78,14 @@ export default function RouteMapPosts({
       defaultZoom={10}
       onChildClick={childClickHandler}
     >
-      {posts?.map((p, i) => {
+      {selectedPosts?.map((p) => {
         const { lat, lng } = p?.metadata?.location?.latLng || {};
         if (lat && lng) {
           return (
             <MapPlace
               lat={lat}
               lng={lng}
-              key={i}
+              key={p.id}
               selected={selectedPlace === p}
             />
           );

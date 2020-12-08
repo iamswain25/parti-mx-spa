@@ -6,6 +6,7 @@ import { ChipData } from "../types";
 import Chips from "./Chips";
 import useBoard from "../store/useBoard";
 import RouteMapPosts from "./RouteMapPosts";
+import ButtonBoardType from "./ButtonBoardType";
 export const useStyles = makeStyles((theme: Theme) => ({
   container: {
     marginTop: theme.spacing(2),
@@ -57,6 +58,7 @@ export default function RouteMap() {
             {board?.count_post ?? 0}
           </Typography>
         </Box>
+        <ButtonBoardType />
       </Grid>
       <div className={classes.mapContainer}>
         {board && <RouteMapPosts board={board} chipData={chipData} />}
