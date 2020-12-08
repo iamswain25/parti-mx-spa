@@ -1,5 +1,5 @@
 import { Role, UserStatus } from "../types";
-export const DOMAIN = "https://policy-fair-mix.web.app";
+export const DOMAIN = "https://seoul-action-plan.web.app";
 export const TITLE = "제19회 전국주민자치박람회";
 export const postSortOptions = [
   { created_at: "desc" },
@@ -126,3 +126,7 @@ export const COUNTER_VIEW_POST = "COUNTER_VIEW_POST";
 export const HASHTAG_SPLIT_REGEX = /[\s,;#]+/;
 export const TELEPHONE = "070-8064-3035";
 export const EMAIL = "contact@juminexpo.kr";
+export const DEFAULT_LAT_LNG = {
+  lat: 37.5696629,
+  lng: 126.9,
+};

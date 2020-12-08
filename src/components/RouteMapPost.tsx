@@ -2,10 +2,10 @@ import React from "react";
 import { Post } from "../types";
 import { Box } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core";
-import { Img } from "react-image";
 import BoardPostSub2 from "./BoardPostSub2";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
+import StorageImage from "./StorageImage";
 export const useStyles = makeStyles((theme: Theme) => ({
   container: {
     padding: theme.spacing(1),
@@ -55,10 +55,7 @@ export default function RouteMapPost({
   return (
     <div className={classes.container} ref={divRef}>
       <Link to={`/post/${p.id}`}>
-        <Img
-          src={[...(p.images?.map((i) => i.uri) || []), "/favicon.ico"]}
-          className={classes.img}
-        />
+        <StorageImage image={p.images?.[0]} className={classes.img} />
         <Box className={classes.titleContainer}>{p.title}</Box>
       </Link>
       <BoardPostSub2 post={p} />

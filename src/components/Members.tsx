@@ -35,6 +35,7 @@ export default function Members() {
   const classes = useStyles();
   const [groupId] = useGroupId();
   const [items, setItems] = React.useState<GroupUser[]>([]);
+  const [hasMore, setHasMore] = React.useState<boolean>(true);
   async function fetchData(isSearching = false) {
     let ref = firestore
       .collection("groups")
@@ -52,6 +53,8 @@ export default function Members() {
     );
     if (isSearching) {
       setItems(users);
+    } else if (!users?.length) {
+      setHasMore(false);
     } else {
       setItems([...items, ...users]);
     }
@@ -70,7 +73,7 @@ export default function Members() {
           <InfiniteScroll
             dataLength={items.length} //This is important field to render the next data
             next={fetchData}
-            hasMore={true}
+            hasMore={hasMore}
             loader={<h4>Loading...</h4>}
             endMessage={
               <p style={{ textAlign: "center" }}>

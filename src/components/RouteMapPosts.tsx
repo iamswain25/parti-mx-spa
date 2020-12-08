@@ -4,6 +4,7 @@ import { LinearProgress } from "@material-ui/core";
 import GoogleMapReact from "google-map-react";
 import MapPlace from "./MapPlace";
 import usePosts from "../store/usePosts";
+import { DEFAULT_LAT_LNG } from "../helpers/options";
 
 export default function RouteMapPosts({
   board,
@@ -45,7 +46,11 @@ export default function RouteMapPosts({
         },
         { lat: 0, lng: 0, length: 0 }
       );
-      return { lat: accu.lat / accu.length, lng: accu.lng / accu.length };
+      if (accu.length > 0) {
+        return { lat: accu.lat / accu.length, lng: accu.lng / accu.length };
+      } else {
+        return DEFAULT_LAT_LNG;
+      }
     }
     return undefined;
   }, [posts]);
@@ -56,8 +61,8 @@ export default function RouteMapPosts({
     const post = posts?.[key];
     setSelectedPlace(post);
   }
-  if (!defaultCenter) {
-    return null;
+  if (defaultCenter === undefined) {
+    return <LinearProgress />;
   }
   return (
     <GoogleMapReact

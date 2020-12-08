@@ -1,8 +1,8 @@
 import * as firebase from "@firebase/testing";
 import fs from "fs";
-import { gyeonggiVillage } from "./firebaseConfig";
+import { actionPlan } from "./firebaseConfig";
 export const setup = async (auth: any, data: any) => {
-  const { projectId } = gyeonggiVillage;
+  const { projectId } = actionPlan;
   // console.log(projectId, __dirname);
   const app = firebase.initializeTestApp({
     projectId,
