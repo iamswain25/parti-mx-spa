@@ -62,8 +62,8 @@ export default function RouteMapPosts({
   if (posts === undefined) {
     return <LinearProgress />;
   }
-  function childClickHandler(key: number) {
-    const post = posts?.[key];
+  function childClickHandler(key: string) {
+    const post = selectedPosts?.find((p) => p?.id === key);
     setSelectedPlace(post);
   }
   if (defaultCenter === undefined) {
@@ -86,7 +86,7 @@ export default function RouteMapPosts({
               lat={lat}
               lng={lng}
               key={p.id}
-              selected={selectedPlace === p}
+              selected={selectedPlace?.id === p?.id}
             />
           );
         }
