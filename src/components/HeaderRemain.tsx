@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       top: "50%",
       transform: "translate(-50%, -50%)",
     },
-    // color: theme.palette.primary.main,
   },
   flexcenter: {
     display: "flex",
@@ -72,8 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       textAlign: "center",
       color: theme.palette.grey[800],
       "&.active": {
-        color: "#544F85",
-        // color: theme.palette.primary.main,
+        color: theme.palette.primary.main,
       },
     },
   },
