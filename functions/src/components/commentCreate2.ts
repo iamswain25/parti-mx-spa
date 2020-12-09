@@ -10,8 +10,17 @@ export default functions
     const comment = snapshot.ref.parent.parent
       ?.collection(PARAM_COLLECTION)
       .doc(COUNTER_DOC);
-    return comment?.set(
-      { count_comment: admin.firestore.FieldValue.increment(1) },
-      { merge: true }
-    );
+    const post = snapshot.ref?.parent?.parent?.parent.parent
+      ?.collection(PARAM_COLLECTION)
+      .doc(COUNTER_DOC);
+    return Promise.all([
+      comment?.set(
+        { count_comment: admin.firestore.FieldValue.increment(1) },
+        { merge: true }
+      ),
+      post?.set(
+        { count_comment: admin.firestore.FieldValue.increment(1) },
+        { merge: true }
+      ),
+    ]);
   });
