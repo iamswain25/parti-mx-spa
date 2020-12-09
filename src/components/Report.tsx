@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { csvDownloadAll } from "../helpers/csvDownload";
+import { csvDownload2, csvDownloadAll } from "../helpers/csvDownload";
 import { useGroupId } from "../store/useGlobalState";
 import firebase from "firebase";
 export default function Report() {
@@ -14,7 +14,7 @@ export default function Report() {
     setDate(event.target.value);
   }
   return (
-    <div>
+    <section>
       <h1>가입회원 리스트 다운로드</h1>
       <div>
         <Button
@@ -55,6 +55,21 @@ export default function Report() {
           }}
         />
       </div>
-    </div>
+      <div>
+        <h2>댓글, 좋아요, 통계 다운로드</h2>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            csvDownload2({
+              group_id: groupId,
+              board_id: "aA7LUOKOSJ0fo6cHzy56",
+            });
+          }}
+        >
+          download csv
+        </Button>
+      </div>
+    </section>
   );
 }
