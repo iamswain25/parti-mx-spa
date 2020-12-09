@@ -2,7 +2,7 @@ import React from "react";
 import { Board, ChipData, NoticeMetadata, Post } from "../types";
 import { LinearProgress } from "@material-ui/core";
 import GoogleMapReact from "google-map-react";
-import MapPlace from "./MapPlace";
+import MapPost from "./MapPost";
 import usePosts from "../store/usePosts";
 import { DEFAULT_LAT_LNG } from "../helpers/options";
 
@@ -82,10 +82,11 @@ export default function RouteMapPosts({
         const { lat, lng } = p?.metadata?.location?.latLng || {};
         if (lat && lng) {
           return (
-            <MapPlace
+            <MapPost
               lat={lat}
               lng={lng}
               key={p.id}
+              post={p}
               selected={selectedPlace?.id === p?.id}
             />
           );
