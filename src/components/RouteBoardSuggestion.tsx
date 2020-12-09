@@ -316,13 +316,10 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
         <div className="limited-time">
           <div className="label">
             전국 주민자치 우수사례를 소개합니다. <br />
-            우수사례를 응원하고 궁금한 점이 있다면 댓글로 질문해보세요. 여러분의
-            응원이 전시관 심사를 통해 가산점으로 부여됩니다.
+            우수사례를 응원하고 궁금한 점이 있다면 댓글로 질문해보세요.
           </div>
           <div>
-            <div className="button">
-              전시관 심사 기간: 12월 7일 월요일 낮 12시(정오)까지
-            </div>
+            <div className="button">우수사례 전시관 심사는 종료되었습니다.</div>
           </div>
         </div>
         <div className="selected-tags">
