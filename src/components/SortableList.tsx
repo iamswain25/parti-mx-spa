@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => {
 });
 const DragHandle = SortableHandle(({ image, className }: any) => (
   <div className={className}>
-    <StorageImage path={image} thumb className={className} />
+    <StorageImage path={image} className={className} />
   </div>
 ));
 const SortableItem = SortableElement(
@@ -55,7 +55,7 @@ const SortableList = SortableContainer(
       <Grid container spacing={1} className={classes.padding}>
         {items.map((item: any, index: number) => (
           <SortableItem
-            key={index+item.path ?? index+item.name ?? index}
+            key={index + item.path ?? index + item.name ?? index}
             order={index}
             index={index}
             item={item}

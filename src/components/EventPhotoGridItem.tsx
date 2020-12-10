@@ -101,7 +101,7 @@ export default function EventPhotoGridItem({
     <Grid item xs={xs} md={md}>
       <Link to={`/post/${p.id}`} className={classes.div}>
         <div className={classes.aspectRatio}>
-          <StorageImage image={p?.images?.[0]} thumb className={classes.full} />
+          <StorageImage image={p?.images?.[0]} className={classes.full} />
           <div className={p.is_closed ? "floating closed" : "floating"}>
             <div>{p.is_closed ? "행사종료" : "모집 중"}</div>
           </div>
