@@ -6,14 +6,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import { FormData } from "../types";
-import { Box, LinearProgress } from "@material-ui/core";
+import { Box, IconButton, LinearProgress } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useLoginModal } from "../store/useGlobalState";
 import { auth } from "../config/firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
+import CloseIcon from "@material-ui/icons/Close";
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: "flex",
     flexDirection: "column",
     // alignItems: "center",
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm: FunctionComponent = () => {
   const classes = useStyles();
   const [error, setError] = React.useState(undefined);
-  const [, setVisible] = useLoginModal();
+  const [isModal, setVisible] = useLoginModal();
   const { handleSubmit, register, errors, formState } = useForm<FormData>();
   function closeLoginModal() {
     setVisible(false);
@@ -76,7 +77,18 @@ const LoginForm: FunctionComponent = () => {
       {formState.isSubmitting && <LinearProgress />}
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-          <Typography variant="h2">로그인</Typography>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="h2">로그인</Typography>
+            {isModal && (
+              <IconButton onClick={closeLoginModal}>
+                <CloseIcon />
+              </IconButton>
+            )}
+          </Box>
           <form
             className={classes.form}
             onSubmit={handleSubmit(handleForm)}
