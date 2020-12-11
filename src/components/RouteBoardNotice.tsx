@@ -7,7 +7,6 @@ import {
   Grid,
   Box,
   Divider,
-  Hidden,
   LinearProgress,
 } from "@material-ui/core";
 import useDesktop from "./useDesktop";
@@ -68,19 +67,13 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
         </Box>
         <ButtonBoardType />
       </Grid>
-      <Box display="flex">
-        <Box paddingX={isDesktop ? 0 : 2} flex={1}>
-          {posts.map((p, i) => (
-            <BoardPostNotice key={p.id} post={p} />
-          ))}
-        </Box>
-        <Hidden implementation="css" smDown>
+      <Grid container spacing={isDesktop ? 3 : 0} direction="row-reverse">
+        <Grid item xs={12} md={4}>
           <Box
-            width={364}
-            border={1}
-            borderColor="grey.300"
-            mt={2}
-            ml={3}
+            border={isDesktop ? 1 : 2}
+            borderColor={isDesktop ? "grey.300" : "primary.main"}
+            mt={isDesktop ? 2 : 0}
+            mb={isDesktop ? 0 : 2}
             height="fit-content"
           >
             <Box
@@ -105,8 +98,15 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
                 }, [])}
             </div>
           </Box>
-        </Hidden>
-      </Box>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Box paddingX={isDesktop ? 0 : 2}>
+            {posts.map((p, i) => (
+              <BoardPostNotice key={p.id} post={p} />
+            ))}
+          </Box>
+        </Grid>
+      </Grid>
     </section>
   );
 }
