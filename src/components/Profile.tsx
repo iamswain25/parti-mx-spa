@@ -16,7 +16,8 @@ import { useCurrentUser, useGroupId } from "../store/useGlobalState";
 import { auth, firestore, storage, uploadFileByPath } from "../config/firebase";
 import useAccountDelete from "../store/useAccountDelete";
 import useUser from "../store/useUser";
-import { SIGNUP_CITIES } from "../helpers/options";
+import { SIGNUP_AREA, SIGNUP_CITIES } from "../helpers/options";
+import { User } from "../types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 }));
-interface GroupForm {
+interface GroupForm extends User {
   name: string;
   email: string;
   bgFiles: any;
@@ -66,22 +67,20 @@ export default function Profile() {
     errors,
     control,
     reset,
+    watch,
   } = useForm<GroupForm>();
+  const area = watch("area");
   React.useEffect(() => {
     if (me) {
       setPhoto(me.photo_url);
-      reset({
-        name: me.name || "",
-        email: me.email || "",
-        address: me.address || "",
-      } as GroupForm);
+      reset(me as GroupForm);
     }
   }, [reset, setPhoto, me]);
 
   async function handleForm(form: GroupForm) {
     const { bgFiles, name, ...rest } = form;
     const variables = { displayName: name, photoURL: photo };
-    const variables2 = { name, photo_url: photo, ...rest };
+    const variables2 = { name, ...rest, photo_url: photo };
     if (bgFiles?.length) {
       const path = `users/${currentUser?.uid}`;
       await uploadFileByPath(bgFiles[0], path);
@@ -155,8 +154,8 @@ export default function Profile() {
       />
       <Controller
         control={control}
-        name="address"
-        defaultValue=""
+        name="area"
+        defaultValue="경기도"
         rules={{ required: "필수 선택" }}
         as={
           <TextField
@@ -164,11 +163,11 @@ export default function Profile() {
             variant="outlined"
             margin="normal"
             fullWidth
+            label="거주지 광역 단위"
             required
-            label="거주지역"
-            error={!!errors.address}
-            helperText={errors?.address?.message}
-            children={SIGNUP_CITIES.map((option) => (
+            error={!!errors.area}
+            helperText={errors?.area?.message}
+            children={SIGNUP_AREA.map((option) => (
               <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
@@ -176,6 +175,31 @@ export default function Profile() {
           />
         }
       />
+      {area === "경기도" && (
+        <Controller
+          control={control}
+          name="address"
+          defaultValue=""
+          rules={{ required: "필수 선택" }}
+          as={
+            <TextField
+              select
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              label="거주지역"
+              error={!!errors.address}
+              helperText={errors?.address?.message}
+              children={SIGNUP_CITIES.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            />
+          }
+        />
+      )}
       <Controller
         control={control}
         name="email"

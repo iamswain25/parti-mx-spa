@@ -22,7 +22,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
-import { SIGNUP_CITIES } from "../helpers/options";
+import { SIGNUP_AREA, SIGNUP_CITIES } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingTop: theme.spacing(8),
@@ -86,7 +86,9 @@ export default function Signup() {
     errors,
     formState,
     control,
-  } = useForm<FormData>();
+    watch,
+  } = useForm<FormData>({ defaultValues: { area: "경기도" } });
+  const area = watch("area");
   async function formHandler(form: FormData) {
     const { email, password, name, ...rest } = form;
 
@@ -198,8 +200,8 @@ export default function Signup() {
             />
             <Controller
               control={control}
-              name="address"
-              defaultValue=""
+              name="area"
+              defaultValue="경기도"
               rules={{ required: "필수 선택" }}
               as={
                 <TextField
@@ -207,11 +209,11 @@ export default function Signup() {
                   variant="outlined"
                   margin="normal"
                   fullWidth
-                  label="거주지역"
+                  label="거주지 광역 단위"
                   required
-                  error={!!errors.address}
-                  helperText={errors?.address?.message}
-                  children={SIGNUP_CITIES.map((option) => (
+                  error={!!errors.area}
+                  helperText={errors?.area?.message}
+                  children={SIGNUP_AREA.map((option) => (
                     <MenuItem key={option} value={option}>
                       {option}
                     </MenuItem>
@@ -219,6 +221,31 @@ export default function Signup() {
                 />
               }
             />
+            {area === "경기도" && (
+              <Controller
+                control={control}
+                name="address"
+                defaultValue=""
+                rules={{ required: "필수 선택" }}
+                as={
+                  <TextField
+                    select
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    label="거주지 시,군"
+                    required
+                    error={!!errors.address}
+                    helperText={errors?.address?.message}
+                    children={SIGNUP_CITIES.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  />
+                }
+              />
+            )}
             <FormControl
               required
               error={Boolean(errors.term_privacy || errors.term_service)}

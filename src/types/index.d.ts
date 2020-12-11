@@ -3,6 +3,7 @@ export type FormData = {
   email: string;
   password: string;
   name: string;
+  area: string;
   address: string;
   term_service: boolean;
   term_privacy: boolean;
@@ -226,6 +227,7 @@ export type User = {
   name: string;
   photo_url: string;
   email: string;
+  area: string;
   address: string;
 };
 export type GroupUser = {
