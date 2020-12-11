@@ -32,14 +32,18 @@ const useStyles = makeStyles((theme) => {
 export default function BoardMoreTag({
   to = "/",
   label,
+  viewLabel = "모두 보기",
 }: {
   to: string;
   label?: string;
+  viewLabel?: string;
 }) {
   const classes = useStyles();
   return (
     <Link to={to} className={classes.link}>
-      <div className="title">{label} 모두 보기</div>
+      <div className="title">
+        {label} {viewLabel}
+      </div>
       <ChevronRightIcon className="svg" />
     </Link>
   );

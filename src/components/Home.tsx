@@ -40,13 +40,26 @@ export default function Home() {
       </Grid>
       {mapBoard && (
         <Grid item xs={isDesktop ? 4 : 12}>
-          <Box mt={3}>
+          <Box
+            my={3}
+            p={isDesktop ? 0 : 2}
+            borderBottom="1px solid #bdbdbd"
+            display={isDesktop ? undefined : "flex"}
+            alignItems={isDesktop ? undefined : "center"}
+            justifyContent={isDesktop ? undefined : "space-between"}
+          >
             <Typography variant="h2" color="textPrimary">
               <Box fontWeight="bold">정책상상 지도보기</Box>
             </Typography>
-            <Box mt={1} display="flex">
+            <Box
+              mt={isDesktop ? 1 : undefined}
+              pb={isDesktop ? 1 : undefined}
+              display="flex"
+              justifyContent="flex-end"
+            >
               <BoardMoreTag
-                label="지도 크게"
+                label="지도"
+                viewLabel="크게 보기"
                 to={`/${group_id}/${mapBoard.id}/map`}
               />
             </Box>
