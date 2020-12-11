@@ -80,10 +80,22 @@ export default function Footer() {
       <section className={classes.root}>
         <Grid spacing={isDesktop ? 3 : 0} container>
           <Grid item>
-            <img src={footer1} alt="footer1" />
+            <a
+              href="http://ggmaeul.or.kr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={footer1} alt="footer1" />
+            </a>
           </Grid>
           <Grid item>
-            <img src={footer2} alt="footer2" />
+            <a
+              href="https://www.gg.go.kr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={footer2} alt="footer2" />
+            </a>
           </Grid>
         </Grid>
         <Grid spacing={3} container className="mt">
@@ -108,14 +120,41 @@ export default function Footer() {
             </a>
           </Grid>
         </Grid>
-        <Grid container>
-          주 소 (11775)경기도 의정부시 청사로 5번길 8-7, 2층 (신곡동,
-          씨티메디타운)
+        <Grid container spacing={isDesktop ? 1 : 0}>
+          <Grid item>
+            주 소{" "}
+            <a
+              href="http://kko.to/s12npElYo"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              (11775)경기도 의정부시 청사로 5번길 8-7, 2층 (신곡동,
+              씨티메디타운)
+            </a>
+          </Grid>
         </Grid>
         <Grid container spacing={isDesktop ? 3 : 0}>
-          <Grid item>대표전화 031-852-2299</Grid>
+          <Grid item>
+            대표전화{" "}
+            <a
+              href="tel:031-852-2299"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              031-852-2299
+            </a>
+          </Grid>
           <Grid item>팩스 031-853-7673</Grid>
-          <Grid item>이메일 center@ggmaeul.or.kr</Grid>
+          <Grid item>
+            이메일{" "}
+            <a
+              href="mailto:center@ggmaeul.or.kr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              center@ggmaeul.or.kr
+            </a>
+          </Grid>
         </Grid>
         <Grid container spacing={3} className="mt">
           <Grid item>
@@ -152,10 +191,10 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
+            <img src={footer3} alt="footer3" className={classes.right} />
             <strong>powered by</strong>
             <img src={partiLogo} alt="parti logo" />
           </a>
-          <img src={footer3} alt="footer3" className={classes.right} />
         </section>
       </section>
     </footer>
