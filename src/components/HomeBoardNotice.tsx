@@ -53,7 +53,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [group_id] = useGroupId();
-  const [posts] = usePosts({ board_id: b.id, limit: 6 });
+  const [posts] = usePosts({ board_id: b.id, limit: 6, sort: 0 });
   if (posts === undefined) {
     return <LinearProgress />;
   }
