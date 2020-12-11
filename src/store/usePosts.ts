@@ -1,6 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
+import { useSort } from "./useGlobalState";
 export default function usePosts<T extends Post>({
   board_id,
   limit,
@@ -20,13 +21,23 @@ export default function usePosts<T extends Post>({
   isClosed?: boolean;
   limit?: number;
 }): [T[] | undefined] {
+  const [sort] = useSort();
   const [items, setItems] = React.useState<T[] | undefined>(undefined);
   React.useEffect(() => {
-    let query = firestore
-      .collection("posts")
-      .where("board_id", "==", board_id)
-      .orderBy("created_at", "desc");
-
+    let query = firestore.collection("posts").where("board_id", "==", board_id);
+    switch (sort) {
+      case 0:
+        query = query.orderBy("created_at", "desc");
+        break;
+      case 1:
+        query = query.orderBy("updated_at", "desc");
+        break;
+      case 2:
+        query = query.orderBy("last_commented_at", "desc");
+        break;
+      default:
+        query = query.orderBy("created_at", "desc");
+    }
     // if (tags && tags.length) {
     //   query = query.where("tag", "array-contains-any", tags);
     // }
@@ -70,6 +81,6 @@ export default function usePosts<T extends Post>({
           console.warn("usePosts", error);
         });
     }
-  }, [board_id, listen, isClosed, limit, tags, where]);
+  }, [board_id, listen, isClosed, limit, tags, where, sort]);
   return [items];
 }

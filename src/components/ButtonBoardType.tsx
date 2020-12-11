@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import GridOnIcon from "@material-ui/icons/GridOn";
 import PinDropIcon from "@material-ui/icons/PinDrop";
 import { useGroupId } from "../store/useGlobalState";
+import PostSort from "./PostSort";
 export const useStyles = makeStyles((theme: Theme) => ({
   smallIcon: {
     display: "flex",
@@ -38,6 +39,7 @@ export default function ButtonBoardType() {
   const classes = useStyles();
   return (
     <Box display="flex">
+      <PostSort />
       <NavLink
         exact
         className={classes.smallIcon}
