@@ -1,15 +1,17 @@
 import React from "react";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
-import { useBoards } from "../store/useGlobalState";
+import { useBoards, useGroupId } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 import HomeBoardEvent from "./HomeBoardEvent";
-import { Box, Grid, LinearProgress } from "@material-ui/core";
+import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import RouteMapPosts from "./RouteMapPosts";
+import BoardMoreTag from "./BoardMoreTag";
 
 export default function Home() {
+  const [group_id] = useGroupId();
   const [boards] = useBoards();
   const [isDesktop] = useDesktop();
   useEffectBoardId();
@@ -36,11 +38,24 @@ export default function Home() {
       <Grid item xs={isDesktop ? 8 : 12}>
         {boardArr}
       </Grid>
-      <Grid item xs={isDesktop ? 4 : 12}>
-        <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
-          {mapBoard && <RouteMapPosts board={mapBoard} />}
-        </Box>
-      </Grid>
+      {mapBoard && (
+        <Grid item xs={isDesktop ? 4 : 12}>
+          <Box mt={3}>
+            <Typography variant="h2" color="textPrimary">
+              <Box fontWeight="bold">정책상상 지도보기</Box>
+            </Typography>
+            <Box mt={1} display="flex">
+              <BoardMoreTag
+                label="지도 크게"
+                to={`/${group_id}/${mapBoard.id}/map`}
+              />
+            </Box>
+          </Box>
+          <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
+            <RouteMapPosts board={mapBoard} />
+          </Box>
+        </Grid>
+      )}
     </Grid>
   );
 }
