@@ -3,6 +3,7 @@ import { ChildComponentProps } from "google-map-react";
 import PlaceIcon from "@material-ui/icons/Place";
 import { IconButton } from "@material-ui/core";
 import { Post } from "../types";
+import SquarePhotoSmall from "./SquarePhotoSmall";
 const K_SIZE = 40;
 
 const greatPlaceStyle = {
@@ -34,8 +35,11 @@ export default function MapPost(
   const style =
     props.$hover || props.selected ? greatPlaceStyleHover : greatPlaceStyle;
   return (
-    <IconButton style={style}>
-      <PlaceIcon />
-    </IconButton>
+    <div>
+      {props.selected && <SquarePhotoSmall p={props.post} />}
+      <IconButton style={style}>
+        <PlaceIcon />
+      </IconButton>
+    </div>
   );
 }
