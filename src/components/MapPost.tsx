@@ -35,7 +35,7 @@ export default function MapPost(
   const style =
     props.$hover || props.selected ? greatPlaceStyleHover : greatPlaceStyle;
   return (
-    <div>
+    <div className="info-window" id={props.post.id}>
       {props.selected && <SquarePhotoSmall p={props.post} />}
       <IconButton style={style}>
         <PlaceIcon />
