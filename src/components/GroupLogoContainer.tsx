@@ -52,7 +52,7 @@ export default function GroupLogoContainer() {
               ({ path: "/publicsphere.jpg" } as Img)
             : group?.mb_img ??
               group?.bg_img ??
-              ({ path: "/publicsphere.jpg" } as Img)
+              ({ path: "/publicsphere-mobile.jpg" } as Img)
         }
         className={classes.backgroundImg}
       />
