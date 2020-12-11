@@ -1,10 +1,10 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
-import { useSort } from "./useGlobalState";
 export default function usePosts<T extends Post>({
   board_id,
   limit,
+  sort = 0,
   tags,
   listen = false,
   isClosed,
@@ -13,6 +13,7 @@ export default function usePosts<T extends Post>({
   board_id: string;
   listen?: boolean;
   tags?: string[];
+  sort?: number;
   where?: [
     fieldPath: string | firebase.firestore.FieldPath,
     opStr: firebase.firestore.WhereFilterOp,
@@ -21,22 +22,24 @@ export default function usePosts<T extends Post>({
   isClosed?: boolean;
   limit?: number;
 }): [T[] | undefined] {
-  const [sort] = useSort();
   const [items, setItems] = React.useState<T[] | undefined>(undefined);
   React.useEffect(() => {
     let query = firestore.collection("posts").where("board_id", "==", board_id);
     switch (sort) {
       case 0:
-        query = query.orderBy("created_at", "desc");
+        query = query.orderBy("created_at", "asc");
         break;
       case 1:
-        query = query.orderBy("updated_at", "desc");
+        query = query.orderBy("created_at", "desc");
         break;
       case 2:
+        query = query.orderBy("updated_at", "desc");
+        break;
+      case 3:
         query = query.orderBy("last_commented_at", "desc");
         break;
       default:
-        query = query.orderBy("created_at", "desc");
+        query = query.orderBy("created_at", "asc");
     }
     // if (tags && tags.length) {
     //   query = query.where("tag", "array-contains-any", tags);

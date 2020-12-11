@@ -14,6 +14,7 @@ import useDesktop from "./useDesktop";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
 import usePosts from "../store/usePosts";
 import ButtonBoardType from "./ButtonBoardType";
+import { useSort } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -42,7 +43,8 @@ const useStyles = makeStyles((theme) => {
 export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
-  const [posts] = usePosts({ board_id: b.id });
+  const [sort] = useSort();
+  const [posts] = usePosts({ board_id: b.id, sort });
   const announcedPosts = posts?.filter((p) => p.is_announced);
   if (posts === undefined) {
     return <LinearProgress />;

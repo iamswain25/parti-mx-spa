@@ -32,9 +32,10 @@ export default function PostSort() {
   return (
     <Box display="flex">
       <Select value={sort} onChange={handleChange} className={classes.sort}>
-        <MenuItem value={0}>최근 등록순</MenuItem>
-        <MenuItem value={1}>최근 업데이트순</MenuItem>
-        <MenuItem value={2}>최근 댓글순</MenuItem>
+        <MenuItem value={0}>등록순</MenuItem>
+        <MenuItem value={1}>최근 등록순</MenuItem>
+        <MenuItem value={2}>최근 업데이트순</MenuItem>
+        <MenuItem value={3}>최근 댓글순</MenuItem>
       </Select>
     </Box>
   );
