@@ -122,7 +122,7 @@ export default function Footer() {
         </Grid>
         <Grid container spacing={isDesktop ? 1 : 0}>
           <Grid item>
-            주 소{" "}
+            주소{" "}
             <a
               href="http://kko.to/s12npElYo"
               target="_blank"
