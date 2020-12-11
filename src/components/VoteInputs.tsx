@@ -41,7 +41,7 @@ export default function VoteInputs({
           native: true,
         }}
         defaultValue="7days"
-        children={voteOptions.map((option) => (
+        children={voteOptions.sort().map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

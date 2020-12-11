@@ -15,12 +15,14 @@ import {
   FormControlLabel,
   Checkbox,
   FormHelperText,
+  MenuItem,
 } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
+import { SIGNUP_CITIES } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingTop: theme.spacing(8),
@@ -86,7 +88,7 @@ export default function Signup() {
     control,
   } = useForm<FormData>();
   async function formHandler(form: FormData) {
-    const { email, password, name } = form;
+    const { email, password, name, ...rest } = form;
 
     try {
       const credential = firebase.auth.EmailAuthProvider.credential(
@@ -105,6 +107,7 @@ export default function Signup() {
         const p2 = userCred.user.updateProfile({ displayName: name });
         const p3 = firestore.doc(`users/${userCred.user.uid}`).set(
           {
+            ...rest,
             name,
             email,
             updated_at: new Date(),
@@ -151,7 +154,7 @@ export default function Signup() {
                   message: "올바른 이메일 주소를 입력하세요.",
                 },
               })}
-              required={!!errors.email}
+              required
               error={!!errors.email}
               helperText={errors?.email?.message}
             />
@@ -167,7 +170,7 @@ export default function Signup() {
               inputRef={register({
                 required: "필수 입력 항목입니다.",
               })}
-              required={!!errors.password}
+              required
               error={!!errors.password}
               helperText={errors?.password?.message}
             />
@@ -189,9 +192,32 @@ export default function Signup() {
                   }
                 },
               })}
-              required={!!errors.name}
+              required
               error={!!errors.name}
               helperText={errors?.name?.message}
+            />
+            <Controller
+              control={control}
+              name="address"
+              defaultValue=""
+              rules={{ required: "필수 선택" }}
+              as={
+                <TextField
+                  select
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  label="거주지역"
+                  required
+                  error={!!errors.address}
+                  helperText={errors?.address?.message}
+                  children={SIGNUP_CITIES.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                />
+              }
             />
             <FormControl
               required

@@ -6,6 +6,7 @@ import {
   IconButton,
   Avatar,
   Button,
+  MenuItem,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -14,6 +15,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useCurrentUser, useGroupId } from "../store/useGlobalState";
 import { auth, firestore, storage, uploadFileByPath } from "../config/firebase";
 import useAccountDelete from "../store/useAccountDelete";
+import useUser from "../store/useUser";
+import { SIGNUP_CITIES } from "../helpers/options";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,11 +50,13 @@ interface GroupForm {
   name: string;
   email: string;
   bgFiles: any;
+  address: string;
 }
 export default function Profile() {
   const classes = useStyles();
   const history = useHistory();
   const [currentUser, setCurrentUser] = useCurrentUser();
+  const [me] = useUser({ id: currentUser?.uid });
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [group_id] = useGroupId();
   const deleteAccount = useAccountDelete();
@@ -63,19 +68,20 @@ export default function Profile() {
     reset,
   } = useForm<GroupForm>();
   React.useEffect(() => {
-    if (currentUser) {
-      setPhoto(currentUser.photoURL);
+    if (me) {
+      setPhoto(me.photo_url);
       reset({
-        name: currentUser.displayName || "",
-        email: currentUser.email || "",
+        name: me.name || "",
+        email: me.email || "",
+        address: me.address || "",
       } as GroupForm);
     }
-  }, [currentUser, reset, setPhoto]);
+  }, [reset, setPhoto, me]);
 
   async function handleForm(form: GroupForm) {
-    const { bgFiles, name } = form;
+    const { bgFiles, name, ...rest } = form;
     const variables = { displayName: name, photoURL: photo };
-    const variables2 = { name, photo_url: photo };
+    const variables2 = { name, photo_url: photo, ...rest };
     if (bgFiles?.length) {
       const path = `users/${currentUser?.uid}`;
       await uploadFileByPath(bgFiles[0], path);
@@ -146,6 +152,29 @@ export default function Profile() {
             }
           },
         }}
+      />
+      <Controller
+        control={control}
+        name="address"
+        defaultValue=""
+        rules={{ required: "필수 선택" }}
+        as={
+          <TextField
+            select
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            required
+            label="거주지역"
+            error={!!errors.address}
+            helperText={errors?.address?.message}
+            children={SIGNUP_CITIES.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          />
+        }
       />
       <Controller
         control={control}

@@ -3,6 +3,7 @@ export type FormData = {
   email: string;
   password: string;
   name: string;
+  address: string;
   term_service: boolean;
   term_privacy: boolean;
 };
@@ -225,6 +226,7 @@ export type User = {
   name: string;
   photo_url: string;
   email: string;
+  address: string;
 };
 export type GroupUser = {
   created_at: firebase.firestore.Timestamp;
