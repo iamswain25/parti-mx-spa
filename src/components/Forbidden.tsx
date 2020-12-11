@@ -84,7 +84,7 @@ export default function Forbidden({
         삭제 되었거나 없는 그룹입니다. <br />
         <Link to="/home">홈 그룹으로 돌아갑니다.</Link>
         <Box mt={2}>
-          {currentUser?.email && (
+          {currentUser?.email?.includes("@parti.coop") && (
             <Button
               variant="contained"
               color="primary"
