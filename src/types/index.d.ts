@@ -147,6 +147,7 @@ export interface Comment {
 	parent_id: string;
 	attitude: string;
 	count_like: number;
+    count_comment: number;
 }
 export interface File {
 	name: string;

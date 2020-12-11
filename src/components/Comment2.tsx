@@ -77,11 +77,17 @@ export default function Comment2({
   const [liked] = useCommentLiked(c);
   const [authorLiked] = useCommentAttitude(c);
   const [currentUser] = useCurrentUser();
+  const [isDeleted, setDeleted] = React.useState<boolean>(false);
   const [edit, setEdit] = React.useState<boolean>(false);
   const [role] = useRole();
-  const remove = useCommentDelete(c);
+  const remove = useCommentDelete(c, () => {
+    setDeleted(true);
+  });
   function editHandler() {
     setEdit(true);
+  }
+  if (isDeleted) {
+    return null;
   }
   return (
     <Box position="relative">

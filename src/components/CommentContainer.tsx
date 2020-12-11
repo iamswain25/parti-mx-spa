@@ -61,7 +61,7 @@ export default function CommentContainer({
           <CommentTextinput comment={comment} handler={insertHandler} />
         </Box>
         <Divider light />
-        {comments?.map((c, i) => {
+        {comments?.map((c) => {
           return <Comment1 key={c.id} comment={c} post={post} />;
         })}
       </Box>

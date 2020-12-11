@@ -75,14 +75,17 @@ export default function Comment1({
   const [liked] = useCommentLiked(c);
   const [currentUser] = useCurrentUser();
   const [authorLiked] = useCommentAttitude(c);
-  const [comments2] = useComments2(c);
+  const [comments2, refresh] = useComments2(c);
   const count_comment = comments2?.length || 0;
   const classes = useStyles();
   const [isRe, setRe] = React.useState<string | undefined>(undefined);
   const [isDeleted, setDeleted] = React.useState<boolean>(false);
   const insertHandler = useCommentInsert({
     post,
-    callback: () => setRe(undefined),
+    callback: () => {
+      setRe(undefined);
+      refresh();
+    },
   });
   const [edit, setEdit] = React.useState<boolean>(false);
   const [role] = useRole();
