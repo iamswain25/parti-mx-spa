@@ -122,7 +122,7 @@ export default function Footer() {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://facebook.com"
+              href="https://www.facebook.com/ggmaeulcenter/"
             >
               <img src={icon1} alt="icon1" />
             </a>
@@ -131,7 +131,7 @@ export default function Footer() {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://youtube.com"
+              href="https://www.youtube.com/channel/UC_qb-OYB4PO2EkYeJWeU2qQ"
             >
               <img src={icon2} alt="icon2" />
             </a>
@@ -140,7 +140,7 @@ export default function Footer() {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://blog.naver.com"
+              href="https://blog.naver.com/prologue/PrologueList.nhn?blogId=ddabokcenter"
             >
               <img src={icon3} alt="icon3" />
             </a>
