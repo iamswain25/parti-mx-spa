@@ -1,5 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
-import partiLogo from "../assets/images/logo-parti.png";
+import partiLogo from "../assets/images/logo-parti.svg";
 import footer1 from "../assets/images/footer1.png";
 import footer2 from "../assets/images/footer2.png";
 import footer3 from "../assets/images/footer3.png";
