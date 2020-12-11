@@ -1,30 +1,34 @@
 import { Grid, makeStyles } from "@material-ui/core";
-import partiLogo from "../assets/images/logo-parti.png";
-import footer1 from "../assets/images/footer1.png";
-import footer2 from "../assets/images/footer2.png";
-import footer3 from "../assets/images/footer3.png";
-import icon1 from "../assets/images/icon1.png";
-import icon2 from "../assets/images/icon2.png";
-import icon3 from "../assets/images/icon3.png";
+import partiLogo from "../assets/images/logo-parti-light.png";
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import BloggerIcon from "../assets/images/icon-blogger.png";
+import NaverPostIcon from "../assets/images/icon-naverpost.png";
+import ccl from "../assets/images/ccl.png";
+import logo from "../assets/images/logo-sehub.png";
 import React from "react";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => ({
   bgColor: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.grey[600],
   },
   root: {
     overflow: "hidden",
     position: "relative",
     margin: `100px auto 0`,
-    paddingTop: theme.spacing(5),
-    paddingBottom: theme.spacing(5),
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+    },
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(1),
     maxWidth: 1200,
     paddingLeft: 30,
     paddingRight: 30,
     flexWrap: "wrap",
     fontSize: 14,
-    color: theme.palette.common.white,
-    lineHeight: 2,
+    color: theme.palette.grey[200],
+    lineHeight: 1.7,
     letterSpacing: 0.58,
     // "&>div": {
     //   display: "flex",
@@ -36,18 +40,15 @@ const useStyles = makeStyles((theme) => ({
     //     marginTop: theme.spacing(1),
     //   },
     // },
-    "&>.powered": {
+    "& .powered": {
       display: "flex",
-      justifyContent: "flex-end",
+      justifyContent: "center",
       alignItems: "center",
       position: "relative",
-      [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
-        alignItems: "center",
-      },
+      margin: "10px 0",
       "&>a>strong": {
         fontSize: 12,
-        color: theme.palette.grey[500],
+        color: theme.palette.grey[400],
       },
     },
     "& .margintop": {
@@ -71,92 +72,115 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  icons: {
+    marginTop: theme.spacing(0.5),
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      justifyContent: "center"
+    },
+    "& img": {
+      width: "15px"
+    }
+  },
+  license: {
+    fontSize: 11,
+    color: theme.palette.grey[400],
+    maxWidth: "300px",
+    margin: "0",
+    [theme.breakpoints.down("xs")]: {
+      margin: '0 auto'
+    },
+  },
+  sns: {
+    fontWeight: 500,
+    margin: "0px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "10px",
+    },
+  }
 }));
+
 export default function Footer() {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   return (
     <footer className={classes.bgColor}>
       <section className={classes.root}>
-        <Grid spacing={isDesktop ? 3 : 0} container>
+      <Grid container spacing={isDesktop ? 4 : 0}>
+        <Grid item sm={8} container direction="column">
           <Grid item>
-            <img src={footer1} alt="footer1" />
+            <img src={logo} alt="footer1" />
           </Grid>
-          <Grid item>
-            <img src={footer2} alt="footer2" />
-          </Grid>
+          <Grid item className="mt">서울특별시 은평구 통일로 684 미래청 1층</Grid>
+          <Grid item>Tel: 02-353-3553</Grid>
+          <Grid item>Fax: 02-383-3553</Grid>
+          <Grid item>E-mail: info@sehub.net</Grid>
         </Grid>
-        <Grid spacing={3} container className="mt">
-          <Grid item>
-            <a
-              href="/post/m5AGcFMUhFLADV1rg9WX"
+        <Grid item sm={4} container direction="column">
+          <p className={classes.sns}>SNS</p>
+          <Grid item className={classes.icons} container spacing={2} alignItems="center">
+            <Grid item>
+              <a
               target="_blank"
               rel="noopener noreferrer"
-              className="color-primary-main"
-            >
-              이용약관
-            </a>
-          </Grid>
-          <Grid item>
-            <a
-              href="/post/69bCfUCukUvs89Jfurj5"
+              href="https://www.facebook.com/Seoulsehub"
+              >
+                <FacebookIcon fontSize="small" />
+              </a>
+            </Grid>
+            <Grid item>
+              <a
               target="_blank"
               rel="noopener noreferrer"
-              className="color-primary-main"
-            >
-              개인정보 처리방침
-            </a>
-          </Grid>
-        </Grid>
-        <Grid container>
-          주 소 (11775)경기도 의정부시 청사로 5번길 8-7, 2층 (신곡동,
-          씨티메디타운)
-        </Grid>
-        <Grid container spacing={isDesktop ? 3 : 0}>
-          <Grid item>대표전화 031-852-2299</Grid>
-          <Grid item>팩스 031-853-7673</Grid>
-          <Grid item>이메일 center@ggmaeul.or.kr</Grid>
-        </Grid>
-        <Grid container spacing={3} className="mt">
-          <Grid item>
-            <a
+              href="https://blog.naver.com/sehub"
+              >
+                <img src={BloggerIcon} alt="social icon" />
+              </a>
+            </Grid>
+            <Grid item>
+              <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://facebook.com"
-            >
-              <img src={icon1} alt="icon1" />
-            </a>
-          </Grid>
-          <Grid item>
-            <a
+              href="https://post.naver.com/sehub"
+              >
+                <img src={NaverPostIcon} alt="social icon" />
+              </a>
+            </Grid>
+            <Grid item>
+              <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://youtube.com"
-            >
-              <img src={icon2} alt="icon2" />
-            </a>
-          </Grid>
-          <Grid item>
-            <a
+              href="https://www.instagram.com/seoulsecenter/"
+              >
+                <InstagramIcon fontSize="small" />
+              </a>
+            </Grid>
+            <Grid item>
+              <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://blog.naver.com"
-            >
-              <img src={icon3} alt="icon3" />
-            </a>
+              href="https://www.youtube.com/channel/UCNDxC5acP2onZTZFAGMJc9Q"
+              >
+                <YouTubeIcon fontSize="small" />
+              </a>
+            </Grid>
+          </Grid>
+          <Grid item className="mt">
+            <img src={ccl} alt="license" />
+            <p className={classes.license}>이 웹사이트에 게시된 저작물은 크리에이티브 커먼즈 라이선스에 따라 이용할 수 있습니다.</p>
           </Grid>
         </Grid>
-        <section className="powered">
+        <Grid item xs={12} className="powered">
           <a
-            href="https://parti.coop"
-            target="_blank"
-            rel="noopener noreferrer"
+          href="https://parti.coop"
+          target="_blank"
+          rel="noopener noreferrer"
           >
             <strong>powered by</strong>
             <img src={partiLogo} alt="parti logo" />
           </a>
-          <img src={footer3} alt="footer3" className={classes.right} />
-        </section>
+        </Grid>
+      </Grid>
       </section>
     </footer>
   );
