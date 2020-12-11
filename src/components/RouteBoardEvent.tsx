@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => {
 export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
-  const [isClosed, setClosed] = React.useState(false);
+  const [isClosed, setClosed] = React.useState(true);
   const [posts] = usePosts({ board_id: b.id, isClosed });
   const [counter] = useBoardCounter({ board_id: b.id });
   if (posts === undefined) {
