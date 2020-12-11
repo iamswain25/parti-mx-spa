@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     letterSpacing: "-0.56px",
     color: theme.palette.grey[900],
     [theme.breakpoints.down("sm")]: {
-      fontSize: "4vw",
+      fontSize: "calc(12px + 2vw)",
       maxWidth: "100%",
       textAlign: "center",
       position: "absolute",
