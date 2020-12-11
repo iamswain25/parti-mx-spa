@@ -32,14 +32,14 @@ export default function Home() {
     return <LinearProgress />;
   }
   return (
-    <Grid container spacing={isDesktop ? 3 : 0} direction="row-reverse">
+    <Grid container spacing={isDesktop ? 3 : 0}>
+      <Grid item xs={isDesktop ? 8 : 12}>
+        {boardArr}
+      </Grid>
       <Grid item xs={isDesktop ? 4 : 12}>
         <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
           {mapBoard && <RouteMapPosts board={mapBoard} />}
         </Box>
-      </Grid>
-      <Grid item xs={isDesktop ? 8 : 12}>
-        {boardArr}
       </Grid>
     </Grid>
   );
