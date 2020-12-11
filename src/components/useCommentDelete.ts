@@ -8,6 +8,11 @@ export default function useCommentDelete(c: Comment, cb?: () => void) {
     if (c.parent_id) {
       docRef = docRef.collection("comments").doc(c.parent_id);
     }
+    // if (c.count_comment > 0) {
+    //   await docRef.collection("comments").doc(c.id).update({ body: null });
+    // } else
+    // {
+    // }
     await docRef.collection("comments").doc(c.id).delete();
     setSuccess("댓글을 삭제 했습니다");
     cb && cb();
