@@ -3,7 +3,7 @@ import React from "react";
 import { LazyImage } from "react-lazy-images";
 import useStoragePath from "../store/useStoragePath";
 import { Img } from "../types";
-import defaultPng from "../assets/images/logo-jeongukminju.png";
+import defaultPng from "../assets/images/default.png";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
