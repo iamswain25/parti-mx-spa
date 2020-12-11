@@ -5,7 +5,6 @@ import GoogleMapReact from "google-map-react";
 import MapPost from "./MapPost";
 import usePosts from "../store/usePosts";
 import { DEFAULT_LAT_LNG } from "../helpers/options";
-
 export default function RouteMapPosts({
   board,
   chipData,
@@ -77,6 +76,14 @@ export default function RouteMapPosts({
       defaultCenter={defaultCenter}
       defaultZoom={10}
       onChildClick={childClickHandler}
+      onClick={(e) => {
+        const container = e.event.target.closest(".info-window");
+        if (container) {
+          childClickHandler(container.id);
+        } else {
+          setSelectedPlace(undefined);
+        }
+      }}
     >
       {selectedPosts?.map((p) => {
         const { lat, lng } = p?.metadata?.location?.latLng || {};
