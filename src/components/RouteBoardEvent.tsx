@@ -89,11 +89,9 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
         </Button>
       </Grid>
       <Grid container spacing={isDesktop ? 3 : 2} className={classes.photoGrid}>
-        {posts
-          .filter((a) => (typeof a.closed_at === "string") === isClosed)
-          .map((p) => (
-            <EventPhotoGridItem p={p} md={3} xs={6} key={p.id} />
-          ))}
+        {posts.map((p) => (
+          <EventPhotoGridItem p={p} md={3} xs={6} key={p.id} />
+        ))}
       </Grid>
     </section>
   );
