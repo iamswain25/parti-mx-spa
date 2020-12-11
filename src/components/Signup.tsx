@@ -270,7 +270,7 @@ export default function Signup() {
                       }
                       label={
                         <a
-                          href="/post/m5AGcFMUhFLADV1rg9WX"
+                          href="https://drive.google.com/file/d/1BUfT1Em7-KlMwMUi0LsdXM9LwMzAQsOP/view?usp=sharing"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -297,7 +297,7 @@ export default function Signup() {
                       }
                       label={
                         <a
-                          href="/post/69bCfUCukUvs89Jfurj5"
+                          href="https://drive.google.com/file/d/1TR21piYb6JxvQFpqIwDgUqIsPVINUnwx/view?usp=sharing"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
