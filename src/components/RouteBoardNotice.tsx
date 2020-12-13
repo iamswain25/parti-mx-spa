@@ -1,7 +1,6 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import BoardPostNotice from "./BoardPostNotice";
 import {
   Typography,
   Grid,
@@ -10,10 +9,10 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import useDesktop from "./useDesktop";
-import RouteBoardAnnounce from "./RouteBoardAnnounce";
 import usePosts from "../store/usePosts";
 import ButtonBoardType from "./ButtonBoardType";
 import { useSort } from "../store/useGlobalState";
+import SquarePhoto from "./SquarePhoto";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -45,6 +44,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [sort] = useSort();
   const [posts] = usePosts({ board_id: b.id, sort });
   const announcedPosts = posts?.filter((p) => p.is_announced);
+  const hasAnnouncement = announcedPosts && announcedPosts?.length > 0;
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -67,46 +67,44 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
         </Box>
         <ButtonBoardType />
       </Grid>
-      <Grid container spacing={isDesktop ? 3 : 0} direction="row-reverse">
-        <Grid item xs={12} md={4}>
+      {hasAnnouncement && (
+        <Box
+          border={isDesktop ? 1 : 2}
+          borderColor={isDesktop ? "grey.300" : "primary.main"}
+          mt={isDesktop ? 2 : 0}
+          mb={2}
+          height="fit-content"
+        >
           <Box
-            border={isDesktop ? 1 : 2}
-            borderColor={isDesktop ? "grey.300" : "primary.main"}
-            mt={isDesktop ? 2 : 0}
-            mb={isDesktop ? 0 : 2}
-            height="fit-content"
+            padding={2}
+            fontSize={16}
+            fontWeight={500}
+            letterSpacing={0.23}
+            color="grey.900"
           >
-            <Box
-              padding={2}
-              fontSize={16}
-              fontWeight={500}
-              letterSpacing={0.23}
-              color="grey.900"
-            >
-              공지
-            </Box>
-            <Divider />
-            <div className={classes.announcement}>
-              {announcedPosts
-                ?.map((p) => <RouteBoardAnnounce key={p.id} post={p} />)
-                ?.reduce((prev: any[], curr: any, index: number) => {
-                  prev.push(curr);
-                  if (index < announcedPosts?.length - 1) {
-                    prev.push(<hr />);
-                  }
-                  return prev;
-                }, [])}
-            </div>
+            공지
           </Box>
+          <Divider />
+          <div className={classes.announcement}>
+            {announcedPosts
+              ?.map((p) => <SquarePhoto key={p.id} p={p} xs={12} md={4} />)
+              ?.reduce((prev: any[], curr: any, index: number) => {
+                prev.push(curr);
+                if (index < announcedPosts?.length - 1) {
+                  prev.push(<hr />);
+                }
+                return prev;
+              }, [])}
+          </div>
+        </Box>
+      )}
+      <Box mt={hasAnnouncement ? 0 : 2}>
+        <Grid container spacing={isDesktop ? 3 : 0}>
+          {posts?.map((p) => (
+            <SquarePhoto key={p.id} p={p} xs={12} md={3} />
+          ))}
         </Grid>
-        <Grid item xs={12} md={8}>
-          <Box paddingX={isDesktop ? 0 : 2}>
-            {posts.map((p, i) => (
-              <BoardPostNotice key={p.id} post={p} />
-            ))}
-          </Box>
-        </Grid>
-      </Grid>
+      </Box>
     </section>
   );
 }
