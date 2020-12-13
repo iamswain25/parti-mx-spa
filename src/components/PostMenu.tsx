@@ -87,6 +87,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        onClick={handleClose}
       >
         {menuItems}
       </Menu>
