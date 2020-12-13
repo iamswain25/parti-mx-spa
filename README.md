@@ -31,7 +31,7 @@ curl -sL https://firebase.tools | bash
 initial setting
 
 ```
-gsutil cors set cors.json gs://policy-fair-mix.appspot.com
+gsutil cors set cors.json gs://gyeonggi-village-mix.appspot.com
 ```
 
 ### firestore
@@ -50,4 +50,4 @@ firebase deploy --only firestore:rules
 
 #### deploy
 
-firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project policy-fair-mix
+firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project gyeonggi-village-mix
