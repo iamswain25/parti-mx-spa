@@ -3,10 +3,11 @@
 ## 환경변수 세팅
 
 firebase functions:config:set hasura.url="http://...com/" hasura.secret="..."
-firebase functions:config:set hasura.url="http://hasura-load-balancer-1241189389.ap-northeast-2.elb.amazonaws.com/v1/graphql"
+firebase functions:config:set hasura.url="https://api."
 firebase functions:config:set hasura.secret="..."
-firebase functions:config:set gmail.user="...@parti.xyz" gmail.pass="..." --project policy-fair-mix
-firebase functions:config:get
+firebase functions:config:set gmail.user="" gmail.pass="" --project gyeonggi-village-mix
+firebase functions:config:set algolia.app_id="" algolia.api_key="" --project gyeonggi-village-mix
+firebase functions:config:get --project gyeonggi-village-mix
 
 ## 배포
 

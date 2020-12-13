@@ -3,6 +3,7 @@ admin.initializeApp();
 import authCreate from "./components/authCreate";
 import authDelete from "./components/authDelete";
 import incrementUserCount from "./components/incrementUserCount";
+import postWrite from "./components/postWrite";
 import postCreate from "./components/postCreate";
 import postDelete from "./components/postDelete";
 import commentCreate from "./components/commentCreate";
@@ -21,6 +22,7 @@ export {
   authCreate,
   authDelete,
   incrementUserCount,
+  postWrite,
   postCreate,
   postDelete,
   postLikeCreate,
