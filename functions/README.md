@@ -9,10 +9,11 @@ nvm alias default v12
 ## 환경변수 세팅
 
 firebase functions:config:set hasura.url="http://...com/" hasura.secret="..."
-firebase functions:config:set hasura.url="http://hasura-load-balancer-1241189389.ap-northeast-2.elb.amazonaws.com/v1/graphql"
+firebase functions:config:set hasura.url="https://api."
 firebase functions:config:set hasura.secret="..."
-firebase functions:config:set gmail.user="...@parti.xyz" gmail.pass="..." --project green-newdeal
-firebase functions:config:get
+firebase functions:config:set gmail.user="" gmail.pass="" --project green-newdeal
+firebase functions:config:set algolia.app_id="" algolia.api_key="" --project green-newdeal
+firebase functions:config:get --project green-newdeal
 
 ## 배포
 
