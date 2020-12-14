@@ -1,11 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import partiLogo from "../assets/images/logo-parti-light.png";
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import YouTubeIcon from '@material-ui/icons/YouTube';
-import BloggerIcon from "../assets/images/icon-blogger.png";
-import NaverPostIcon from "../assets/images/icon-naverpost.png";
-import ccl from "../assets/images/ccl.png";
 import logo from "../assets/images/logo-sehub.png";
 import React from "react";
 import useDesktop from "./useDesktop";
