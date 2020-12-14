@@ -11,7 +11,7 @@ import React from "react";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles((theme) => ({
   bgColor: {
-    backgroundColor: theme.palette.grey[600],
+    backgroundColor: theme.palette.grey[700],
   },
   root: {
     overflow: "hidden",
@@ -58,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .color-primary-main": {
       color: theme.palette.primary.main,
+      fontWeight: "bold",
+    },
+    "& .bold": {
+      color: theme.palette.grey[300],
       fontWeight: "bold",
     },
     "& .mt": {
@@ -111,64 +115,22 @@ export default function Footer() {
           <Grid item>
             <img src={logo} alt="footer1" />
           </Grid>
+          <Grid spacing={3} container className="mt">
+            <Grid item>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="bold">
+                이용약관
+              </a>
+            </Grid>
+            <Grid item>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="bold">
+                개인정보 처리방침
+              </a>
+            </Grid>
+          </Grid>
           <Grid item className="mt">서울특별시 은평구 통일로 684 미래청 1층</Grid>
           <Grid item>Tel: 02-353-3553</Grid>
           <Grid item>Fax: 02-383-3553</Grid>
           <Grid item>E-mail: info@sehub.net</Grid>
-        </Grid>
-        <Grid item sm={4} container direction="column">
-          <p className={classes.sns}>SNS</p>
-          <Grid item className={classes.icons} container spacing={2} alignItems="center">
-            <Grid item>
-              <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.facebook.com/Seoulsehub"
-              >
-                <FacebookIcon fontSize="small" />
-              </a>
-            </Grid>
-            <Grid item>
-              <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://blog.naver.com/sehub"
-              >
-                <img src={BloggerIcon} alt="social icon" />
-              </a>
-            </Grid>
-            <Grid item>
-              <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://post.naver.com/sehub"
-              >
-                <img src={NaverPostIcon} alt="social icon" />
-              </a>
-            </Grid>
-            <Grid item>
-              <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.instagram.com/seoulsecenter/"
-              >
-                <InstagramIcon fontSize="small" />
-              </a>
-            </Grid>
-            <Grid item>
-              <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.youtube.com/channel/UCNDxC5acP2onZTZFAGMJc9Q"
-              >
-                <YouTubeIcon fontSize="small" />
-              </a>
-            </Grid>
-          </Grid>
-          <Grid item className="mt">
-            <img src={ccl} alt="license" />
-            <p className={classes.license}>이 웹사이트에 게시된 저작물은 크리에이티브 커먼즈 라이선스에 따라 이용할 수 있습니다.</p>
-          </Grid>
         </Grid>
         <Grid item xs={12} className="powered">
           <a
