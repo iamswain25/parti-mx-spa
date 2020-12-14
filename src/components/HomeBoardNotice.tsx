@@ -54,6 +54,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [group_id] = useGroupId();
   const [posts] = usePosts({ board_id: b.id, limit: 6, sort: 0 });
+  posts?.sort((a) => (a.is_announced ? -1 : 1));
   if (posts === undefined) {
     return <LinearProgress />;
   }
