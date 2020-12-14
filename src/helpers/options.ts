@@ -124,3 +124,4 @@ export const SIGNUP_CITIES = [
   "하남시",
   "화성시",
 ];
+export const KAKAO_JS_KEY = "37babb2123d29f37a5e065c1f322b565";

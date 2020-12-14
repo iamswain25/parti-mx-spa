@@ -33,6 +33,7 @@ import kakaostory from "../assets/images/kakaostory.png";
 import naverblog from "../assets/images/naverblog.png";
 import StorageImage from "./StorageImage";
 import { useSuccess } from "../store/useGlobalState";
+import { KAKAO_JS_KEY } from "../helpers/options";
 const useStyles = makeStyles((theme) => ({
   root: { width: 64, height: 64, borderRadius: 32 },
 }));
@@ -86,7 +87,7 @@ export default function ShareButtons({ post: p }: { post: Post }) {
             <Grid item>
               <KaKaoTalkButton
                 id="kakaotalk"
-                jsKey="3add14597333a220aa329681eabbc2f9"
+                jsKey={KAKAO_JS_KEY}
                 pathname={pathname}
                 message={p.title.replace(/'/g, "\\'")}
                 media={p?.images?.[0]?.uri}
