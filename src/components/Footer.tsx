@@ -17,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     position: "relative",
     margin: `100px auto 0`,
-    [theme.breakpoints.down("xs")]: {
-      textAlign: "center",
-    },
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(1),
     maxWidth: 1200,
@@ -56,50 +53,12 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
       },
     },
-    "& .color-primary-main": {
-      color: theme.palette.primary.main,
-      fontWeight: "bold",
-    },
     "& .bold": {
       color: theme.palette.grey[300],
       fontWeight: "bold",
     },
     "& .mt": {
       marginTop: theme.spacing(2),
-    },
-  },
-  right: {
-    position: "absolute",
-    right: -5,
-    bottom: 30,
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-  icons: {
-    marginTop: theme.spacing(0.5),
-    [theme.breakpoints.down("xs")]: {
-      display: "flex",
-      justifyContent: "center"
-    },
-    "& img": {
-      width: "15px"
-    }
-  },
-  license: {
-    fontSize: 11,
-    color: theme.palette.grey[400],
-    maxWidth: "300px",
-    margin: "0",
-    [theme.breakpoints.down("xs")]: {
-      margin: '0 auto'
-    },
-  },
-  sns: {
-    fontWeight: 500,
-    margin: "0px",
-    [theme.breakpoints.down("xs")]: {
-      marginTop: "10px",
     },
   }
 }));
@@ -117,20 +76,20 @@ export default function Footer() {
           </Grid>
           <Grid spacing={3} container className="mt">
             <Grid item>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="bold">
+              <a href="https://docs.google.com/file/d/1HH1hSBgpl2tX266EfsjsUJvs7KAL_lctZKJnGAsTCNE/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="bold">
                 이용약관
               </a>
             </Grid>
             <Grid item>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="bold">
+              <a href="https://docs.google.com/file/d/11FSUnqoNijw9yGbgQCT38_fKrYS0tyTTYOOfLCVBbX8/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="bold">
                 개인정보 처리방침
               </a>
             </Grid>
           </Grid>
           <Grid item className="mt">서울특별시 은평구 통일로 684 미래청 1층</Grid>
-          <Grid item>Tel: 02-353-3553</Grid>
-          <Grid item>Fax: 02-383-3553</Grid>
-          <Grid item>E-mail: info@sehub.net</Grid>
+          <Grid item>Tel: <a href="tel:+82-2-353-3553">02-353-3553</a></Grid>
+          <Grid item>Fax: <a href="fax:+82-2-383-3553">02-383-3553</a></Grid>
+          <Grid item>E-mail: <a href="mailto:info@sehub.net">info@sehub.net</a></Grid>
         </Grid>
         <Grid item xs={12} className="powered">
           <a
