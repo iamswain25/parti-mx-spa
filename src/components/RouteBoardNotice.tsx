@@ -1,5 +1,5 @@
 import React from "react";
-import { Board } from "../types";
+import { Board, ChipData } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -13,6 +13,8 @@ import usePosts from "../store/usePosts";
 import ButtonBoardType from "./ButtonBoardType";
 import { useSort } from "../store/useGlobalState";
 import SquarePhoto from "./SquarePhoto";
+import { DEFAULT_HASHTAGS } from "../helpers/options";
+import Chips from "./Chips";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -37,7 +39,23 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [sort] = useSort();
+  const [chipData, setChipData] = React.useState<ChipData[]>(
+    DEFAULT_HASHTAGS.map((c) => ({ label: c, selected: false }))
+  );
   const [posts] = usePosts({ board_id: b.id, sort });
+  const selectedTags = React.useMemo(
+    () => chipData?.filter((c) => c.selected).map((c) => c.label),
+    [chipData]
+  );
+  const selectedPosts = React.useMemo(
+    () =>
+      selectedTags?.length
+        ? posts?.filter((p) =>
+            selectedTags?.every((t: string) => p.tags?.includes(t))
+          )
+        : posts,
+    [selectedTags, posts]
+  );
   const announcedPosts = posts?.filter((p) => p.is_announced);
   const hasAnnouncement = announcedPosts && announcedPosts?.length > 0;
   if (posts === undefined) {
@@ -45,6 +63,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   }
   return (
     <section className={classes.container}>
+      <Chips chips={chipData} setChips={setChipData} />
       <Grid
         container
         justify="space-between"
@@ -93,7 +112,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
       )}
       <Box mt={hasAnnouncement ? 0 : 2}>
         <Grid container spacing={isDesktop ? 3 : 0}>
-          {posts?.map((p) => (
+          {selectedPosts?.map((p) => (
             <SquarePhoto key={p.id} p={p} xs={12} md={3} />
           ))}
         </Grid>
