@@ -33,13 +33,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function ButtonBoardType() {
+export default function ButtonBoardType({ sort = false }: { sort?: boolean }) {
   const [board] = useBoard();
   const [group_id] = useGroupId();
   const classes = useStyles();
   return (
     <Box display="flex">
-      <PostSort />
+      {sort && <PostSort />}
       <NavLink
         exact
         className={classes.smallIcon}

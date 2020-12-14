@@ -60,7 +60,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             {b?.count_open || 0}
           </Typography>
         </Box>
-        <ButtonBoardType />
+        <ButtonBoardType sort />
       </Grid>
       {hasAnnouncement && (
         <Box
