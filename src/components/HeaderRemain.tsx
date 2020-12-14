@@ -103,7 +103,7 @@ export default function HeaderRemain() {
             <DrawerGroup />
           </Hidden>
           <Grid item xs={3} className={classes.logoFont}>
-            <Link to={`/${group?.id}`}>{group?.title}서울특별시 사회적경제지원센터</Link>
+            <Link to={`/${group?.id}`}>{group?.title}</Link>
           </Grid>
           <Grid item xs={7} className={classes.flexcenter}>
             {boards?.map((b, i) => (
