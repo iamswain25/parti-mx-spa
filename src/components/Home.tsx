@@ -27,20 +27,5 @@ export default function Home() {
         return null;
     }
   });
-  const mapBoard = boards?.find((b) => b.type === "notice");
-  if (boardArr === undefined) {
-    return <LinearProgress />;
-  }
-  return (
-    <Grid container spacing={isDesktop ? 3 : 0} direction="row-reverse">
-      <Grid item xs={isDesktop ? 4 : 12}>
-        <Box height={isDesktop ? "100%" : "50vh"}>
-          {mapBoard && <RouteMapPosts board={mapBoard} />}
-        </Box>
-      </Grid>
-      <Grid item xs={isDesktop ? 8 : 12}>
-        {boardArr}
-      </Grid>
-    </Grid>
-  );
+  return boardArr === undefined ? <LinearProgress /> : <>{boardArr}</>;
 }
