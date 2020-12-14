@@ -41,9 +41,6 @@ export async function makeNewVariables(form: any, other: any) {
 }
 
 export async function makeUpdateVariables(form: any, other: any) {
-  if ("isHtml" in form) {
-    delete form.isHtml;
-  }
   const { imageArr, fileArr, images2, files2, setSuccess, ...rest } = other;
   let images = null;
 
@@ -66,17 +63,6 @@ export async function makeUpdateVariables(form: any, other: any) {
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
   }
-  // if ("tags" in form && "customTags" in form) {
-  //   const tagSet = new Set([...form.tags, ...form.customTags]);
-  //   form.tags = Array.from(tagSet);
-  //   delete form.customTags;
-  // }
-  // else if ("tags" in form) {
-  //   form.tag_map = form.tags.reduce((prev: any, curr: string) => {
-  //     prev[curr] = true;
-  //     return prev;
-  //   }, {});
-  // }
   delete form.isHtml;
   if (files2) {
     files = [...files2, ...(files || [])];
