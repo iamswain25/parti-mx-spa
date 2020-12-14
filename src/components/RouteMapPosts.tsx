@@ -16,19 +16,26 @@ export default function RouteMapPosts({
   const [selectedPlace, setSelectedPlace] = React.useState<
     Post<SuggestionMetadata> | undefined
   >(undefined);
+  const selectedTags = React.useMemo(
+    () => chipData?.filter(c => c.selected).map(c => c.label),
+    [chipData],
+  );
+  const selectedPosts = React.useMemo(
+    () =>
+      selectedTags?.length
+        ? posts?.filter(p =>
+            selectedTags?.every((t: string) => p.tags?.includes(t)),
+          )
+        : posts,
+    [selectedTags, posts],
+  );
   React.useEffect(() => {
-    if (posts && chipData) {
-      const selectedTags = chipData.filter(c => c.selected).map(c => c.label);
-      const selectedPosts = posts.filter(p =>
-        selectedTags.every(t => p.tags?.includes(t)),
-      );
-      if (selectedPlace) {
-        if (!selectedPosts.includes(selectedPlace)) {
-          setSelectedPlace(undefined);
-        }
+    if (selectedPlace && selectedPosts) {
+      if (!selectedPosts.includes(selectedPlace)) {
+        setSelectedPlace(undefined);
       }
     }
-  }, [posts, chipData, selectedPlace]);
+  }, [selectedPosts, selectedPlace]);
   const defaultCenter = React.useMemo(() => {
     if (posts) {
       const accu = posts.reduce(
@@ -54,8 +61,8 @@ export default function RouteMapPosts({
   if (posts === undefined) {
     return <LinearProgress />;
   }
-  function childClickHandler(key: number) {
-    const post = posts?.[key];
+  function childClickHandler(key: string) {
+    const post = selectedPosts?.find(p => p?.id === key);
     setSelectedPlace(post);
   }
   if (defaultCenter === undefined) {
@@ -69,7 +76,7 @@ export default function RouteMapPosts({
       defaultCenter={defaultCenter}
       defaultZoom={10}
       onChildClick={childClickHandler}
-      onClick={(e) => {
+      onClick={e => {
         const container = e.event.target.closest(".info-window");
         if (container) {
           childClickHandler(container.id);
