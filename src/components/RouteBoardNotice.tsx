@@ -29,11 +29,6 @@ const useStyles = makeStyles((theme) => {
     },
     announcement: {
       padding: theme.spacing(2),
-      "&>hr": {
-        margin: `${theme.spacing(2)}px 0`,
-        border: "none",
-        borderTop: `1px solid ${theme.palette.grey[200]}`,
-      },
     },
   };
 });
@@ -85,17 +80,15 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             공지
           </Box>
           <Divider />
-          <div className={classes.announcement}>
-            {announcedPosts
-              ?.map((p) => <SquarePhoto key={p.id} p={p} xs={12} md={4} />)
-              ?.reduce((prev: any[], curr: any, index: number) => {
-                prev.push(curr);
-                if (index < announcedPosts?.length - 1) {
-                  prev.push(<hr />);
-                }
-                return prev;
-              }, [])}
-          </div>
+          <Grid
+            container
+            spacing={isDesktop ? 2 : 0}
+            className={classes.announcement}
+          >
+            {announcedPosts?.map((p) => (
+              <SquarePhoto key={p.id} p={p} xs={12} md={4} />
+            ))}
+          </Grid>
         </Box>
       )}
       <Box mt={hasAnnouncement ? 0 : 2}>
