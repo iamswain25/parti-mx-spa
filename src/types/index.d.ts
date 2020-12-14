@@ -11,6 +11,7 @@ export type FormData = {
 export interface ChipData {
   selected: boolean;
   label: string;
+  count: number;
 }
 export interface NoticeFormdata {
   title: string;

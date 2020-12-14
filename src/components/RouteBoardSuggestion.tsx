@@ -209,6 +209,7 @@ type Filter = "type" | "area" | "keyword" | "cancel" | "hide";
 const defaultTags: ChipData[] = DEFAULT_HASHTAGS.map((tag) => ({
   selected: false,
   label: tag,
+  count: 0,
 }));
 
 export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
@@ -217,10 +218,11 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const [filter, setFilter] = React.useState<Filter>("hide");
   const wrapperRef = React.useRef(null);
 
-  const [chips, setChips] = React.useState<ChipData[]>(defaultTags);
-  const selectedTags = React.useMemo(() => chips.filter((c) => c.selected), [
-    chips,
-  ]);
+  const [chips, setChips] = React.useState<ChipData[] | undefined>(defaultTags);
+  const selectedTags = React.useMemo(
+    () => chips?.filter((c) => c.selected) || [],
+    [chips]
+  );
   const [posts] = usePosts({ board_id: b.id });
   const randomPosts = React.useMemo(() => {
     if (posts) {
@@ -298,10 +300,10 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               <Chips
                 chips={
                   filter === "type"
-                    ? chips.slice(0, CUTTING_INDEX)
+                    ? chips?.slice(0, CUTTING_INDEX)
                     : filter === "area"
-                    ? chips.slice(CUTTING_INDEX, KEYWORD_INDEX)
-                    : chips.slice(KEYWORD_INDEX)
+                    ? chips?.slice(CUTTING_INDEX, KEYWORD_INDEX)
+                    : chips?.slice(KEYWORD_INDEX)
                 }
                 setChips={setChips}
               />

@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import { Chip } from "@material-ui/core";
 import { ChipData } from "../types";
 import DoneIcon from "@material-ui/icons/Done";
+// import { firestore } from "../config/firebase";
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: "flex",
@@ -40,26 +41,26 @@ export default function Chips({
   chips,
   setChips,
 }: {
-  chips: ChipData[];
-  setChips: Dispatch<SetStateAction<ChipData[]>>;
+  chips?: ChipData[];
+  setChips?: Dispatch<SetStateAction<ChipData[] | undefined>>;
 }) {
   const classes = useStyles();
   const handleSelect = React.useCallback(
     (chipClicked: ChipData) => () => {
       chipClicked.selected = !chipClicked.selected;
-      setChips((chips) => [...chips]);
+      setChips && setChips((chips) => [...(chips || [])]);
     },
     [setChips]
   );
   return (
     <Paper component="ul" className={classes.root} elevation={0}>
-      {chips.map((chip) => {
+      {chips?.map((chip) => {
         return (
           <li key={chip.label}>
             <Chip
               avatar={chip.selected ? <DoneIcon /> : undefined}
               variant="outlined"
-              label={"#" + chip.label}
+              label={`#${chip.label}${chip.count ? ` (${chip.count})` : ""}`}
               onClick={handleSelect(chip)}
               className={chip.selected ? classes.selected : classes.chip}
             />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Board, ChipData } from "../types";
+import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -13,8 +13,8 @@ import usePosts from "../store/usePosts";
 import ButtonBoardType from "./ButtonBoardType";
 import { useSort } from "../store/useGlobalState";
 import SquarePhoto from "./SquarePhoto";
-import { DEFAULT_HASHTAGS } from "../helpers/options";
 import Chips from "./Chips";
+import useTagChips from "./useTagChips";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
@@ -39,10 +39,8 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [sort] = useSort();
-  const [chipData, setChipData] = React.useState<ChipData[]>(
-    DEFAULT_HASHTAGS.map((c) => ({ label: c, selected: false }))
-  );
   const [posts] = usePosts({ board_id: b.id, sort });
+  const [chipData, setChipData] = useTagChips(posts);
   const selectedTags = React.useMemo(
     () => chipData?.filter((c) => c.selected).map((c) => c.label),
     [chipData]
@@ -56,8 +54,10 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
         : posts,
     [selectedTags, posts]
   );
+
   const announcedPosts = posts?.filter((p) => p.is_announced);
-  const hasAnnouncement = announcedPosts && announcedPosts?.length > 0;
+  const showAnnouncement =
+    announcedPosts && announcedPosts?.length > 0 && !selectedTags?.length;
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -81,7 +81,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
         </Box>
         <ButtonBoardType sort />
       </Grid>
-      {hasAnnouncement && (
+      {showAnnouncement && (
         <Box
           border={isDesktop ? 1 : 2}
           borderColor={isDesktop ? "grey.300" : "primary.main"}
@@ -110,7 +110,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
           </Grid>
         </Box>
       )}
-      <Box mt={hasAnnouncement ? 0 : 2}>
+      <Box mt={showAnnouncement ? 0 : 2}>
         <Grid container spacing={isDesktop ? 3 : 0}>
           {selectedPosts?.map((p) => (
             <SquarePhoto key={p.id} p={p} xs={12} md={3} />

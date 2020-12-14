@@ -1,5 +1,5 @@
 import { createGlobalState } from "react-hooks-global-state";
-import { Board, Role } from "../types";
+import { Board, ChipData, Role } from "../types";
 export const initialState = {
   loginModal: false,
   error: null,
@@ -10,6 +10,7 @@ export const initialState = {
   sort: 0,
   role: undefined,
   boards: undefined,
+  chipsData: undefined,
 };
 interface GlobalType {
   success: any;
@@ -21,6 +22,7 @@ interface GlobalType {
   currentUser?: firebase.User | null;
   sort: number;
   boards?: Board[];
+  chipsData?: ChipData[];
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export function useCurrentUser() {
@@ -49,4 +51,7 @@ export function useSort() {
 }
 export function useBoards() {
   return useGlobalState("boards");
+}
+export function useChipsData() {
+  return useGlobalState("chipsData");
 }

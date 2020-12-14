@@ -1,12 +1,11 @@
 import React from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core";
-import { DEFAULT_HASHTAGS } from "../helpers/options";
-import { ChipData } from "../types";
 import Chips from "./Chips";
 import useBoard from "../store/useBoard";
 import RouteMapPosts from "./RouteMapPosts";
 import ButtonBoardType from "./ButtonBoardType";
+import { useChipsData } from "../store/useGlobalState";
 export const useStyles = makeStyles((theme: Theme) => ({
   container: {
     marginTop: theme.spacing(2),
@@ -37,9 +36,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 export default function RouteMap() {
   const [board] = useBoard();
   const classes = useStyles();
-  const [chipData, setChipData] = React.useState<ChipData[]>(
-    DEFAULT_HASHTAGS.map((c) => ({ label: c, selected: false }))
-  );
+  const [chipData, setChipData] = useChipsData();
   return (
     <section className={classes.container}>
       <Chips chips={chipData} setChips={setChipData} />

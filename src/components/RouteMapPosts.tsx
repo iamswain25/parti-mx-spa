@@ -5,6 +5,7 @@ import GoogleMapReact from "google-map-react";
 import MapPost from "./MapPost";
 import usePosts from "../store/usePosts";
 import { DEFAULT_LAT_LNG } from "../helpers/options";
+import useTagChips from "./useTagChips";
 export default function RouteMapPosts({
   board,
   chipData,
@@ -13,6 +14,7 @@ export default function RouteMapPosts({
   chipData?: ChipData[];
 }) {
   const [posts] = usePosts<Post<NoticeMetadata>>({ board_id: board.id });
+  useTagChips(posts);
   const [selectedPlace, setSelectedPlace] = React.useState<
     Post<NoticeMetadata> | undefined
   >(undefined);

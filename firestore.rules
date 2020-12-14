@@ -84,5 +84,8 @@ service cloud.firestore {
         allow write: if isOrganizer();
       }
     }
+    match /%24PARAMS%24/{document=**} {
+      allow read: if true;
+    }
   }
 }
