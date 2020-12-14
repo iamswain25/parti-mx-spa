@@ -15,7 +15,6 @@ import {
   FormControlLabel,
   Checkbox,
   FormHelperText,
-  MenuItem,
 } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { Link, useHistory } from "react-router-dom";
@@ -201,11 +200,14 @@ export default function Signup() {
             <Controller
               control={control}
               name="area"
-              defaultValue="경기도"
+              defaultValue=""
               rules={{ required: "필수 선택" }}
               as={
                 <TextField
                   select
+                  SelectProps={{
+                    native: true,
+                  }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -214,9 +216,9 @@ export default function Signup() {
                   error={!!errors.area}
                   helperText={errors?.area?.message}
                   children={SIGNUP_AREA.map((option) => (
-                    <MenuItem key={option} value={option}>
+                    <option key={option} value={option}>
                       {option}
-                    </MenuItem>
+                    </option>
                   ))}
                 />
               }
@@ -230,6 +232,9 @@ export default function Signup() {
                 as={
                   <TextField
                     select
+                    SelectProps={{
+                      native: true,
+                    }}
                     variant="outlined"
                     margin="normal"
                     fullWidth
@@ -238,9 +243,9 @@ export default function Signup() {
                     error={!!errors.address}
                     helperText={errors?.address?.message}
                     children={SIGNUP_CITIES.map((option) => (
-                      <MenuItem key={option} value={option}>
+                      <option key={option} value={option}>
                         {option}
-                      </MenuItem>
+                      </option>
                     ))}
                   />
                 }
