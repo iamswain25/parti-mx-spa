@@ -24,6 +24,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
+import { AGE } from '../helpers/options';
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingTop: theme.spacing(8),
@@ -211,12 +212,9 @@ export default function Signup() {
                     onChange={(e) => onChange(e.target.value)}
                     onSelect={value}
                   >
-                    <MenuItem value={10}>10대</MenuItem>
-                    <MenuItem value={20}>20대</MenuItem>
-                    <MenuItem value={30}>30대</MenuItem>
-                    <MenuItem value={40}>40대</MenuItem>
-                    <MenuItem value={50}>50대</MenuItem>
-                    <MenuItem value={60}>60대 이상</MenuItem>
+                    {AGE.map((e, i) => (
+                      <MenuItem value={e} key={i}>{e}</MenuItem>
+                    ))}
                   </Select>
                   )}
                   />
