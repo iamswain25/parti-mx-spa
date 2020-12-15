@@ -15,16 +15,13 @@ import {
   FormControlLabel,
   Checkbox,
   FormHelperText,
-  Select,
-  InputLabel,
-  MenuItem
 } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
-import { AGE } from '../helpers/options';
+import UserExtraInfo from "./UserExtraInfo";
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingTop: theme.spacing(8),
@@ -82,15 +79,12 @@ export default function Signup() {
   const [, setCurrentUser] = useCurrentUser();
   const history = useHistory<{ from: { pathname: string } }>();
   const { from } = history.location.state ?? { from: "/" };
-  const {
-    handleSubmit,
-    register,
-    errors,
-    formState,
-    control,
-  } = useForm<FormData>();
+  const formControl = useForm<FormData>({
+    defaultValues: { area: "서울특별시" },
+  });
+  const { handleSubmit, register, errors, formState, control } = formControl;
   async function formHandler(form: FormData) {
-    const { email, password, name, age } = form;
+    const { email, password, name, ...rest } = form;
 
     try {
       const credential = firebase.auth.EmailAuthProvider.credential(
@@ -109,12 +103,12 @@ export default function Signup() {
         const p2 = userCred.user.updateProfile({ displayName: name });
         const p3 = firestore.doc(`users/${userCred.user.uid}`).set(
           {
+            ...rest,
             name,
             email,
             updated_at: new Date(),
             term_privacy: new Date(),
             term_service: new Date(),
-            age
           },
           { merge: true }
         );
@@ -198,28 +192,7 @@ export default function Signup() {
               error={!!errors.name}
               helperText={errors?.name?.message}
             />
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel id="select-label">Age</InputLabel>
-              <FormGroup>
-                <Controller 
-                  name="age"
-                  control={control}
-                  defaultValue={false}
-                  render={({ onChange, value, ...rest}) => (
-                  <Select
-                    labelId="select-label"
-                    id="select"
-                    onChange={(e) => onChange(e.target.value)}
-                    onSelect={value}
-                  >
-                    {AGE.map((e, i) => (
-                      <MenuItem value={e} key={i}>{e}</MenuItem>
-                    ))}
-                  </Select>
-                  )}
-                  />
-              </FormGroup>
-            </FormControl>
+            <UserExtraInfo formControl={formControl} />
             <FormControl
               required
               error={Boolean(errors.term_privacy || errors.term_service)}

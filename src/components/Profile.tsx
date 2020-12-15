@@ -14,6 +14,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useCurrentUser, useGroupId } from "../store/useGlobalState";
 import { auth, firestore, storage, uploadFileByPath } from "../config/firebase";
 import useAccountDelete from "../store/useAccountDelete";
+import UserExtraInfo from "./UserExtraInfo";
+import { User } from "../types";
+import useUser from "../store/useUser";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,39 +46,35 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 }));
-interface GroupForm {
+interface GroupForm extends User {
   name: string;
   email: string;
   bgFiles: any;
+  age: string;
+  area: string;
+  address: string;
 }
 export default function Profile() {
   const classes = useStyles();
   const history = useHistory();
   const [currentUser, setCurrentUser] = useCurrentUser();
+  const [me] = useUser({ id: currentUser?.uid });
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [group_id] = useGroupId();
   const deleteAccount = useAccountDelete();
-  const {
-    handleSubmit,
-    register,
-    errors,
-    control,
-    reset,
-  } = useForm<GroupForm>();
+  const formControl = useForm<GroupForm>();
+  const { handleSubmit, register, errors, control, reset } = formControl;
   React.useEffect(() => {
-    if (currentUser) {
-      setPhoto(currentUser.photoURL);
-      reset({
-        name: currentUser.displayName || "",
-        email: currentUser.email || "",
-      } as GroupForm);
+    if (me) {
+      setPhoto(me.photo_url);
+      reset(me as GroupForm);
     }
-  }, [currentUser, reset, setPhoto]);
+  }, [me, reset, setPhoto]);
 
   async function handleForm(form: GroupForm) {
-    const { bgFiles, name } = form;
+    const { bgFiles, name, ...rest } = form;
     const variables = { displayName: name, photoURL: photo };
-    const variables2 = { name, photo_url: photo };
+    const variables2 = { name, ...rest, photo_url: photo };
     if (bgFiles?.length) {
       const path = `users/${currentUser?.uid}`;
       await uploadFileByPath(bgFiles[0], path);
@@ -147,6 +146,7 @@ export default function Profile() {
           },
         }}
       />
+      <UserExtraInfo formControl={formControl} />
       <Controller
         control={control}
         name="email"

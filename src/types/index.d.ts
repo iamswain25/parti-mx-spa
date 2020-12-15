@@ -6,6 +6,8 @@ export type FormData = {
 	term_service: boolean;
 	term_privacy: boolean;
 	age: string;
+	area: string;
+	address: string;
 };
 export interface ChipData {
 	selected: boolean;

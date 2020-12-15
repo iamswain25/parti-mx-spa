@@ -5,7 +5,7 @@ export default function useUser({
   id,
   listen = false,
 }: {
-  id: string;
+  id?: string;
   listen?: boolean;
 }): [User | null] {
   const [user, setUser] = React.useState<User | null>(null);

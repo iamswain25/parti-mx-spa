@@ -1,5 +1,11 @@
 # production 세팅
 
+## NODE.JS version
+
+firebase가 v12 지원:
+nvm install v12
+nvm alias default v12
+
 ## 환경변수 세팅
 
 firebase functions:config:set hasura.url="http://...com/" hasura.secret="..."
