@@ -18,6 +18,7 @@ export default function useTagChips(posts?: Post[]) {
         return prev;
       }, {});
       const tagsArr = Object.values(tagsObj) as ChipData[];
+      tagsArr.sort((a, b) => (a.label > b.label ? 1 : -1));
       setChipData(tagsArr);
     }
   }, [posts, setChipData]);
