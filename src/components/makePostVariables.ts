@@ -15,6 +15,7 @@ export async function makeNewVariables(form: any, other: any) {
   }
   if (form.isHtml) {
     const html = form.html as RawDraftContentState;
+    form.html = JSON.parse(JSON.stringify(html));
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
@@ -31,7 +32,6 @@ export async function makeNewVariables(form: any, other: any) {
 export async function makeUpdateVariables(form: any, other: any) {
   const { imageArr, fileArr, images2, files2, setSuccess, ...rest } = other;
   let images = null;
-
   if (imageArr.length) {
     images = await Promise.all(imageArr.map(uploadFileGetUriArray));
     setSuccess(images?.length + " 개의 사진 업로드 성공");
@@ -46,7 +46,7 @@ export async function makeUpdateVariables(form: any, other: any) {
   }
   if (form.isHtml) {
     const html = form.html as RawDraftContentState;
-    debugger;
+    form.html = JSON.parse(JSON.stringify(html));
     form.body = html.blocks
       .map((block) => (!block.text.trim() && "\n") || block.text)
       .join("\n");
