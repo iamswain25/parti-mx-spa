@@ -35,6 +35,15 @@ const useStyles = makeStyles((theme) => ({
     "&>a": {
       textDecoration: "underline",
     },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(1),
+      fontSize: 30,
+      marginTop: theme.spacing(4),
+      textAlign: "center",
+      "&>a": {
+        marginTop: theme.spacing(1),
+      },
+    },
   },
 }));
 export default function Forbidden({
@@ -81,8 +90,8 @@ export default function Forbidden({
   if (noGroup) {
     return (
       <div className={classes.link}>
-        삭제 되었거나 없는 그룹입니다. <br />
-        <Link to="/home">홈 그룹으로 돌아갑니다.</Link>
+        삭제 되었거나 없는 페이지입니다. <br />
+        <Link to="/">홈으로 돌아갑니다.</Link>
         <Box mt={2}>
           {currentUser?.email?.includes("@parti.coop") && (
             <Button
