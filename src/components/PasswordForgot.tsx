@@ -3,7 +3,12 @@ import { auth } from "../config/firebase";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import { Button, Typography, Container } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  Container,
+  LinearProgress,
+} from "@material-ui/core";
 import { DOMAIN } from "../helpers/options";
 import { useSuccess } from "../store/useGlobalState";
 import { loginError } from "../helpers/firebaseErrorCode";
@@ -59,7 +64,13 @@ export default function PasswordForgot() {
   const classes = useStyles();
   const [error, setError] = React.useState(undefined);
   const [, setSuccess] = useSuccess();
-  const { handleSubmit, register, errors, reset } = useForm<FormEmail>();
+  const {
+    handleSubmit,
+    register,
+    errors,
+    reset,
+    formState,
+  } = useForm<FormEmail>();
   async function formHandler(form: FormEmail) {
     const { email } = form;
     const actionCodeSettings = {
@@ -79,6 +90,7 @@ export default function PasswordForgot() {
   return (
     <div className={classes.paper}>
       <Container component="main" maxWidth="xs">
+        {formState.isSubmitting && <LinearProgress />}
         <Typography variant="h2">비밀번호 찾기</Typography>
         <form
           onSubmit={handleSubmit(formHandler)}
@@ -110,6 +122,7 @@ export default function PasswordForgot() {
           {error && <div className={classes.error}>{error}</div>}
           <div className={classes.wrapper}>
             <Button
+              disabled={formState.isSubmitting}
               type="submit"
               fullWidth
               variant="contained"
