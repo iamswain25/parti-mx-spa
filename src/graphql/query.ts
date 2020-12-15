@@ -48,7 +48,20 @@ export const homeGroup = gql`
         where: { type: { _eq: "event" } }
         order_by: { order: asc_nulls_last }
       ) {
-        ...boards
+        id
+        title
+        body
+        permission
+        type
+        updated_at
+        last_posted_at
+        posts(
+          limit: 4
+          order_by: { created_at: desc_nulls_last }
+          where: { closed_at: { _is_null: true } }
+        ) {
+          ...posts
+        }
       }
     }
   }
