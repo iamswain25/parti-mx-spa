@@ -1,5 +1,5 @@
 import { Role, UserStatus } from "../types";
-export const DOMAIN = "https://https://eve.ggmaeul.or.kr/";
+export const DOMAIN = "https://eve.ggmaeul.or.kr/";
 export const TITLE = "2020 경기도마을공동체지원센터 어울림축제";
 export const postSortOptions = [
   { created_at: "desc" },
