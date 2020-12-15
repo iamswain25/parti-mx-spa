@@ -191,10 +191,10 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={footer3} alt="footer3" className={classes.right} />
             <strong>powered by</strong>
             <img src={partiLogo} alt="parti logo" />
           </a>
+          <img src={footer3} alt="footer3" className={classes.right} />
         </section>
       </section>
     </footer>
