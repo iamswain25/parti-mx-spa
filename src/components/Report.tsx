@@ -1,60 +1,15 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { csvDownload2, csvDownloadAll } from "../helpers/csvDownload";
-import { useGroupId } from "../store/useGlobalState";
-import firebase from "firebase";
+import { csvDownload2 } from "../helpers/csvDownload";
+import { useParams } from "react-router-dom";
 export default function Report() {
-  const [groupId] = useGroupId();
-  const [date, setDate] = React.useState(
-    new Date().toISOString().substr(0, 16)
-  );
-  const [limit, setLimit] = React.useState(1);
-  function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(event.target.value);
-    setDate(event.target.value);
-  }
+  const { group_id, board_id } = useParams<{
+    group_id: string;
+    board_id: string;
+  }>();
+
   return (
     <section>
-      <h1>가입회원 리스트 다운로드</h1>
-      <div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            const time = new Date(date);
-            const seconds = time.getTime() / 1000;
-            const startAfter = new firebase.firestore.Timestamp(seconds, 0);
-            console.log(startAfter, limit);
-            csvDownloadAll({
-              group_id: groupId,
-              startAfter,
-              limit,
-            });
-          }}
-        >
-          download csv
-        </Button>
-      </div>
-      <div>
-        start after
-        <input type="datetime-local" value={date} onChange={changeHandler} />
-      </div>
-      <div>
-        limit
-        <input
-          type="number"
-          value={limit}
-          onChange={(event) => {
-            const value = event.target.value;
-            const number = Number(value);
-            if (number > 1000) {
-              setLimit(1000);
-            } else {
-              setLimit(number);
-            }
-          }}
-        />
-      </div>
       <div>
         <h2>댓글, 좋아요, 통계 다운로드</h2>
         <Button
@@ -62,8 +17,8 @@ export default function Report() {
           color="primary"
           onClick={() => {
             csvDownload2({
-              group_id: groupId,
-              board_id: "aA7LUOKOSJ0fo6cHzy56",
+              group_id,
+              board_id,
             });
           }}
         >

@@ -1,6 +1,5 @@
 import { Parser } from "json2csv";
 import { firestore } from "../config/firebase";
-import { COUNTER_DOC, PARAM_COLLECTION } from "./options";
 async function delay(t: number) {
   return new Promise(function (resolve) {
     setTimeout(resolve, t);
@@ -94,47 +93,11 @@ export function csvDownload2({
     .then((snapshot) => snapshot.docs)
     .then((posts) =>
       Promise.all(
-        posts.map(async (post, i) => {
-          await delay(i * 1000);
-          const counter = await post.ref
-            .collection(PARAM_COLLECTION)
-            .doc(COUNTER_DOC)
-            .get();
-          const conter2 = await post.ref
-            .collection("comments")
-            .get()
-            .then((snapshot) => snapshot.docs)
-            .then((docs) =>
-              Promise.all(
-                docs.map(async (c, j) => {
-                  await delay(j * 10);
-                  const comment2 = await c.ref
-                    .collection(PARAM_COLLECTION)
-                    .doc(COUNTER_DOC)
-                    .get();
-                  if (comment2.exists) {
-                    return comment2.data();
-                  } else {
-                    return null;
-                  }
-                })
-              )
-            )
-            .then((arr) =>
-              arr.reduce((prev, curr) => {
-                if (curr) {
-                  return prev + curr?.count_comment || 0;
-                }
-                return prev;
-              }, 0)
-            );
-
+        posts.map(async (post) => {
           return {
-            ...counter.data(),
-            count_comment2: conter2,
             id: post.id,
-            link: `https://juminexpo.kr/post/${post.id}`,
-            title: post.get("title"),
+            link: `https://eve.ggmaeul.or.kr/post/${post.id}`,
+            ...post.data(),
           };
         })
       )
@@ -143,10 +106,10 @@ export function csvDownload2({
       const fields = [
         "id",
         "title",
+        "body",
         "link",
         "count_like",
         "count_comment",
-        "count_comment2",
       ];
       const opts = {
         fields,

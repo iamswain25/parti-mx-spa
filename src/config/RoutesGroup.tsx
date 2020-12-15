@@ -5,7 +5,6 @@ import GroupEdit from "../components/GroupEdit";
 import Members from "../components/Members";
 import MemberNew from "../components/MemberNew";
 import AdminRoute from "./AdminRoute";
-import Report from "../components/Report";
 import { Route, Switch } from "react-router-dom";
 import SearchInstant from "../components/SearchInstant";
 import useEffectGroupId from "../store/useEffectGroupId";
@@ -19,7 +18,6 @@ export default function RoutesGroup() {
       <AdminRoute exact path="/:group_id/boards" component={BoardsSetting} />
       <AdminRoute exact path="/:group_id/members" component={Members} />
       <AdminRoute exact path="/:group_id/members/new" component={MemberNew} />
-      <AdminRoute exact path="/:group_id/report" component={Report} />
       <AdminRoute exact path="/:group_id/edit" component={GroupEdit} />
       <Route path="/:group_id/:board_id" component={RoutesBoard} />
     </Switch>
