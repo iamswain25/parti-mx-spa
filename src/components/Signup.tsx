@@ -15,6 +15,9 @@ import {
   FormControlLabel,
   Checkbox,
   FormHelperText,
+  Select,
+  InputLabel,
+  MenuItem
 } from "@material-ui/core";
 import useRedirectIfLogin from "./useRedirectIfLogin";
 import { Link, useHistory } from "react-router-dom";
@@ -86,7 +89,7 @@ export default function Signup() {
     control,
   } = useForm<FormData>();
   async function formHandler(form: FormData) {
-    const { email, password, name } = form;
+    const { email, password, name, age } = form;
 
     try {
       const credential = firebase.auth.EmailAuthProvider.credential(
@@ -110,6 +113,7 @@ export default function Signup() {
             updated_at: new Date(),
             term_privacy: new Date(),
             term_service: new Date(),
+            age
           },
           { merge: true }
         );
@@ -193,6 +197,31 @@ export default function Signup() {
               error={!!errors.name}
               helperText={errors?.name?.message}
             />
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel id="select-label">Age</InputLabel>
+              <FormGroup>
+                <Controller 
+                  name="age"
+                  control={control}
+                  defaultValue={false}
+                  render={({ onChange, value, ...rest}) => (
+                  <Select
+                    labelId="select-label"
+                    id="select"
+                    onChange={(e) => onChange(e.target.value)}
+                    onSelect={value}
+                  >
+                    <MenuItem value={10}>10대</MenuItem>
+                    <MenuItem value={20}>20대</MenuItem>
+                    <MenuItem value={30}>30대</MenuItem>
+                    <MenuItem value={40}>40대</MenuItem>
+                    <MenuItem value={50}>50대</MenuItem>
+                    <MenuItem value={60}>60대 이상</MenuItem>
+                  </Select>
+                  )}
+                  />
+              </FormGroup>
+            </FormControl>
             <FormControl
               required
               error={Boolean(errors.term_privacy || errors.term_service)}
