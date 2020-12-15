@@ -10,6 +10,7 @@ import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
 import MenuProfile from "./MenuProfile";
 import useGroup from "../store/useGroup";
+import SearchButton from "./SearchButton";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -119,6 +120,7 @@ export default function HeaderRemain() {
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
             {currentUser?.email && <MenuProfile />}
+            <SearchButton />
             <Hidden smDown>
               {currentUser?.email ? <LogoutButton /> : <LoginButton />}
             </Hidden>
