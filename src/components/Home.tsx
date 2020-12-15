@@ -41,8 +41,8 @@ export default function Home() {
       {mapBoard && (
         <Grid item xs={isDesktop ? 4 : 12}>
           <Box
+            mx={isDesktop ? undefined : 2}
             my={3}
-            p={isDesktop ? 0 : 2}
             borderBottom="1px solid #bdbdbd"
             display={isDesktop ? undefined : "flex"}
             alignItems={isDesktop ? undefined : "center"}
