@@ -2,22 +2,25 @@ import React from "react";
 import { Divider, Hidden, Typography, Container } from "@material-ui/core";
 import SearchInput from "./SearchInput";
 import HeaderBack from "./HeaderBack";
-import { Post } from "../types";
+// import { Post } from "../types";
 import SearchSuggestion from "./SearchSuggestion";
-
+import algoliasearch from "algoliasearch";
+import { RequestOptions } from "@algolia/transporter";
+import { useParams } from "react-router-dom";
+const client = algoliasearch("6HUA4GMFJJ", "6310f1a94693ca85bf55899a686f05a5");
+const index = client.initIndex("green-newdeal");
 export default function Search() {
+  const { group_id } = useParams<{ group_id: string }>();
   const [keyword, setKeyword] = React.useState("");
-  // const { loading, data, error } = useQuery(searchPosts, {
-  //   variables: {
-  //     searchKeyword: `%${keyword}%`,
-  //     group_id,
-  //     tags: keyword.split(/[\s,;#]+/),
-  //     userId,
-  //   },
-  //   fetchPolicy: "network-only",
-  // });
-  // useErrorEffect(error);
-  const results = [] as Post[];
+  const [result, setResult] = React.useState<undefined | any>(undefined);
+  React.useEffect(() => {
+    const options: RequestOptions = {
+      hitsPerPage: 20,
+      facetFilters: [`group_id:${group_id}`],
+    };
+    index.search(keyword, options).then(setResult);
+  }, [keyword, group_id]);
+  console.log(result);
   return (
     <>
       <Hidden mdUp>
@@ -30,9 +33,9 @@ export default function Search() {
       <Container maxWidth="lg">
         <SearchInput keyword={keyword} setKeyword={setKeyword} />
         {keyword &&
-          (results?.length ? (
-            results?.map((p, i) => {
-              return <SearchSuggestion key={i} post={p} />;
+          (result?.hits?.length ? (
+            result?.hits?.map((p: any, i: number) => {
+              return <SearchSuggestion key={p.objectId || i} post={p} />;
             })
           ) : (
             <Container>

@@ -10,7 +10,6 @@ import { CssBaseline } from "@material-ui/core";
 import RoutePostEdit from "../components/RoutePostEdit";
 import GroupNew from "../components/GroupNew";
 import Profile from "../components/Profile";
-import Search from "../components/Search";
 import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import { initialState } from "../store/useGlobalState";
@@ -49,7 +48,6 @@ export default function Routes() {
           />
           <Route path="/group/new" exact component={GroupNew} />
           <Route path="/profile" exact component={Profile} />
-          <Route path="/search" exact component={Search} />
           <Route path="/:group_id" component={RoutesGroup} />
           <Route path="*">
             <Redirect to={`/${initialState.groupId}`} />
