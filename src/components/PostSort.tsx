@@ -36,6 +36,7 @@ export default function PostSort() {
         <MenuItem value={1}>최근 등록순</MenuItem>
         <MenuItem value={2}>최근 업데이트순</MenuItem>
         <MenuItem value={3}>최근 댓글순</MenuItem>
+        <MenuItem value={4}>공감순</MenuItem>
       </Select>
     </Box>
   );

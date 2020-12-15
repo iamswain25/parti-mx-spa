@@ -20,6 +20,7 @@
   - functions
 
 #### firebase tools
+
 ```
 curl -sL https://firebase.tools | bash
 ```
@@ -37,6 +38,11 @@ gsutil cors set cors.json gs://gyeonggi-village-mix.appspot.com
 ### firestore
 
 #### rules
+
+#### indexes
+
+download:
+`firebase firestore:indexes --project gyeonggi-village-mix | cat > ./firestore.indexes.json`
 
 ##### test
 

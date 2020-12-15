@@ -38,6 +38,9 @@ export default function usePosts<T extends Post>({
       case 3:
         query = query.orderBy("last_commented_at", "desc");
         break;
+      case 4:
+        query = query.orderBy("count_like", "desc");
+        break;
       default:
         query = query.orderBy("created_at", "asc");
     }
