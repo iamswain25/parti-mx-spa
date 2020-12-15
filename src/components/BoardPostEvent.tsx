@@ -115,7 +115,12 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               </Box>
             </Box>
             <Box color="primary.dark" display="flex" alignItems="flex-end">
-              {attending ? (
+              {!!p.closed_at ? (
+                <Box display="flex" alignItems="center">
+                  완료
+                  <CheckCircleIcon color="primary" />
+                </Box>
+              ) : attending ? (
                 <Box display="flex" alignItems="center">
                   참석함
                   <CheckCircleIcon color="primary" />
