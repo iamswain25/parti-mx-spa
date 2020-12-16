@@ -5,40 +5,40 @@ import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
 import usePermission from "../store/usePermission";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   icon: {
     width: theme.spacing(1.5),
     height: theme.spacing(1.5),
-    color: theme.palette.common.white,
+    color: theme.palette.common.white
   },
   like: {
     [theme.breakpoints.up("md")]: {
-      fontSize: 16,
+      fontSize: 16
     },
     [theme.breakpoints.down("sm")]: {
       fontSize: 14,
-      width: "100%",
+      width: "100%"
     },
     letterSpacing: -0.33,
     color: theme.palette.common.white,
     backgroundColor: theme.palette.primary.light,
     borderColor: "#bbe7d6", // theme.palette.primary.main,
     borderWidth: 1,
-    borderStyle: "solid",
+    borderStyle: "solid"
   },
   event: {
     [theme.breakpoints.up("md")]: {
-      fontSize: 16,
+      fontSize: 16
     },
     [theme.breakpoints.down("sm")]: {
       fontSize: 14,
-      width: "100%",
+      width: "100%"
     },
     // backgroundColor: theme.palette.primary.dark,
     color: theme.palette.common.white,
     // color: theme.palette.primary.dark,
-    backgroundColor: theme.palette.primary.light,
-  },
+    backgroundColor: theme.palette.primary.light
+  }
 }));
 export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
@@ -58,7 +58,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
       .delete();
     switch (type) {
       case "suggestion":
-        return setSuccess("응원 취소 하였습니다.");
+        return setSuccess("제안 동의 취소 하였습니다.");
       case "event":
         return setSuccess("공감 취소 하였습니다.");
       default:
@@ -74,7 +74,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          응원해요 취소
+          제안 동의 취소
         </Button>
       );
     case "event":

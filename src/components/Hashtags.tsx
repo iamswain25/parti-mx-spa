@@ -1,16 +1,17 @@
 import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Chip, TextField, FormControl } from "@material-ui/core";
-import { Controller } from "react-hook-form";
-import { DEFAULT_HASHTAGS, HASHTAG_SPLIT_REGEX } from "../helpers/options";
-
-export default function Hashtags(props: { formControl: any }) {
+import { UseFormMethods, Controller } from "react-hook-form";
+import { SuggestionFormdata } from "../types";
+export default function Hashtags(props: {
+  formControl: UseFormMethods<SuggestionFormdata>;
+}) {
   const { control } = props.formControl;
   const changeHandler = (onChange: any) => (e: any, data: any) => {
     return onChange(
       data
         .join(",")
-        .split(HASHTAG_SPLIT_REGEX)
+        .split(/[\s,;#]+/)
         .filter((e: any) => e)
     );
   };
@@ -23,18 +24,18 @@ export default function Hashtags(props: { formControl: any }) {
         render={({ onChange, ...props }) => (
           <Autocomplete
             multiple
-            options={DEFAULT_HASHTAGS}
+            options={[]}
             freeSolo
             renderTags={(value: string[], getTagProps) =>
               value.map((option: string, index: number) => (
                 <Chip
                   variant="outlined"
-                  label={"#" + option}
+                  label={option}
                   {...getTagProps({ index })}
                 />
               ))
             }
-            renderInput={(params) => (
+            renderInput={params => (
               <TextField
                 {...params}
                 variant="outlined"

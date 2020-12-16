@@ -5,7 +5,7 @@ import {
   TextField,
   IconButton,
   Avatar,
-  Button,
+  Button
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -18,33 +18,33 @@ import UserExtraInfo from "./UserExtraInfo";
 import { User } from "../types";
 import useUser from "../store/useUser";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(2)
     },
-    flex: 1,
+    flex: 1
   },
   large: {
     width: theme.spacing(20),
-    height: theme.spacing(20),
+    height: theme.spacing(20)
   },
   btn: {
     position: "absolute",
     right: 0,
-    top: -theme.spacing(3),
+    top: -theme.spacing(3)
   },
   flex: {
     display: "flex",
     justifyContent: "center",
     position: "relative",
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(4)
   },
   exit: {
     // color: theme.palette.primary.main,
     justifyContent: "flex-end",
-    display: "flex",
-  },
+    display: "flex"
+  }
 }));
 interface GroupForm extends User {
   name: string;
@@ -143,7 +143,7 @@ export default function Profile() {
                 return "이미 사용 중인 닉네임입니다.";
               }
             }
-          },
+          }
         }}
       />
       <UserExtraInfo formControl={formControl} />
@@ -169,7 +169,7 @@ export default function Profile() {
       {currentUser?.email && (
         <div className={classes.exit}>
           <Button variant="outlined" color="primary" onClick={deleteAccount}>
-            멤버탈퇴
+            회원탈퇴
           </Button>
         </div>
       )}

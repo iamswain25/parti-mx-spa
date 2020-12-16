@@ -35,7 +35,7 @@ export default function SuggestionNew() {
         is_closed: false,
         updated_at: new Date(),
         created_at: new Date(),
-        type: "suggestion",
+        type: "suggestion"
       });
       const doc = await firestore.collection("posts").add(variables);
       history.push("/post/" + doc.id);
@@ -48,7 +48,7 @@ export default function SuggestionNew() {
         <Box mt={2}>
           {formState.isSubmitting && <LinearProgress />}
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">전시글 쓰기</Typography>
+            <Typography variant="h2">제안글 쓰기</Typography>
             <SuggestionInputs formControl={formControl} />
             <ImageFileDropzone
               images={imageArr}
@@ -57,7 +57,7 @@ export default function SuggestionNew() {
               setFiles={setFileArr}
             />
             <BtnSubmitDesktop
-              text="전시 제출"
+              text="제안 제출"
               isSubmitting={formState.isSubmitting}
             />
           </Container>

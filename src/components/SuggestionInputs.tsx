@@ -3,15 +3,11 @@ import CustomTextField from "./CustomTextField";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
 import Hashtags from "./Hashtags";
-import ReactPlayer from "react-player";
+import { suggestionOptions } from "../helpers/options";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
 }) {
   const { register, errors } = props.formControl;
-  function playable(value: string) {
-    if (value && !ReactPlayer.canPlay(value))
-      return "재생 가능한 유튜브 링크가 아닙니다.";
-  }
   return (
     <>
       <CustomTextField
@@ -22,51 +18,33 @@ export default function SuggestionInputs(props: {
         errors={errors}
       />
       <CustomTextField
-        label="소개영상"
-        name="metadata.youtube"
-        inputRef={register({
-          validate: {
-            playable,
-          },
-        })}
-        errors={errors}
-        helperText={
-          errors?.metadata?.youtube?.message ??
-          "유튜브 링크 주소를 넣어주세요. 예: https://youtu.be/GaWVFHEvpNI"
-        }
-      />
-      <CustomTextField
-        label="단체명·단체소개"
+        label="제안 배경"
         multiline
         name="context"
         register={register}
         errors={errors}
       />
       <CustomTextField
-        label="요약"
+        register={register}
+        errors={errors}
+        select
+        label="제안 종료 방법"
+        variant="filled"
+        name="metadata.closingMethod"
+        SelectProps={{
+          native: true
+        }}
+        defaultValue="7days"
+        children={suggestionOptions.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      />
+      <CustomTextField
+        label="제안 내용"
         multiline
         name="body"
-        register={register}
-        errors={errors}
-      />
-      <CustomTextField
-        label="심사평"
-        multiline
-        name="metadata.detail1"
-        inputRef={register()}
-        errors={errors}
-      />
-      <CustomTextField
-        label="일반현황"
-        multiline
-        name="metadata.detail2"
-        register={register}
-        errors={errors}
-      />
-      <CustomTextField
-        label="대표사례"
-        multiline
-        name="metadata.detail3"
         register={register}
         errors={errors}
       />
