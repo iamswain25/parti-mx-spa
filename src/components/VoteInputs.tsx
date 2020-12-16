@@ -12,7 +12,7 @@ import { VoteFormdata } from "../types";
 
 export default function VoteInputs({
   formControl,
-  isEdit = false,
+  isEdit = false
 }: {
   formControl: UseFormMethods<VoteFormdata>;
   isEdit?: boolean;
@@ -28,7 +28,6 @@ export default function VoteInputs({
         register={register}
         errors={errors}
       />
-      <Hashtags formControl={formControl} />
       <HtmlInput formControl={formControl} />
       <CustomTextField
         register={register}
@@ -38,10 +37,10 @@ export default function VoteInputs({
         variant="filled"
         name="metadata.closingMethod"
         SelectProps={{
-          native: true,
+          native: true
         }}
         defaultValue="7days"
-        children={voteOptions.map((option) => (
+        children={voteOptions.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
