@@ -35,14 +35,14 @@ export default function EventInputs({ formControl }: any) {
         type="number"
         defaultValue={10}
         InputProps={{
-          endAdornment: <span>명</span>,
+          endAdornment: <span>명</span>
         }}
         inputRef={register({
           required: "필수 입력",
           min: {
             value: 1,
-            message: "모집 최소 인원은 1명 입니다.",
-          },
+            message: "모집 최소 인원은 1명 입니다."
+          }
         })}
         errors={errors}
       />
@@ -54,7 +54,6 @@ export default function EventInputs({ formControl }: any) {
         register={register}
         errors={errors}
       />
-      <Hashtags formControl={formControl} />
       <HtmlInput formControl={formControl} />
     </>
   );

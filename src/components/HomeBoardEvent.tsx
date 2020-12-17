@@ -1,71 +1,81 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Box, LinearProgress } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
+import { Typography, Grid, Box, Divider } from "@material-ui/core";
+import BoardPostEvent from "./BoardPostEvent";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
-import EventPhotoGridItem from "./EventPhotoGridItem";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
-      [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(2),
-      },
-      [theme.breakpoints.up("md")]: {
-        paddingTop: theme.spacing(3),
-      },
+      paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(5),
+      [theme.breakpoints.up("md")]: {
+        border: `1px solid ${grey[300]}`,
+        maxWidth: 364,
+        marginBottom: theme.spacing(5)
+      },
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: theme.spacing(2)
+      },
+      backgroundColor: theme.palette.background.default
     },
     titleContainer: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2)
+    },
+    postContainer: {
+      overflow: "hidden",
+      display: "grid",
+      gridGap: theme.spacing(1.5),
       [theme.breakpoints.up("md")]: {
-        marginBottom: theme.spacing(3),
+        padding: theme.spacing(2)
       },
       [theme.breakpoints.down("sm")]: {
-        marginBottom: theme.spacing(2),
-        marginLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-      },
-      "&>.space-between": {
-        marginTop: theme.spacing(1),
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      },
-    },
+        paddingRight: theme.spacing(2)
+      }
+    }
   };
 });
 
 export default function HomeBoardEvent({ board: b }: { board: Board }) {
-  const [isDesktop] = useDesktop();
   const classes = useStyles();
+  const [isDesktop] = useDesktop();
   const [group_id] = useGroupId();
-  const [posts] = usePosts({ board_id: b.id, limit: 4 });
-  if (posts === undefined) {
-    return <LinearProgress />;
-  }
+  const [posts] = usePosts({ board_id: b.id });
   return (
     <>
       <section className={classes.container}>
-        <div className={classes.titleContainer}>
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          className={classes.titleContainer}
+        >
           <Typography variant="h2" color="textPrimary">
-            <Box fontWeight="bold">{b?.title}</Box>
+            <Box ml={isDesktop ? 2 : 0} fontWeight="bold">
+              {b.title}
+            </Box>
           </Typography>
-          <div className="space-between">
-            <div>{b?.body}</div>
-            {isDesktop && (
-              <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
-            )}
-          </div>
-        </div>
-        <Grid container spacing={isDesktop ? 3 : 2}>
-          {posts?.map((p) => (
-            <EventPhotoGridItem key={p.id} p={p} md={3} xs={6} />
-          ))}
+          {isDesktop && (
+            <Box mr={1}>
+              <BoardMoreTag to={`/${group_id}/${b.id}`} />
+            </Box>
+          )}
         </Grid>
+        {isDesktop && <Divider light />}
+        <div className={classes.postContainer}>
+          {posts?.map((p, i) => (
+            <BoardPostEvent key={i} post={p} />
+          ))}
+        </div>
+        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
       </section>
       {!isDesktop && <GreyDivider />}
     </>

@@ -2,40 +2,29 @@ import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
-import {
-  Typography,
-  Grid,
-  Box,
-  Button,
-  LinearProgress,
-} from "@material-ui/core";
+import { Typography, Grid, Box, Button } from "@material-ui/core";
 import useDesktop from "./useDesktop";
+import BoardPostEvent from "./BoardPostEvent";
+import GreyDivider from "./GreyDivider";
 import usePosts from "../store/usePosts";
-import EventPhotoGridItem from "./EventPhotoGridItem";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
-      paddingBottom: theme.spacing(5),
+      [theme.breakpoints.up("md")]: {
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4)
+      }
     },
     titleContainer: {
       borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
-      marginBottom: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-      },
-    },
-    photoGrid: {
-      [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(2),
-      },
-      [theme.breakpoints.up("md")]: {
-        paddingTop: theme.spacing(3),
-      },
-    },
+        paddingRight: theme.spacing(2)
+      }
+    }
   };
 });
 
@@ -43,10 +32,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id, isClosed });
-  if (posts === undefined) {
-    return <LinearProgress />;
-  }
+  const [posts] = usePosts({ board_id: b.id });
   return (
     <section className={classes.container}>
       <Grid container alignItems="center" className={classes.titleContainer}>
@@ -56,14 +42,14 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "textSecondary" : "textPrimary"}
             >
-              진행 예정 모임
+              진행 중인 모임
             </Typography>
             <Box mr={1} />
             <Typography
               variant="h4"
               color={isClosed ? "textSecondary" : "primary"}
             >
-              {b?.count_open || 0}
+              {b.count_open || 0}
             </Typography>
           </Box>
         </Button>
@@ -81,18 +67,19 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "primary" : "textSecondary"}
             >
-              {b?.count_closed || 0}
+              {b.count_closed || 0}
             </Typography>
           </Box>
         </Button>
       </Grid>
-      <Grid container spacing={isDesktop ? 3 : 2} className={classes.photoGrid}>
-        {posts
-          .filter((a) => (typeof a.closed_at === "string") === isClosed)
-          .map((p) => (
-            <EventPhotoGridItem p={p} md={3} xs={6} key={p.id} />
-          ))}
-      </Grid>
+      {posts
+        ?.filter(a => (typeof a.closed_at === "string") === isClosed)
+        .map((p, i) => (
+          <Box key={i}>
+            <BoardPostEvent post={p} />
+            {!isDesktop && <GreyDivider />}
+          </Box>
+        ))}
     </section>
   );
 }

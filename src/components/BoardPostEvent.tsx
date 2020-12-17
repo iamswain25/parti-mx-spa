@@ -12,14 +12,14 @@ import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import StorageImage from "./StorageImage";
 import usePostLiked from "../store/usePostLiked";
 import { Link } from "react-router-dom";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     container: {
       display: "flex",
       flexDirection: "column",
       [theme.breakpoints.up("md")]: {
         padding: theme.spacing(2),
-        borderBottom: "1px solid " + theme.palette.divider,
+        borderBottom: "1px solid " + theme.palette.divider
       },
       [theme.breakpoints.down("sm")]: {
         // border: `1px solid ${grey[200]}`,
@@ -29,13 +29,13 @@ const useStyles = makeStyles((theme) => {
         boxShadow: theme.shadows[1],
         borderWidth: 1,
         borderStyle: "solid",
-        borderColor: theme.palette.divider,
-      },
+        borderColor: theme.palette.divider
+      }
     },
     titleContainer: {
       overflow: "hidden",
       maxHeight: 44,
-      cursor: "pointer",
+      cursor: "pointer"
     },
     imgContainer: {
       maxWidth: 76,
@@ -53,9 +53,9 @@ const useStyles = makeStyles((theme) => {
       "& img": {
         width: "inherit",
         height: "inherit",
-        objectFit: "cover",
-      },
-    },
+        objectFit: "cover"
+      }
+    }
   };
 });
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
