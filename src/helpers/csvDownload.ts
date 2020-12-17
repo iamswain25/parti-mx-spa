@@ -154,6 +154,47 @@ export function csvDownload2({
       makeFile(opts, result);
     });
 }
+export function csvDownload3({
+  group_id,
+  board_id,
+}: {
+  group_id: string;
+  board_id: string;
+}) {
+  let query = firestore
+    .collection("posts")
+    .where("group_id", "==", group_id)
+    .where("board_id", "==", board_id);
+
+  query
+    .get()
+    .then((snapshot) => snapshot.docs)
+    .then((posts) =>
+      posts.map((post) => {
+        return {
+          id: post.id,
+          link: `https://juminexpo.kr/post/${post.id}`,
+          ...post.data(),
+        };
+      })
+    )
+    .then((result) => {
+      const fields = [
+        "id",
+        "title",
+        "body",
+        "context",
+        "metadata.detail1",
+        "metadata.detail2",
+        "metadata.detail3",
+        "link",
+      ];
+      const opts = {
+        fields,
+      };
+      makeFile(opts, result);
+    });
+}
 
 function makeFile(opts: any, result: any) {
   try {

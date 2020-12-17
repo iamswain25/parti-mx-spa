@@ -1,6 +1,10 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { csvDownload2, csvDownloadAll } from "../helpers/csvDownload";
+import {
+  csvDownload2,
+  csvDownload3,
+  csvDownloadAll,
+} from "../helpers/csvDownload";
 import { useGroupId } from "../store/useGlobalState";
 import firebase from "firebase";
 export default function Report() {
@@ -15,8 +19,27 @@ export default function Report() {
   }
   return (
     <section>
-      <h1>가입회원 리스트 다운로드</h1>
       <div>
+        <div>
+          start after
+          <input type="datetime-local" value={date} onChange={changeHandler} />
+        </div>
+        <div>
+          limit
+          <input
+            type="number"
+            value={limit}
+            onChange={(event) => {
+              const value = event.target.value;
+              const number = Number(value);
+              if (number > 1000) {
+                setLimit(1000);
+              } else {
+                setLimit(number);
+              }
+            }}
+          />
+        </div>
         <Button
           variant="contained"
           color="primary"
@@ -32,31 +55,11 @@ export default function Report() {
             });
           }}
         >
-          download csv
+          가입회원 리스트 다운로드
         </Button>
       </div>
+
       <div>
-        start after
-        <input type="datetime-local" value={date} onChange={changeHandler} />
-      </div>
-      <div>
-        limit
-        <input
-          type="number"
-          value={limit}
-          onChange={(event) => {
-            const value = event.target.value;
-            const number = Number(value);
-            if (number > 1000) {
-              setLimit(1000);
-            } else {
-              setLimit(number);
-            }
-          }}
-        />
-      </div>
-      <div>
-        <h2>댓글, 좋아요, 통계 다운로드</h2>
         <Button
           variant="contained"
           color="primary"
@@ -67,7 +70,21 @@ export default function Report() {
             });
           }}
         >
-          download csv
+          댓글, 좋아요, 통계 다운로드
+        </Button>
+      </div>
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            csvDownload3({
+              group_id: groupId,
+              board_id: "aA7LUOKOSJ0fo6cHzy56",
+            });
+          }}
+        >
+          우수사례 전시 내용 이미지 빼고 텍스트
         </Button>
       </div>
     </section>
