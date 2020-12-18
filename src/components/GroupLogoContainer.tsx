@@ -7,7 +7,7 @@ import InfoGroup from "./InfoGroup";
 import useDesktop from "./useDesktop";
 import StorageImage from "./StorageImage";
 import { Img } from "../types";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     container: {
       position: "relative",
@@ -30,7 +30,9 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up("md")]: {
         height: 260,
       },
-      [theme.breakpoints.down("sm")]: {},
+      [theme.breakpoints.down("sm")]: {
+        height: "intrinsic",
+      },
     },
   };
 });
