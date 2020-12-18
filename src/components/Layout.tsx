@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import BoardTabNavigator from "./BoardTabNavigator";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     [theme.breakpoints.up("md")]: {
       marginTop: theme.spacing(3),
@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Layout({ children }: React.PropsWithChildren<{}>) {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      {children}
+    <>
       <BoardTabNavigator />
-    </div>
+      <div className={classes.root}>{children}</div>
+    </>
   );
 }

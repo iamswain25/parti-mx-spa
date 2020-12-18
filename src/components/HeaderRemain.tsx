@@ -1,19 +1,20 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Grid, Hidden } from "@material-ui/core";
-import { useBoardId, useBoards, useCurrentUser } from "../store/useGlobalState";
+import { useCurrentUser } from "../store/useGlobalState";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
 import MenuProfile from "./MenuProfile";
 import useGroup from "../store/useGroup";
+import logo2018 from "../assets/images/logo2018.png";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
-    borderBottom: "1px solid #E0E0E0",
+    // borderBottom: "1px solid #E0E0E0",
     // color: theme.palette.primary.main,
     color: "rgba(18, 18, 18, 0.74)",
     boxShadow: "none",
@@ -32,14 +33,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.up("md")]: {
       paddingLeft: 30,
       paddingRight: 30,
-      minHeight: 100,
-      height: 100,
+      minHeight: theme.mixins.toolbar.minHeight,
+      height: theme.mixins.toolbar.minHeight,
     },
   },
   logoFont: {
     lineHeight: 1.2,
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     fontSize: 28,
     fontWeight: 500,
     letterSpacing: "-0.56px",
@@ -57,26 +59,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     // color: theme.palette.primary.main,
   },
-  flexcenter: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-    "& .boards": {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      fontSize: 20,
-      fontWeight: 500,
-      textAlign: "center",
-      color: theme.palette.grey[800],
-      "&.active": {
-        color: "#544F85",
-        // color: theme.palette.primary.main,
-      },
-    },
-  },
   flexend: {
     [theme.breakpoints.down("sm")]: {
       // display: "none",
@@ -92,8 +74,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function HeaderRemain() {
   const classes = useStyles();
   const [group] = useGroup();
-  const [board_id] = useBoardId();
-  const [boards] = useBoards();
   const [currentUser] = useCurrentUser();
   return (
     <AppBar position="sticky" className={classes.appBar}>
@@ -102,22 +82,11 @@ export default function HeaderRemain() {
           <Hidden mdUp implementation="css">
             <DrawerGroup />
           </Hidden>
-          <Grid item xs={3} className={classes.logoFont}>
-            <Link to={`/${group?.id}`}>{group?.title}</Link>
-          </Grid>
-          <Grid item xs={7} className={classes.flexcenter}>
-            {boards?.map((b, i) => (
-              <NavLink
-                exact
-                to={`/${group?.id}/${b.id}`}
-                key={i}
-                className="boards"
-                isActive={(match) => !!match || b.id === board_id}
-                activeClassName="active"
-              >
-                {b.title}
-              </NavLink>
-            ))}
+          <Grid item xs={2}></Grid>
+          <Grid item xs={8} className={classes.logoFont}>
+            <Link to={`/${group?.id}`}>
+              <img src={logo2018} alt="logo" />
+            </Link>
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
             {currentUser?.email && <MenuProfile />}

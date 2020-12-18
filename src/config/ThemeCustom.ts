@@ -1,5 +1,5 @@
 import { Theme, createMuiTheme } from "@material-ui/core";
-const DRAWER_MIN_HEIGHT = 56;
+const DRAWER_MIN_HEIGHT = 100;
 export const theme: Theme = createMuiTheme({
 	overrides: {
 		MuiInputBase: {

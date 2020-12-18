@@ -11,7 +11,6 @@ import FilesImages from "./FilesImages";
 import CommentContainer2 from "./CommentContainer2";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
-import HashtagsDetail from "./HashtagsDetail";
 const useStyles = makeStyles(theme => {
   return {
     root: {
@@ -77,7 +76,7 @@ export default function NoticeDetail({
 }: {
   post: Post<NoticeMetadata>;
 }) {
-  const { images, created_at, files, metadata } = p;
+  const { images, created_at, files } = p;
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
