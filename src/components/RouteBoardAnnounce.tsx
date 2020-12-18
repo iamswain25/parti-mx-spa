@@ -5,7 +5,8 @@ import { grey } from "@material-ui/core/colors";
 import { Typography, Box, Hidden } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 import { Link } from "react-router-dom";
-const useStyles = makeStyles((theme) => {
+import useStoragePath from "../store/useStoragePath";
+const useStyles = makeStyles(theme => {
   return {
     container: {
       display: "flex",
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function RouteBoardAnnounce({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const firstImage = p.images?.[0]?.uri;
+  const firstImage = useStoragePath(p.images?.[0]?.path);
   return (
     <div className={classes.container}>
       {firstImage && (

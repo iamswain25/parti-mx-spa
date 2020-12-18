@@ -2,7 +2,7 @@ import { Box, makeStyles } from "@material-ui/core";
 import React from "react";
 import { Img } from "../types";
 import StorageImage from "./StorageImage";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
     marginBottom: theme.spacing(1),

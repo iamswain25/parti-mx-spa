@@ -1,20 +1,20 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import BoardPostNotice from "./BoardPostNotice";
 import {
   Typography,
   Grid,
   Box,
   Divider,
-  Hidden,
   LinearProgress,
 } from "@material-ui/core";
 import useDesktop from "./useDesktop";
-import PostSort from "./PostSort";
-import RouteBoardAnnounce from "./RouteBoardAnnounce";
 import usePosts from "../store/usePosts";
-const useStyles = makeStyles((theme) => {
+import ButtonBoardType from "./ButtonBoardType";
+import { useSort } from "../store/useGlobalState";
+import BoardPostNotice from "./BoardPostNotice";
+import RouteBoardAnnounce from "./RouteBoardAnnounce";
+const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
@@ -30,11 +30,6 @@ const useStyles = makeStyles((theme) => {
     },
     announcement: {
       padding: theme.spacing(2),
-      "&>hr": {
-        margin: `${theme.spacing(2)}px 0`,
-        border: "none",
-        borderTop: `1px solid ${theme.palette.grey[200]}`,
-      },
     },
   };
 });
@@ -42,8 +37,10 @@ const useStyles = makeStyles((theme) => {
 export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
-  const [posts] = usePosts({ board_id: b.id });
-  const announcedPosts = posts?.filter((p) => p.is_announced);
+  const [sort] = useSort();
+  const [posts] = usePosts({ board_id: b.id, sort });
+  const announcedPosts = posts?.filter(p => p.is_announced);
+  const showAnnouncement = announcedPosts && announcedPosts?.length > 0;
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -64,47 +61,48 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             {b?.count_open || 0}
           </Typography>
         </Box>
-        <PostSort />
+        <ButtonBoardType sort />
       </Grid>
-      <Box display="flex">
-        <Box paddingX={isDesktop ? 0 : 2} flex={1}>
-          {posts.map((p, i) => (
-            <BoardPostNotice key={i} post={p} />
-          ))}
-        </Box>
-        <Hidden implementation="css" smDown>
-          <Box
-            width={364}
-            border={1}
-            borderColor="grey.300"
-            mt={2}
-            ml={3}
-            height="fit-content"
-          >
+      <Grid container direction="row-reverse" spacing={isDesktop ? 3 : 0}>
+        <Grid item xs={12} md={4}>
+          {showAnnouncement && (
             <Box
-              padding={2}
-              fontSize={16}
-              fontWeight={500}
-              letterSpacing={0.23}
-              color="grey.900"
+              border={isDesktop ? 1 : 2}
+              borderColor={isDesktop ? "grey.300" : "primary.main"}
+              mt={isDesktop ? 2 : 0}
+              mb={2}
+              height="fit-content"
             >
-              공지
+              <Box
+                padding={2}
+                fontSize={16}
+                fontWeight={500}
+                letterSpacing={0.23}
+                color="grey.900"
+              >
+                공지
+              </Box>
+              <Divider />
+              <Grid
+                container
+                spacing={isDesktop ? 2 : 0}
+                className={classes.announcement}
+              >
+                {announcedPosts?.map(p => (
+                  <RouteBoardAnnounce post={p} key={p.id} />
+                ))}
+              </Grid>
             </Box>
-            <Divider />
-            <div className={classes.announcement}>
-              {announcedPosts
-                ?.map((p) => <RouteBoardAnnounce key={p.id} post={p} />)
-                ?.reduce((prev: any[], curr: any, index: number) => {
-                  prev.push(curr);
-                  if (index < announcedPosts?.length - 1) {
-                    prev.push(<hr />);
-                  }
-                  return prev;
-                }, [])}
-            </div>
+          )}
+        </Grid>
+        <Grid item xs={12} md={8} container spacing={isDesktop ? 3 : 0}>
+          <Box mt={isDesktop ? 2 : 0}>
+            {posts?.map(p => (
+              <BoardPostNotice post={p} key={p.id} />
+            ))}
           </Box>
-        </Hidden>
-      </Box>
+        </Grid>
+      </Grid>
     </section>
   );
 }

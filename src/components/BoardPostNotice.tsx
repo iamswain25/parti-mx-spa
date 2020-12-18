@@ -5,7 +5,9 @@ import { grey } from "@material-ui/core/colors";
 import { Typography, Box, Hidden } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 import { Link } from "react-router-dom";
-const useStyles = makeStyles((theme) => {
+import useStoragePath from "../store/useStoragePath";
+import useDesktop from "./useDesktop";
+const useStyles = makeStyles(theme => {
   return {
     container: {
       borderBottom: `1px solid ${grey[200]}`,
@@ -13,7 +15,7 @@ const useStyles = makeStyles((theme) => {
         height: 145,
       },
       padding: "12px 0",
-      display: "flex",
+      display: "block",
     },
     titleContainer: {
       overflow: "hidden",
@@ -27,27 +29,34 @@ const useStyles = makeStyles((theme) => {
       overflow: "hidden",
     },
     img: {
-      width: 176,
-      height: 120,
-      objectFit: "cover",
-      backgroundColor: grey[200],
-      marginRight: 18,
-      cursor: "pointer",
+      display: "block",
+      overflow: "hidden",
+      [theme.breakpoints.up("md")]: {
+        float: "left",
+        marginRight: 18,
+        "&>img": {
+          width: 176,
+          height: 120,
+          objectFit: "cover",
+          backgroundColor: grey[200],
+        },
+      },
     },
   };
 });
 
 export default function BoardPostNotice({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const firstImage = p.images?.[0]?.uri;
+  const [isDesktop] = useDesktop();
+  const firstImage = useStoragePath(p.images?.[0]?.path);
   return (
     <div className={classes.container}>
       {firstImage && (
-        <Link to={`/post/${p.id}`}>
-          <img src={firstImage} alt="post" className={classes.img} />
+        <Link to={`/post/${p.id}`} className={classes.img}>
+          <img src={firstImage} alt="post" />
         </Link>
       )}
-      <div>
+      <Box p={isDesktop ? 0 : 1}>
         <Link to={`/post/${p.id}`}>
           <Box className={classes.titleContainer} mb={1} display="flex">
             <Typography variant="h3" color="textPrimary">
@@ -63,7 +72,7 @@ export default function BoardPostNotice({ post: p }: { post: Post }) {
           </Box>
         </Hidden>
         <BoardPostSub2 post={p} />
-      </div>
+      </Box>
     </div>
   );
 }

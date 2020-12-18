@@ -4,6 +4,7 @@ import { Post } from "../types";
 export default function usePosts<T extends Post>({
   board_id,
   limit,
+  sort = 0,
   tags,
   listen = false,
   isClosed,
@@ -12,6 +13,7 @@ export default function usePosts<T extends Post>({
   board_id: string;
   listen?: boolean;
   tags?: string[];
+  sort?: number;
   where?: [
     fieldPath: string | firebase.firestore.FieldPath,
     opStr: firebase.firestore.WhereFilterOp,
@@ -22,11 +24,26 @@ export default function usePosts<T extends Post>({
 }): [T[] | undefined] {
   const [items, setItems] = React.useState<T[] | undefined>(undefined);
   React.useEffect(() => {
-    let query = firestore
-      .collection("posts")
-      .where("board_id", "==", board_id)
-      .orderBy("created_at", "desc");
-
+    let query = firestore.collection("posts").where("board_id", "==", board_id);
+    switch (sort) {
+      case 0:
+        query = query.orderBy("created_at", "asc");
+        break;
+      case 1:
+        query = query.orderBy("created_at", "desc");
+        break;
+      case 2:
+        query = query.orderBy("updated_at", "desc");
+        break;
+      case 3:
+        query = query.orderBy("last_commented_at", "desc");
+        break;
+      case 4:
+        query = query.orderBy("count_like", "desc");
+        break;
+      default:
+        query = query.orderBy("created_at", "asc");
+    }
     // if (tags && tags.length) {
     //   query = query.where("tag", "array-contains-any", tags);
     // }
@@ -70,6 +87,6 @@ export default function usePosts<T extends Post>({
           console.warn("usePosts", error);
         });
     }
-  }, [board_id, listen, isClosed, limit, tags, where]);
+  }, [board_id, listen, isClosed, limit, tags, where, sort]);
   return [items];
 }

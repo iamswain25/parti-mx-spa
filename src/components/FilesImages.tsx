@@ -6,7 +6,7 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import filesize from "filesize";
 import { downloadFileDirectly } from "../helpers/download";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     root: {
       padding: theme.spacing(1),
@@ -35,7 +35,7 @@ export default function FilesImages(props: { files?: File[]; images: Img[] }) {
       <Grid container spacing={2}>
         {files?.map((f, i) => {
           return (
-            <Grid container item xs={12} key={f.path}>
+            <Grid container item xs={12} key={f.path ?? f.name ?? i}>
               <div className={classes.hover}>
                 <div className={classes.flex}>
                   <AttachFileIcon />

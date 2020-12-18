@@ -20,6 +20,7 @@
   - functions
 
 #### firebase tools
+
 ```
 curl -sL https://firebase.tools | bash
 ```
@@ -44,7 +45,8 @@ firebase emulators:start --only firestore
 
 ##### deploy
 
-firebase deploy --only firestore:rules
+firebase deploy --only firestore:rules --project seoul-action-plan
+firebase deploy --only firestore:indexes --project seoul-action-plan
 
 ### functions
 
