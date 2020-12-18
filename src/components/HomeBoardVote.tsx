@@ -14,7 +14,7 @@ import useDesktop from "./useDesktop";
 import BoardMoreTag from "./BoardMoreTag";
 import { useGroupId } from "../store/useGlobalState";
 import usePosts from "../store/usePosts";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     container: {
       [theme.breakpoints.up("md")]: {
@@ -99,7 +99,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
   const [isDesktop, theme] = useDesktop();
   const classes = useStyles();
   const [group_id] = useGroupId();
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, limit: 4 });
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: theme.breakpoints.values.md },

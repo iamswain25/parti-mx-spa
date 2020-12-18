@@ -8,16 +8,14 @@ import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
 import BoardPostNotice from "./BoardPostNotice";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
       [theme.breakpoints.down("sm")]: {
         padding: theme.spacing(2),
       },
-      [theme.breakpoints.up("md")]: {
-        paddingTop: theme.spacing(3),
-      },
+      [theme.breakpoints.up("md")]: {},
       paddingBottom: theme.spacing(5),
     },
     titleContainer: {
@@ -71,7 +69,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           </div>
         </div>
         <div>
-          {posts?.map((p) => (
+          {posts?.map(p => (
             <BoardPostNotice key={p.id} post={p} />
           ))}
         </div>

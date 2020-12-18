@@ -12,34 +12,45 @@ import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles(theme => {
   return {
     container: {
-      [theme.breakpoints.up("md")]: {
-        marginBottom: theme.spacing(5)
-      },
+      flex: 1,
       [theme.breakpoints.down("sm")]: {
-        marginLeft: theme.spacing(2)
-      }
+        padding: theme.spacing(2),
+      },
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(3),
+      },
+      paddingBottom: theme.spacing(5),
     },
     titleContainer: {
       borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
+      paddingBottom: theme.spacing(2),
     },
     postContainer: {
       [theme.breakpoints.up("md")]: {
         display: "grid",
         gridTemplateColumns: "calc(50% - 12px) calc(50% - 12px)",
         gridTemplateRows: "1fr 1fr",
-        paddingTop: theme.spacing(3)
+        paddingTop: theme.spacing(3),
       },
-      gridGap: theme.spacing(3)
-    }
+      gridGap: theme.spacing(3),
+    },
+    mobileMore: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: theme.spacing(2),
+    },
   };
 });
 
 export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, limit: 4 });
   const [group_id] = useGroupId();
   return (
     <>
@@ -60,7 +71,9 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
             <BoardPostSuggestion key={i} post={p} />
           ))}
         </div>
-        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
+        <div className={classes.mobileMore}>
+          <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
+        </div>
       </section>
       {!isDesktop && <GreyDivider />}
     </>

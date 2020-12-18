@@ -1,5 +1,5 @@
 import React from "react";
-import { Board, ChipData, NoticeMetadata, Post } from "../types";
+import { Board, ChipData, SuggestionMetadata, Post } from "../types";
 import { LinearProgress } from "@material-ui/core";
 import GoogleMapReact from "google-map-react";
 import MapPlace from "./MapPlace";
@@ -13,17 +13,15 @@ export default function RouteMapPosts({
   board: Board;
   chipData?: ChipData[];
 }) {
-  const [posts] = usePosts<Post<NoticeMetadata>>({ board_id: board.id });
+  const [posts] = usePosts<Post<SuggestionMetadata>>({ board_id: board.id });
   const [selectedPlace, setSelectedPlace] = React.useState<
-    Post<NoticeMetadata> | undefined
+    Post<SuggestionMetadata> | undefined
   >(undefined);
   React.useEffect(() => {
     if (posts && chipData) {
-      const selectedTags = chipData
-        .filter((c) => c.selected)
-        .map((c) => c.label);
-      const selectedPosts = posts.filter((p) =>
-        selectedTags.every((t) => p.tags?.includes(t))
+      const selectedTags = chipData.filter(c => c.selected).map(c => c.label);
+      const selectedPosts = posts.filter(p =>
+        selectedTags.every(t => p.tags?.includes(t)),
       );
       if (selectedPlace) {
         if (!selectedPosts.includes(selectedPlace)) {
@@ -44,7 +42,7 @@ export default function RouteMapPosts({
           }
           return prev;
         },
-        { lat: 0, lng: 0, length: 0 }
+        { lat: 0, lng: 0, length: 0 },
       );
       if (accu.length > 0) {
         return { lat: accu.lat / accu.length, lng: accu.lng / accu.length };

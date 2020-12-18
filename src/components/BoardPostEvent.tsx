@@ -18,30 +18,34 @@ const useStyles = makeStyles(theme => {
       display: "flex",
       flexDirection: "column",
       [theme.breakpoints.up("md")]: {
-        padding: theme.spacing(2),
-        borderBottom: "1px solid " + theme.palette.divider
+        // borderBottom: "1px solid " + theme.palette.divider,
       },
       [theme.breakpoints.down("sm")]: {
-        // border: `1px solid ${grey[200]}`,
         padding: theme.spacing(1),
         borderRadius: theme.shape.borderRadius,
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[1],
         borderWidth: 1,
         borderStyle: "solid",
-        borderColor: theme.palette.divider
-      }
+        borderColor: theme.palette.divider,
+      },
     },
     titleContainer: {
       overflow: "hidden",
       maxHeight: 44,
-      cursor: "pointer"
+      cursor: "pointer",
     },
     imgContainer: {
-      maxWidth: 76,
-      maxHeight: 76,
-      width: 76,
-      height: 76,
+      [theme.breakpoints.up("md")]: {
+        // maxWidth: 76,
+        // maxHeight: 76,
+        // width: 76,
+        // height: 76,
+      },
+      [theme.breakpoints.down("sm")]: {
+        margin: -theme.spacing(1),
+        marginBottom: 0,
+      },
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -53,9 +57,9 @@ const useStyles = makeStyles(theme => {
       "& img": {
         width: "inherit",
         height: "inherit",
-        objectFit: "cover"
-      }
-    }
+        objectFit: "cover",
+      },
+    },
   };
 });
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
@@ -80,7 +84,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
           <Link className={classes.imgContainer} to={`/post/${p.id}`}>
             {firstImage ? <StorageImage image={firstImage} /> : <EventIcon />}
           </Link>
-          <Box>
+          <Box mt={1}>
             <Link to={`/post/${p.id}`}>
               <Box mb={1} className={classes.titleContainer}>
                 <Typography variant={"h4"} color="textPrimary">
@@ -114,7 +118,14 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
                 <Box ml={1}>{place}</Box>
               </Box>
             </Box>
-            <Box color="primary.dark" display="flex" alignItems="flex-end">
+            <Box
+              color="primary.dark"
+              display="flex"
+              alignItems="flex-end"
+              flex={1}
+              justifyContent="flex-end"
+              p={1}
+            >
               {liked ? (
                 <Box display="flex" alignItems="center">
                   공감함

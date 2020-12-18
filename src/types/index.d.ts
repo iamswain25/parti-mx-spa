@@ -40,12 +40,7 @@ export interface SuggestionFormdata {
 	body: string;
 	name: string;
 	tags: string[];
-	metadata: {
-		youtube: string;
-		detail1: string;
-		detail2: string;
-		detail3: string;
-	};
+	metadata: SuggestionMetadata
 }
 export interface VoteFormdata {
 	title: string;
@@ -196,13 +191,10 @@ export interface Suggestion {
 	mx_posts_by_pk: Post;
 }
 export type Location = { address: string; latLng?: LatLng };
-export type NoticeMetadata = { announcement: boolean; location: Location };
+export type NoticeMetadata = { announcement: boolean };
 export type SuggestionMetadata = {
 	closingMethod: string;
-	youtube: string;
-	detail1: string;
-	detail2: string;
-	detail3: string;
+	location: Location
 };
 export type VoteMetadata = {
 	closingMethod: string;
@@ -212,7 +204,7 @@ export type VoteMetadata = {
 	isResultHidden: boolean;
 };
 export type EventMetadata = {
-	event_date: firebase.firestore.Timestamp;
+	event_date: firebase.firestore.Timestamp;//hasura: eventDate 굳이 바꿈 ㅜㅜ
 	place: string;
 	deadline: firebase.firestore.Timestamp;
 	countPeople: number;
