@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
 import usePosts from "../store/usePosts";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     root: { paddingBottom: theme.spacing(5) },
     titleContainer: {
@@ -73,7 +73,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
         </Button>
       </Grid>
       {posts
-        .filter((a) => (typeof a.closed_at === "string") === isClosed)
+        .filter(a => (typeof a.closed_at === "string") === isClosed)
         .map((p, i) => (
           <RoutePostVote key={i} post={p} />
         ))}

@@ -32,19 +32,18 @@ const useStyles = makeStyles(theme => {
     },
     titleContainer: {
       overflow: "hidden",
-      maxHeight: 44,
-      cursor: "pointer",
+      flex: 1,
     },
     imgContainer: {
       [theme.breakpoints.up("md")]: {
-        // maxWidth: 76,
-        // maxHeight: 76,
-        // width: 76,
-        // height: 76,
+        flexBasis: 76,
+        flex: 0,
+        height: 76,
       },
       [theme.breakpoints.down("sm")]: {
         margin: -theme.spacing(1),
-        marginBottom: 0,
+        marginBottom: theme.spacing(1),
+        maxHeight: 76,
       },
       display: "flex",
       justifyContent: "center",
@@ -80,13 +79,15 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
   return (
     <div className={classes.container}>
       <Box mb={1} color="#a9aaad">
-        <Grid container direction="row" alignItems="center">
-          <Link className={classes.imgContainer} to={`/post/${p.id}`}>
-            {firstImage ? <StorageImage image={firstImage} /> : <EventIcon />}
-          </Link>
-          <Box mt={1}>
+        <Grid container>
+          <Grid item className={classes.imgContainer}>
             <Link to={`/post/${p.id}`}>
-              <Box mb={1} className={classes.titleContainer}>
+              {firstImage ? <StorageImage image={firstImage} /> : <EventIcon />}
+            </Link>
+          </Grid>
+          <Grid item className={classes.titleContainer}>
+            <Link to={`/post/${p.id}`}>
+              <Box mb={1}>
                 <Typography variant={"h4"} color="textPrimary">
                   {p.title}
                 </Typography>
@@ -95,7 +96,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
             <Box color="grey.600">
               <Typography variant="subtitle2">{event_date}</Typography>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
       </Box>
       <Box borderTop={1} borderColor="grey.200" pt={1} color="#a9aaad">

@@ -106,11 +106,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
     <Grid container className={classes.gridTab}>
       <div className={classes.tab}>
         <Box display="flex" flexWrap="nowrap">
-          <NavLink
-            exact
-            to={`/home?group_id=${group_id}`}
-            className={classes.tabLink}
-          >
+          <NavLink exact to={`/${group_id}`} className={classes.tabLink}>
             홈
           </NavLink>
           {boards.map((b, i) => (

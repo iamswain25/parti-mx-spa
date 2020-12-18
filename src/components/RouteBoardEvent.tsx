@@ -3,33 +3,41 @@ import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
-import useDesktop from "./useDesktop";
 import BoardPostEvent from "./BoardPostEvent";
-import GreyDivider from "./GreyDivider";
 import usePosts from "../store/usePosts";
 const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(1),
+      },
       [theme.breakpoints.up("md")]: {
-        paddingLeft: theme.spacing(4),
-        paddingRight: theme.spacing(4)
-      }
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+      },
     },
     titleContainer: {
       borderBottom: `1px solid ${grey[400]}`,
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
+      marginBottom: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2)
-      }
-    }
+        paddingRight: theme.spacing(2),
+      },
+    },
+    divider: {
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+      marginTop: theme.spacing(1),
+      borderTopColor: theme.palette.divider,
+    },
   };
 });
 
 export default function RouteBoardEvent({ board: b }: { board: Board }) {
-  const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
   const [posts] = usePosts({ board_id: b.id });
@@ -72,14 +80,16 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
           </Box>
         </Button>
       </Grid>
-      {posts
-        ?.filter(a => (typeof a.closed_at === "string") === isClosed)
-        .map((p, i) => (
-          <Box key={i}>
-            <BoardPostEvent post={p} />
-            {!isDesktop && <GreyDivider />}
-          </Box>
-        ))}
+      <Grid container spacing={2}>
+        {posts
+          ?.filter(a => (typeof a.closed_at === "string") === isClosed)
+          .map((p, i) => (
+            <Grid item key={p.id}>
+              <BoardPostEvent post={p} />
+              {posts.length !== i + 1 && <hr className={classes.divider} />}
+            </Grid>
+          ))}
+      </Grid>
     </section>
   );
 }

@@ -18,6 +18,10 @@ const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
+      [theme.breakpoints.up("md")]: {
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+      },
     },
     titleContainer: {
       borderBottom: `1px solid ${theme.palette.grey[400]}`,

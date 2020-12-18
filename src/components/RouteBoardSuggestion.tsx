@@ -10,9 +10,9 @@ const useStyles = makeStyles(theme => {
     container: {
       flex: 1,
       [theme.breakpoints.up("md")]: {
-        paddingLeft: theme.spacing(4),
-        paddingRight: theme.spacing(4)
-      }
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
+      },
     },
     titleContainer: {
       borderBottom: `1px solid ${grey[300]}`,
@@ -20,9 +20,9 @@ const useStyles = makeStyles(theme => {
       paddingBottom: theme.spacing(2),
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2)
-      }
-    }
+        paddingRight: theme.spacing(2),
+      },
+    },
   };
 });
 
