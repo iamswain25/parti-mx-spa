@@ -6,13 +6,12 @@ import { voteOptions } from "../helpers/options";
 import VoteEditCandidates from "./VoteEditCandidates";
 import VoteNewCandidates from "./VoteNewCandidates";
 import HtmlInput from "./HtmlInput";
-import Hashtags from "./Hashtags";
 import { UseFormMethods } from "react-hook-form";
 import { VoteFormdata } from "../types";
 
 export default function VoteInputs({
   formControl,
-  isEdit = false
+  isEdit = false,
 }: {
   formControl: UseFormMethods<VoteFormdata>;
   isEdit?: boolean;
@@ -33,12 +32,10 @@ export default function VoteInputs({
         register={register}
         errors={errors}
         select
+        SelectProps={{ native: true }}
         label="투표 종료 방법"
         variant="filled"
         name="metadata.closingMethod"
-        SelectProps={{
-          native: true
-        }}
         defaultValue="7days"
         children={voteOptions.map(option => (
           <option key={option.value} value={option.value}>

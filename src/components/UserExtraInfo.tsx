@@ -36,16 +36,14 @@ export default function UserExtraInfo(props: {
         as={
           <TextField
             select
-            SelectProps={{
-              native: true,
-            }}
+            SelectProps={{ native: true }}
             variant="outlined"
             margin="normal"
             fullWidth
             label="거주지 광역 단위"
             error={!!errors.area}
             helperText={errors?.area?.message}
-            children={SIGNUP_AREA.map((option) => (
+            children={SIGNUP_AREA.map(option => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -61,16 +59,14 @@ export default function UserExtraInfo(props: {
           as={
             <TextField
               select
-              SelectProps={{
-                native: true,
-              }}
+              SelectProps={{ native: true }}
               variant="outlined"
               margin="normal"
               fullWidth
               label="거주지 시,군"
               error={!!errors.address}
               helperText={errors?.address?.message}
-              children={SEOUL_DISTRICT.map((option) => (
+              children={SEOUL_DISTRICT.map(option => (
                 <option key={option} value={option}>
                   {option}
                 </option>

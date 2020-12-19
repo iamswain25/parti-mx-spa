@@ -28,12 +28,10 @@ export default function SuggestionInputs(props: {
         register={register}
         errors={errors}
         select
+        SelectProps={{ native: true }}
         label="제안 종료 방법"
         variant="filled"
         name="metadata.closingMethod"
-        SelectProps={{
-          native: true
-        }}
         defaultValue="7days"
         children={suggestionOptions.map(option => (
           <option key={option.value} value={option.value}>
