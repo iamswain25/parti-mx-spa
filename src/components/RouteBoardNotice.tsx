@@ -10,10 +10,10 @@ import {
 } from "@material-ui/core";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
-import ButtonBoardType from "./ButtonBoardType";
 import { useSort } from "../store/useGlobalState";
 import BoardPostNotice from "./BoardPostNotice";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
+import PostSort from "./PostSort";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -61,7 +61,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             {b?.count_open || 0}
           </Typography>
         </Box>
-        <ButtonBoardType sort />
+        <PostSort />
       </Grid>
       <Grid container direction="row-reverse" spacing={isDesktop ? 3 : 0}>
         <Grid item xs={12} md={4}>
