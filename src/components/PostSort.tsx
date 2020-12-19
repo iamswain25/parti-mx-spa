@@ -2,8 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Select, MenuItem } from "@material-ui/core";
 import { useSort } from "../store/useGlobalState";
+import { SORT_ARRAY } from "../helpers/options";
 
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     sort: {
       "&::before": {
@@ -24,7 +25,7 @@ export default function PostSort() {
   const classes = useStyles();
   const [sort, setSort] = useSort();
   function handleChange(
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
+    event: React.ChangeEvent<{ name?: string; value: unknown }>,
   ) {
     const { value } = event.target;
     setSort(Number(value) ?? 0);
@@ -32,9 +33,11 @@ export default function PostSort() {
   return (
     <Box display="flex">
       <Select value={sort} onChange={handleChange} className={classes.sort}>
-        <MenuItem value={0}>최근 등록순</MenuItem>
-        <MenuItem value={1}>최근 업데이트순</MenuItem>
-        <MenuItem value={2}>최근 댓글순</MenuItem>
+        {SORT_ARRAY.map((item, index) => (
+          <MenuItem key={index} value={index}>
+            {item.label}
+          </MenuItem>
+        ))}
       </Select>
     </Box>
   );
