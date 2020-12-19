@@ -111,11 +111,11 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
           </NavLink>
           {boards.map((b, i) => (
             <NavLink
-              to={`/home/${b.id}`}
-              key={i}
-              className={`${classes.tabLink} ${
-                board?.id === b.id ? "active" : ""
-              }`}
+              to={`/${group_id}/${b.id}`}
+              key={b.id}
+              className={classes.tabLink}
+              isActive={match => !!match || b.id === board_id}
+              activeClassName="active"
             >
               {b.title}
             </NavLink>
