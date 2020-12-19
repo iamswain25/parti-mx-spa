@@ -1,6 +1,6 @@
 import { Role, UserStatus } from "../types";
 export const DOMAIN = "https://seoul-action-plan.web.app";
-export const TITLE = "제19회 전국주민자치박람회";
+export const TITLE = "사회적경제 시민참여액션플랜";
 export const postSortOptions = [
 	{ created_at: "desc" },
 	{ updated_at: "desc" },
