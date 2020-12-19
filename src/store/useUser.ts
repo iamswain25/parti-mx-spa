@@ -12,10 +12,10 @@ export default function useUser({
   React.useEffect(() => {
     if (id) {
       if (listen) {
-        firestore
+        return firestore
           .collection("users")
           .doc(id)
-          .onSnapshot((doc) => {
+          .onSnapshot(doc => {
             const item = { id: doc.id, ...doc.data() } as User;
             setUser(item);
           });
@@ -24,7 +24,7 @@ export default function useUser({
           .collection("users")
           .doc(id)
           .get()
-          .then((doc) => {
+          .then(doc => {
             const item = { id: doc.id, ...doc.data() } as User;
             setUser(item);
           });

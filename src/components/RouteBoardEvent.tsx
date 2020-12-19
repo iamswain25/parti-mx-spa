@@ -5,6 +5,7 @@ import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import BoardPostEvent from "./BoardPostEvent";
 import usePosts from "../store/usePosts";
+import PostSort from "./PostSort";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -43,42 +44,50 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const [posts] = usePosts({ board_id: b.id, isClosed });
   return (
     <section className={classes.container}>
-      <Grid container alignItems="center" className={classes.titleContainer}>
-        <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
-          <Box display="flex" alignItems="center">
-            <Typography
-              variant="h4"
-              color={isClosed ? "textSecondary" : "textPrimary"}
-            >
-              진행 중인 모임
-            </Typography>
-            <Box mr={1} />
-            <Typography
-              variant="h4"
-              color={isClosed ? "textSecondary" : "primary"}
-            >
-              {b.count_open || 0}
-            </Typography>
-          </Box>
-        </Button>
-        <Box mr={2} />
-        <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
-          <Box display="flex" alignItems="center">
-            <Typography
-              variant="h4"
-              color={isClosed ? "textPrimary" : "textSecondary"}
-            >
-              완료 된 모임
-            </Typography>
-            <Box mr={1} />
-            <Typography
-              variant="h4"
-              color={isClosed ? "primary" : "textSecondary"}
-            >
-              {b.count_closed || 0}
-            </Typography>
-          </Box>
-        </Button>
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
+        className={classes.titleContainer}
+      >
+        <Box display="flex">
+          <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant="h4"
+                color={isClosed ? "textSecondary" : "textPrimary"}
+              >
+                진행 중인 모임
+              </Typography>
+              <Box mr={1} />
+              <Typography
+                variant="h4"
+                color={isClosed ? "textSecondary" : "primary"}
+              >
+                {b.count_open || 0}
+              </Typography>
+            </Box>
+          </Button>
+          <Box mr={2} />
+          <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant="h4"
+                color={isClosed ? "textPrimary" : "textSecondary"}
+              >
+                완료 된 모임
+              </Typography>
+              <Box mr={1} />
+              <Typography
+                variant="h4"
+                color={isClosed ? "primary" : "textSecondary"}
+              >
+                {b.count_closed || 0}
+              </Typography>
+            </Box>
+          </Button>
+        </Box>
+        <PostSort />
       </Grid>
       <Grid container spacing={2}>
         {posts?.map((p, i) => (

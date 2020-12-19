@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
 import usePosts from "../store/usePosts";
+import PostSort from "./PostSort";
 const useStyles = makeStyles(theme => {
   return {
     root: { paddingBottom: theme.spacing(5) },
@@ -35,42 +36,50 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
   }
   return (
     <section className={classes.root}>
-      <Grid container alignItems="center" className={classes.titleContainer}>
-        <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
-          <Box display="flex" alignItems="center">
-            <Typography
-              variant="h4"
-              color={isClosed ? "textSecondary" : "textPrimary"}
-            >
-              진행 중인 투표
-            </Typography>
-            <Box mr={1} />
-            <Typography
-              variant="h4"
-              color={isClosed ? "primary" : "textSecondary"}
-            >
-              {b?.count_open || 0}
-            </Typography>
-          </Box>
-        </Button>
-        <Box mr={2} />
-        <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
-          <Box display="flex" alignItems="center">
-            <Typography
-              variant="h4"
-              color={isClosed ? "textPrimary" : "textSecondary"}
-            >
-              완료 된 투표
-            </Typography>
-            <Box mr={1} />
-            <Typography
-              variant="h4"
-              color={isClosed ? "primary" : "textSecondary"}
-            >
-              {b?.count_closed || 0}
-            </Typography>
-          </Box>
-        </Button>
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
+        className={classes.titleContainer}
+      >
+        <Box display="flex">
+          <Button onClick={() => setClosed(false)} style={{ padding: 0 }}>
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant="h4"
+                color={isClosed ? "textSecondary" : "textPrimary"}
+              >
+                진행 중인 투표
+              </Typography>
+              <Box mr={1} />
+              <Typography
+                variant="h4"
+                color={isClosed ? "primary" : "textSecondary"}
+              >
+                {b?.count_open || 0}
+              </Typography>
+            </Box>
+          </Button>
+          <Box mr={2} />
+          <Button onClick={() => setClosed(true)} style={{ padding: 0 }}>
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant="h4"
+                color={isClosed ? "textPrimary" : "textSecondary"}
+              >
+                완료 된 투표
+              </Typography>
+              <Box mr={1} />
+              <Typography
+                variant="h4"
+                color={isClosed ? "primary" : "textSecondary"}
+              >
+                {b?.count_closed || 0}
+              </Typography>
+            </Box>
+          </Button>
+        </Box>
+        <PostSort />
       </Grid>
       {posts?.map((p, i) => (
         <RoutePostVote key={i} post={p} />
