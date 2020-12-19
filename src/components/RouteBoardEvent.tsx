@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => {
 export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, isClosed });
   return (
     <section className={classes.container}>
       <Grid container alignItems="center" className={classes.titleContainer}>
@@ -81,14 +81,12 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
         </Button>
       </Grid>
       <Grid container spacing={2}>
-        {posts
-          ?.filter(a => (typeof a.closed_at === "string") === isClosed)
-          .map((p, i) => (
-            <Grid item key={p.id}>
-              <BoardPostEvent post={p} />
-              {posts.length !== i + 1 && <hr className={classes.divider} />}
-            </Grid>
-          ))}
+        {posts?.map((p, i) => (
+          <Grid item key={p.id}>
+            <BoardPostEvent post={p} />
+            {posts?.length !== i + 1 && <hr className={classes.divider} />}
+          </Grid>
+        ))}
       </Grid>
     </section>
   );

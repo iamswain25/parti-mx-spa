@@ -7,7 +7,7 @@
     "shell": "npm run build && firebase functions:shell --project seoul-action-plan",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions --project seoul-action-plan",
-    "deploy1": "tsc && firebase deploy --only functions:postCreate --project seoul-action-plan",
+    "deploy1": "tsc && firebase deploy --only functions:postUpdate --project seoul-action-plan",
     "logs": "firebase functions:log"
   },
   "engines": {

@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => {
 export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, isClosed });
   return (
     <section className={classes.container}>
       <Grid container alignItems="center" className={classes.titleContainer}>
@@ -46,7 +46,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "textSecondary" : "primary"}
             >
-              {b.count_open}
+              {b.count_open || 0}
             </Typography>
           </Box>
         </Button>
@@ -64,16 +64,14 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
               variant="h4"
               color={isClosed ? "primary" : "textSecondary"}
             >
-              {b.count_closed}
+              {b.count_closed || 0}
             </Typography>
           </Box>
         </Button>
       </Grid>
-      {posts
-        ?.filter(a => (typeof a.closed_at === "string") === isClosed)
-        .map((p, i) => (
-          <RoutePostSuggestion key={p.id} post={p} />
-        ))}
+      {posts?.map(p => (
+        <RoutePostSuggestion key={p.id} post={p} />
+      ))}
     </section>
   );
 }

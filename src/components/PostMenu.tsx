@@ -37,21 +37,21 @@ export default function PostMenu({ post: p }: { post: Post }) {
     menuItems.push(
       <MenuItem onClick={edit} key={1}>
         수정하기
-      </MenuItem>
+      </MenuItem>,
     );
   }
   if (hasDeletePermission || isMine) {
     menuItems.push(
       <MenuItem onClick={remove} key={2}>
         삭제하기
-      </MenuItem>
+      </MenuItem>,
     );
   }
-  if (!isClosed && isOrganizer && p.type !== "event") {
+  if (!isClosed && isOrganizer) {
     menuItems.push(
       <MenuItem onClick={resolve} key={5}>
         토론 정리
-      </MenuItem>
+      </MenuItem>,
     );
   }
   if (isNotice && isOrganizer) {
@@ -59,20 +59,20 @@ export default function PostMenu({ post: p }: { post: Post }) {
       menuItems.push(
         <MenuItem onClick={denounce} key={3}>
           공지 내리기
-        </MenuItem>
+        </MenuItem>,
       );
     } else {
       menuItems.push(
         <MenuItem onClick={announce} key={4}>
           공지 올리기
-        </MenuItem>
+        </MenuItem>,
       );
     }
   }
   menuItems.push(
     <MenuItem key={6}>
       <ShareButtons post={p} />
-    </MenuItem>
+    </MenuItem>,
   );
   if (!menuItems.length) {
     return <div />;

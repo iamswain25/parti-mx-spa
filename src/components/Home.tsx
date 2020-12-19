@@ -37,7 +37,6 @@ export default function Home() {
     const narrow = boards
       .filter(board => ["vote", "event"].includes(board?.type))
       .map(mapElement);
-    console.log(wide, narrow);
     return (
       <Grid container spacing={3}>
         <Grid item xs={8}>

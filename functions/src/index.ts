@@ -4,6 +4,7 @@ import authCreate from "./components/authCreate";
 import authDelete from "./components/authDelete";
 import incrementUserCount from "./components/incrementUserCount";
 import postCreate from "./components/postCreate";
+import postUpdate from "./components/postUpdate";
 import postDelete from "./components/postDelete";
 import commentCreate from "./components/commentCreate";
 import commentCreate2 from "./components/commentCreate2";
@@ -22,6 +23,7 @@ export {
   authDelete,
   incrementUserCount,
   postCreate,
+  postUpdate,
   postDelete,
   postLikeCreate,
   postLikeDelete,

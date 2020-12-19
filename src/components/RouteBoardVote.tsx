@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => {
 export default function RouteBoardVote({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, isClosed });
   if (posts === undefined) {
     return <LinearProgress />;
   }
@@ -72,11 +72,9 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
           </Box>
         </Button>
       </Grid>
-      {posts
-        .filter(a => (typeof a.closed_at === "string") === isClosed)
-        .map((p, i) => (
-          <RoutePostVote key={i} post={p} />
-        ))}
+      {posts?.map((p, i) => (
+        <RoutePostVote key={i} post={p} />
+      ))}
     </section>
   );
 }

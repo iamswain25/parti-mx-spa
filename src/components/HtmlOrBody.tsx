@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core";
 import LinkPreview from "./LinkPreview";
 import Linkify from "./Linkify";
 import draftToHtml from "draftjs-to-html";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   const colors = {
     emerald: theme.palette.primary.dark,
     grey900: theme.palette.grey[900],
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => {
       "& p": {
         margin: "1em 0",
       },
-      whiteSpace: (isHtml) => (isHtml ? "normal" : "pre-wrap"),
+      whiteSpace: isHtml => (isHtml ? "normal" : "pre-wrap"),
       [theme.breakpoints.up("md")]: {
         fontSize: 16,
         letterSpacing: -0.4,
@@ -45,7 +45,7 @@ export default function HtmlOrBody({ post: p }: { post: Post }) {
   return (
     <>
       <div className={classes.body}>
-        {type === "suggestion" && <div className={classes.label}>요약</div>}
+        {type === "suggestion" && <div className={classes.label}>제안내용</div>}
         {html ? (
           <div
             className="draftjs"
