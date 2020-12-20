@@ -1,6 +1,8 @@
 import React from "react";
 import { firestore } from "../config/firebase";
+import { COMMENT_LIMIT } from "../helpers/options";
 import { Comment } from "../types";
+
 let lastSnapshot: null | firebase.firestore.DocumentSnapshot = null;
 export default function useComments({
   post_id,
@@ -17,6 +19,10 @@ export default function useComments({
     if (startAfter === undefined) {
       return;
     }
+    /**
+     * startAfter 이후 댓글 (자신이 다는 댓글 등) subscription 해서 보기
+     * startAfter 없을 시 모든 댓글 subscription
+     */
     let query = firestore
       .collection("posts")
       .doc(post_id)
@@ -25,21 +31,21 @@ export default function useComments({
     if (startAfter) {
       query = query.startAfter(startAfter);
     }
-    return query.onSnapshot((snapshot) => {
+    return query.onSnapshot(snapshot => {
       const newItems = snapshot
         .docChanges()
-        .filter((change) => change.type === "added")
-        .map((change) => {
+        .filter(change => change.type === "added")
+        .map(change => {
           const doc = change.doc;
           return { id: doc.id, ...doc.data() } as Comment;
         });
-      setItems((items) => [...items, ...newItems]);
+      setItems(items => [...items, ...newItems]);
       const deletedIds = snapshot
         .docChanges()
-        .filter((change) => change.type === "removed")
-        .map((change) => change.doc.id);
-      setItems((items) => [
-        ...items.filter((item) => !deletedIds.includes(item.id)),
+        .filter(change => change.type === "removed")
+        .map(change => change.doc.id);
+      setItems(items => [
+        ...items.filter(item => !deletedIds.includes(item.id)),
       ]);
     });
   }, [post_id, startAfter]);
@@ -49,19 +55,23 @@ export default function useComments({
       .doc(post_id)
       .collection("comments")
       .orderBy("created_at", "asc")
-      .limitToLast(3)
+      .limitToLast(COMMENT_LIMIT)
       .get()
-      .then((snapshot) => {
+      .then(snapshot => {
         if (snapshot.empty) {
           setStartAfter(null);
+          setHasMore(false);
         } else {
           lastSnapshot = snapshot.docs[0];
           const getLast = snapshot.docs[snapshot.docs.length - 1];
           setStartAfter(getLast);
           const items = snapshot.docs.map(
-            (doc) => ({ id: doc.id, ...doc.data() } as Comment)
+            doc => ({ id: doc.id, ...doc.data() } as Comment),
           );
           setItems(items);
+          if (items.length < COMMENT_LIMIT) {
+            setHasMore(false);
+          }
         }
         setLoading(false);
       });
@@ -75,22 +85,22 @@ export default function useComments({
         .collection("comments")
         .orderBy("created_at", "asc")
         .endBefore(lastSnapshot)
-        .limitToLast(3)
+        .limitToLast(COMMENT_LIMIT)
         .get()
-        .then((snapshot) => {
+        .then(snapshot => {
           if (snapshot.empty) {
             setHasMore(false);
           } else {
             lastSnapshot = snapshot.docs[0];
             const newItems = snapshot.docs.map(
-              (doc) => ({ id: doc.id, ...doc.data() } as Comment)
+              doc => ({ id: doc.id, ...doc.data() } as Comment),
             );
-            setItems((items) => [...newItems, ...items]);
+            setItems(items => [...newItems, ...items]);
           }
           setLoading(false);
         });
     },
-    [setLoading, setItems, setHasMore, post_id]
+    [setLoading, setItems, setHasMore, post_id],
   );
   return [items, loadmore, loading, hasMore];
 }

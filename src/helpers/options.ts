@@ -69,6 +69,8 @@ export function showStatusLabelByValue(value: UserStatus) {
 }
 export const CUTTING_INDEX = 5;
 export const KEYWORD_INDEX = 19;
+export const COMMENT_LIMIT = 10;
+export const LIKED_USER_LIMIT = 24;
 export const DEFAULT_HASHTAGS = [
   "주민자치",
   "지역_활성화",
