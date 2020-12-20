@@ -55,11 +55,18 @@ service cloud.firestore {
         allow read: if true;
         allow delete: if user_id == request.auth.uid;
         allow create: if checkSubPermission("like") && user_id == request.auth.uid;
+        allow update: if checkSubPermission("like") && user_id == request.auth.uid;
       }
 
-      match /candidates/{candidate_id}/{document=**} {
+      match /candidates/{candidate_id} {
         allow read: if true;
-        allow write: if true;
+        allow update: if checkPostReadPermission("update");
+        allow delete: if checkPostReadPermission("delete");
+        allow create: if checkPostReadPermission("create");
+        match /users/{user_id} {
+          allow read: if true;
+          allow write: if user_id == request.auth.uid;
+        }
       }
     }
     match /users/{user_id}/{document=**} {

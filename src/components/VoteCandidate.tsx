@@ -5,8 +5,6 @@ import { LinearProgressActive, LinearProgressGrey } from "./LinearProgress";
 import CheckIcon from "@material-ui/icons/Check";
 import useWhoVotedModal from "./useWhoVotedModal";
 import { useError } from "../store/useGlobalState";
-import useCandidateCounter from "../store/useCandidateCounter";
-
 export default function VoteCandidate({
   candidate: c,
   voted = false,
@@ -18,10 +16,6 @@ export default function VoteCandidate({
   post: Post<VoteMetadata>;
   onClick: () => any;
 }) {
-  const [votes] = useCandidateCounter({
-    post_id: post.id,
-    candidate_id: c.id,
-  });
   const {
     metadata: { isResultHidden = false, isAnonymous = false },
     is_closed = false,
@@ -30,13 +24,13 @@ export default function VoteCandidate({
   } = post;
   const [, setError] = useError();
   const [percentage, width, count] = React.useMemo(() => {
-    const count = votes?.count_vote || 0;
+    const count = c?.count_vote || 0;
     return [
       Math.round((count * 100) / total) ?? 0,
       Math.round((count * 100) / max) || 0,
       count,
     ];
-  }, [max, total, votes]);
+  }, [max, total, c]);
   const { modal, setVisible } = useWhoVotedModal(c);
   function resultHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (isAnonymous) {

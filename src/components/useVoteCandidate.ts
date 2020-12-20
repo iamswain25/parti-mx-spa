@@ -5,7 +5,7 @@ import usePermission from "../store/usePermission";
 
 export default function useVoteCandidate(
   p: Post<VoteMetadata>,
-  candidates: Candidate[]
+  candidates: Candidate[],
 ) {
   const [currentUser] = useCurrentUser();
   const [hasPermission, showAlert] = usePermission("like");
@@ -22,7 +22,7 @@ export default function useVoteCandidate(
     const promises = [];
     if (c.voted && liked) {
       const isOtherCandidateVoted = candidates.some(
-        (c3) => c.id !== c3.id && c3.voted
+        c3 => c.id !== c3.id && c3.voted,
       );
       if (!isOtherCandidateVoted) {
         // 다른 candidate도 투표하지 않았으면 like를 지운다.
@@ -39,7 +39,7 @@ export default function useVoteCandidate(
         promises.push(docRef.set({ created_at: new Date() }));
       } else {
         promises.push(
-          ...candidates.map((c2) => {
+          ...candidates.map(c2 => {
             if (c.id === c2.id) {
               return docRef.set({ created_at: new Date() });
             }
@@ -49,7 +49,7 @@ export default function useVoteCandidate(
                 .delete();
             }
             return null;
-          })
+          }),
         );
       }
     }

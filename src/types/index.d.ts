@@ -283,6 +283,7 @@ export type Candidate = {
 	order: number;
 	body: string;
 	voted: boolean; // 해당 유저(currentUser)의 투표 여부
+	count_vote: number;
 };
 export interface VoteDetailType extends Post {
 	users_aggregate: {
