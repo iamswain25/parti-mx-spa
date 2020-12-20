@@ -6,13 +6,14 @@ export default function useCommentAttitude(c: Comment) {
   const [liked, setLiked] = React.useState<boolean | undefined>(undefined);
   React.useEffect(() => {
     if (c.post_id && c.id) {
+      if (typeof c.created_by !== "string") return setLiked(false);
       firestore
         .collection("posts")
         .doc(c.post_id)
         .collection("likes")
         .doc(c.created_by)
         .get()
-        .then((doc) => setLiked(doc.exists));
+        .then(doc => setLiked(doc.exists));
       // return firestore
       //   .collection("posts")
       //   .doc(c.post_id)

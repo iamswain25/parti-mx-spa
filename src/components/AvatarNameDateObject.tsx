@@ -7,7 +7,7 @@ import {
   GridJustification,
 } from "@material-ui/core";
 import { semanticDate } from "../helpers/datefns";
-import useUser from "../store/useUser";
+import { User } from "../types";
 const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(3),
@@ -27,17 +27,16 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }));
-export default function AvatarNameDate({
-  user_id,
+export default function AvatarNameDateObject({
+  user,
   created_at,
   justify = "space-between",
 }: {
-  user_id: string;
+  user: User;
   created_at?: firebase.firestore.Timestamp;
   justify?: GridJustification;
 }) {
   const classes = useStyles();
-  const [user] = useUser({ id: user_id });
   return (
     <Grid
       container

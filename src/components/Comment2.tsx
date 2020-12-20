@@ -20,7 +20,8 @@ import useCommentLiked from "../store/useCommentLiked";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
 import { getAttitude } from "../helpers/attitude";
 import useCommentAttitude from "../store/useCommentAttitude";
-const useStyles = makeStyles((theme) => ({
+import AvatarNameDateObject from "./AvatarNameDateObject";
+const useStyles = makeStyles(theme => ({
   attitude: {
     fontSize: 13,
     fontWeight: "bold",
@@ -94,11 +95,19 @@ export default function Comment2({
       <Box paddingY={2}>
         <div className={classes.flexmiddle}>
           <div>
-            <AvatarNameDate
-              user_id={c.created_by}
-              created_at={c?.updated_at}
-              justify="flex-start"
-            />
+            {typeof c.created_by === "string" ? (
+              <AvatarNameDate
+                user_id={c.created_by}
+                created_at={c?.updated_at}
+                justify="flex-start"
+              />
+            ) : (
+              <AvatarNameDateObject
+                user={c.created_by}
+                created_at={c?.updated_at}
+                justify="flex-start"
+              />
+            )}
           </div>
           <div className={classes.attitude}>
             {authorLiked && getAttitude(post)}

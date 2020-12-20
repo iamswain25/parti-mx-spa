@@ -21,7 +21,8 @@ import useComments2 from "../store/useComments2";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
 import useCommentAttitude from "../store/useCommentAttitude";
 import { getAttitude } from "../helpers/attitude";
-const useStyles = makeStyles((theme) => ({
+import AvatarNameDateObject from "./AvatarNameDateObject";
+const useStyles = makeStyles(theme => ({
   attitude: {
     fontSize: 13,
     fontWeight: "bold",
@@ -99,11 +100,19 @@ export default function Comment1({
       <Box pt={2}>
         <div className={classes.flexmiddle}>
           <div>
-            <AvatarNameDate
-              user_id={c.created_by}
-              created_at={c?.updated_at}
-              justify="flex-start"
-            />
+            {typeof c.created_by === "string" ? (
+              <AvatarNameDate
+                user_id={c.created_by}
+                created_at={c.created_at}
+                justify="flex-start"
+              />
+            ) : (
+              <AvatarNameDateObject
+                user={c.created_by}
+                created_at={c.created_at}
+                justify="flex-start"
+              />
+            )}
           </div>
           <div className={classes.attitude}>
             {authorLiked && getAttitude(post)}
@@ -152,7 +161,7 @@ export default function Comment1({
               <Divider light />
             </Box>
           )}
-          {comments2.map((c) => {
+          {comments2.map(c => {
             return (
               <Comment2 key={c.id} comment={c} setRe={setRe} post={post} />
             );

@@ -6,7 +6,8 @@ import PanToolIcon from "@material-ui/icons/PanTool";
 import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
 import { Link } from "react-router-dom";
-const useStyles = makeStyles((theme) => {
+import { daysLeftMeta } from "../helpers/datefns";
+const useStyles = makeStyles(theme => {
   return {
     container: {
       borderBottom: `1px solid ${grey[200]}`,
@@ -56,7 +57,8 @@ const useStyles = makeStyles((theme) => {
 
 export default function RoutePostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const { count_like = 0 } = p;
+  const { count_like = 0, is_closed } = p;
+  const daysLeft = is_closed ? "완료" : daysLeftMeta(p.metadata, p.created_at);
   return (
     <div className={classes.container}>
       <Box mb={1}>
@@ -65,7 +67,9 @@ export default function RoutePostSuggestion({ post: p }: { post: Post }) {
             <PanToolIcon color="primary" className={classes.icon} />
           </Box>
           <Box color="primary.dark" fontWeight={500}>
-            <Typography variant="h5">{count_like}명 동의</Typography>
+            <Typography variant="h5">
+              {count_like}명 동의 / {daysLeft}
+            </Typography>
           </Box>
         </Grid>
       </Box>

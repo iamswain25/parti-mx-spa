@@ -138,9 +138,10 @@ export interface CommentInput {
 }
 export interface Comment {
 	id: string;
-	created_by: string;
+	created_by: string | User;
 	body: string;
 	updated_at: firebase.firestore.Timestamp;
+	created_at: firebase.firestore.Timestamp;
 	name: string;
 	post_id: string;
 	parent_id: string;

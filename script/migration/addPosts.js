@@ -1,5 +1,4 @@
 const array = [];
-
 const { firestore } = require("./firebase");
 const batch = firestore.batch();
 function addSuggestion({ id, ...data }) {
@@ -20,6 +19,28 @@ function addEvent({ id, ...data }) {
   data.type = "event";
   delete data.context;
   batch.set(firestore.collection("posts").doc(`${id}`), data);
+}
+function addComment({ id: post_id, comments }) {
+  comments.forEach(({ id: comment_id, created_at, user, body }) => {
+    const data = {
+      body,
+      created_at: new Date(created_at),
+      created_by: user,
+      post_id: `${post_id}`,
+    };
+    batch.set(
+      firestore
+        .collection("posts")
+        .doc(`${post_id}`)
+        .collection("comments")
+        .doc(`${comment_id}`),
+      data,
+    );
+  });
+}
+function updateManualClosing({ id, ...data }) {
+  data.metadata = { ...data.metadata, closingMethod: "manual" };
+  batch.update(firestore.collection("posts").doc(`${id}`), data);
 }
 function updateTime({ id, ...data }) {
   data.updated_at = new Date(data.updated_at);
@@ -50,5 +71,5 @@ function addNotice({ id, ...data }) {
   data.type = "notice";
   batch.set(firestore.collection("posts").doc(`${id}`), data);
 }
-array.map(updateFilePath);
+array.map(addComment);
 batch.commit().then(console.log);

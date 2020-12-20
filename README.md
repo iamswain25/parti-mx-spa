@@ -53,3 +53,38 @@ firebase deploy --only firestore:indexes --project seoul-action-plan
 #### deploy
 
 firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project seoul-action-plan
+
+## To do
+
+### 관리자 커스텀
+
+#### 정렬기준
+
+1. 공감수순
+1. 조회수순
+1. 댓글수순
+1. 업데이트순
+1. 등록순
+
+- 앞에서
+- 뒤에서
+
+1. 마지막 댓글순
+1. 마지막 공감순
+
+#### 홈
+
+1. 보이는 게시판 선택
+
+   - 보이는 포스트 정렬기준 선택
+   - 보이는 포스트 수 선택
+   - 게시판 포스트 유형
+     - 지도 여부
+     - 이미지 유무
+       - 이미지 비율
+         - 정사각형
+         - 16:9
+
+1. 디자인 선택
+   - 데스크탑
+   - 모바일
