@@ -10,9 +10,6 @@ const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
-      [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(1),
-      },
       [theme.breakpoints.up("md")]: {
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
