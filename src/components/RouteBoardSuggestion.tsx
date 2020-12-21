@@ -6,6 +6,7 @@ import { Typography, Grid, Box, Button } from "@material-ui/core";
 import RoutePostSuggestion from "./RoutePostSuggestion";
 import usePosts from "../store/usePosts";
 import PostSort from "./PostSort";
+import { useSort } from "../store/useGlobalState";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -30,7 +31,8 @@ const useStyles = makeStyles(theme => {
 export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id, isClosed });
+  const [sort] = useSort();
+  const [posts] = usePosts({ board_id: b.id, isClosed, sort });
   return (
     <section className={classes.container}>
       <Grid

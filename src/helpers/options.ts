@@ -45,7 +45,8 @@ export const SORT_ARRAY: {
   { param: ["created_at", "asc"], label: "등록순" },
   { param: ["updated_at", "desc"], label: "최근수정순" },
   { param: ["last_commented_at", "desc"], label: "최근댓글순" },
-  { param: ["count_like", "desc"], label: "최근공감순" },
+  { param: ["count_like", "desc"], label: "공감순" },
+  { param: ["count_comment", "desc"], label: "댓글순" },
 ];
 
 export function permissionLabelByValue(value: Role) {
