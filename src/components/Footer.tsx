@@ -1,5 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
-import partiLogo from "../assets/images/logo-parti-light.png";
+import partiLogo from "../assets/images/logo-parti-lighter.png";
 import logo from "../assets/images/logo-sehub.png";
 import React from "react";
 import useDesktop from "./useDesktop";
@@ -115,7 +115,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <strong>powered by</strong>
+              <strong>powered by </strong>
               <img src={partiLogo} alt="parti logo" />
             </a>
           </Grid>

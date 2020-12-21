@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontWeight: 500,
       letterSpacing: -1,
       textAlign: "center",
-      color: "#544f85",
+      color: theme.palette.primary,
       borderBottom: "1px solid " + theme.palette.grey[300],
       "&.active": {
         color: theme.palette.primary.main,
@@ -73,7 +73,7 @@ export default function DrawerBoards({ close }: { close: () => void }) {
         </IconButton>
       </div>
       <div className={classes.container}>
-        {boards?.map((b) => (
+        {boards?.map(b => (
           <NavLink
             exact
             to={`/${group?.id}/${b.id}`}

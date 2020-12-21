@@ -8,7 +8,7 @@ import {
   Avatar,
   Hidden,
   Paper,
-  Chip
+  Chip,
 } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
@@ -26,7 +26,7 @@ import useUser from "../store/useUser";
 const useStyles = makeStyles(theme => {
   const colors = {
     emerald: theme.palette.primary.dark,
-    grey900: theme.palette.grey[900]
+    grey900: theme.palette.grey[900],
   };
   return {
     root: {
@@ -40,8 +40,8 @@ const useStyles = makeStyles(theme => {
         backgroundColor: theme.palette.background.paper,
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.palette.grey[300]
-      }
+        borderColor: theme.palette.grey[300],
+      },
     },
     title: {
       display: "flex",
@@ -50,22 +50,22 @@ const useStyles = makeStyles(theme => {
       [theme.breakpoints.up("md")]: {
         paddingTop: 60,
         fontSize: 24,
-        letterSpacing: -0.6
+        letterSpacing: -0.6,
       },
       [theme.breakpoints.down("sm")]: {
         fontSize: 16,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     image: {
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(3),
-        paddingBottom: theme.spacing(3)
+        paddingBottom: theme.spacing(3),
       },
       [theme.breakpoints.down("sm")]: {
         paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2)
-      }
+        paddingBottom: theme.spacing(2),
+      },
     },
     body: {
       whiteSpace: "pre-wrap",
@@ -73,26 +73,26 @@ const useStyles = makeStyles(theme => {
         fontSize: 16,
         letterSpacing: -0.4,
         marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(3)
+        marginBottom: theme.spacing(3),
       },
       [theme.breakpoints.down("sm")]: {
         fontSize: 14,
         letterSpacing: -0.3,
-        marginTop: theme.spacing(1.5)
-      }
+        marginTop: theme.spacing(1.5),
+      },
     },
     small: {
       width: theme.spacing(2.5),
-      height: theme.spacing(2.5)
+      height: theme.spacing(2.5),
     },
     label: {
       [theme.breakpoints.up("md")]: {
-        fontSize: 14
+        fontSize: 14,
       },
       fontSize: 12,
       fontWeight: 500,
       color: colors.emerald,
-      marginRight: theme.spacing(0.5)
+      marginRight: theme.spacing(0.5),
     },
     chips: {
       display: "flex",
@@ -102,13 +102,13 @@ const useStyles = makeStyles(theme => {
       paddingBottom: theme.spacing(0.5),
       paddingLeft: -2,
       margin: 0,
-      fontFamily: "Roboto"
+      fontFamily: "Roboto",
     },
     chip: {
       margin: theme.spacing(0.5),
       color: theme.palette.text.primary,
-      borderColor: theme.palette.divider
-    }
+      borderColor: theme.palette.divider,
+    },
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
@@ -207,7 +207,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         <GreyDivider height={0.5} />
       </Hidden>
       <div className={classes.root}>
-        <CommentContainer2 post={p} />
+        <CommentContainer2 post={p} likeLabel="동의 인원" />
       </div>
     </Box>
   );

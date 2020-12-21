@@ -22,7 +22,7 @@ import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
 import UserExtraInfo from "./UserExtraInfo";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     paddingTop: theme.spacing(8),
   },
@@ -89,7 +89,7 @@ export default function Signup() {
     try {
       const credential = firebase.auth.EmailAuthProvider.credential(
         email,
-        password
+        password,
       );
       const userCred = await auth.currentUser?.linkWithCredential(credential);
       if (userCred && userCred.user) {
@@ -98,7 +98,7 @@ export default function Signup() {
             created_at: new Date(),
             role: "user",
           },
-          { merge: true }
+          { merge: true },
         );
         const p2 = userCred.user.updateProfile({ displayName: name });
         const p3 = firestore.doc(`users/${userCred.user.uid}`).set(
@@ -110,7 +110,7 @@ export default function Signup() {
             term_privacy: new Date(),
             term_service: new Date(),
           },
-          { merge: true }
+          { merge: true },
         );
         await Promise.all([p1, p2, p3]);
         alert("회원가입 되었습니다.");
@@ -208,12 +208,15 @@ export default function Signup() {
                   render={({ onChange, value, ...rest }) => (
                     <FormControlLabel
                       control={
-                        <Checkbox
-                          {...rest}
-                          color="primary"
-                          onChange={(e) => onChange(e.target.checked)}
-                          checked={value}
-                        />
+                        <>
+                          <Checkbox
+                            {...rest}
+                            color="primary"
+                            onChange={e => onChange(e.target.checked)}
+                            checked={value}
+                          />
+                          이용약관 동의 (필수)
+                        </>
                       }
                       label={
                         <a
@@ -221,7 +224,7 @@ export default function Signup() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          이용약관
+                          내용보기
                         </a>
                       }
                     />
@@ -235,12 +238,15 @@ export default function Signup() {
                   render={({ onChange, value, ...rest }) => (
                     <FormControlLabel
                       control={
-                        <Checkbox
-                          {...rest}
-                          color="primary"
-                          onChange={(e) => onChange(e.target.checked)}
-                          checked={value}
-                        />
+                        <>
+                          <Checkbox
+                            {...rest}
+                            color="primary"
+                            onChange={e => onChange(e.target.checked)}
+                            checked={value}
+                          />
+                          개인정보 처리방침 동의 (필수)
+                        </>
                       }
                       label={
                         <a
@@ -248,7 +254,7 @@ export default function Signup() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          개인정보 처리방침
+                          내용보기
                         </a>
                       }
                     />

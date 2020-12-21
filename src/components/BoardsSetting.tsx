@@ -36,7 +36,7 @@ const newBoard: Partial<Board> = {
     like: ["organizer", "member", "user"],
   },
 };
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     "& div": {
       display: "flex",
@@ -62,9 +62,14 @@ export default function BoardsSetting() {
   const history = useHistory();
   const [group_id] = useGroupId();
   const [boards] = useBoards();
-  const { handleSubmit, register, errors, control, reset, formState } = useForm<
-    BoardsForm
-  >();
+  const {
+    handleSubmit,
+    register,
+    errors,
+    control,
+    reset,
+    formState,
+  } = useForm<BoardsForm>();
   const { fields, append, remove } = useFieldArray<FormBoard, "uid">({
     name: "boards",
     control,
@@ -103,13 +108,13 @@ export default function BoardsSetting() {
             .add(b);
     });
     await Promise.all(updates);
-    const deletes = deletingIds.map(async (id: string) =>       
-       firestore
+    const deletes = deletingIds.map(async (id: string) =>
+      firestore
         .collection("groups")
         .doc(group_id)
         .collection("boards")
         .doc(id)
-        .delete()
+        .delete(),
     );
     await Promise.all(deletes);
     history.push(`/${group_id}`);
@@ -136,10 +141,10 @@ export default function BoardsSetting() {
                     label="게시판 유형"
                     defaultValue={field.type}
                     name={`boards[${i}].type`}
-                    render={(props) => (
+                    render={props => (
                       <Select {...props} inputProps={{ readOnly: !!field.id }}>
                         <MenuItem value="notice">소식</MenuItem>
-                        <MenuItem value="suggestion">전시</MenuItem>
+                        <MenuItem value="suggestion">제안</MenuItem>
                         <MenuItem value="event">모임</MenuItem>
                         <MenuItem value="vote">투표</MenuItem>
                       </Select>
@@ -192,7 +197,7 @@ export default function BoardsSetting() {
                   control={control}
                 />
                 <SelectBoardPermission
-                  label="글 조희 권한"
+                  label="글 조회 권한"
                   name={`boards[${i}].permission.read`}
                   defaultValue={field?.permission?.read || []}
                   control={control}

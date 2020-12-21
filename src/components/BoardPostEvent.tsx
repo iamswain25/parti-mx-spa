@@ -63,7 +63,6 @@ const useStyles = makeStyles(theme => {
 });
 export default function BoardPostVEvent({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const { count_like = 0 } = p;
   let event_date = null,
     place = null,
     deadline = null,
@@ -99,16 +98,18 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
           </Grid>
         </Grid>
       </Box>
-      <Box borderTop={1} borderColor="grey.200" pt={1} color="#a9aaad">
+      <Box
+        borderTop={1}
+        borderColor="grey.200"
+        pt={1}
+        color={p.is_closed ? "#a9aaad" : "textPrimary"}
+      >
         <Typography variant="h6">
           <Grid container justify="space-between" wrap="wrap">
             <Box>
               <Box display="flex" alignItems="center">
                 <HowToRegIcon />
-                <Box ml={1}>
-                  {count_like}명 공감{" / "}
-                  {countPeople}명 모집
-                </Box>
+                <Box ml={1}>모집인원 {countPeople}명</Box>
               </Box>
               <Box display="flex" alignItems="center" mt={1}>
                 <EventIcon />

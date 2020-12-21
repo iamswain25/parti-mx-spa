@@ -67,7 +67,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
                 variant="h4"
                 color={isClosed ? "textPrimary" : "textSecondary"}
               >
-                완료 된 투표
+                완료된 투표
               </Typography>
               <Box mr={1} />
               <Typography

@@ -27,11 +27,11 @@ const useStyles = makeStyles(theme => {
       [theme.breakpoints.down("sm")]: {
         marginBottom: theme.spacing(2),
       },
-      "&>.space-between": {
+      "&>.flex-end": {
         marginTop: theme.spacing(1),
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
       },
     },
     mobileMore: {
@@ -61,11 +61,8 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
-          <div className="space-between">
-            <div>{b?.body}</div>
-            {isDesktop && (
-              <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
-            )}
+          <div className="flex-end">
+            {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
           </div>
         </div>
         <div>
