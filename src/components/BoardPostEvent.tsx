@@ -128,7 +128,12 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
               justifyContent="flex-end"
               p={1}
             >
-              {liked ? (
+              {p.is_closed ? (
+                <Box display="flex" alignItems="center">
+                  완료
+                  <CheckCircleIcon color="primary" />
+                </Box>
+              ) : liked ? (
                 <Box display="flex" alignItems="center">
                   공감함
                   <CheckCircleIcon color="primary" />
