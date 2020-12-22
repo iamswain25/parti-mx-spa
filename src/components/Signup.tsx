@@ -65,6 +65,8 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 0,
     "& a": {
       textDecoration: "underline",
+      color: theme.palette.primary.main,
+      marginLeft: theme.spacing(1),
     },
   },
   error: {

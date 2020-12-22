@@ -15,7 +15,7 @@ import CommentContainer2 from "./CommentContainer2";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
 import HashtagsDetail from "./HashtagsDetail";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     root: {
       paddingTop: theme.spacing(2),
@@ -69,11 +69,13 @@ export default function EventDetail({ post: p }: { post: Post }) {
           <AvatarNameDate user_id={p.created_by} created_at={created_at} />
         </Box>
         <Divider light />
-        <Box my={2}>
-          <Typography variant="body1" color="primary">
-            <HourglassEmptyIcon /> 모집중
-          </Typography>
-        </Box>
+        {p.is_closed ? null : (
+          <Box my={2}>
+            <Typography variant="body1" color="primary">
+              <HourglassEmptyIcon /> 모집중
+            </Typography>
+          </Box>
+        )}
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
         <HashtagsDetail tags={p.tags} />
