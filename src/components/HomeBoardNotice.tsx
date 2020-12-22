@@ -1,7 +1,7 @@
 import React from "react";
 import { Board } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Box, LinearProgress } from "@material-ui/core";
+import { Typography, Box, LinearProgress, Grid } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
@@ -15,20 +15,16 @@ const useStyles = makeStyles(theme => {
       [theme.breakpoints.down("sm")]: {
         padding: theme.spacing(2),
       },
-      [theme.breakpoints.up("md")]: {},
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(3),
+      },
       paddingBottom: theme.spacing(5),
     },
     titleContainer: {
       borderBottom: "1px solid " + theme.palette.grey[400],
-      paddingBottom: theme.spacing(1),
-      [theme.breakpoints.up("md")]: {
-        marginBottom: theme.spacing(3),
-      },
-      [theme.breakpoints.down("sm")]: {
-        marginBottom: theme.spacing(2),
-      },
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
       "&>.flex-end": {
-        marginTop: theme.spacing(1),
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
@@ -57,14 +53,19 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
   return (
     <>
       <section className={classes.container}>
-        <div className={classes.titleContainer}>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          className={classes.titleContainer}
+        >
           <Typography variant="h2" color="textPrimary">
             <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
           <div className="flex-end">
             {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
           </div>
-        </div>
+        </Grid>
         <div>
           {posts?.map(p => (
             <BoardPostNotice key={p.id} post={p} />

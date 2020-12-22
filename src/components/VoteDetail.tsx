@@ -21,7 +21,7 @@ import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
 import HashtagsDetail from "./HashtagsDetail";
 import CandidatesDetail from "./CandidatesDetail";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     root: {
       [theme.breakpoints.up("md")]: {
@@ -109,12 +109,9 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
       <Box paddingX={2} className={classes.root}>
         <Box color="grey.900" className={classes.title}>
           {p.title}
-          <Hidden smDown implementation="css">
-            <Box display="flex" alignItems="center">
-              <ShareButtons post={p} />
-              <PostMenu post={p} />
-            </Box>
-          </Hidden>
+          <Box display="flex" alignItems="center">
+            <PostMenu post={p} />
+          </Box>
         </Box>
         <Box mt={1}>
           <AvatarNameDate user_id={p.created_by} created_at={created_at} />

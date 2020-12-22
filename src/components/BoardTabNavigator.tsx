@@ -121,25 +121,32 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
             </NavLink>
           ))}
         </Box>
-        {permissionWrite() && !pathname.endsWith("/new") && (
-          <>
-            <div className={classes.btn}>
-              <Button variant="contained" color="primary" onClick={btnHandler}>
-                글쓰기
-              </Button>
-            </div>
-            <Hidden mdUp implementation="css">
-              <Fab
-                color="primary"
-                aria-label="write"
-                className={classes.fab}
-                onClick={btnHandler}
-              >
-                <CreateIcon />
-              </Fab>
-            </Hidden>
-          </>
-        )}
+        {permissionWrite() &&
+          !pathname.endsWith("/new") &&
+          !pathname.endsWith("/profile") &&
+          !pathname.includes("/edit") && (
+            <>
+              <div className={classes.btn}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={btnHandler}
+                >
+                  글쓰기
+                </Button>
+              </div>
+              <Hidden mdUp implementation="css">
+                <Fab
+                  color="primary"
+                  aria-label="write"
+                  className={classes.fab}
+                  onClick={btnHandler}
+                >
+                  <CreateIcon />
+                </Fab>
+              </Hidden>
+            </>
+          )}
       </div>
     </Grid>
   );
