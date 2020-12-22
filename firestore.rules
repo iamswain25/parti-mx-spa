@@ -13,8 +13,8 @@ service cloud.firestore {
       }
       allow list: if true;
       allow read: if checkPostReadPermission("read");
-      allow update: if checkPostReadPermission("update");
-      allow delete: if checkPostReadPermission("delete");
+      allow update: if resource.data.created_by == request.auth.uid || checkPostReadPermission("update");
+      allow delete: if resource.data.created_by == request.auth.uid || checkPostReadPermission("delete");
       allow create: if checkPostReadPermission("create");
       
       match /comments/{comment_id}/{document=**} {
