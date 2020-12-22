@@ -139,3 +139,33 @@ function makeFile(opts: any, result: any) {
     console.error(err);
   }
 }
+export function csvDownloadAllUsers({ group_id }: { group_id: string }) {
+  let query = firestore
+    .collection("users")
+    .where("email", "!=", null)
+    .orderBy("email", "asc");
+  query
+    .get()
+    .then((snapshot) => snapshot.docs)
+    .then((docs) =>
+      docs.map((doc) => {
+        const { created_at, name, area, address, email } = doc.data() as any;
+        return {
+          id: doc.id,
+          created_at: created_at?.toDate()?.toISOString(),
+          name,
+          area,
+          address,
+          email,
+        };
+      })
+    )
+    .then((result) => {
+      const fields = ["id", "created_at", "email", "name", "area", "address"];
+      const opts = {
+        fields,
+      };
+
+      makeFile(opts, result);
+    });
+}

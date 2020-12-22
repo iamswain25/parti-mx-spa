@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { csvDownload2 } from "../helpers/csvDownload";
+import { csvDownload2, csvDownloadAllUsers } from "../helpers/csvDownload";
 import { useParams } from "react-router-dom";
 export default function Report() {
   const { group_id, board_id } = useParams<{
@@ -23,6 +23,19 @@ export default function Report() {
           }}
         >
           download csv
+        </Button>
+      </div>
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            csvDownloadAllUsers({
+              group_id,
+            });
+          }}
+        >
+          회원리스트
         </Button>
       </div>
     </section>
