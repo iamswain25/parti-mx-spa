@@ -10,6 +10,7 @@ import usePostResolve from "./usePostResolve";
 import ShareButtons from "./ShareButtons";
 import { useCurrentUser, useRole } from "../store/useGlobalState";
 import usePermission from "../store/usePermission";
+import { BOARD_TYPE_LABEL } from "../helpers/options";
 export default function PostMenu({ post: p }: { post: Post }) {
   const [currentUser] = useCurrentUser();
   const [role] = useRole();
@@ -47,10 +48,10 @@ export default function PostMenu({ post: p }: { post: Post }) {
       </MenuItem>,
     );
   }
-  if (!isClosed && isOrganizer) {
+  if (!isClosed && isOrganizer && !isNotice) {
     menuItems.push(
       <MenuItem onClick={resolve} key={5}>
-        토론 정리
+        {BOARD_TYPE_LABEL[p.type] + " 종료"}
       </MenuItem>,
     );
   }

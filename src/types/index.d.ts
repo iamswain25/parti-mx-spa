@@ -166,7 +166,7 @@ export type Post<
 	title: string;
 	board_id: string;
 	group_id: string;
-	type: string;
+	type: BoardTypes;
 	context: string;
 	name: string;
 	body: string;

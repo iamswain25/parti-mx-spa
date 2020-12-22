@@ -49,6 +49,13 @@ export const SORT_ARRAY: {
   { param: ["count_comment", "desc"], label: "댓글순" },
 ];
 
+export const BOARD_TYPE_LABEL = {
+  notice: "소식",
+  suggestion: "제안",
+  event: "모임",
+  vote: "투표",
+};
+
 export function permissionLabelByValue(value: Role) {
   const item = boardPermissionList.find(p => p.value === value);
   if (item) {
