@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles(theme => {
   return {
     container: {
+      flex: 1,
       display: "flex",
       flexDirection: "column",
       [theme.breakpoints.up("md")]: {
@@ -39,24 +40,30 @@ const useStyles = makeStyles(theme => {
         flexBasis: 76,
         flex: 0,
         height: 76,
+        marginRight: theme.spacing(1),
       },
       [theme.breakpoints.down("sm")]: {
-        margin: -theme.spacing(1),
-        marginBottom: theme.spacing(1),
-        maxHeight: 76,
+        // margin: -theme.spacing(1),
+        // marginBottom: theme.spacing(1),
+        height: 76,
+        minWidth: 76,
       },
       display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 2.5,
-      backgroundColor: grey[200],
       overflow: "hidden",
-      marginRight: theme.spacing(1),
-      cursor: "pointer",
-      "& img": {
-        width: "inherit",
-        height: "inherit",
-        objectFit: "cover",
+      borderRadius: 2.5,
+      "&>a": {
+        flex: 1,
+        backgroundColor: grey[200],
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+
+        cursor: "pointer",
+        "& img": {
+          width: "inherit",
+          height: "inherit",
+          objectFit: "cover",
+        },
       },
     },
   };
@@ -78,7 +85,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
   return (
     <div className={classes.container}>
       <Box mb={1} color="#a9aaad">
-        <Grid container>
+        <Grid container spacing={1}>
           <Grid item className={classes.imgContainer}>
             <Link to={`/post/${p.id}`}>
               {firstImage ? <StorageImage image={firstImage} /> : <EventIcon />}

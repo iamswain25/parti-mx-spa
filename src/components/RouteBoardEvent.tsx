@@ -88,7 +88,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
       </Grid>
       <Grid container spacing={2}>
         {posts?.map((p, i) => (
-          <Grid item key={p.id}>
+          <Grid container item key={p.id}>
             <BoardPostEvent post={p} />
             {posts?.length !== i + 1 && <hr className={classes.divider} />}
           </Grid>
