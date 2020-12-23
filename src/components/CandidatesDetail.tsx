@@ -5,7 +5,7 @@ import useDesktop from "./useDesktop";
 import VoteCandidate from "./VoteCandidate";
 import useVoteCandidate from "./useVoteCandidate";
 import useCandidates from "../store/useCandidates";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     btn: {
       backgroundColor: theme.palette.primary.main,
@@ -34,7 +34,7 @@ export default function CandidatesDetail({
   const [liked, setLiked] = React.useState(false);
   React.useEffect(() => {
     if (candidates) {
-      setLiked(candidates.some((c) => c.voted));
+      setLiked(candidates.some(c => c.voted));
     }
   }, [candidates, setLiked]);
   const isClosed = p.is_closed;
@@ -42,6 +42,14 @@ export default function CandidatesDetail({
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const voteHandler = useVoteCandidate(p, candidates);
+  const max = React.useMemo(
+    () =>
+      candidates?.reduce(
+        (prev, curr) => (prev > curr.count_vote ? prev : curr.count_vote),
+        1,
+      ) || 1,
+    [candidates],
+  );
   return (
     <Box>
       <Box className={classes.sub} mt={2} mb={1}>
@@ -57,8 +65,9 @@ export default function CandidatesDetail({
         </Grid>
       </Box>
       <Box>
-        {candidates?.map((c) => (
+        {candidates?.map(c => (
           <VoteCandidate
+            max={max}
             candidate={c}
             voted={liked}
             onClick={voteHandler(c, liked)}

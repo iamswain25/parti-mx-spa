@@ -7,7 +7,7 @@
     "shell": "npm run build && firebase functions:shell --project gyeonggi-village-mix",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions --project gyeonggi-village-mix",
-    "deploy1": "tsc && firebase deploy --only functions:postWrite --project gyeonggi-village-mix",
+    "deploy1": "tsc && firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project gyeonggi-village-mix",
     "logs": "firebase functions:log"
   },
   "engines": {

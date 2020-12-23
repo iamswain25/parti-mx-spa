@@ -170,7 +170,7 @@ export type Post<
   title: string;
   board_id: string;
   group_id: string;
-  type: string;
+  type: BoardTypes;
   context: string;
   name: string;
   body: string;
@@ -190,7 +190,6 @@ export type Post<
   count_comment: number;
   count_view: number;
   count_total_vote: number;
-  count_max_vote: number;
   tags: string[];
 };
 export interface Suggestion {
@@ -294,6 +293,7 @@ export type Candidate = {
   order: number;
   body: string;
   voted: boolean; // 해당 유저(currentUser)의 투표 여부
+  count_vote: number;
 };
 export interface VoteDetailType extends Post {
   users_aggregate: {
