@@ -186,7 +186,6 @@ export type Post<
 	count_comment: number;
 	count_view: number;
 	count_total_vote: number;
-	count_max_vote: number;
 	tags: string[];
 };
 export interface Suggestion {
