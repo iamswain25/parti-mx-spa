@@ -15,6 +15,7 @@ import PasswordForgot from "../components/PasswordForgot";
 import useSignInWithEmailLink from "../components/useSignInWithEmailLink";
 import { initialState } from "../store/useGlobalState";
 import GroupLogoContainer from "../components/GroupLogoContainer";
+import HomeLogoContainer from "../components/HomeLogoContainer";
 import BoardTabNavigator from "../components/BoardTabNavigator";
 import Logout from "../components/Logout";
 import useEffectRole from "../store/useEffectRole";
@@ -45,7 +46,10 @@ export default function Routes() {
   return (
     <>
       <CssBaseline />
-      <GroupLogoContainer />
+      <Switch>
+        <Route path="/home" exact component={HomeLogoContainer} />
+        <Route component={GroupLogoContainer} />
+      </Switch>
       <BoardTabNavigator />
       <div className={classes.root}>
         <Switch>
