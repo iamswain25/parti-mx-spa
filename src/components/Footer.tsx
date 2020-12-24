@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
     "& a": {
       color: theme.palette.primary.main,
       marginLeft: theme.spacing(1),
