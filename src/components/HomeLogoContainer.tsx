@@ -35,7 +35,8 @@ const useStyles = makeStyles<Theme>((theme) => {
       paddingTop: theme.spacing(8),
       margin: theme.spacing(0, "auto"),
       [theme.breakpoints.down("sm")]: {
-        width: 296,
+        maxWidth: 296,
+        width: "90%",
       },
       "& > img": {},
     },
@@ -46,6 +47,7 @@ const useStyles = makeStyles<Theme>((theme) => {
         marginBottom: theme.spacing(4),
         [theme.breakpoints.down("sm")]: {
           maxWidth: 275,
+          width: "90%",
         },
       },
     },

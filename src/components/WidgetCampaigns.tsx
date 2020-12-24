@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => {
     imgContainer: {
       position: "relative",
       flex: 1,
+      overflow: "hidden",
     },
     group4: {
       [theme.breakpoints.up("md")]: {
