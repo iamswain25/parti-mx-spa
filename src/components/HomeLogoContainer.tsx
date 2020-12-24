@@ -58,8 +58,8 @@ const useStyles = makeStyles<Theme>((theme) => {
       },
     },
     text: {
-      marginBottom: theme.spacing(2),
       "& p": {
+        marginBottom: theme.spacing(2),
         margin: 0,
         color: theme.palette.grey["500"],
         textAlign: "center",
@@ -84,7 +84,7 @@ const useStyles = makeStyles<Theme>((theme) => {
       backgroundColor: theme.palette.grey["800"],
       minHeight: 150,
       letterSpacing: "-0.26",
-      padding: theme.spacing(2, 0),
+      padding: theme.spacing(4, 0),
       [theme.breakpoints.down("sm")]: {
         padding: theme.spacing(4, 4),
         paddingBottom: theme.spacing(16),
@@ -108,11 +108,13 @@ export default function HomeLogoContainer() {
   const [isDesktop] = useDesktop();
   return (
     <div className={classes.root}>
-      <img
-        className={classes.savethechildrenLogo}
-        src={savethechildrenLogo}
-        alt="save the children logo"
-      />
+      <a href="https://www.sc.or.kr/" target="_blank" rel="noopener noreferrer">
+        <img
+          className={classes.savethechildrenLogo}
+          src={savethechildrenLogo}
+          alt="save the children logo"
+        />
+      </a>
       <div className={classes.sharentingLogo}>
         <img src={sharentingLogo} alt="sharenting project logo" />
       </div>
@@ -142,12 +144,8 @@ export default function HomeLogoContainer() {
         <div className={classes.text}>
           <img src={text1} style={{ width: "322px" }} alt="text" />
           <p>AVG, Digital Birth: Welcome to the Online World, 2010</p>
-        </div>
-        <div className={classes.text}>
           <img src={text2} style={{ width: "350px" }} alt="text" />
           <p>Barclays PLC, 영국의 다국적 금융서비스 기업</p>
-        </div>
-        <div className={classes.text}>
           <img src={text3} style={{ width: "320px" }} alt="text" />
           <p>뉴욕주립대학교, 미국 FBI</p>
         </div>
@@ -169,7 +167,7 @@ export default function HomeLogoContainer() {
         </p>
         <p>
           보호자가 아동의 일상이나 사진을 SNS에 공개하는 일을 일컬어
-          <span>셰어런팅(Sharenting)*</span>이라는 말도 생겼습니다.
+          <span> 셰어런팅(Sharenting)*</span>이라는 말도 생겼습니다.
         </p>
       </div>
       {!isDesktop ? (
