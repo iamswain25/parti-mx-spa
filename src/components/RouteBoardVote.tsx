@@ -75,8 +75,8 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
           </Button>
         </Grid>
         {posts
-          .filter((a) => (typeof a.closed_at === "string") === isClosed)
-          .map((p, i) => (
+          ?.filter((a) => (typeof a.closed_at === "string") === isClosed)
+          ?.map((p, i) => (
             <RoutePostVote key={i} post={p} />
           ))}
       </section>

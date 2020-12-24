@@ -31,7 +31,18 @@ export const boardPermissionList = [
   { label: "유저", value: "user" },
   { label: "익명", value: "anonymous" },
 ];
-
+type OrderBy = [
+  fieldPath: string,
+  directionStr?: firebase.firestore.OrderByDirection
+];
+export const SORT_ARRAY: {
+  param: OrderBy;
+  label: string;
+}[] = [
+  { param: ["created_at", "desc"], label: "최근등록순" },
+  { param: ["count_like", "desc"], label: "공감순" },
+  { param: ["count_comment", "desc"], label: "댓글순" },
+];
 export function permissionLabelByValue(value: Role) {
   const item = boardPermissionList.find((p) => p.value === value);
   if (item) {

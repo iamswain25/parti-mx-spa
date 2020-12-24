@@ -8,7 +8,6 @@ import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
-import ReactPlayer from "react-player";
 import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
@@ -49,17 +48,8 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           </Typography>
           {isDesktop && <BoardMoreTag to={`/${group_id}/${b?.id}`} />}
         </Grid>
-        <div className="player-wrapper">
-          <ReactPlayer
-            url={"https://youtu.be/XZcXKNmNcuU"}
-            width="100%"
-            height="100%"
-            className="react-player"
-            controls={true}
-          />
-        </div>
         <div>
-          {posts.map((p) => (
+          {posts?.map((p) => (
             <BoardPostNotice key={p.id} post={p} />
           ))}
         </div>

@@ -154,7 +154,7 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
             removeArrowOnDeviceType={["tablet", "mobile"]}
             partialVisible={true}
           >
-            {posts.map((p, i) => (
+            {posts?.map((p, i) => (
               <BoardPostVote key={i} post={p} />
             ))}
           </Carousel>

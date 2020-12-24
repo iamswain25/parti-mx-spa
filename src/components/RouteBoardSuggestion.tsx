@@ -30,7 +30,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const [posts] = usePosts({ board_id: b.id });
   return (
     <section className={classes.container}>
-      {posts.map((p) => (
+      {posts?.map((p) => (
         <RoutePostSuggestion key={p.id} post={p} />
       ))}
     </section>

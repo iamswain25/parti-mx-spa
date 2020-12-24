@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import HomeBoardNotice from "./HomeBoardNotice";
 import HomeBoardSuggestion from "./HomeBoardSuggestion";
 import HomeBoardVote from "./HomeBoardVote";
@@ -8,26 +7,10 @@ import useDesktop from "./useDesktop";
 import useBoards from "../store/useBoards";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
-
-const useStyles = makeStyles((theme) => {
-  return {
-    left: {
-      [theme.breakpoints.up("md")]: {
-        marginRight: theme.spacing(3),
-        width: `calc(66% - ${theme.spacing(3)}px)`,
-      },
-    },
-    right: {
-      [theme.breakpoints.up("md")]: {
-        marginLeft: theme.spacing(3),
-        width: `calc(34% - ${theme.spacing(3)}px)`,
-      },
-    },
-  };
-});
+import { Grid } from "@material-ui/core";
+import WidgetCampaigns from "./WidgetCampaigns";
 
 export default function Home() {
-  const classes = useStyles();
   const [isDesktop] = useDesktop();
   const [boards] = useBoards();
   useEffectBoardId();
@@ -38,24 +21,25 @@ export default function Home() {
   return (
     <>
       {isDesktop ? (
-        <>
-          <ul className={classes.left}>
+        <Grid container spacing={isDesktop ? 3 : 0}>
+          <Grid item xs={12} md={8}>
             {notice?.map((b: Board) => (
               <HomeBoardNotice key={b.id} board={b} />
             ))}
             {suggestion?.map((b: Board) => (
               <HomeBoardSuggestion key={b.id} board={b} />
             ))}
-          </ul>
-          <ul className={classes.right}>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <WidgetCampaigns />
             {vote?.map((b: Board) => (
               <HomeBoardVote key={b.id} board={b} />
             ))}
             {event?.map((b: Board) => (
               <HomeBoardEvent key={b.id} board={b} />
             ))}
-          </ul>
-        </>
+          </Grid>
+        </Grid>
       ) : (
         //모바일
         <>
@@ -71,6 +55,7 @@ export default function Home() {
           {event?.map((b: Board) => (
             <HomeBoardEvent key={b.id} board={b} />
           ))}
+          <WidgetCampaigns />
         </>
       )}
     </>

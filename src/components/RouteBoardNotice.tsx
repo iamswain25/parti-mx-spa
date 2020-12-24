@@ -54,7 +54,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
       </Grid>
       <Box display="flex">
         <Box paddingX={isDesktop ? 0 : 2} flex={1}>
-          {posts.map((p, i) => (
+          {posts?.map((p, i) => (
             <BoardPostNotice key={i} post={p} />
           ))}
         </Box>
@@ -79,8 +79,8 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             <Divider />
             <Box padding={2}>
               {posts
-                .filter((p) => p.is_announced)
-                .map((p) => (
+                ?.filter((p) => p.is_announced)
+                ?.map((p) => (
                   <RouteBoardAnnounce key={p.id} post={p} />
                 ))}
             </Box>

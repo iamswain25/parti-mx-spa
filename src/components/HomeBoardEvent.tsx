@@ -12,13 +12,14 @@ import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles((theme) => {
   return {
     container: {
+      flex: 1,
+      // paddingBottom: theme.spacing(5),
       [theme.breakpoints.up("md")]: {
         border: `1px solid ${grey[300]}`,
-        maxWidth: 364,
         marginBottom: theme.spacing(5),
       },
       [theme.breakpoints.down("sm")]: {
-        marginLeft: theme.spacing(2),
+        padding: theme.spacing(2),
       },
       backgroundColor: theme.palette.background.default,
     },
@@ -28,14 +29,28 @@ const useStyles = makeStyles((theme) => {
     },
     postContainer: {
       overflow: "hidden",
-      display: "grid",
-      gridGap: theme.spacing(1.5),
       [theme.breakpoints.up("md")]: {
         padding: theme.spacing(2),
       },
       [theme.breakpoints.down("sm")]: {
-        paddingRight: theme.spacing(2),
+        // paddingRight: theme.spacing(2),
       },
+    },
+    mobileMore: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: theme.spacing(2),
+    },
+    divider: {
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+      marginTop: theme.spacing(1),
+      borderTopColor: theme.palette.divider,
     },
   };
 });
@@ -44,7 +59,10 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const [group_id] = useGroupId();
-  const [posts] = usePosts({ board_id: b.id });
+  const [posts] = usePosts({ board_id: b.id, limit: 4, isClosed: false });
+  if (!posts?.length) {
+    return null;
+  }
   return (
     <>
       <section className={classes.container}>
@@ -68,11 +86,18 @@ export default function HomeBoardEvent({ board: b }: { board: Board }) {
         </Grid>
         {isDesktop && <Divider light />}
         <div className={classes.postContainer}>
-          {posts.map((p, i) => (
-            <BoardPostEvent key={i} post={p} />
-          ))}
+          <Grid container direction="column" spacing={2}>
+            {posts?.map((p, i) => (
+              <Grid item key={p.id}>
+                <BoardPostEvent post={p} />
+                {posts.length !== i + 1 && <hr className={classes.divider} />}
+              </Grid>
+            ))}
+          </Grid>
         </div>
-        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
+        <div className={classes.mobileMore}>
+          <BoardMoreTag to={`/${group_id}/${b.id}`} />
+        </div>
       </section>
       {!isDesktop && <GreyDivider />}
     </>

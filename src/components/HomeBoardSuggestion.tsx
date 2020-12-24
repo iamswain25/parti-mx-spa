@@ -56,7 +56,7 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
         </Grid>
         <div className={classes.postContainer}>
-          {posts.map((p, i) => (
+          {posts?.map((p, i) => (
             <BoardPostSuggestion key={i} post={p} />
           ))}
         </div>
