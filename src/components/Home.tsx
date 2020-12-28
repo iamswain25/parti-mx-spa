@@ -9,6 +9,7 @@ import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 import { Grid } from "@material-ui/core";
 import WidgetCampaigns from "./WidgetCampaigns";
+import HomeMain from "./HomeMain";
 
 export default function Home() {
   const [isDesktop] = useDesktop();
@@ -23,6 +24,7 @@ export default function Home() {
       {isDesktop ? (
         <Grid container spacing={isDesktop ? 3 : 0}>
           <Grid item xs={12} md={8}>
+            <HomeMain />
             {notice?.map((b: Board) => (
               <HomeBoardNotice key={b.id} board={b} />
             ))}
@@ -43,6 +45,7 @@ export default function Home() {
       ) : (
         //모바일
         <>
+          <HomeMain />
           {notice?.map((b: Board) => (
             <HomeBoardNotice key={b.id} board={b} />
           ))}
