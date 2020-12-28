@@ -1,0 +1,95 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /posts/{post_id} {
+      function checkPostReadPermission(type) {
+        let group_id = resource != null ? resource.data.group_id : request.resource.data.group_id;
+        let board_id = resource != null ? resource.data.board_id : request.resource.data.board_id;
+        let boardPath = /databases/$(database)/documents/groups/$(group_id)/boards/$(board_id);
+        let userPath = /databases/$(database)/documents/groups/$(group_id)/users/$(request.auth != null ? request.auth.uid : "no" );
+        let role = exists(userPath) ? get(userPath).data.role : "anonymous";
+        let permission = exists(boardPath) ? get(boardPath).data.permission : [];
+        return role in permission[type];
+      }
+      allow list: if true;
+      allow read: if checkPostReadPermission("read");
+      allow update: if resource.data.created_by == request.auth.uid || checkPostReadPermission("update");
+      allow delete: if resource.data.created_by == request.auth.uid || checkPostReadPermission("delete");
+      allow create: if checkPostReadPermission("create");
+      
+      match /comments/{comment_id}/{document=**} {
+        function checkSubPermission(type) {
+          let post = get(/databases/$(database)/documents/posts/$(post_id));
+          let group_id = post.data.group_id;
+          let board_id = post.data.board_id;
+          let board = get(/databases/$(database)/documents/groups/$(group_id)/boards/$(board_id));
+          let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
+          let role = user != null ? user.data.role : "anonymous";
+          let permission = board.data.permission;
+          return role in permission[type];
+        }
+        function checkSubOrganizer() {
+          let post = get(/databases/$(database)/documents/posts/$(post_id));
+          let group_id = post.data.group_id;
+          let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
+          let role = user != null ? user.data.role : "anonymous";
+          return role == "organizer";
+        }
+        allow read: if true;
+        allow delete: if resource.data.created_by == request.auth.uid || checkSubOrganizer();
+        allow create: if checkSubPermission("comment");
+        allow update: if resource.data.created_by == request.auth.uid;
+      }
+      match /likes/{user_id}/{document=**} {
+         function checkSubPermission(type) {
+          let post = get(/databases/$(database)/documents/posts/$(post_id));
+          let group_id = post.data.group_id;
+          let board_id = post.data.board_id;
+          let board = get(/databases/$(database)/documents/groups/$(group_id)/boards/$(board_id));
+          let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
+          let role = user != null ? user.data.role : "anonymous";
+          let permission = board.data.permission;
+          return role in permission[type];
+        }
+        
+        allow read: if true;
+        allow delete: if user_id == request.auth.uid;
+        allow create: if checkSubPermission("like") && user_id == request.auth.uid;
+        allow update: if checkSubPermission("like") && user_id == request.auth.uid;
+      }
+
+      match /candidates/{candidate_id} {
+        allow read: if true;
+        allow update: if checkPostReadPermission("update");
+        allow delete: if checkPostReadPermission("delete");
+        allow create: if checkPostReadPermission("create");
+        match /users/{user_id} {
+          allow read: if true;
+          allow write: if user_id == request.auth.uid;
+        }
+      }
+    }
+    match /users/{user_id}/{document=**} {
+      allow read: if true;
+      allow write: if user_id == request.auth.uid;
+    }
+    match /groups/{group_id} {
+      function isOrganizer() {
+        let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
+        return  user.data.role == "organizer";
+      }
+    
+      allow read: if true;
+      allow write: if isOrganizer();
+      
+      match /users/{user_id}/{document=**} {
+        allow read: if true;
+        allow write: if user_id == request.auth.uid || isOrganizer();
+      }
+      match /boards/{document=**} {
+        allow read: if true;
+        allow write: if isOrganizer();
+      }
+    }
+  }
+}
