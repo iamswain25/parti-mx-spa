@@ -47,7 +47,7 @@ export default function StickyBtn() {
     <>
       <div className={classes.container}>
         <a
-          href="https://campaigns.kr/campaigns/281"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdRa_PLzdTJbxDCSQiHXWeWh18Aze94PqNeP1aZXoUSjgU5NQ/viewform"
           target="_blank"
           rel="noopener noreferrer"
           color="primary"
@@ -58,7 +58,7 @@ export default function StickyBtn() {
       </div>
       <div className={classes.stickyContainer}>
         <a
-          href="https://campaigns.kr/campaigns/281"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdRa_PLzdTJbxDCSQiHXWeWh18Aze94PqNeP1aZXoUSjgU5NQ/viewform"
           target="_blank"
           rel="noopener noreferrer"
           color="primary"
