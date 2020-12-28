@@ -44,7 +44,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           className={classes.titleContainer}
         >
           <Typography variant="h2" color="textPrimary">
-            <Box fontWeight="bold">{b?.title}</Box>
+            <Box fontWeight="bold">{b?.body}</Box>
           </Typography>
           {isDesktop && <BoardMoreTag to={`/${group_id}/${b?.id}`} />}
         </Grid>
