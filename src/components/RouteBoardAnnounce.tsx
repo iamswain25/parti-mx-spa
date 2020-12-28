@@ -1,19 +1,18 @@
 import React from "react";
-import useNavigateToPost from "./useNavigateToPost";
 import { Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Box, Hidden } from "@material-ui/core";
 import BoardPostSub2 from "./BoardPostSub2";
-const useStyles = makeStyles((theme) => {
+import { Link } from "react-router-dom";
+import useStoragePath from "../store/useStoragePath";
+const useStyles = makeStyles(theme => {
   return {
     container: {
-      borderBottom: `1px solid ${grey[200]}`,
       display: "flex",
       flexWrap: "wrap",
     },
     titleContainer: {
-      marginTop: theme.spacing(1),
       overflow: "hidden",
       cursor: "pointer",
     },
@@ -35,28 +34,21 @@ const useStyles = makeStyles((theme) => {
 
 export default function RouteBoardAnnounce({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const navigatePost = useNavigateToPost(p.id);
-  const firstImage = p.images?.[0]?.uri;
+  const firstImage = useStoragePath(p.images?.[0]?.path);
   return (
     <div className={classes.container}>
       {firstImage && (
-        <img
-          src={firstImage}
-          alt="post"
-          className={classes.img}
-          onClick={navigatePost}
-        />
+        <Link to={`/post/${p.id}`}>
+          <img src={firstImage} alt="post" className={classes.img} />
+        </Link>
       )}
       <div>
-        <Box
-          className={classes.titleContainer}
-          mb={1}
-          display="flex"
-          onClick={navigatePost}
-        >
-          <Typography variant="h3" color="textPrimary">
-            {p.title}
-          </Typography>
+        <Box className={classes.titleContainer} mb={1} display="flex">
+          <Link to={`/post/${p.id}`}>
+            <Typography variant="h3" color="textPrimary">
+              {p.title}
+            </Typography>
+          </Link>
         </Box>
         <Hidden implementation="css" smDown>
           <Box color="grey.600">

@@ -7,60 +7,58 @@ import useDesktop from "./useDesktop";
 import useBoards from "../store/useBoards";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
-import { Grid } from "@material-ui/core";
+import { Grid, LinearProgress } from "@material-ui/core";
 import WidgetCampaigns from "./WidgetCampaigns";
 import HomeMain from "./HomeMain";
-
+function mapElement(b: Board) {
+  switch (b.type) {
+    case "suggestion":
+      return <HomeBoardSuggestion key={b.id} board={b} />;
+    case "notice":
+      return <HomeBoardNotice key={b.id} board={b} />;
+    case "vote":
+      return <HomeBoardVote key={b.id} board={b} />;
+    case "event":
+      return <HomeBoardEvent key={b.id} board={b} />;
+    default:
+      return null;
+  }
+}
 export default function Home() {
   const [isDesktop] = useDesktop();
   const [boards] = useBoards();
   useEffectBoardId();
-  const notice = boards.filter((b) => b.type === "notice");
-  const suggestion = boards.filter((b) => b.type === "suggestion");
-  const vote = boards.filter((b) => b.type === "vote");
-  const event = boards.filter((b) => b.type === "event");
-  return (
-    <>
-      {isDesktop ? (
-        <Grid container spacing={isDesktop ? 3 : 0}>
-          <Grid item xs={12} md={8}>
-            <HomeMain />
-            {notice?.map((b: Board) => (
-              <HomeBoardNotice key={b.id} board={b} />
-            ))}
-            {suggestion?.map((b: Board) => (
-              <HomeBoardSuggestion key={b.id} board={b} />
-            ))}
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <WidgetCampaigns />
-            {vote?.map((b: Board) => (
-              <HomeBoardVote key={b.id} board={b} />
-            ))}
-            {event?.map((b: Board) => (
-              <HomeBoardEvent key={b.id} board={b} />
-            ))}
-          </Grid>
-        </Grid>
-      ) : (
-        //모바일
-        <>
+
+  if (boards === undefined) return <LinearProgress />;
+  if (!boards) return null;
+  if (isDesktop) {
+    const wide = boards
+      .filter((board) => ["notice", "suggestion"].includes(board?.type))
+      .map(mapElement);
+
+    const narrow = boards
+      .filter((board) => ["vote", "event"].includes(board?.type))
+      .map(mapElement);
+    return (
+      <Grid container spacing={3}>
+        <Grid item xs={8}>
           <HomeMain />
-          {notice?.map((b: Board) => (
-            <HomeBoardNotice key={b.id} board={b} />
-          ))}
-          {vote?.map((b: Board) => (
-            <HomeBoardVote key={b.id} board={b} />
-          ))}
-          {suggestion?.map((b: Board) => (
-            <HomeBoardSuggestion key={b.id} board={b} />
-          ))}
-          {event?.map((b: Board) => (
-            <HomeBoardEvent key={b.id} board={b} />
-          ))}
+          {wide}
+        </Grid>
+        <Grid item xs={4}>
           <WidgetCampaigns />
-        </>
-      )}
-    </>
-  );
+          {narrow}
+        </Grid>
+      </Grid>
+    );
+  } else {
+    const boardArr = boards?.map(mapElement);
+    return (
+      <>
+        <HomeMain />
+        {boardArr}
+        <WidgetCampaigns />
+      </>
+    );
+  }
 }
