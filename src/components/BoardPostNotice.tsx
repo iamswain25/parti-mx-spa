@@ -7,7 +7,7 @@ import BoardPostSub2 from "./BoardPostSub2";
 import { Link } from "react-router-dom";
 import useStoragePath from "../store/useStoragePath";
 import useDesktop from "./useDesktop";
-const useStyles = makeStyles(theme => {
+const useStyles = makeStyles((theme) => {
   return {
     container: {
       borderBottom: `1px solid ${grey[200]}`,
@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => {
     img: {
       display: "block",
       overflow: "hidden",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
       [theme.breakpoints.up("md")]: {
         float: "left",
         marginRight: 18,
