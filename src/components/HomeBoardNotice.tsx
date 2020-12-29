@@ -34,6 +34,11 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [group_id] = useGroupId();
   const [posts] = usePosts({ board_id: b.id });
+  React.useEffect(() => {
+    posts?.sort((a, b) =>
+      a.is_announced ? 1 : a.created_at > b.created_at ? 1 : -1
+    );
+  }, [posts]);
   return (
     <>
       <section className={classes.container}>
@@ -49,7 +54,7 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
           {isDesktop && <BoardMoreTag to={`/${group_id}/${b?.id}`} />}
         </Grid>
         <div>
-          {posts?.map((p) => (
+          {posts?.slice(3).map((p) => (
             <BoardPostNotice key={p.id} post={p} />
           ))}
         </div>
