@@ -150,8 +150,8 @@ export default function HomeMain() {
             <br />
           </div>
           <div className={classes.quote}>
-            “이것도 셰어런팅 아닐까요?" 함께 이야기 나누고 싶은 게시물을
-            발견했다면?”
+            “이것도 셰어런팅 아닐까요?” 함께 이야기 나누고 싶은 게시물을
+            발견했다면?
           </div>
           <StickyBtn />
         </div>
