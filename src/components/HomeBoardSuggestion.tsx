@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => {
       },
       [theme.breakpoints.down("sm")]: {
         marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
       },
     },
     titleContainer: {
