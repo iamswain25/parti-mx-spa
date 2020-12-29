@@ -1,13 +1,10 @@
 import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import {
-  useCurrentUser,
-  useSuccess,
-  useLoginModal,
-} from "../store/useGlobalState";
+import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
+import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
@@ -28,25 +25,16 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: 1,
     borderStyle: "solid",
   },
-  event: {
-    [theme.breakpoints.up("md")]: {
-      fontSize: 16,
-    },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: 14,
-      width: "100%",
-    },
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.common.white,
-  },
 }));
 export default function BtnLikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const count = 0;
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
-  const [, showLogin] = useLoginModal();
+  const [hasPermission, showAlert] = usePermission("like");
   async function handler() {
+    if (!hasPermission) {
+      return showAlert();
+    }
     if (currentUser) {
       await firestore
         .collection("posts")
@@ -56,14 +44,13 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
         .set(
           {
             created_at: new Date(),
-            name: currentUser.displayName ?? currentUser.email,
+            name: currentUser.displayName || "익명",
             photo_url: currentUser.photoURL,
           },
           { merge: true }
-        );
+        )
+        .catch(console.warn);
       setSuccess("공감 하였습니다.");
-    } else {
-      showLogin(true);
     }
   }
   const type = p.type;
@@ -79,17 +66,6 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           제보 공감
         </Button>
       );
-    case "event":
-      return (
-        <Button
-          onClick={handler}
-          variant="contained"
-          className={classes.event}
-          disableElevation
-        >
-          공감신청
-        </Button>
-      );
     default:
       return (
         <Button
@@ -99,7 +75,7 @@ export default function BtnLikePost({ post: p }: { post: Post }) {
           startIcon={<FavoriteIcon className={classes.icon} />}
           disableElevation
         >
-          공감 {count}
+          공감
         </Button>
       );
   }

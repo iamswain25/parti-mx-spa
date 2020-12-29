@@ -21,6 +21,7 @@ import Logout from "../components/Logout";
 import useEffectRole from "../store/useEffectRole";
 import Footer from "../components/Footer";
 import RoutesGroup from "./RoutesGroup";
+import useEffectBoards from "../store/useEffectBoards";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -43,6 +44,7 @@ export default function Routes() {
   const classes = useStyles();
   useSignInWithEmailLink();
   useEffectRole();
+  useEffectBoards();
   return (
     <>
       <CssBaseline />

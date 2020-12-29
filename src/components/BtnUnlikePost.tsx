@@ -4,11 +4,12 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useCurrentUser, useSuccess } from "../store/useGlobalState";
 import { Post } from "../types";
 import { firestore } from "../config/firebase";
+import usePermission from "../store/usePermission";
 const useStyles = makeStyles((theme) => ({
   icon: {
     width: theme.spacing(1.5),
     height: theme.spacing(1.5),
-    color: theme.palette.primary.main,
+    color: theme.palette.common.white,
   },
   like: {
     [theme.breakpoints.up("md")]: {
@@ -43,19 +44,22 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
   const classes = useStyles();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
-  const type = p.type;
+  const { count_like = 0, type } = p;
+  const [hasPermission, showAlert] = usePermission("like");
   async function handler() {
-    if (currentUser) {
-      await firestore
-        .collection("posts")
-        .doc(p.id)
-        .collection("likes")
-        .doc(currentUser.uid)
-        .delete();
+    if (!hasPermission) {
+      return showAlert();
     }
+    await firestore
+      .collection("posts")
+      .doc(p.id)
+      .collection("likes")
+      .doc(currentUser?.uid)
+      .delete()
+      .catch(console.warn);
     switch (type) {
       case "suggestion":
-        return setSuccess("제보 취소 하였습니다.");
+        return setSuccess("제보공감 취소 하였습니다.");
       case "event":
         return setSuccess("공감 취소 하였습니다.");
       default:
@@ -71,7 +75,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           className={classes.like}
           disableElevation
         >
-          제보 공감 취소
+          제보공감 취소
         </Button>
       );
     case "event":
@@ -94,7 +98,7 @@ export default function BtnUnlikePost({ post: p }: { post: Post }) {
           disableElevation
           startIcon={<FavoriteIcon className={classes.icon} />}
         >
-          공감 취소 {p.count_like}
+          공감 취소 {count_like}
         </Button>
       );
   }

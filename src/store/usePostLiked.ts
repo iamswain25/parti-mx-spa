@@ -12,7 +12,7 @@ export default function usePostLiked(id: string) {
         .doc(id)
         .collection("likes")
         .doc(currentUser.uid)
-        .onSnapshot((doc) => setLiked(doc.exists));
+        .onSnapshot((doc) => setLiked(doc.exists), console.warn);
     }
   }, [currentUser, setLiked, id]);
   return [liked];

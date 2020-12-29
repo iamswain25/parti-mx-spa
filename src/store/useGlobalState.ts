@@ -1,4 +1,5 @@
 import { createGlobalState } from "react-hooks-global-state";
+import { Board, Role } from "../types";
 export const initialState = {
   loginModal: false,
   error: null,
@@ -8,16 +9,18 @@ export const initialState = {
   boardId: undefined,
   sort: 0,
   role: undefined,
+  boards: undefined,
 };
 interface GlobalType {
   success: any;
   groupId: string;
   boardId?: string;
   error: any;
-  role?: "organizer" | "member" | "user" | "anonymous";
+  role?: Role;
   loginModal: boolean;
   currentUser?: firebase.User | null;
   sort: number;
+  boards?: Board[];
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export enum keys {
@@ -54,4 +57,7 @@ export function useRole() {
 }
 export function useSort() {
   return useGlobalState("sort");
+}
+export function useBoards() {
+  return useGlobalState("boards");
 }
