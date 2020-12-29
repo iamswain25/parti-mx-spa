@@ -115,7 +115,7 @@ export default function GroupLogoContainer() {
         )}
         <div className={classes.groupLogoOverlay}>
           <Typography variant="h1" color="inherit">
-            {title}
+            <Link to="/">{title}</Link>
           </Typography>
           <div className={classes.groupInfo}>
             <span>개설 {semanticDate(created_at)}</span>
