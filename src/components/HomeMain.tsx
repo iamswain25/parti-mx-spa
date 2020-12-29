@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => {
       letterSpacing: -0.26,
       color: "#757575",
       paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
+      paddingBottom: theme.spacing(2),
     },
     body: {
       fontSize: 14,
