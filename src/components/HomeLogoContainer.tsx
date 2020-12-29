@@ -85,7 +85,8 @@ const useStyles = makeStyles<Theme>((theme) => {
       marginTop: 45,
       backgroundColor: theme.palette.grey["800"],
       minHeight: 150,
-      letterSpacing: "-0.26",
+      letterSpacing: -0.26,
+      fontSize: 16,
       padding: theme.spacing(4, 0),
       [theme.breakpoints.down("sm")]: {
         padding: theme.spacing(4, 4),
