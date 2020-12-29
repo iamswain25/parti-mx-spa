@@ -80,6 +80,7 @@ const useStyles = makeStyles<Theme>((theme) => {
     illustMobile: {
       width: "100vw",
       marginTop: `calc(-15%)`,
+      backgroundColor: theme.palette.grey["800"],
     },
     footer: {
       marginTop: 45,
