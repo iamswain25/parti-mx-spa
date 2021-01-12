@@ -11,7 +11,7 @@ nvm alias default v12
 firebase functions:config:set hasura.url="http://...com/" hasura.secret="..."
 firebase functions:config:set hasura.url="http://hasura-load-balancer-1241189389.ap-northeast-2.elb.amazonaws.com/v1/graphql"
 firebase functions:config:set hasura.secret="..."
-firebase functions:config:set gmail.user="...@parti.xyz" gmail.pass="..." --project seoul-action-plan
+firebase functions:config:set gmail.user="...@parti.xyz" gmail.pass="..." --project green-newdeal
 firebase functions:config:get
 
 ## 배포

@@ -1,8 +1,8 @@
 import * as firebase from "@firebase/testing";
 import fs from "fs";
-import { actionPlan } from "./firebaseConfig";
+import { greenNewDeal } from "./firebaseConfig";
 export const setup = async (auth: any, data: any) => {
-  const { projectId } = actionPlan;
+  const { projectId } = greenNewDeal;
   // console.log(projectId, __dirname);
   const app = firebase.initializeTestApp({
     projectId,
@@ -34,7 +34,7 @@ export const setup = async (auth: any, data: any) => {
 };
 
 export const teardown = async () => {
-  Promise.all(firebase.apps().map((app) => app.delete()));
+  Promise.all(firebase.apps().map(app => app.delete()));
 };
 
 expect.extend({

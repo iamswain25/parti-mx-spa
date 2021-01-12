@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { actionPlan as firebaseConfig } from "./firebaseConfig";
+import { greenNewDeal as firebaseConfig } from "./firebaseConfig";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/functions";
@@ -37,7 +37,7 @@ export const secondAuth = secondApp.auth();
 export async function inviteNewUser(email: string, password: string) {
   const newUserCredential = await secondAuth.createUserWithEmailAndPassword(
     email,
-    password
+    password,
   );
   if (!newUserCredential.user) {
     throw new Error("no user created");

@@ -32,7 +32,7 @@ curl -sL https://firebase.tools | bash
 initial setting
 
 ```
-gsutil cors set cors.json gs://seoul-action-plan.appspot.com
+gsutil cors set cors.json gs://green-newdeal.appspot.com
 ```
 
 ### firestore
@@ -45,14 +45,14 @@ firebase emulators:start --only firestore
 
 ##### deploy
 
-firebase deploy --only firestore:rules --project seoul-action-plan
-firebase deploy --only firestore:indexes --project seoul-action-plan
+firebase deploy --only firestore:rules --project green-newdeal
+firebase deploy --only firestore:indexes --project green-newdeal
 
 ### functions
 
 #### deploy
 
-firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project seoul-action-plan
+firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project green-newdeal
 
 ## To do
 
