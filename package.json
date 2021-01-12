@@ -64,8 +64,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "firebase deploy --only hosting --project seoul-action-plan",
-    "rules": "firebase deploy --only firestore --project seoul-action-plan",
+    "deploy": "firebase deploy --only hosting --project parti-2020",
+    "rules": "firebase deploy --only firestore --project parti-2020",
     "bd": "yarn build && yarn deploy",
     "pre-bd": "yarn build && firebase hosting:channel:deploy $param",
     "firelogin": "firebase login --reauth",

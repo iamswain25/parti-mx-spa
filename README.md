@@ -32,22 +32,22 @@ curl -sL https://firebase.tools | bash
 initial setting
 
 ```
-gsutil cors set cors.json gs://seoul-action-plan.appspot.com
+gsutil cors set cors.json gs://parti-2020.appspot.com
 ```
 
 ### firestore
 
 rules와 indexes 첫 일괄 배포는 cli로 하되, 그 후 수정은 console 사이트에서 수동으로 배포하고, cli로 변경 부분 다운 받아 commit하는 작업 방식을 따른다.
 
-firebase deploy --only firestore:rules --project seoul-action-plan
-firebase deploy --only firestore:indexes --project seoul-action-plan
+firebase deploy --only firestore:rules --project parti-2020
+firebase deploy --only firestore:indexes --project parti-2020
 \*firebase.json 에 파일 위치 존재 여부 확인
 
 #### rules
 
 #### indexes
 
-firebase firestore:indexes --project seoul-action-plan | cat > ./firestore.indexes.json
+firebase firestore:indexes --project parti-2020 | cat > ./firestore.indexes.json
 
 ##### test
 
@@ -55,14 +55,14 @@ firebase emulators:start --only firestore
 
 ##### deploy
 
-firebase deploy --only firestore:rules --project seoul-action-plan
-firebase deploy --only firestore:indexes --project seoul-action-plan
+firebase deploy --only firestore:rules --project parti-2020
+firebase deploy --only firestore:indexes --project parti-2020
 
 ### functions
 
 #### deploy
 
-firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project seoul-action-plan
+firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project parti-2020
 
 ## To do
 
