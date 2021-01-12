@@ -3,8 +3,7 @@ import React from "react";
 import { LazyImage } from "react-lazy-images";
 import useStoragePath from "../store/useStoragePath";
 import { Img } from "../types";
-import defaultPng from "../assets/images/logo-jeongukminju.png";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     root: {
       backgroundColor: theme.palette.grey[200],
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme) => {
 export default function StorageImage(
   props:
     | { className?: string; image?: Img; thumb?: boolean }
-    | { className?: string; path: string }
+    | { className?: string; path: string },
 ) {
   let path = "path" in props ? props.path : props.image?.path;
   const classes = useStyles();
@@ -29,7 +28,7 @@ export default function StorageImage(
   if ("image" in props && !props.image) {
     return (
       <div className={className}>
-        <img src={defaultPng} alt="defaultPng" />
+        <img src="/ogp.png" alt="ogp" />
       </div>
     );
   }

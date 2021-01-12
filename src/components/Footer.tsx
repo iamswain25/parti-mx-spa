@@ -1,6 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import partiLogo from "../assets/images/logo-parti-lighter.png";
-import logo from "../assets/images/logo-sehub.png";
 import React from "react";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles(theme => ({
@@ -65,19 +64,10 @@ export default function Footer() {
       <section className={classes.root}>
         <Grid container spacing={isDesktop ? 4 : 0}>
           <Grid item sm={8} container direction="column">
-            <Grid item>
-              <a
-                href="https://sehub.net"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src={logo} alt="서사경홈페이지" />
-              </a>
-            </Grid>
             <Grid spacing={3} container className="mt">
               <Grid item>
                 <a
-                  href="https://docs.google.com/file/d/1HH1hSBgpl2tX266EfsjsUJvs7KAL_lctZKJnGAsTCNE/view?usp=sharing"
+                  href="/#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bold"
@@ -87,7 +77,7 @@ export default function Footer() {
               </Grid>
               <Grid item>
                 <a
-                  href="https://docs.google.com/file/d/11FSUnqoNijw9yGbgQCT38_fKrYS0tyTTYOOfLCVBbX8/view?usp=sharing"
+                  href="/#"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bold"
@@ -97,16 +87,11 @@ export default function Footer() {
               </Grid>
             </Grid>
             <Grid item className="mt">
-              서울특별시 은평구 통일로 684 미래청 1층
+              서울시 종로구 자하문로 17길 12-9, 2층
             </Grid>
             <Grid item>
-              Tel: <a href="tel:+82-2-353-3553">02-353-3553</a>
-            </Grid>
-            <Grid item>
-              Fax: <a href="fax:+82-2-383-3553">02-383-3553</a>
-            </Grid>
-            <Grid item>
-              E-mail: <a href="mailto:info@sehub.net">info@sehub.net</a>
+              Tel: <a href="tel:+82-70-4820-4900">070-4820-4900</a> /
+              <a href="tel:+82-70-4820-4998">070-4820-4998</a>
             </Grid>
           </Grid>
           <Grid item xs={12} className="powered">
