@@ -7,6 +7,7 @@ import RoutePostSuggestion from "./RoutePostSuggestion";
 import usePosts from "../store/usePosts";
 import PostSort from "./PostSort";
 import { useSort } from "../store/useGlobalState";
+import ButtonBoardType from "./ButtonBoardType";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -78,7 +79,7 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
             </Box>
           </Button>
         </Box>
-        <PostSort />
+        <ButtonBoardType sort />
       </Grid>
       {posts?.map(p => (
         <RoutePostSuggestion key={p.id} post={p} />

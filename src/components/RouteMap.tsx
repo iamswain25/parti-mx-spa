@@ -45,17 +45,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   mapContainer: {
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-      flexDirection: "column",
-      flex: 1,
-      width: "100%",
-      height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
-    },
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-      flex: 1,
-    },
+    height: `calc(100vh - ${Number(theme.mixins.toolbar.minHeight) * 2}px)`,
+    width: "100%",
+    display: "flex",
+    flex: 1,
+    [theme.breakpoints.down("sm")]: {},
+    [theme.breakpoints.up("md")]: {},
   },
 }));
 
@@ -64,7 +59,7 @@ export default function RouteMap() {
   const classes = useStyles();
   //   const [sort] = useGlobalState(keys.SORT);
   const [chipData, setChipData] = React.useState<ChipData[]>(
-    DEFAULT_HASHTAGS.map((c) => ({ label: c, selected: false }))
+    DEFAULT_HASHTAGS.map(c => ({ label: c, selected: false })),
   );
   return (
     <section className={classes.container}>
