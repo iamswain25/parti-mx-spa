@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
-import PostSort from "./PostSort";
 import { makeStyles, Theme } from "@material-ui/core";
 import { DEFAULT_HASHTAGS } from "../helpers/options";
 import { ChipData } from "../types";
 import Chips from "./Chips";
 import useBoard from "../store/useBoard";
 import RouteMapPosts from "./RouteMapPosts";
+import ButtonBoardType from "./ButtonBoardType";
 export const useStyles = makeStyles((theme: Theme) => ({
   smallIcon: {
     padding: theme.spacing(0.5),
@@ -80,7 +80,7 @@ export default function RouteMap() {
           </Typography>
         </Box>
         <Box display="flex">
-          <PostSort />
+          <ButtonBoardType sort />
         </Box>
       </Grid>
       <div className={classes.mapContainer}>
