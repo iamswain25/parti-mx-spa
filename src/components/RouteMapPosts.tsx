@@ -5,37 +5,11 @@ import GoogleMapReact from "google-map-react";
 import MapPost from "./MapPost";
 import usePosts from "../store/usePosts";
 import { DEFAULT_LAT_LNG } from "../helpers/options";
-export default function RouteMapPosts({
-  board,
-  chipData,
-}: {
-  board: Board;
-  chipData?: ChipData[];
-}) {
+export default function RouteMapPosts({ board }: { board: Board }) {
   const [posts] = usePosts<Post<SuggestionMetadata>>({ board_id: board.id });
   const [selectedPlace, setSelectedPlace] = React.useState<
     Post<SuggestionMetadata> | undefined
   >(undefined);
-  const selectedTags = React.useMemo(
-    () => chipData?.filter(c => c.selected).map(c => c.label),
-    [chipData],
-  );
-  const selectedPosts = React.useMemo(
-    () =>
-      selectedTags?.length
-        ? posts?.filter(p =>
-            selectedTags?.every((t: string) => p.tags?.includes(t)),
-          )
-        : posts,
-    [selectedTags, posts],
-  );
-  React.useEffect(() => {
-    if (selectedPlace && selectedPosts) {
-      if (!selectedPosts.includes(selectedPlace)) {
-        setSelectedPlace(undefined);
-      }
-    }
-  }, [selectedPosts, selectedPlace]);
   const defaultCenter = React.useMemo(() => {
     if (posts) {
       const accu = posts.reduce(
@@ -62,7 +36,7 @@ export default function RouteMapPosts({
     return <LinearProgress />;
   }
   function childClickHandler(key: string) {
-    const post = selectedPosts?.find(p => p?.id === key);
+    const post = posts?.find(p => p?.id === key);
     setSelectedPlace(post);
   }
   if (defaultCenter === undefined) {

@@ -3,7 +3,7 @@ import { Post } from "../types";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import StorageImage from "./StorageImage";
 import { Link } from "react-router-dom";
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   root: {
     cursor: "pointer",
     position: "absolute",
@@ -33,6 +33,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   hover: {
     [theme.breakpoints.up("md")]: {
+      minWidth: "100px",
       width: "100%",
       position: "relative",
       paddingTop: theme.spacing(2),
@@ -66,13 +67,6 @@ export default function SquarePhotoSmall({ p }: { p: Post }) {
         <div className="title">
           <Typography variant="h3">{p.title}</Typography>
         </div>
-        <Typography variant="h6" color="primary">
-          <Grid container>
-            {p?.tags?.map((chip) => {
-              return <span key={chip}>#{chip}&nbsp;</span>;
-            })}
-          </Grid>
-        </Typography>
       </div>
     </Link>
   );
