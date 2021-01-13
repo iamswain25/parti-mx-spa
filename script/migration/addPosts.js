@@ -1,4 +1,5 @@
 const array = [];
+
 const { firestore } = require("./firebase");
 const batch = firestore.batch();
 function addSuggestion({ id, ...data }) {
@@ -71,5 +72,47 @@ function addNotice({ id, ...data }) {
   data.type = "notice";
   batch.set(firestore.collection("posts").doc(`${id}`), data);
 }
-array.map(addComment);
+function addGroup({ id, createdBy, users_aggregate, ...data }) {
+  data.created_at = new Date(data.created_at);
+  data.created_by = createdBy.firebase_uid;
+  data.bg_img = { path: data.bg_img_url };
+  data.mb_img = { path: data.mb_img_url };
+  data.count_user = users_aggregate.aggregate.count;
+  batch.set(firestore.collection("groups").doc(`${id}`), data);
+}
+function addBoards({ id: groupId, boards }) {
+  boards.map(
+    ({
+      id: boardId,
+      permission,
+      last_posted_at,
+      count_open,
+      count_closed,
+      count_post,
+      ...data
+    }) => {
+      data.last_posted_at = new Date(last_posted_at);
+      data.permission = {
+        comment: ["organizer", "member", "user"],
+        create: ["organizer", "member", "user"],
+        delete: ["organizer"],
+        like: ["organizer", "member", "user"],
+        read: ["organizer", "member", "user", "anonymous"],
+        update: ["organizer"],
+      };
+      data.count_open = count_open.aggregate.count;
+      data.count_closed = count_closed.aggregate.count;
+      data.count_post = count_post.aggregate.count;
+      batch.set(
+        firestore
+          .collection("groups")
+          .doc(`${groupId}`)
+          .collection("boards")
+          .doc(`${boardId}`),
+        data,
+      );
+    },
+  );
+}
+array.map(addBoards);
 batch.commit().then(console.log);
