@@ -114,5 +114,5 @@ function addBoards({ id: groupId, boards }) {
     },
   );
 }
-array.map(addBoards);
+array.map(addBoards2);
 batch.commit().then(console.log);

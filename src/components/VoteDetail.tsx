@@ -1,13 +1,6 @@
 import React from "react";
 import { Post, VoteMetadata } from "../types";
-import {
-  Box,
-  Grid,
-  Divider,
-  makeStyles,
-  Typography,
-  Hidden,
-} from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles, Typography } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import CommentContainer from "./CommentContainer";
 import AvatarNameDate from "./AvatarNameDate";
@@ -16,7 +9,6 @@ import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { daysLeftMeta } from "../helpers/datefns";
 import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
-import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
 import HashtagsDetail from "./HashtagsDetail";

@@ -21,7 +21,7 @@ import useEffectBoards from "../store/useEffectBoards";
 import HeaderRemain from "../components/HeaderRemain";
 import GroupLogoContainer from "../components/GroupLogoContainer";
 import Layout from "../components/Layout";
-import Footer from "../components/Footer";
+// import Footer from "../components/Footer";
 
 export default function Routes() {
   useSignInWithEmailLink();
@@ -31,7 +31,9 @@ export default function Routes() {
     <>
       <CssBaseline />
       <HeaderRemain />
-      <Route path={["/home", "/test"]} exact component={GroupLogoContainer} />
+      <Switch>
+        <Route path={["/:group_id"]} exact component={GroupLogoContainer} />
+      </Switch>
       <Layout>
         <Switch>
           <Route path="/forgot" exact component={PasswordForgot} />
@@ -43,9 +45,7 @@ export default function Routes() {
           <Route
             exact
             path="/p/:id"
-            render={(props) => (
-              <Redirect to={`/post/${props.match.params.id}`} />
-            )}
+            render={props => <Redirect to={`/post/${props.match.params.id}`} />}
           />
           <Route path="/group/new" exact component={GroupNew} />
           <Route path="/profile" exact component={Profile} />
@@ -56,7 +56,7 @@ export default function Routes() {
           </Route>
         </Switch>
       </Layout>
-      <Footer />
+      {/* <Footer /> */}
       <LoginModal />
       <SnackbarCustom />
       <SnackbarSuccess />

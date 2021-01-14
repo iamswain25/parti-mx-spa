@@ -10,7 +10,6 @@ import LoginButton from "./LoginButton";
 import DrawerGroup from "./DrawerGroup";
 import MenuProfile from "./MenuProfile";
 import useGroup from "../store/useGroup";
-import logo2018 from "../assets/images/logo2018.png";
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.background.paper,
@@ -84,9 +83,7 @@ export default function HeaderRemain() {
           </Hidden>
           <Grid item xs={2}></Grid>
           <Grid item xs={8} className={classes.logoFont}>
-            <Link to={`/${group?.id}`}>
-              <img src={logo2018} alt="logo" />
-            </Link>
+            <Link to={`/${group?.id}`}>{group?.title}</Link>
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
             {currentUser?.email && <MenuProfile />}

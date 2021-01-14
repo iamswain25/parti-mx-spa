@@ -5,7 +5,7 @@ export const initialState = {
   error: null,
   success: null,
   currentUser: undefined,
-  groupId: "home",
+  groupId: "1",
   boardId: undefined,
   sort: 0,
   role: undefined,

@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => {
         maxWidth: 364,
       },
       [theme.breakpoints.down("sm")]: {
-        marginLeft: theme.spacing(2),
+        padding: theme.spacing(2),
       },
       "& .custom-dot-list-style": {
         bottom: 24,
@@ -62,6 +62,15 @@ const useStyles = makeStyles(theme => {
       alignItems: "center",
       justifyContent: "center",
       padding: theme.spacing(2),
+    },
+    mobileMore: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: theme.spacing(2),
     },
   };
 });
@@ -162,7 +171,9 @@ export default function HomeBoardVote({ board: b }: { board: Board }) {
             ))}
           </Carousel>
         </div>
-        {!isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
+        <div className={classes.mobileMore}>
+          <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
+        </div>
       </section>
       {!isDesktop && <GreyDivider />}
     </>

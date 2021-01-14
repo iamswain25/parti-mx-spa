@@ -1,6 +1,5 @@
 import { Grid, makeStyles } from "@material-ui/core";
 import partiLogo from "../assets/images/logo-parti-lighter.png";
-import logo from "../assets/images/logo-sehub.png";
 import React from "react";
 import useDesktop from "./useDesktop";
 const useStyles = makeStyles(theme => ({
@@ -71,7 +70,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={logo} alt="서사경홈페이지" />
+                {/* <img src={logo} alt="서사경홈페이지" /> */}
               </a>
             </Grid>
             <Grid spacing={3} container className="mt">

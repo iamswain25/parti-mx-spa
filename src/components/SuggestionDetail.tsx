@@ -18,7 +18,6 @@ import CommentContainer2 from "./CommentContainer2";
 import { semanticDate, closingDateFrom } from "../helpers/datefns";
 import FilesImages from "./FilesImages";
 import PostMenu from "./PostMenu";
-import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
 import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
