@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "parti-2020"
+  },
+  "targets": {
+    "parti-2020": {
+      "hosting": {
+        "master": [
+          "parti-2020"
+        ],
+        "fire": [
+          "parti-mx"
+        ]
+      }
+    }
   }
 }

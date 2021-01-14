@@ -64,7 +64,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "firebase deploy --only hosting --project parti-2020",
+    "deploy": "firebase deploy --only hosting:fire --project parti-2020",
     "rules": "firebase deploy --only firestore --project parti-2020",
     "bd": "yarn build && yarn deploy",
     "pre-bd": "yarn build && firebase hosting:channel:deploy $param",
