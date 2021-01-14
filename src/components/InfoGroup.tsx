@@ -8,7 +8,8 @@ import useGroupJoin from "./useGroupJoin";
 import { permissionLabelByValue } from "../helpers/options";
 import { Group, Role } from "../types";
 import { LinearProgress } from "@material-ui/core";
-const useStyles = makeStyles((theme) => {
+import useUser from "../store/useUser";
+const useStyles = makeStyles(theme => {
   return {
     groupInfo: {
       position: "absolute",
@@ -20,13 +21,11 @@ const useStyles = makeStyles((theme) => {
       letterSpacing: 0,
       alignItems: "center",
       backgroundColor: "rgba(255,255,255,0.3)",
-      paddingLeft: theme.spacing(2),
+      padding: theme.spacing(0, 2),
       [theme.breakpoints.up("md")]: {
         height: theme.spacing(6),
       },
-      [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing(1),
-      },
+      [theme.breakpoints.down("sm")]: {},
       "& a": {
         color: "inherit",
       },
@@ -44,6 +43,9 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "center",
       alignItems: "center",
     },
+    profile: {
+      padding: theme.spacing(0, 2),
+    },
   };
 });
 export default function InfoGroup({
@@ -57,10 +59,8 @@ export default function InfoGroup({
   const [currentUser] = useCurrentUser();
   const joinHandler = useGroupJoin();
   const { created_at } = group || {};
+  const [me] = useUser({ id: currentUser?.uid });
   if (!group) {
-    return null;
-  }
-  if (group.id === "home" && role !== "organizer") {
     return null;
   }
   return (
@@ -69,8 +69,8 @@ export default function InfoGroup({
       {role === undefined ? (
         <LinearProgress />
       ) : (
-        <Link to="/profile">
-          {currentUser?.displayName}({permissionLabelByValue(role)})
+        <Link to="/profile" className={classes.profile}>
+          {me?.name}({permissionLabelByValue(role)})
         </Link>
       )}
       {role === "anonymous" && (
