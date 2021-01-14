@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import algoliasearch from "algoliasearch";
 const ALGOLIA_ID = functions.config().algolia.app_id;
 const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
-const ALGOLIA_INDEX_NAME = "gyeonggiVillage";
+const ALGOLIA_INDEX_NAME = "green-newdeal";
 const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
 const index = client.initIndex(ALGOLIA_INDEX_NAME);
 export default async function postAlgolia(
