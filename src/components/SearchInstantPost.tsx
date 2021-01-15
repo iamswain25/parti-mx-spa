@@ -1,17 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 // import BoardPostSub2 from "./BoardPostSub2";
 import { Link } from "react-router-dom";
 import { Highlight } from "react-instantsearch-dom";
-const useStyles = makeStyles((theme) => {
+import { semanticDate } from "../helpers/datefns";
+import useUser from "../store/useUser";
+const useStyles = makeStyles(theme => {
   return {
     container: {
       // borderBottom: `1px solid ${grey[200]}`,
       // padding: theme.spacing(1),
+      cursor: "pointer",
     },
     titleContainer: {
-      cursor: "pointer",
       display: "flex",
       overflow: "hidden",
       marginBottom: theme.spacing(1),
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme) => {
       display: "-webkit-box",
       WebkitLineClamp: 6,
       WebkitBoxOrient: "vertical",
+    },
+    postInfo: {
+      marginTop: theme.spacing(1),
     },
     flexrowleft: {
       display: "flex",
@@ -45,21 +50,31 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function SearchInstantPost({ hit: p }: { hit: any }) {
+  const { objectID, created_by, count_like = 0, count_comment = 0 } = p;
+  const [user] = useUser({ id: created_by });
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <div className={classes.titleContainer}>
-        <Link to={`/post/${p.objectID}`}>
+      <Link to={`/post/${objectID}`}>
+        <div className={classes.titleContainer}>
           <Typography variant="h3" color="textPrimary">
-            <Highlight hit={p} attribute="title" />
+            <Highlight hit={p} attribute="title" tagName="span" />
           </Typography>
-        </Link>
-      </div>
-      <Box color="grey.600">
+        </div>
         <Typography variant="body1" className={classes.body}>
-          <Highlight hit={p} attribute="body" />
+          <Highlight hit={p} attribute="body" tagName="span" />
+          <Grid
+            container
+            justify="flex-start"
+            spacing={1}
+            className={classes.postInfo}
+          >
+            <Grid item>{user?.name}</Grid>
+            <Grid item>댓글 {count_comment}</Grid>
+            <Grid item>공감 {count_like}</Grid>
+          </Grid>
         </Typography>
-      </Box>
+      </Link>
     </div>
   );
 }
