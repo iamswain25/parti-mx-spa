@@ -2,15 +2,81 @@ const array = [];
 
 const { firestore } = require("./firebase");
 const batch = firestore.batch();
-function addSuggestion({ id, ...data }) {
-  data.created_by = "Gmh0xAICMeYpcJpgLWPjYHn6bSd2";
-  data.updated_by = "Gmh0xAICMeYpcJpgLWPjYHn6bSd2";
-  data.group_id = "home";
-  data.board_id = "ubxgpbnMzgOVKodUmypK";
-  data.type = "suggestion";
-  const { closingMethod, address } = data.metadata;
-  data.metadata = { closingMethod, location: { address } };
+function addSuggestion({
+  id,
+  board_id,
+  board,
+  createdBy,
+  updatedBy,
+  images,
+  files,
+  location,
+  users_aggregate,
+  comments_aggregate,
+  ...data
+}) {
+  data.created_by = createdBy.firebase_uid;
+  data.updated_by = updatedBy.firebase_uid;
+  data.group_id = `${board.group_id}`;
+  data.board_id = `${board_id}`;
+  data.type = board.type;
+  if (data.created_at) data.created_at = new Date(data.created_at);
+  if (data.updated_at) data.updated_at = new Date(data.updated_at);
+  if (data.closed_at) {
+    data.is_closed = true;
+    data.closed_at = new Date(data.closed_at);
+  } else {
+    data.is_closed = false;
+  }
+  if (data.last_commented_at)
+    data.last_commented_at = new Date(data.last_commented_at);
+  const { closingMethod = "manual", address = null } = data.metadata;
+  let latLng = null;
+  if (location) {
+    const {
+      coordinates: [lng, lat],
+    } = location;
+    latLng = { lat, lng };
+  }
+  data.metadata = { closingMethod, location: { address, latLng } };
+  data.count_like = users_aggregate.aggregate.sum.like_count;
+  data.count_comment = comments_aggregate.aggregate.count;
+  if (images)
+    data.images =
+      images.map(({ uri, ...data }) => {
+        try {
+          const path = uri
+            .match(/o\/(posts%2F.+)\?alt=media/)[1]
+            .replace(/%2F/g, "/");
+          return { ...data, path };
+        } catch (error) {
+          console.log(error, uri);
+          return null;
+        }
+      }) || null;
+  if (files)
+    data.files =
+      files.map(({ uri, ...data }) => {
+        try {
+          const path = uri
+            .match(/o\/(posts%2F.+)\?alt=media/)[1]
+            .replace(/%2F/g, "/");
+          return { ...data, path };
+        } catch (error) {
+          console.log(error, uri);
+          return null;
+        }
+      }) || null;
+  // return data;
   batch.set(firestore.collection("posts").doc(`${id}`), data);
+}
+function updateSuggestion({ id, closed_at, ...data }) {
+  if (data.closed_at) {
+    data.is_closed = true;
+  } else {
+    data.is_closed = false;
+  }
+  batch.set(firestore.collection("posts").doc(`${id}`), data, { merge: true });
 }
 function addEvent({ id, ...data }) {
   data.created_by = "Gmh0xAICMeYpcJpgLWPjYHn6bSd2";
@@ -114,5 +180,5 @@ function addBoards({ id: groupId, boards }) {
     },
   );
 }
-array.map(addBoards2);
+array.map(updateSuggestion);
 batch.commit().then(console.log);
