@@ -30,7 +30,7 @@ export default function EventInputs({ formControl }: any) {
       />
       <CustomTextField
         label="모집인원"
-        name="countPeople"
+        name="count_people"
         type="number"
         defaultValue={10}
         InputProps={{

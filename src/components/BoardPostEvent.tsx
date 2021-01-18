@@ -73,10 +73,10 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
   let event_date = null,
     place = null,
     deadline = null,
-    countPeople = null;
+    count_people = null;
   if (p?.metadata && "event_date" in p?.metadata) {
     event_date = getEventDate2(p.metadata.event_date);
-    countPeople = p.metadata.countPeople;
+    count_people = p.metadata.count_people;
     place = p.metadata.place;
     deadline = getEventDate3(p.metadata.deadline);
   }
@@ -116,7 +116,7 @@ export default function BoardPostVEvent({ post: p }: { post: Post }) {
             <Box>
               <Box display="flex" alignItems="center">
                 <HowToRegIcon />
-                <Box ml={1}>모집인원 {countPeople}명</Box>
+                <Box ml={1}>모집인원 {count_people}명</Box>
               </Box>
               <Box display="flex" alignItems="center" mt={1}>
                 <EventIcon />

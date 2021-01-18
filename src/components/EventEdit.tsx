@@ -43,11 +43,11 @@ export default function EventEdit({ post: p }: { post: Post }) {
   const { handleSubmit } = formControl;
 
   async function handleForm(form: EventFormdata) {
-    const { event_date, deadline, countPeople, place, ...rest } = form;
+    const { event_date, deadline, count_people, place, ...rest } = form;
     const metadata = {
       event_date: new Date(event_date),
       deadline: new Date(deadline),
-      countPeople,
+      count_people,
       place,
     };
     const variables = await makeUpdateVariables(rest, {

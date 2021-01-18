@@ -27,7 +27,7 @@ export interface EventFormdata {
 	event_date: string;
 	place: string;
 	deadline: string;
-	countPeople: number;
+	count_people: number;
 	title: string;
 	body: string;
 	isHtml: boolean;
@@ -208,7 +208,7 @@ export type EventMetadata = {
 	event_date: firebase.firestore.Timestamp;//hasura: eventDate 굳이 바꿈 ㅜㅜ
 	place: string;
 	deadline: firebase.firestore.Timestamp;
-	countPeople: number;
+	count_people: number;
 };
 export type Vote = { id: string; created_at: firebase.firestore.Timestamp };
 export interface Event extends Post {

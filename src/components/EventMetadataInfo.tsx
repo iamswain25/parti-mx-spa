@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function EventMetadataInfo(props: { metadata: EventMetadata }) {
-  let { event_date, place, deadline, countPeople } = props.metadata;
+  let { event_date, place, deadline, count_people } = props.metadata;
   const classes = useStyles();
   event_date = getEventDate(event_date);
   deadline = getEventDate(deadline);
@@ -42,7 +42,7 @@ export default function EventMetadataInfo(props: { metadata: EventMetadata }) {
       <div>
         <HowToRegIcon />
         모집 인원
-        <div className="text-primary"> {countPeople}명</div>
+        <div className="text-primary"> {count_people}명</div>
       </div>
       <div>
         <EventIcon />
