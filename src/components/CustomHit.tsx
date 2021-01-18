@@ -33,9 +33,16 @@ const useStyles = makeStyles(theme => {
 });
 
 export default function CustomHit({ hit: p }: { hit: any }) {
-  const { objectID, created_by, count_like = 0, count_comment = 0 } = p;
+  const {
+    objectID,
+    created_at,
+    created_by,
+    count_like = 0,
+    count_comment = 0,
+  } = p;
   const [user] = useUser({ id: created_by });
   const classes = useStyles();
+  const created_date = new Date(created_at._seconds * 1000);
   return (
     <Paper elevation={0} className={classes.container}>
       <Link to={`/post/${objectID}`}>
@@ -53,6 +60,13 @@ export default function CustomHit({ hit: p }: { hit: any }) {
             className={classes.postInfo}
           >
             <Grid item>{user?.name}</Grid>
+            <Grid item>
+              {created_date.toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+              })}
+            </Grid>
             <Grid item>댓글 {count_comment}</Grid>
             <Grid item>공감 {count_like}</Grid>
           </Grid>
