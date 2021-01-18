@@ -70,13 +70,33 @@ function addSuggestion({
   // return data;
   batch.set(firestore.collection("posts").doc(`${id}`), data);
 }
-function updateSuggestion({ id, closed_at, ...data }) {
-  if (data.closed_at) {
-    data.is_closed = true;
-  } else {
-    data.is_closed = false;
-  }
-  batch.set(firestore.collection("posts").doc(`${id}`), data, { merge: true });
+function updateSuggestion({ id, users }) {
+  users.map(({ updated_at, user }) => {
+    const data = { created_at: new Date(updated_at) };
+    batch.set(
+      firestore
+        .collection("posts")
+        .doc(`${id}`)
+        .collection("likes")
+        .doc(user.firebase_uid),
+      data,
+      { merge: true },
+    );
+  });
+}
+function addLikes({ id, users }) {
+  users.map(({ updated_at, user }) => {
+    const data = { created_at: new Date(updated_at) };
+    batch.set(
+      firestore
+        .collection("posts")
+        .doc(`${id}`)
+        .collection("likes")
+        .doc(user.firebase_uid),
+      data,
+      { merge: true },
+    );
+  });
 }
 function addEvent({ id, ...data }) {
   data.created_by = "Gmh0xAICMeYpcJpgLWPjYHn6bSd2";
@@ -86,24 +106,6 @@ function addEvent({ id, ...data }) {
   data.type = "event";
   delete data.context;
   batch.set(firestore.collection("posts").doc(`${id}`), data);
-}
-function addComment({ id: post_id, comments }) {
-  comments.forEach(({ id: comment_id, created_at, user, body }) => {
-    const data = {
-      body,
-      created_at: new Date(created_at),
-      created_by: user,
-      post_id: `${post_id}`,
-    };
-    batch.set(
-      firestore
-        .collection("posts")
-        .doc(`${post_id}`)
-        .collection("comments")
-        .doc(`${comment_id}`),
-      data,
-    );
-  });
 }
 function updateManualClosing({ id, ...data }) {
   data.metadata = { ...data.metadata, closingMethod: "manual" };
