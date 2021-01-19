@@ -5,14 +5,14 @@ export default function Ie11() {
     <section id="ie11">
       <div className="container">
         <div className="title">
-          사회적경제 시민참여액션플랜를 방문해주셔서 감사합니다.
+        녹색전환을 위한 지역 그린뉴딜 플랫폼 “여기” 를 방문해주셔서 감사합니다.
         </div>
         <div className="label">
           지원하지 않는 브라우저로 접속 시 이용이 제한될 수 있습니다.
           <br />
           웹사이트에 접속하려면 다른 브라우저를 이용하세요.
           <br />
-          사회적경제 시민참여액션플랜는 Chrome, Microsoft Edge에
+          녹색전환을 위한 지역 그린뉴딜 플랫폼 “여기” 는 Chrome, Microsoft Edge에
           최적화되어 있습니다.
           <br />
         </div>
@@ -40,16 +40,6 @@ export default function Ie11() {
               <span className="edge">Edge</span>
               <span>설치하기</span>
             </div>
-          </a>
-        </div>
-        <div className="text-center">
-          <a
-            href="https://pf.kakao.com/_DslxnK"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ask"
-          >
-            문의하기
           </a>
         </div>
       </div>
