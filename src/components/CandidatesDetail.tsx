@@ -42,14 +42,17 @@ export default function CandidatesDetail({
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const voteHandler = useVoteCandidate(p, candidates);
-  const max = React.useMemo(
-    () =>
+  const [max, total] = React.useMemo(
+    () => [
       candidates?.reduce(
         (prev, curr) => (prev > curr.count_vote ? prev : curr.count_vote),
         1,
       ) || 1,
+      candidates?.reduce((prev, curr) => prev + curr.count_vote, 0) || 1,
+    ],
     [candidates],
   );
+
   return (
     <Box>
       <Box className={classes.sub} mt={2} mb={1}>
@@ -68,6 +71,7 @@ export default function CandidatesDetail({
         {candidates?.map(c => (
           <VoteCandidate
             max={max}
+            total={total}
             candidate={c}
             voted={liked}
             onClick={voteHandler(c, liked)}

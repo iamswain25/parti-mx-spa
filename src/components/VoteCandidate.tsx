@@ -11,17 +11,18 @@ export default function VoteCandidate({
   post,
   onClick,
   max,
+  total = 1,
 }: {
   candidate: Candidate;
   voted: boolean;
-  max: number;
   post: Post<VoteMetadata>;
   onClick: () => any;
+  max: number;
+  total: number;
 }) {
   const {
     metadata: { is_result_hidden = false, is_anonymous = false },
     is_closed = false,
-    count_total_vote: total = 0,
   } = post;
   const [, setError] = useError();
   const [percentage, width, count] = React.useMemo(() => {
