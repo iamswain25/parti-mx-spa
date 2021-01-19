@@ -1,6 +1,5 @@
 const array = [];
-
-const { firestore } = require("./firebase");
+const { firestore, admin } = require("./firebase");
 const { batchArray, proxyBatchSet, commit } = require("./firestoreBatch");
 
 function addVote({
@@ -45,25 +44,25 @@ function addVote({
   data.count_like = users_aggregate.aggregate.sum.like_count;
   data.count_comment = comments_aggregate.aggregate.count;
   data.metadata = {
-    isBinary:
+    is_binary:
       typeof isBinary === "boolean"
         ? isBinary
         : isBinary === "false"
         ? false
         : true,
-    isMultiple:
+    is_multiple:
       typeof isMultiple === "boolean"
         ? isMultiple
         : isMultiple === "false"
         ? false
         : true,
-    isAnonymous:
+    is_anonymous:
       typeof isAnonymous === "boolean"
         ? isAnonymous
         : isAnonymous === "false"
         ? false
         : true,
-    isResultHidden:
+    is_result_hidden:
       typeof isResultHidden === "boolean"
         ? isResultHidden
         : isResultHidden === "false"
@@ -185,7 +184,46 @@ function addVote({
     },
   );
 }
-array.map(addVote);
+function updateVote({
+  id: post_id,
+  metadata: { isBinary, isMultiple, isAnonymous, isResultHidden },
+  ...data
+}) {
+  data.metadata = {
+    isBinary: admin.firestore.FieldValue.delete(),
+    isMultiple: admin.firestore.FieldValue.delete(),
+    isAnonymous: admin.firestore.FieldValue.delete(),
+    isResultHidden: admin.firestore.FieldValue.delete(),
+    is_binary:
+      typeof isBinary === "boolean"
+        ? isBinary
+        : isBinary === "false"
+        ? false
+        : true,
+    is_multiple:
+      typeof isMultiple === "boolean"
+        ? isMultiple
+        : isMultiple === "false"
+        ? false
+        : true,
+    is_anonymous:
+      typeof isAnonymous === "boolean"
+        ? isAnonymous
+        : isAnonymous === "false"
+        ? false
+        : true,
+    is_result_hidden:
+      typeof isResultHidden === "boolean"
+        ? isResultHidden
+        : isResultHidden === "false"
+        ? false
+        : true,
+  };
+  proxyBatchSet(firestore.collection("posts").doc(`${post_id}`), data, {
+    merge: true,
+  });
+}
+array.map(updateVote);
 commit();
 console.log(batchArray.length, batchArray.total);
 // {
@@ -214,7 +252,7 @@ console.log(batchArray.length, batchArray.total);
 //   mx_posts(where: {
 //     board: {type: {_eq: "vote"}}
 //     # candidates: {votes: {count:{_gt :0}}}
-//   }, 
+//   },
 //     # limit: 1
 //   ) {
 //     id
