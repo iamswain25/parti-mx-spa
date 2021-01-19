@@ -7,7 +7,7 @@ import "./index.sass";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 import Ie11 from "./components/Ie11";
-function detectIE() {
+export function detectIE() {
   const ua = window.navigator.userAgent;
 
   const msie = ua.indexOf("MSIE ");
@@ -26,7 +26,8 @@ function detectIE() {
   return false;
 }
 ReactDOM.render(
-  detectIE() ? <Ie11 /> : <App />,
+  // detectIE() ? <Ie11 /> : <App />,
+  <App />,
   document.getElementById("root")
 );
 

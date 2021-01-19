@@ -12,6 +12,7 @@ import {
   useGroupId,
   useRole,
 } from "../store/useGlobalState";
+import {detectIE} from '../index';
 const useStyles = makeStyles(theme => {
   return {
     gridTab: {
@@ -31,12 +32,6 @@ const useStyles = makeStyles(theme => {
       },
     },
     tab: {
-      [theme.breakpoints.up("md")]: {
-        maxWidth: 1200,
-        width: 1200,
-        padding: "0 30px",
-        margin: "0 auto",
-      },
       flex: 1,
       height: 48,
       overflow: "auto",
@@ -48,6 +43,14 @@ const useStyles = makeStyles(theme => {
       display: "flex",
       flexWrap: "nowrap",
       justifyContent: "space-between",
+    },
+    tabMd:{
+      [theme.breakpoints.up("md")]: {
+        maxWidth: 1200,
+        width: 1200,
+        padding: "0 30px",
+        margin: "0 auto",
+      },
     },
     tabLink: {
       minWidth: 72,
@@ -104,7 +107,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
   if (!boards) return null;
   return (
     <Grid container className={classes.gridTab}>
-      <div className={classes.tab}>
+      <div className={`${classes.tab} ${detectIE() ? null : classes.tabMd}`}>
         <Box display="flex" flexWrap="nowrap">
           <NavLink exact to={`/${group_id}`} className={classes.tabLink}>
             홈
