@@ -47,11 +47,11 @@ export interface VoteFormdata {
 	context: string;
 	body: string;
 	metadata: {
-		closingMethod: string;
-		isMultiple: boolean;
-		isAnonymous: boolean;
-		isResultHidden: boolean;
-		isBinary: boolean;
+		closing_method: string;
+		is_multiple: boolean;
+		is_anonymous: boolean;
+		is_result_hidden: boolean;
+		is_binary: boolean;
 	};
 	candidates: Candidate[];
 	isHtml: boolean;
@@ -191,18 +191,18 @@ export type Post<
 export interface Suggestion {
 	mx_posts_by_pk: Post;
 }
-export type Location = { address: string; latLng?: LatLng };
+export type Location = { address: string; lat_lng?: LatLng };
 export type NoticeMetadata = { announcement: boolean };
 export type SuggestionMetadata = {
-	closingMethod: string;
+	closing_method: string;
 	location: Location
 };
 export type VoteMetadata = {
-	closingMethod: string;
-	isBinary: boolean;
-	isMultiple: boolean;
-	isAnonymous: boolean;
-	isResultHidden: boolean;
+	closing_method: string;
+	is_binary: boolean;
+	is_multiple: boolean;
+	is_anonymous: boolean;
+	is_result_hidden: boolean;
 };
 export type EventMetadata = {
 	event_date: firebase.firestore.Timestamp;//hasura: eventDate 굳이 바꿈 ㅜㅜ

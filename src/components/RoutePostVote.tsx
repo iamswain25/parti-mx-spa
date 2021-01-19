@@ -75,7 +75,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
   ]);
   const [isVoted, setVoted] = React.useState(false);
   const isClosed = !!p?.closed_at;
-  const isResultHidden = metadata.isResultHidden;
+  const is_result_hidden = metadata.is_result_hidden;
   const [candidates] = useCandidates({ post_id: p.id });
   React.useEffect(() => {
     setVoted(false);
@@ -140,7 +140,7 @@ export default function RoutePostVote({ post: p }: { post: Post }) {
                   total={totalVoteCount}
                   key={i}
                   isClosed={isClosed}
-                  isResultHidden={isResultHidden}
+                  is_result_hidden={is_result_hidden}
                 />
               ))}
             </Box>

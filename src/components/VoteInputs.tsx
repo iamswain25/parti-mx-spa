@@ -17,7 +17,7 @@ export default function VoteInputs({
   isEdit?: boolean;
 }) {
   const { register, errors, control, watch } = formControl;
-  const isBinary = watch("metadata.isBinary");
+  const is_binary = watch("metadata.is_binary");
   return (
     <>
       <CustomTextField
@@ -35,7 +35,7 @@ export default function VoteInputs({
         SelectProps={{ native: true }}
         label="투표 종료 방법"
         variant="filled"
-        name="metadata.closingMethod"
+        name="metadata.closing_method"
         defaultValue="7days"
         children={voteOptions.map(option => (
           <option key={option.value} value={option.value}>
@@ -47,7 +47,7 @@ export default function VoteInputs({
         찬반투표
         <ControlledSwitch
           control={control}
-          name="metadata.isBinary"
+          name="metadata.is_binary"
           disabled={isEdit}
         />
       </Grid>
@@ -60,16 +60,16 @@ export default function VoteInputs({
         <Typography>익명투표</Typography>
         <ControlledSwitch
           control={control}
-          name="metadata.isAnonymous"
+          name="metadata.is_anonymous"
           disabled={isEdit}
         />
       </Grid>
-      {!isBinary && (
+      {!is_binary && (
         <Grid container justify="space-between" alignItems="center">
           <Typography>중복투표</Typography>
           <ControlledSwitch
             control={control}
-            name="metadata.isMultiple"
+            name="metadata.is_multiple"
             disabled={isEdit}
           />
         </Grid>
@@ -78,7 +78,7 @@ export default function VoteInputs({
         <Typography>종료 될 때까지 중간 투표 집계를 숨깁니다.</Typography>
         <ControlledSwitch
           control={control}
-          name="metadata.isResultHidden"
+          name="metadata.is_result_hidden"
           disabled={isEdit}
         />
       </Grid>

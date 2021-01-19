@@ -137,10 +137,10 @@ export function daysLeftMeta(
   created_at: firebase.firestore.Timestamp
 ) {
   try {
-    if (metadata?.closingMethod === "manual") {
+    if (metadata?.closing_method === "manual") {
       return "토론 정리 시 종료";
     }
-    const after = Number(metadata?.closingMethod?.replace("days", ""));
+    const after = Number(metadata?.closing_method?.replace("days", ""));
     return Math.abs(calculateDays(created_at, after)) + "일 남음";
   } catch (err) {
     return "버그";

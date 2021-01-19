@@ -117,15 +117,15 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
   const [user] = useUser({ id: created_by });
   const closingAt = React.useMemo(() => {
     let after = undefined;
-    const closingMethod = metadata?.closingMethod;
-    if (!closingMethod) {
+    const closing_method = metadata?.closing_method;
+    if (!closing_method) {
       return "계속";
     }
-    if (closingMethod === "manual") {
+    if (closing_method === "manual") {
       return "토론 정리 시 종료";
     }
     try {
-      after = Number(closingMethod?.replace("days", ""));
+      after = Number(closing_method?.replace("days", ""));
       return closingDateFrom(created_at, after);
     } catch (err) {
       console.log(metadata);

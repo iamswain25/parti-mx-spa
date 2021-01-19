@@ -9,10 +9,10 @@ import { UseFormMethods } from "react-hook-form/dist/types/form";
 export const deletingIds: any[] = [];
 export default function VoteEditCandidates({
   formControl,
-  isBinary = false,
+  is_binary = false,
 }: {
   formControl: UseFormMethods<VoteFormdata>;
-  isBinary?: boolean;
+  is_binary?: boolean;
 }) {
   const { errors, control, getValues, setValue } = formControl;
   const { fields, append, remove } = useFieldArray<Candidate, "uid">({
@@ -40,7 +40,7 @@ export default function VoteEditCandidates({
       return "중복입니다";
     }
   }
-  if (isBinary) {
+  if (is_binary) {
     return null;
   }
   return (

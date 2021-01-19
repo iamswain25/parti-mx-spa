@@ -25,17 +25,17 @@ export default function VoteNew() {
     defaultValues: {
       candidates: [{ body: "" }, { body: "" }],
       metadata: {
-        isBinary: true,
-        isResultHidden: false,
-        isAnonymous: false,
-        isMultiple: false,
+        is_binary: true,
+        is_result_hidden: false,
+        is_anonymous: false,
+        is_multiple: false,
       },
     } as VoteFormdata,
   });
   const { handleSubmit } = formControl;
   async function handleForm(form: VoteFormdata) {
     const { candidates = [], metadata, ...rest } = form;
-    metadata.isMultiple = !!metadata.isMultiple;
+    metadata.is_multiple = !!metadata.is_multiple;
     const variables = await makeNewVariables(rest, {
       group_id,
       board_id,
@@ -50,7 +50,7 @@ export default function VoteNew() {
       created_by: currentUser?.uid,
       updated_by: currentUser?.uid,
     });
-    if (metadata.isBinary) {
+    if (metadata.is_binary) {
       candidates.length = 0;
       candidates.push(
         { body: "찬성", order: 1 } as Candidate,

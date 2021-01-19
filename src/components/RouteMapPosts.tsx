@@ -34,10 +34,10 @@ export default function RouteMapPosts({
     if (posts) {
       const accu = posts.reduce(
         (prev, curr) => {
-          const latLng = curr?.metadata?.location?.latLng;
-          if (latLng) {
-            prev.lat = prev.lat + latLng?.lat;
-            prev.lng = prev.lng + latLng?.lng;
+          const lat_lng = curr?.metadata?.location?.lat_lng;
+          if (lat_lng) {
+            prev.lat = prev.lat + lat_lng?.lat;
+            prev.lng = prev.lng + lat_lng?.lng;
             prev.length++;
           }
           return prev;
@@ -72,7 +72,7 @@ export default function RouteMapPosts({
       onChildClick={childClickHandler}
     >
       {posts?.map((p, i) => {
-        const { lat, lng } = p?.metadata?.location?.latLng || {};
+        const { lat, lng } = p?.metadata?.location?.lat_lng || {};
         if (lat && lng) {
           return (
             <MapPlace

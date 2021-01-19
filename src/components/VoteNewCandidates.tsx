@@ -25,7 +25,7 @@ export default function VoteNewCandidates({ formControl }: any) {
     watch,
   } = formControl as UseFormMethods<VoteFormdata>;
   const classes = useStyles();
-  const isBinary = watch("metadata.isBinary");
+  const is_binary = watch("metadata.is_binary");
   const { fields, append, remove } = useFieldArray<Candidate, "uid">({
     name: "candidates",
     control,
@@ -49,7 +49,7 @@ export default function VoteNewCandidates({ formControl }: any) {
       return "중복입니다";
     }
   }
-  if (isBinary) {
+  if (is_binary) {
     return null;
   }
 

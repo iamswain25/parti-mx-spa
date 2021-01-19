@@ -35,7 +35,7 @@ export default function useVoteCandidate(
       } else {
         promises.push(likeRef.set({ created_at: new Date() }, { merge: true }));
       }
-      if (p.metadata.isMultiple) {
+      if (p.metadata.is_multiple) {
         promises.push(docRef.set({ created_at: new Date() }));
       } else {
         promises.push(

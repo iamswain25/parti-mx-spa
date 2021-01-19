@@ -14,20 +14,20 @@ export default function GooglePlaceAutocomplete(props: {
   setState: React.Dispatch<React.SetStateAction<Location>>;
 }) {
   const { setState, state } = props;
-  const { address = "", latLng } = state || {};
+  const { address = "", lat_lng } = state || {};
   function setAddress(address: string) {
-    setState({ latLng, address });
+    setState({ lat_lng, address });
   }
-  function setLatLng(latLng: LatLng) {
-    setState({ latLng, address });
+  function setLatLng(lat_lng: LatLng) {
+    setState({ lat_lng, address });
   }
   async function handleSelect(address: string) {
     setAddress(address);
     return geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
-      .then((latLng) => {
-        setLatLng(latLng);
-        console.log(latLng);
+      .then((lat_lng) => {
+        setLatLng(lat_lng);
+        console.log(lat_lng);
       })
       .catch((error) => console.error("Error", error));
   }
@@ -91,11 +91,11 @@ export default function GooglePlaceAutocomplete(props: {
           bootstrapURLKeys={{
             key: "AIzaSyACd_eKd6RV29bhAu3N3pFwHOuMS-LJmjY",
           }}
-          center={latLng}
+          center={lat_lng}
           defaultCenter={DEFAULT_LAT_LNG}
           defaultZoom={11}
         >
-          {latLng && <MapPlace {...latLng} selected={true} />}
+          {lat_lng && <MapPlace {...lat_lng} selected={true} />}
         </GoogleMapReact>
       </Box>
     </>

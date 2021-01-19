@@ -55,9 +55,9 @@ export default function CandidatesDetail({
       <Box className={classes.sub} mt={2} mb={1}>
         <Grid container alignItems="center" justify="space-between">
           <Box display="flex" alignItems="center">
-            {metadata?.isAnonymous && <Box mr={1}>익명투표</Box>}
-            {metadata?.isMultiple && <Box mr={1}>복수응답가능</Box>}
-            {metadata?.isResultHidden && (
+            {metadata?.is_anonymous && <Box mr={1}>익명투표</Box>}
+            {metadata?.is_multiple && <Box mr={1}>복수응답가능</Box>}
+            {metadata?.is_result_hidden && (
               <Box mr={1}>중간 투표 집계를 숨김</Box>
             )}
           </Box>

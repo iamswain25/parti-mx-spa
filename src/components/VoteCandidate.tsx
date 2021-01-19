@@ -19,7 +19,7 @@ export default function VoteCandidate({
   onClick: () => any;
 }) {
   const {
-    metadata: { isResultHidden = false, isAnonymous = false },
+    metadata: { is_result_hidden = false, is_anonymous = false },
     is_closed = false,
     count_total_vote: total = 0,
   } = post;
@@ -34,7 +34,7 @@ export default function VoteCandidate({
   }, [max, total, c]);
   const { modal, setVisible } = useWhoVotedModal(c);
   function resultHandler(event: React.MouseEvent<HTMLElement, MouseEvent>) {
-    if (isAnonymous) {
+    if (is_anonymous) {
       return setError("익명투표 입니다.");
     }
     setVisible(true);
@@ -57,7 +57,7 @@ export default function VoteCandidate({
           <Box fontSize={12} letterSpacing={-0.26} color="grey.900">
             {c.body}
           </Box>
-          {!isResultHidden && voted && (
+          {!is_result_hidden && voted && (
             <Box
               letterSpacing={-0.26}
               color="grey.900"
@@ -71,7 +71,7 @@ export default function VoteCandidate({
             </Box>
           )}
         </Grid>
-        {((!isResultHidden && voted) || is_closed) && (
+        {((!is_result_hidden && voted) || is_closed) && (
           <Box mt={1}>
             {c.voted ? (
               <LinearProgressActive variant="determinate" value={width} />

@@ -1,7 +1,7 @@
 import { Post } from "../types";
 export function getAttitude(post: Post) {
   // if (user?.votes?.length) {
-  //   if (post?.metadata.isAnonymous !== true) {
+  //   if (post?.metadata.is_anonymous !== true) {
   //     return user.votes.map((v) => v?.candidate.body).join(",");
   //   }
   // }
