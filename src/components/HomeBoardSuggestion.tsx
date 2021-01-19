@@ -28,12 +28,8 @@ const useStyles = makeStyles(theme => {
     },
     postContainer: {
       [theme.breakpoints.up("md")]: {
-        display: "grid",
-        gridTemplateColumns: "calc(50% - 12px) calc(50% - 12px)",
-        gridTemplateRows: "1fr 1fr",
-        paddingTop: theme.spacing(3),
+        padding: theme.spacing(2),
       },
-      gridGap: theme.spacing(3),
     },
     mobileMore: {
       [theme.breakpoints.up("md")]: {
@@ -67,9 +63,14 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
         </Grid>
         <div className={classes.postContainer}>
+          <Grid container spacing={2}>
+
           {posts?.map((p, i) => (
+            <Grid item key={p.id} sm={6}>
             <BoardPostSuggestion key={i} post={p} />
-          ))}
+              </Grid>
+            ))}
+            </Grid>
         </div>
         <div className={classes.mobileMore}>
           <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
