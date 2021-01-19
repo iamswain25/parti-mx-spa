@@ -1,6 +1,5 @@
 const array = [];
-
-const { firestore } = require("./firebase");
+const { firestore, admin } = require("./firebase");
 const batch = firestore.batch();
 function addSuggestion({
   id,
@@ -70,18 +69,22 @@ function addSuggestion({
   // return data;
   batch.set(firestore.collection("posts").doc(`${id}`), data);
 }
-function updateSuggestion({ id, users }) {
-  users.map(({ updated_at, user }) => {
-    const data = { created_at: new Date(updated_at) };
-    batch.set(
-      firestore
-        .collection("posts")
-        .doc(`${id}`)
-        .collection("likes")
-        .doc(user.firebase_uid),
-      data,
-      { merge: true },
-    );
+function updateSuggestion({ id: post_id, location }) {
+  const data = {
+    metadata: {
+      location: {
+        latLng: admin.firestore.FieldValue.delete(),
+      },
+    },
+  };
+  if (location) {
+    const {
+      coordinates: [lng, lat],
+    } = location;
+    data.metadata.location.lat_lng = { lat, lng };
+  }
+  batch.set(firestore.collection("posts").doc(`${post_id}`), data, {
+    merge: true,
   });
 }
 function addLikes({ id, users }) {
