@@ -100,7 +100,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
           )}
         </Grid>
         <Grid item xs={12} md={8} container spacing={isDesktop ? 3 : 0}>
-          <Box mt={isDesktop ? 2 : 0}>
+          <Box width="100%" mt={isDesktop ? 2 : 0}>
             {posts?.map(p => (
               <BoardPostNotice post={p} key={p.id} />
             ))}
