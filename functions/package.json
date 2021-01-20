@@ -6,7 +6,7 @@
     "shell": "npm run build && firebase functions:shell --project parti-2020",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions --project parti-2020",
-    "deploy1": "tsc && firebase deploy --only functions:candidateVoteCreate,functions:candidateVoteDelete --project parti-2020",
+    "deploy1": "tsc && firebase deploy --only functions:userPostWrite --project parti-2020",
     "logs": "firebase functions:log"
   },
   "engines": {
