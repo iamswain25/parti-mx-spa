@@ -5,7 +5,7 @@ import useLogin from "./useLogin";
 import { Link } from "react-router-dom";
 import { useCurrentUser } from "../store/useGlobalState";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   div: {
     marginTop: theme.spacing(10),
     display: "flex",
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   link: {
-    marginTop: theme.spacing(10),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -34,16 +33,24 @@ const useStyles = makeStyles((theme) => ({
     "&>a": {
       textDecoration: "underline",
     },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(1),
+    },
+    [theme.breakpoints.up("md")]: {
+      marginTop: theme.spacing(10),
+    },
   },
 }));
 export default function Forbidden({
   noPost = false,
   noBoard = false,
   notAdmin = false,
+  noGroup = false,
 }: {
   noPost?: boolean;
   noBoard?: boolean;
   notAdmin?: boolean;
+  noGroup?: boolean;
 }) {
   const [currentUser] = useCurrentUser();
   const classes = useStyles();
@@ -71,6 +78,14 @@ export default function Forbidden({
       <div className={classes.link}>
         삭제된 게시판입니다. <br />
         <Link to="/">이전 그룹의 메인화면으로 돌아갑니다.</Link>
+      </div>
+    );
+  }
+  if (noGroup) {
+    return (
+      <div className={classes.link}>
+        없는 그룹입니다. <br />
+        <Link to="/">메인화면으로 돌아갑니다.</Link>
       </div>
     );
   }

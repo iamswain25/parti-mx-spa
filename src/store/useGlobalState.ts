@@ -20,7 +20,7 @@ interface GlobalType {
   loginModal: boolean;
   currentUser?: firebase.User | null;
   sort: number;
-  boards?: Board[];
+  boards?: Board[] | null;
 }
 export const { useGlobalState } = createGlobalState<GlobalType>(initialState);
 export function useCurrentUser() {

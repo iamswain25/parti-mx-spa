@@ -8,6 +8,7 @@ import HomeBoardEvent from "./HomeBoardEvent";
 import { Grid, LinearProgress } from "@material-ui/core";
 import HomeBoardVote from "./HomeBoardVote";
 import useDesktop from "./useDesktop";
+import Forbidden from "./Forbidden";
 function mapElement(b: Board) {
   switch (b.type) {
     case "suggestion":
@@ -28,7 +29,7 @@ export default function Home() {
   useEffectBoardId();
 
   if (boards === undefined) return <LinearProgress />;
-  if (!boards) return null;
+  if (!boards) return <Forbidden noGroup />;
   if (isDesktop) {
     const wide = boards
       .filter(board => ["notice", "suggestion"].includes(board?.type))

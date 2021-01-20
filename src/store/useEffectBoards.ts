@@ -13,19 +13,19 @@ export default function useEffectBoards(): void {
         .collection("boards")
         .orderBy("order", "asc")
         .onSnapshot(
-          (snapshot) => {
-            const boards = snapshot.docs.map(
-              (doc) => ({ id: doc.id, ...(doc.data() as any) } as Board)
-            );
-            if (boards) {
-              setBoards(boards);
+          snapshot => {
+            if (snapshot.empty) {
+              setBoards(null);
             } else {
-              setBoards([]);
+              const boards = snapshot.docs.map(
+                doc => ({ id: doc.id, ...(doc.data() as any) } as Board),
+              );
+              setBoards(boards);
             }
           },
-          (error) => {
+          error => {
             console.warn("useEffectBoards", error);
-          }
+          },
         );
     }
   }, [groupId, setBoards]);
