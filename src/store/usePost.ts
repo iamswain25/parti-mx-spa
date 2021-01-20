@@ -2,11 +2,10 @@ import firebase from "firebase";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { firestore } from "../config/firebase";
-import { PARAM_COLLECTION, COUNTER_VIEW_POST } from "../helpers/options";
 import { Post } from "../types";
 import { useCurrentUser } from "./useGlobalState";
 export default function usePost(
-  listen: Boolean = true
+  listen: Boolean = true,
 ): [Post | null | undefined] {
   const { post_id: id } = useParams<{ post_id: string }>();
   const [item, setItem] = React.useState<Post | null | undefined>(undefined);
@@ -16,13 +15,16 @@ export default function usePost(
       firestore
         .collection("users")
         .doc(currentUser.uid)
-        .collection(PARAM_COLLECTION)
-        .doc(COUNTER_VIEW_POST)
+        .collection("posts")
+        .doc(id)
         .set(
-          { [id]: firebase.firestore.FieldValue.increment(1) },
-          { merge: true }
+          {
+            count_view: firebase.firestore.FieldValue.increment(1),
+            updated_at: new Date(),
+          },
+          { merge: true },
         )
-        .catch((error) => {
+        .catch(error => {
           console.warn("view count", error);
         });
       if (listen) {
@@ -30,7 +32,7 @@ export default function usePost(
           .collection("posts")
           .doc(id)
           .onSnapshot(
-            (doc) => {
+            doc => {
               if (doc.exists) {
                 const item = { id: doc.id, ...doc.data() } as Post;
                 setItem(item);
@@ -38,17 +40,17 @@ export default function usePost(
                 setItem(null);
               }
             },
-            (error) => {
+            error => {
               console.warn("listen Post", error);
               setItem(null);
-            }
+            },
           );
       } else {
         firestore
           .collection("posts")
           .doc(id)
           .get()
-          .then((doc) => {
+          .then(doc => {
             if (doc.exists) {
               const item = { id: doc.id, ...doc.data() } as Post;
               setItem(item);
@@ -56,10 +58,11 @@ export default function usePost(
               setItem(null);
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.warn("get Post", error);
             setItem(null);
           });
+        return () => setItem(undefined);
       }
     }
   }, [id, listen, currentUser]);
