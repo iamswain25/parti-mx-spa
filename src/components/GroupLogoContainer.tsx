@@ -7,6 +7,7 @@ import InfoGroup from "./InfoGroup";
 import useDesktop from "./useDesktop";
 import StorageImage from "./StorageImage";
 import { Img } from "../types";
+import defaultImg from "../assets/images/publicsphere.jpg";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -49,12 +50,8 @@ export default function GroupLogoContainer() {
       <StorageImage
         image={
           isDesktop
-            ? group?.bg_img ??
-              group?.mb_img ??
-              ({ path: "/publicsphere.jpg" } as Img)
-            : group?.mb_img ??
-              group?.bg_img ??
-              ({ path: "/publicsphere-mobile.jpg" } as Img)
+            ? group?.bg_img ?? group?.mb_img ?? ({ path: defaultImg } as Img)
+            : group?.mb_img ?? group?.bg_img ?? ({ path: defaultImg } as Img)
         }
         className={classes.backgroundImg}
       />
