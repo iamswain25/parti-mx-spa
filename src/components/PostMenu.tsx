@@ -55,7 +55,7 @@ export default function PostMenu({ post: p }: { post: Post }) {
       </MenuItem>,
     );
   }
-  if (isNotice && isOrganizer) {
+  if (["notice", "suggestion"].includes(p.type) && isOrganizer) {
     if (isAnnounced) {
       menuItems.push(
         <MenuItem onClick={denounce} key={3}>
