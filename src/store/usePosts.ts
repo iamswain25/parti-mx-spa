@@ -70,6 +70,7 @@ export default function usePosts<T extends Post>({
         .catch(error => {
           console.warn("usePosts", error);
         });
+      return () => setItems(undefined);
     }
   }, [board_id, listen, isClosed, limit, tags, where, sort]);
   return [items];
