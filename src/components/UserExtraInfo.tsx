@@ -1,34 +1,15 @@
 import { TextField } from "@material-ui/core";
 import React from "react";
 import { Controller, UseFormMethods } from "react-hook-form";
-import { AGE, SIGNUP_AREA, SEOUL_DISTRICT } from "../helpers/options";
+import { SIGNUP_AREA, areaDistrictList } from "../helpers/options";
 export default function UserExtraInfo(props: {
   formControl: UseFormMethods<any>;
 }) {
-  const { errors, control, watch } = props.formControl;
+  const { errors, control, watch, register } = props.formControl;
   const area = watch("area");
+  const areaObj = areaDistrictList.find(x => x.label === area);
   return (
     <>
-      <Controller
-        name="age"
-        control={control}
-        defaultValue=""
-        as={
-          <TextField
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            select
-            label="Age"
-            SelectProps={{ native: true }}
-            children={AGE.map((e, i) => (
-              <option value={e} key={i}>
-                {e}
-              </option>
-            ))}
-          />
-        }
-      />
       <Controller
         control={control}
         name="area"
@@ -51,7 +32,7 @@ export default function UserExtraInfo(props: {
           />
         }
       />
-      {area === "서울특별시" && (
+      {areaObj && (
         <Controller
           control={control}
           name="address"
@@ -66,7 +47,7 @@ export default function UserExtraInfo(props: {
               label="거주지 시,군"
               error={!!errors.address}
               helperText={errors?.address?.message}
-              children={SEOUL_DISTRICT.map(option => (
+              children={areaObj?.value.map(option => (
                 <option key={option} value={option}>
                   {option}
                 </option>
@@ -75,6 +56,17 @@ export default function UserExtraInfo(props: {
           }
         />
       )}
+      <TextField
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        name="organization"
+        label="소속"
+        inputRef={register()}
+        required={!!errors.organization}
+        error={!!errors.organization}
+        helperText={errors?.organization?.message}
+      />
     </>
   );
 }

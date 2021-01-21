@@ -177,7 +177,7 @@ export default function Signup() {
               margin="normal"
               fullWidth
               name="name"
-              label="닉네임"
+              label="활동명"
               inputRef={register({
                 required: "필수 입력 항목입니다.",
                 validate: async (value: string) => {
@@ -186,7 +186,7 @@ export default function Signup() {
                     .where("name", "==", value)
                     .get();
                   if (!res.empty) {
-                    return "이미 사용 중인 닉네임입니다.";
+                    return "이미 사용 중인 활동명입니다.";
                   }
                 },
               })}
@@ -221,11 +221,7 @@ export default function Signup() {
                         </>
                       }
                       label={
-                        <a
-                          href="https://docs.google.com/file/d/1HH1hSBgpl2tX266EfsjsUJvs7KAL_lctZKJnGAsTCNE/view?usp=sharing"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <a href="#" target="_blank" rel="noopener noreferrer">
                           내용보기
                         </a>
                       }
@@ -251,11 +247,7 @@ export default function Signup() {
                         </>
                       }
                       label={
-                        <a
-                          href="https://docs.google.com/file/d/11FSUnqoNijw9yGbgQCT38_fKrYS0tyTTYOOfLCVBbX8/view?usp=sharing"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <a href="#" target="_blank" rel="noopener noreferrer">
                           내용보기
                         </a>
                       }
