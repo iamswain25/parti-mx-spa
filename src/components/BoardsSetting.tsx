@@ -73,12 +73,14 @@ export default function BoardsSetting() {
     control,
     reset,
     formState,
+    watch
   } = useForm<BoardsForm>();
   const { fields, append, remove } = useFieldArray<FormBoard, "uid">({
     name: "boards",
     control,
     keyName: "uid",
   });
+  const watchingBoards = watch("boards");
   React.useEffect(() => {
     if (boards) {
       reset({ boards });
@@ -155,34 +157,36 @@ export default function BoardsSetting() {
                     )}
                   />
                 </FormControl>
-                <FormControl>
-                  <label>게시판 화면</label>
-                  <Controller
-                    control={control}
-                    label="게시판 화면"
-                    defaultValue={field.view}
-                    name={`boards[${i}].view`}
-                    render={props => (
-                      <RadioGroup {...props} row>
-                        <FormControlLabel
-                          value="text"
-                          control={<Radio />}
-                          label="text"
-                        />
-                        <FormControlLabel
-                          value="small"
-                          control={<Radio />}
-                          label="small"
-                        />
-                        <FormControlLabel
-                          value="large"
-                          control={<Radio />}
-                          label="large"
-                        />
-                      </RadioGroup>
-                    )}
-                  />
-                </FormControl>
+                {watchingBoards[i].type === "notice" && (
+                  <FormControl>
+                    <label>게시판 화면</label>
+                    <Controller
+                      control={control}
+                      label="게시판 화면"
+                      defaultValue={field.view}
+                      name={`boards[${i}].view`}
+                      render={props => (
+                        <RadioGroup {...props} row>
+                          <FormControlLabel
+                            value="text"
+                            control={<Radio />}
+                            label="text"
+                          />
+                          <FormControlLabel
+                            value="small"
+                            control={<Radio />}
+                            label="small"
+                          />
+                          <FormControlLabel
+                            value="large"
+                            control={<Radio />}
+                            label="large"
+                          />
+                        </RadioGroup>
+                      )}
+                    />
+                  </FormControl>
+                )}
                 <CustomTextField
                   type="number"
                   label="게시판 순서"
