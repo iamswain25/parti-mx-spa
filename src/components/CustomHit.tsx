@@ -1,10 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Paper } from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Typography, Grid, Paper, Breadcrumbs, Chip } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Highlight } from "react-instantsearch-dom";
-import { semanticDate } from "../helpers/datefns";
 import useUser from "../store/useUser";
+import { useBoards, useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -32,6 +32,15 @@ const useStyles = makeStyles(theme => {
   };
 });
 
+const StyledBreadcrumb = withStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.grey[100],
+    height: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    cursor: "pointer",
+  },
+}))(Chip);
+
 export default function CustomHit({ hit: p }: { hit: any }) {
   const {
     objectID,
@@ -39,12 +48,21 @@ export default function CustomHit({ hit: p }: { hit: any }) {
     created_by,
     count_like = 0,
     count_comment = 0,
+    board_id,
   } = p;
   const [user] = useUser({ id: created_by });
+  const [boards] = useBoards();
+  const board = boards?.find(b => b.id === board_id);
+  const [group_id] = useGroupId();
   const classes = useStyles();
   const created_date = new Date(created_at._seconds * 1000);
   return (
     <Paper elevation={0} className={classes.container}>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link to={`/${group_id}/${board_id}`}>
+          <StyledBreadcrumb label={`${board?.title}`} />
+        </Link>
+      </Breadcrumbs>
       <Link to={`/post/${objectID}`}>
         <div className={classes.titleContainer}>
           <Typography variant="h3" color="textPrimary">
