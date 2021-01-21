@@ -14,6 +14,7 @@ import { useSort } from "../store/useGlobalState";
 import BoardPostNotice from "./BoardPostNotice";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
 import PostSort from "./PostSort";
+import SquarePhoto from "./SquarePhoto";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -99,11 +100,21 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             </Box>
           )}
         </Grid>
-        <Grid item xs={12} md={8} container spacing={isDesktop ? 3 : 0}>
-          <Box width="100%" mt={isDesktop ? 2 : 0}>
-            {posts?.map(p => (
-              <BoardPostNotice post={p} key={p.id} />
-            ))}
+        <Grid item xs={12} md={8} spacing={isDesktop ? 3 : 0}>
+          <Box width="100%" mt={isDesktop ? 3 : 0}>
+            {b?.view === "large" ? (
+              <Grid container spacing={isDesktop ? 3 : 0}>
+                {posts?.map(p => (
+                  <SquarePhoto key={p.id} p={p} xs={12} sm={6} md={3} />
+                ))}
+              </Grid>
+            ) : (
+              <div>
+                {posts?.map(p => (
+                  <BoardPostNotice key={p.id} post={p} view={b?.view} />
+                ))}
+              </div>
+            )}
           </Box>
         </Grid>
       </Grid>

@@ -45,13 +45,19 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export default function BoardPostNotice({ post: p }: { post: Post }) {
+export default function BoardPostNotice({
+  post: p,
+  view,
+}: {
+  post: Post;
+  view: string;
+}) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
   const firstImage = useStoragePath(p.images?.[0]?.path);
   return (
     <div className={classes.container}>
-      {firstImage && (
+      {view !== "text" && firstImage && (
         <Link to={`/post/${p.id}`} className={classes.img}>
           <img src={firstImage} alt="post" />
         </Link>

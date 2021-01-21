@@ -3,7 +3,7 @@ import { Post } from "../types";
 import { Grid, GridSize, makeStyles, Typography } from "@material-ui/core";
 import StorageImage from "./StorageImage";
 import { Link } from "react-router-dom";
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   aspectRatio: {
     display: "flex",
     position: "relative",
@@ -53,15 +53,17 @@ export const useStyles = makeStyles((theme) => ({
 export default function SquarePhoto({
   p,
   xs = 6,
+  sm = 6,
   md = 3,
 }: {
   p: Post;
   xs?: GridSize;
+  sm?: GridSize;
   md?: GridSize;
 }) {
   const classes = useStyles();
   return (
-    <Grid item xs={xs} md={md}>
+    <Grid item xs={xs} sm={sm} md={md}>
       <Link to={`/post/${p.id}`} className={classes.div}>
         <div className={classes.aspectRatio}>
           <StorageImage image={p?.images?.[0]} className={classes.full} />
@@ -72,7 +74,7 @@ export default function SquarePhoto({
           </div>
           <Typography variant="h6" color="primary">
             <Grid container>
-              {p?.tags?.map((chip) => {
+              {p?.tags?.map(chip => {
                 return <span key={chip}>#{chip}&nbsp;</span>;
               })}
             </Grid>

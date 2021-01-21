@@ -11,6 +11,9 @@ import {
   Select,
   MenuItem,
   makeStyles,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useHistory } from "react-router-dom";
@@ -26,6 +29,7 @@ const newBoard: Partial<Board> = {
   title: "",
   body: "",
   type: "notice",
+  view: "text",
   id: "",
   permission: {
     read: ["organizer", "member", "user", "anonymous"],
@@ -148,6 +152,34 @@ export default function BoardsSetting() {
                         <MenuItem value="event">모임</MenuItem>
                         <MenuItem value="vote">투표</MenuItem>
                       </Select>
+                    )}
+                  />
+                </FormControl>
+                <FormControl>
+                  <label>게시판 화면</label>
+                  <Controller
+                    control={control}
+                    label="게시판 화면"
+                    defaultValue={field.view}
+                    name={`boards[${i}].view`}
+                    render={props => (
+                      <RadioGroup {...props} row>
+                        <FormControlLabel
+                          value="text"
+                          control={<Radio />}
+                          label="text"
+                        />
+                        <FormControlLabel
+                          value="small"
+                          control={<Radio />}
+                          label="small"
+                        />
+                        <FormControlLabel
+                          value="large"
+                          control={<Radio />}
+                          label="large"
+                        />
+                      </RadioGroup>
                     )}
                   />
                 </FormControl>

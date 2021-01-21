@@ -26,11 +26,6 @@ const useStyles = makeStyles(theme => {
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
     },
-    postContainer: {
-      [theme.breakpoints.up("md")]: {
-        padding: theme.spacing(2),
-      },
-    },
     mobileMore: {
       [theme.breakpoints.up("md")]: {
         display: "none",
@@ -62,16 +57,15 @@ export default function HomeBoardSuggestion({ board: b }: { board: Board }) {
           </Typography>
           {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
         </Grid>
-        <div className={classes.postContainer}>
+        <Box mt={2}>
           <Grid container spacing={2}>
-
-          {posts?.map((p, i) => (
-            <Grid item key={p.id} sm={6}>
-            <BoardPostSuggestion key={i} post={p} />
+            {posts?.map((p, i) => (
+              <Grid item key={p.id} sm={6}>
+                <BoardPostSuggestion key={i} post={p} />
               </Grid>
             ))}
-            </Grid>
-        </div>
+          </Grid>
+        </Box>
         <div className={classes.mobileMore}>
           <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
         </div>

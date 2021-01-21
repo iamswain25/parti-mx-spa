@@ -8,6 +8,7 @@ import useDesktop from "./useDesktop";
 import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
 import BoardPostNotice from "./BoardPostNotice";
+import SquarePhoto from "./SquarePhoto";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -66,11 +67,21 @@ export default function HomeBoardNotice({ board: b }: { board: Board }) {
             {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
           </div>
         </Grid>
-        <div>
-          {posts?.map(p => (
-            <BoardPostNotice key={p.id} post={p} />
-          ))}
-        </div>
+        <Box mt={2}>
+          {b?.view === "large" ? (
+            <Grid container spacing={isDesktop ? 3 : 0}>
+              {posts?.map(p => (
+                <SquarePhoto key={p.id} p={p} xs={12} sm={6} md={3} />
+              ))}
+            </Grid>
+          ) : (
+            <div>
+              {posts?.map(p => (
+                <BoardPostNotice key={p.id} post={p} view={b?.view} />
+              ))}
+            </div>
+          )}
+        </Box>
         <div className={classes.mobileMore}>
           <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
         </div>
