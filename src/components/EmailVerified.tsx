@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { sendVerificationEmail } from "../helpers/emailVerification";
+import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles(theme => ({
   div: {
     marginTop: theme.spacing(10),
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 export default function EmailVerified() {
   const classes = useStyles();
   const history = useHistory();
+  const [group_id] = useGroupId();
   const isVerified = auth.currentUser?.emailVerified;
 
   async function updateVerificationInfo() {
@@ -43,22 +45,15 @@ export default function EmailVerified() {
   if (isVerified === undefined) {
     return <LinearProgress />;
   }
-  if (auth.currentUser?.isAnonymous) {
+  if (auth.currentUser?.isAnonymous || isVerified) {
     history.replace("/");
   }
   return (
     <Box className={classes.div}>
-      {isVerified ? (
-        <Typography variant="h1" color="primary">
-          이메일 인증이 완료되었습니다.
-          <Link to="/">
-            <Button color="primary">홈화면으로 돌아가기</Button>
-          </Link>
-        </Typography>
-      ) : (
+      {!isVerified && (
         <Typography variant="h1" color="primary">
           이메일 인증을 완료해주세요.
-          <Link to="/">
+          <Link to={`${group_id}`}>
             <Button color="primary" onClick={sendVerificationEmail}>
               인증 이메일 재발송
             </Button>
