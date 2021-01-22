@@ -8,7 +8,9 @@ import {
   Divider,
 } from "@material-ui/core";
 import useUser from "../store/useUser";
-const useStyles = makeStyles((theme) => ({
+import { auth } from "../config/firebase";
+import DoneIcon from "@material-ui/icons/Done";
+const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(4),
     height: theme.spacing(4),
@@ -33,7 +35,12 @@ export default function AvatarNameEmail(props: { user_id: string }) {
           <div>
             <Box fontWeight={500}>{name}</Box>
             <Typography variant="h5" color="textSecondary">
-              {email}
+              {email}{" "}
+              {u?.verified ? (
+                <span>
+                  <DoneIcon color="primary" />
+                </span>
+              ) : null}
             </Typography>
           </div>
         </Box>

@@ -8,7 +8,7 @@ import UserGroupStatus from "./UserGroupStatus";
 import { GroupUser } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { firestore } from "../config/firebase";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   top: {
     height: theme.mixins.toolbar.minHeight,
     paddingLeft: theme.spacing(2),
@@ -49,7 +49,7 @@ export default function Members() {
     const snapshot = await ref.get();
     lastVisible = snapshot.docs[snapshot.docs.length - 1];
     const users = snapshot.docs.map(
-      (u) => ({ id: u.id, ...(u.data() as any) } as GroupUser)
+      u => ({ id: u.id, ...(u.data() as any) } as GroupUser),
     );
     if (isSearching) {
       setItems(users);

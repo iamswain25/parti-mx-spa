@@ -225,6 +225,7 @@ export type User = {
   name: string;
   photo_url: string;
   email: string;
+  verified: boolean;
 };
 export type GroupUser = {
   created_at: firebase.firestore.Timestamp;
