@@ -115,9 +115,18 @@ export default function Signup() {
           { merge: true },
         );
         await Promise.all([p1, p2, p3]);
-        alert("회원가입 되었습니다.");
+        alert(
+          "회원가입 되었습니다. 플랫폼 이용을 위해 이메일 인증을 완료해주세요.",
+        );
         setCurrentUser({ ...userCred.user } as firebase.User);
         history.replace(from);
+
+        const actionCodeSettings = {
+          // TODO: update url
+          url: "https://green-newdeal.web.app/verification",
+          handleCodeInApp: true,
+        };
+        await userCred.user.sendEmailVerification(actionCodeSettings);
       }
     } catch (error) {
       loginError(error, setError);
