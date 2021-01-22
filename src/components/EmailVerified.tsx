@@ -7,8 +7,8 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { sendVerificationEmail } from "./Profile";
+import { Link, useHistory } from "react-router-dom";
+import { sendVerificationEmail } from "../helpers/emailVerification";
 const useStyles = makeStyles(theme => ({
   div: {
     marginTop: theme.spacing(10),
@@ -24,9 +24,12 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }));
+
 export default function EmailVerified() {
   const classes = useStyles();
+  const history = useHistory();
   const isVerified = auth.currentUser?.emailVerified;
+
   async function updateVerificationInfo() {
     if (isVerified) {
       await firestore.doc(`users/${auth.currentUser?.uid}`).update({
@@ -39,6 +42,9 @@ export default function EmailVerified() {
   }, []);
   if (isVerified === undefined) {
     return <LinearProgress />;
+  }
+  if (auth.currentUser?.isAnonymous) {
+    history.replace("/");
   }
   return (
     <Box className={classes.div}>

@@ -22,6 +22,7 @@ import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
 import UserExtraInfo from "./UserExtraInfo";
+import { DOMAIN } from "../helpers/options";
 const useStyles = makeStyles(theme => ({
   paper: {
     paddingTop: theme.spacing(8),
@@ -122,8 +123,7 @@ export default function Signup() {
         history.replace(from);
 
         const actionCodeSettings = {
-          // TODO: update url
-          url: "https://green-newdeal.web.app/verification",
+          url: `${DOMAIN}/verification`,
           handleCodeInApp: true,
         };
         await userCred.user.sendEmailVerification(actionCodeSettings);

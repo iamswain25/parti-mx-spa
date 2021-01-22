@@ -6,10 +6,11 @@ import Members from "../components/Members";
 import MemberNew from "../components/MemberNew";
 import AdminRoute from "./AdminRoute";
 import Report from "../components/Report";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import SearchInstant from "../components/SearchInstant";
 import useEffectGroupId from "../store/useEffectGroupId";
 import RoutesBoard from "./RoutesBoard";
+import { verificationGuard } from "../helpers/emailVerification";
 export default function RoutesGroup() {
   useEffectGroupId();
   return (
@@ -21,7 +22,12 @@ export default function RoutesGroup() {
       <AdminRoute exact path="/:group_id/members/new" component={MemberNew} />
       <AdminRoute exact path="/:group_id/report" component={Report} />
       <AdminRoute exact path="/:group_id/edit" component={GroupEdit} />
-      <Route path="/:group_id/:board_id" component={RoutesBoard} />
+      <Route
+        path="/:group_id/:board_id"
+        render={() =>
+          verificationGuard([<RoutesBoard />, <Redirect to="/verification" />])
+        }
+      />
     </Switch>
   );
 }

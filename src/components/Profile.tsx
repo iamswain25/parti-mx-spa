@@ -17,6 +17,7 @@ import useAccountDelete from "../store/useAccountDelete";
 import UserExtraInfo from "./UserExtraInfo";
 import { User } from "../types";
 import useUser from "../store/useUser";
+import { sendVerificationEmail } from "../helpers/emailVerification";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,13 +55,6 @@ interface GroupForm extends User {
   area: string;
   address: string;
   organization: string;
-}
-export async function sendVerificationEmail() {
-  const actionCodeSettings = {
-    url: "https://green-newdeal.web.app/",
-    handleCodeInApp: true,
-  };
-  await auth.currentUser?.sendEmailVerification(actionCodeSettings);
 }
 export default function Profile() {
   const classes = useStyles();
