@@ -15,10 +15,7 @@ export async function sendVerificationEmail() {
 
 export function verificationGuard(component: JSX.Element[]) {
   const currentUser = auth.currentUser;
-  if (
-    currentUser !== undefined &&
-    (currentUser?.isAnonymous || currentUser?.emailVerified)
-  ) {
+  if (currentUser?.isAnonymous || currentUser?.emailVerified) {
     return component[0];
   } else {
     return component[1];
