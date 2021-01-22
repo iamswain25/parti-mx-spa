@@ -21,6 +21,7 @@ import HeaderRemain from "../components/HeaderRemain";
 import GroupLogoContainer from "../components/GroupLogoContainer";
 import Layout from "../components/Layout";
 import Footer from "../components/Footer";
+import EmailVerified from "../components/EmailVerified";
 
 export default function Routes() {
   useSignInWithEmailLink();
@@ -37,14 +38,13 @@ export default function Routes() {
           <Route path="/login" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/verification" exact component={EmailVerified} />
           <Route path="/post/:post_id" exact component={RoutePost} />
           <Route path="/edit/:post_id" exact component={RoutePostEdit} />
           <Route
             exact
             path="/p/:id"
-            render={(props) => (
-              <Redirect to={`/post/${props.match.params.id}`} />
-            )}
+            render={props => <Redirect to={`/post/${props.match.params.id}`} />}
           />
           <Route path="/group/new" exact component={GroupNew} />
           <Route path="/profile" exact component={Profile} />
