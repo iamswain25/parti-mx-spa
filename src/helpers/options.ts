@@ -1,6 +1,6 @@
 import { Role, UserStatus } from "../types";
 import firebase from "firebase";
-export const DOMAIN = "https://plan.sehub.net";
+export const DOMAIN = "https://green-newdeal.web.app";
 export const TITLE = "사회적경제 시민참여액션플랜";
 export const postSortOptions = [
   { created_at: "desc" },
