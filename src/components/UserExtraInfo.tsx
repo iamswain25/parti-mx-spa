@@ -62,6 +62,9 @@ export default function UserExtraInfo(props: {
         fullWidth
         name="organization"
         label="소속"
+        InputLabelProps={{
+          shrink: true,
+        }}
         inputRef={register()}
         required={!!errors.organization}
         error={!!errors.organization}

@@ -55,6 +55,13 @@ interface GroupForm extends User {
   address: string;
   organization: string;
 }
+export async function sendVerificationEmail() {
+  const actionCodeSettings = {
+    url: "https://green-newdeal.web.app/",
+    handleCodeInApp: true,
+  };
+  await auth.currentUser?.sendEmailVerification(actionCodeSettings);
+}
 export default function Profile() {
   const classes = useStyles();
   const history = useHistory();
@@ -62,6 +69,7 @@ export default function Profile() {
   const [me] = useUser({ id: currentUser?.uid });
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [group_id] = useGroupId();
+  const isVerified = auth.currentUser?.emailVerified;
   const deleteAccount = useAccountDelete();
   const formControl = useForm<GroupForm>();
   const { handleSubmit, register, errors, control, reset } = formControl;
@@ -120,7 +128,7 @@ export default function Profile() {
         defaultValue=""
         as={
           <TextField
-            label="닉네임"
+            label="활동명"
             variant="outlined"
             margin="normal"
             fullWidth
@@ -131,17 +139,17 @@ export default function Profile() {
           />
         }
         rules={{
-          required: "닉네임을 입력해야 합니다.",
+          required: "활동명을 입력해야 합니다.",
           validate: async (value: string) => {
             const res = await firestore
               .collection("users")
               .where("name", "==", value)
               .get();
             if (res.docs.length > 1) {
-              return "이미 사용 중인 닉네임입니다.";
+              return "이미 사용 중인 활동명입니다.";
             } else if (res.docs.length === 1) {
               if (res.docs[0].id !== currentUser?.uid) {
-                return "이미 사용 중인 닉네임입니다.";
+                return "이미 사용 중인 활동명입니다.";
               }
             }
           },
@@ -162,10 +170,19 @@ export default function Profile() {
             autoFocus
             required
             error={errors.email ? true : false}
-            helperText={errors.email && errors.email.message}
+            helperText={
+              isVerified
+                ? "이메일 인증이 완료되었습니다."
+                : "이메일 인증이 필요합니다. 아래의 링크를 클릭하여 이메일 인증을 완료해주세요."
+            }
           />
         }
       />
+      {isVerified ? null : (
+        <Button color="primary" onClick={sendVerificationEmail}>
+          인증 이메일 재발송
+        </Button>
+      )}
       <BtnSubmitDesktop text="수정" />
       {currentUser?.email && (
         <div className={classes.exit}>
