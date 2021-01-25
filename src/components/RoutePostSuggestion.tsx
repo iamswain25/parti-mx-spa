@@ -11,12 +11,22 @@ const useStyles = makeStyles(theme => {
   return {
     container: {
       borderBottom: `1px solid ${grey[200]}`,
-      [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(2),
-      },
+      padding: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2),
+      },
+    },
+    announcementContainer: {
+      backgroundColor: "rgb(0,158,85,0.1)",
+      borderBottom: `1px solid ${grey[200]}`,
+      padding: theme.spacing(2),
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+      },
+      "& > a > h3": {
+        fontWeight: "bold",
       },
     },
     titleContainer: {
@@ -57,10 +67,14 @@ const useStyles = makeStyles(theme => {
 
 export default function RoutePostSuggestion({ post: p }: { post: Post }) {
   const classes = useStyles();
-  const { count_like = 0, is_closed } = p;
+  const { count_like = 0, is_closed, is_announced } = p;
   const daysLeft = is_closed ? "완료" : daysLeftMeta(p.metadata, p.created_at);
   return (
-    <div className={classes.container}>
+    <div
+      className={
+        is_announced ? classes.announcementContainer : classes.container
+      }
+    >
       <Box mb={1}>
         <Grid container direction="row">
           <Box mr={0.5} display="flex" alignItems="center">

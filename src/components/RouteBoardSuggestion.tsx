@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => {
         paddingRight: theme.spacing(2),
       },
     },
+    margin: {
+      marginBottom: theme.spacing(2),
+    },
   };
 });
 
@@ -34,6 +37,9 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const [isClosed, setClosed] = React.useState(false);
   const [sort] = useSort();
   const [posts] = usePosts({ board_id: b.id, isClosed, sort });
+  const announcedPosts = posts?.filter(p => p.is_announced);
+  const normalPosts = posts?.filter(p => !p.is_announced);
+  const showAnnouncement = announcedPosts && announcedPosts?.length > 0;
   return (
     <section className={classes.container}>
       <Grid
@@ -81,7 +87,11 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
         </Box>
         <ButtonBoardType sort />
       </Grid>
-      {posts?.map(p => (
+      <div className={classes.margin}>
+        {showAnnouncement &&
+          announcedPosts?.map(p => <RoutePostSuggestion key={p.id} post={p} />)}
+      </div>
+      {normalPosts?.map(p => (
         <RoutePostSuggestion key={p.id} post={p} />
       ))}
     </section>
