@@ -6,26 +6,42 @@ import {
   Pagination,
   Configure,
   Stats,
+  Menu,
+  MenuSelect,
 } from "react-instantsearch-dom";
 import { CustomHits } from "./CustomHits";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, LinearProgress, Grid } from "@material-ui/core";
+import { useBoards } from "../store/useGlobalState";
+import useDesktop from "./useDesktop";
 const client = algoliasearch("6HUA4GMFJJ", "6310f1a94693ca85bf55899a686f05a5");
 const useStyles = makeStyles(theme => {
   return {
-    searchResult: {
+    resultHeader: {
       borderBottom: "1px solid " + theme.palette.divider,
       fontSize: 20,
       padding: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      display: "flex",
+    },
+    resultCategory: {
+      [theme.breakpoints.up("lg")]: {
+        marginLeft: theme.spacing(4),
+      },
     },
   };
 });
 export default function SearchInstant() {
   const { group_id } = useParams<{ group_id: string }>();
   const classes = useStyles();
+  const [boards] = useBoards();
+  const [isDesktop] = useDesktop();
+  if (boards === undefined) {
+    return <LinearProgress />;
+  }
   return (
     <InstantSearch indexName="green-newdeal" searchClient={client}>
       <SearchBox />
-      <div className={classes.searchResult}>
+      <div className={classes.resultHeader}>
         <span>검색결과 </span>
         <Stats
           translations={{
@@ -34,10 +50,41 @@ export default function SearchInstant() {
             },
           }}
         />
+        <div>
+          {!isDesktop ? (
+            <MenuSelect
+              attribute="board_id"
+              transformItems={(items: any[]) =>
+                items.map(item => ({
+                  ...item,
+                  label: boards?.find(board => board.id === item.label)?.title,
+                }))
+              }
+            />
+          ) : null}
+        </div>
       </div>
-      <Configure hitsPerPage={4} filters={`group_id:${group_id}`} />
-      <CustomHits />
-      <Pagination />
+      <Grid container className={classes.resultCategory}>
+        {isDesktop ? (
+          <Grid item xs={1}>
+            <Menu
+              attribute="board_id"
+              transformItems={(items: any[]) =>
+                items.map(item => ({
+                  ...item,
+                  label: boards?.find(board => board.id === item.label)?.title,
+                }))
+              }
+            />
+          </Grid>
+        ) : null}
+
+        <Grid item xs>
+          <Configure hitsPerPage={5} filters={`group_id:${group_id}`} />
+          <CustomHits />
+          <Pagination showLast />
+        </Grid>
+      </Grid>
     </InstantSearch>
   );
 }

@@ -35,8 +35,8 @@ const useStyles = makeStyles(theme => {
 const StyledBreadcrumb = withStyles(theme => ({
   root: {
     backgroundColor: theme.palette.grey[100],
-    height: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    height: theme.spacing(3),
+    marginBottom: theme.spacing(1),
     cursor: "pointer",
   },
 }))(Chip);
