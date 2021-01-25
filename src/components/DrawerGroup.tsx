@@ -4,7 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme, Theme } from "@material-ui/core/styles";
 import { useCurrentUser } from "../store/useGlobalState";
-import DrawerBoards from "./DrawerBoards";
+import MyGroupList from "./MyGroupList";
 const useStyles = makeStyles((theme: Theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 24,
   },
   drawer: {
-    width: "100%",
+    width: 300,
     [theme.breakpoints.up("md")]: {
       flexShrink: 0,
     },
@@ -54,7 +54,7 @@ export default function DrawerGroup() {
           keepMounted: true,
         }}
       >
-        <DrawerBoards close={handleDrawerClose} />
+        <MyGroupList clickHandler={handleDrawerClose} />
       </Drawer>
     </>
   );

@@ -78,10 +78,9 @@ export default function HeaderRemain() {
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
         <Grid container>
-          <Hidden mdUp implementation="css">
+          <Grid item xs={2}>
             <DrawerGroup />
-          </Hidden>
-          <Grid item xs={2}></Grid>
+          </Grid>
           <Grid item xs={8} className={classes.logoFont}>
             <Link to={`/${group?.id}`}>{group?.title}</Link>
           </Grid>

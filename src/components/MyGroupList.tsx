@@ -17,7 +17,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import GroupSearchList from "./GroupSearchList";
 import MenuProfile from "./MenuProfile";
 import useGroups from "../store/useGroups";
@@ -36,34 +36,37 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: "center",
   },
 }));
-export default function MyGroupList(props: {
-  clickHandler: (group_id?: string) => void;
-}) {
+export default function MyGroupList(props: { clickHandler: () => void }) {
   const { clickHandler } = props;
   const [groupId] = useGroupId();
   const classes = useStyles();
   const history = useHistory();
   const [keyword, setKeyword] = React.useState("");
-  const [groups] = useGroups(true);
+  const [groups] = useGroups();
   const [currentUser] = useCurrentUser();
   let list = [];
-  list.push(
-    ...groups?.map((g: Group, i: number) => {
-      return (
-        <ListItem
-          key={`group${i}`}
-          button
-          onClick={() => clickHandler(g.id)}
-          selected={groupId === g.id}
-        >
-          <ListItemIcon>
-            <Avatar variant="square" children={g.title.substr(0, 1)} />
-          </ListItemIcon>
-          <ListItemText primary={g.title} />
-        </ListItem>
-      );
-    })
-  );
+  if (groups) {
+    list.push(
+      ...groups?.map((g: Group, i: number) => {
+        return (
+          <ListItem
+            key={g.id}
+            component={Link}
+            to={`/${g.id}`}
+            button
+            onClick={clickHandler}
+            selected={groupId === g.id}
+          >
+            <ListItemIcon>
+              <Avatar variant="square" children={g.title.substr(0, 1)}  />
+            </ListItemIcon>
+            <ListItemText primary={g.title} />
+          </ListItem>
+        );
+      }),
+    );
+  }
+
   // list.push(<Divider key="divider" />);
   // list.push(<ListItem key="label">아래는 가입하지 않은 그룹입니다</ListItem>);
   // list.push(
@@ -100,7 +103,7 @@ export default function MyGroupList(props: {
             <OutlinedInput
               fullWidth
               value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
+              onChange={e => setKeyword(e.target.value)}
               startAdornment={
                 <InputAdornment position="start">
                   <SearchIcon />
