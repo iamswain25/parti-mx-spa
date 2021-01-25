@@ -46,7 +46,7 @@ export default function EmailVerified() {
     return <LinearProgress />;
   }
   if (auth.currentUser?.isAnonymous || isVerified) {
-    history.replace("/");
+    history.replace(`/${group_id}`);
   }
   return (
     <Box className={classes.div}>
