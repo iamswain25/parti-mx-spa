@@ -22,7 +22,6 @@ import GroupLogoContainer from "../components/GroupLogoContainer";
 import Layout from "../components/Layout";
 import Footer from "../components/Footer";
 import EmailVerified from "../components/EmailVerified";
-import { verificationGuard } from "../helpers/emailVerification";
 export default function Routes() {
   useSignInWithEmailLink();
   useEffectRole();
@@ -32,16 +31,7 @@ export default function Routes() {
     <>
       <CssBaseline />
       <HeaderRemain />
-      <Route
-        path={["/home", "/test"]}
-        exact
-        render={() =>
-          verificationGuard([
-            <GroupLogoContainer />,
-            <Redirect to="/verification" />,
-          ])
-        }
-      />
+      <Route path={["/home", "/test"]} exact component={GroupLogoContainer} />
       <Layout>
         <Switch>
           <Route path="/forgot" exact component={PasswordForgot} />

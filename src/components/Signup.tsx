@@ -22,7 +22,6 @@ import { useCurrentUser } from "../store/useGlobalState";
 import firebase from "firebase";
 import { loginError } from "../helpers/firebaseErrorCode";
 import UserExtraInfo from "./UserExtraInfo";
-import { DOMAIN } from "../helpers/options";
 const useStyles = makeStyles(theme => ({
   paper: {
     paddingTop: theme.spacing(8),
@@ -116,17 +115,8 @@ export default function Signup() {
           { merge: true },
         );
         await Promise.all([p1, p2, p3]);
-        alert(
-          "회원가입 되었습니다. 플랫폼 이용을 위해 이메일 인증을 완료해주세요.",
-        );
         setCurrentUser({ ...userCred.user } as firebase.User);
         history.replace(from);
-
-        const actionCodeSettings = {
-          url: `${DOMAIN}/verification`,
-          handleCodeInApp: true,
-        };
-        await userCred.user.sendEmailVerification(actionCodeSettings);
       }
     } catch (error) {
       loginError(error, setError);

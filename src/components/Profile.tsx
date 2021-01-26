@@ -17,7 +17,6 @@ import useAccountDelete from "../store/useAccountDelete";
 import UserExtraInfo from "./UserExtraInfo";
 import { User } from "../types";
 import useUser from "../store/useUser";
-import { sendVerificationEmail } from "../helpers/emailVerification";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -164,19 +163,10 @@ export default function Profile() {
             autoFocus
             required
             error={errors.email ? true : false}
-            helperText={
-              isVerified
-                ? "이메일 인증이 완료되었습니다."
-                : "이메일 인증이 필요합니다. 아래의 링크를 클릭하여 이메일 인증을 완료해주세요."
-            }
+            helperText={errors.email && errors.email.message}
           />
         }
       />
-      {isVerified ? null : (
-        <Button color="primary" onClick={sendVerificationEmail}>
-          인증 이메일 재발송
-        </Button>
-      )}
       <BtnSubmitDesktop text="수정" />
       {currentUser?.email && (
         <div className={classes.exit}>
