@@ -66,7 +66,11 @@ export default function EventDetail({ post: p }: { post: Post }) {
           </Box>
         </Box>
         <Box mb={2} mt={1}>
-          <AvatarNameDate user_id={p.created_by} created_at={created_at} />
+          <AvatarNameDate
+            user_id={p.created_by}
+            created_at={created_at}
+            count_view={p.count_view || 0}
+          />
         </Box>
         <Divider light />
         {p.is_closed ? null : (

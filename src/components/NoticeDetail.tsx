@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => {
         backgroundColor: theme.palette.background.paper,
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.palette.grey[300]
-      }
+        borderColor: theme.palette.grey[300],
+      },
     },
     title: {
       display: "flex",
@@ -36,23 +36,23 @@ const useStyles = makeStyles(theme => {
         paddingTop: 60,
         fontSize: 24,
         letterSpacing: -0.6,
-        paddingBottom: theme.spacing(2)
+        paddingBottom: theme.spacing(2),
       },
       [theme.breakpoints.down("sm")]: {
         paddingBottom: theme.spacing(1),
         fontSize: 16,
-        fontWeight: 500
-      }
+        fontWeight: 500,
+      },
     },
     image: {
       [theme.breakpoints.up("md")]: {
         paddingTop: theme.spacing(3),
-        paddingBottom: theme.spacing(3)
+        paddingBottom: theme.spacing(3),
       },
       [theme.breakpoints.down("sm")]: {
         paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2)
-      }
+        paddingBottom: theme.spacing(2),
+      },
     },
     body: {
       whiteSpace: "pre-wrap",
@@ -60,19 +60,19 @@ const useStyles = makeStyles(theme => {
         fontSize: 16,
         letterSpacing: -0.4,
         marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(3)
+        marginBottom: theme.spacing(3),
       },
       [theme.breakpoints.down("sm")]: {
         fontSize: 14,
         letterSpacing: -0.3,
-        marginTop: theme.spacing(1.5)
-      }
-    }
+        marginTop: theme.spacing(1.5),
+      },
+    },
   };
 });
 
 export default function NoticeDetail({
-  post: p
+  post: p,
 }: {
   post: Post<NoticeMetadata>;
 }) {
@@ -90,7 +90,11 @@ export default function NoticeDetail({
           </Box>
         </Box>
         <Box mt={1}>
-          <AvatarNameDate user_id={p.created_by} created_at={created_at} />
+          <AvatarNameDate
+            user_id={p.created_by}
+            created_at={created_at}
+            count_view={p.count_view || 0}
+          />
         </Box>
         <Box my={2}>
           <Divider light />

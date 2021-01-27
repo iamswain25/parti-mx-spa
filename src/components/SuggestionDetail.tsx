@@ -149,15 +149,21 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           <Divider light />
         </Box>
         <Box mb={2}>
-          <Grid container alignItems="center">
-            <Box className={classes.label}>제안자</Box>
-            <Avatar
-              alt={user?.name}
-              src={user?.photo_url}
-              className={classes.small}
-            />
-            <Box ml={1} fontWeight={500}>
-              {user?.name}
+          <Grid container justify="space-between">
+            <Box display="flex" alignItems="center">
+              <Box className={classes.label}>제안자</Box>
+              <Avatar
+                alt={user?.name}
+                src={user?.photo_url}
+                className={classes.small}
+              />
+              <Box ml={1} fontWeight={500}>
+                {user?.name}
+              </Box>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <Box className={classes.label}> 조회</Box>
+              <Box>{p.count_view}</Box>
             </Box>
           </Grid>
         </Box>

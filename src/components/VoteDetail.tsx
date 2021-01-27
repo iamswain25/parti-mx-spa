@@ -114,7 +114,11 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
           </Box>
         </Box>
         <Box mt={1}>
-          <AvatarNameDate user_id={p.created_by} created_at={created_at} />
+          <AvatarNameDate
+            user_id={p.created_by}
+            created_at={created_at}
+            count_view={p.count_view || 0}
+          />
         </Box>
         <Box my={2}>
           <Divider light />

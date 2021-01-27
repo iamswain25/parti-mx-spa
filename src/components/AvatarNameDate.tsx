@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { semanticDate } from "../helpers/datefns";
 import useUser from "../store/useUser";
+import useDesktop from "./useDesktop";
 const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(3),
@@ -30,10 +31,12 @@ const useStyles = makeStyles(theme => ({
 export default function AvatarNameDate({
   user_id,
   created_at,
+  count_view,
   justify = "space-between",
 }: {
   user_id: string;
   created_at?: firebase.firestore.Timestamp;
+  count_view?: number;
   justify?: GridJustification;
 }) {
   const classes = useStyles();
@@ -57,6 +60,7 @@ export default function AvatarNameDate({
       </Box>
       <Box color="grey.600" ml={1}>
         {semanticDate(created_at)}
+        {count_view !== undefined ? <span>{` 조회 ${count_view}`}</span> : null}
       </Box>
     </Grid>
   );
