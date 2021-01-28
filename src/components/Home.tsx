@@ -1,29 +1,53 @@
 import React from "react";
-import HomeBoardNotice from "./HomeBoardNotice";
-import HomeBoardSuggestion from "./HomeBoardSuggestion";
+import HomeBoardNotice2 from "./HomeBoardNotice2";
+import HomeBoardSuggestion2 from "./HomeBoardSuggestion2";
 import { useBoards } from "../store/useGlobalState";
-import { Board } from "../types";
+import { Board, Post } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
-import HomeBoardEvent from "./HomeBoardEvent";
+import HomeBoardEvent2 from "./HomeBoardEvent2";
 import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
-import HomeBoardVote from "./HomeBoardVote";
+import HomeBoardVote2 from "./HomeBoardVote2";
 import useDesktop from "./useDesktop";
 import HomeMapPosts from "./HomeMapPosts";
 import useAllPosts from "../store/useAllPosts";
-function mapElement(b: Board) {
+const mapElement = (posts: Post[]) => (b: Board) => {
   switch (b.type) {
     case "suggestion":
-      return <HomeBoardSuggestion key={b.id} board={b} />;
+      return (
+        <HomeBoardSuggestion2
+          key={b.id}
+          board={b}
+          posts={posts.filter(p => p.type === b.type)}
+        />
+      );
     case "notice":
-      return <HomeBoardNotice key={b.id} board={b} />;
+      return (
+        <HomeBoardNotice2
+          key={b.id}
+          board={b}
+          posts={posts.filter(p => p.type === b.type)}
+        />
+      );
     case "vote":
-      return <HomeBoardVote key={b.id} board={b} />;
+      return (
+        <HomeBoardVote2
+          key={b.id}
+          board={b}
+          posts={posts.filter(p => p.type === b.type)}
+        />
+      );
     case "event":
-      return <HomeBoardEvent key={b.id} board={b} />;
+      return (
+        <HomeBoardEvent2
+          key={b.id}
+          board={b}
+          posts={posts.filter(p => p.type === b.type)}
+        />
+      );
     default:
       return null;
   }
-}
+};
 export default function Home() {
   const [boards] = useBoards();
   const [posts] = useAllPosts();
@@ -31,8 +55,8 @@ export default function Home() {
   useEffectBoardId();
 
   if (boards === undefined) return <LinearProgress />;
-  if (!boards) return null;
-  const boardArr = boards?.map(mapElement);
+  if (!(boards && posts)) return null;
+  const boardArr = boards?.map(mapElement(posts));
   return (
     <Grid container spacing={isDesktop ? 3 : 0}>
       <Grid item xs={isDesktop ? 8 : 12}>
