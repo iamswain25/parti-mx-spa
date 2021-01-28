@@ -22,7 +22,6 @@ export default function useAllPosts<T extends Post>(): [
             const items = snapshot.docs.map(
               doc => ({ id: doc.id, ...(doc.data() as any) } as T),
             );
-            console.log(items);
             setItems(items);
           }
         })

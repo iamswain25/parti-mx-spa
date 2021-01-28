@@ -1,6 +1,6 @@
 import React from "react";
 import { Post } from "../types";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import StorageImage from "./StorageImage";
 import { Link } from "react-router-dom";
 export const useStyles = makeStyles(theme => ({

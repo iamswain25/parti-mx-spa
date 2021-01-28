@@ -8,7 +8,6 @@ import {
   Divider,
 } from "@material-ui/core";
 import useUser from "../store/useUser";
-import { auth } from "../config/firebase";
 import DoneIcon from "@material-ui/icons/Done";
 const useStyles = makeStyles(theme => ({
   small: {

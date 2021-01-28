@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import "./index.sass";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
-import Ie11 from "./components/Ie11";
+// import Ie11 from "./components/Ie11";
 export function detectIE() {
   const ua = window.navigator.userAgent;
 
