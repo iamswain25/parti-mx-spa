@@ -5,9 +5,11 @@ import { useBoards } from "../store/useGlobalState";
 import { Board } from "../types";
 import useEffectBoardId from "../store/useEffectBoardId";
 import HomeBoardEvent from "./HomeBoardEvent";
-import { Grid, LinearProgress } from "@material-ui/core";
+import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import HomeBoardVote from "./HomeBoardVote";
 import useDesktop from "./useDesktop";
+import HomeMapPosts from "./HomeMapPosts";
+import useAllPosts from "../store/useAllPosts";
 function mapElement(b: Board) {
   switch (b.type) {
     case "suggestion":
@@ -24,31 +26,35 @@ function mapElement(b: Board) {
 }
 export default function Home() {
   const [boards] = useBoards();
+  const [posts] = useAllPosts();
   const [isDesktop] = useDesktop();
   useEffectBoardId();
 
   if (boards === undefined) return <LinearProgress />;
   if (!boards) return null;
-  if (isDesktop) {
-    const wide = boards
-      .filter(board => ["notice", "suggestion"].includes(board?.type))
-      .map(mapElement);
-
-    const narrow = boards
-      .filter(board => ["vote", "event"].includes(board?.type))
-      .map(mapElement);
-    return (
-      <Grid container spacing={3}>
-        <Grid item xs={8}>
-          {wide}
-        </Grid>
-        <Grid item xs={4}>
-          {narrow}
-        </Grid>
+  const boardArr = boards?.map(mapElement);
+  return (
+    <Grid container spacing={isDesktop ? 3 : 0}>
+      <Grid item xs={isDesktop ? 8 : 12}>
+        {boardArr}
       </Grid>
-    );
-  } else {
-    const boardArr = boards?.map(mapElement);
-    return <>{boardArr}</>;
-  }
+      <Grid item xs={isDesktop ? 4 : 12}>
+        <Box
+          mx={isDesktop ? 0 : 2}
+          my={3}
+          borderBottom="1px solid #bdbdbd"
+          display={isDesktop ? undefined : "flex"}
+          alignItems={isDesktop ? undefined : "center"}
+          justifyContent={isDesktop ? undefined : "space-between"}
+        >
+          <Typography variant="h2" color="textPrimary">
+            <Box fontWeight="bold">지도보기</Box>
+          </Typography>
+          <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
+            {posts?.length && <HomeMapPosts posts={posts} />}
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
+  );
 }

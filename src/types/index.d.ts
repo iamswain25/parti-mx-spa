@@ -162,9 +162,7 @@ export type Metadata =
   | EventMetadata
   | SuggestionMetadata
   | NoticeMetadata;
-export type Post<
-  T = VoteMetadata | EventMetadata | SuggestionMetadata | NoticeMetadata
-> = {
+export type Post<T = { location: Location } & Metadata> = {
   id: string;
   title: string;
   board_id: string;
@@ -196,19 +194,18 @@ export interface Suggestion {
   mx_posts_by_pk: Post;
 }
 export type Location = { address: string; latLng?: LatLng };
-export type NoticeMetadata = { announcement: boolean };
-export type SuggestionMetadata = {
+export type NoticeMetadata = Metadata & { announcement: boolean };
+export type SuggestionMetadata = Metadata & {
   closingMethod: string;
-  location: Location;
 };
-export type VoteMetadata = {
+export type VoteMetadata = Metadata & {
   closingMethod: string;
   isBinary: boolean;
   isMultiple: boolean;
   isAnonymous: boolean;
   isResultHidden: boolean;
 };
-export type EventMetadata = {
+export type EventMetadata = Metadata & {
   event_date: firebase.firestore.Timestamp; //hasura: eventDate 굳이 바꿈 ㅜㅜ
   place: string;
   deadline: firebase.firestore.Timestamp;
