@@ -85,12 +85,13 @@ export default function HeaderRemain() {
           </Hidden>
           <Grid item xs={2}></Grid>
           <Grid item xs={8} className={classes.logoFont}>
+            {/* <Link to={`/${group?.id}`}>{group?.title}</Link> */}
             <Link to={`/${group?.id}`}>
               <img src={greenlablogo} alt="logo" />
             </Link>
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
-            {currentUser?.email && <MenuProfile />}
+            <Hidden xsDown>{currentUser?.email && <MenuProfile />}</Hidden>
             <SearchButton />
             <Hidden smDown>
               {currentUser?.email ? <LogoutButton /> : <LoginButton />}

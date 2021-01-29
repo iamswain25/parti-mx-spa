@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import partiLogo from "../assets/images/logo-parti-lighter.png";
 import React from "react";
 import useDesktop from "./useDesktop";
@@ -35,7 +35,11 @@ const useStyles = makeStyles(theme => ({
       justifyContent: "center",
       alignItems: "center",
       position: "relative",
-      margin: "10px 0",
+      marginBottom: theme.spacing(4),
+      padding: 0,
+      [theme.breakpoints.down("sm")]: {
+        margin: theme.spacing(4),
+      },
       "&>a>strong": {
         fontSize: 12,
         color: theme.palette.grey[400],
@@ -64,6 +68,16 @@ export default function Footer() {
       <section className={classes.root}>
         <Grid container spacing={isDesktop ? 4 : 0}>
           <Grid item sm={8} container direction="column">
+            <a
+              href="http://igt.or.kr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bold mt"
+            >
+              {/* <Typography variant="h5"> */}
+              녹색전환연구소 Institute for Green Transformation
+              {/* </Typography> */}
+            </a>
             <Grid spacing={3} container className="mt">
               <Grid item>
                 <a
@@ -86,12 +100,15 @@ export default function Footer() {
                 </a>
               </Grid>
             </Grid>
-            <Grid item className="mt">
-              서울시 종로구 자하문로 17길 12-9, 2층
-            </Grid>
-            <Grid item>
-              Tel: <a href="tel:+82-70-4820-4900">070-4820-4900</a> /
-              <a href="tel:+82-70-4820-4998">070-4820-4998</a>
+            <Grid spacing={1} container className="mt" direction="column">
+              <Grid item>서울시 종로구 자하문로 17길 12-9, 2층(03035)</Grid>
+              <Grid item>
+                전화: <a href="tel:+82-70-4820-4900">070-4820-4900</a> /
+                <a href="tel:+82-70-4820-4998">070-4820-4998</a>
+              </Grid>
+              <Grid item>
+                E-mail: <a href="mailto:mail2igt@daum.net">mail2igt@daum.net</a>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} className="powered">
