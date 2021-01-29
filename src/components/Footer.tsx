@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import partiLogo from "../assets/images/logo-parti-lighter.png";
 import React from "react";
 import useDesktop from "./useDesktop";

@@ -40,20 +40,20 @@ export default function Chips({
   chips,
   setChips,
 }: {
-  chips: ChipData[];
-  setChips: Dispatch<SetStateAction<ChipData[]>>;
+  chips?: ChipData[];
+  setChips?: Dispatch<SetStateAction<ChipData[] | undefined>>;
 }) {
   const classes = useStyles();
   const handleSelect = React.useCallback(
     (chipClicked: ChipData) => () => {
       chipClicked.selected = !chipClicked.selected;
-      setChips((chips) => [...chips]);
+      setChips && setChips(chips => [...(chips || [])]);
     },
-    [setChips]
+    [setChips],
   );
   return (
     <Paper component="ul" className={classes.root} elevation={0}>
-      {chips.map((chip) => {
+      {chips?.map(chip => {
         return (
           <li key={chip.label}>
             <Chip

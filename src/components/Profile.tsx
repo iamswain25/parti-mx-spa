@@ -62,7 +62,6 @@ export default function Profile() {
   const [me] = useUser({ id: currentUser?.uid });
   const [photo, setPhoto] = React.useState<null | string>(null);
   const [group_id] = useGroupId();
-  const isVerified = auth.currentUser?.emailVerified;
   const deleteAccount = useAccountDelete();
   const formControl = useForm<GroupForm>();
   const { handleSubmit, register, errors, control, reset } = formControl;

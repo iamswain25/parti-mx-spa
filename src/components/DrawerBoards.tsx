@@ -2,11 +2,10 @@ import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { IconButton, Hidden, Typography } from "@material-ui/core";
+import { IconButton, Hidden } from "@material-ui/core";
 import { useBoards, useCurrentUser } from "../store/useGlobalState";
 import useGroup from "../store/useGroup";
 import greenlablogo from "../assets/images/greenlablogo.png";
-import MenuProfile from "./MenuProfile";
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -78,7 +77,7 @@ export default function DrawerBoards({ close }: { close: () => void }) {
         </IconButton>
       </div>
       <div className={classes.container}>
-        <Hidden smUp>
+        <Hidden smUp implementation="css">
           {currentUser?.email && (
             <NavLink
               exact

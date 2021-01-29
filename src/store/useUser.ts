@@ -28,6 +28,7 @@ export default function useUser({
             const item = { id: doc.id, ...doc.data() } as User;
             setUser(item);
           });
+        return () => setUser(null);
       }
     }
   }, [id, listen]);

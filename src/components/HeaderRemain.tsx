@@ -80,7 +80,7 @@ export default function HeaderRemain() {
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar classes={{ regular: classes.toolbar }} disableGutters>
         <Grid container>
-          <Hidden mdUp implementation="css">
+          <Hidden mdUp>
             <DrawerGroup />
           </Hidden>
           <Grid item xs={2}></Grid>
@@ -91,9 +91,11 @@ export default function HeaderRemain() {
             </Link>
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
-            <Hidden xsDown>{currentUser?.email && <MenuProfile />}</Hidden>
+            <Hidden xsDown implementation="css">
+              {currentUser?.email && <MenuProfile />}
+            </Hidden>
             <SearchButton />
-            <Hidden smDown>
+            <Hidden smDown implementation="css">
               {currentUser?.email ? <LogoutButton /> : <LoginButton />}
             </Hidden>
           </Grid>

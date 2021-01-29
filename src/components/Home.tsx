@@ -10,6 +10,8 @@ import HomeBoardVote2 from "./HomeBoardVote2";
 import useDesktop from "./useDesktop";
 import HomeMapPosts from "./HomeMapPosts";
 import useAllPosts from "../store/useAllPosts";
+import useTagChips from "./useTagChips";
+import Chips from "./Chips";
 const mapElement = (posts: Post[]) => {
   posts.sort(a => (a.is_announced ? -1 : 1));
   return (b: Board) => {
@@ -56,32 +58,49 @@ export default function Home() {
   const [posts] = useAllPosts();
   const [isDesktop] = useDesktop();
   useEffectBoardId();
+  const [chipData, setChipData] = useTagChips(posts);
+  const selectedTags = React.useMemo(
+    () => chipData?.filter(c => c.selected).map(c => c.label),
+    [chipData],
+  );
+  const selectedPosts = React.useMemo(
+    () =>
+      selectedTags?.length
+        ? posts?.filter(p =>
+            selectedTags?.every((t: string) => p.tags?.includes(t)),
+          )
+        : posts,
+    [selectedTags, posts],
+  );
 
   if (boards === undefined) return <LinearProgress />;
-  if (!(boards && posts)) return null;
-  const boardArr = boards?.map(mapElement(posts));
+  if (!(boards && selectedPosts)) return null;
+  const boardArr = boards?.map(mapElement(selectedPosts));
   return (
-    <Grid container spacing={isDesktop ? 3 : 0}>
-      <Grid item xs={isDesktop ? 8 : 12}>
-        {boardArr}
-      </Grid>
-      <Grid item xs={isDesktop ? 4 : 12}>
-        <Box
-          mx={isDesktop ? 0 : 2}
-          my={3}
-          borderBottom="1px solid #bdbdbd"
-          display={isDesktop ? undefined : "flex"}
-          alignItems={isDesktop ? undefined : "center"}
-          justifyContent={isDesktop ? undefined : "space-between"}
-        >
-          <Typography variant="h2" color="textPrimary">
-            <Box fontWeight="bold">지도보기</Box>
-          </Typography>
-          <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
-            {posts?.length && <HomeMapPosts posts={posts} />}
+    <>
+      <Chips chips={chipData} setChips={setChipData} />
+      <Grid container spacing={isDesktop ? 3 : 0}>
+        <Grid item xs={isDesktop ? 8 : 12}>
+          {boardArr}
+        </Grid>
+        <Grid item xs={isDesktop ? 4 : 12}>
+          <Box
+            mx={isDesktop ? 0 : 2}
+            my={3}
+            borderBottom="1px solid #bdbdbd"
+            display={isDesktop ? undefined : "flex"}
+            alignItems={isDesktop ? undefined : "center"}
+            justifyContent={isDesktop ? undefined : "space-between"}
+          >
+            <Typography variant="h2" color="textPrimary">
+              <Box fontWeight="bold">지도보기</Box>
+            </Typography>
+            <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
+              {selectedPosts?.length && <HomeMapPosts posts={selectedPosts} />}
+            </Box>
           </Box>
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }

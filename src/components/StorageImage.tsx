@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import clsx from "clsx";
 import React from "react";
 import { LazyImage } from "react-lazy-images";
 import useStoragePath from "../store/useStoragePath";
@@ -19,11 +20,9 @@ export default function StorageImage(
     | { className?: string; image?: Img; thumb?: boolean }
     | { className?: string; path: string },
 ) {
-  let path = "path" in props ? props.path : props.image?.path;
   const classes = useStyles();
-  const className = props.className
-    ? `${classes.root} ${props.className}`
-    : classes.root;
+  let path = "path" in props ? props.path : props.image?.path;
+  const className = clsx(classes.root, props.className);
   const src = useStoragePath(path, "thumb" in props ? props.thumb : false);
   if ("image" in props && !props.image) {
     return (
