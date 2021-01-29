@@ -38,7 +38,7 @@ export default function Home() {
       <Grid item xs={isDesktop ? 8 : 12}>
         {boardArr}
       </Grid>
-      {mapBoard && (
+      {!!mapBoard && (
         <Grid item xs={isDesktop ? 4 : 12}>
           <Box
             mx={isDesktop ? undefined : 2}
