@@ -1,5 +1,6 @@
 import { createGlobalState } from "react-hooks-global-state";
 import { Board, ChipData, Role } from "../types";
+import firebase from "firebase";
 export const initialState = {
   loginModal: false,
   error: null,

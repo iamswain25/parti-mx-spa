@@ -16,8 +16,8 @@ import { auth, firestore, storage, uploadFileByPath } from "../config/firebase";
 import useAccountDelete from "../store/useAccountDelete";
 import UserExtraInfo from "./UserExtraInfo";
 import { User } from "../types";
+import firebase from "firebase";
 import useUser from "../store/useUser";
-
 const useStyles = makeStyles(theme => ({
   root: {
     [theme.breakpoints.down("sm")]: {

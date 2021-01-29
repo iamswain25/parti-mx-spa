@@ -2,6 +2,7 @@ import React from "react";
 import { firestore } from "../config/firebase";
 import { LIKED_USER_LIMIT } from "../helpers/options";
 import { PostLike } from "../types";
+import firebase from "firebase";
 let lastSnapshot: null | firebase.firestore.DocumentSnapshot = null;
 export default function usePostLikedUsers(
   post_id: string,
