@@ -2,9 +2,11 @@ import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link, NavLink } from "react-router-dom";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Hidden, Typography } from "@material-ui/core";
 import { useBoards, useCurrentUser } from "../store/useGlobalState";
 import useGroup from "../store/useGroup";
+import greenlablogo from "../assets/images/greenlablogo.png";
+import MenuProfile from "./MenuProfile";
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -55,6 +57,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       },
     },
   },
+  profile: {
+    textAlign: "center",
+  },
 }));
 
 export default function DrawerBoards({ close }: { close: () => void }) {
@@ -66,13 +71,26 @@ export default function DrawerBoards({ close }: { close: () => void }) {
     <section className={classes.root}>
       <div className="title">
         <Link to={`/${group?.id}`} onClick={close}>
-          {group?.title}
+          <img src={greenlablogo} alt="logo" />
         </Link>
         <IconButton onClick={close}>
           <CloseIcon />
         </IconButton>
       </div>
       <div className={classes.container}>
+        <Hidden smUp>
+          {currentUser?.email && (
+            <NavLink
+              exact
+              to={`/profile`}
+              onClick={close}
+              className="boards"
+              activeClassName="active"
+            >
+              프로필
+            </NavLink>
+          )}
+        </Hidden>
         {boards?.map(b => (
           <NavLink
             exact
