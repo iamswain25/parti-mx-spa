@@ -7,7 +7,6 @@ import { Typography, Grid, Box } from "@material-ui/core";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
 import useDesktop from "./useDesktop";
-import usePosts from "../store/usePosts";
 import { useGroupId } from "../store/useGlobalState";
 const useStyles = makeStyles(theme => {
   return {

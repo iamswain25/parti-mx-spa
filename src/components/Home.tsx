@@ -10,43 +10,46 @@ import HomeBoardVote2 from "./HomeBoardVote2";
 import useDesktop from "./useDesktop";
 import HomeMapPosts from "./HomeMapPosts";
 import useAllPosts from "../store/useAllPosts";
-const mapElement = (posts: Post[]) => (b: Board) => {
-  switch (b.type) {
-    case "suggestion":
-      return (
-        <HomeBoardSuggestion2
-          key={b.id}
-          board={b}
-          posts={posts.filter(p => p.type === b.type)}
-        />
-      );
-    case "notice":
-      return (
-        <HomeBoardNotice2
-          key={b.id}
-          board={b}
-          posts={posts.filter(p => p.type === b.type)}
-        />
-      );
-    case "vote":
-      return (
-        <HomeBoardVote2
-          key={b.id}
-          board={b}
-          posts={posts.filter(p => p.type === b.type)}
-        />
-      );
-    case "event":
-      return (
-        <HomeBoardEvent2
-          key={b.id}
-          board={b}
-          posts={posts.filter(p => p.type === b.type)}
-        />
-      );
-    default:
-      return null;
-  }
+const mapElement = (posts: Post[]) => {
+  posts.sort(a => (a.is_announced ? -1 : 1));
+  return (b: Board) => {
+    switch (b.type) {
+      case "suggestion":
+        return (
+          <HomeBoardSuggestion2
+            key={b.id}
+            board={b}
+            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+          />
+        );
+      case "notice":
+        return (
+          <HomeBoardNotice2
+            key={b.id}
+            board={b}
+            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+          />
+        );
+      case "vote":
+        return (
+          <HomeBoardVote2
+            key={b.id}
+            board={b}
+            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+          />
+        );
+      case "event":
+        return (
+          <HomeBoardEvent2
+            key={b.id}
+            board={b}
+            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 };
 export default function Home() {
   const [boards] = useBoards();

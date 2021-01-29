@@ -12,7 +12,8 @@ export default function useAllPosts<T extends Post>(): [
       let query = firestore
         .collection("posts")
         .where("group_id", "==", groupId)
-        .where("is_closed", "==", false);
+        .where("is_closed", "==", false)
+        .orderBy("created_at", "desc");
       query
         .get()
         .then(snapshot => {

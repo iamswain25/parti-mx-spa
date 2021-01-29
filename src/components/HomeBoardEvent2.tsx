@@ -1,8 +1,7 @@
 import React from "react";
 import { Board, Post } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
-import { grey } from "@material-ui/core/colors";
-import { Typography, Grid, Box, Divider } from "@material-ui/core";
+import { Typography, Grid, Box } from "@material-ui/core";
 import BoardPostEvent from "./BoardPostEvent";
 import GreyDivider from "./GreyDivider";
 import BoardMoreTag from "./BoardMoreTag";
@@ -12,27 +11,22 @@ const useStyles = makeStyles(theme => {
   return {
     container: {
       flex: 1,
-      // paddingBottom: theme.spacing(5),
-      [theme.breakpoints.up("md")]: {
-        border: `1px solid ${grey[300]}`,
-        marginBottom: theme.spacing(5),
-      },
       [theme.breakpoints.down("sm")]: {
         padding: theme.spacing(2),
       },
-      backgroundColor: theme.palette.background.default,
+      [theme.breakpoints.up("md")]: {
+        paddingTop: theme.spacing(3),
+      },
+      paddingBottom: theme.spacing(5),
     },
     titleContainer: {
+      borderBottom: "1px solid " + theme.palette.grey[400],
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
-    },
-    postContainer: {
-      overflow: "hidden",
-      [theme.breakpoints.up("md")]: {
-        padding: theme.spacing(2),
-      },
-      [theme.breakpoints.down("sm")]: {
-        // paddingRight: theme.spacing(2),
+      "&>.flex-end": {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
       },
     },
     mobileMore: {
@@ -43,13 +37,6 @@ const useStyles = makeStyles(theme => {
       alignItems: "center",
       justifyContent: "center",
       marginTop: theme.spacing(2),
-    },
-    divider: {
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-      },
-      marginTop: theme.spacing(1),
-      borderTopColor: theme.palette.divider,
     },
   };
 });
@@ -69,33 +56,24 @@ export default function HomeBoardEvent2({
       <section className={classes.container}>
         <Grid
           container
-          direction="row"
           justify="space-between"
           alignItems="center"
           className={classes.titleContainer}
         >
           <Typography variant="h2" color="textPrimary">
-            <Box ml={isDesktop ? 2 : 0} fontWeight="bold">
-              {b.title}
-            </Box>
+            <Box fontWeight="bold">{b?.title}</Box>
           </Typography>
-          {isDesktop && (
-            <Box mr={1}>
-              <BoardMoreTag to={`/${group_id}/${b.id}`} />
-            </Box>
-          )}
+          <div className="flex-end">
+            {isDesktop && <BoardMoreTag to={`/${group_id}/${b.id}`} />}
+          </div>
         </Grid>
-        {isDesktop && <Divider light />}
-        <div className={classes.postContainer}>
-          <Grid container direction="column" spacing={2}>
-            {posts?.map((p, i) => (
-              <Grid item key={p.id}>
-                <BoardPostEvent post={p} />
-                {posts.length !== i + 1 && <hr className={classes.divider} />}
-              </Grid>
+        <Box mt={2}>
+          <div>
+            {posts?.map(p => (
+              <BoardPostEvent key={p.id} post={p} />
             ))}
-          </Grid>
-        </div>
+          </div>
+        </Box>
         <div className={classes.mobileMore}>
           <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
         </div>
