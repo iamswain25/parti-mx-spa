@@ -1,6 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { PostLike } from "../types";
+import firebase from "firebase";
 let lastSnapshot: null | firebase.firestore.DocumentSnapshot = null;
 export default function usePostLikedUsers(
   post_id: string

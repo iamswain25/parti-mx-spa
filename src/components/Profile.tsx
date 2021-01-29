@@ -18,7 +18,7 @@ import useAccountDelete from "../store/useAccountDelete";
 import useUser from "../store/useUser";
 import { SIGNUP_AREA, SIGNUP_CITIES } from "../helpers/options";
 import { User } from "../types";
-
+import firebase from "firebase";
 const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.down("sm")]: {

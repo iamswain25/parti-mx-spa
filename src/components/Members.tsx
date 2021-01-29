@@ -8,6 +8,7 @@ import UserGroupStatus from "./UserGroupStatus";
 import { GroupUser } from "../types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { firestore } from "../config/firebase";
+import firebase from "firebase";
 const useStyles = makeStyles((theme) => ({
   top: {
     height: theme.mixins.toolbar.minHeight,

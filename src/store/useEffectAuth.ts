@@ -1,6 +1,7 @@
 import React from "react";
 import { auth } from "../config/firebase";
 import { useCurrentUser } from "./useGlobalState";
+import firebase from "firebase";
 export default function useEffectAuth(): [firebase.User | null | undefined] {
   const [user, setUser] = useCurrentUser();
   React.useEffect(() => {

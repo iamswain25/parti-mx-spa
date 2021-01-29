@@ -1,6 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Comment } from "../types";
+import firebase from "firebase";
 let lastSnapshot: null | firebase.firestore.DocumentSnapshot = null;
 export default function useComments({
   post_id,

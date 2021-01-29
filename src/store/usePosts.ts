@@ -1,6 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Post } from "../types";
+import firebase from "firebase";
 export default function usePosts<T extends Post>({
   board_id,
   limit,
