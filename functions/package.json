@@ -7,7 +7,7 @@
     "shell": "npm run build && firebase functions:shell --project green-newdeal",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions --project green-newdeal",
-    "deploy1": "tsc && firebase deploy --only functions:userPostWrite --project green-newdeal",
+    "deploy1": "tsc && firebase deploy --only functions:boardDelete --project green-newdeal",
     "logs": "firebase functions:log"
   },
   "engines": {
@@ -15,20 +15,19 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@types/firebase": "^3.2.1",
-    "@types/node": "^13.13.30",
     "@types/nodemailer": "^6.4.0",
     "algoliasearch": "^4.8.3",
     "firebase-admin": "^9.3.0",
     "firebase-functions": "^3.13.0",
-    "isbot": "^3.0.14",
-    "nodemailer": "^6.4.14"
+    "isbot": "^3.0.23",
+    "nodemailer": "^6.4.17"
   },
   "devDependencies": {
-    "firebase-functions-test": "^0.1.6",
-    "minimist": "^1.2.5",
-    "tslint": "^5.12.0",
+    "firebase-functions-test": "^0.2.0",
     "typescript": "^3.9.7"
+  },
+  "peerDependencies": {
+    "@types/node": "^10.10.0"
   },
   "private": true
 }
