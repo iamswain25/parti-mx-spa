@@ -5,7 +5,6 @@ import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import RoutePostSuggestion from "./RoutePostSuggestion";
 import usePosts from "../store/usePosts";
-import PostSort from "./PostSort";
 import { useSort } from "../store/useGlobalState";
 import ButtonBoardType from "./ButtonBoardType";
 const useStyles = makeStyles(theme => {

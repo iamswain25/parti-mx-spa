@@ -1,12 +1,12 @@
 import React from "react";
-import { Board, ChipData, SuggestionMetadata, Post } from "../types";
+import { Board, SuggestionMetadata, Post } from "../types";
 import { LinearProgress } from "@material-ui/core";
 import GoogleMapReact from "google-map-react";
 import MapPost from "./MapPost";
 import usePosts from "../store/usePosts";
 import { DEFAULT_LAT_LNG } from "../helpers/options";
 export default function RouteMapPosts({ board }: { board: Board }) {
-  const [posts] = usePosts<Post<SuggestionMetadata>>({ board_id: board.id });
+  const [posts] = usePosts({ board_id: board.id });
   const [selectedPlace, setSelectedPlace] = React.useState<
     Post<SuggestionMetadata> | undefined
   >(undefined);

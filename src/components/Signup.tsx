@@ -220,7 +220,7 @@ export default function Signup() {
                         </>
                       }
                       label={
-                        <a href="#" target="_blank" rel="noopener noreferrer">
+                        <a href="/#" target="_blank" rel="noopener noreferrer">
                           내용보기
                         </a>
                       }
@@ -246,7 +246,7 @@ export default function Signup() {
                         </>
                       }
                       label={
-                        <a href="#" target="_blank" rel="noopener noreferrer">
+                        <a href="/#" target="_blank" rel="noopener noreferrer">
                           내용보기
                         </a>
                       }
