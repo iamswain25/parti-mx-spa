@@ -22,12 +22,12 @@ export default function EventNew() {
   const formControl = useForm<EventFormdata>();
   const { handleSubmit } = formControl;
   async function handleForm(form: EventFormdata) {
-    const { event_date, deadline, countPeople, place, ...rest } = form;
+    const { event_date, deadline, countPeople, location, ...rest } = form;
     const metadata = {
       event_date: new Date(event_date),
       deadline: new Date(deadline),
       countPeople,
-      place,
+      location,
     };
     const variables = await makeNewVariables(rest, {
       board_id,

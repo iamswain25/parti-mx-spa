@@ -7,8 +7,6 @@ import {
   makeStyles,
   Avatar,
   Hidden,
-  Paper,
-  Chip,
 } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
@@ -111,7 +109,7 @@ const useStyles = makeStyles(theme => {
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { images = [], created_by, created_at, context, files = [], tags } = p;
+  const { images = [], created_by, created_at, context, files = [] } = p;
   const metadata = p.metadata as SuggestionMetadata;
   const [liked] = usePostLiked(p.id);
   const [user] = useUser({ id: created_by });
@@ -178,21 +176,6 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
             </Box>
           </Grid>
         </Box>
-        {tags && (
-          <Paper component="ul" className={classes.chips} elevation={0}>
-            {tags.map(chip => {
-              return (
-                <li key={chip}>
-                  <Chip
-                    variant="outlined"
-                    label={chip}
-                    className={classes.chip}
-                  />
-                </li>
-              );
-            })}
-          </Paper>
-        )}
         <FilesImages images={images} files={files} />
         <Box className={classes.body}>
           <Box className={classes.label}>제안배경</Box>

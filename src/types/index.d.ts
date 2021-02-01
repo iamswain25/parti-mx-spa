@@ -26,7 +26,7 @@ export interface NoticeFormdata {
 }
 export interface EventFormdata {
   event_date: string;
-  place: string;
+  place?: string;
   deadline: string;
   countPeople: number;
   title: string;
@@ -34,6 +34,7 @@ export interface EventFormdata {
   isHtml: boolean;
   html: RawDraftContentState;
   tags: string[];
+  location: Location;
 }
 export interface SuggestionFormdata {
   title: string;

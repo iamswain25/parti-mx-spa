@@ -2,17 +2,14 @@ import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Chip, TextField, FormControl } from "@material-ui/core";
 import { UseFormMethods, Controller } from "react-hook-form";
-import { SuggestionFormdata } from "../types";
-export default function Hashtags(props: {
-  formControl: UseFormMethods<SuggestionFormdata>;
-}) {
+export default function Hashtags(props: { formControl: UseFormMethods<any> }) {
   const { control } = props.formControl;
   const changeHandler = (onChange: any) => (e: any, data: any) => {
     return onChange(
       data
         .join(",")
         .split(/[\s,;#]+/)
-        .filter((e: any) => e)
+        .filter((e: any) => e),
     );
   };
   return (

@@ -1,14 +1,12 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
-import { Controller, UseFormMethods } from "react-hook-form";
+import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
-import Hashtags from "./Hashtags";
 import { suggestionOptions } from "../helpers/options";
-import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
 }) {
-  const { register, errors, control } = props.formControl;
+  const { register, errors } = props.formControl;
   return (
     <>
       <CustomTextField
@@ -46,15 +44,6 @@ export default function SuggestionInputs(props: {
         name="body"
         register={register}
         errors={errors}
-      />
-      <Hashtags formControl={props.formControl} />
-      <Controller
-        control={control}
-        name="metadata.location"
-        defaultValue={{ address: "" }}
-        render={({ value, onChange }) => (
-          <GooglePlaceAutocomplete state={value} setState={onChange} />
-        )}
       />
     </>
   );

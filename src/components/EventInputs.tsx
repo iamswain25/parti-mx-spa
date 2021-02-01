@@ -2,9 +2,15 @@ import React from "react";
 import CustomTextField from "./CustomTextField";
 import { getDatetimeFormat } from "../helpers/datefns";
 import HtmlInput from "./HtmlInput";
+import Hashtags from "./Hashtags";
+import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
+import { Controller, UseFormMethods } from "react-hook-form";
+import { EventFormdata } from "../types";
 const now = getDatetimeFormat(new Date());
-export default function EventInputs({ formControl }: any) {
-  const { register, errors } = formControl;
+export default function EventInputs(props: {
+  formControl: UseFormMethods<EventFormdata>;
+}) {
+  const { register, errors, control } = props.formControl;
   return (
     <>
       <CustomTextField
@@ -22,12 +28,12 @@ export default function EventInputs({ formControl }: any) {
         register={register}
         errors={errors}
       />
-      <CustomTextField
+      {/* <CustomTextField
         label="장소"
         name="place"
         register={register}
         errors={errors}
-      />
+      /> */}
       <CustomTextField
         label="모집인원"
         name="countPeople"
@@ -53,7 +59,16 @@ export default function EventInputs({ formControl }: any) {
         register={register}
         errors={errors}
       />
-      <HtmlInput formControl={formControl} />
+      <HtmlInput formControl={props.formControl} />
+      <Hashtags formControl={props.formControl} />
+      <Controller
+        control={control}
+        name="location"
+        defaultValue={{ address: "" }}
+        render={({ value, onChange }) => (
+          <GooglePlaceAutocomplete state={value} setState={onChange} />
+        )}
+      />
     </>
   );
 }
