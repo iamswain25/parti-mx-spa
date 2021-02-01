@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "../types";
+import { Post, BoardViewTypes } from "../types";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Box, Hidden } from "@material-ui/core";
@@ -50,7 +50,7 @@ export default function BoardPostNotice({
   view,
 }: {
   post: Post;
-  view: string;
+  view: BoardViewTypes;
 }) {
   const classes = useStyles();
   const [isDesktop] = useDesktop();
