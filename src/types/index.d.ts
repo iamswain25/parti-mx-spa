@@ -342,3 +342,16 @@ declare global {
     }
   }
 }
+export interface UsePostProps {
+  board_id: string;
+  listen?: boolean;
+  tags?: string[];
+  sort?: number;
+  where?: [
+    fieldPath: string | firebase.firestore.FieldPath,
+    opStr: firebase.firestore.WhereFilterOp,
+    value: any,
+  ];
+  isClosed?: boolean;
+  limit?: number;
+}

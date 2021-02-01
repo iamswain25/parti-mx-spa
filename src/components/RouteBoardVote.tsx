@@ -10,8 +10,9 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
-import usePosts from "../store/usePosts";
 import PostSort from "./PostSort";
+import useTagPosts from "../store/useTagPosts";
+import Chips from "./Chips";
 const useStyles = makeStyles(theme => {
   return {
     root: { paddingBottom: theme.spacing(5) },
@@ -30,12 +31,16 @@ const useStyles = makeStyles(theme => {
 export default function RouteBoardVote({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id, isClosed });
+  const [posts, chipData, setChipData] = useTagPosts({
+    board_id: b.id,
+    isClosed,
+  });
   if (posts === undefined) {
     return <LinearProgress />;
   }
   return (
     <section className={classes.root}>
+      <Chips chips={chipData} setChips={setChipData} />
       <Grid
         container
         justify="space-between"

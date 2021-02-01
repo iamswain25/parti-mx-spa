@@ -4,9 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import RoutePostSuggestion from "./RoutePostSuggestion";
-import usePosts from "../store/usePosts";
 import { useSort } from "../store/useGlobalState";
 import ButtonBoardType from "./ButtonBoardType";
+import useTagPosts from "../store/useTagPosts";
+import Chips from "./Chips";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -35,12 +36,17 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
   const [sort] = useSort();
-  const [posts] = usePosts({ board_id: b.id, isClosed, sort });
+  const [posts, chipData, setChipData] = useTagPosts({
+    board_id: b.id,
+    isClosed,
+    sort,
+  });
   const announcedPosts = posts?.filter(p => p.is_announced);
   const normalPosts = posts?.filter(p => !p.is_announced);
   const showAnnouncement = announcedPosts && announcedPosts?.length > 0;
   return (
     <section className={classes.container}>
+      <Chips chips={chipData} setChips={setChipData} />
       <Grid
         container
         justify="space-between"

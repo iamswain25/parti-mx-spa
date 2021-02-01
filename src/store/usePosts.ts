@@ -1,8 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { SORT_ARRAY } from "../helpers/options";
-import { Post } from "../types";
-import firebase from "firebase";
+import { Post, UsePostProps } from "../types";
 export default function usePosts<T extends Post>({
   board_id,
   limit,
@@ -11,19 +10,7 @@ export default function usePosts<T extends Post>({
   listen = false,
   isClosed,
   where,
-}: {
-  board_id: string;
-  listen?: boolean;
-  tags?: string[];
-  sort?: number;
-  where?: [
-    fieldPath: string | firebase.firestore.FieldPath,
-    opStr: firebase.firestore.WhereFilterOp,
-    value: any,
-  ];
-  isClosed?: boolean;
-  limit?: number;
-}): [T[] | undefined] {
+}: UsePostProps): [T[] | undefined] {
   const [items, setItems] = React.useState<T[] | undefined>(undefined);
   React.useEffect(() => {
     let query = firestore.collection("posts").where("board_id", "==", board_id);

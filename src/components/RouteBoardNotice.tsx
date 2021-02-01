@@ -9,12 +9,13 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import useDesktop from "./useDesktop";
-import usePosts from "../store/usePosts";
 import { useSort } from "../store/useGlobalState";
 import BoardPostNotice from "./BoardPostNotice";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
 import PostSort from "./PostSort";
 import SquarePhoto from "./SquarePhoto";
+import useTagPosts from "../store/useTagPosts";
+import Chips from "./Chips";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -43,7 +44,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   const [isDesktop] = useDesktop();
   const classes = useStyles();
   const [sort] = useSort();
-  const [posts] = usePosts({ board_id: b.id, sort });
+  const [posts, chipData, setChipData] = useTagPosts({ board_id: b.id, sort });
   const announcedPosts = posts?.filter(p => p.is_announced);
   const showAnnouncement = announcedPosts && announcedPosts?.length > 0;
   if (posts === undefined) {
@@ -51,6 +52,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
   }
   return (
     <section className={classes.container}>
+      <Chips chips={chipData} setChips={setChipData} />
       <Grid
         container
         justify="space-between"

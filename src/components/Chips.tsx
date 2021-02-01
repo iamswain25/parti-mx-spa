@@ -51,6 +51,7 @@ export default function Chips({
     },
     [setChips],
   );
+  if (!chips?.length) return null;
   return (
     <Paper component="ul" className={classes.root} elevation={0}>
       {chips?.map(chip => {

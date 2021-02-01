@@ -4,8 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import BoardPostEvent from "./BoardPostEvent";
-import usePosts from "../store/usePosts";
 import PostSort from "./PostSort";
+import useTagPosts from "../store/useTagPosts";
+import Chips from "./Chips";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -38,9 +39,13 @@ const useStyles = makeStyles(theme => {
 export default function RouteBoardEvent({ board: b }: { board: Board }) {
   const classes = useStyles();
   const [isClosed, setClosed] = React.useState(false);
-  const [posts] = usePosts({ board_id: b.id, isClosed });
+  const [posts, chipData, setChipData] = useTagPosts({
+    board_id: b.id,
+    isClosed,
+  });
   return (
     <section className={classes.container}>
+      <Chips chips={chipData} setChips={setChipData} />
       <Grid
         container
         justify="space-between"
