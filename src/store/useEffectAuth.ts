@@ -8,6 +8,9 @@ export default function useEffectAuth(): [firebase.User | null | undefined] {
     return auth.onAuthStateChanged(function (user) {
       if (user) {
         setUser({ ...user });
+        if (!user.emailVerified) {
+          // window.location.replace("/verification");
+        }
       } else {
         auth.signInAnonymously();
       }

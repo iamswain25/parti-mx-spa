@@ -41,6 +41,7 @@ export default function EmailVerified() {
   }
   useEffect(() => {
     updateVerificationInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (isVerified === undefined) {
     return <LinearProgress />;
