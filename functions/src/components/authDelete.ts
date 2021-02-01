@@ -5,7 +5,7 @@ import { client } from "./ApolloClient";
 type UserRecord = admin.auth.UserRecord;
 
 export default functions
-  .region("asia-northeast3")
+  .region("asia-northeast1")
   .auth.user()
   .onDelete(async (user: UserRecord) => {
     const { uid } = user;

@@ -4,7 +4,7 @@ import createHasuraUser from "./createHasuraUser";
 import injectCustomClaim from "./injectCustomClaim";
 
 export default functions
-  .region("asia-northeast3")
+  .region("asia-northeast1")
   .auth.user()
   .onCreate(async (user: admin.auth.UserRecord) => {
     if (user.disabled) {

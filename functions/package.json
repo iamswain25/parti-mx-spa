@@ -7,7 +7,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions",
-    "deployshare": "tsc && firebase deploy --only functions:post",
+    "deploy1": "tsc && firebase deploy --only functions:authCreate,functions:authDelete --project parti-2020",
     "logs": "firebase functions:log"
   },
   "engines": {
