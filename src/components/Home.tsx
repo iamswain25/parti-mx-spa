@@ -21,7 +21,7 @@ const mapElement = (posts: Post[]) => {
           <HomeBoardSuggestion2
             key={b.id}
             board={b}
-            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
           />
         );
       case "notice":
@@ -29,7 +29,7 @@ const mapElement = (posts: Post[]) => {
           <HomeBoardNotice2
             key={b.id}
             board={b}
-            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
           />
         );
       case "vote":
@@ -37,7 +37,7 @@ const mapElement = (posts: Post[]) => {
           <HomeBoardVote2
             key={b.id}
             board={b}
-            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
           />
         );
       case "event":
@@ -45,7 +45,7 @@ const mapElement = (posts: Post[]) => {
           <HomeBoardEvent2
             key={b.id}
             board={b}
-            posts={posts.filter(p => p.type === b.type).slice(0, 4)}
+            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
           />
         );
       default:
