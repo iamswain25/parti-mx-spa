@@ -38,6 +38,13 @@ const useStyles = makeStyles(theme => {
       justifyContent: "center",
       marginTop: theme.spacing(2),
     },
+    divider: {
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      },
+      marginTop: theme.spacing(1),
+      borderTopColor: theme.palette.divider,
+    },
   };
 });
 
@@ -68,11 +75,14 @@ export default function HomeBoardEvent2({
           </div>
         </Grid>
         <Box mt={2}>
-          <div>
-            {posts?.map(p => (
-              <BoardPostEvent key={p.id} post={p} />
+          <Grid container spacing={2}>
+            {posts?.map((p, i) => (
+              <Grid container item key={p.id} direction="column">
+                <BoardPostEvent post={p} />
+                {posts?.length !== i + 1 && <hr className={classes.divider} />}
+              </Grid>
             ))}
-          </div>
+          </Grid>
         </Box>
         <div className={classes.mobileMore}>
           <BoardMoreTag label={b?.title} to={`/${group_id}/${b.id}`} />
