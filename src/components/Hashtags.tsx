@@ -15,7 +15,7 @@ export default function Hashtags(props: { formControl: UseFormMethods<any> }) {
   return (
     <FormControl margin="normal" fullWidth>
       <Controller
-        name="tags"
+        name="customTags"
         control={control}
         defaultValue={[]}
         render={({ onChange, ...props }) => (

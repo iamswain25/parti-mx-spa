@@ -14,15 +14,18 @@ export interface ChipData {
   selected: boolean;
   label: string;
 }
-export interface NoticeFormdata {
+export interface BaseFormData {
+  metadata: {
+    location: Location;
+  };
+  tags: string[];
+  customTags: string[];
+}
+export interface NoticeFormdata extends BaseFormData {
   title: string;
   body: string;
   isHtml: boolean;
   html: RawDraftContentState;
-  tags: string[];
-  metadata: {
-    location: Location;
-  };
 }
 export interface EventFormdata {
   event_date: string;

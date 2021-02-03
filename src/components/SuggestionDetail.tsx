@@ -20,6 +20,7 @@ import HtmlOrBody from "./HtmlOrBody";
 import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
 import useUser from "../store/useUser";
+import LinkPreview from "./LinkPreview";
 const useStyles = makeStyles(theme => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -91,25 +92,15 @@ const useStyles = makeStyles(theme => {
       color: colors.emerald,
       marginRight: theme.spacing(0.5),
     },
-    chips: {
-      display: "flex",
-      flexWrap: "wrap",
-      listStyle: "none",
-      paddingTop: theme.spacing(0.5),
-      paddingBottom: theme.spacing(0.5),
-      paddingLeft: -2,
-      margin: 0,
-      fontFamily: "Roboto",
-    },
-    chip: {
+    tag: {
       margin: theme.spacing(0.5),
-      color: theme.palette.text.primary,
-      borderColor: theme.palette.divider,
+      color: theme.palette.primary.main,
+      // borderColor: theme.palette.divider,
     },
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { images = [], created_by, created_at, context, files = [] } = p;
+  const { images = [], created_by, created_at, context, files = [], tags } = p;
   const metadata = p.metadata as SuggestionMetadata;
   const [liked] = usePostLiked(p.id);
   const [user] = useUser({ id: created_by });
@@ -181,7 +172,17 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
           <Box className={classes.label}>제안배경</Box>
           <Linkify body={context} />
         </Box>
+        <LinkPreview text={context} />
         <HtmlOrBody post={p} />
+        <Grid container>
+          {tags?.map(chip => {
+            return (
+              <span key={chip} className={classes.tag}>
+                #{chip}
+              </span>
+            );
+          })}
+        </Grid>
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

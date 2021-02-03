@@ -3,6 +3,7 @@ import CustomTextField from "./CustomTextField";
 import { UseFormMethods } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
 import { suggestionOptions } from "../helpers/options";
+import Tags from "./Tags";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
 }) {
@@ -38,6 +39,7 @@ export default function SuggestionInputs(props: {
           </option>
         ))}
       />
+      <Tags formControl={props.formControl} />
       <CustomTextField
         label="제안 내용"
         multiline

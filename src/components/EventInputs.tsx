@@ -3,6 +3,7 @@ import CustomTextField from "./CustomTextField";
 import { getDatetimeFormat } from "../helpers/datefns";
 import HtmlInput from "./HtmlInput";
 import Hashtags from "./Hashtags";
+import Tags from "./Tags";
 import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 import { Controller, UseFormMethods } from "react-hook-form";
 import { EventFormdata } from "../types";
@@ -60,6 +61,7 @@ export default function EventInputs(props: {
         errors={errors}
       />
       <HtmlInput formControl={props.formControl} />
+      <Tags formControl={props.formControl} />
       <Hashtags formControl={props.formControl} />
       <Controller
         control={control}

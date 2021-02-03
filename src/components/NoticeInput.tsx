@@ -5,6 +5,7 @@ import CustomTextField from "./CustomTextField";
 import HtmlInput from "./HtmlInput";
 import Hashtags from "./Hashtags";
 import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
+import Tags from "./Tags";
 
 export default function NoticeInput(props: {
   formControl: UseFormMethods<NoticeFormdata>;
@@ -21,6 +22,7 @@ export default function NoticeInput(props: {
         errors={errors}
       />
       <HtmlInput formControl={props.formControl} />
+      <Tags formControl={props.formControl} />
       <Hashtags formControl={props.formControl} />
       <Controller
         control={control}

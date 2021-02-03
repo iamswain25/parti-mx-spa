@@ -2,6 +2,13 @@ import { uploadFileByUUID } from "../config/firebase";
 import { RawDraftContentState } from "react-draft-wysiwyg";
 export async function makeNewVariables(form: any, other: any) {
   const { imageArr, fileArr, setSuccess, ...rest } = other;
+  const { customTags, tags } = form;
+  if (customTags) {
+    const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
+    form.tags = tagArr;
+    delete form.customTags;
+  }
   let images = null;
   if (imageArr.length) {
     images = await Promise.all(imageArr.map(uploadFileByUUID));
@@ -17,7 +24,7 @@ export async function makeNewVariables(form: any, other: any) {
     /* entityMap -> data -> _map이 Map 데이터타입(keyed collection) 안데 이걸 일반 object로 변환 처리 */
     form.html = JSON.parse(JSON.stringify(html));
     form.body = html.blocks
-      .map((block) => (!block.text.trim() && "\n") || block.text)
+      .map(block => (!block.text.trim() && "\n") || block.text)
       .join("\n");
   }
   // if ("tags" in form && "customTags" in form) {
@@ -46,6 +53,13 @@ export async function makeUpdateVariables(form: any, other: any) {
   }
   const { imageArr, fileArr, images2, files2, setSuccess, ...rest } = other;
   let images = null;
+  const { customTags, tags } = form;
+  if (customTags) {
+    const tagSet = new Set([...tags, ...customTags]);
+    const tagArr = Array.from(tagSet);
+    form.tags = tagArr;
+    delete form.customTags;
+  }
 
   if (imageArr.length) {
     images = await Promise.all(imageArr.map(uploadFileByUUID));
@@ -63,7 +77,7 @@ export async function makeUpdateVariables(form: any, other: any) {
     const html = form.html as RawDraftContentState;
     form.html = JSON.parse(JSON.stringify(html));
     form.body = html.blocks
-      .map((block) => (!block.text.trim() && "\n") || block.text)
+      .map(block => (!block.text.trim() && "\n") || block.text)
       .join("\n");
   }
   // if ("tags" in form && "customTags" in form) {

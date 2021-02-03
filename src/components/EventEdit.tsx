@@ -19,7 +19,7 @@ import { getDatetimeFormat } from "../helpers/datefns";
 import { firestore } from "../config/firebase";
 
 export default function EventEdit({ post: p }: { post: Post }) {
-  const { id, title, body, files, images, html } = p;
+  const { id, title, body, files, images, html, tags } = p;
   const history = useHistory();
   const [, setSuccess] = useSuccess();
   const [currentUser] = useCurrentUser();
@@ -38,6 +38,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
       deadline: getDatetimeFormat(metadata.deadline.toDate(), 0),
       event_date: getDatetimeFormat(metadata.event_date.toDate(), 0),
       tags: p.tags,
+      customTags: tags,
     },
   });
   const { handleSubmit } = formControl;
