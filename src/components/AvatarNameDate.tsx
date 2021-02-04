@@ -9,7 +9,7 @@ import {
 import { semanticDate } from "../helpers/datefns";
 import useUser from "../store/useUser";
 import firebase from "firebase";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       fontSize: 11,
     },
+  },
+  marginLeft: {
+    marginLeft: theme.spacing(1),
   },
 }));
 export default function AvatarNameDate({
@@ -60,7 +63,9 @@ export default function AvatarNameDate({
       </Box>
       <Box color="grey.600" ml={1}>
         {semanticDate(created_at)}
-        {count_view !== undefined ? <span>{` 조회 ${count_view}`}</span> : null}
+        {count_view !== undefined ? (
+          <span className={classes.marginLeft}>{` 조회 ${count_view}`}</span>
+        ) : null}
       </Box>
     </Grid>
   );
