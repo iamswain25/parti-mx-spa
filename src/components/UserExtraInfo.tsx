@@ -21,14 +21,22 @@ export default function UserExtraInfo(props: {
             variant="outlined"
             margin="normal"
             fullWidth
-            label="거주지 광역 단위"
+            label="거주지 광역 단위 (선택)"
+            InputLabelProps={{
+              shrink: true,
+            }}
             error={!!errors.area}
             helperText={errors?.area?.message}
-            children={SIGNUP_AREA.map(option => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
+            children={
+              <>
+                <option key="" value=""></option>
+                {SIGNUP_AREA.map(option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </>
+            }
           />
         }
       />
@@ -44,14 +52,22 @@ export default function UserExtraInfo(props: {
               variant="outlined"
               margin="normal"
               fullWidth
-              label="거주지 시,군"
+              label="거주지 시,군 (선택)"
+              InputLabelProps={{
+                shrink: true,
+              }}
               error={!!errors.address}
               helperText={errors?.address?.message}
-              children={areaObj?.value.map(option => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
+              children={
+                <>
+                  <option key="" value=""></option>
+                  {areaObj?.value.map(option => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </>
+              }
             />
           }
         />
@@ -61,7 +77,7 @@ export default function UserExtraInfo(props: {
         margin="normal"
         fullWidth
         name="organization"
-        label="소속"
+        label="소속 (선택)"
         InputLabelProps={{
           shrink: true,
         }}

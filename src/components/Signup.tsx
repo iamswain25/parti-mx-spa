@@ -82,7 +82,7 @@ export default function Signup() {
   const history = useHistory<{ from: { pathname: string } }>();
   const { from } = history.location.state ?? { from: "/" };
   const formControl = useForm<FormData>({
-    defaultValues: { area: "서울특별시" },
+    defaultValues: { area: "" },
   });
   const { handleSubmit, register, errors, formState, control } = formControl;
   async function formHandler(form: FormData) {
@@ -144,6 +144,9 @@ export default function Signup() {
               name="email"
               autoComplete="email"
               autoFocus
+              InputLabelProps={{
+                shrink: true,
+              }}
               inputRef={register({
                 required: "필수 입력 항목입니다.",
                 pattern: {
@@ -164,6 +167,9 @@ export default function Signup() {
               type="password"
               id="password"
               autoComplete="current-password"
+              InputLabelProps={{
+                shrink: true,
+              }}
               inputRef={register({
                 required: "필수 입력 항목입니다.",
               })}
@@ -177,6 +183,9 @@ export default function Signup() {
               fullWidth
               name="name"
               label="활동명"
+              InputLabelProps={{
+                shrink: true,
+              }}
               inputRef={register({
                 required: "필수 입력 항목입니다.",
                 validate: async (value: string) => {
