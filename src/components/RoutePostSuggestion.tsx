@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => {
       },
     },
     announcementContainer: {
-      backgroundColor: "rgb(0,158,85,0.1)",
+      backgroundColor: "rgb(0,158,85,0.05)",
       borderBottom: `1px solid ${grey[200]}`,
       padding: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
