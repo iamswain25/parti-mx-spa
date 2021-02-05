@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { Link } from "react-router-dom";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     link: {
       display: "flex",
@@ -32,14 +32,16 @@ const useStyles = makeStyles((theme) => {
 export default function BoardMoreTag({
   to = "/",
   label,
+  viewLabel = "모두 보기",
 }: {
   to: string;
   label?: string;
+  viewLabel?: string;
 }) {
   const classes = useStyles();
   return (
     <Link to={to} className={classes.link}>
-      <div className="title">{label} 모두 보기</div>
+      <div className="title">{viewLabel ?? label}</div>
       <ChevronRightIcon className="svg" />
     </Link>
   );

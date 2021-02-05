@@ -1,7 +1,6 @@
 import {
   FormControl,
   Typography,
-  makeStyles,
   FormGroup,
   FormControlLabel,
   Checkbox,
@@ -9,19 +8,8 @@ import {
 import React from "react";
 import { UseFormMethods } from "react-hook-form";
 import { DEFAULT_HASHTAGS } from "../helpers/options";
-const useStyles = makeStyles(theme => {
-  return {
-    tooltip: { fontSize: 15, whiteSpace: "pre-wrap" },
-    icon: {
-      marginLeft: 8,
-      textDecoration: "underline dotted",
-      cursor: "help",
-    },
-  };
-});
 export default function Tags(props: { formControl: UseFormMethods<any> }) {
   const { register } = props.formControl;
-  const classes = useStyles();
   return (
     <>
       <FormControl margin="normal">

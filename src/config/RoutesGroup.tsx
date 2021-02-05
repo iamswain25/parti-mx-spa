@@ -10,12 +10,14 @@ import { Route, Switch } from "react-router-dom";
 import SearchInstant from "../components/SearchInstant";
 import useEffectGroupId from "../store/useEffectGroupId";
 import RoutesBoard from "./RoutesBoard";
+import RouteMapAll from "../components/RouteMapAll";
 export default function RoutesGroup() {
   useEffectGroupId();
   return (
     <Switch>
       <Route exact path="/:group_id" component={Home} />
       <Route exact path="/:group_id/search" component={SearchInstant} />
+      <Route exact path="/:group_id/map" component={RouteMapAll} />
       <AdminRoute exact path="/:group_id/boards" component={BoardsSetting} />
       <AdminRoute exact path="/:group_id/members" component={Members} />
       <AdminRoute exact path="/:group_id/members/new" component={MemberNew} />
