@@ -22,6 +22,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: 28,
         height: 28,
       },
+      "&> a": {
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        paddingLeft: 48,
+        "&> img": {
+          width: 275,
+        },
+      },
     },
   },
   container: {
@@ -77,7 +86,7 @@ export default function DrawerBoards({ close }: { close: () => void }) {
         </IconButton>
       </div>
       <div className={classes.container}>
-        <Hidden smUp implementation="css">
+        <Hidden smUp>
           {currentUser?.email && (
             <NavLink
               exact

@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     // color: theme.palette.primary.main,
   },
+  logoImg: {
+    width: 275,
+  },
   flexend: {
     [theme.breakpoints.down("sm")]: {
       // display: "none",
@@ -87,7 +90,7 @@ export default function HeaderRemain() {
           <Grid item xs={8} className={classes.logoFont}>
             {/* <Link to={`/${group?.id}`}>{group?.title}</Link> */}
             <Link to={`/${group?.id}`}>
-              <img src={greenlablogo} alt="logo" />
+              <img className={classes.logoImg} src={greenlablogo} alt="logo" />
             </Link>
           </Grid>
           <Grid item xs={2} className={classes.flexend}>
