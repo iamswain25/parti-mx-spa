@@ -48,7 +48,7 @@ export default function RouteMapAll() {
       >
         <KeyboardArrowLeftIcon fontSize="large" />
         <Typography variant="h2" color="textPrimary">
-          지도보기
+          홈으로 돌아가 지도보기
         </Typography>
       </Grid>
       <div className={classes.mapContainer}>
