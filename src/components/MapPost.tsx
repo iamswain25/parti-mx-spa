@@ -35,29 +35,28 @@ export default function MapPost(
   const {
     post: { type },
   } = props;
-  const [normal] = React.useMemo(() => {
-    let borderColor = "#008083";
-    let color = "#008083";
+  const [normal, hover] = React.useMemo(() => {
+    let color;
     switch (type) {
       case "suggestion":
-        borderColor = "#008083";
         color = "#008083";
-        return [{ ...greatPlaceStyle, borderColor, color }];
+        break;
       case "notice":
-        borderColor = "#01babd";
         color = "#01babd";
-        return [{ ...greatPlaceStyle, borderColor, color }];
+        break;
       case "vote":
-        borderColor = "#f7a17e";
         color = "#f7a17e";
-        return [{ ...greatPlaceStyle, borderColor, color }];
+        break;
       case "event":
-        borderColor = "#aed9bb";
         color = "#aed9bb";
-        return [{ ...greatPlaceStyle, borderColor, color }];
+        break;
     }
+    return [
+      { ...greatPlaceStyle, borderColor: color, color },
+      { ...greatPlaceStyleHover, backgroundColor: color, borderColor: color },
+    ];
   }, [type]);
-  const style = props.$hover || props.selected ? greatPlaceStyleHover : normal;
+  const style = props.$hover || props.selected ? hover : normal;
   return (
     <div className="info-window" id={props.post.id}>
       <IconButton style={style}>
