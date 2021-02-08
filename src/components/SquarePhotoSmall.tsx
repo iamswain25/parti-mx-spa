@@ -1,8 +1,9 @@
 import React from "react";
 import { Post } from "../types";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import StorageImage from "./StorageImage";
 import { Link } from "react-router-dom";
+import { useBoards } from "../store/useGlobalState";
 export const useStyles = makeStyles(theme => ({
   root: {
     cursor: "pointer",
@@ -11,6 +12,7 @@ export const useStyles = makeStyles(theme => ({
     top: -theme.spacing(1),
     backgroundColor: theme.palette.common.white,
     padding: theme.spacing(1),
+    zIndex: 999,
   },
   aspectRatio: {
     display: "flex",
@@ -42,7 +44,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(1),
     },
-    "&>.title": { marginBottom: theme.spacing(0.5) },
+    "&>.title": { margin: theme.spacing(0.5, 0), fontSize: 16 },
   },
   full: {
     backgroundColor: theme.palette.grey[200],
@@ -58,15 +60,19 @@ export const useStyles = makeStyles(theme => ({
 
 export default function SquarePhotoSmall({ p }: { p: Post }) {
   const classes = useStyles();
+  const [boards] = useBoards();
+  const board = React.useMemo(() => boards?.find(b => p.board_id === b.id), [
+    boards,
+    p,
+  ]);
   return (
     <Link to={`/post/${p.id}`} className={classes.root}>
       <div className={classes.aspectRatio}>
         <StorageImage image={p?.images?.[0]} className={classes.full} />
       </div>
       <div className={classes.hover}>
-        <div className="title">
-          <Typography variant="h3">{p.title}</Typography>
-        </div>
+        {board?.title}
+        <div className="title">{p.title}</div>
       </div>
     </Link>
   );
