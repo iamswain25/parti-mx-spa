@@ -25,11 +25,7 @@ export default function StorageImage(
   const className = clsx(classes.root, props.className);
   const src = useStoragePath(path, "thumb" in props ? props.thumb : false);
   if ("image" in props && !props.image) {
-    return (
-      <div className={className}>
-        <img src="/ogp.png" alt="ogp" />
-      </div>
-    );
+    return <img src="/ogp.png" alt="ogp" className={className} />;
   }
   if (!src) {
     return <div className={className} />;
