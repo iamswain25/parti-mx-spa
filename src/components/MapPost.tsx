@@ -30,16 +30,40 @@ const greatPlaceStyleHover = {
   color: "#ffffff",
 };
 export default function MapPost(
-  props: ChildComponentProps & { post: Post; selected: boolean }
+  props: ChildComponentProps & { post: Post; selected: boolean },
 ) {
-  const style =
-    props.$hover || props.selected ? greatPlaceStyleHover : greatPlaceStyle;
+  const {
+    post: { type },
+  } = props;
+  const [normal] = React.useMemo(() => {
+    let borderColor = "#008083";
+    let color = "#008083";
+    switch (type) {
+      case "suggestion":
+        borderColor = "#008083";
+        color = "#008083";
+        return [{ ...greatPlaceStyle, borderColor, color }];
+      case "notice":
+        borderColor = "#01babd";
+        color = "#01babd";
+        return [{ ...greatPlaceStyle, borderColor, color }];
+      case "vote":
+        borderColor = "#f7a17e";
+        color = "#f7a17e";
+        return [{ ...greatPlaceStyle, borderColor, color }];
+      case "event":
+        borderColor = "#aed9bb";
+        color = "#aed9bb";
+        return [{ ...greatPlaceStyle, borderColor, color }];
+    }
+  }, [type]);
+  const style = props.$hover || props.selected ? greatPlaceStyleHover : normal;
   return (
     <div className="info-window" id={props.post.id}>
-      {props.selected && <SquarePhotoSmall p={props.post} />}
       <IconButton style={style}>
         <PlaceIcon />
       </IconButton>
+      {props.selected && <SquarePhotoSmall p={props.post} />}
     </div>
   );
 }
