@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import BoardPostEvent from "./BoardPostEvent";
-import PostSort from "./PostSort";
 import useTagPosts from "../store/useTagPosts";
 import Chips from "./Chips";
+import ButtonBoardType from "./ButtonBoardType";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -89,7 +89,7 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
             </Box>
           </Button>
         </Box>
-        <PostSort />
+        <ButtonBoardType sort />
       </Grid>
       <Grid container spacing={2}>
         {posts?.map((p, i) => (

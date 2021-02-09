@@ -347,7 +347,7 @@ declare global {
   }
 }
 export interface UsePostProps {
-  board_id: string;
+  board_id?: string;
   listen?: boolean;
   tags?: string[];
   sort?: number;

@@ -13,6 +13,9 @@ export default function usePosts<T extends Post>({
 }: UsePostProps): [T[] | undefined] {
   const [items, setItems] = React.useState<T[] | undefined>(undefined);
   React.useEffect(() => {
+    if (!board_id) {
+      return;
+    }
     let query = firestore.collection("posts").where("board_id", "==", board_id);
     query = query.orderBy(...SORT_ARRAY[sort].param);
 

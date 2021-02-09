@@ -2,8 +2,10 @@ import React from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core";
 import useBoard from "../store/useBoard";
-import RouteMapPosts from "./RouteMapPosts";
+import MapPosts from "./MapPosts";
 import ButtonBoardType from "./ButtonBoardType";
+import useTagPosts from "../store/useTagPosts";
+import Chips from "./Chips";
 export const useStyles = makeStyles((theme: Theme) => ({
   smallIcon: {
     padding: theme.spacing(0.5),
@@ -53,10 +55,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
 
 export default function RouteMap() {
   const [board] = useBoard();
+  const [posts, chipData, setChipData] = useTagPosts({ board_id: board?.id });
   const classes = useStyles();
   //   const [sort] = useGlobalState(keys.SORT);
   return (
     <section className={classes.container}>
+      <Chips chips={chipData} setChips={setChipData} />
       <Grid
         container
         justify="space-between"
@@ -77,7 +81,7 @@ export default function RouteMap() {
         </Box>
       </Grid>
       <div className={classes.mapContainer}>
-        {board && <RouteMapPosts board={board} />}
+        {posts?.length && <MapPosts posts={posts} />}
       </div>
     </section>
   );

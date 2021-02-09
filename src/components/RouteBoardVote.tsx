@@ -10,9 +10,9 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import RoutePostVote from "./RoutePostVote";
-import PostSort from "./PostSort";
 import useTagPosts from "../store/useTagPosts";
 import Chips from "./Chips";
+import ButtonBoardType from "./ButtonBoardType";
 const useStyles = makeStyles(theme => {
   return {
     root: { paddingBottom: theme.spacing(5) },
@@ -84,7 +84,7 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
             </Box>
           </Button>
         </Box>
-        <PostSort />
+        <ButtonBoardType sort />
       </Grid>
       {posts?.map((p, i) => (
         <RoutePostVote key={i} post={p} />

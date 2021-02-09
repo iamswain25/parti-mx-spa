@@ -12,10 +12,10 @@ import useDesktop from "./useDesktop";
 import { useSort } from "../store/useGlobalState";
 import BoardPostNotice from "./BoardPostNotice";
 import RouteBoardAnnounce from "./RouteBoardAnnounce";
-import PostSort from "./PostSort";
 import SquarePhoto from "./SquarePhoto";
 import useTagPosts from "../store/useTagPosts";
 import Chips from "./Chips";
+import ButtonBoardType from "./ButtonBoardType";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -68,7 +68,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
             {b?.count_open || 0}
           </Typography>
         </Box>
-        <PostSort />
+        <ButtonBoardType sort />
       </Grid>
       <Grid container direction="row-reverse" spacing={isDesktop ? 3 : 0}>
         <Grid item xs={12} md={4}>

@@ -4,7 +4,7 @@ import { LinearProgress } from "@material-ui/core";
 import GoogleMapReact from "google-map-react";
 import MapPost from "./MapPost";
 import { DEFAULT_LAT_LNG } from "../helpers/options";
-export default function RouteMapPosts({ posts }: { posts: Post[] }) {
+export default function HomeMapPosts({ posts }: { posts: Post[] }) {
   const [selectedPlace, setSelectedPlace] = React.useState<
     Post<SuggestionMetadata> | undefined
   >(undefined);
