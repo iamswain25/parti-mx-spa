@@ -3,6 +3,8 @@ import { storage } from "../config/firebase";
 export default function useStoragePath(path?: string, thumb: boolean = false) {
   const [url, setUrl] = React.useState<string | undefined>();
   React.useEffect(() => {
+    let isCancelled = false;
+    if (isCancelled) return;
     if (path) {
       if (
         path?.startsWith("/") ||
@@ -23,6 +25,9 @@ export default function useStoragePath(path?: string, thumb: boolean = false) {
         storage.ref(_path).getDownloadURL().then(setUrl);
       }
     }
+    return () => {
+      isCancelled = true;
+    };
   }, [path, setUrl, thumb]);
   return url;
 }

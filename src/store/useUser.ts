@@ -10,6 +10,7 @@ export default function useUser({
 }): [User | null] {
   const [user, setUser] = React.useState<User | null>(null);
   React.useEffect(() => {
+    let isCancelled = false;
     if (id) {
       if (listen) {
         return firestore
@@ -20,6 +21,7 @@ export default function useUser({
             setUser(item);
           });
       } else {
+        if (isCancelled) return;
         firestore
           .collection("users")
           .doc(id)
@@ -28,6 +30,10 @@ export default function useUser({
             const item = { id: doc.id, ...doc.data() } as User;
             setUser(item);
           });
+        return () => {
+          isCancelled = true;
+          setUser(null);
+        };
       }
     }
   }, [id, listen]);

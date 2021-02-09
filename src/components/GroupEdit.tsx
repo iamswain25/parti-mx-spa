@@ -11,7 +11,7 @@ import StorageImage from "./StorageImage";
 
 import { useError, useGroupId } from "../store/useGlobalState";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: { flex: 1 },
   flex: {
     display: "flex",
@@ -32,9 +32,14 @@ export default function GroupEdit() {
   const [groupId] = useGroupId();
   const [images, setImages] = React.useState<any>({});
   const [, setError] = useError();
-  const { handleSubmit, register, errors, reset, control } = useForm<
-    GroupForm
-  >();
+  const {
+    handleSubmit,
+    register,
+    errors,
+    reset,
+    control,
+    formState,
+  } = useForm<GroupForm>();
   const [group] = useGroup();
   React.useEffect(() => {
     if (group) {
@@ -126,7 +131,11 @@ export default function GroupEdit() {
           </>
         )}
       </div>
-      <BtnSubmitDesktop text="저장" />
+      <BtnSubmitDesktop
+        text="저장"
+        isSubmitting={formState.isSubmitting}
+        cancel="./"
+      />
     </form>
   );
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import useGoBack from "./useGoBack";
-const useStyles = makeStyles((theme) => ({
+import { Link } from "react-router-dom";
+const useStyles = makeStyles(theme => ({
   btn: {
     display: "flex",
     alignItems: "center",
@@ -27,14 +28,26 @@ const useStyles = makeStyles((theme) => ({
 export default function BtnSubmitDesktop({
   text = "저장",
   isSubmitting = false,
+  cancel = "",
 }) {
   const classes = useStyles();
   const back = useGoBack();
   return (
     <div className={classes.btn}>
-      <Button variant="outlined" color="secondary" onClick={back}>
-        취소
-      </Button>
+      {cancel ? (
+        <Button
+          component={Link}
+          variant="outlined"
+          color="secondary"
+          to={cancel}
+        >
+          취소
+        </Button>
+      ) : (
+        <Button variant="outlined" color="secondary" onClick={back}>
+          취소
+        </Button>
+      )}
       <Button
         type="submit"
         variant="contained"

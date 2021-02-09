@@ -78,9 +78,13 @@ service cloud.firestore {
         let user = get(/databases/$(database)/documents/groups/$(group_id)/users/$(request.auth.uid));
         return  user.data.role == "organizer";
       }
+      function isParti() {
+        let user = get(/databases/$(database)/documents/users/$(request.auth.uid));
+        return user.data.email.matches('.*@parti[.].*')
+      }
     
       allow read: if true;
-      allow write: if isOrganizer();
+      allow write: if isOrganizer() || isParti();
       
       match /users/{user_id}/{document=**} {
         allow read: if true;

@@ -17,11 +17,13 @@ import {
   InputAdornment,
   IconButton,
 } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
-import GroupSearchList from "./GroupSearchList";
-import MenuProfile from "./MenuProfile";
+import { Link } from "react-router-dom";
 import useGroups from "../store/useGroups";
 import { useCurrentUser } from "../store/useGlobalState";
+import useNewGroup from "./useNewGroup";
+import AvatarStorage from "./AvatarStorage";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
     display: "flex",
@@ -40,14 +42,18 @@ export default function MyGroupList(props: { clickHandler: () => void }) {
   const { clickHandler } = props;
   const [groupId] = useGroupId();
   const classes = useStyles();
-  const history = useHistory();
+  const newGroupHadnler = useNewGroup();
   const [keyword, setKeyword] = React.useState("");
   const [groups] = useGroups();
+  const filteredGroups = React.useMemo(
+    () => groups?.filter(g => g.title.includes(keyword)),
+    [groups, keyword],
+  );
   const [currentUser] = useCurrentUser();
   let list = [];
-  if (groups) {
+  if (filteredGroups?.length) {
     list.push(
-      ...groups?.map((g: Group, i: number) => {
+      ...filteredGroups?.map((g: Group, i: number) => {
         return (
           <ListItem
             key={g.id}
@@ -58,43 +64,27 @@ export default function MyGroupList(props: { clickHandler: () => void }) {
             selected={groupId === g.id}
           >
             <ListItemIcon>
-              <Avatar variant="square" children={g.title.substr(0, 1)}  />
+              <AvatarStorage
+                obj={g.mb_img}
+                variant="square"
+                children={g.title.substr(0, 1)}
+              />
             </ListItemIcon>
             <ListItemText primary={g.title} />
           </ListItem>
         );
       }),
     );
+  } else {
+    list.push(<ListItem>검색된 그룹이 없습니다.</ListItem>);
   }
-
-  // list.push(<Divider key="divider" />);
-  // list.push(<ListItem key="label">아래는 가입하지 않은 그룹입니다</ListItem>);
-  // list.push(
-  //   rest?.map((g: Group, i: number) => (
-  //     <ListItem
-  //       key={`rest${i}`}
-  //       button
-  //       onClick={() => clickHandler(g.id)}
-  //       selected={g.id === group_id}
-  //     >
-  //       <ListItemIcon>
-  //         <Avatar
-  //           variant="square"
-  //           src={g.bg_img}
-  //           children={g.title.substr(0, 1)}
-  //         />
-  //       </ListItemIcon>
-  //       <ListItemText primary={g.title} />
-  //     </ListItem>
-  //   ))
-  // );
 
   return (
     <>
       <Typography variant="h2">
         <div className={classes.title}>
           <span>믹스 그룹</span>
-          <MenuProfile />
+          {currentUser?.email ? <LogoutButton /> : <LoginButton />}
         </div>
       </Typography>
       <Typography variant="h4">
@@ -120,19 +110,15 @@ export default function MyGroupList(props: { clickHandler: () => void }) {
               }
             />
           </ListItem>
-          {keyword ? (
-            <GroupSearchList keyword={keyword} clickHandler={clickHandler} />
-          ) : (
-            list
-          )}
+          {list}
           {currentUser?.email?.includes("@parti.") && (
-            <ListItem button onClick={() => history.push("/group/new")}>
+            <ListItem button onClick={newGroupHadnler}>
               <ListItemIcon>
                 <Avatar variant="square" children={<AddIcon />} />
               </ListItemIcon>
               <ListItemText
                 primaryTypographyProps={{ variant: "h4" }}
-                primary="그룹 만들기"
+                primary="새 그룹 만들기"
               />
             </ListItem>
           )}

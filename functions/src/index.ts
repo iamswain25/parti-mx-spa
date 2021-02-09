@@ -19,6 +19,7 @@ import commentLikeDelete2 from "./components/commentLikeDelete2";
 import candidateVoteCreate from "./components/candidateVoteCreate";
 import candidateVoteDelete from "./components/candidateVoteDelete";
 import userPostWrite from "./components/userPostWrite";
+import groupCreate from "./components/groupCreate";
 export {
   authCreate,
   authDelete,
@@ -39,4 +40,5 @@ export {
   candidateVoteCreate,
   candidateVoteDelete,
   userPostWrite,
+  groupCreate,
 };
