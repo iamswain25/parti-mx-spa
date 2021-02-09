@@ -1,6 +1,7 @@
 import React from "react";
 import { firestore } from "../config/firebase";
 import { Comment } from "../types";
+import firebase from "firebase";
 export default function useComments2(
   c: Comment,
   listen = false,

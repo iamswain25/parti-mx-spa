@@ -17,7 +17,7 @@ import useAccountDelete from "../store/useAccountDelete";
 import UserExtraInfo from "./UserExtraInfo";
 import { User } from "../types";
 import useUser from "../store/useUser";
-
+import firebase from "firebase";
 const useStyles = makeStyles(theme => ({
   root: {
     [theme.breakpoints.down("sm")]: {

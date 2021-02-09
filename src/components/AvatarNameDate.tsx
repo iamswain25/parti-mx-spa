@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { semanticDate } from "../helpers/datefns";
 import useUser from "../store/useUser";
+import firebase from "firebase";
 const useStyles = makeStyles(theme => ({
   small: {
     width: theme.spacing(3),

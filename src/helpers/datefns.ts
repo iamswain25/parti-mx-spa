@@ -7,6 +7,7 @@ import {
   addHours,
 } from "date-fns";
 import { ko } from "date-fns/locale";
+import firebase from "firebase";
 export function calculateDays(date: firebase.firestore.Timestamp, days = 30) {
   return differenceInDays(new Date(), addDays(date.toDate(), days));
 }

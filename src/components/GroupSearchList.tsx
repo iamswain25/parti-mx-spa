@@ -2,14 +2,13 @@ import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
 import { Avatar } from "@material-ui/core";
 import useGroups from "../store/useGroups";
 export default function GroupSearchList(props: {
   keyword: string;
   clickHandler: any;
 }) {
-  const { keyword, clickHandler } = props;
+  const { clickHandler } = props;
   const [groups] = useGroups();
   if (!groups?.length) {
     return <ListItem>검색된 그룹이 없습니다.</ListItem>;

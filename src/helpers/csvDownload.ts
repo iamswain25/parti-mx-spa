@@ -1,5 +1,6 @@
 import { Parser } from "json2csv";
 import { firestore } from "../config/firebase";
+import firebase from "firebase";
 async function delay(t: number) {
   return new Promise(function (resolve) {
     setTimeout(resolve, t);
