@@ -107,7 +107,10 @@ export default function Footer() {
                 <a href="tel:+82-70-4820-4998">070-4820-4998</a>
               </Grid>
               <Grid item>
-                E-mail: <a href="mailto:mail2igt@daum.net">mail2igt@daum.net</a>
+                E-mail:{" "}
+                <a href="mailto:igt.greenduck@gmail.com">
+                  igt.greenduck@gmail.com
+                </a>
               </Grid>
             </Grid>
           </Grid>
