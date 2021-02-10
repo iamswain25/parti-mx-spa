@@ -73,7 +73,7 @@ export default function BoardsSetting() {
     control,
     reset,
     formState,
-    watch
+    watch,
   } = useForm<BoardsForm>();
   const { fields, append, remove } = useFieldArray<FormBoard, "uid">({
     name: "boards",
@@ -159,7 +159,7 @@ export default function BoardsSetting() {
                 </FormControl>
                 {watchingBoards[i].type === "notice" && (
                   <FormControl>
-                    <label>게시판 화면</label>
+                    <label>게시판 글 목록</label>
                     <Controller
                       control={control}
                       label="게시판 화면"
@@ -170,17 +170,17 @@ export default function BoardsSetting() {
                           <FormControlLabel
                             value="text"
                             control={<Radio />}
-                            label="text"
+                            label="게시판"
                           />
                           <FormControlLabel
-                            value="small"
+                            value="preview"
                             control={<Radio />}
-                            label="small"
+                            label="미리보기"
                           />
                           <FormControlLabel
-                            value="large"
+                            value="album"
                             control={<Radio />}
-                            label="large"
+                            label="앨범"
                           />
                         </RadioGroup>
                       )}

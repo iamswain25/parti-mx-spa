@@ -105,7 +105,7 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
         </Grid>
         <Grid item xs={12} md={8}>
           <Box width="100%" mt={isDesktop ? 3 : 0}>
-            {b?.view === "large" ? (
+            {b?.view === "album" ? (
               <Grid container spacing={isDesktop ? 3 : 0}>
                 {posts?.length ? (
                   posts?.map(p => (

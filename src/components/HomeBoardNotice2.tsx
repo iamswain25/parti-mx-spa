@@ -69,7 +69,7 @@ export default function HomeBoardNotice2({
           </div>
         </Grid>
         <Box mt={2}>
-          {b?.view === "large" ? (
+          {b?.view === "album" ? (
             <Grid container spacing={isDesktop ? 3 : 0}>
               {posts?.map(p => (
                 <SquarePhoto key={p.id} p={p} xs={12} sm={6} md={3} />

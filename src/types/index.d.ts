@@ -89,7 +89,7 @@ export type Board = {
   count_closed: number;
 };
 export type BoardTypes = "notice" | "suggestion" | "event" | "vote";
-export type BoardViewTypes = "text" | "small" | "large";
+export type BoardViewTypes = "text" | "preview" | "album";
 export interface LatLng {
   lat: number;
   lng: number;
