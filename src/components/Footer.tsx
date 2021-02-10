@@ -103,7 +103,7 @@ export default function Footer() {
             <Grid spacing={1} container className="mt" direction="column">
               <Grid item>서울시 종로구 자하문로 17길 12-9, 2층(03035)</Grid>
               <Grid item>
-                전화: <a href="tel:+82-70-4820-4900">070-4820-4900</a> /
+                전화: <a href="tel:+82-70-4820-4900">070-4820-4900</a> /{" "}
                 <a href="tel:+82-70-4820-4998">070-4820-4998</a>
               </Grid>
               <Grid item>
