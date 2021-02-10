@@ -1,6 +1,7 @@
 import { createGlobalState } from "react-hooks-global-state";
 import { Board, ChipData, Role } from "../types";
 import firebase from "firebase";
+import { DEFAULT_HASHTAGS } from "../helpers/options";
 export const initialState = {
   loginModal: false,
   error: null,
@@ -11,7 +12,7 @@ export const initialState = {
   sort: 0,
   role: undefined,
   boards: undefined,
-  chipsData: undefined,
+  chipsData: DEFAULT_HASHTAGS.map(tag => ({ selected: false, label: tag })),
 };
 interface GlobalType {
   success: any;

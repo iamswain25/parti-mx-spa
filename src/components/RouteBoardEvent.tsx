@@ -7,6 +7,7 @@ import BoardPostEvent from "./BoardPostEvent";
 import useTagPosts from "../store/useTagPosts";
 import Chips from "./Chips";
 import ButtonBoardType from "./ButtonBoardType";
+import DisplayNone from "./DisplayNone";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -92,12 +93,16 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
         <ButtonBoardType sort />
       </Grid>
       <Grid container spacing={2}>
-        {posts?.map((p, i) => (
-          <Grid container item key={p.id} direction="column">
-            <BoardPostEvent post={p} />
-            {posts?.length !== i + 1 && <hr className={classes.divider} />}
-          </Grid>
-        ))}
+        {posts?.length ? (
+          posts?.map((p, i) => (
+            <Grid container item key={p.id} direction="column">
+              <BoardPostEvent post={p} />
+              {posts?.length !== i + 1 && <hr className={classes.divider} />}
+            </Grid>
+          ))
+        ) : (
+          <DisplayNone text="태그된 게시글이 없습니다." />
+        )}
       </Grid>
     </section>
   );

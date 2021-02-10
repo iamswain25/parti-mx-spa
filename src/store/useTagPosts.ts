@@ -1,7 +1,8 @@
 import React from "react";
 import { ChipData, Post, UsePostProps } from "../types";
-import useTagChips from "../components/useTagChips";
+// import useTagChips from "../components/useTagChips";
 import usePosts from "./usePosts";
+import { useChipsData } from "./useGlobalState";
 export default function useTagPosts(
   props: UsePostProps,
 ): [
@@ -10,7 +11,8 @@ export default function useTagPosts(
   (u: React.SetStateAction<ChipData[] | undefined>) => void,
 ] {
   const [posts] = usePosts(props);
-  const [chipData, setChipData] = useTagChips(posts);
+  // const [chipData, setChipData] = useTagChips(posts);
+  const [chipData, setChipData] = useChipsData();
   const selectedTags = React.useMemo(
     () => chipData?.filter(c => c.selected).map(c => c.label),
     [chipData],

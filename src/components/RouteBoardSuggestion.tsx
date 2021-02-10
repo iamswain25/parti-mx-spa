@@ -8,6 +8,7 @@ import { useSort } from "../store/useGlobalState";
 import ButtonBoardType from "./ButtonBoardType";
 import useTagPosts from "../store/useTagPosts";
 import Chips from "./Chips";
+import DisplayNone from "./DisplayNone";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -96,9 +97,11 @@ export default function RouteBoardSuggestion({ board: b }: { board: Board }) {
         {showAnnouncement &&
           announcedPosts?.map(p => <RoutePostSuggestion key={p.id} post={p} />)}
       </div>
-      {normalPosts?.map(p => (
-        <RoutePostSuggestion key={p.id} post={p} />
-      ))}
+      {normalPosts?.length ? (
+        normalPosts?.map(p => <RoutePostSuggestion key={p.id} post={p} />)
+      ) : (
+        <DisplayNone text="태그된 게시글이 없습니다." />
+      )}
     </section>
   );
 }

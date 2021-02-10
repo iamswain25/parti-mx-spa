@@ -16,6 +16,7 @@ import SquarePhoto from "./SquarePhoto";
 import useTagPosts from "../store/useTagPosts";
 import Chips from "./Chips";
 import ButtonBoardType from "./ButtonBoardType";
+import DisplayNone from "./DisplayNone";
 const useStyles = makeStyles(theme => {
   return {
     container: {
@@ -106,15 +107,23 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
           <Box width="100%" mt={isDesktop ? 3 : 0}>
             {b?.view === "large" ? (
               <Grid container spacing={isDesktop ? 3 : 0}>
-                {posts?.map(p => (
-                  <SquarePhoto key={p.id} p={p} xs={12} sm={6} md={3} />
-                ))}
+                {posts?.length ? (
+                  posts?.map(p => (
+                    <SquarePhoto key={p.id} p={p} xs={12} sm={6} md={3} />
+                  ))
+                ) : (
+                  <DisplayNone text="태그된 게시글이 없습니다." />
+                )}
               </Grid>
             ) : (
               <div>
-                {posts?.map(p => (
-                  <BoardPostNotice key={p.id} post={p} view={b?.view} />
-                ))}
+                {posts?.length ? (
+                  posts?.map(p => (
+                    <BoardPostNotice key={p.id} post={p} view={b?.view} />
+                  ))
+                ) : (
+                  <DisplayNone text="태그된 게시글이 없습니다." />
+                )}
               </div>
             )}
           </Box>

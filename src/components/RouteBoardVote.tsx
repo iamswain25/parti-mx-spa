@@ -13,6 +13,7 @@ import RoutePostVote from "./RoutePostVote";
 import useTagPosts from "../store/useTagPosts";
 import Chips from "./Chips";
 import ButtonBoardType from "./ButtonBoardType";
+import DisplayNone from "./DisplayNone";
 const useStyles = makeStyles(theme => {
   return {
     root: { paddingBottom: theme.spacing(5) },
@@ -86,9 +87,11 @@ export default function RouteBoardVote({ board: b }: { board: Board }) {
         </Box>
         <ButtonBoardType sort />
       </Grid>
-      {posts?.map((p, i) => (
-        <RoutePostVote key={i} post={p} />
-      ))}
+      {posts?.length ? (
+        posts?.map((p, i) => <RoutePostVote key={i} post={p} />)
+      ) : (
+        <DisplayNone text="태그된 게시글이 없습니다." />
+      )}
     </section>
   );
 }

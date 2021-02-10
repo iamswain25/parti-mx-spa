@@ -12,42 +12,23 @@ import HomeMapPosts from "./HomeMapPosts";
 import Chips from "./Chips";
 import BoardMoreTag from "./BoardMoreTag";
 import useTagPostsAll from "../store/useTagPostsAll";
+import DisplayNone from "./DisplayNone";
 const mapElement = (posts: Post[]) => {
   posts.sort(a => (a.is_announced ? -1 : 1));
   return (b: Board) => {
+    const filteredPosts = posts.filter(p => p.board_id === b.id).slice(0, 4);
+    if (filteredPosts.length === 0) return null;
     switch (b.type) {
       case "suggestion":
         return (
-          <HomeBoardSuggestion2
-            key={b.id}
-            board={b}
-            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
-          />
+          <HomeBoardSuggestion2 key={b.id} board={b} posts={filteredPosts} />
         );
       case "notice":
-        return (
-          <HomeBoardNotice2
-            key={b.id}
-            board={b}
-            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
-          />
-        );
+        return <HomeBoardNotice2 key={b.id} board={b} posts={filteredPosts} />;
       case "vote":
-        return (
-          <HomeBoardVote2
-            key={b.id}
-            board={b}
-            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
-          />
-        );
+        return <HomeBoardVote2 key={b.id} board={b} posts={filteredPosts} />;
       case "event":
-        return (
-          <HomeBoardEvent2
-            key={b.id}
-            board={b}
-            posts={posts.filter(p => p.board_id === b.id).slice(0, 4)}
-          />
-        );
+        return <HomeBoardEvent2 key={b.id} board={b} posts={filteredPosts} />;
       default:
         return null;
     }
@@ -65,35 +46,39 @@ export default function Home() {
   return (
     <>
       <Chips chips={chipData} setChips={setChipData} />
-      <Grid container spacing={isDesktop ? 3 : 0}>
-        <Grid item xs={isDesktop ? 8 : 12}>
-          {boardArr}
-        </Grid>
-        <Grid item xs={isDesktop ? 4 : 12}>
-          <Box
-            mx={isDesktop ? 0 : 2}
-            my={3}
-            borderBottom="1px solid #bdbdbd"
-            display={isDesktop ? undefined : "flex"}
-            alignItems={isDesktop ? undefined : "center"}
-            justifyContent={isDesktop ? undefined : "space-between"}
-          >
-            <Grid container justify="space-between">
-              <Typography variant="h2" color="textPrimary">
-                <Box fontWeight="bold">지도보기</Box>
-              </Typography>
-              <BoardMoreTag
-                label="지도"
-                viewLabel="크게 보기"
-                to={`/${group_id}/map`}
-              />
-            </Grid>
-            <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
-              {posts?.length && <HomeMapPosts posts={posts} />}
+      {posts?.length ? (
+        <Grid container spacing={isDesktop ? 3 : 0}>
+          <Grid item xs={isDesktop ? 8 : 12}>
+            {boardArr}
+          </Grid>
+          <Grid item xs={isDesktop ? 4 : 12}>
+            <Box
+              mx={isDesktop ? 0 : 2}
+              my={3}
+              borderBottom="1px solid #bdbdbd"
+              display={isDesktop ? undefined : "flex"}
+              alignItems={isDesktop ? undefined : "center"}
+              justifyContent={isDesktop ? undefined : "space-between"}
+            >
+              <Grid container justify="space-between">
+                <Typography variant="h2" color="textPrimary">
+                  <Box fontWeight="bold">지도보기</Box>
+                </Typography>
+                <BoardMoreTag
+                  label="지도"
+                  viewLabel="크게 보기"
+                  to={`/${group_id}/map`}
+                />
+              </Grid>
+              <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
+                <HomeMapPosts posts={posts} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : (
+        <DisplayNone text="태그된 게시글이 없습니다." />
+      )}
     </>
   );
 }
