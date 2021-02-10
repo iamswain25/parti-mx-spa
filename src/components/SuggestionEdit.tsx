@@ -47,7 +47,7 @@ export default function SuggestionEdit({ post: p }: { post: Post }) {
       </Hidden>
       <Box mt={2}>
         <Container component="main" maxWidth="md">
-          <Typography variant="h2">제안글 수정</Typography>
+          <Typography variant="h2">공론장 제안글 쓰기</Typography>
           <SuggestionInputs formControl={formControl} />
           <ImageFileDropzone
             images={imageArr}
