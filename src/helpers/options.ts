@@ -80,16 +80,16 @@ export const KEYWORD_INDEX = 19;
 export const COMMENT_LIMIT = 10;
 export const LIKED_USER_LIMIT = 24;
 export const DEFAULT_HASHTAGS = [
+  "에너지전환",
+  "건물&주거",
+  "교통",
+  "순환경제&자원순환",
+  "공원&생물다양성",
+  "농업먹거리",
+  "문화예술",
   "정의로운전환",
   "사회적경제",
-  "순환경제",
-  "기후운동",
-  "탈성장",
-  "코로나19",
-  "지역분권",
-  "에너지전환",
-  "전환의방법론",
-  "주거권",
+  "어떻게_사회를_전환할_것인가",
 ];
 export const PARAM_COLLECTION = "$PARAMS$";
 export const COUNTER_DOC = "counters";
