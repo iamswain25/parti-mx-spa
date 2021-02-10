@@ -48,11 +48,11 @@ export default function RouteMapAll() {
       >
         <KeyboardArrowLeftIcon fontSize="large" />
         <Typography variant="h2" color="textPrimary">
-          홈으로 돌아가 지도보기
+          지도보기
         </Typography>
       </Grid>
       <div className={classes.mapContainer}>
-        {posts?.length && <MapPosts posts={posts} />}
+        <MapPosts posts={posts} />
       </div>
     </section>
   );

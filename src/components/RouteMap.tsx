@@ -81,7 +81,7 @@ export default function RouteMap() {
         </Box>
       </Grid>
       <div className={classes.mapContainer}>
-        {posts?.length && <MapPosts posts={posts} />}
+        <MapPosts posts={posts} />
       </div>
     </section>
   );
