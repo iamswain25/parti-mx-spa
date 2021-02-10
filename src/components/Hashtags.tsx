@@ -27,7 +27,7 @@ export default function Hashtags(props: { formControl: UseFormMethods<any> }) {
               value.map((option: string, index: number) => (
                 <Chip
                   variant="outlined"
-                  label={option}
+                  label={"#" + option}
                   {...getTagProps({ index })}
                 />
               ))
