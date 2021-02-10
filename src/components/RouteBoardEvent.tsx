@@ -92,18 +92,18 @@ export default function RouteBoardEvent({ board: b }: { board: Board }) {
         </Box>
         <ButtonBoardType sort />
       </Grid>
-      <Grid container spacing={2}>
-        {posts?.length ? (
-          posts?.map((p, i) => (
+      {posts?.length ? (
+        <Grid container spacing={2}>
+          {posts?.map((p, i) => (
             <Grid container item key={p.id} direction="column">
               <BoardPostEvent post={p} />
               {posts?.length !== i + 1 && <hr className={classes.divider} />}
             </Grid>
-          ))
-        ) : (
-          <DisplayNone text="태그된 게시글이 없습니다." />
-        )}
-      </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <DisplayNone text="태그된 게시글이 없습니다." />
+      )}
     </section>
   );
 }
