@@ -1,6 +1,6 @@
 import React from "react";
 import { NoticeMetadata, Post } from "../types";
-import { Box, Grid, Divider, makeStyles, Paper, Chip } from "@material-ui/core";
+import { Box, Grid, Divider, makeStyles } from "@material-ui/core";
 import BtnLikePost from "./BtnLikePost";
 import GreyDivider from "./GreyDivider";
 import AvatarNameDate from "./AvatarNameDate";
@@ -11,6 +11,7 @@ import FilesImages from "./FilesImages";
 import CommentContainer2 from "./CommentContainer2";
 import HtmlOrBody from "./HtmlOrBody";
 import usePostLiked from "../store/usePostLiked";
+import TagsDetail from "./TagsDetail";
 const useStyles = makeStyles(theme => {
   return {
     root: {
@@ -68,11 +69,6 @@ const useStyles = makeStyles(theme => {
         marginTop: theme.spacing(1.5),
       },
     },
-    tag: {
-      margin: theme.spacing(0.5),
-      color: theme.palette.primary.main,
-      // borderColor: theme.palette.divider,
-    },
   };
 });
 
@@ -81,7 +77,7 @@ export default function NoticeDetail({
 }: {
   post: Post<NoticeMetadata>;
 }) {
-  const { images, created_at, files, tags } = p;
+  const { images, created_at, files } = p;
   const [liked] = usePostLiked(p.id);
   const classes = useStyles();
   const [isDesktop] = useDesktop();
@@ -104,17 +100,9 @@ export default function NoticeDetail({
         <Box my={2}>
           <Divider light />
         </Box>
-        <Grid container>
-          {tags?.map(chip => {
-            return (
-              <span key={chip} className={classes.tag}>
-                #{chip}
-              </span>
-            );
-          })}
-        </Grid>
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
+        <TagsDetail post={p} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

@@ -11,8 +11,8 @@ import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 import HtmlOrBody from "./HtmlOrBody";
 import useComments from "../store/useComments";
-import HashtagsDetail from "./HashtagsDetail";
 import CandidatesDetail from "./CandidatesDetail";
+import TagsDetail from "./TagsDetail";
 const useStyles = makeStyles(theme => {
   return {
     root: {
@@ -125,7 +125,7 @@ export default function VoteDetail({ post: p }: { post: Post<VoteMetadata> }) {
         )}
         <FilesImages images={images} files={files} />
         <HtmlOrBody post={p} />
-        <HashtagsDetail tags={p.tags} />
+        <TagsDetail post={p} />
         <CandidatesDetail post={p} />
       </Box>
       {!isDesktop && <GreyDivider height={0.5} />}

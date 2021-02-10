@@ -21,6 +21,7 @@ import Linkify from "./Linkify";
 import usePostLiked from "../store/usePostLiked";
 import useUser from "../store/useUser";
 import LinkPreview from "./LinkPreview";
+import TagsDetail from "./TagsDetail";
 const useStyles = makeStyles(theme => {
   const colors = {
     emerald: theme.palette.primary.dark,
@@ -92,15 +93,10 @@ const useStyles = makeStyles(theme => {
       color: colors.emerald,
       marginRight: theme.spacing(0.5),
     },
-    tag: {
-      margin: theme.spacing(0.5),
-      color: theme.palette.primary.main,
-      // borderColor: theme.palette.divider,
-    },
   };
 });
 export default function SuggestionDetail({ post: p }: { post: Post }) {
-  const { images = [], created_by, created_at, context, files = [], tags } = p;
+  const { images = [], created_by, created_at, context, files = [] } = p;
   const metadata = p.metadata as SuggestionMetadata;
   const [liked] = usePostLiked(p.id);
   const [user] = useUser({ id: created_by });
@@ -174,15 +170,7 @@ export default function SuggestionDetail({ post: p }: { post: Post }) {
         </Box>
         <LinkPreview text={context} />
         <HtmlOrBody post={p} />
-        <Grid container>
-          {tags?.map(chip => {
-            return (
-              <span key={chip} className={classes.tag}>
-                #{chip}
-              </span>
-            );
-          })}
-        </Grid>
+        <TagsDetail post={p} />
         <Box mt={4} mb={isDesktop ? 5 : 2}>
           <Grid container justify="center" alignItems="center">
             {liked ? <BtnUnlikePost post={p} /> : <BtnLikePost post={p} />}

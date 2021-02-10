@@ -13,6 +13,7 @@ export default function usePosts<T extends Post>({
 }: UsePostProps): [T[] | undefined] {
   const [items, setItems] = React.useState<T[] | undefined>(undefined);
   React.useEffect(() => {
+    let isCancelled = false;
     if (!board_id) {
       return;
     }
@@ -50,9 +51,11 @@ export default function usePosts<T extends Post>({
         },
       );
     } else {
+      if (isCancelled) return;
       query
         .get()
         .then(snapshot => {
+          if (isCancelled) return;
           const items = snapshot.docs.map(
             doc => ({ id: doc.id, ...(doc.data() as any) } as T),
           );
@@ -61,6 +64,9 @@ export default function usePosts<T extends Post>({
         .catch(error => {
           console.warn("usePosts", error);
         });
+      return () => {
+        isCancelled = true;
+      };
     }
   }, [board_id, listen, isClosed, limit, tags, where, sort]);
   return [items];

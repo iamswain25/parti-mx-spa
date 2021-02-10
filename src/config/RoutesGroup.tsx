@@ -11,8 +11,10 @@ import SearchInstant from "../components/SearchInstant";
 import useEffectGroupId from "../store/useEffectGroupId";
 import RoutesBoard from "./RoutesBoard";
 import RouteMapAll from "../components/RouteMapAll";
+import useEffectTags from "../store/useEffectTags";
 export default function RoutesGroup() {
   useEffectGroupId();
+  useEffectTags();
   return (
     <Switch>
       <Route exact path="/:group_id" component={Home} />
