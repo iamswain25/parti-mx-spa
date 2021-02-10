@@ -71,64 +71,60 @@ export default function RouteBoardNotice({ board: b }: { board: Board }) {
         </Box>
         <ButtonBoardType sort />
       </Grid>
-      <Grid container direction="row-reverse" spacing={isDesktop ? 3 : 0}>
-        <Grid item xs={12} md={4}>
-          {showAnnouncement && (
-            <Box
-              border={isDesktop ? 1 : 2}
-              borderColor={isDesktop ? "grey.300" : "primary.main"}
-              mt={isDesktop ? 2 : 0}
-              mb={2}
-              height="fit-content"
-            >
+      {posts?.length ? (
+        <Grid container direction="row-reverse" spacing={isDesktop ? 3 : 0}>
+          <Grid item xs={12} md={4}>
+            {showAnnouncement && (
               <Box
-                padding={2}
-                fontSize={16}
-                fontWeight={500}
-                letterSpacing={0.23}
-                color="grey.900"
+                border={isDesktop ? 1 : 2}
+                borderColor={isDesktop ? "grey.300" : "primary.main"}
+                mt={isDesktop ? 2 : 0}
+                mb={2}
+                height="fit-content"
               >
-                공지
+                <Box
+                  padding={2}
+                  fontSize={16}
+                  fontWeight={500}
+                  letterSpacing={0.23}
+                  color="grey.900"
+                >
+                  공지
+                </Box>
+                <Divider />
+                <Grid
+                  container
+                  spacing={isDesktop ? 2 : 0}
+                  className={classes.announcement}
+                >
+                  {announcedPosts?.map(p => (
+                    <RouteBoardAnnounce post={p} key={p.id} />
+                  ))}
+                </Grid>
               </Box>
-              <Divider />
-              <Grid
-                container
-                spacing={isDesktop ? 2 : 0}
-                className={classes.announcement}
-              >
-                {announcedPosts?.map(p => (
-                  <RouteBoardAnnounce post={p} key={p.id} />
-                ))}
-              </Grid>
-            </Box>
-          )}
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Box width="100%" mt={isDesktop ? 3 : 0}>
-            {b?.view === "album" ? (
-              <Grid container spacing={isDesktop ? 3 : 0}>
-                {posts?.length ? (
-                  posts?.map(p => (
-                    <SquarePhoto key={p.id} p={p} xs={12} sm={6} md={3} />
-                  ))
-                ) : (
-                  <DisplayNone text="태그된 게시글이 없습니다." />
-                )}
-              </Grid>
-            ) : (
-              <div>
-                {posts?.length ? (
-                  posts?.map(p => (
-                    <BoardPostNotice key={p.id} post={p} view={b?.view} />
-                  ))
-                ) : (
-                  <DisplayNone text="태그된 게시글이 없습니다." />
-                )}
-              </div>
             )}
-          </Box>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Box width="100%" mt={isDesktop ? 3 : 0}>
+              {b?.view === "album" ? (
+                <Grid container spacing={isDesktop ? 3 : 0}>
+                  {posts?.map(p => (
+                    <SquarePhoto key={p.id} p={p} xs={12} sm={6} md={3} />
+                  ))}
+                </Grid>
+              ) : (
+                <div>
+                  {posts?.map(p => (
+                    <BoardPostNotice key={p.id} post={p} view={b?.view} />
+                  ))}
+                </div>
+              )}
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : (
+        <DisplayNone text="태그된 게시글이 없습니다." />
+      )}
     </section>
   );
 }
