@@ -16,7 +16,7 @@ import filesize from "filesize";
 import SortableList from "./SortableList";
 import { SortEnd } from "react-sortable-hoc";
 import arrayMove from "array-move";
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     root: { marginTop: theme.spacing(2) },
     padding: { padding: theme.spacing(1) },
@@ -39,20 +39,20 @@ export default function ImageFileDropzone(props: {
   const { setFiles, files, images, setImages } = props;
   const classes = useStyles();
   const onFileDrop = useCallback(
-    (acceptedFiles) => {
+    acceptedFiles => {
       setFiles([...files, ...acceptedFiles]);
     },
-    [setFiles, files]
+    [setFiles, files],
   );
   const onImageDrop = useCallback(
-    (acceptedFiles) => {
+    acceptedFiles => {
       const _images = acceptedFiles.map((f: File & { preview: string }) => {
         f.preview = URL.createObjectURL(f);
         return f;
       });
       setImages([...images, ..._images]);
     },
-    [setImages, images]
+    [setImages, images],
   );
   function fileRemove(i: number) {
     files.splice(i, 1);
@@ -82,7 +82,7 @@ export default function ImageFileDropzone(props: {
             variant="contained"
             disableElevation
           >
-            Attach Images
+            이미지 첨부
           </Button>
         </Grid>
         <Grid item {...filesDrop.getRootProps()}>
@@ -92,7 +92,7 @@ export default function ImageFileDropzone(props: {
             variant="contained"
             disableElevation
           >
-            Attach Files
+            파일 첨부
           </Button>
         </Grid>
       </Grid>

@@ -37,7 +37,7 @@ export default function Hashtags(props: { formControl: UseFormMethods<any> }) {
                 {...params}
                 variant="outlined"
                 label="#해시태그"
-                placeholder="Enter your Hashtag"
+                placeholder="단어 입력후 엔터를 눌러 추가하세요"
               />
             )}
             onChange={changeHandler(onChange)}

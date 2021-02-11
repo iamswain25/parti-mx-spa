@@ -13,7 +13,7 @@ export default function Tags(props: { formControl: UseFormMethods<any> }) {
   return (
     <>
       <FormControl margin="normal">
-        <Typography variant="h3" style={{ lineHeight: "30px" }}>
+        <Typography variant="h4" style={{ lineHeight: "30px" }}>
           주제 선택
         </Typography>
         <FormGroup row>

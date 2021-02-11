@@ -1,13 +1,16 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
-import { UseFormMethods } from "react-hook-form";
+import { UseFormMethods, Controller } from "react-hook-form";
 import { SuggestionFormdata } from "../types";
 import { suggestionOptions } from "../helpers/options";
 import Tags from "./Tags";
+import Hashtags from "./Hashtags";
+import HtmlInput from "./HtmlInput";
+import GooglePlaceAutocomplete from "./GooglePlaceAutocomplete";
 export default function SuggestionInputs(props: {
   formControl: UseFormMethods<SuggestionFormdata>;
 }) {
-  const { register, errors } = props.formControl;
+  const { register, errors, control } = props.formControl;
   return (
     <>
       <CustomTextField
@@ -24,6 +27,17 @@ export default function SuggestionInputs(props: {
         register={register}
         errors={errors}
       />
+      <HtmlInput formControl={props.formControl} />
+      <Tags formControl={props.formControl} />
+      <Hashtags formControl={props.formControl} />
+      <Controller
+        control={control}
+        name="metadata.location"
+        defaultValue={{ address: "" }}
+        render={({ value, onChange }) => (
+          <GooglePlaceAutocomplete state={value} setState={onChange} />
+        )}
+      />
       <CustomTextField
         register={register}
         errors={errors}
@@ -38,14 +52,6 @@ export default function SuggestionInputs(props: {
             {option.label}
           </option>
         ))}
-      />
-      <Tags formControl={props.formControl} />
-      <CustomTextField
-        label="제안 내용"
-        multiline
-        name="body"
-        register={register}
-        errors={errors}
       />
     </>
   );
