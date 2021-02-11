@@ -22,12 +22,20 @@ export default function EventNew() {
   const formControl = useForm<EventFormdata>();
   const { handleSubmit } = formControl;
   async function handleForm(form: EventFormdata) {
-    const { event_date, deadline, countPeople, location, ...rest } = form;
+    const {
+      event_date,
+      deadline,
+      countPeople,
+      location,
+      place,
+      ...rest
+    } = form;
     const metadata = {
       event_date: new Date(event_date),
       deadline: new Date(deadline),
       countPeople,
       location,
+      place,
     };
     const variables = await makeNewVariables(rest, {
       board_id,
@@ -51,7 +59,7 @@ export default function EventNew() {
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Box mt={2}>
         <Container>
-          <Typography variant="h2">모임</Typography>
+          <Typography variant="h2">모임 새글 쓰기</Typography>
           <EventInputs formControl={formControl} />
           <ImageFileDropzone
             images={imageArr}

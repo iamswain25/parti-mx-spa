@@ -51,11 +51,11 @@ export default function NoticeNew() {
     <>
       <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
         <Hidden mdUp>
-          <HeaderNew title="소식 쓰기" />
+          <HeaderNew title="도서관 새글 쓰기" />
         </Hidden>
         <Box mt={2}>
           <Container component="main" maxWidth="md">
-            <Typography variant="h2">소식 쓰기</Typography>
+            <Typography variant="h2">도서관 새글 쓰기</Typography>
             <NoticeInput formControl={formControl} />
             <ImageFileDropzone
               images={imageArr}

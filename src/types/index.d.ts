@@ -20,31 +20,27 @@ export interface BaseFormData {
   };
   tags: string[];
   customTags: string[];
+  isHtml: boolean;
+  html: RawDraftContentState;
 }
 export interface NoticeFormdata extends BaseFormData {
   title: string;
   body: string;
-  isHtml: boolean;
-  html: RawDraftContentState;
 }
-export interface EventFormdata {
+export interface EventFormdata extends BaseFormData {
   event_date: string;
-  place?: string;
+  place: string;
   deadline: string;
   countPeople: number;
   title: string;
   body: string;
-  isHtml: boolean;
-  html: RawDraftContentState;
-  tags: string[];
   location: Location;
 }
-export interface SuggestionFormdata {
+export interface SuggestionFormdata extends BaseFormData {
   title: string;
   context: string;
   body: string;
   name: string;
-  tags: string[];
   metadata: SuggestionMetadata;
 }
 export interface VoteFormdata {

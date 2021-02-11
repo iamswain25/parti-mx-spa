@@ -44,12 +44,20 @@ export default function EventEdit({ post: p }: { post: Post }) {
   const { handleSubmit } = formControl;
 
   async function handleForm(form: EventFormdata) {
-    const { event_date, deadline, countPeople, location, ...rest } = form;
+    const {
+      event_date,
+      deadline,
+      countPeople,
+      location,
+      place,
+      ...rest
+    } = form;
     const metadata = {
       event_date: new Date(event_date),
       deadline: new Date(deadline),
       countPeople,
       location,
+      place,
     };
     const variables = await makeUpdateVariables(rest, {
       imageArr,
@@ -69,7 +77,7 @@ export default function EventEdit({ post: p }: { post: Post }) {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Box mt={2}>
-        <Typography variant="h2">모임 수정</Typography>
+        <Typography variant="h2">모임 글 수정</Typography>
         <EventInputs formControl={formControl} />
         <ImageFileDropzone
           images={imageArr}

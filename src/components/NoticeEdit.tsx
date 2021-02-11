@@ -41,11 +41,11 @@ export default function NoticeEdit({ post: p }: { post: Post }) {
   return (
     <form onSubmit={handleSubmit(handleForm)} noValidate autoComplete="off">
       <Hidden mdUp>
-        <HeaderNew title="소식 수정" />
+        <HeaderNew title="도서관 글 수정" />
       </Hidden>
       <Box mt={2}>
         <Container component="main" maxWidth="md">
-          <Typography variant="h2">소식 수정</Typography>
+          <Typography variant="h2">도서관 글 수정</Typography>
           <NoticeInput formControl={formControl} />
           <ImageFileDropzone
             images={imageArr}

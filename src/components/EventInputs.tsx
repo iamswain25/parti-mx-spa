@@ -21,6 +21,7 @@ export default function EventInputs(props: {
         register={register}
         errors={errors}
       />
+      <HtmlInput formControl={props.formControl} />
       <CustomTextField
         label="일시"
         name="event_date"
@@ -29,12 +30,15 @@ export default function EventInputs(props: {
         register={register}
         errors={errors}
       />
-      {/* <CustomTextField
-        label="장소"
+      <CustomTextField
+        label="모임 장소(또는 화상회의 링크)"
         name="place"
-        register={register}
+        defaultValue=""
+        inputRef={register({
+          required: false,
+        })}
         errors={errors}
-      /> */}
+      />
       <CustomTextField
         label="모집인원"
         name="countPeople"
@@ -60,7 +64,6 @@ export default function EventInputs(props: {
         register={register}
         errors={errors}
       />
-      <HtmlInput formControl={props.formControl} />
       <Tags formControl={props.formControl} />
       <Hashtags formControl={props.formControl} />
       <Controller
