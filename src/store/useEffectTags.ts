@@ -2,9 +2,8 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useChipsData } from "./useGlobalState";
 export default function useEffectTags() {
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
-  const tag = params.get("tag");
+  const { state } = useLocation<{ tag?: string }>();
+  const tag = state?.tag;
   const [, setChipData] = useChipsData();
   React.useEffect(() => {
     if (!tag) return;

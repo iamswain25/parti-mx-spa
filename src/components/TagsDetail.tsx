@@ -25,7 +25,7 @@ export default function TagsDetail({
           <Link
             key={chip}
             className={classes.tag}
-            to={`/${group_id}?tag=${chip}`}
+            to={{ pathname: `/${group_id}`, state: { tag: chip } }}
           >
             #{chip}
           </Link>
