@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     wrapperClassName: { border: "1px solid black" },
-    editorClassName: { padding: "0 16px" },
+    editorClassName: { padding: "0 16px", maxHeight: 800 },
   };
 });
 export default function HtmlInput(props: { formControl: UseFormMethods<any> }) {
