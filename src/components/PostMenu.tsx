@@ -57,12 +57,14 @@ export default function PostMenu({ post: p }: { post: Post }) {
       );
     }
   }
-  if (isManualClosingVote && !isClosed) {
-    menuItems.push(
-      <MenuItem onClick={resolve} key={5}>
-        토론 정리
-      </MenuItem>
-    );
+  if (isMine || isOrganizer) {
+    if (isManualClosingVote && !isClosed) {
+      menuItems.push(
+        <MenuItem onClick={resolve} key={5}>
+          토론 정리
+        </MenuItem>
+      );
+    }
   }
   if (isNotice && isOrganizer) {
     if (isAnnounced) {
