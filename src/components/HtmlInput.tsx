@@ -22,31 +22,32 @@ const useStyles = makeStyles((theme) => {
 });
 export default function HtmlInput(props: { formControl: UseFormMethods<any> }) {
   const { register, errors, control, watch } = props.formControl;
-  const { isHtml, html } = watch();
+  const { isHtml = true, html } = watch();
   const classes = useStyles();
   return (
     <>
-      <FormControlLabel
-        control={
-          <Controller
-            name="isHtml"
-            control={control}
-            defaultValue={false}
-            render={({ onChange, value }) => (
+      <Controller
+        name="isHtml"
+        control={control}
+        defaultValue={true}
+        render={({ onChange, value }) => (
+          <FormControlLabel
+            control={
               <Checkbox
                 color="primary"
                 checked={value}
                 onChange={(e) => onChange(e.currentTarget.checked)}
               />
-            )}
+            }
+            label="HTML 편집기 사용 (*주의: 체크해제 시 작성중인 내용이 사라집니다)"
           />
-        }
-        label="내용에 HTML 편집기를 씁니다. *주의: 버전이 낮아 버그가 있습니다."
+        )}
       />
       {isHtml ? (
         <Controller
           control={control}
           name="html"
+          defaultValue=""
           as={
             <Editor
               initialContentState={html}

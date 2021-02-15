@@ -20,7 +20,9 @@ export default function NoticeNew() {
   const [, setSuccess] = useSuccess();
   const [imageArr, setImageArr] = React.useState<File[]>([]);
   const [fileArr, setFileArr] = React.useState<File[]>([]);
-  const formControl = useForm<NoticeFormdata>();
+  const formControl = useForm<NoticeFormdata>({
+    defaultValues: { isHtml: true },
+  });
   const { handleSubmit } = formControl;
   async function handleForm(form: NoticeFormdata) {
     const variables = await makeNewVariables(form, {
