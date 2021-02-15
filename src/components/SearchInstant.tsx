@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => {
         marginLeft: theme.spacing(4),
       },
     },
+    marginRight: {
+      marginRight: 5,
+    },
   };
 });
 export default function SearchInstant() {
@@ -40,9 +43,13 @@ export default function SearchInstant() {
   }
   return (
     <InstantSearch indexName="green-newdeal" searchClient={client}>
-      <SearchBox />
+      <SearchBox
+        translations={{
+          placeholder: "검색어를 입력하세요",
+        }}
+      />
       <div className={classes.resultHeader}>
-        <span>검색결과 </span>
+        <span className={classes.marginRight}>검색결과</span>
         <Stats
           translations={{
             stats(nbHits) {
