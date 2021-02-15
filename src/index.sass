@@ -45,8 +45,36 @@ hr
 
 
 .draftjs
+  p:empty
+    min-height: 20px
   ul
     list-style-type: disc
     margin-block-start: 1em
     margin-block-end: 1em
     padding-inline-start: 40px
+  iframe
+    width: 100%
+  code
+    font-family: monospace
+    overflow-wrap: break-word
+    background: rgb(241, 241, 241)
+    border-radius: 3px
+    padding: 1px 3px
+
+.ais-SearchBox
+  margin: 1em 0
+  .ais-SearchBox-form
+    display: flex
+.ais-Hits
+  .ais-Hits-list
+    display: flex
+    flex-direction: column
+    overflow: hidden
+    position: relative
+    .ais-Hits-item
+      width: calc(100% - 1rem)
+.ais-Pagination
+  margin-top: 2em
+  .ais-Pagination-list
+    overflow: hidden
+    flex-wrap: wrap
