@@ -21,6 +21,7 @@ import PostMenu from "./PostMenu";
 import FilesImages from "./FilesImages";
 import ShareButtons from "./ShareButtons";
 import HtmlOrBody from "./HtmlOrBody";
+import { useStore } from "../store/store";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -105,6 +106,9 @@ export default function VoteDetail({ post: p }: { post: Post }) {
   const metadata = p.metadata as VoteMetadata;
   const commentCount = p.comments_aggregate?.aggregate?.count || 0;
   const participantCount = p.users_aggregate?.aggregate?.sum?.like_count;
+  const status = p?.board?.group?.status;
+  const isOrganizer = status === "organizer";
+  const [{ user_id }] = useStore();
   const daysLeft = React.useMemo(() => daysLeftMeta(metadata, created_at), [
     metadata,
     created_at,
@@ -138,7 +142,9 @@ export default function VoteDetail({ post: p }: { post: Post }) {
           <Hidden smDown implementation="css">
             <Box display="flex" alignItems="center">
               <ShareButtons post={p} />
-              <PostMenu post={p} />
+              {isOrganizer || user_id == createdBy.id ? (
+                <PostMenu post={p} />
+              ) : null}
             </Box>
           </Hidden>
         </Box>
