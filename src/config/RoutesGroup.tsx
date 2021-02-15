@@ -12,12 +12,14 @@ import useEffectGroupId from "../store/useEffectGroupId";
 import RoutesBoard from "./RoutesBoard";
 import RouteMapAll from "../components/RouteMapAll";
 import useEffectTags from "../store/useEffectTags";
+import IntroPage from "../components/IntroPage";
 export default function RoutesGroup() {
   useEffectGroupId();
   useEffectTags();
   return (
     <Switch>
       <Route exact path="/:group_id" component={Home} />
+      <Route exact path="/:group_id/intro" component={IntroPage} />
       <Route exact path="/:group_id/search" component={SearchInstant} />
       <Route exact path="/:group_id/map" component={RouteMapAll} />
       <AdminRoute exact path="/:group_id/boards" component={BoardsSetting} />

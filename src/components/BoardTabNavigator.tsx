@@ -12,7 +12,7 @@ import {
   useGroupId,
   useRole,
 } from "../store/useGlobalState";
-import {detectIE} from '../index';
+import { detectIE } from "../index";
 const useStyles = makeStyles(theme => {
   return {
     gridTab: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => {
       flexWrap: "nowrap",
       justifyContent: "space-between",
     },
-    tabMd:{
+    tabMd: {
       [theme.breakpoints.up("md")]: {
         maxWidth: 1200,
         width: 1200,
@@ -111,6 +111,9 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
         <Box display="flex" flexWrap="nowrap">
           <NavLink exact to={`/${group_id}`} className={classes.tabLink}>
             홈
+          </NavLink>
+          <NavLink exact to={`/${group_id}/intro`} className={classes.tabLink}>
+            소개
           </NavLink>
           {boards.map((b, i) => (
             <NavLink
