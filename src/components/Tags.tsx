@@ -18,7 +18,7 @@ export default function Tags(props: { formControl: UseFormMethods<any> }) {
           style={{ lineHeight: "30px" }}
           color={errors.tags ? "error" : "inherit"}
         >
-          주제 선택
+          주제 선택 *
         </Typography>
         {errors.tags?.type === "required" && (
           <Typography variant="h6" color="error">

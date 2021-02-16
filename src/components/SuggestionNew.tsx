@@ -57,7 +57,7 @@ export default function SuggestionNew() {
               setFiles={setFileArr}
             />
             <BtnSubmitDesktop
-              text="제출하기"
+              text="제안하기"
               isSubmitting={formState.isSubmitting}
             />
           </Container>

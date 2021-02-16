@@ -40,10 +40,10 @@ export default function EventInputs(props: {
         errors={errors}
       />
       <CustomTextField
-        label="모집인원"
+        label="모집인원 *"
         name="countPeople"
         type="number"
-        defaultValue={10}
+        defaultValue={0}
         InputProps={{
           endAdornment: <span>명</span>,
         }}

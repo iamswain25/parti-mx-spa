@@ -38,7 +38,7 @@ export default function Hashtags(props: { formControl: UseFormMethods<any> }) {
                 variant="outlined"
                 label="#해시태그"
                 placeholder="단어 입력후 엔터를 눌러 추가하세요"
-                helperText="주제 선택에서 ‘기타’를 선택한 경우 자세한 주제를 추가해주세요"
+                helperText="주제 선택에서 ‘기타’를 선택한 경우 자세한 주제를 추가해주세요."
               />
             )}
             onChange={changeHandler(onChange)}
