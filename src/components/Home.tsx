@@ -59,19 +59,17 @@ export default function Home() {
           </Grid>
           <Grid item xs={isDesktop ? 4 : 12}>
             <Box mx={isDesktop ? 0 : 2} my={4} borderBottom="1px solid #bdbdbd">
-              <Grid container justify="space-between">
+              <Grid container justify="space-between" alignItems="center">
                 <Typography variant="h2" color="textPrimary">
                   <Box fontWeight="bold" my={isDesktop ? 0 : 4}>
                     지도보기
                   </Box>
                 </Typography>
-                <Hidden smDown>
-                  <BoardMoreTag
-                    label="지도"
-                    viewLabel="크게 보기"
-                    to={`/${group_id}/map`}
-                  />
-                </Hidden>
+                <BoardMoreTag
+                  label="지도"
+                  viewLabel="크게 보기"
+                  to={`/${group_id}/map`}
+                />
               </Grid>
               <Box height={isDesktop ? 800 : "50vh"} mt={isDesktop ? 3 : 0}>
                 <HomeMapPosts posts={posts} />
