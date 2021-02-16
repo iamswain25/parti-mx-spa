@@ -24,12 +24,12 @@ export default function GooglePlaceAutocomplete(props: {
   async function handleSelect(address: string) {
     setAddress(address);
     return geocodeByAddress(address)
-      .then((results) => getLatLng(results[0]))
-      .then((latLng) => {
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
         setLatLng(latLng);
         console.log(latLng);
       })
-      .catch((error) => console.error("Error", error));
+      .catch(error => console.error("Error", error));
   }
   return (
     <>
@@ -51,10 +51,11 @@ export default function GooglePlaceAutocomplete(props: {
                 name="address"
                 fullWidth
                 label="주소를 입력하세요"
-                helperText="예) 대한민국 서울특별시 서대문구 남가좌1동 서대문구사회적경제마을센터"
+                helperText="주소 입력 시 게시판 지도에 위치정보가 표시됩니다."
                 inputProps={
                   getInputProps({
-                    placeholder: "주소를 검색하세요 ...",
+                    placeholder:
+                      "예) 서울시특별시 서대문구 남가좌1동 서대문사회적경제마을센터",
                     className: "location-search-input",
                   }) as any
                 }

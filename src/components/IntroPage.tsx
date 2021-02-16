@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => {
       "& > h6": {
         textAlign: "right",
         color: "#9e9e9e",
-        [theme.breakpoints.down("lg")]: {
+        [theme.breakpoints.down("xs")]: {
           textAlign: "left",
         },
       },

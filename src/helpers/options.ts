@@ -90,6 +90,7 @@ export const DEFAULT_HASHTAGS = [
   "정의로운전환",
   "사회적경제",
   "어떻게_사회를_전환할_것인가",
+  "기타",
 ];
 export const PARAM_COLLECTION = "$PARAMS$";
 export const COUNTER_DOC = "counters";
