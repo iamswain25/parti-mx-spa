@@ -13,6 +13,7 @@ import {
   useRole,
 } from "../store/useGlobalState";
 import { detectIE } from "../index";
+import { match } from "assert";
 const useStyles = makeStyles(theme => {
   return {
     gridTab: {
@@ -120,7 +121,7 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
               to={`/${group_id}/${b.id}`}
               key={b.id}
               className={classes.tabLink}
-              isActive={match => !!match || b.id === board_id}
+              isActive={match => !!match && b.id === board_id}
               activeClassName="active"
             >
               {b.title}

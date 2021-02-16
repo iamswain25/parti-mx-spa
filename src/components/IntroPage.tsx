@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => {
       color: "#4e8545",
       fontWeight: 700,
       letterSpacing: "1.2px",
+      [theme.breakpoints.down("xs")]: {
+        fontSize: 16,
+      },
     },
     preface: {
       color: "#757575",
@@ -31,6 +34,9 @@ const useStyles = makeStyles(theme => {
       wordBreak: "break-all",
       "& > h5": {
         marginBottom: theme.spacing(3),
+        [theme.breakpoints.down("sm")]: {
+          fontSize: 14,
+        },
         "& > span:not(.line-through)": {
           color: "white",
           backgroundColor: "#7eba74",
@@ -44,8 +50,9 @@ const useStyles = makeStyles(theme => {
       "& > h6": {
         textAlign: "right",
         color: "#9e9e9e",
-        [theme.breakpoints.down("xs")]: {
+        [theme.breakpoints.down("sm")]: {
           textAlign: "left",
+          fontSize: 14,
         },
       },
     },
@@ -63,6 +70,9 @@ const useStyles = makeStyles(theme => {
             color: "#757575",
             lineHeight: 1.5,
             wordBreak: "break-all",
+            [theme.breakpoints.down("sm")]: {
+              fontSize: 14,
+            },
           },
         },
       },
@@ -74,11 +84,17 @@ const useStyles = makeStyles(theme => {
           color: "#757575",
           lineHeight: 1.5,
           wordBreak: "break-all",
+          [theme.breakpoints.down("sm")]: {
+            fontSize: 14,
+          },
         },
       },
       " & h6": {
         color: "#9e9e9e",
         marginTop: theme.spacing(3),
+        [theme.breakpoints.down("sm")]: {
+          fontSize: 14,
+        },
       },
     },
     img: {
@@ -121,7 +137,7 @@ export default function IntroPage() {
             <span>
               녹색전환을 위한 지역 그린뉴딜 플랫폼 ‘녹색오리’에 오신 여러분을
               환영합니다.
-            </span>
+            </span>{" "}
             녹색오리, 이름하여 ‘녹덕’(
             <span className="line-through">녹색덕후</span>)은 이 플랫폼의
             이름이자 이곳에 찾아와 녹색전환을 위해 한 걸음 걸어나가는
@@ -150,7 +166,7 @@ export default function IntroPage() {
             <span>
               녹색오리 플랫폼은 우리가 당면한 위기와 문제를 헤쳐갈 지혜와 방책을
               모으기 위한 토론과 숙의의 공론장입니다.
-            </span>
+            </span>{" "}
             급박하게 만들어진 중앙정부의 그린뉴딜 안은 기후위기를 막아내고
             사회적 문제를 해결하기에는 아직 가야 할 길이 멀다는 평을 받고
             있습니다. 이를 보완하기 위해 이전의 정책결정과정과는 다른,
