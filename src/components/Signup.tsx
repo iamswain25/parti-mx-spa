@@ -229,7 +229,11 @@ export default function Signup() {
                         </>
                       }
                       label={
-                        <a href="/#" target="_blank" rel="noopener noreferrer">
+                        <a
+                          href="https://drive.google.com/file/d/1XptTrdZnOtUOP1Dc4SZVnaQ1xGtx5v3O/view"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           내용보기
                         </a>
                       }
@@ -255,7 +259,11 @@ export default function Signup() {
                         </>
                       }
                       label={
-                        <a href="/#" target="_blank" rel="noopener noreferrer">
+                        <a
+                          href="https://drive.google.com/file/d/1AIU_8dBROEUrR_vyc629OhPQ_PdLRDcz/view"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           내용보기
                         </a>
                       }

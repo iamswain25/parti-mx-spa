@@ -81,7 +81,7 @@ export default function Footer() {
             <Grid spacing={3} container className="mt">
               <Grid item>
                 <a
-                  href="/#"
+                  href="https://drive.google.com/file/d/1XptTrdZnOtUOP1Dc4SZVnaQ1xGtx5v3O/view"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bold"
@@ -91,7 +91,7 @@ export default function Footer() {
               </Grid>
               <Grid item>
                 <a
-                  href="/#"
+                  href="https://drive.google.com/file/d/1AIU_8dBROEUrR_vyc629OhPQ_PdLRDcz/view"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bold"
