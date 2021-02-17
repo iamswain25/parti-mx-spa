@@ -121,7 +121,15 @@ export default function BoardTabNavigator({ board }: { board?: Board }) {
               to={`/${group_id}/${b.id}`}
               key={b.id}
               className={classes.tabLink}
-              isActive={match => !!match && b.id === board_id}
+              isActive={(match, location) => {
+                if (location.pathname == `/${group_id}/intro`) {
+                  return false;
+                }
+                if (b.id === board_id || !!match) {
+                  return true;
+                }
+                return false;
+              }}
               activeClassName="active"
             >
               {b.title}
