@@ -14,7 +14,7 @@ export default functions
       .get();
     return Promise.all(
       posts.docs.map(docRef => {
-        docRef.ref.update({ deleted_at: new Date() });
+        docRef.ref.delete();
       }),
     );
   });
